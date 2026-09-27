@@ -421,15 +421,14 @@ class Banner(BaseModel):
         now = timezone.now()
         if self.start_date and now < self.start_date:
             return False
-        if self.end_date and now > self.end_date:
-            return False
-        return True
+        return not (self.end_date and now > self.end_date)
 
     def get_image_url(self) -> str:
         if self.image:
             try:
                 return self.image.url
-            except Exception:
-                pass
+            except ValueError:
+                return self.image_url or ""
         return self.image_url or ""
+
 

@@ -369,7 +369,7 @@ def test_gateway_list_character_equipment_primary_and_fallback():
     assert eq_primary[0].quantity == 1
     assert eq_primary[0].enchant == 7
     assert eq_primary[0].slot == 10
-    assert getattr(gw_primary, "_schema_variant_list_character_equipment") == "primary"
+    assert gw_primary._schema_variant_list_character_equipment == "primary"
 
     # 2. Fallback schema with items.loc_data (no slot column)
     engine_fallback = create_engine("sqlite://")
@@ -385,6 +385,6 @@ def test_gateway_list_character_equipment_primary_and_fallback():
     assert eq_fallback[0].quantity == 1
     assert eq_fallback[0].enchant == 5
     assert eq_fallback[0].slot == 12
-    assert getattr(gw_fallback, "_schema_variant_list_character_equipment") == "fallback"
+    assert gw_fallback._schema_variant_list_character_equipment == "fallback"
 
 

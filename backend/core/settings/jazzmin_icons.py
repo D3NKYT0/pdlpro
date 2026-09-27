@@ -64,6 +64,7 @@ JAZZMIN_ICONS_PDL = {
     "content.wikipage": "fas fa-book-open",
     "content.calendarevent": "fas fa-calendar-alt",
     "content.denkynhohandbook": "fas fa-book",
+    "content.banner": "fas fa-image",
 
     # Payments.
     "payment": "fas fa-credit-card",

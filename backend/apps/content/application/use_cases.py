@@ -5,7 +5,10 @@ from typing import Any
 from uuid import UUID
 
 from apps.content.domain.faq import FaqAudience
-from apps.content.domain.repositories import IBannerCatalogRepository, IContentCatalogRepository
+from apps.content.domain.repositories import (
+    IBannerCatalogRepository,
+    IContentCatalogRepository,
+)
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError
 from common.i18n import localized_text, resolve_language

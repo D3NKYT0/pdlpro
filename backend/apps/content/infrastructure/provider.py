@@ -13,7 +13,6 @@ from apps.content.application.legal import (
 from apps.content.application.use_cases import (
     GetNewsUseCase,
     GetWikiPageUseCase,
-    ListBannersInput,
     ListCalendarEventsUseCase,
     ListDownloadsUseCase,
     ListFaqUseCase,

@@ -17,7 +17,6 @@ from apps.server.domain.character_rules import MAX_CHARACTERS_PER_ACCOUNT
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
     CharacterLimitReachedError,
-    GameAccountAlreadyExistsError,
     GameAccountNotFoundError,
     LinkSlotLimitError,
 )
