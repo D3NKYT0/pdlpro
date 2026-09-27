@@ -9,6 +9,7 @@ import { TemplateShell, isGemwright, isVesperlyn, resolveTemplateId } from '../.
 import { useTheme } from '../../theme/ThemeProvider'
 import { serverApi } from '../../services/api'
 import { ComingSoonPage } from '../../pages/ComingSoonPage'
+import { BannerModal } from '../public/BannerModal'
 
 export function PublicLayout() {
   useDefaultTheme()
@@ -30,18 +31,11 @@ export function PublicLayout() {
     return <ComingSoonPage info={info.data} />
   }
 
+  const isLanding = pathname === '/' || pathname === '/home'
+  const bannerLocation = isLanding ? 'landing' : 'all'
   const templateId = resolveTemplateId(theme.presentation?.renderer)
-  if (isVesperlyn(theme.presentation?.renderer) && theme.presentation) {
-    return <ClubPublicLayout presentation={theme.presentation} />
-  }
-  if (isGemwright(theme.presentation?.renderer) && theme.presentation) {
-    return <PortalPublicLayout presentation={theme.presentation} />
-  }
-  if (templateId && theme.presentation) {
-    return <TemplateShell presentation={theme.presentation} templateId={templateId} />
-  }
 
-  return (
+  let content = (
     <div data-theme-surface="public">
       <SiteNav />
 
@@ -52,7 +46,23 @@ export function PublicLayout() {
       <SiteFooter />
     </div>
   )
+
+  if (isVesperlyn(theme.presentation?.renderer) && theme.presentation) {
+    content = <ClubPublicLayout presentation={theme.presentation} />
+  } else if (isGemwright(theme.presentation?.renderer) && theme.presentation) {
+    content = <PortalPublicLayout presentation={theme.presentation} />
+  } else if (templateId && theme.presentation) {
+    content = <TemplateShell presentation={theme.presentation} templateId={templateId} />
+  }
+
+  return (
+    <>
+      {content}
+      <BannerModal location={bannerLocation} />
+    </>
+  )
 }
+
 
 export function PublicContent() {
   return <Outlet />

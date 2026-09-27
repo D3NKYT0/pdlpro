@@ -615,5 +615,15 @@
   "resourceGate": {
     "title": "Recurso temporalmente desactivado",
     "body": "El equipo pausó este módulo. Tus datos y tu progreso siguen preservados."
+  },
+  "banner": {
+    "close": "Cerrar",
+    "dontShowAgain": "No volver a mostrar",
+    "autoCloseIn": "Cerrando en {{seconds}}s...",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "counter": "{{current}} de {{total}}",
+    "actionDefault": "Saber más"
   }
 }
+

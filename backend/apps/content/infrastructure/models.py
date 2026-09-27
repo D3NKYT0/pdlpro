@@ -308,3 +308,128 @@ class CalendarEvent(BaseModel):
 
     def __str__(self) -> str:
         return self.title
+
+
+class Banner(BaseModel):
+    """Banner visual ou modal informativo para a landing page, coming soon e rotas públicas."""
+
+    class DisplayType(models.TextChoices):
+        POPUP = "popup", _("Modal Pop-up (Rico)")
+        VISUAL = "visual", _("Banner Visual (Flyer)")
+
+    class TargetLocation(models.TextChoices):
+        ALL = "all", _("Todas as páginas públicas")
+        LANDING = "landing", _("Apenas Landing Page")
+        COMING_SOON = "coming_soon", _("Apenas Coming Soon")
+        LANDING_AND_COMING_SOON = "landing_and_coming_soon", _("Landing Page e Coming Soon")
+        PANEL = "panel", _("Painel do Jogador")
+
+    class DismissPolicy(models.TextChoices):
+        SESSION = "session", _("1 vez por sessão")
+        ALWAYS = "always", _("Sempre exibir")
+        DAYS = "days", _("Não exibir novamente por X dias")
+        DISMISS_FOREVER = "dismiss_forever", _("Não exibir mais após fechar")
+
+    title = models.CharField(max_length=200, verbose_name=_("Título"))
+    title_en = models.CharField(max_length=200, blank=True, verbose_name=_("Título (EN)"))
+    title_es = models.CharField(max_length=200, blank=True, verbose_name=_("Título (ES)"))
+
+    badge = models.CharField(max_length=50, blank=True, verbose_name=_("Badge / Etiqueta"))
+    badge_en = models.CharField(max_length=50, blank=True, verbose_name=_("Badge (EN)"))
+    badge_es = models.CharField(max_length=50, blank=True, verbose_name=_("Badge (ES)"))
+
+    description = models.TextField(blank=True, verbose_name=_("Descrição"))
+    description_en = models.TextField(blank=True, verbose_name=_("Descrição (EN)"))
+    description_es = models.TextField(blank=True, verbose_name=_("Descrição (ES)"))
+
+    image = models.ImageField(upload_to="banners/", null=True, blank=True, verbose_name=_("Imagem"))
+    image_url = models.URLField(blank=True, default="", verbose_name=_("URL Externa da Imagem (opcional)"))
+
+    link = models.CharField(max_length=300, blank=True, default="", verbose_name=_("Link Principal (opcional)"))
+    link_text = models.CharField(max_length=100, blank=True, default="", verbose_name=_("Texto do Botão Principal"))
+    link_text_en = models.CharField(max_length=100, blank=True, default="", verbose_name=_("Texto do Botão Principal (EN)"))
+    link_text_es = models.CharField(max_length=100, blank=True, default="", verbose_name=_("Texto do Botão Principal (ES)"))
+
+    secondary_link = models.CharField(max_length=300, blank=True, default="", verbose_name=_("Link Secundário (opcional)"))
+    secondary_link_text = models.CharField(max_length=100, blank=True, default="", verbose_name=_("Texto do Botão Secundário"))
+    secondary_link_text_en = models.CharField(max_length=100, blank=True, default="", verbose_name=_("Texto do Botão Secundário (EN)"))
+    secondary_link_text_es = models.CharField(max_length=100, blank=True, default="", verbose_name=_("Texto do Botão Secundário (ES)"))
+
+    display_type = models.CharField(
+        max_length=20,
+        choices=DisplayType.choices,
+        default=DisplayType.POPUP,
+        verbose_name=_("Formato de Exibição"),
+    )
+    target_location = models.CharField(
+        max_length=30,
+        choices=TargetLocation.choices,
+        default=TargetLocation.LANDING_AND_COMING_SOON,
+        verbose_name=_("Onde Exibir"),
+    )
+    dismiss_policy = models.CharField(
+        max_length=20,
+        choices=DismissPolicy.choices,
+        default=DismissPolicy.DAYS,
+        verbose_name=_("Controle de Frequência"),
+    )
+    dismiss_days = models.PositiveIntegerField(
+        default=7,
+        verbose_name=_("Dias sem reexibir"),
+        help_text=_("Usado quando a frequência é configurada para X dias."),
+    )
+
+    auto_close = models.BooleanField(
+        default=False,
+        verbose_name=_("Fechar automaticamente"),
+    )
+    auto_close_delay = models.PositiveIntegerField(
+        default=10,
+        verbose_name=_("Tempo para fechar (segundos)"),
+    )
+    show_close_button = models.BooleanField(
+        default=True,
+        verbose_name=_("Exibir botão de fechar"),
+    )
+    width_px = models.PositiveIntegerField(
+        default=640,
+        blank=True,
+        null=True,
+        verbose_name=_("Largura máxima (px)"),
+    )
+
+    is_active = models.BooleanField(default=True, verbose_name=_("Ativo"))
+    order = models.PositiveIntegerField(default=0, verbose_name=_("Ordem de prioridade"))
+    start_date = models.DateTimeField(null=True, blank=True, verbose_name=_("Data de Início"))
+    end_date = models.DateTimeField(null=True, blank=True, verbose_name=_("Data de Término"))
+
+    class Meta:
+        verbose_name = _("Banner")
+        verbose_name_plural = _("Banners")
+        ordering = ["order", "-created_at"]
+        indexes = [
+            models.Index(fields=["is_active", "target_location", "order"]),
+            models.Index(fields=["start_date", "end_date"]),
+        ]
+
+    def __str__(self) -> str:
+        return self.title
+
+    def is_visible(self) -> bool:
+        if not self.is_active:
+            return False
+        now = timezone.now()
+        if self.start_date and now < self.start_date:
+            return False
+        if self.end_date and now > self.end_date:
+            return False
+        return True
+
+    def get_image_url(self) -> str:
+        if self.image:
+            try:
+                return self.image.url
+            except Exception:
+                pass
+        return self.image_url or ""
+

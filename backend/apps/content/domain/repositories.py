@@ -224,3 +224,38 @@ class IDenkynhoRepository(ABC):
         """Apelido e detalhe do mascote; defaults se usuário/perfil ausentes."""
 
         raise NotImplementedError
+
+
+class IBannerAdminRepository(ABC):
+    """Porta administrativa de banners e modais pop-up."""
+
+    @abstractmethod
+    def list_all(self) -> list[Any]:
+        """Lista todos os banners ordenados por prioridade e data."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_by_id(self, banner_id: UUID) -> Any | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def new(self, **fields) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def save(self, row: Any) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, banner_id: UUID) -> bool:
+        raise NotImplementedError
+
+
+class IBannerCatalogRepository(ABC):
+    """Porta pública de catálogo para leitura de banners ativos."""
+
+    @abstractmethod
+    def list_active_banners(self, location: str | None = None) -> list[Any]:
+        """Lista os banners ativos e vigentes para a localização indicada."""
+        raise NotImplementedError
+

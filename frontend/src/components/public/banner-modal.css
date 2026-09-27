@@ -1,0 +1,341 @@
+/* ==========================================================================
+   PDL PRO - Banner System (Flyers & Rich Modals)
+   ========================================================================== */
+
+.pdl-banner-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(5, 5, 8, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: pdl-banner-fade-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pdl-banner-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pdl-banner-scale-up {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Base Modal Container */
+.pdl-banner-container {
+  position: relative;
+  max-width: 92vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  animation: pdl-banner-scale-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.85),
+    0 0 25px rgba(212, 175, 55, 0.15);
+}
+
+/* Floating Close Button */
+.pdl-banner-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 30;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(20, 20, 26, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: #e6c875;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.65);
+}
+
+.pdl-banner-close-btn:hover {
+  background: rgba(40, 36, 26, 0.95);
+  color: #fff;
+  border-color: #ffd700;
+  transform: scale(1.08);
+}
+
+
+/* Visual Flyer Mode (display_type: 'normal') */
+.pdl-banner-flyer {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  background: #0d0d12;
+}
+
+.pdl-banner-flyer-link {
+  display: block;
+  line-height: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.pdl-banner-flyer-link:hover {
+  opacity: 0.95;
+}
+
+.pdl-banner-flyer-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* Rich Modal Mode (display_type: 'popup') */
+.pdl-banner-rich {
+  background: linear-gradient(180deg, #1b1b22 0%, #101016 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  overflow: hidden;
+}
+
+.pdl-banner-scrollable {
+  overflow-y: auto;
+  max-height: calc(88vh - 64px);
+  padding: 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 175, 55, 0.4) transparent;
+}
+
+.pdl-banner-scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+.pdl-banner-scrollable::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.4);
+  border-radius: 4px;
+}
+.pdl-banner-scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Rich Header */
+.pdl-banner-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-right: 2.5rem;
+}
+
+
+.pdl-banner-badge {
+  align-self: flex-start;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%);
+  color: #101014;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
+}
+
+.pdl-banner-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+  background: linear-gradient(180deg, #ffffff 30%, #d4af37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Rich Media */
+.pdl-banner-media {
+  margin-bottom: 1.25rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #08080c;
+}
+
+.pdl-banner-media-img {
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Rich Description */
+.pdl-banner-desc {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #c9c7c5;
+  margin-bottom: 1.5rem;
+  white-space: pre-line;
+}
+
+/* Rich Actions */
+.pdl-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.pdl-banner-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #e6c875 0%, #aa820a 100%);
+  color: #0d0d12;
+  border: 1px solid #ffd700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.25);
+}
+
+.pdl-banner-btn-primary:hover {
+  background: linear-gradient(180deg, #f5da88 0%, #bd920f 100%);
+  color: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(212, 175, 55, 0.35);
+}
+
+.pdl-banner-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e5e5e5;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.pdl-banner-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+/* Footer & Controls */
+.pdl-banner-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(10, 10, 14, 0.75);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pdl-banner-dismiss-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #9c9a96;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pdl-banner-dismiss-option input[type="checkbox"] {
+  accent-color: #d4af37;
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+}
+
+.pdl-banner-dismiss-option:hover {
+  color: #dedbd6;
+}
+
+.pdl-banner-timer-badge {
+  font-size: 0.75rem;
+  color: #8c8982;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Auto-Close Progress Bar */
+.pdl-banner-progress-track {
+  height: 3px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.pdl-banner-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37, #ffd700);
+  transition: width 1s linear;
+}
+
+/* Pagination / Queue indicator */
+.pdl-banner-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pdl-banner-nav-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #c9c7c5;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pdl-banner-nav-btn:hover:not(:disabled) {
+  border-color: #d4af37;
+  color: #ffd700;
+}
+
+.pdl-banner-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pdl-banner-counter {
+  font-size: 0.75rem;
+  color: #9c9a96;
+}

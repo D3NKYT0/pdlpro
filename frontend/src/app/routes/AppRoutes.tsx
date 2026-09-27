@@ -54,6 +54,7 @@ import { AdminGamesPage } from '../../pages/admin/AdminGamesPage'
 import { AdminHubPage } from '../../pages/admin/AdminHubPage'
 import { AdminItemObservationPage } from '../../pages/admin/AdminItemObservationPage'
 import { AdminCustomItemsPage } from '../../pages/admin/AdminCustomItemsPage'
+import { AdminBannersPage } from '../../pages/admin/AdminBannersPage'
 import { AdminNewsPage } from '../../pages/admin/AdminNewsPage'
 import { AdminCalendarPage } from '../../pages/admin/AdminCalendarPage'
 import { AdminFaqPage } from '../../pages/admin/AdminFaqPage'
@@ -165,6 +166,7 @@ export function AppRoutes() {
               <Route path="/panel/admin/coin-packages" element={<AdminCoinPackagesPage />} />
               <Route path="/panel/admin/wallet" element={<AdminWalletPage />} />
               <Route path="/panel/admin/shop" element={<AdminShopPage />} />
+              <Route path="/panel/admin/banners" element={<AdminBannersPage />} />
               <Route path="/panel/admin/news" element={<AdminNewsPage />} />
               <Route path="/panel/admin/calendar" element={<AdminCalendarPage />} />
               <Route path="/panel/admin/faq" element={<AdminFaqPage />} />

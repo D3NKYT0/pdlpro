@@ -615,5 +615,15 @@
   "resourceGate": {
     "title": "Feature temporarily disabled",
     "body": "The team paused this module. Your data and progress remain preserved."
+  },
+  "banner": {
+    "close": "Close",
+    "dontShowAgain": "Do not show again",
+    "autoCloseIn": "Closing in {{seconds}}s...",
+    "next": "Next",
+    "previous": "Previous",
+    "counter": "{{current}} of {{total}}",
+    "actionDefault": "Learn more"
   }
 }
+

@@ -5,7 +5,7 @@ from typing import Any
 from uuid import UUID
 
 from apps.content.domain.faq import FaqAudience
-from apps.content.domain.repositories import IContentCatalogRepository
+from apps.content.domain.repositories import IBannerCatalogRepository, IContentCatalogRepository
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError
 from common.i18n import localized_text, resolve_language
@@ -397,3 +397,66 @@ class ListCalendarEventsUseCase(UseCase[ListCalendarInput | None, list[dict]]):
             }
             for item in self._catalog.list_published_calendar()
         ]
+
+
+@dataclass(frozen=True, slots=True)
+class ListBannersInput:
+    """Parâmetros de filtro para listagem pública de banners."""
+
+    location: str | None = None
+    language: str = "pt"
+
+
+class ListPublicBannersUseCase(UseCase[ListBannersInput | None, list[dict[str, Any]]]):
+    """Lista banners ativos e vigentes para a localização solicitada."""
+
+    def __init__(self, catalog: IBannerCatalogRepository) -> None:
+        self._catalog = catalog
+
+    def execute(self, data: ListBannersInput | None = None) -> list[dict[str, Any]]:
+        location = data.location if data else None
+        language = resolve_language(data.language if data else "pt")
+        rows = self._catalog.list_active_banners(location=location)
+        return [self._dump(item, language) for item in rows]
+
+    @staticmethod
+    def _dump(item, language: str) -> dict[str, Any]:
+        return {
+            "id": str(item.id),
+            "title": localized_text(item, "title", language),
+            "title_pt": item.title,
+            "title_en": item.title_en,
+            "title_es": item.title_es,
+            "badge": localized_text(item, "badge", language),
+            "badge_pt": item.badge,
+            "badge_en": item.badge_en,
+            "badge_es": item.badge_es,
+            "description": localized_text(item, "description", language),
+            "description_pt": item.description,
+            "description_en": item.description_en,
+            "description_es": item.description_es,
+            "image_url": item.get_image_url(),
+            "link": item.link,
+            "link_text": localized_text(item, "link_text", language) or item.link_text,
+            "link_text_pt": item.link_text,
+            "link_text_en": item.link_text_en,
+            "link_text_es": item.link_text_es,
+            "secondary_link": item.secondary_link,
+            "secondary_link_text": localized_text(item, "secondary_link_text", language) or item.secondary_link_text,
+            "secondary_link_text_pt": item.secondary_link_text,
+            "secondary_link_text_en": item.secondary_link_text_en,
+            "secondary_link_text_es": item.secondary_link_text_es,
+            "display_type": item.display_type,
+            "target_location": item.target_location,
+            "dismiss_policy": item.dismiss_policy,
+            "dismiss_days": item.dismiss_days,
+            "auto_close": item.auto_close,
+            "auto_close_delay": item.auto_close_delay,
+            "show_close_button": item.show_close_button,
+            "width_px": item.width_px,
+            "order": item.order,
+            "start_date": item.start_date.isoformat() if item.start_date else None,
+            "end_date": item.end_date.isoformat() if item.end_date else None,
+            "language": language,
+        }
+

@@ -5,6 +5,7 @@ from apps.staff.presentation.views.accounts import (
     StaffUnlinkGameAccountView,
 )
 from apps.staff.presentation.views.cms import (
+    StaffBannersView,
     StaffCalendarView,
     StaffDownloadsView,
     StaffFaqView,
@@ -123,6 +124,7 @@ urlpatterns = [
     path("shop/autoconfig/", StaffShopAutoconfigView.as_view(), name="staff-shop-autoconfig"),
     path("shop/", StaffShopItemsView.as_view(), name="staff-shop"),
     path("news/", StaffNewsView.as_view(), name="staff-news"),
+    path("banners/", StaffBannersView.as_view(), name="staff-banners"),
     path("calendar/", StaffCalendarView.as_view(), name="staff-calendar"),
     path("faq/", StaffFaqView.as_view(), name="staff-faq"),
     path("wiki/", StaffWikiView.as_view(), name="staff-wiki"),

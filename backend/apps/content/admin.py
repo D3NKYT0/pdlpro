@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 from apps.content.infrastructure.models import (
+    Banner,
     CalendarEvent,
     DenkynhoHandbook,
     DownloadLink,
@@ -149,3 +150,106 @@ class CalendarEventAdmin(PDLModelAdmin):
         (_("English"), {"fields": ("title_en", "description_en")}),
         (_("Español"), {"fields": ("title_es", "description_es")}),
     )
+
+
+@admin.register(Banner)
+class BannerAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``Banner`` com preview e controle de visibilidade."""
+
+    list_display = (
+        "title",
+        "display_type",
+        "target_location",
+        "dismiss_policy",
+        "is_active",
+        "order",
+        "image_preview",
+        "created_at",
+    )
+    list_filter = ("is_active", "display_type", "target_location", "dismiss_policy")
+    search_fields = ("title", "title_en", "title_es", "badge", "description")
+    list_editable = ("is_active", "order")
+    readonly_fields = ("image_preview", "created_at", "updated_at")
+    fieldsets = (
+        (
+            _("Configurações Gerais"),
+            {
+                "fields": (
+                    "is_active",
+                    "order",
+                    "display_type",
+                    "target_location",
+                    "start_date",
+                    "end_date",
+                )
+            },
+        ),
+        (
+            _("Imagem e Mídia"),
+            {
+                "fields": (
+                    "image",
+                    "image_url",
+                    "image_preview",
+                    "width_px",
+                )
+            },
+        ),
+        (
+            _("Frequência e Fechamento"),
+            {
+                "fields": (
+                    "dismiss_policy",
+                    "dismiss_days",
+                    "show_close_button",
+                    "auto_close",
+                    "auto_close_delay",
+                )
+            },
+        ),
+        (
+            _("Links e Ações (CTA)"),
+            {
+                "fields": (
+                    "link",
+                    "link_text",
+                    "link_text_en",
+                    "link_text_es",
+                    "secondary_link",
+                    "secondary_link_text",
+                    "secondary_link_text_en",
+                    "secondary_link_text_es",
+                )
+            },
+        ),
+        (_("Português"), {"fields": ("title", "badge", "description")}),
+        (_("English"), {"fields": ("title_en", "badge_en", "description_en")}),
+        (_("Español"), {"fields": ("title_es", "badge_es", "description_es")}),
+    )
+
+    def image_preview(self, obj):
+        url = obj.get_image_url()
+        if url:
+            from django.utils.html import format_html
+            return format_html(
+                '<img src="{}" style="max-width: 140px; max-height: 80px; object-fit: contain; border-radius: 4px; border: 1px solid #444;" />',
+                url,
+            )
+        return _("(Sem imagem)")
+
+    image_preview.short_description = _("Preview")
+
+    actions = ["activate_banners", "deactivate_banners"]
+
+    def activate_banners(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, _("{} banners foram ativados.").format(updated))
+
+    activate_banners.short_description = _("Ativar banners selecionados")
+
+    def deactivate_banners(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, _("{} banners foram desativados.").format(updated))
+
+    deactivate_banners.short_description = _("Desativar banners selecionados")
+

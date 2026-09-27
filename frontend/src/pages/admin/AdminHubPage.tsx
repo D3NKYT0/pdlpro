@@ -15,6 +15,7 @@ import {
   Package,
   PackagePlus,
   Headphones,
+  Megaphone,
   Newspaper,
   Server,
   Settings2,
@@ -92,6 +93,7 @@ const categories: Category[] = [
     key: 'content',
     tone: 'content',
     entries: [
+      { to: '/panel/admin/banners', key: 'banners', icon: Megaphone },
       { to: '/panel/admin/news', key: 'news', icon: Newspaper },
       { to: '/panel/admin/calendar', key: 'calendar', icon: CalendarDays },
       { to: '/panel/admin/faq', key: 'faq', icon: CircleHelp },

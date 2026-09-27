@@ -18,6 +18,7 @@ from apps.content.application.use_cases import (
     GetNewsUseCase,
     GetWikiPageInput,
     GetWikiPageUseCase,
+    ListBannersInput,
     ListCalendarEventsUseCase,
     ListCalendarInput,
     ListDownloadsUseCase,
@@ -25,6 +26,7 @@ from apps.content.application.use_cases import (
     ListFaqUseCase,
     ListNewsInput,
     ListNewsUseCase,
+    ListPublicBannersUseCase,
     ListWikiInput,
     ListWikiPagesUseCase,
     SearchWikiInput,
@@ -273,3 +275,27 @@ class LegalDetailView(InjectedAPIView):
                 )
             )
         )
+
+
+class BannerListView(InjectedAPIView):
+    """Entrada HTTP para ``ListPublicBannersUseCase``.
+
+    Permite filtrar banners ativos por localização através de ?location=landing|coming_soon|all|panel.
+    """
+
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    @extend_schema(
+        tags=["Conteúdo"],
+        summary=gettext_lazy("Listar banners públicos"),
+        description=gettext_lazy("Lista os banners e modais pop-up ativos configurados para a localização informada."),
+    )
+    def get(self, request):
+        location = request.query_params.get("location")
+        language = resolve_language(request.query_params.get("lang"))
+        items = self.resolve(ListPublicBannersUseCase).execute(
+            ListBannersInput(location=location, language=language)
+        )
+        return Response(items)
+

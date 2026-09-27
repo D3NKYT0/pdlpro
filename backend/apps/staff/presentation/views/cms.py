@@ -4,14 +4,17 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from apps.staff.application.cms import (
+    DeleteStaffBannerUseCase,
     DeleteStaffCalendarUseCase,
     DeleteStaffDownloadUseCase,
     DeleteStaffFaqUseCase,
     DeleteStaffWikiUseCase,
+    ListStaffBannersUseCase,
     ListStaffCalendarUseCase,
     ListStaffDownloadsUseCase,
     ListStaffFaqUseCase,
     ListStaffWikiUseCase,
+    UpsertStaffBannerUseCase,
     UpsertStaffCalendarUseCase,
     UpsertStaffDownloadUseCase,
     UpsertStaffFaqUseCase,
@@ -171,3 +174,42 @@ class StaffDownloadsView(InjectedAPIView):
     )
     def delete(self, request):
         return Response(self.resolve(DeleteStaffDownloadUseCase).execute(request.data or {}))
+
+
+class StaffBannersView(InjectedAPIView):
+    """Entrada HTTP do CRUD administrativo de banners e modais pop-up."""
+
+    permission_classes = [IsAuthenticated, IsStaffMember]
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Listar banners administrativos"),
+        description=gettext_lazy("Lista todos os banners gerenciados pela equipe, inclusive rascunhos e inativos."),
+    )
+    def get(self, request):
+        return Response(self.resolve(ListStaffBannersUseCase).execute())
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Criar banner administrativo"),
+        description=gettext_lazy("Cria um banner ou modal pop-up com o payload administrativo informado."),
+    )
+    def post(self, request):
+        return Response(self.resolve(UpsertStaffBannerUseCase).execute(request.data or {}))
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Atualizar banner administrativo"),
+        description=gettext_lazy("Atualiza um banner ou modal pop-up com o payload administrativo informado."),
+    )
+    def put(self, request):
+        return Response(self.resolve(UpsertStaffBannerUseCase).execute(request.data or {}))
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Excluir banner administrativo"),
+        description=gettext_lazy("Remove o banner identificado no payload."),
+    )
+    def delete(self, request):
+        return Response(self.resolve(DeleteStaffBannerUseCase).execute(request.data or {}))
+

@@ -75,6 +75,10 @@
         "title": "Módulos de juegos",
         "description": "Encender, apagar y rellenar el contenido de los minijuegos"
       },
+      "banners": {
+        "title": "Banners y Avisos",
+        "description": "Popups, flyers y avisos en la landing page y coming soon"
+      },
       "news": {
         "title": "Noticias",
         "description": "Publicar avisos del servidor en PT, EN y ES"
@@ -2091,6 +2095,67 @@
         "success": "Simulación confirmada: {{coins}} monedas acreditadas a {{username}}.",
         "error": "No se pudo confirmar la simulación."
       }
+    }
+  },
+  "banners": {
+    "kicker": "Contenido y Avisos",
+    "title": "Banners y Avisos",
+    "description": "Administra banners promocionales, flyers y modales ricos en la landing page y coming soon.",
+    "create": "Nuevo Banner",
+    "edit": "Editar Banner",
+    "tabPt": "Português",
+    "tabEn": "English",
+    "tabEs": "Español",
+    "tabBehavior": "Comportamiento y Visualización",
+    "fieldTitle": "Título interno / PT",
+    "fieldTitleEn": "Título (Inglés)",
+    "fieldTitleEs": "Título (Español)",
+    "fieldBadge": "Insignia / Badge (ej: NUEVO, EVENTO)",
+    "fieldDescription": "Descripción / Texto (PT)",
+    "fieldDescriptionEn": "Descripción / Texto (Inglés)",
+    "fieldDescriptionEs": "Descripción / Texto (Español)",
+    "fieldImage": "URL de la Imagen / Flyer",
+    "fieldDisplayType": "Tipo de Visualización",
+    "displayTypeNormal": "Flyer Visual (Solo Imagen / Clickeable)",
+    "displayTypePopup": "Modal Rico (Título, Imagen, Texto y Botones)",
+    "fieldTargetLocation": "Ubicación de Visualización",
+    "locationLanding": "Solo Landing Page",
+    "locationComingSoon": "Solo Coming Soon",
+    "locationLandingAndComingSoon": "Landing y Coming Soon",
+    "locationPanel": "Panel del Jugador",
+    "locationAll": "Todas las Páginas Públicas",
+    "fieldDismissPolicy": "Frecuencia de Visualización",
+    "policySession": "Una vez por sesión (sesión del navegador)",
+    "policyAlways": "Siempre (en cada carga de página)",
+    "policyDays": "No volver a mostrar por X días",
+    "policyDismissForever": "No volver a mostrar tras cerrar",
+    "fieldDismissDays": "Cantidad de días sin mostrar",
+    "fieldAutoClose": "Cerrar automáticamente tras unos segundos",
+    "fieldAutoCloseDelay": "Tiempo de visualización (segundos)",
+    "fieldShowCloseButton": "Mostrar botón cerrar (X)",
+    "fieldLink": "Enlace Principal (CTA)",
+    "fieldLinkText": "Texto del Botón Principal (PT)",
+    "fieldLinkTextEn": "Texto del Botón Principal (EN)",
+    "fieldLinkTextEs": "Texto del Botón Principal (ES)",
+    "fieldSecondaryLink": "Enlace Secundario (opcional)",
+    "fieldSecondaryLinkText": "Texto del Botón Secundario (PT)",
+    "fieldSecondaryLinkTextEn": "Texto del Botón Secundario (EN)",
+    "fieldSecondaryLinkTextEs": "Texto del Botón Secundario (ES)",
+    "fieldWidth": "Ancho Máximo (px)",
+    "fieldHeight": "Alto Máximo (px)",
+    "fieldOrder": "Orden de prioridad",
+    "fieldActive": "Activo",
+    "preview": "Previsualizar Modal",
+    "libraryEyebrow": "Catálogo",
+    "libraryTitle": "Banners Registrados",
+    "empty": "No hay banners registrados.",
+    "submitCreate": "Crear Banner",
+    "submitUpdate": "Actualizar Banner",
+    "toast": {
+      "created": "Banner creado con éxito",
+      "updated": "Banner actualizado con éxito",
+      "deleted": "Banner eliminado con éxito",
+      "error": "No se pudo guardar el banner"
     }
   }
 }

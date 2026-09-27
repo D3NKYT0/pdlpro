@@ -1,5 +1,5 @@
 import { request } from '../infra/http'
-import type { ApiPaymentOrder } from '../types'
+import type { ApiPaymentOrder, ApiStaffBanner } from '../types'
 
 export interface ApiPanelSettings {
   id: string | null
@@ -386,4 +386,12 @@ export const staffApi = {
       method: 'POST',
       body: JSON.stringify(payload || {}),
     }),
+  banners: () => request<ApiStaffBanner[]>('/staff/banners/'),
+  saveBanner: (payload: Partial<ApiStaffBanner>) =>
+    request<ApiStaffBanner>('/staff/banners/', {
+      method: payload.id ? 'PUT' : 'POST',
+      body: JSON.stringify(payload),
+    }),
+  deleteBanner: (id: string) =>
+    request<{ deleted: boolean }>('/staff/banners/', { method: 'DELETE', body: JSON.stringify({ id }) }),
 }

@@ -501,3 +501,65 @@ export interface ApiSupportList {
   results: ApiSupportTicket[]
   summary: Record<string, number>
 }
+
+export interface ApiBanner {
+  id: string
+  title: string
+  badge: string
+  description: string
+  image?: string
+  image_url?: string
+  link: string
+  link_text: string
+  secondary_link: string
+  secondary_link_text: string
+  display_type: 'normal' | 'popup'
+  target_location: 'landing' | 'coming_soon' | 'landing_and_coming_soon' | 'panel' | 'all'
+  dismiss_policy: 'session' | 'always' | 'days' | 'dismiss_forever'
+  dismiss_days: number
+  auto_close: boolean
+  auto_close_delay: number
+  show_close_button: boolean
+  width?: number
+  width_px?: number
+  height?: number
+  order: number
+}
+
+export interface ApiStaffBanner {
+  id?: string
+  title: string
+  title_en: string
+  title_es: string
+  badge: string
+  description: string
+  description_en: string
+  description_es: string
+  image?: string
+  image_url?: string
+  link: string
+  link_text: string
+  link_text_en: string
+  link_text_es: string
+  secondary_link: string
+  secondary_link_text: string
+  secondary_link_text_en: string
+  secondary_link_text_es: string
+  display_type: 'normal' | 'popup'
+  target_location: 'landing' | 'coming_soon' | 'landing_and_coming_soon' | 'panel' | 'all'
+  dismiss_policy: 'session' | 'always' | 'days' | 'dismiss_forever'
+  dismiss_days: number
+  auto_close: boolean
+  auto_close_delay: number
+  show_close_button: boolean
+  width?: number
+  width_px?: number
+  height?: number
+  is_active: boolean
+  order: number
+  start_date?: string | null
+  end_date?: string | null
+  created_at?: string
+  updated_at?: string
+}
+

@@ -75,6 +75,10 @@
         "title": "Game modules",
         "description": "Turn minigames on or off and fill their playable content"
       },
+      "banners": {
+        "title": "Banners & Notices",
+        "description": "Popups, flyers and announcements on landing and coming soon"
+      },
       "news": {
         "title": "News",
         "description": "Publish server announcements in PT, EN and ES"
@@ -2091,6 +2095,67 @@
         "success": "Simulation confirmed: {{coins}} coins credited to {{username}}.",
         "error": "The simulation could not be confirmed."
       }
+    }
+  },
+  "banners": {
+    "kicker": "Content & Notices",
+    "title": "Banners & Notices",
+    "description": "Manage promotional banners, flyers and rich modals on landing page and coming soon.",
+    "create": "New Banner",
+    "edit": "Edit Banner",
+    "tabPt": "Português",
+    "tabEn": "English",
+    "tabEs": "Español",
+    "tabBehavior": "Behavior & Display",
+    "fieldTitle": "Internal / PT Title",
+    "fieldTitleEn": "Title (English)",
+    "fieldTitleEs": "Title (Spanish)",
+    "fieldBadge": "Badge / Tag (e.g. NEW, EVENT)",
+    "fieldDescription": "Description / Text (PT)",
+    "fieldDescriptionEn": "Description / Text (English)",
+    "fieldDescriptionEs": "Description / Text (Spanish)",
+    "fieldImage": "Image / Flyer URL",
+    "fieldDisplayType": "Display Type",
+    "displayTypeNormal": "Visual Flyer (Image-only / Clickable)",
+    "displayTypePopup": "Rich Modal (Title, Image, Text & Buttons)",
+    "fieldTargetLocation": "Target Location",
+    "locationLanding": "Landing Page Only",
+    "locationComingSoon": "Coming Soon Only",
+    "locationLandingAndComingSoon": "Landing & Coming Soon",
+    "locationPanel": "Player Panel",
+    "locationAll": "All Public Pages",
+    "fieldDismissPolicy": "Display Frequency",
+    "policySession": "Once per session (browser session)",
+    "policyAlways": "Always (every page load)",
+    "policyDays": "Do not show again for X days",
+    "policyDismissForever": "Never show again once closed",
+    "fieldDismissDays": "Number of days to suppress",
+    "fieldAutoClose": "Auto close after a few seconds",
+    "fieldAutoCloseDelay": "Display timer (seconds)",
+    "fieldShowCloseButton": "Show close button (X)",
+    "fieldLink": "Primary Link (CTA)",
+    "fieldLinkText": "Primary Button Text (PT)",
+    "fieldLinkTextEn": "Primary Button Text (EN)",
+    "fieldLinkTextEs": "Primary Button Text (ES)",
+    "fieldSecondaryLink": "Secondary Link (optional)",
+    "fieldSecondaryLinkText": "Secondary Button Text (PT)",
+    "fieldSecondaryLinkTextEn": "Secondary Button Text (EN)",
+    "fieldSecondaryLinkTextEs": "Secondary Button Text (ES)",
+    "fieldWidth": "Max Width (px)",
+    "fieldHeight": "Max Height (px)",
+    "fieldOrder": "Priority Order",
+    "fieldActive": "Active",
+    "preview": "Preview Modal",
+    "libraryEyebrow": "Catalog",
+    "libraryTitle": "Registered Banners",
+    "empty": "No banners registered.",
+    "submitCreate": "Create Banner",
+    "submitUpdate": "Update Banner",
+    "toast": {
+      "created": "Banner created successfully",
+      "updated": "Banner updated successfully",
+      "deleted": "Banner deleted successfully",
+      "error": "Could not save banner"
     }
   }
 }

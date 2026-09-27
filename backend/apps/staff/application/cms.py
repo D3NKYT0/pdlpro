@@ -6,6 +6,7 @@ from django.utils.text import slugify
 
 from apps.content.domain.faq import FaqAudience, FaqCategory
 from apps.content.domain.repositories import (
+    IBannerAdminRepository,
     ICalendarAdminRepository,
     IDownloadAdminRepository,
     IFaqAdminRepository,
@@ -358,3 +359,122 @@ class DeleteStaffDownloadUseCase(UseCase[dict, dict]):
         if not self._downloads.delete(download_id):
             raise EntityNotFoundError("Download não encontrado.")
         return {"deleted": True}
+
+
+def _dump_banner(row) -> dict:
+    return {
+        "id": str(row.id),
+        "title": row.title,
+        "title_en": row.title_en,
+        "title_es": row.title_es,
+        "badge": row.badge,
+        "badge_en": row.badge_en,
+        "badge_es": row.badge_es,
+        "description": row.description,
+        "description_en": row.description_en,
+        "description_es": row.description_es,
+        "image_url": row.get_image_url(),
+        "link": row.link,
+        "link_text": row.link_text,
+        "link_text_en": row.link_text_en,
+        "link_text_es": row.link_text_es,
+        "secondary_link": row.secondary_link,
+        "secondary_link_text": row.secondary_link_text,
+        "secondary_link_text_en": row.secondary_link_text_en,
+        "secondary_link_text_es": row.secondary_link_text_es,
+        "display_type": row.display_type,
+        "target_location": row.target_location,
+        "dismiss_policy": row.dismiss_policy,
+        "dismiss_days": row.dismiss_days,
+        "auto_close": row.auto_close,
+        "auto_close_delay": row.auto_close_delay,
+        "show_close_button": row.show_close_button,
+        "width_px": row.width_px,
+        "is_active": row.is_active,
+        "order": row.order,
+        "start_date": row.start_date.isoformat() if row.start_date else None,
+        "end_date": row.end_date.isoformat() if row.end_date else None,
+        "created_at": row.created_at.isoformat() if hasattr(row, "created_at") and row.created_at else None,
+    }
+
+
+class ListStaffBannersUseCase(UseCase[None, list[dict]]):
+    """Lista todos os banners para a interface administrativa do painel."""
+
+    def __init__(self, banners: IBannerAdminRepository) -> None:
+        self._banners = banners
+
+    def execute(self, data: None = None) -> list[dict]:
+        return [_dump_banner(item) for item in self._banners.list_all()]
+
+
+class UpsertStaffBannerUseCase(UseCase[dict, dict]):
+    """Cria ou atualiza um banner administrativo."""
+
+    def __init__(self, banners: IBannerAdminRepository) -> None:
+        self._banners = banners
+
+    def execute(self, data: dict) -> dict:
+        title = _text(data, "title", limit=200)
+        if not title:
+            raise ValidationDomainError("Informe o título do banner.")
+
+        banner_id = parse_optional_uuid(data.get("id"))
+        row = self._banners.get_by_id(banner_id) if banner_id else None
+        if banner_id and row is None:
+            raise EntityNotFoundError("Banner não encontrado.")
+
+        if row is None:
+            row = self._banners.new(title=title)
+
+        row.title = title
+        row.title_en = _text(data, "title_en", limit=200)
+        row.title_es = _text(data, "title_es", limit=200)
+        row.badge = _text(data, "badge", limit=50)
+        row.badge_en = _text(data, "badge_en", limit=50)
+        row.badge_es = _text(data, "badge_es", limit=50)
+        row.description = _text(data, "description")
+        row.description_en = _text(data, "description_en")
+        row.description_es = _text(data, "description_es")
+        row.image_url = _text(data, "image_url", limit=500)
+        row.link = _text(data, "link", limit=300)
+        row.link_text = _text(data, "link_text", limit=100)
+        row.link_text_en = _text(data, "link_text_en", limit=100)
+        row.link_text_es = _text(data, "link_text_es", limit=100)
+        row.secondary_link = _text(data, "secondary_link", limit=300)
+        row.secondary_link_text = _text(data, "secondary_link_text", limit=100)
+        row.secondary_link_text_en = _text(data, "secondary_link_text_en", limit=100)
+        row.secondary_link_text_es = _text(data, "secondary_link_text_es", limit=100)
+        row.display_type = _text(data, "display_type", limit=20) or "popup"
+        row.target_location = _text(data, "target_location", limit=30) or "landing_and_coming_soon"
+        row.dismiss_policy = _text(data, "dismiss_policy", limit=20) or "days"
+        row.dismiss_days = parse_non_negative_int(data.get("dismiss_days"), default=7)
+        row.auto_close = _bool(data, "auto_close", default=False)
+        row.auto_close_delay = parse_non_negative_int(data.get("auto_close_delay"), default=10)
+        row.show_close_button = _bool(data, "show_close_button", default=True)
+        width_val = data.get("width_px")
+        row.width_px = parse_non_negative_int(width_val, default=640) if width_val else 640
+        row.is_active = _bool(data, "is_active", default=True)
+        row.order = parse_non_negative_int(data.get("order"), default=0)
+
+        start_date_raw = data.get("start_date")
+        row.start_date = parse_required_datetime(start_date_raw) if start_date_raw else None
+        end_date_raw = data.get("end_date")
+        row.end_date = parse_required_datetime(end_date_raw) if end_date_raw else None
+
+        self._banners.save(row)
+        return _dump_banner(row)
+
+
+class DeleteStaffBannerUseCase(UseCase[dict, dict]):
+    """Remove um banner."""
+
+    def __init__(self, banners: IBannerAdminRepository) -> None:
+        self._banners = banners
+
+    def execute(self, data: dict) -> dict:
+        banner_id = parse_required_uuid(data.get("id"))
+        if not self._banners.delete(banner_id):
+            raise EntityNotFoundError("Banner não encontrado.")
+        return {"deleted": True}
+

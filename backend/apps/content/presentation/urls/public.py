@@ -1,6 +1,7 @@
 from django.urls import path
 
 from apps.content.presentation.views.public import (
+    BannerListView,
     CalendarEventListView,
     DownloadListView,
     FaqListView,
@@ -14,6 +15,7 @@ from apps.content.presentation.views.public import (
 )
 
 urlpatterns = [
+    path("banners/", BannerListView.as_view(), name="public-banners"),
     path("news/", NewsListView.as_view(), name="public-news"),
     path("news/<slug:slug>/", NewsDetailView.as_view(), name="public-news-detail"),
     path("faq/", FaqListView.as_view(), name="public-faq"),

@@ -13,15 +13,19 @@ from apps.content.application.legal import (
 from apps.content.application.use_cases import (
     GetNewsUseCase,
     GetWikiPageUseCase,
+    ListBannersInput,
     ListCalendarEventsUseCase,
     ListDownloadsUseCase,
     ListFaqUseCase,
     ListNewsUseCase,
+    ListPublicBannersUseCase,
     ListWikiPagesUseCase,
     SearchWikiUseCase,
 )
 from apps.content.application.wardrobe import EquipDenkynhoUseCase
 from apps.content.domain.repositories import (
+    IBannerAdminRepository,
+    IBannerCatalogRepository,
     ICalendarAdminRepository,
     IContentCatalogRepository,
     IDenkynhoRepository,
@@ -36,6 +40,8 @@ from common.di.provider import AppProvider
 
 from .configured_model import ConfiguredConversationModel
 from .repositories import (
+    DjangoBannerAdminRepository,
+    DjangoBannerCatalogRepository,
     DjangoCalendarAdminRepository,
     DjangoContentCatalogRepository,
     DjangoDenkynhoRepository,
@@ -71,6 +77,10 @@ class ContentProvider(AppProvider):
         container.register(
             IContentCatalogRepository, DjangoContentCatalogRepository, lifetime=Lifetime.SCOPED
         )
+        container.register(IBannerAdminRepository, DjangoBannerAdminRepository, lifetime=Lifetime.SCOPED)
+        container.register(
+            IBannerCatalogRepository, DjangoBannerCatalogRepository, lifetime=Lifetime.SCOPED
+        )
         container.register(IDenkynhoRepository, DjangoDenkynhoRepository, lifetime=Lifetime.SCOPED)
         for use_case in (
             AssistantReplyUseCase,
@@ -86,6 +96,7 @@ class ContentProvider(AppProvider):
             GetWikiPageUseCase,
             SearchWikiUseCase,
             ListCalendarEventsUseCase,
+            ListPublicBannersUseCase,
             ListLegalDocumentsUseCase,
             GetLegalDocumentUseCase,
             ListLegalHistoryUseCase,

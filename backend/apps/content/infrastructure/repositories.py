@@ -6,6 +6,8 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 
 from apps.content.domain.repositories import (
+    IBannerAdminRepository,
+    IBannerCatalogRepository,
     ICalendarAdminRepository,
     IContentCatalogRepository,
     IDenkynhoRepository,
@@ -15,6 +17,7 @@ from apps.content.domain.repositories import (
     IWikiAdminRepository,
 )
 from apps.content.infrastructure.models import (
+    Banner,
     CalendarEvent,
     DenkynhoCareAction,
     DenkynhoProfile,
@@ -221,3 +224,47 @@ class DjangoDenkynhoRepository(IDenkynhoRepository):
             return {"name": "", "detail": "balanced"}
         detail = profile.detail if profile.detail in {"brief", "balanced", "detailed"} else "balanced"
         return {"name": profile.preferred_name, "detail": detail}
+
+
+class DjangoBannerAdminRepository(IBannerAdminRepository):
+    """Adaptador Django de ``IBannerAdminRepository`` para banners do painel e admin."""
+
+    def list_all(self) -> list[Banner]:
+        return list(Banner.objects.all().order_by("order", "-created_at"))
+
+    def get_by_id(self, banner_id: UUID) -> Banner | None:
+        return Banner.objects.filter(id=banner_id).first()
+
+    def new(self, **fields) -> Banner:
+        return Banner(**fields)
+
+    def save(self, row: Banner) -> Banner:
+        row.save()
+        return row
+
+    def delete(self, banner_id: UUID) -> bool:
+        deleted, _ = Banner.objects.filter(id=banner_id).delete()
+        return deleted > 0
+
+
+class DjangoBannerCatalogRepository(IBannerCatalogRepository):
+    """Adaptador Django de ``IBannerCatalogRepository`` para consulta pública de banners."""
+
+    def list_active_banners(self, location: str | None = None) -> list[Banner]:
+        from django.utils import timezone
+
+        now = timezone.now()
+        qs = Banner.objects.filter(is_active=True)
+        qs = qs.filter(
+            Q(start_date__isnull=True) | Q(start_date__lte=now)
+        ).filter(
+            Q(end_date__isnull=True) | Q(end_date__gte=now)
+        )
+        if location:
+            match_locations = [location, "all"]
+            if location in ("landing", "coming_soon"):
+                match_locations.append("landing_and_coming_soon")
+            qs = qs.filter(target_location__in=match_locations)
+
+        return list(qs.order_by("order", "-created_at"))
+

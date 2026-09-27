@@ -1,4 +1,5 @@
 from apps.content.infrastructure.models import (
+    Banner,
     CalendarEvent,
     DenkynhoProfile,
     DownloadLink,
@@ -7,4 +8,4 @@ from apps.content.infrastructure.models import (
     WikiPage,
 )
 
-__all__ = ["CalendarEvent", "DenkynhoProfile", "DownloadLink", "Faq", "News", "WikiPage"]
+__all__ = ["Banner", "CalendarEvent", "DenkynhoProfile", "DownloadLink", "Faq", "News", "WikiPage"]

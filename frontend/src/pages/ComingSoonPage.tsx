@@ -10,6 +10,7 @@ import { Button, ButtonLink } from '../components/ui/Button'
 import { serverApi } from '../services/api'
 import type { ApiServerInfo } from '../services/types'
 import { themeImage, themeLandingHeroImage, themeVideo } from '../theme/assets'
+import { BannerModal } from '../components/public/BannerModal'
 
 type CountdownValue = { days: string; hours: string; mins: string; secs: string; finished: boolean }
 
@@ -513,6 +514,8 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
           </div>
         </section>
       ) : null}
+      <BannerModal location="coming_soon" />
     </div>
   )
 }
+

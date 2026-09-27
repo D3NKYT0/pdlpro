@@ -1,5 +1,5 @@
 import { request } from '../infra/http'
-import type { ApiNews } from '../types'
+import type { ApiBanner, ApiNews } from '../types'
 
 export interface AssistantPreferences {
   preferred_name?: string
@@ -142,4 +142,7 @@ export const contentApi = {
         changes: Array<{ area: string; reason: string }>
       }>
     }>(withLang('/public/legal/history/', language)),
+  banners: (location?: string, language: ContentLanguage = 'pt') =>
+    request<ApiBanner[]>(withLang('/public/banners/', language, location ? `location=${encodeURIComponent(location)}` : '')),
 }
+
