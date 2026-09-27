@@ -8,24 +8,48 @@ Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
-## [Unreleased]
+## [Não publicado]
+
+### Adicionado
+
+### Alterado
+
+### Corrigido
+
+## [2.6.0] - 2026-09-26
+
+Lançamento da versão 2.6.0 do PDL PRO trazendo o novo sistema de banners informativos e promocionais, gestão e grade de 7 vagas para personagens, modal de checkout da carteira com Mercado Pago Bricks/PIX em alta fidelidade e paridade aprimorada para servidores Lineage 2 (Lucera 2).
+
+### Adicionado
+
+- **Sistema de Banners Informativos e Promocionais**:
+  - Módulo completo de banners com suporte para exibição em Landing Page (`landing`), Página de Lançamento / Coming Soon (`coming_soon`), Painel do Jogador (`panel`) e exibição global (`all`).
+  - Suporte a internacionalização completa (`pt`, `en`, `es`), agendamento por período (`starts_at`, `ends_at`), prioridade de ordenação (`priority`) e controle de frequência por sessão (`show_once_per_session`).
+  - Renderização rica de modal (`BannerModal`) com suporte a imagem de capa, texto formatado, botão de ação com link e fechamento estilizado com backdrop blur sem cortes de layout.
+  - Painel administrativo dedicado em `/panel/admin/banners` (`AdminBannersPage`) com listagem, paginação, ativação/desativação rápida e modal de edição/criação completo.
+  - Endpoints públicos em `/api/v1/public/banners/` e restritos à equipe em `/api/v1/staff/banners/`, desacoplados por injeção de dependência e portas de domínio.
+- **Gestão de Personagens e Grade de 7 Vagas**:
+  - Limite estrito de 7 personagens por conta de jogo (`max_slots: 7`) aplicado e validado no backend (`CharacterLimitReachedException`) e refletido na interface.
+  - Visualização em grade fixa de 7 slots em `/panel/accounts`: personagens existentes exibidos com avatar, nível, classe e status; vagas não preenchidas exibidas como "vazias" com atalho direto de criação.
+  - Modal de criação de personagens (`CreateCharacterModal`) com suporte a escolha de raça/classe, validação de regras de apelido e pré-visualização responsiva.
+- Compatibilidade de schema do banco Lineage 2: rotina automática `ensure_columns()` no `SqlAlchemyLineageGateway` para verificar e adicionar colunas ausentes (`email`, `created_time`, `linked_uuid`) na tabela `accounts` de forma transparente em tempo de execução, comando management `prepare_lineage_database` (com flag `--with-exchange`) e verificação integrada ao probe do configurador de integrações.
+- Suporte explícito ao alias de hash `whirlpool2` em `LineagePasswordHasher` (`LINEAGE_PASSWORD_ALGO=whirlpool2`), alinhando o PDL PRO às convenções de configuração do loginserver da Lucera 2.
+- Tutoriais de integração em [docs/tutoriais/](../tutoriais/README.md).
+- [Fonte única](../projeto/fonte-unica.md): mapa canônico (segurança, ops, tutoriais) e callouts GitHub.
+- [Economia do jogador](../funcionalidades/economia-jogador.md): carteira, loja, marketplace e leilão.
+- Índice de [histórico](README.md) para registros datados.
 
 ### Alterado
 
 - Checkout de recarga na Carteira (`/panel/wallet`): fluxo de "Meios de pagamento", documento do pagador (CPF/CNPJ), Mercado Pago Bricks, Stripe e resultado do PIX migrados para modal dedicado (`WalletCheckoutModal`), eliminando a expansão inline e a perda de contexto na tela.
 - Estilização e identidade visual do Mercado Pago Bricks: integração de `customVariables` com o design system do PDL PRO (paleta escura obsidiana e botões em ouro `--panel-gold`), máscara/formatação de documento e tela dedicada de PIX com QR code em alta fidelidade e cópia rápida.
-
-
-### Adicionado
-
-- Compatibilidade de schema do banco Lineage 2: rotina automática `ensure_columns()` no `SqlAlchemyLineageGateway` para verificar e adicionar colunas ausentes (`email`, `created_time`, `linked_uuid`) na tabela `accounts` de forma transparente em tempo de execução, comando management `prepare_lineage_database` (com flag `--with-exchange`) e verificação integrada ao probe do configurador de integrações.
-- Suporte explícito ao alias de hash `whirlpool2` em `LineagePasswordHasher` (`LINEAGE_PASSWORD_ALGO=whirlpool2`), alinhando o PDL PRO às convenções de configuração do loginserver da Lucera 2.
-- Tutoriais de integração em [docs/tutoriais/](../tutoriais/README.md).
-- [Fonte única](../projeto/fonte-unica.md): mapa canônico (segurança, ops,
-  tutoriais) e callouts GitHub.
-- [Economia do jogador](../funcionalidades/economia-jogador.md): carteira,
-  loja, marketplace e leilão.
-- Índice de [histórico](README.md) para registros datados.
+- Configurador de integrações SMTP (`/panel/admin/integrations`): campo `EMAIL_BACKEND` substituído por seleção intuitiva entre SMTP Real (Produção), Console/Log (Mock de desenvolvimento), Desativado e Memória, com alertas contextuais quando em modo Mock e feedback descritivo no probe de teste.
+- Documentação só em Markdown: removidos PDFs de migração e scripts em `docs/_pdf/`.
+- Auditorias Python movidas de `desenvolvimento/` para `historico/`.
+- Todos os `.md` de `docs/` passam a ter chrome padrão (índice, fonte única) e `> **Atualizado:**` com a data da revisão. Registros de `historico/2026-*` ficam marcados como arquivo.
+- Índice e guias de operação usam callouts; segurança operacional deixa de ser repetida na implantação avançada.
+- Release como caminho recomendado; exemplos com `seudominio.com`.
+- [CHANGELOG.md](../../CHANGELOG.md) da raiz expandido com explicação da política de versionamento e ponteiro canônico.
 
 ### Corrigido
 
@@ -36,20 +60,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Falso positivo de `REDIS_PASSWORD` ausente no status de segredos (`/panel/admin/secrets`): expostos atributos `REDIS_URL` e `REDIS_PASSWORD` nas configurações Django e adicionados fallbacks de leitura de `settings.CACHES` e variáveis de ambiente.
 - Alerta de reinicialização pendente (`restart_required`) no painel de segredos passa a considerar o horário de inicialização do processo (`PROCESS_BOOT_TIME`), limpando o aviso automaticamente após a reinicialização dos containers.
 - Bloqueio de inicialização do Mercado Pago Bricks na carteira (`/panel/wallet`): adicionados domínios CDN do Mercado Livre/Mercado Pago (`*.mlstatic.com`, `http2.mlstatic.com`, `*.mercadolibre.com`) e permissão de scripts inline exigida pelo SDK na política Content-Security-Policy do Nginx e Django.
-
-### Alterado
-
-- Configurador de integrações SMTP (`/panel/admin/integrations`): campo `EMAIL_BACKEND` substituído por seleção intuitiva entre SMTP Real (Produção), Console/Log (Mock de desenvolvimento), Desativado e Memória, com alertas contextuais quando em modo Mock e feedback descritivo no probe de teste.
-- Documentação só em Markdown: removidos PDFs de migração e scripts em
-  `docs/_pdf/`.
-- Auditorias Python movidas de `desenvolvimento/` para `historico/`.
-- Todos os `.md` de `docs/` passam a ter chrome padrão (índice, fonte única)
-  e `> **Atualizado:**` com a data da revisão. Registros de `historico/2026-*`
-  ficam marcados como arquivo.
-- Índice e guias de operação usam callouts; segurança operacional deixa de
-  ser repetida na implantação avançada.
-- Release como caminho recomendado; exemplos com `seudominio.com`.
-- [CHANGELOG.md](../../CHANGELOG.md) da raiz permanece só como ponteiro.
+- Ícone de menu no Django Jazzmin: adicionado o ícone FontAwesome correspondente para o modelo de Banners (`content.banner: fas fa-image`).
+- Botão de fechar do BannerModal: corrigido posicionamento e corte de borda causado por `overflow: hidden`, garantindo visibilidade total do botão em resoluções desktop e mobile.
 
 ## [2.5.12] - 2026-09-25
 
