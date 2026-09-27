@@ -1,12 +1,13 @@
 import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
 import { Button } from '../components/ui/Button'
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { RefreshCcw } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { useActiveAccount } from '../contexts/ActiveAccountContext'
 import { inventoryApi, lineageApi, marketplaceApi } from '../services/api'
 import type { ApiCharacterListing } from '../services/api'
 import { ListingDetail } from '../components/marketplace/ListingDetail'
@@ -18,14 +19,36 @@ export function MarketplacePage() {
   const { user } = useAuth()
   const { t } = useTranslation('panel')
   const queryClient = useQueryClient()
+  const { activeLogin, setActiveAccount } = useActiveAccount()
   const catalog = useQuery({ queryKey: ['marketplace'], queryFn: marketplaceApi.catalog })
   const mine = useQuery({ queryKey: ['marketplace-mine'], queryFn: marketplaceApi.mine, enabled: Boolean(user) })
+  const accounts = useQuery({
+    queryKey: ['lineage-accounts'],
+    queryFn: lineageApi.accounts,
+    enabled: Boolean(user),
+  })
+  const availableAccounts = accounts.data?.accounts ?? []
+  const primaryLogin = activeLogin ?? availableAccounts.find((acc) => acc.is_primary)?.login ?? availableAccounts[0]?.login
+  const [selectedLogin, setSelectedLogin] = useState('')
+  const login = selectedLogin || primaryLogin || ''
+
+  useEffect(() => {
+    if (activeLogin) {
+      setSelectedLogin(activeLogin)
+    }
+  }, [activeLogin])
+
   const characters = useQuery({
-    queryKey: ['marketplace-chars'],
-    queryFn: () => lineageApi.characters(),
+    queryKey: ['characters', login || ''],
+    queryFn: () => lineageApi.characters(login || undefined),
     enabled: Boolean(user),
   })
   const [charId, setCharId] = useState('')
+
+  useEffect(() => {
+    setCharId('')
+  }, [login])
+
   const [price, setPrice] = useState('')
   const [notes, setNotes] = useState('')
   const [selectedListing, setSelectedListing] = useState<ApiCharacterListing | null>(null)
@@ -33,8 +56,8 @@ export function MarketplacePage() {
   const [publishing, setPublishing] = useState(false)
 
   const selectedCharacterEquipment = useQuery({
-    queryKey: ['marketplace-character-equipment', charId],
-    queryFn: () => inventoryApi.equipment(Number(charId)),
+    queryKey: ['marketplace-character-equipment', login, charId],
+    queryFn: () => inventoryApi.equipment(Number(charId), login || undefined),
     enabled: Boolean(charId),
   })
 
@@ -42,6 +65,7 @@ export function MarketplacePage() {
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: ['marketplace'] }),
       queryClient.invalidateQueries({ queryKey: ['marketplace-mine'] }),
+      queryClient.invalidateQueries({ queryKey: ['characters'] }),
       queryClient.invalidateQueries({ queryKey: ['marketplace-chars'] }),
       queryClient.invalidateQueries({ queryKey: ['wallet'] }),
     ])
@@ -52,7 +76,12 @@ export function MarketplacePage() {
     if (publishing) return
     setPublishing(true)
     try {
-      await marketplaceApi.list({ char_id: Number(charId), price, notes })
+      await marketplaceApi.list({
+        char_id: Number(charId),
+        price,
+        notes,
+        ...(login ? { login } : {}),
+      })
       toast.success(t('marketplace.toast.listed'))
       setCharId('')
       setPrice('')
@@ -138,6 +167,13 @@ export function MarketplacePage() {
         <aside className="marketplace-side-column">
           <MarketplaceSellForm
             characters={characters.data ?? []}
+            accounts={availableAccounts}
+            account={login}
+            onAccountChange={(newLogin) => {
+              setSelectedLogin(newLogin)
+              setCharId('')
+              void setActiveAccount(newLogin)
+            }}
             charId={charId}
             price={price}
             notes={notes}

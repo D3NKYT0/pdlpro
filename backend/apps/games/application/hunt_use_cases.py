@@ -208,4 +208,9 @@ def _pick_character(characters: list[dict], login: str, char_id: int) -> dict | 
             if row["login"] == login and int(row["char_id"]) == int(char_id):
                 return row
         return None
-    return characters[0]
+    if login:
+        for row in characters:
+            if row["login"] == login:
+                return row
+        return None
+    return characters[0] if characters else None

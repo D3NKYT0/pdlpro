@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import {
@@ -13,8 +13,9 @@ import {
 import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
 import { Field } from '../ui/Field'
-import { Select } from '../ui/Select'
-import { gamesApi } from '../../services/api'
+import { Select, type SelectOption } from '../ui/Select'
+import { gamesApi, lineageApi } from '../../services/api'
+import { useActiveAccount } from '../../contexts/ActiveAccountContext'
 import { formatNumber } from '../../lib/formatters'
 import { CharacterAvatar } from '../character/CharacterAvatar'
 import { formatDuration } from '../rankings/rankingsFormat'
@@ -38,30 +39,106 @@ function huntValue(metric: string, value: number) {
 
 export function HuntSection() {
   const { t } = useTranslation('panel')
-  const [selected, setSelected] = useState('')
-  const charactersKey = selected
+  const { activeLogin, setActiveAccount } = useActiveAccount()
+  const accountsQuery = useQuery({
+    queryKey: ['lineage-accounts'],
+    queryFn: lineageApi.accounts,
+    enabled: typeof lineageApi.accounts === 'function',
+    retry: false,
+  })
+
+  const [selectedAccount, setSelectedAccount] = useState('')
+  const [selectedCharId, setSelectedCharId] = useState('')
+
   const query = useQuery({
-    queryKey: ['hunt', charactersKey],
+    queryKey: ['hunt', selectedAccount, selectedCharId],
     queryFn: () => {
-      if (!selected) return gamesApi.hunt()
-      const [login, charId] = selected.split(':')
-      return gamesApi.hunt(login, Number(charId))
+      const login = selectedAccount || activeLogin || undefined
+      const charId = selectedCharId ? Number(selectedCharId) : undefined
+      return gamesApi.hunt(login, charId)
     },
   })
   const action = useProgramAction()
   const data = query.data
-  const options = useMemo(
-    () => (data?.characters ?? []).map((row) => ({
-      value: `${row.login}:${row.char_id}`,
-      label: t('rewards.hunt.characterOption', {
-        name: row.name,
-        login: row.login,
-        level: row.level,
-      }),
-    })),
-    [data?.characters, t],
-  )
-  const currentValue = selected || (data?.character ? `${data.character.login}:${data.character.char_id}` : '')
+
+  const accountOptions = useMemo<SelectOption[]>(() => {
+    const list: SelectOption[] = []
+    const seen = new Set<string>()
+    const available = accountsQuery.data?.accounts ?? []
+
+    for (const acc of available) {
+      if (!seen.has(acc.login)) {
+        seen.add(acc.login)
+        list.push({
+          value: acc.login,
+          label: t(acc.is_primary ? 'rewards.hunt.accountPrimaryOption' : 'rewards.hunt.accountOption', {
+            login: acc.login,
+            defaultValue: acc.is_primary ? `${acc.login} — principal` : acc.login,
+          }),
+        })
+      }
+    }
+    for (const row of data?.characters ?? []) {
+      if (row.login && !seen.has(row.login)) {
+        seen.add(row.login)
+        list.push({
+          value: row.login,
+          label: t('rewards.hunt.accountOption', {
+            login: row.login,
+            defaultValue: row.login,
+          }),
+        })
+      }
+    }
+    return list
+  }, [accountsQuery.data?.accounts, data?.characters, t])
+
+  const currentAccount =
+    selectedAccount ||
+    (data?.character?.login ?? '') ||
+    activeLogin ||
+    accountOptions[0]?.value ||
+    ''
+
+  const characterOptions = useMemo<SelectOption[]>(() => {
+    if (!currentAccount) return []
+    return (data?.characters ?? [])
+      .filter((row) => row.login === currentAccount)
+      .map((row) => ({
+        value: String(row.char_id),
+        label: t('rewards.hunt.characterOption', {
+          name: row.name,
+          level: row.level,
+          defaultValue: `${row.name} — nível ${row.level}`,
+        }),
+      }))
+  }, [currentAccount, data?.characters, t])
+
+  const currentCharId =
+    selectedCharId ||
+    (data?.character && data.character.login === currentAccount ? String(data.character.char_id) : '') ||
+    characterOptions[0]?.value ||
+    ''
+
+  useEffect(() => {
+    if (activeLogin && activeLogin !== selectedAccount) {
+      setSelectedAccount(activeLogin)
+      const firstChar = (data?.characters ?? []).find((c) => c.login === activeLogin)
+      setSelectedCharId(firstChar ? String(firstChar.char_id) : '')
+    }
+  }, [activeLogin])
+
+  function handleAccountChange(newLogin: string) {
+    setSelectedAccount(newLogin)
+    const firstChar = (data?.characters ?? []).find((c) => c.login === newLogin)
+    setSelectedCharId(firstChar ? String(firstChar.char_id) : '')
+    void setActiveAccount(newLogin)
+  }
+
+  function handleCharChange(newCharId: string) {
+    setSelectedCharId(newCharId)
+  }
+
   const quests = data?.quests ?? []
   const claimedCount = quests.filter((quest) => quest.claimed).length
   const readyCount = quests.filter((quest) => !quest.claimed && quest.current >= quest.target).length
@@ -99,7 +176,7 @@ export function HuntSection() {
               </div>
             </header>
 
-            {options.length ? (
+            {accountOptions.length ? (
               <div className="hunt-character">
                 {data.character ? (
                   <CharacterAvatar
@@ -109,12 +186,25 @@ export function HuntSection() {
                     size="md"
                   />
                 ) : null}
+                <Field label={t('rewards.hunt.account')}>
+                  <Select
+                    aria-label={t('rewards.hunt.account')}
+                    value={currentAccount}
+                    options={accountOptions}
+                    onChange={handleAccountChange}
+                  />
+                </Field>
                 <Field label={t('rewards.hunt.character')}>
                   <Select
                     aria-label={t('rewards.hunt.character')}
-                    value={currentValue}
-                    options={options}
-                    onChange={setSelected}
+                    value={currentCharId}
+                    options={
+                      characterOptions.length
+                        ? characterOptions
+                        : [{ value: '', label: t('rewards.hunt.noCharacters') }]
+                    }
+                    disabled={!characterOptions.length}
+                    onChange={handleCharChange}
                   />
                 </Field>
                 {data.character ? (
@@ -249,7 +339,7 @@ export function HuntSection() {
                                 data.character?.char_id,
                               ),
                               t('rewards.hunt.claimToast'),
-                              [['hunt', charactersKey]],
+                              [['hunt']],
                             )
                           }
                         >

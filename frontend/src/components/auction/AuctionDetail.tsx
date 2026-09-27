@@ -33,6 +33,9 @@ interface AuctionDetailProps {
   bidCharacter: string
   characters: Array<{ char_id: number; name: string; level: number }>
   pending: boolean
+  accounts?: Array<{ login: string; is_primary?: boolean }>
+  account?: string
+  onAccountChange?: (value: string) => void
   onAmountChange: (value: string) => void
   onCharacterChange: (value: string) => void
   onClose: () => void
@@ -46,6 +49,9 @@ export function AuctionDetail({
   bidCharacter,
   characters,
   pending,
+  accounts,
+  account,
+  onAccountChange,
   onAmountChange,
   onCharacterChange,
   onClose,
@@ -244,6 +250,24 @@ export function AuctionDetail({
 
             {!isOwner && auction.status === 'open' ? (
               <form className="auction-bid-form" onSubmit={(event) => onBid(event, auction.id)}>
+                {accounts && accounts.length > 0 ? (
+                  <Field>
+                    {t('auctions.detail.bidAccount')}
+                    <select
+                      value={account || ''}
+                      onChange={(event) => onAccountChange?.(event.target.value)}
+                      aria-label={t('auctions.detail.bidAccount')}
+                    >
+                      {accounts.map((acc) => (
+                        <option key={acc.login} value={acc.login}>
+                          {t(acc.is_primary ? 'auctions.detail.accountPrimaryOption' : 'auctions.detail.accountOption', {
+                            login: acc.login,
+                          })}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
+                ) : null}
                 <Field>
                   {t('auctions.detail.bidCharacter')}
                   <select value={bidCharacter} onChange={(event) => onCharacterChange(event.target.value)} required>

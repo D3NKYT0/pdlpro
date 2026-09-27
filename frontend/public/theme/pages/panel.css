@@ -19115,14 +19115,17 @@ html.pdl-panel .daily-day-seal svg {
 html.pdl-panel .hunt-character {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: auto minmax(0, 380px) auto;
-  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
   gap: 10px 14px;
 }
 
 html.pdl-panel .hunt-character .ui-field {
   margin-bottom: 0;
+  min-width: 180px;
+  flex: 1 1 200px;
+  max-width: 320px;
 }
 
 html.pdl-panel .hunt-presence.is-online {
@@ -19359,8 +19362,12 @@ html.pdl-panel .stats-table .is-podium td {
   }
 
   html.pdl-panel .hunt-character {
-    grid-template-columns: minmax(0, 1fr);
-    justify-items: start;
+    width: 100%;
+  }
+
+  html.pdl-panel .hunt-character .ui-field {
+    max-width: 100%;
+    width: 100%;
   }
 }
 

@@ -90,6 +90,9 @@ export function ActiveAccountProvider({ children }: { children: ReactNode }) {
         queryClient.invalidateQueries({ queryKey: ['lineage-accounts'] }),
         queryClient.invalidateQueries({ queryKey: ['characters'] }),
         queryClient.invalidateQueries({ queryKey: ['inventory'] }),
+        queryClient.invalidateQueries({ queryKey: ['marketplace-chars'] }),
+        queryClient.invalidateQueries({ queryKey: ['auction-characters'] }),
+        queryClient.invalidateQueries({ queryKey: ['hunt'] }),
       ])
     }
   }

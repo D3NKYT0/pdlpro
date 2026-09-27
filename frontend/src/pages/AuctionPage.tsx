@@ -1,12 +1,13 @@
 import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
 import { Button } from '../components/ui/Button'
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { RefreshCcw } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { useActiveAccount } from '../contexts/ActiveAccountContext'
 import { auctionApi, inventoryApi, lineageApi } from '../services/api'
 import type { ApiAuction } from '../services/api'
 import { AuctionDetail } from '../components/auction/AuctionDetail'
@@ -19,16 +20,33 @@ export function AuctionPage() {
   const { user } = useAuth()
   const { t } = useTranslation('panel')
   const queryClient = useQueryClient()
+  const { activeLogin, setActiveAccount } = useActiveAccount()
   const open = useQuery({ queryKey: ['auctions'], queryFn: auctionApi.open })
   const mine = useQuery({ queryKey: ['auctions-mine'], queryFn: auctionApi.mine, enabled: Boolean(user) })
+  const accounts = useQuery({
+    queryKey: ['lineage-accounts'],
+    queryFn: lineageApi.accounts,
+    enabled: Boolean(user),
+  })
+  const availableAccounts = accounts.data?.accounts ?? []
+  const primaryLogin = activeLogin ?? availableAccounts.find((acc) => acc.is_primary)?.login ?? availableAccounts[0]?.login
+  const [selectedLogin, setSelectedLogin] = useState('')
+  const login = selectedLogin || primaryLogin || ''
+
+  useEffect(() => {
+    if (activeLogin) {
+      setSelectedLogin(activeLogin)
+    }
+  }, [activeLogin])
+
   const inventory = useQuery({
-    queryKey: ['inventory'],
-    queryFn: () => inventoryApi.dashboard(),
+    queryKey: ['inventory', login || ''],
+    queryFn: () => inventoryApi.dashboard(login || undefined),
     enabled: Boolean(user),
   })
   const characters = useQuery({
-    queryKey: ['auction-characters'],
-    queryFn: () => lineageApi.characters(),
+    queryKey: ['characters', login || ''],
+    queryFn: () => lineageApi.characters(login || undefined),
     enabled: Boolean(user),
   })
   const [kind, setKind] = useState<'item' | 'character'>('item')
@@ -44,6 +62,14 @@ export function AuctionPage() {
   const [creating, setCreating] = useState(false)
   const [bidding, setBidding] = useState(false)
 
+  useEffect(() => {
+    setCharId('')
+    setInventoryId('')
+    setItemKey('')
+    setQuantity('1')
+    setBidCharacter('')
+  }, [login])
+
   const selectedInventory = (inventory.data ?? []).find((row) => row.inventory_id === inventoryId)
   const selectedItem = (selectedInventory?.items ?? []).find(
     (item) => `${item.item_id}:${item.enchant}` === itemKey,
@@ -57,6 +83,7 @@ export function AuctionPage() {
       queryClient.invalidateQueries({ queryKey: ['auctions'] }),
       queryClient.invalidateQueries({ queryKey: ['auctions-mine'] }),
       queryClient.invalidateQueries({ queryKey: ['inventory'] }),
+      queryClient.invalidateQueries({ queryKey: ['characters'] }),
       queryClient.invalidateQueries({ queryKey: ['auction-characters'] }),
       queryClient.invalidateQueries({ queryKey: ['wallet'] }),
     ])
@@ -81,6 +108,7 @@ export function AuctionPage() {
               char_id: Number(charId),
               min_bid: minBid,
               hours: Number(hours),
+              ...(login ? { login } : {}),
             })
           : await auctionApi.create({
               kind: 'item',
@@ -154,6 +182,13 @@ export function AuctionPage() {
             bidAmount={bidAmount}
             bidCharacter={bidCharacter}
             characters={characters.data ?? []}
+            accounts={availableAccounts}
+            account={login}
+            onAccountChange={(newLogin) => {
+              setSelectedLogin(newLogin)
+              setBidCharacter('')
+              void setActiveAccount(newLogin)
+            }}
             pending={bidding}
             onAmountChange={setBidAmount}
             onCharacterChange={setBidCharacter}
@@ -174,6 +209,16 @@ export function AuctionPage() {
         <aside className="marketplace-side-column auction-side-column">
           <AuctionCreateForm
             kind={kind}
+            accounts={availableAccounts}
+            account={login}
+            onAccountChange={(newLogin) => {
+              setSelectedLogin(newLogin)
+              setCharId('')
+              setInventoryId('')
+              setItemKey('')
+              setQuantity('1')
+              void setActiveAccount(newLogin)
+            }}
             inventory={inventory.data ?? []}
             characters={characters.data ?? []}
             inventoryId={inventoryId}

@@ -303,6 +303,7 @@ it('caça do dia resgata a missão concluída e bloqueia a incompleta', async ()
   const user = mount('/panel/rewards?tab=hunt')
   expect(await screen.findByRole('heading', { name: 'Caça do dia' })).toBeVisible()
   expect(screen.getByRole('img', { name: 'Retrato de Caçador' })).toHaveAttribute('src', '/theme/avatars/human-m.png')
+  expect(screen.getByLabelText('Conta de jogo')).toBeVisible()
   expect(screen.getByLabelText('Personagem')).toBeVisible()
   expect(screen.getByText('Offline')).toBeVisible()
   expect(screen.getByRole('progressbar', { name: 'Progresso da caça' })).toHaveAttribute('aria-valuenow', '52')
@@ -328,31 +329,43 @@ it('caça já resgatada não permite novo envio', async () => {
   expect(gamesApi.claimHunt).not.toHaveBeenCalled()
 })
 
-it('caça recarrega o personagem escolhido na lista', async () => {
+it('caça suporta seleção de conta e personagem em dois selects', async () => {
+  const altChar1 = { login: 'alt', char_id: 9, name: 'Outro', level: 40, online: false, sex: 0, class_id: 0 }
+  const altChar2 = { login: 'alt', char_id: 10, name: 'MagoAlt', level: 78, online: true, sex: 0, class_id: 0 }
   vi.mocked(gamesApi.hunt).mockImplementation(async (login?: string, charId?: number) => {
-    if (login === 'alt' && charId === 9) {
+    if (login === 'alt' && charId === 10) {
       return {
         ...hunt,
-        character: { ...hunt.character, login: 'alt', char_id: 9, name: 'Outro' },
-        characters: [
-          hunt.characters[0],
-          { login: 'alt', char_id: 9, name: 'Outro', level: 40, online: false },
-        ],
+        character: { ...hunt.character, login: 'alt', char_id: 10, name: 'MagoAlt', level: 78 },
+        characters: [hunt.characters[0], altChar1, altChar2],
+      } as Awaited<ReturnType<typeof gamesApi.hunt>>
+    }
+    if (login === 'alt') {
+      return {
+        ...hunt,
+        character: { ...hunt.character, login: 'alt', char_id: 9, name: 'Outro', level: 40 },
+        characters: [hunt.characters[0], altChar1, altChar2],
       } as Awaited<ReturnType<typeof gamesApi.hunt>>
     }
     return {
       ...hunt,
-      characters: [
-        hunt.characters[0],
-        { login: 'alt', char_id: 9, name: 'Outro', level: 40, online: false },
-      ],
+      characters: [hunt.characters[0], altChar1, altChar2],
     } as Awaited<ReturnType<typeof gamesApi.hunt>>
   })
   const user = mount('/panel/rewards?tab=hunt')
   await screen.findByRole('heading', { name: 'Caça do dia' })
-  await user.click(screen.getByRole('combobox', { name: 'Personagem' }))
-  await user.click(screen.getByRole('option', { name: 'Outro · alt · 40' }))
+  expect(screen.getByRole('combobox', { name: 'Conta de jogo' })).toBeVisible()
+  expect(screen.getByRole('combobox', { name: 'Personagem' })).toBeVisible()
+
+  // 1. Troca a conta para 'alt'
+  await user.click(screen.getByRole('combobox', { name: 'Conta de jogo' }))
+  await user.click(screen.getByRole('option', { name: 'alt' }))
   await waitFor(() => expect(gamesApi.hunt).toHaveBeenCalledWith('alt', 9))
+
+  // 2. Troca o personagem da conta para 'MagoAlt'
+  await user.click(screen.getByRole('combobox', { name: 'Personagem' }))
+  await user.click(screen.getByRole('option', { name: /MagoAlt/ }))
+  await waitFor(() => expect(gamesApi.hunt).toHaveBeenCalledWith('alt', 10))
 })
 
 it('caça sem missões apresenta o estado vazio', async () => {

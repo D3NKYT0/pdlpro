@@ -39,6 +39,9 @@ interface MarketplaceSellFormProps {
   publishing: boolean
   equipmentLoading: boolean
   equipment: EquipmentPreview[]
+  accounts?: Array<{ login: string; is_primary?: boolean }>
+  account?: string
+  onAccountChange?: (value: string) => void
   onCharChange: (value: string) => void
   onPriceChange: (value: string) => void
   onNotesChange: (value: string) => void
@@ -53,6 +56,9 @@ export function MarketplaceSellForm({
   publishing,
   equipmentLoading,
   equipment,
+  accounts,
+  account,
+  onAccountChange,
   onCharChange,
   onPriceChange,
   onNotesChange,
@@ -71,6 +77,25 @@ export function MarketplaceSellForm({
         <BadgeDollarSign aria-hidden="true" />
       </div>
       <form onSubmit={onSubmit}>
+        {accounts && accounts.length > 0 ? (
+          <Field>
+            {t('marketplace.sell.account')}
+            <select
+              value={account || ''}
+              onChange={(event) => onAccountChange?.(event.target.value)}
+              aria-label={t('marketplace.sell.account')}
+            >
+              {accounts.map((acc) => (
+                <option key={acc.login} value={acc.login}>
+                  {t(acc.is_primary ? 'marketplace.sell.accountPrimaryOption' : 'marketplace.sell.accountOption', {
+                    login: acc.login,
+                  })}
+                </option>
+              ))}
+            </select>
+          </Field>
+        ) : null}
+
         <Field>
           {t('marketplace.sell.character')}
           <select value={charId} onChange={(event) => onCharChange(event.target.value)} required>

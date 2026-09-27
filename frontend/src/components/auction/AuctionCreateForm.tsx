@@ -51,6 +51,9 @@ interface AuctionCreateFormProps {
   minBid: string
   hours: string
   creating: boolean
+  accounts?: Array<{ login: string; is_primary?: boolean }>
+  account?: string
+  onAccountChange?: (value: string) => void
   onKindChange: (value: 'item' | 'character') => void
   onInventoryChange: (value: string) => void
   onItemChange: (value: string) => void
@@ -72,6 +75,9 @@ export function AuctionCreateForm({
   minBid,
   hours,
   creating,
+  accounts,
+  account,
+  onAccountChange,
   onKindChange,
   onInventoryChange,
   onItemChange,
@@ -99,6 +105,25 @@ export function AuctionCreateForm({
         <BadgeDollarSign aria-hidden="true" />
       </div>
       <form onSubmit={onSubmit}>
+        {accounts && accounts.length > 0 ? (
+          <Field>
+            {t('auctions.create.account')}
+            <select
+              value={account || ''}
+              onChange={(event) => onAccountChange?.(event.target.value)}
+              aria-label={t('auctions.create.account')}
+            >
+              {accounts.map((acc) => (
+                <option key={acc.login} value={acc.login}>
+                  {t(acc.is_primary ? 'auctions.create.accountPrimaryOption' : 'auctions.create.accountOption', {
+                    login: acc.login,
+                  })}
+                </option>
+              ))}
+            </select>
+          </Field>
+        ) : null}
+
         <Field>
           {t('auctions.create.kind')}
           <select

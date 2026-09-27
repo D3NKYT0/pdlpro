@@ -186,3 +186,16 @@ def test_hunt_weekly_quest_uses_localized_name(api, player):
     )
     assert en.data["quests"][0]["name"] == "Week in the realm"
     assert en.data["quests"][0]["description"] == "Stay online"
+
+
+@pytest.mark.django_db
+def test_hunt_picks_first_character_when_only_login_provided(api, player):
+    api.force_authenticate(user=player)
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
+    char = _seed_character(player, pvp=2)
+    HuntQuest.objects.all().delete()
+
+    res = api.get("/api/v1/customer/games/hunt/?login=hunter")
+    assert res.status_code == 200
+    assert res.data["character"]["login"] == "hunter"
+    assert res.data["character"]["char_id"] == char.char_id

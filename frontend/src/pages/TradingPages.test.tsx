@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
@@ -17,7 +17,7 @@ vi.mock('../contexts/AuthContext', () => ({ useAuth: () => session }))
 vi.mock('../components/ItemIcon', () => ({ ItemIcon: () => null }))
 vi.mock('../services/domain/marketplace.service', () => ({ marketplaceApi: { catalog: vi.fn(), mine: vi.fn(), list: vi.fn(), buy: vi.fn(), cancel: vi.fn() } }))
 vi.mock('../services/domain/auction.service', () => ({ auctionApi: { open: vi.fn(), mine: vi.fn(), create: vi.fn(), bid: vi.fn() } }))
-vi.mock('../services/domain/lineage.service', () => ({ lineageApi: { characters: vi.fn() }, inventoryApi: { dashboard: vi.fn(), equipment: vi.fn() } }))
+vi.mock('../services/domain/lineage.service', () => ({ lineageApi: { characters: vi.fn(), accounts: vi.fn(), setActiveAccount: vi.fn() }, inventoryApi: { dashboard: vi.fn(), equipment: vi.fn() } }))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 
 const listing: ApiCharacterListing = {
@@ -123,6 +123,8 @@ beforeEach(() => {
   vi.mocked(auctionApi.open).mockResolvedValue([auction])
   vi.mocked(auctionApi.mine).mockResolvedValue([])
   vi.mocked(auctionApi.create).mockResolvedValue(auction)
+  vi.mocked(lineageApi.accounts).mockResolvedValue({ accounts: [], slots: { used: 0, total: 3, can_link: true }, primary: { login: '', status: 'unclaimed' } } as any)
+  vi.mocked(lineageApi.setActiveAccount).mockResolvedValue({ ok: true, active_login: '' } as any)
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 afterEach(async () => { cleanup(); client.clear(); vi.restoreAllMocks(); await i18n.changeLanguage('pt') })
@@ -321,3 +323,157 @@ it('leilão segue o idioma ativo, incluindo status e tempo restante', async () =
   expect(screen.queryByText('Leilões abertos')).not.toBeInTheDocument()
   expect(screen.queryByText('Dar lance')).not.toBeInTheDocument()
 })
+
+it('marketplace suporta mudança de conta e lista personagens da conta selecionada', async () => {
+  const multiAccounts = {
+    accounts: [
+      { login: 'main_acc', is_primary: true },
+      { login: 'alt_acc', is_primary: false },
+    ],
+    slots: { used: 2, total: 3, can_link: true },
+    primary: { login: 'main_acc', status: 'claimed' },
+  }
+  const altChar = {
+    char_id: 8,
+    name: 'OrcAlt',
+    level: 75,
+    class_id: 48,
+    sex: 0,
+    online: false,
+    pvp: 10,
+    pk: 0,
+    clan_name: '',
+    title: '',
+  }
+  vi.mocked(lineageApi.accounts).mockResolvedValue(multiAccounts as any)
+  vi.mocked(lineageApi.characters).mockImplementation(async (login) =>
+    (login === 'alt_acc' ? [altChar] : [character]) as any,
+  )
+
+  const user = mount(<MarketplacePage />)
+  const accountSelect = await screen.findByRole('combobox', { name: 'Conta de jogo' })
+  expect(accountSelect).toBeVisible()
+  expect(accountSelect).toHaveValue('main_acc')
+
+  await user.selectOptions(accountSelect, 'alt_acc')
+  expect(accountSelect).toHaveValue('alt_acc')
+
+  await screen.findByRole('option', { name: /OrcAlt/ })
+  await user.selectOptions(screen.getByRole('combobox', { name: 'Personagem' }), '8')
+  await user.type(screen.getByRole('spinbutton', { name: 'Preço' }), '250.00')
+  await user.click(screen.getByRole('button', { name: 'Publicar anúncio' }))
+
+  expect(marketplaceApi.list).toHaveBeenCalledWith({
+    char_id: 8,
+    price: '250',
+    notes: '',
+    login: 'alt_acc',
+  })
+})
+
+it('leilão suporta mudança de conta na criação do leilão', async () => {
+  const multiAccounts = {
+    accounts: [
+      { login: 'main_acc', is_primary: true },
+      { login: 'alt_acc', is_primary: false },
+    ],
+    slots: { used: 2, total: 3, can_link: true },
+    primary: { login: 'main_acc', status: 'claimed' },
+  }
+  const altChar = {
+    char_id: 8,
+    name: 'OrcAlt',
+    level: 75,
+    class_id: 48,
+    sex: 0,
+    online: false,
+    pvp: 10,
+    pk: 0,
+    clan_name: '',
+    title: '',
+  }
+  const altBag = {
+    inventory_id: 'alt-bag',
+    character_name: 'OrcAlt',
+    character: altChar,
+    items: [{ id: 'alt-item', item_id: 60, item_name: 'Sword', enchant: 5, quantity: 1 }],
+  }
+  vi.mocked(lineageApi.accounts).mockResolvedValue(multiAccounts as any)
+  vi.mocked(lineageApi.characters).mockImplementation(async (login) =>
+    (login === 'alt_acc' ? [altChar] : [character]) as any,
+  )
+  vi.mocked(inventoryApi.dashboard).mockImplementation(async (login) =>
+    (login === 'alt_acc' ? [altBag] : [{ inventory_id: 'bag', character_name: 'Elf', character, items: [{ id: 'item', item_id: 57, item_name: 'Adena', enchant: 3, quantity: 10 }] }]) as any,
+  )
+
+  const user = mount(<AuctionPage />)
+
+  const accountSelect = await screen.findByRole('combobox', { name: 'Conta de jogo' })
+  expect(accountSelect).toBeVisible()
+  expect(accountSelect).toHaveValue('main_acc')
+  await user.selectOptions(accountSelect, 'alt_acc')
+  expect(accountSelect).toHaveValue('alt_acc')
+
+  await user.selectOptions(screen.getByRole('combobox', { name: 'Tipo de leilão' }), 'character')
+  await screen.findByRole('option', { name: /OrcAlt/ })
+  await user.selectOptions(screen.getByRole('combobox', { name: 'Personagem' }), '8')
+  await user.type(screen.getByRole('spinbutton', { name: 'Lance inicial' }), '120')
+  await user.click(screen.getByRole('button', { name: 'Publicar leilão' }))
+
+  expect(auctionApi.create).toHaveBeenCalledWith({
+    kind: 'character',
+    char_id: 8,
+    min_bid: '120',
+    hours: 24,
+    login: 'alt_acc',
+  })
+})
+
+it('leilão suporta mudança de conta no lance do leilão', async () => {
+  const multiAccounts = {
+    accounts: [
+      { login: 'main_acc', is_primary: true },
+      { login: 'alt_acc', is_primary: false },
+    ],
+    slots: { used: 2, total: 3, can_link: true },
+    primary: { login: 'main_acc', status: 'claimed' },
+  }
+  const altChar = {
+    char_id: 8,
+    name: 'OrcAlt',
+    level: 75,
+    class_id: 48,
+    sex: 0,
+    online: false,
+    pvp: 10,
+    pk: 0,
+    clan_name: '',
+    title: '',
+  }
+  vi.mocked(lineageApi.accounts).mockResolvedValue(multiAccounts as any)
+  vi.mocked(lineageApi.characters).mockImplementation(async (login) =>
+    (login === 'alt_acc' ? [altChar] : [character]) as any,
+  )
+
+  const user = mount(<AuctionPage />)
+
+  await user.click(await screen.findByRole('button', { name: /Ver leilão/ }))
+  const bidAccountSelect = await screen.findByRole('combobox', { name: 'Conta do destinatário' })
+  expect(bidAccountSelect).toBeVisible()
+  expect(bidAccountSelect).toHaveValue('main_acc')
+
+  const recipientSelect = screen.getByRole('combobox', { name: 'Personagem que receberá o item' })
+  expect(within(recipientSelect).getByRole('option', { name: /Elf/ })).toBeInTheDocument()
+
+  await user.selectOptions(bidAccountSelect, 'alt_acc')
+  expect(bidAccountSelect).toHaveValue('alt_acc')
+
+  await waitFor(() => {
+    expect(within(recipientSelect).getByRole('option', { name: /OrcAlt/ })).toBeInTheDocument()
+  })
+  await user.selectOptions(recipientSelect, 'OrcAlt')
+  await user.click(screen.getByRole('button', { name: 'Dar lance' }))
+
+  expect(auctionApi.bid).toHaveBeenCalledWith('auction', '12.01', 'OrcAlt')
+})
+
