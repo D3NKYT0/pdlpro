@@ -60,6 +60,7 @@ export function AdminBannersPage() {
   const [clearedImage, setClearedImage] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const urlInputRef = useRef<HTMLInputElement>(null)
   const action = useFeedbackAction()
 
   function reset() {
@@ -485,6 +486,17 @@ export function AdminBannersPage() {
 
             {/* Interactive Image / Flyer Field with direct preview and upload */}
             <div className="admin-banner-image-wrapper" style={{ gridColumn: '1 / -1' }}>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
+                style={{ display: 'none' }}
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) handleFileSelected(file)
+                  e.target.value = ''
+                }}
+              />
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                 <span className="field-label" style={{ margin: 0, fontWeight: 600, fontSize: '0.85rem' }}>
                   {t('banners.fieldImage')}
@@ -493,7 +505,10 @@ export function AdminBannersPage() {
                   <Button
                     type="button"
                     className={`btn-xs ${imageSourceMode === 'upload' ? 'primary' : 'ghost'}`}
-                    onClick={() => setImageSourceMode('upload')}
+                    onClick={() => {
+                      setImageSourceMode('upload')
+                      fileInputRef.current?.click()
+                    }}
                   >
                     <Upload size={13} style={{ marginRight: 4 }} />
                     {t('banners.fieldImageUpload')}
@@ -501,7 +516,10 @@ export function AdminBannersPage() {
                   <Button
                     type="button"
                     className={`btn-xs ${imageSourceMode === 'url' ? 'primary' : 'ghost'}`}
-                    onClick={() => setImageSourceMode('url')}
+                    onClick={() => {
+                      setImageSourceMode('url')
+                      setTimeout(() => urlInputRef.current?.focus(), 50)
+                    }}
                   >
                     <LinkIcon size={13} style={{ marginRight: 4 }} />
                     {t('banners.fieldImageUrl')}
@@ -531,16 +549,6 @@ export function AdminBannersPage() {
                     if (e.key === 'Enter' || e.key === ' ') fileInputRef.current?.click()
                   }}
                 >
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
-                    style={{ display: 'none' }}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0]
-                      if (file) handleFileSelected(file)
-                    }}
-                  />
                   <div className="admin-banner-dropzone-content">
                     <div className="admin-banner-dropzone-icon">
                       <ImagePlus size={24} />
@@ -559,6 +567,7 @@ export function AdminBannersPage() {
                 /* External URL Input */
                 <Field>
                   <input
+                    ref={urlInputRef}
                     type="text"
                     value={form.image}
                     onChange={(e) => handleUrlChange(e.target.value)}
@@ -612,8 +621,7 @@ export function AdminBannersPage() {
                           if (imageSourceMode === 'upload') {
                             fileInputRef.current?.click()
                           } else {
-                            const input = document.querySelector('input[placeholder*="https://"]') as HTMLInputElement | null
-                            input?.focus()
+                            urlInputRef.current?.focus()
                           }
                         }}
                       >

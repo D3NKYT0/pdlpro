@@ -194,4 +194,34 @@ describe('AdminBannersPage', () => {
       )
     })
   })
+
+  it('triggers file picker click when "Enviar imagem do dispositivo" button is clicked', async () => {
+    mount()
+
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement
+    expect(fileInput).toBeInTheDocument()
+    const clickSpy = vi.spyOn(fileInput, 'click')
+
+    const uploadBtn = screen.getByRole('button', { name: /enviar imagem do dispositivo/i })
+    fireEvent.click(uploadBtn)
+
+    expect(clickSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('switches to upload mode and triggers file input click when in url mode', async () => {
+    mount()
+
+    const urlBtn = screen.getByRole('button', { name: /url externa da imagem/i })
+    fireEvent.click(urlBtn)
+
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement
+    expect(fileInput).toBeInTheDocument()
+    const clickSpy = vi.spyOn(fileInput, 'click')
+
+    const uploadBtn = screen.getByRole('button', { name: /enviar imagem do dispositivo/i })
+    fireEvent.click(uploadBtn)
+
+    expect(clickSpy).toHaveBeenCalledTimes(1)
+  })
 })
+
