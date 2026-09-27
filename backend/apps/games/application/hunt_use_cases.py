@@ -77,12 +77,16 @@ class GetHuntDetailsUseCase(UseCase[HuntActor, dict]):
             return {"character": None, "characters": [], "quests": []}
         selected = _pick_character(characters, data.login, data.char_id)
         if selected is None:
-            raise ValidationDomainError("Personagem não encontrado.")
+            if data.char_id:
+                raise ValidationDomainError("Personagem não encontrado.")
+            return {"character": None, "characters": characters, "quests": []}
         if not self._access.can_access(data.user_id, data.username, selected["login"]):
             raise AuthorizationError()
         char = self._lineage.get_character(selected["login"], selected["char_id"])
         if char is None:
-            raise ValidationDomainError("Personagem não encontrado.")
+            if data.char_id:
+                raise ValidationDomainError("Personagem não encontrado.")
+            return {"character": None, "characters": characters, "quests": []}
         quests = []
         for quest in self._hunt.list_active_quests():
             start = hunt_period_start(quest.period)

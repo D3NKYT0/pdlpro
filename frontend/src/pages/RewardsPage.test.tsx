@@ -389,6 +389,18 @@ it('caça sem conta vinculada pede o vínculo L2', async () => {
   expect(screen.queryByLabelText('Personagem')).not.toBeInTheDocument()
 })
 
+it('caça com conta sem personagens criados exibe aviso amigável e seletor', async () => {
+  vi.mocked(gamesApi.hunt).mockResolvedValue({
+    character: null,
+    characters: [{ login: 'outra_conta', char_id: 12, name: 'OutroChar', level: 60, online: false, sex: 0, class_id: 0 }],
+    quests: [],
+  } as Awaited<ReturnType<typeof gamesApi.hunt>>)
+  mount('/panel/rewards?tab=hunt')
+  expect(await screen.findByText('Nenhum personagem nesta conta')).toBeVisible()
+  expect(screen.getByText(/ainda não possui personagens criados no servidor/)).toBeVisible()
+  expect(screen.getByRole('combobox', { name: 'Conta de jogo' })).toBeVisible()
+})
+
 it('recurso de caça pausado substitui as missões pelo aviso', async () => {
   vi.mocked(programsApi.resources).mockResolvedValue([{ code: 'hunt', enabled: false }] as Awaited<ReturnType<typeof programsApi.resources>>)
   mount('/panel/rewards?tab=hunt')

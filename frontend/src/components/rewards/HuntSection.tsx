@@ -267,6 +267,17 @@ export function HuntSection() {
             ) : null}
           </Card>
 
+          {!data.character ? (
+            <Card className="rewards-empty-card">
+              <Empty icon={<Swords aria-hidden="true" />}>
+                <strong style={{ display: 'block', marginBottom: 4 }}>{t('rewards.hunt.noCharactersTitle')}</strong>
+                <span className="muted">
+                  {t('rewards.hunt.noCharactersHint', { account: currentAccount || t('rewards.hunt.account') })}
+                </span>
+              </Empty>
+            </Card>
+          ) : null}
+
           {data.character && quests.length === 0 ? (
             <Card className="rewards-empty-card">
               <Empty icon={<Crosshair aria-hidden="true" />}>{t('rewards.hunt.emptyQuests')}</Empty>
@@ -353,6 +364,15 @@ export function HuntSection() {
             </div>
           ) : null}
         </>
+      ) : !query.isPending && query.error ? (
+        <Card className="rewards-empty-card">
+          <Empty icon={<Swords aria-hidden="true" />}>
+            <strong style={{ display: 'block', marginBottom: 4 }}>{t('rewards.hunt.noCharactersTitle')}</strong>
+            <span className="muted">
+              {t('rewards.hunt.noCharactersHint', { account: currentAccount || activeLogin || t('rewards.hunt.account') })}
+            </span>
+          </Empty>
+        </Card>
       ) : null}
     </div>
   )

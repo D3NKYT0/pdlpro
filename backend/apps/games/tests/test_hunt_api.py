@@ -199,3 +199,14 @@ def test_hunt_picks_first_character_when_only_login_provided(api, player):
     assert res.status_code == 200
     assert res.data["character"]["login"] == "hunter"
     assert res.data["character"]["char_id"] == char.char_id
+
+
+@pytest.mark.django_db
+def test_hunt_returns_empty_character_when_account_has_no_characters(api, player):
+    api.force_authenticate(user=player)
+    # Register an account without any characters in game
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
+    res = api.get("/api/v1/customer/games/hunt/?login=emptyacc")
+    assert res.status_code == 200
+    assert res.data["character"] is None
+    assert res.data["quests"] == []

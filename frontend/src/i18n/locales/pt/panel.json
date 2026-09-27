@@ -1531,6 +1531,8 @@
       "selectCharacter": "Selecione o personagem",
       "characterOption": "{{name}} — nível {{level}}",
       "noCharacters": "Nenhum personagem nesta conta",
+      "noCharactersTitle": "Nenhum personagem nesta conta",
+      "noCharactersHint": "A conta {{account}} ainda não possui personagens criados no servidor. Crie um personagem no jogo ou escolha outra conta no seletor acima para acompanhar a caça.",
       "online": "Online",
       "offline": "Offline",
       "progress": "{{current}} / {{target}}",

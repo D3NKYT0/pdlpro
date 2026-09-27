@@ -1531,6 +1531,8 @@
       "selectCharacter": "Select character",
       "characterOption": "{{name}} — level {{level}}",
       "noCharacters": "No characters in this account",
+      "noCharactersTitle": "No characters in this account",
+      "noCharactersHint": "Account {{account}} does not have any characters created on the server yet. Create a character in-game or choose another account in the selector above to track the hunt.",
       "online": "Online",
       "offline": "Offline",
       "progress": "{{current}} / {{target}}",
