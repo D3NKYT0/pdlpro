@@ -120,14 +120,36 @@ export function WalletPage() {
           },
           onError: (message) => toast.error(message),
           onSubmit: async (formData) => {
-            const result = await paymentApi.process(order.id, formData)
-            setOrder(result)
-            if (result.status === 'confirmed') {
-              toast.success(t('wallet.toast.coinsCredited', { coins: result.coins }))
-              handleCloseCheckout()
-              await refreshWallet()
-            } else if (result.pix_qr_code) {
-              toast.success(t('wallet.toast.pixGenerated'))
+            try {
+              const rawPayer = (typeof formData.payer === 'object' && formData.payer ? formData.payer : {}) as Record<string, unknown>
+              const rawIdent = (typeof rawPayer.identification === 'object' && rawPayer.identification ? rawPayer.identification : {}) as Record<string, unknown>
+              const payload = {
+                ...formData,
+                payer: {
+                  ...rawPayer,
+                  email: rawPayer.email || user?.email || '',
+                  first_name: rawPayer.first_name || firstName,
+                  last_name: rawPayer.last_name || lastName,
+                  identification: {
+                    type: rawIdent.type || inferDocumentType(sanitized) || 'CPF',
+                    number: sanitizeDocument(String(rawIdent.number || sanitized)),
+                  },
+                },
+              }
+              const result = await paymentApi.process(order.id, payload)
+              setOrder(result)
+              if (result.status === 'confirmed') {
+                toast.success(t('wallet.toast.coinsCredited', { coins: result.coins }))
+                handleCloseCheckout()
+                await refreshWallet()
+              } else if (result.pix_qr_code) {
+                toast.success(t('wallet.toast.pixGenerated'))
+              } else if (result.status === 'failed') {
+                toast.error(result.gateway_message || t('wallet.toast.paymentDeclined'))
+              }
+            } catch (error) {
+              toast.error(apiErrorMessage(error, t('wallet.toast.mercadoPagoProcessFailed')))
+              throw error
             }
           },
         })

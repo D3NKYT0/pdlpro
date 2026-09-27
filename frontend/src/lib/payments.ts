@@ -119,7 +119,22 @@ export async function mountMercadoPagoBrick(options: {
     callbacks: {
       onReady: options.onReady,
       onSubmit: async ({ formData }: { formData: Record<string, unknown> }) => {
-        await options.onSubmit(formData)
+        const rawPayer = (typeof formData?.payer === 'object' && formData?.payer ? formData.payer : {}) as Record<string, unknown>
+        const rawIdent = (typeof rawPayer.identification === 'object' && rawPayer.identification ? rawPayer.identification : {}) as Record<string, unknown>
+        const enrichedFormData = {
+          ...formData,
+          payer: {
+            ...rawPayer,
+            email: rawPayer.email || options.email,
+            first_name: rawPayer.first_name || options.firstName || '',
+            last_name: rawPayer.last_name || options.lastName || '',
+            identification: {
+              type: rawIdent.type || docType || 'CPF',
+              number: sanitizeDocument(String(rawIdent.number || options.document)),
+            },
+          },
+        }
+        await options.onSubmit(enrichedFormData)
         return null
       },
       onError: (error: { message?: string }) =>

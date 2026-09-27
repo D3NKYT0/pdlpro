@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
@@ -432,6 +433,9 @@ class ProcessPaymentInput:
     order_id: UUID
     payload: dict
     payer_email: str = ""
+    payer_first_name: str = ""
+    payer_last_name: str = ""
+    payer_document: str = ""
 
 
 class ProcessPaymentUseCase(UseCase[ProcessPaymentInput, dict]):
@@ -469,10 +473,19 @@ class ProcessPaymentUseCase(UseCase[ProcessPaymentInput, dict]):
         if order.status not in {"pending", "processing", "failed"}:
             raise PaymentNotPendingError()
         payload = dict(data.payload)
-        payer = payload.get("payer") if isinstance(payload.get("payer"), dict) else {}
+        payer = dict(payload.get("payer")) if isinstance(payload.get("payer"), dict) else {}
         if data.payer_email and not payer.get("email"):
-            payer = {**payer, "email": data.payer_email}
-            payload["payer"] = payer
+            payer["email"] = data.payer_email
+        if data.payer_first_name and not payer.get("first_name"):
+            payer["first_name"] = data.payer_first_name
+        if data.payer_last_name and not payer.get("last_name"):
+            payer["last_name"] = data.payer_last_name
+        if data.payer_document and not payer.get("identification"):
+            digits = re.sub(r"\D", "", data.payer_document)
+            if digits:
+                doc_type = "CNPJ" if len(digits) > 11 else "CPF"
+                payer["identification"] = {"type": doc_type, "number": digits}
+        payload["payer"] = payer
         result = self._gateways.get(order.method).process_payment(order, payload)
         gateway_data = {
             "pix_qr_code": result.pix_qr_code,

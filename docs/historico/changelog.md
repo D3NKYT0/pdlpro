@@ -16,6 +16,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- **Geração de PIX no checkout Mercado Pago**:
+  - Correção no callback de envio do Mercado Pago Payment Brick (`mountMercadoPagoBrick` e `WalletPage`), que omitia a identificação do pagador (`CPF`/`CNPJ`), nome e sobrenome na transação via PIX, provocando recusa do backend por ausência de documento e silenciando o erro na tela.
+  - Envio obrigatório de `first_name` e `last_name` no objeto `payer` para a API do Mercado Pago em `MercadoPagoGateway`, com fallback para os dados da conta autenticada em `ProcessPaymentUseCase` e `ProcessPaymentOrderView`.
+  - Tratamento de exceções e exibição de toast com mensagem de erro detalhada da recusa do gateway em `WalletPage`.
+
 ## [2.6.1] - 2026-09-27
 
 Lançamento da versão 2.6.1 do PDL PRO trazendo suporte a alternância de conta ativa no Mercado de Personagens e Leilões, divisão do seletor da Caça do Dia em seletores dedicados de Conta e Personagem com tratamento gracioso de estado vazio, e novas ilustrações temáticas exclusivas em alta definição no estilo dark fantasy para todos os cards de resumo e atalhos do painel.

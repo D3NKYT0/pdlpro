@@ -64,12 +64,17 @@ class MercadoPagoGateway(IPaymentGateway):
         if document_type not in {"CPF", "CNPJ"} or not document_number:
             raise PaymentGatewayError("Informe um CPF ou CNPJ válido para o Mercado Pago.")
 
+        first_name = str(payer.get("first_name") or "").strip() or "Jogador"
+        last_name = str(payer.get("last_name") or "").strip() or first_name
+
         payment_data: dict[str, Any] = {
             "transaction_amount": float(order.amount),
             "description": f"Moedas PDL ({order.package_code or 'custom'})",
             "payment_method_id": payload.get("payment_method_id"),
             "payer": {
                 "email": payer.get("email") or "",
+                "first_name": first_name,
+                "last_name": last_name,
                 "identification": {"type": document_type, "number": document_number},
             },
             "external_reference": f"pdl_coins_{order.id}",
@@ -90,7 +95,8 @@ class MercadoPagoGateway(IPaymentGateway):
         response = sdk.payment().create(payment_data, RequestOptions(custom_headers={"x-idempotency-key": str(uuid.uuid4())}))
         if response.get("status", 500) >= 400:
             logger.error(
-                "Mercado Pago recusou o pagamento",
+                "Mercado Pago recusou o pagamento: %s",
+                response.get("response"),
                 extra={
                     "event": "payment.gateway_rejected",
                     "payment_order_id": str(order.id),

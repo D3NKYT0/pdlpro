@@ -204,12 +204,22 @@ class ProcessPaymentOrderView(InjectedAPIView):
         description=gettext_lazy("Envia o pedido ao gateway e devolve dados de cobrança como PIX ou boleto."),
     )
     def post(self, request, order_id):
+        user = request.user
+        first_name = (getattr(user, "first_name", "") or "").strip()
+        last_name = (getattr(user, "last_name", "") or "").strip()
+        if not first_name:
+            name_parts = (getattr(user, "display_name", "") or getattr(user, "username", "") or "Jogador").strip().split(maxsplit=1)
+            first_name = name_parts[0]
+            last_name = name_parts[1] if len(name_parts) > 1 else first_name
+
         outcome = self.resolve(ProcessPaymentUseCase).execute(
             ProcessPaymentInput(
                 user_id=request.user.id,
                 order_id=order_id,
                 payload=request.data if isinstance(request.data, dict) else {},
-                payer_email=request.user.email,
+                payer_email=getattr(request.user, "email", "") or "",
+                payer_first_name=first_name,
+                payer_last_name=last_name,
             )
         )
         order = dump_order(outcome["order"])

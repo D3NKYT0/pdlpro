@@ -136,6 +136,7 @@
       "paymentStartFailed": "Não foi possível iniciar o pagamento",
       "pixGenerated": "PIX gerado. Pague para creditar as moedas.",
       "mercadoPagoFailed": "Falha ao abrir o Mercado Pago",
+      "mercadoPagoProcessFailed": "Falha ao processar pagamento com o Mercado Pago",
       "stripeOpenFailed": "Falha ao abrir o Stripe",
       "paymentDeclined": "Pagamento recusado",
       "paymentSent": "Pagamento enviado. Aguarde a confirmação.",

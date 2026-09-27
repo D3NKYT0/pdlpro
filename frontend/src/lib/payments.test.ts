@@ -53,11 +53,19 @@ it('monta Mercado Pago com documento normalizado e encaminha callbacks', async (
   vi.stubGlobal('MercadoPago', class { bricks() { return { create } } })
   const tag = document.createElement('script'); tag.src = 'https://sdk.mercadopago.com/js/v2'; document.body.appendChild(tag)
   const onSubmit = vi.fn().mockResolvedValue(undefined), onReady = vi.fn(), onError = vi.fn()
-  await mountMercadoPagoBrick({ publicKey: 'pk-test', amount: 25, email: 'a@test.dev', document: '123.456.789-09', containerId: 'checkout', onSubmit, onReady, onError })
+  await mountMercadoPagoBrick({ publicKey: 'pk-test', amount: 25, email: 'a@test.dev', firstName: 'John', lastName: 'Doe', document: '123.456.789-09', containerId: 'checkout', onSubmit, onReady, onError })
   const config = create.mock.calls[0][2]
   expect(config.initialization.payer.identification).toEqual({ type: 'CPF', number: '12345678909' })
   await config.callbacks.onSubmit({ formData: { token: 'opaque' } })
-  expect(onSubmit).toHaveBeenCalledWith({ token: 'opaque' })
+  expect(onSubmit).toHaveBeenCalledWith({
+    token: 'opaque',
+    payer: {
+      email: 'a@test.dev',
+      first_name: 'John',
+      last_name: 'Doe',
+      identification: { type: 'CPF', number: '12345678909' },
+    },
+  })
   config.callbacks.onReady()
   expect(onReady).toHaveBeenCalledOnce()
   config.callbacks.onError({ message: 'Recusado' })

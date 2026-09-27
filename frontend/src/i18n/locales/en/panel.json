@@ -136,6 +136,7 @@
       "paymentStartFailed": "Could not start the payment",
       "pixGenerated": "PIX generated. Pay it to receive the coins.",
       "mercadoPagoFailed": "Could not open Mercado Pago",
+      "mercadoPagoProcessFailed": "Failed to process Mercado Pago payment",
       "stripeOpenFailed": "Could not open Stripe",
       "paymentDeclined": "Payment declined",
       "paymentSent": "Payment sent. Wait for the confirmation.",

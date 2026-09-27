@@ -80,6 +80,29 @@ def test_mercadopago_uses_order_amount_not_client_amount(order, mocker):
     assert payload["transaction_amount"] == 12.34
     assert payload["metadata"]["order_id"] == str(order.id)
     assert payload["payer"]["identification"] == {"type": "CPF", "number": "12345678909"}
+    assert payload["payer"]["first_name"] == "Jogador"
+    assert payload["payer"]["last_name"] == "Jogador"
+
+
+def test_mercadopago_includes_payer_name(order, mocker):
+    sdk = mocker.patch("mercadopago.SDK").return_value
+    create = sdk.payment.return_value.create
+    create.return_value = {"status": 201, "response": {"id": "mp-test", "status": "pending"}}
+    MercadoPagoGateway().process_payment(
+        order,
+        {
+            "payment_method_id": "pix",
+            "payer": {
+                "email": "hero@test.dev",
+                "first_name": "Daniel",
+                "last_name": "Amaral",
+                "identification": {"type": "cpf", "number": "123.456.789-09"},
+            },
+        },
+    )
+    payload = create.call_args.args[0]
+    assert payload["payer"]["first_name"] == "Daniel"
+    assert payload["payer"]["last_name"] == "Amaral"
 
 
 @pytest.mark.parametrize("payer", [None, {}, {"identification": {"type": "INVALID", "number": "123"}}])
