@@ -12,6 +12,16 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+### Alterado
+
+### Corrigido
+
+## [2.6.1] - 2026-09-27
+
+Lançamento da versão 2.6.1 do PDL PRO trazendo suporte a alternância de conta ativa no Mercado de Personagens e Leilões, divisão do seletor da Caça do Dia em seletores dedicados de Conta e Personagem com tratamento gracioso de estado vazio, e novas ilustrações temáticas exclusivas em alta definição no estilo dark fantasy para todos os cards de resumo e atalhos do painel.
+
+### Adicionado
+
 - **Suporte à troca de conta de jogo no Mercado e Leilões**:
   - Seletor de conta de jogo nos formulários e cabeçalhos de `/panel/marketplace` (`MarketplacePage`) e `/panel/auctions` (`AuctionPage`), sincronizado bidirecionalmente com o contexto global `useActiveAccount()`.
   - Formulários de anúncio de personagens (`MarketplaceSellForm`), criação de leilões (`AuctionCreateForm`) e ofertas (`AuctionDetail`) passam a respeitar e filtrar os personagens associados à conta ativa selecionada.
