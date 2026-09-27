@@ -29,7 +29,32 @@ vi.mock('../../components/ui/RichText', () => ({
   isRichTextEmpty: (html: string) => !html.replace(/<[^>]*>/g, '').trim(),
 }))
 vi.mock('../../hooks/useItemCatalog', () => ({ useItemCatalog: () => ({ isPending: false, isError: false, getById: (id: string) => String(id) === '57' ? { id: '57', name: 'Adena', grade: 'NG' } : String(id) === '1835' ? { id: '1835', name: 'Soulshot: No Grade', grade: 'NG' } : null, search: () => [], refetch: vi.fn() }) }))
-vi.mock('../../services/domain/staff.service', () => ({ staffApi: { coins: vi.fn(), saveCoins: vi.fn(), walletPromo: vi.fn(), saveWalletPromo: vi.fn(), services: vi.fn(), saveServices: vi.fn(), games: vi.fn(), saveGame: vi.fn(), autoconfigGames: vi.fn(), shop: vi.fn(), saveShopItem: vi.fn(), autoconfigShop: vi.fn(), news: vi.fn(), saveNews: vi.fn(), panel: vi.fn(), savePanel: vi.fn(), inspectAccount: vi.fn(), unlinkAccount: vi.fn() } }))
+vi.mock('../../services/domain/staff.service', () => ({
+  staffApi: {
+    coins: vi.fn(),
+    saveCoins: vi.fn(),
+    walletPromo: vi.fn(),
+    saveWalletPromo: vi.fn(),
+    bonusTiers: vi.fn(),
+    saveBonusTier: vi.fn(),
+    deleteBonusTier: vi.fn(),
+    previewBonusSimulation: vi.fn(),
+    services: vi.fn(),
+    saveServices: vi.fn(),
+    games: vi.fn(),
+    saveGame: vi.fn(),
+    autoconfigGames: vi.fn(),
+    shop: vi.fn(),
+    saveShopItem: vi.fn(),
+    autoconfigShop: vi.fn(),
+    news: vi.fn(),
+    saveNews: vi.fn(),
+    panel: vi.fn(),
+    savePanel: vi.fn(),
+    inspectAccount: vi.fn(),
+    unlinkAccount: vi.fn(),
+  },
+}))
 vi.mock('../../services/domain/commerce.service', () => ({ commerceApi: { staffPackages: vi.fn(), save: vi.fn() } }))
 vi.mock('../../services/domain/staffGameContent.service', () => ({ staffGameContentApi: { configs: vi.fn(), saveConfig: vi.fn() } }))
 
@@ -42,10 +67,31 @@ beforeEach(() => {
     percent: '10.00',
     title: 'Promoção de recarga',
     description: '',
+    badge: '',
+    stacking_mode: 'max',
+    first_purchase_active: false,
+    first_purchase_percent: '15.00',
+    pix_bonus_percent: '5.00',
     active: false,
     starts_at: null,
     ends_at: null,
     currently_active: false,
+  })
+  vi.mocked(staffApi.bonusTiers).mockResolvedValue([])
+  vi.mocked(staffApi.previewBonusSimulation).mockResolvedValue({
+    amount: 500,
+    payment_method: 'standard',
+    is_first_purchase: false,
+    total_percent: '10.00',
+    bonus_coins: 50,
+    total_coins: 550,
+    rule_applied: '',
+    breakdown: {
+      tier_bonus: 50,
+      promo_bonus: 0,
+      pix_bonus: 0,
+      first_purchase_bonus: 0,
+    },
   })
   vi.mocked(staffApi.services).mockResolvedValue([{ code: 'UNSTUCK', name: 'Destravar', price: '5.00', active: true }])
   vi.mocked(staffApi.games).mockResolvedValue([{ id: 'dice', code: 'dice', name: 'Dados', active: true, settings: {} }])
@@ -113,14 +159,14 @@ it('carteira salva promoção de recarga ativa', async () => {
   await user.type(screen.getByLabelText('Título'), 'Campanha 20%')
   await user.click(screen.getByRole('checkbox', { name: 'Campanha ativa' }))
   await user.click(screen.getByRole('button', { name: /Salvar/ }))
-  expect(staffApi.saveWalletPromo).toHaveBeenCalledWith({
+  expect(staffApi.saveWalletPromo).toHaveBeenCalledWith(expect.objectContaining({
     percent: '20',
     title: 'Campanha 20%',
     description: '',
     active: true,
     starts_at: null,
     ends_at: null,
-  })
+  }))
   expect(toast.success).toHaveBeenCalledWith('Promoção da carteira atualizada')
 })
 

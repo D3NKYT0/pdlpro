@@ -18,6 +18,7 @@ from apps.server.domain.repositories import (
     IServicePriceRepository,
 )
 from apps.shop.domain.repositories import IShopItemAdminRepository
+from apps.wallet.domain.bonus import IPurchaseBonusPolicy
 from apps.wallet.domain.repositories import ICoinAdminRepository
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
@@ -138,6 +139,11 @@ def _wallet_promo_payload(row) -> dict:
             "percent": "10.00",
             "title": "Promoção de recarga",
             "description": "",
+            "badge": "",
+            "stacking_mode": "max",
+            "first_purchase_active": False,
+            "first_purchase_percent": "0.00",
+            "pix_bonus_percent": "0.00",
             "active": False,
             "starts_at": None,
             "ends_at": None,
@@ -148,10 +154,27 @@ def _wallet_promo_payload(row) -> dict:
         "percent": str(row.percent),
         "title": row.title,
         "description": row.description,
+        "badge": getattr(row, "badge", "") or "",
+        "stacking_mode": getattr(row, "stacking_mode", "max") or "max",
+        "first_purchase_active": bool(getattr(row, "first_purchase_active", False)),
+        "first_purchase_percent": str(getattr(row, "first_purchase_percent", Decimal("0.00")) or "0.00"),
+        "pix_bonus_percent": str(getattr(row, "pix_bonus_percent", Decimal("0.00")) or "0.00"),
         "active": row.active,
         "starts_at": row.starts_at.isoformat() if row.starts_at else None,
         "ends_at": row.ends_at.isoformat() if row.ends_at else None,
         "currently_active": row.is_currently_active(),
+    }
+
+
+def _bonus_tier_payload(row) -> dict:
+    return {
+        "id": str(row.id),
+        "min_amount": str(row.min_amount),
+        "max_amount": str(row.max_amount) if row.max_amount is not None else None,
+        "percent": str(row.percent),
+        "description": row.description,
+        "active": row.active,
+        "order": row.order,
     }
 
 
@@ -374,6 +397,19 @@ class UpdateStaffWalletPromoUseCase(UseCase[dict, dict]):
             raise ValidationDomainError("O percentual da promoção deve estar entre 0 e 100.")
         row.title = title
         row.description = str(data.get("description") or "")
+        row.badge = str(data.get("badge") or "").strip()
+        stacking = str(data.get("stacking_mode") or "max").strip().lower()
+        row.stacking_mode = stacking if stacking in {"max", "sum"} else "max"
+        row.first_purchase_active = bool(data.get("first_purchase_active", False))
+        fp_percent = Decimal(str(data.get("first_purchase_percent") if data.get("first_purchase_percent") is not None else 0))
+        if fp_percent < 0 or fp_percent > 500:
+            raise ValidationDomainError("O percentual de 1ª recarga deve estar entre 0 e 500.")
+        row.first_purchase_percent = fp_percent
+        pix_percent = Decimal(str(data.get("pix_bonus_percent") if data.get("pix_bonus_percent") is not None else 0))
+        if pix_percent < 0 or pix_percent > 100:
+            raise ValidationDomainError("O percentual de bônus PIX deve estar entre 0 e 100.")
+        row.pix_bonus_percent = pix_percent
+
         row.percent = percent
         row.active = bool(data.get("active", row.active))
         row.starts_at = _parse_optional_datetime(data.get("starts_at"), field="starts_at")
@@ -382,6 +418,111 @@ class UpdateStaffWalletPromoUseCase(UseCase[dict, dict]):
             raise ValidationDomainError("A data final deve ser posterior ao início da promoção.")
         self._coins.save_promo(row)
         return _wallet_promo_payload(row)
+
+
+class ListStaffBonusTiersUseCase(UseCase[None, list[dict]]):
+    """Lista todas as faixas progressivas de bônus por quantidade de moedas."""
+
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
+    def execute(self, data: None = None) -> list[dict]:
+        return [_bonus_tier_payload(row) for row in self._coins.list_bonus_tiers()]
+
+
+class UpsertStaffBonusTierUseCase(UseCase[dict, dict]):
+    """Cria ou atualiza uma faixa progressiva de bônus de recarga."""
+
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
+    def execute(self, data: dict) -> dict:
+        tier_id = str(data.get("id") or "").strip()
+        row = self._coins.get_bonus_tier(tier_id) if tier_id else None
+        if row is None:
+            row = self._coins.new_bonus_tier()
+
+        try:
+            min_amount = Decimal(str(data.get("min_amount") if data.get("min_amount") is not None else 0))
+        except Exception:
+            raise ValidationDomainError("Quantidade mínima inválida.")
+        if min_amount < 0:
+            raise ValidationDomainError("A quantidade mínima de moedas não pode ser negativa.")
+
+        max_amount = None
+        if data.get("max_amount") not in (None, ""):
+            try:
+                max_amount = Decimal(str(data["max_amount"]))
+            except Exception:
+                raise ValidationDomainError("Quantidade máxima inválida.")
+            if max_amount < min_amount:
+                raise ValidationDomainError("A quantidade máxima deve ser maior ou igual à mínima.")
+
+        try:
+            percent = Decimal(str(data.get("percent") if data.get("percent") is not None else 0))
+        except Exception:
+            raise ValidationDomainError("Percentual inválido.")
+        if percent < 0 or percent > 100:
+            raise ValidationDomainError("O percentual de bônus deve estar entre 0 e 100.")
+
+        description = str(data.get("description") or "").strip() or f"Bônus de {percent}%"
+        order = int(data.get("order") or 0)
+        active = bool(data.get("active", True))
+
+        row.min_amount = min_amount
+        row.max_amount = max_amount
+        row.percent = percent
+        row.description = description
+        row.order = order
+        row.active = active
+
+        self._coins.save_bonus_tier(row)
+        return _bonus_tier_payload(row)
+
+
+class DeleteStaffBonusTierUseCase(UseCase[str, dict]):
+    """Exclui uma faixa de bônus pelo ID."""
+
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
+    def execute(self, data: str) -> dict:
+        tier = self._coins.get_bonus_tier(data)
+        if tier is not None:
+            self._coins.delete_bonus_tier(tier)
+            return {"deleted": True, "id": str(data)}
+        return {"deleted": False, "id": str(data)}
+
+
+class PreviewStaffBonusSimulationUseCase(UseCase[dict, dict]):
+    """Simula o cálculo de bônus em tempo real para o painel staff."""
+
+    def __init__(self, bonus_policy: IPurchaseBonusPolicy) -> None:
+        self._bonus_policy = bonus_policy
+
+    def execute(self, data: dict) -> dict:
+        try:
+            amount = Decimal(str(data.get("amount") or 0))
+        except Exception:
+            amount = Decimal("0.00")
+        payment_method = str(data.get("payment_method") or "")
+        is_first_purchase = bool(data.get("is_first_purchase", False))
+        result = self._bonus_policy.preview(
+            amount,
+            payment_method=payment_method,
+            is_first_purchase=is_first_purchase,
+        )
+        return {
+            "amount": str(result.amount),
+            "bonus": str(result.bonus),
+            "percent": str(result.percent),
+            "total": str(result.total),
+            "description": result.description,
+            "tier_bonus": str(result.tier_bonus),
+            "promo_bonus": str(result.promo_bonus),
+            "pix_bonus": str(result.pix_bonus),
+            "first_purchase_bonus": str(result.first_purchase_bonus),
+        }
 
 
 class ListStaffCoinPackagesUseCase(UseCase[None, list[dict]]):

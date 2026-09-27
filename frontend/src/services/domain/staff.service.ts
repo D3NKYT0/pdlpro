@@ -55,11 +55,43 @@ export interface ApiStaffWalletPromo {
   percent: string
   title: string
   description: string
+  badge: string
+  stacking_mode: 'max' | 'sum'
+  first_purchase_active: boolean
+  first_purchase_percent: string
+  pix_bonus_percent: string
   active: boolean
   starts_at: string | null
   ends_at: string | null
   currently_active: boolean
 }
+
+export interface ApiStaffBonusTier {
+  id: string
+  min_amount: number
+  max_amount: number | null
+  percent: string
+  description: string
+  active: boolean
+  order: number
+}
+
+export interface ApiBonusSimulationResult {
+  amount: number
+  payment_method: string
+  is_first_purchase: boolean
+  total_percent: string
+  bonus_coins: number
+  total_coins: number
+  rule_applied: string
+  breakdown: {
+    tier_bonus: number
+    promo_bonus: number
+    pix_bonus: number
+    first_purchase_bonus: number
+  }
+}
+
 
 export interface ApiStaffCoinPackage {
   id: string
@@ -290,6 +322,19 @@ export const staffApi = {
   walletPromo: () => request<ApiStaffWalletPromo>('/staff/wallet-promo/'),
   saveWalletPromo: (payload: Partial<ApiStaffWalletPromo>) =>
     request<ApiStaffWalletPromo>('/staff/wallet-promo/', { method: 'PUT', body: JSON.stringify(payload) }),
+  bonusTiers: () => request<ApiStaffBonusTier[]>('/staff/bonus-tiers/'),
+  saveBonusTier: (payload: Partial<ApiStaffBonusTier>) =>
+    request<ApiStaffBonusTier>('/staff/bonus-tiers/', {
+      method: payload.id ? 'PUT' : 'POST',
+      body: JSON.stringify(payload),
+    }),
+  deleteBonusTier: (id: string) =>
+    request<{ deleted: boolean }>('/staff/bonus-tiers/', { method: 'DELETE', body: JSON.stringify({ id }) }),
+  previewBonusSimulation: (payload: { amount: number; payment_method?: string; is_first_purchase?: boolean }) =>
+    request<ApiBonusSimulationResult>('/staff/bonus-simulation/', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
   coinPackages: () => request<ApiStaffCoinPackage[]>('/staff/coin-packages/'),
   saveCoinPackage: (payload: Partial<ApiStaffCoinPackage>) =>
     request<ApiStaffCoinPackage>('/staff/coin-packages/', {

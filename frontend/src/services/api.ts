@@ -96,6 +96,8 @@ export type {
   ApiStaffShopItem,
   ApiStaffShopAutoconfig,
   ApiStaffWalletPromo,
+  ApiStaffBonusTier,
+  ApiBonusSimulationResult,
 } from './domain/staff.service'
 export { programsApi } from './domain/programs.service'
 export type {

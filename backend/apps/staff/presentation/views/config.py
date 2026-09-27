@@ -7,19 +7,23 @@ from apps.games.application.staff_autoconfig import BootstrapStaffGamesUseCase
 from apps.server.presentation.item_metadata import ItemCatalogAPIView
 from apps.shop.application.staff_autoconfig import BootstrapStaffShopUseCase
 from apps.staff.application.use_cases import (
+    DeleteStaffBonusTierUseCase,
     DeleteStaffCoinPackageUseCase,
     GetPanelSettingsUseCase,
     GetStaffCoinConfigUseCase,
     GetStaffWalletPromoUseCase,
+    ListStaffBonusTiersUseCase,
     ListStaffCoinPackagesUseCase,
     ListStaffGamesUseCase,
     ListStaffNewsUseCase,
     ListStaffServicePricesUseCase,
     ListStaffShopItemsUseCase,
+    PreviewStaffBonusSimulationUseCase,
     ToggleStaffGameUseCase,
     UpdatePanelSettingsUseCase,
     UpdateStaffCoinConfigUseCase,
     UpdateStaffWalletPromoUseCase,
+    UpsertStaffBonusTierUseCase,
     UpsertStaffCoinPackageUseCase,
     UpsertStaffNewsUseCase,
     UpsertStaffServicePricesUseCase,
@@ -136,6 +140,54 @@ class StaffWalletPromoView(InjectedAPIView):
     )
     def put(self, request):
         return Response(self.resolve(UpdateStaffWalletPromoUseCase).execute(request.data or {}))
+
+
+class StaffBonusTiersView(InjectedAPIView):
+    """Entrada HTTP para faixas progressivas de bônus de recarga."""
+
+    permission_classes = [IsAuthenticated, IsStaffMember]
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Listar faixas de bônus"),
+        description=gettext_lazy("Lista todas as faixas progressivas de bônus de recarga ordenadas."),
+    )
+    def get(self, request):
+        return Response(self.resolve(ListStaffBonusTiersUseCase).execute())
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Criar ou atualizar faixa de bônus"),
+        description=gettext_lazy("Cria ou atualiza uma faixa progressiva de bônus de recarga."),
+    )
+    def post(self, request):
+        return Response(self.resolve(UpsertStaffBonusTierUseCase).execute(request.data or {}))
+
+    def put(self, request):
+        return Response(self.resolve(UpsertStaffBonusTierUseCase).execute(request.data or {}))
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Excluir faixa de bônus"),
+        description=gettext_lazy("Remove a faixa de bônus informada por ID."),
+    )
+    def delete(self, request):
+        tier_id = str((request.data or {}).get("id") or request.query_params.get("id") or "")
+        return Response(self.resolve(DeleteStaffBonusTierUseCase).execute(tier_id))
+
+
+class StaffBonusSimulationView(InjectedAPIView):
+    """Entrada HTTP para simulação em tempo real do cálculo de bônus."""
+
+    permission_classes = [IsAuthenticated, IsStaffMember]
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Simular cálculo de bônus"),
+        description=gettext_lazy("Simula a aplicação de faixas, promoção, PIX e 1ª recarga sem persistência."),
+    )
+    def post(self, request):
+        return Response(self.resolve(PreviewStaffBonusSimulationUseCase).execute(request.data or {}))
 
 
 class StaffCoinPackagesView(InjectedAPIView):

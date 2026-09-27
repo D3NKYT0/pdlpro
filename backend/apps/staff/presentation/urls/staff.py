@@ -12,6 +12,8 @@ from apps.staff.presentation.views.cms import (
     StaffWikiView,
 )
 from apps.staff.presentation.views.config import (
+    StaffBonusSimulationView,
+    StaffBonusTiersView,
     StaffCoinConfigView,
     StaffCoinPackagesView,
     StaffGamesAutoconfigView,
@@ -121,6 +123,8 @@ urlpatterns = [
     path("coins/", StaffCoinConfigView.as_view(), name="staff-coins"),
     path("coin-packages/", StaffCoinPackagesView.as_view(), name="staff-coin-packages"),
     path("wallet-promo/", StaffWalletPromoView.as_view(), name="staff-wallet-promo"),
+    path("bonus-tiers/", StaffBonusTiersView.as_view(), name="staff-bonus-tiers"),
+    path("bonus-simulation/", StaffBonusSimulationView.as_view(), name="staff-bonus-simulation"),
     path("shop/autoconfig/", StaffShopAutoconfigView.as_view(), name="staff-shop-autoconfig"),
     path("shop/", StaffShopItemsView.as_view(), name="staff-shop"),
     path("news/", StaffNewsView.as_view(), name="staff-news"),

@@ -18,6 +18,10 @@ class BonusPreview:
     percent: Decimal
     description: str
     total: Decimal
+    tier_bonus: Decimal = Decimal("0.00")
+    promo_bonus: Decimal = Decimal("0.00")
+    pix_bonus: Decimal = Decimal("0.00")
+    first_purchase_bonus: Decimal = Decimal("0.00")
 
 
 class IPurchaseBonusPolicy(ABC):
@@ -29,7 +33,13 @@ class IPurchaseBonusPolicy(ABC):
     """
 
     @abstractmethod
-    def preview(self, amount: Decimal) -> BonusPreview:
+    def preview(
+        self,
+        amount: Decimal,
+        *,
+        payment_method: str = "",
+        is_first_purchase: bool = False,
+    ) -> BonusPreview:
         """Calcula bônus e total para amount em moedas do painel, sem efetuar crédito."""
 
         raise NotImplementedError

@@ -202,6 +202,36 @@ class ICoinAdminRepository(ABC):
 
         raise NotImplementedError
 
+    @abstractmethod
+    def list_bonus_tiers(self) -> list[Any]:
+        """Lista todas as faixas de bônus ordenadas."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_bonus_tier(self, tier_id: str) -> Any | None:
+        """Localiza uma faixa de bônus pelo UUID; None se inexistente."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def new_bonus_tier(self) -> Any:
+        """Instancia uma faixa de bônus ainda não persistida."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def save_bonus_tier(self, row: Any) -> Any:
+        """Persiste a faixa de bônus e devolve a linha salva."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete_bonus_tier(self, row: Any) -> None:
+        """Remove a faixa de bônus."""
+
+        raise NotImplementedError
+
 
 class IGameExchangeRepository(ABC):
     """Porta de recibos de câmbio com o jogo (GameExchange) e bloqueio do usuário.

@@ -17,6 +17,7 @@ from apps.wallet.infrastructure.exchange_models import GameExchange
 from apps.wallet.infrastructure.models import (
     CoinConfig,
     CoinPackage,
+    CoinPurchaseBonus,
     CoinPurchasePromo,
     Wallet,
     WalletTransaction,
@@ -243,6 +244,26 @@ class DjangoCoinAdminRepository(ICoinAdminRepository):
         return row
 
     def delete_coin_package(self, row: CoinPackage) -> None:
+        row.delete()
+
+    def list_bonus_tiers(self) -> list[CoinPurchaseBonus]:
+        return list(CoinPurchaseBonus.objects.order_by("order", "min_amount"))
+
+    def get_bonus_tier(self, tier_id: str) -> CoinPurchaseBonus | None:
+        try:
+            tier_uuid = UUID(str(tier_id))
+        except ValueError:
+            return None
+        return CoinPurchaseBonus.objects.filter(id=tier_uuid).first()
+
+    def new_bonus_tier(self) -> CoinPurchaseBonus:
+        return CoinPurchaseBonus()
+
+    def save_bonus_tier(self, row: CoinPurchaseBonus) -> CoinPurchaseBonus:
+        row.save()
+        return row
+
+    def delete_bonus_tier(self, row: CoinPurchaseBonus) -> None:
         row.delete()
 
 

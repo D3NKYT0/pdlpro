@@ -23,16 +23,19 @@ Os tipos e limites estão em [application/use_cases.py](../../backend/apps/payme
 
 A listagem do jogador `GET /api/v1/customer/payments/` usa paginação padrão (`page`, `page_size`, envelope com `count`, `total_pages`, `results`) e inclui `created_at` / `paid_at`. O extrato `GET /api/v1/shared/wallet/transactions/` segue o mesmo envelope.
 
-## Promoção de recarga
+## Promoção de recarga e configurador de bônus
 
-Campanhas de banner na carteira usam o modelo `CoinPurchasePromo`. Configure em `/panel/admin/wallet` (também disponível no Jazzmin: **Promoções de recarga**). Campos: percentual, título, descrição, ativo e vigência opcional (`starts_at` / `ends_at`). No máximo uma campanha fica marcada como ativa.
+Campanhas de banner na carteira e regras de bônus são centralizadas em `/panel/admin/wallet` (também disponíveis no Jazzmin: **Promoções de recarga** e **Faixas de bônus na compra de moedas**).
 
-- Staff: `GET/PUT /api/v1/staff/wallet-promo/`.
-- O catálogo `GET /api/v1/customer/payments/catalog/` devolve `promo` com `percent`, `title` e `description` quando a campanha está vigente; caso contrário `promo` é `null`.
-- O efeito econômico é **bônus de moedas** via `IPurchaseBonusPolicy`: a promo eleva o piso do percentual (`max` entre faixa `CoinPurchaseBonus` e a campanha). O valor cobrado no gateway (`amount`) não muda.
-- A liquidação já existente credita o bônus em `bonus_balance` com a descrição da campanha ou da faixa, conforme o percentual efetivo.
-
-Configure a campanha em `/panel/admin/wallet`, confira o banner em `/panel/wallet` e valide o crédito confirmando a simulação no admin financeiro.
+- **Campanha sazonal / Evento:** Modelo `CoinPurchasePromo`. Campos: `percent`, `title`, `description`, `badge` (selo visual), `stacking_mode` (`max` para prevalecer o maior entre campanha e faixa, ou `sum` para somar a campanha à faixa progressiva), `active` e vigência opcional (`starts_at` / `ends_at`).
+- **Faixas progressivas de moedas:** Modelo `CoinPurchaseBonus`. Permite definir intervalos (`min_amount` até `max_amount` ou sem limite) com percentual e prioridade (`order`). Gerenciáveis diretamente na SPA em `/panel/admin/wallet` via `GET/POST/PUT/DELETE /api/v1/staff/bonus-tiers/`.
+- **Incentivos especiais de conversão:**
+  - **1ª Recarga:** Bônus configurável (`first_purchase_active` e `first_purchase_percent`) concedido na primeira compra de moedas da conta.
+  - **Incentivo PIX:** Bônus percentual adicional (`pix_bonus_percent`) concedido automaticamente em pagamentos processados via PIX.
+- **Simulador em tempo real:** Endpoint `POST /api/v1/staff/bonus-simulation/` calcula o total de moedas, bônus acumulado e o detalhamento por regra (faixa, campanha, PIX e 1ª compra) para qualquer quantidade e método selecionados na interface.
+- O catálogo público `GET /api/v1/customer/payments/catalog/` devolve `promo` com `percent`, `title` e `description` quando a campanha está vigente; caso contrário `promo` é `null`.
+- O efeito econômico é **bônus de moedas** via `IPurchaseBonusPolicy`. O valor cobrado no gateway (`amount`) não muda.
+- A liquidação credita o bônus em `bonus_balance` com a composição das descrições das regras aplicadas.
 
 ## Configuração
 

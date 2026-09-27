@@ -117,6 +117,15 @@ class CoinPurchasePromo(BaseModel):
     percent = models.DecimalField(max_digits=5, decimal_places=2)
     title = models.CharField(max_length=120)
     description = models.CharField(max_length=240, blank=True)
+    badge = models.CharField(max_length=60, blank=True, default="")
+    stacking_mode = models.CharField(
+        max_length=20,
+        default="max",
+        choices=[("max", _("Maior bônus")), ("sum", _("Cumulativo"))],
+    )
+    first_purchase_active = models.BooleanField(default=False)
+    first_purchase_percent = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal("0.00"))
+    pix_bonus_percent = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal("0.00"))
     active = models.BooleanField(default=True)
     starts_at = models.DateTimeField(null=True, blank=True)
     ends_at = models.DateTimeField(null=True, blank=True)

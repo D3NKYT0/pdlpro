@@ -294,3 +294,80 @@ def test_staff_can_manage_coin_packages_brl_and_usd(api, staff):
     remaining = api.get("/api/v1/staff/coin-packages/").data
     assert all(row["id"] != package_id for row in remaining)
     assert all(row["code"] != "plus-pack" for row in remaining)
+
+
+@pytest.mark.django_db
+def test_staff_can_manage_bonus_tiers_and_simulate(api, staff):
+    api.force_authenticate(user=staff)
+
+    # 1. Update wallet promo with customizable fields
+    promo_resp = api.put(
+        "/api/v1/staff/wallet-promo/",
+        {
+            "percent": "15.00",
+            "title": "Mega Promo",
+            "description": "Ganhe 15% extra",
+            "badge": "ESPECIAL",
+            "stacking_mode": "sum",
+            "first_purchase_active": True,
+            "first_purchase_percent": "50.00",
+            "pix_bonus_percent": "5.00",
+            "active": True,
+        },
+        format="json",
+    )
+    assert promo_resp.status_code == 200, promo_resp.data
+    assert promo_resp.data["badge"] == "ESPECIAL"
+    assert promo_resp.data["stacking_mode"] == "sum"
+    assert promo_resp.data["first_purchase_active"] is True
+    assert promo_resp.data["pix_bonus_percent"] == "5.00"
+
+    # 2. Create a bonus tier
+    create_resp = api.post(
+        "/api/v1/staff/bonus-tiers/",
+        {
+            "min_amount": "100.00",
+            "max_amount": "499.00",
+            "percent": "10.00",
+            "description": "Bônus Pro 10%",
+            "order": 1,
+            "active": True,
+        },
+        format="json",
+    )
+    assert create_resp.status_code == 200, create_resp.data
+    tier_id = create_resp.data["id"]
+    assert create_resp.data["percent"] == "10.00"
+
+    # 3. List tiers
+    list_resp = api.get("/api/v1/staff/bonus-tiers/")
+    assert list_resp.status_code == 200
+    assert any(row["id"] == tier_id for row in list_resp.data)
+
+    # 4. Simulate bonus calculation
+    sim_resp = api.post(
+        "/api/v1/staff/bonus-simulation/",
+        {
+            "amount": "200.00",
+            "payment_method": "pix",
+            "is_first_purchase": True,
+        },
+        format="json",
+    )
+    assert sim_resp.status_code == 200, sim_resp.data
+    # 200 moedas:
+    # tier: 10% (20.00)
+    # promo: 15% (30.00) - stacking is sum so base = 25% (50.00)
+    # pix: 5% (10.00)
+    # first purchase: 50% (100.00)
+    # total percent: 10 + 15 + 5 + 50 = 80% -> bonus = 160.00, total = 360.00
+    assert sim_resp.data["bonus"] == "160.00"
+    assert sim_resp.data["total"] == "360.00"
+    assert sim_resp.data["pix_bonus"] == "10.00"
+    assert sim_resp.data["first_purchase_bonus"] == "100.00"
+
+    # 5. Delete the tier
+    del_resp = api.delete(f"/api/v1/staff/bonus-tiers/?id={tier_id}")
+    assert del_resp.status_code == 200
+    assert del_resp.data["deleted"] is True
+
