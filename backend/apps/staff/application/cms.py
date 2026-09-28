@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from contextlib import suppress
 from urllib.parse import urlparse
 
 from django.utils.text import slugify
@@ -26,6 +27,14 @@ from common.richtext import is_rich_text_empty, sanitize_rich_text
 def _text(data: dict, key: str, *, limit: int | None = None) -> str:
     value = str(data.get(key) or "").strip()
     return value[:limit] if limit is not None else value
+
+
+def _discard_banner_file(row) -> None:
+    if not row.image:
+        return
+    with suppress(OSError):
+        row.image.delete(save=False)
+    row.image = None
 
 
 def _bool(data: dict, key: str, default: bool = False) -> bool:
@@ -443,11 +452,7 @@ class UpsertStaffBannerUseCase(UseCase[dict, dict]):
         row.description_es = _text(data, "description_es")
         # Image handling: file upload, external URL, or clearing
         if _bool(data, "clear_image", default=False):
-            if row.image:
-                try:
-                    row.image.delete(save=False)
-                except Exception:
-                    pass
+            _discard_banner_file(row)
             row.image = None
             row.image_url = ""
         else:
@@ -458,12 +463,7 @@ class UpsertStaffBannerUseCase(UseCase[dict, dict]):
             elif isinstance(image_val, str):
                 trimmed = image_val.strip()
                 if not trimmed:
-                    if row.image:
-                        try:
-                            row.image.delete(save=False)
-                        except Exception:
-                            pass
-                        row.image = None
+                    _discard_banner_file(row)
                     row.image_url = ""
                 else:
                     existing_url = row.get_image_url()

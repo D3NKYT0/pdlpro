@@ -35,8 +35,8 @@ from apps.staff.application.secrets import (
     RequestSecretActionUseCase,
 )
 from apps.staff.application.use_cases import (
-    DeleteStaffCoinPackageUseCase,
     DeleteStaffBonusTierUseCase,
+    DeleteStaffCoinPackageUseCase,
     GetPanelSettingsUseCase,
     GetStaffCoinConfigUseCase,
     GetStaffWalletPromoUseCase,

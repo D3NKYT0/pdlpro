@@ -134,8 +134,8 @@ beforeEach(() => {
   } as any)
 })
 afterEach(() => { cleanup(); vi.restoreAllMocks() })
-function mount(page: ReactElement) {
-  render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><MemoryRouter>{page}</MemoryRouter></QueryClientProvider>)
+function mount(page: ReactElement, path = '/') {
+  render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><MemoryRouter initialEntries={[path]}>{page}</MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
 
@@ -293,6 +293,12 @@ it('preenche o catálogo low grade e bloqueia clique duplicado', async () => {
   expect(staffApi.autoconfigShop).toHaveBeenCalledTimes(1)
   resolveFn({ created: { items: 33, packages: 8 }, items_total: 33, packages_total: 8 })
   await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Catálogo low grade aplicado (33 itens e 8 pacotes novos)'))
+})
+
+it('abre a loja admin direto na aba de pacotes quando ?tab=packages', async () => {
+  mount(<AdminShopPage />, '/panel/admin/shop?tab=packages')
+  expect(await screen.findByRole('button', { name: 'Novo pacote' })).toBeVisible()
+  expect(screen.getByRole('tab', { name: 'Pacotes', selected: true })).toBeVisible()
 })
 
 it('cria pacote da loja a partir do item já cadastrado', async () => {

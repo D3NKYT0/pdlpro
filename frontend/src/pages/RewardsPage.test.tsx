@@ -189,6 +189,13 @@ it('apresenta a temporada com progresso, atalho do salão de jogos e abas da jor
   expect(within(journey).getAllByRole('tab')).toHaveLength(4)
 })
 
+it('guarda a sub-aba do passe em ?pass= sem perder a aba da jornada', async () => {
+  mount('/panel/rewards?tab=battle&pass=levels')
+  expect(await screen.findByRole('tab', { name: 'Prêmios por nível', selected: true })).toBeVisible()
+  expect(screen.getByText('Trilha gratuita')).toBeVisible()
+  expect(screen.getByRole('tab', { name: 'Passe de batalha', selected: true })).toBeVisible()
+})
+
 it('resgata a missão concluída e bloqueia a missão em andamento', async () => {
   const user = mount()
   const done = within((await screen.findByText('Caçar 10 lobos')).closest('article')!)

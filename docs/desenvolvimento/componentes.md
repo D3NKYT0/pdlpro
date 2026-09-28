@@ -135,6 +135,8 @@ Use `Select` (não `<select>` nativo) quando o menu aberto precisar seguir o tem
 
 [useAsyncAction](../../frontend/src/hooks/useAsyncAction.ts) centraliza `pending`, `error` e bloqueio síncrono de chamadas repetidas. Retorna `{ ok: true, value }` ou `{ ok: false, error }`; chamadas ignoradas também têm `skipped: true`. Não cancela a operação ao desmontar a tela. [useFeedbackAction](../../frontend/src/hooks/useFeedbackAction.ts) acrescenta o toast de falha, preservando a mensagem pública de `ApiError` ou usando o fallback. O callback continua responsável pela mensagem de sucesso.
 
+Abas que representam seções de uma página usam [useSearchParamTab](../../frontend/src/hooks/useSearchParamTab.ts) no lugar de `useState`: a aba ativa fica em `?tab=` e sobrevive ao F5 e a links compartilhados. Valores ausentes ou desconhecidos caem no padrão, e os demais parâmetros da URL são preservados. Sub-abas dentro de uma aba usam um parâmetro próprio (ex.: `?tab=battle&pass=levels`). Abas de idioma de formulários CMS e componentes reaproveitados várias vezes na mesma tela continuam com estado local.
+
 Escolha um hook por grupo de ações que precisa ficar bloqueado junto. Operações independentes podem ter hooks separados. Desabilitar um botão melhora a interface, mas a idempotência e as transações continuam obrigatórias no backend.
 
 Use apenas um controle por `Field`. Para erro, coloque um ID no conteúdo de `error`, associe-o com `aria-describedby` e marque `aria-invalid` no controle. O componente não inventa regras de validação nem converte valores da API.

@@ -10,4 +10,5 @@ export interface PanelItemAction {
   enchant: number
 }
 
-export type InventoryTab = 'characters' | 'bag'
+export const INVENTORY_TABS = ['characters', 'bag'] as const
+export type InventoryTab = (typeof INVENTORY_TABS)[number]

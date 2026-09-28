@@ -7,7 +7,8 @@ import { gamesApi, inventoryApi, lineageApi } from '../../services/api'
 import { useActiveAccount } from '../../contexts/ActiveAccountContext'
 import i18n from '../../i18n'
 import { INTL_LOCALES, isAppLanguage } from '../../i18n/locale'
-import type { InventoryTab, PanelItemAction } from './types'
+import { useSearchParamTab } from '../../hooks/useSearchParamTab'
+import { INVENTORY_TABS, type PanelItemAction } from './types'
 
 function searchLocale() {
   return isAppLanguage(i18n.language) ? INTL_LOCALES[i18n.language] : 'pt-BR'
@@ -19,7 +20,7 @@ export function useInventoryDashboard() {
   const queryClient = useQueryClient()
   const accounts = useQuery({ queryKey: ['lineage-accounts'], queryFn: lineageApi.accounts })
   const bag = useQuery({ queryKey: ['bag'], queryFn: gamesApi.bag })
-  const [activeTab, setActiveTab] = useState<InventoryTab>('characters')
+  const [activeTab, setActiveTab] = useSearchParamTab(INVENTORY_TABS, 'characters')
   const [selectedLogin, setSelectedLogin] = useState('')
   const primaryLogin = activeLogin ?? accounts.data?.accounts.find((account) => account.is_primary)?.login
   const fallbackLogin = primaryLogin ?? accounts.data?.accounts[0]?.login ?? ''

@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 27 de setembro de 2026
+> **Atualizado:** 28 de setembro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
@@ -19,10 +19,32 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   - Exibição direta das miniaturas reais dos flyers na listagem do catálogo administrativo (`.admin-banner-thumb`), substituindo ícones genéricos.
   - Atualização do backend em `UpsertStaffBannerUseCase` e `StaffBannersView` com `MultiPartParser` para processar upload de arquivos de imagem e expor campos unificados `image` e `image_url` nas APIs pública e administrativa.
   - Internacionalização completa em `pt`, `en` e `es` em `admin.json`.
+- **Configurador de bônus de recarga na Carteira administrativa**:
+  - Nova central em `/panel/admin/wallet` (`AdminWalletPage`) para campanhas de recarga, faixas progressivas de bônus e simulação, com estilos dedicados (`wallet-bonus.css`) e os ícones esmaltados `GoldCoinIcon` e `PixBoltIcon`.
+  - Campanha sazonal (`CoinPurchasePromo`) com selo visual (`badge`) e modo de empilhamento (`stacking_mode`): `max` aplica o maior entre campanha e faixa; `sum` soma os dois.
+  - Incentivos de conversão configuráveis: bônus da 1ª recarga (`first_purchase_active` / `first_purchase_percent`) e bônus adicional para PIX (`pix_bonus_percent`).
+  - CRUD de faixas progressivas (`CoinPurchaseBonus`) em `GET/POST/PUT/DELETE /api/v1/staff/bonus-tiers/`, com validação de mínimo, máximo e percentual (0–100).
+  - Simulador em tempo real em `POST /api/v1/staff/bonus-simulation/`, com detalhamento por regra (faixa, campanha, PIX e 1ª recarga) sem persistir dados.
+  - O valor cobrado no gateway não muda; o bônus continua creditado em `bonus_balance` pela `IPurchaseBonusPolicy`. Migração `wallet.0007_add_bonus_customization_fields`.
+  - Internacionalização em `pt`, `en` e `es` em `admin.json`; guia atualizado em [Pagamentos](../integracoes/pagamentos.md).
+- **Tráfego pago e analytics configuráveis por ambiente**:
+  - Suporte a Google Analytics 4 / Google Tag (`VITE_GTAG_ID`), conversões do Google Ads (`VITE_GOOGLE_ADS_ID` / `VITE_GOOGLE_ADS_CONVERSION_LABEL`), Google Tag Manager (`VITE_GTM_ID`), Meta Pixel (`VITE_META_PIXEL_ID`) e TikTok Pixel (`VITE_TIKTOK_PIXEL_ID`); serviços sem ID ficam desativados.
+  - `TrackingRouteListener` registra `page_view` a cada navegação da SPA; cadastro, login, abertura do checkout e recarga confirmada disparam os eventos de conversão de cada plataforma.
+  - Integração com o consentimento de cookies (LGPD/GDPR) via `ConsentEnforcementBridge` e Google Consent Mode v2: pixels de marketing respeitam a permissão do visitante, e o Google Tag opera sem cookies quando o consentimento é recusado.
+  - Guia em [Tráfego pago](../integracoes/trafego-pago.md) e variáveis documentadas no `.env.example`.
 
 ### Alterado
 
+- Os testes de interface do frontend aguardam até 5 s por renderizações assíncronas (`asyncUtilTimeout`), eliminando falhas intermitentes sob instrumentação de cobertura e em runners de CI.
+
 ### Corrigido
+
+- **Descrição do bônus de recarga no modo `max`**: quando a faixa progressiva supera a campanha, a prévia e o crédito passam a exibir a descrição da faixa vencedora, e não mais a da campanha.
+- **Faixas de bônus e banners no painel da equipe**:
+  - Valores não numéricos em mínimo, máximo ou percentual das faixas de bônus retornam erro de validação (HTTP 400) sem capturar exceções genéricas; a simulação trata quantidade inválida como zero.
+  - Remover o flyer de um banner conclui a limpeza mesmo quando o storage falha ao apagar o arquivo, sem mascarar outros erros.
+  - `PUT /api/v1/staff/bonus-tiers/` documentado no OpenAPI com tag, resumo e descrição.
+  - Rótulo acessível no seletor de 1ª recarga do simulador de bônus em `/panel/admin/wallet`.
 
 - **Geração de PIX no checkout Mercado Pago**:
   - Correção no callback de envio do Mercado Pago Payment Brick (`mountMercadoPagoBrick` e `WalletPage`), que omitia a identificação do pagador (`CPF`/`CNPJ`), nome e sobrenome na transação via PIX, provocando recusa do backend por ausência de documento e silenciando o erro na tela.

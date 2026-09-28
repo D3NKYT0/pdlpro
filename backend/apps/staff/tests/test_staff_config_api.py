@@ -371,3 +371,39 @@ def test_staff_can_manage_bonus_tiers_and_simulate(api, staff):
     assert del_resp.status_code == 200
     assert del_resp.data["deleted"] is True
 
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"min_amount": "abc", "percent": "10"},
+        {"min_amount": "10", "max_amount": "xyz", "percent": "10"},
+        {"min_amount": "10", "percent": "dez"},
+        {"min_amount": "-1", "percent": "10"},
+        {"min_amount": "100", "max_amount": "50", "percent": "10"},
+        {"min_amount": "10", "percent": "101"},
+    ],
+)
+def test_bonus_tier_rejects_invalid_values(api, staff, payload):
+    api.force_authenticate(user=staff)
+
+    response = api.post("/api/v1/staff/bonus-tiers/", payload, format="json")
+
+    assert response.status_code == 400, response.data
+    assert api.get("/api/v1/staff/bonus-tiers/").data == []
+
+
+@pytest.mark.django_db
+def test_bonus_simulation_treats_invalid_amount_as_zero(api, staff):
+    api.force_authenticate(user=staff)
+
+    response = api.post(
+        "/api/v1/staff/bonus-simulation/",
+        {"amount": "muito", "payment_method": "pix"},
+        format="json",
+    )
+
+    assert response.status_code == 200, response.data
+    assert response.data["amount"] == "0.00"
+    assert response.data["bonus"] == "0.00"
+

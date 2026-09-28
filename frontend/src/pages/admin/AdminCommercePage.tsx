@@ -18,7 +18,10 @@ import {
   Status,
 } from "../../components/programs/ProgramUI";
 import { useProgramAction } from "../../components/programs/useProgramAction";
+import { useSearchParamTab } from "../../hooks/useSearchParamTab";
 import { AdminHeader } from "./AdminChrome";
+
+const COMMERCE_TABS = ["packages", "promos"] as const;
 
 export function AdminCommercePage() {
   const { t } = useTranslation("admin");
@@ -36,7 +39,7 @@ export function AdminCommercePage() {
     queryFn: programsApi.staffSupporters,
   });
   const action = useProgramAction();
-  const [tab, setTab] = useState("packages");
+  const [tab, setTab] = useSearchParamTab(COMMERCE_TABS, "packages");
   const [draft, setDraft] = useState<Partial<ShopPackage & Promo> | null>(null);
   const [contents, setContents] = useState<
     { item: string; quantity: number }[]
@@ -59,10 +62,12 @@ export function AdminCommercePage() {
       />
       <ErrorNotice error={packs.error || promos.error || action.error} />
       <div className="program-tabs">
-        {[
-          ["packages", t("commerce.tabPackages")],
-          ["promos", t("commerce.tabPromos")],
-        ].map(([id, label]) => (
+        {(
+          [
+            ["packages", t("commerce.tabPackages")],
+            ["promos", t("commerce.tabPromos")],
+          ] as const
+        ).map(([id, label]) => (
           <button
             key={id}
             className={tab === id ? "active" : ""}

@@ -27,11 +27,17 @@ beforeEach(() => {
   vi.mocked(walletApi.me).mockResolvedValue({ balance: '100', bonus_balance: '5' } as any)
 })
 afterEach(cleanup)
-function mount() {
+function mount(path = '/panel/shop') {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
-  render(<QueryClientProvider client={client}><MemoryRouter><ShopPage /></MemoryRouter></QueryClientProvider>)
+  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[path]}><ShopPage /></MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
+
+it('abre a aba indicada em ?tab= para preservar a seleção ao recarregar', async () => {
+  mount('/panel/shop?tab=packages')
+  expect(screen.getByRole('tab', { name: 'Pacotes' }).getAttribute('aria-selected')).toBe('true')
+  expect(await screen.findByRole('button', { name: 'Adicionar pacote' })).toBeTruthy()
+})
 
 it('destaca o ícone do item ao lado do texto, fora da arte', async () => {
   mount()

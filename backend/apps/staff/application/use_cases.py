@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 from django.conf import settings
 from django.utils.text import slugify
@@ -444,8 +444,8 @@ class UpsertStaffBonusTierUseCase(UseCase[dict, dict]):
 
         try:
             min_amount = Decimal(str(data.get("min_amount") if data.get("min_amount") is not None else 0))
-        except Exception:
-            raise ValidationDomainError("Quantidade mínima inválida.")
+        except (InvalidOperation, ValueError, TypeError):
+            raise ValidationDomainError("Quantidade mínima inválida.") from None
         if min_amount < 0:
             raise ValidationDomainError("A quantidade mínima de moedas não pode ser negativa.")
 
@@ -453,15 +453,15 @@ class UpsertStaffBonusTierUseCase(UseCase[dict, dict]):
         if data.get("max_amount") not in (None, ""):
             try:
                 max_amount = Decimal(str(data["max_amount"]))
-            except Exception:
-                raise ValidationDomainError("Quantidade máxima inválida.")
+            except (InvalidOperation, ValueError, TypeError):
+                raise ValidationDomainError("Quantidade máxima inválida.") from None
             if max_amount < min_amount:
                 raise ValidationDomainError("A quantidade máxima deve ser maior ou igual à mínima.")
 
         try:
             percent = Decimal(str(data.get("percent") if data.get("percent") is not None else 0))
-        except Exception:
-            raise ValidationDomainError("Percentual inválido.")
+        except (InvalidOperation, ValueError, TypeError):
+            raise ValidationDomainError("Percentual inválido.") from None
         if percent < 0 or percent > 100:
             raise ValidationDomainError("O percentual de bônus deve estar entre 0 e 100.")
 
@@ -503,7 +503,7 @@ class PreviewStaffBonusSimulationUseCase(UseCase[dict, dict]):
     def execute(self, data: dict) -> dict:
         try:
             amount = Decimal(str(data.get("amount") or 0))
-        except Exception:
+        except (InvalidOperation, ValueError, TypeError):
             amount = Decimal("0.00")
         payment_method = str(data.get("payment_method") or "")
         is_first_purchase = bool(data.get("is_first_purchase", False))

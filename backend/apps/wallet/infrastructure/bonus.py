@@ -87,7 +87,10 @@ class DjangoPurchaseBonusPolicy(IPurchaseBonusPolicy):
 
         bonus = (amount * total_percent / Decimal("100.00")).quantize(Decimal("0.01"))
         parts = []
-        if promo is not None and promo_percent > 0:
+        promo_leads = promo is not None and promo_percent > 0 and (
+            stacking == "sum" or promo_percent >= tier_percent
+        )
+        if promo_leads:
             parts.append(promo.description or promo.title)
         elif rule is not None and rule.description:
             parts.append(rule.description)

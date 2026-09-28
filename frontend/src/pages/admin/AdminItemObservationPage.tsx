@@ -14,6 +14,7 @@ import { itemObservationApi as api, formatItemQuantity as qty, type ObservationA
 import { ItemIcon } from '../../components/ItemIcon'
 import { AdminHeader } from './AdminChrome'
 import { useAuth } from '../../contexts/AuthContext'
+import { useSearchParamTab } from '../../hooks/useSearchParamTab'
 import './item-observation.css'
 
 type Translate = (key: string, options?: Record<string, unknown>) => string
@@ -174,13 +175,15 @@ export function Categories({ access }: { access: ObservationAccess }) {
   </Card>
 }
 
+const OBSERVATION_TABS = ['live', 'snapshots', 'categories'] as const
+
 export function AdminItemObservationPage() {
   const { t } = useTranslation('admin')
   const KEY = useObservationKey()
-  const [tab, setTab] = useState('live')
+  const [tab, setTab] = useSearchParamTab(OBSERVATION_TABS, 'live')
   const access = useQuery({ queryKey: [...KEY, 'access'], queryFn: api.access, retry: false })
   return <div className="account-page item-observation"><div className="observation-hero"><AdminHeader kicker={t('itemWatch.kicker')} title={t('itemWatch.title')} description={t('itemWatch.description')} /><div className="observation-hero-mark" aria-hidden="true"><ChartNoAxesCombined size={44} /></div></div>
     {access.isPending && <p>{t('itemWatch.checkingAccess')}</p>}<ErrorNotice error={access.error} />{access.isError && <Button type="submit" onClick={() => void access.refetch()}>{t('itemWatch.retry')}</Button>}
-    {access.data && <><nav className="observation-tabs" aria-label={t('itemWatch.tabsLabel')}>{[{ value: 'live', label: t('itemWatch.tabLive'), Icon: ChartNoAxesCombined }, { value: 'snapshots', label: t('itemWatch.tabSnapshots'), Icon: History }, { value: 'categories', label: t('itemWatch.tabCategories'), Icon: Tags }].map(({ value, label, Icon }) => <button key={value} aria-pressed={tab === value} onClick={() => setTab(value)}><Icon size={17} />{label}</button>)}</nav>{tab === 'live' ? <Live /> : tab === 'snapshots' ? <Snapshots access={access.data} /> : <Categories access={access.data} />}</>}
+    {access.data && <><nav className="observation-tabs" aria-label={t('itemWatch.tabsLabel')}>{([{ value: 'live', label: t('itemWatch.tabLive'), Icon: ChartNoAxesCombined }, { value: 'snapshots', label: t('itemWatch.tabSnapshots'), Icon: History }, { value: 'categories', label: t('itemWatch.tabCategories'), Icon: Tags }] as const).map(({ value, label, Icon }) => <button key={value} aria-pressed={tab === value} onClick={() => setTab(value)}><Icon size={17} />{label}</button>)}</nav>{tab === 'live' ? <Live /> : tab === 'snapshots' ? <Snapshots access={access.data} /> : <Categories access={access.data} />}</>}
   </div>
 }

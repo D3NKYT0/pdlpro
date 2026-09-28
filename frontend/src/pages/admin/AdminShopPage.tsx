@@ -1,6 +1,7 @@
 import { Card } from '../../components/ui/Card'
 import { useFeedbackAction } from '../../hooks/useFeedbackAction'
 import { useAsyncAction } from '../../hooks/useAsyncAction'
+import { useSearchParamTab } from '../../hooks/useSearchParamTab'
 import { Field } from '../../components/ui/Field'
 import { Button } from '../../components/ui/Button'
 import { Tabs } from '../../components/ui/Tabs'
@@ -18,7 +19,7 @@ import { ItemIcon } from '../../components/ItemIcon'
 import { ItemIdField } from '../../components/ItemIdField'
 import { useItemCatalog } from '../../hooks/useItemCatalog'
 
-type ShopTab = 'items' | 'packages'
+const SHOP_TABS = ['items', 'packages'] as const
 
 export function AdminShopPage() {
   const { t } = useTranslation('admin')
@@ -26,7 +27,7 @@ export function AdminShopPage() {
   const queryClient = useQueryClient()
   const shop = useQuery({ queryKey: ['staff-shop'], queryFn: staffApi.shop })
   const packs = useQuery({ queryKey: ['staff-packages'], queryFn: commerceApi.staffPackages })
-  const [tab, setTab] = useState<ShopTab>('items')
+  const [tab, setTab] = useSearchParamTab(SHOP_TABS, 'items')
   const [name, setName] = useState('')
   const [itemId, setItemId] = useState('')
   const [price, setPrice] = useState('')

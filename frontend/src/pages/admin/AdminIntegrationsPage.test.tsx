@@ -161,13 +161,13 @@ const statusFixture = {
   },
 }
 
-function renderPage() {
+function renderPage(path = '/panel/admin/integrations') {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   return render(
     createElement(
       QueryClientProvider,
       { client },
-      createElement(MemoryRouter, null, createElement(AdminIntegrationsPage)),
+      createElement(MemoryRouter, { initialEntries: [path] }, createElement(AdminIntegrationsPage)),
     ),
   )
 }
@@ -196,6 +196,15 @@ describe('AdminIntegrationsPage', () => {
     expect(document.querySelector('[data-enamel-icon="payment-card"]')).not.toBeNull()
     expect(document.querySelector('[data-enamel-icon="purse"]')).not.toBeNull()
     expect(document.querySelector('.admin-integrations-section[data-tone="stripe"]')).not.toBeNull()
+  })
+
+  it('abre a seção indicada em ?tab= e troca de seção pela URL', async () => {
+    const user = userEvent.setup()
+    renderPage('/panel/admin/integrations?tab=smtp')
+    expect(await screen.findByRole('tab', { name: /smtp/i })).toHaveAttribute('aria-selected', 'true')
+
+    await user.click(screen.getByRole('tab', { name: /pagamentos/i }))
+    expect(screen.getByRole('tab', { name: /pagamentos/i })).toHaveAttribute('aria-selected', 'true')
   })
 
   it('salva payload sem reenviar segredo vazio e bloqueia double-submit', async () => {

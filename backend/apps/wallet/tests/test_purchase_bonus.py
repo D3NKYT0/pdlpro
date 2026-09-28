@@ -1,5 +1,7 @@
 from decimal import Decimal
+
 import pytest
+
 from apps.wallet.infrastructure.bonus import DjangoPurchaseBonusPolicy
 from apps.wallet.infrastructure.models import CoinPurchaseBonus, CoinPurchasePromo
 

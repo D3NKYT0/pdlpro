@@ -204,3 +204,45 @@ def test_staff_banner_image_upload_and_url(staff_client):
 
     # Cleanup
     Banner.objects.filter(id__in=[banner_url_id, banner_file_id]).delete()
+
+
+def _upload_banner(staff_client, title: str) -> str:
+    from django.core.files.uploadedfile import SimpleUploadedFile
+
+    image = SimpleUploadedFile(
+        "flyer.png",
+        b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15c4\x00\x00\x00\nIDATx\x9cc\x00\x01\x00\x00\x05\x00\x01\r\n-\xb4\x00\x00\x00\x00IEND\xaeB`\x82",
+        content_type="image/png",
+    )
+    response = staff_client.post(
+        "/api/v1/staff/banners/",
+        {"title": title, "image": image},
+        format="multipart",
+    )
+    assert response.status_code == 200, response.data
+    return response.data["id"]
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "clear_payload",
+    [{"clear_image": "true"}, {"image": ""}],
+)
+def test_staff_banner_clears_image_even_when_storage_delete_fails(staff_client, mocker, clear_payload):
+    banner_id = _upload_banner(staff_client, "Banner com falha no storage")
+    delete = mocker.patch(
+        "django.db.models.fields.files.FieldFile.delete",
+        side_effect=OSError("storage indisponível"),
+    )
+
+    response = staff_client.put(
+        "/api/v1/staff/banners/",
+        {"id": banner_id, "title": "Banner limpo", **clear_payload},
+        format="json",
+    )
+
+    assert response.status_code == 200, response.data
+    assert response.data["image"] == ""
+    assert response.data["image_url"] == ""
+    assert delete.called
+    assert not Banner.objects.get(id=banner_id).image

@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/vitest'
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { MemoryRouter, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import toast from 'react-hot-toast'
 import { ApiError, gamesApi, inventoryApi, lineageApi } from '../services/api'
@@ -29,10 +30,22 @@ beforeEach(() => {
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 afterEach(() => { cleanup(); client.clear() })
-function mount() {
-  render(<QueryClientProvider client={client}><InventoryPage /></QueryClientProvider>)
+function LocationProbe() {
+  const location = useLocation()
+  return <output data-testid="location">{location.search}</output>
+}
+function mount(initialEntry = '/panel/inventory') {
+  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[initialEntry]}><InventoryPage /><LocationProbe /></MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
+it('aba ativa fica na URL para sobreviver ao recarregamento', async () => {
+  const user = mount()
+  await user.click(screen.getByRole('tab', { name: /Bag do site/ }))
+  expect(screen.getByTestId('location')).toHaveTextContent('?tab=bag')
+  cleanup()
+  mount('/panel/inventory?tab=bag')
+  expect(screen.getByRole('tab', { name: /Bag do site/ })).toHaveAttribute('aria-selected', 'true')
+})
 it.each([false, true])('retirada informa conta, personagem, item e quantidade; erro=%s', async fail => {
   if (fail) vi.mocked(inventoryApi.withdraw).mockRejectedValue(new ApiError('Personagem online', 409, 'ONLINE'))
   const user = mount()

@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import toast from 'react-hot-toast'
 
@@ -76,12 +76,18 @@ const sampleSimResult = {
   },
 }
 
-function mount() {
+function LocationProbe() {
+  const location = useLocation()
+  return <output data-testid="location">{location.pathname + location.search}</output>
+}
+
+function mount(initialEntry = '/panel/admin/wallet') {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   render(
     <QueryClientProvider client={client}>
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[initialEntry]}>
         <AdminWalletPage />
+        <LocationProbe />
       </MemoryRouter>
     </QueryClientProvider>,
   )
@@ -122,6 +128,27 @@ it('renderiza abas e permite navegar entre Campanhas, Faixas, Regras e Simulador
   await user.click(screen.getByRole('tab', { name: /Simulador/ }))
   expect(await screen.findByText('Simular Regras de Bônus')).toBeInTheDocument()
   expect(screen.getByText('Quantidade de moedas a recarregar')).toBeInTheDocument()
+})
+
+it('grava a aba ativa na URL ao clicar para preservar a seleção no recarregamento', async () => {
+  const user = mount('/panel/admin/wallet?from=central')
+  await screen.findByRole('heading', { name: /Banner na carteira/ })
+
+  await user.click(screen.getByRole('tab', { name: /Regras Especiais/ }))
+
+  expect(screen.getByTestId('location')).toHaveTextContent('/panel/admin/wallet?from=central&tab=rules')
+  expect(screen.getByRole('tab', { name: /Regras Especiais/ })).toHaveAttribute('aria-selected', 'true')
+})
+
+it('abre diretamente a aba indicada em ?tab= e cai em Campanhas quando o valor é inválido', async () => {
+  mount('/panel/admin/wallet?tab=tiers')
+  expect(await screen.findByText('Faixa Bronze (+10%)')).toBeInTheDocument()
+  expect(screen.getByRole('tab', { name: /Faixas Progressivas/ })).toHaveAttribute('aria-selected', 'true')
+  cleanup()
+
+  mount('/panel/admin/wallet?tab=inexistente')
+  expect(await screen.findByRole('heading', { name: /Banner na carteira/ })).toBeInTheDocument()
+  expect(screen.getByRole('tab', { name: /Campanhas/ })).toHaveAttribute('aria-selected', 'true')
 })
 
 it('salva promoção com badge, modo cumulativo e porcentagem', async () => {

@@ -37,6 +37,7 @@ import { Modal } from '../../components/ui/Modal'
 import { Tabs } from '../../components/ui/Tabs'
 import { Toggle } from '../../components/ui/Toggle'
 import { useFeedbackAction } from '../../hooks/useFeedbackAction'
+import { useSearchParamTab } from '../../hooks/useSearchParamTab'
 import {
   BannerFlagIcon,
   GiftBoxIcon,
@@ -68,7 +69,7 @@ function fromDatetimeLocal(value: string) {
   return date.toISOString()
 }
 
-type WalletTab = 'promo' | 'tiers' | 'rules' | 'simulator'
+const WALLET_TABS = ['promo', 'tiers', 'rules', 'simulator'] as const
 
 const EMPTY_TIER: Omit<ApiStaffBonusTier, 'id'> = {
   min_amount: 100,
@@ -82,7 +83,7 @@ const EMPTY_TIER: Omit<ApiStaffBonusTier, 'id'> = {
 export function AdminWalletPage() {
   const { t } = useTranslation('admin')
   const queryClient = useQueryClient()
-  const [activeTab, setActiveTab] = useState<WalletTab>('promo')
+  const [activeTab, setActiveTab] = useSearchParamTab(WALLET_TABS, 'promo')
 
   // Queries
   const promo = useQuery({ queryKey: ['staff-wallet-promo'], queryFn: staffApi.walletPromo })
@@ -1286,6 +1287,7 @@ export function AdminWalletPage() {
                     </div>
                   </div>
                   <Toggle
+                    label={<span className="sr-only">{t('wallet.simulator.isFirstPurchase')}</span>}
                     checked={simIsFirstPurchase}
                     onChange={(e) => setSimIsFirstPurchase(e.target.checked)}
                   />

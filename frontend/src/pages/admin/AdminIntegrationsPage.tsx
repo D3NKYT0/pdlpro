@@ -17,6 +17,7 @@ import {
   ShieldOkIcon,
 } from '../../components/icons'
 import { apiErrorMessage } from '../../lib/errors'
+import { useSearchParamTab } from '../../hooks/useSearchParamTab'
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -199,6 +200,16 @@ function SectionCard({
   )
 }
 
+const INTEGRATION_TABS: readonly IntegrationSectionId[] = [
+  'payments',
+  'lineage',
+  'smtp',
+  'oauth',
+  'denkynho',
+  'storage',
+  'observability',
+]
+
 const EMPTY_DRAFTS: Record<IntegrationSectionId, Draft> = {
   payments: {},
   lineage: {},
@@ -212,7 +223,7 @@ const EMPTY_DRAFTS: Record<IntegrationSectionId, Draft> = {
 export function AdminIntegrationsPage() {
   const { t } = useTranslation('admin')
   const queryClient = useQueryClient()
-  const [tab, setTab] = useState<IntegrationSectionId>('payments')
+  const [tab, setTab] = useSearchParamTab(INTEGRATION_TABS, 'payments')
   const [drafts, setDrafts] = useState<Record<IntegrationSectionId, Draft>>(EMPTY_DRAFTS)
   const [clears, setClears] = useState<Record<string, boolean>>({})
 

@@ -71,6 +71,7 @@
 | [Lineage 2](integracoes/lineage.md) | Dialetos SQL e gateways |
 | [TLS MySQL L2](integracoes/lineage-mysql-ssl.md) | Certificados e volume Docker |
 | [Pagamentos](integracoes/pagamentos.md) | Fluxo interno MP/Stripe |
+| [Tráfego pago](integracoes/trafego-pago.md) | GA4, Google Ads, GTM, Meta e TikTok Pixel |
 | [Catálogo de itens](integracoes/catalogo-de-itens.md) | XML, customs, cache |
 | [Ícones](integracoes/icones.md) | Pacote de assets |
 | [Câmbio painel ↔ jogo](integracoes/cambio-painel-jogo.md) | Inventário e recibos |

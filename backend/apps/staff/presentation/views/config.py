@@ -163,6 +163,11 @@ class StaffBonusTiersView(InjectedAPIView):
     def post(self, request):
         return Response(self.resolve(UpsertStaffBonusTierUseCase).execute(request.data or {}))
 
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Atualizar faixa de bônus"),
+        description=gettext_lazy("Atualiza uma faixa progressiva de bônus de recarga existente pelo ID."),
+    )
     def put(self, request):
         return Response(self.resolve(UpsertStaffBonusTierUseCase).execute(request.data or {}))
 

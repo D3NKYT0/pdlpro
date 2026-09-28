@@ -6,7 +6,8 @@ import { Modal } from '../components/ui/Modal'
 import { Field } from '../components/ui/Field'
 import { ErrorNotice } from '../components/ui/Feedback'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useSearchParamTab } from '../hooks/useSearchParamTab'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import {
@@ -111,6 +112,7 @@ const gameTabs: Array<{ id: GameTab; icon: LucideIcon }> = [
   { id: 'fishing', icon: Fish },
   { id: 'economy', icon: Sword },
 ]
+const GAME_TAB_IDS = gameTabs.map(({ id }) => id)
 
 export function GamesPage() {
   const { t } = useTranslation('panel')
@@ -131,16 +133,7 @@ export function GamesPage() {
   const [resetTarget, setResetTarget] = useState<{ id: string; name: string } | null>(null)
   const [buyTokensOpen, setBuyTokensOpen] = useState(false)
   const [boxHelpOpen, setBoxHelpOpen] = useState(false)
-  const [params, setParams] = useSearchParams()
-  const requestedGame = params.get('tab')
-  const activeGame = gameTabs.find((tab) => tab.id === requestedGame)?.id ?? 'roulette'
-  function setActiveGame(tab: GameTab) {
-    setParams((current) => {
-      const next = new URLSearchParams(current)
-      next.set('tab', tab)
-      return next
-    })
-  }
+  const [activeGame, setActiveGame] = useSearchParamTab(GAME_TAB_IDS, 'roulette')
 
   useEffect(() => {
     return () => {

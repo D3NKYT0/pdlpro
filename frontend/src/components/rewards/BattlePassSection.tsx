@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import {
@@ -29,6 +28,7 @@ import {
   RewardList,
 } from '../programs/ProgramUI'
 import { useProgramAction } from '../programs/useProgramAction'
+import { useSearchParamTab } from '../../hooks/useSearchParamTab'
 import { ItemIcon } from '../ItemIcon'
 
 const BATTLE_PASS_KEYS = [['battle-pass'], ['battle-details']] as const
@@ -42,6 +42,7 @@ const PASS_TABS: Array<{ id: PassTab; icon: LucideIcon }> = [
   { id: 'milestones', icon: Flag },
   { id: 'history', icon: History },
 ]
+const PASS_TAB_IDS = PASS_TABS.map(({ id }) => id)
 
 function percentOf(value: number, total: number) {
   return Math.min(100, Math.max(0, (value / Math.max(1, total)) * 100))
@@ -58,7 +59,7 @@ export function BattlePassSection() {
     queryFn: gamesApi.battleDetails,
   })
   const action = useProgramAction()
-  const [tab, setTab] = useState<PassTab>('quests')
+  const [tab, setTab] = useSearchParamTab(PASS_TAB_IDS, 'quests', 'pass')
   const data = details.data
   const season = pass.data?.season
   const levels = pass.data?.levels ?? []

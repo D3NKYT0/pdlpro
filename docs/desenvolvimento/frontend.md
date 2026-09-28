@@ -16,7 +16,7 @@ A interface é uma SPA React com TypeScript e Vite. Site público, autenticaçã
 | `contexts/AuthContext.tsx` | Estado de autenticação |
 | `pages/`, `pages/admin/` | Orquestração fina: Query + composição de seções |
 | `components/` | UI de feature e biblioteca visual |
-| `components/ui/`, `hooks/` | Biblioteca visual, ciclo compartilhado de ações e `useDebouncedValue` |
+| `components/ui/`, `hooks/` | Biblioteca visual, ciclo compartilhado de ações, `useDebouncedValue` e `useSearchParamTab` (aba na URL) |
 | `services/api.ts` | Única fachada de import para telas (APIs + tipos) |
 | `services/domain/` | Adapters `*Api` por capacidade (paths/payloads) |
 | `services/infra/` | HTTP, erros e recuperação da sessão |

@@ -2,13 +2,15 @@ import { useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { useProgramAction } from '../programs/useProgramAction'
+import { useSearchParamTab } from '../../hooks/useSearchParamTab'
 import { formatNumber } from '../../lib/formatters'
 import { commerceApi, shopApi, walletApi, type CartLine } from '../../services/api'
 
 export const SHOP_CART_KEYS = [['shop-quote']] as const
 export const SHOP_CHECKOUT_KEYS = [['shop-quote'], ['shop-purchases'], ['wallet']] as const
 
-export type ShopTab = 'items' | 'packages' | 'history'
+export const SHOP_TABS = ['items', 'packages', 'history'] as const
+export type ShopTab = (typeof SHOP_TABS)[number]
 
 /** Agrega catálogo, carrinho e checkout da loja sem espalhar queries na página. */
 export function useShopPage() {
@@ -18,7 +20,7 @@ export function useShopPage() {
   const cart = useQuery({ queryKey: ['shop-quote'], queryFn: commerceApi.quote })
   const purchases = useQuery({ queryKey: ['shop-purchases'], queryFn: commerceApi.purchases })
   const wallet = useQuery({ queryKey: ['wallet'], queryFn: walletApi.me })
-  const [tab, setTab] = useState<ShopTab>('items')
+  const [tab, setTab] = useSearchParamTab(SHOP_TABS, 'items')
   const [coupon, setCoupon] = useState('')
   const key = useRef<string | null>(null)
   const action = useProgramAction()
