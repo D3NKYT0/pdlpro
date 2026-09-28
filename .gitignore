@@ -33,6 +33,7 @@ local_settings.py
 .env.local
 .env.production
 .env.staging
+.env.before-restore-*
 !.env.example
 
 # Certificados TLS do MySQL L2 (pasta versionada, PEMs fora do Git)

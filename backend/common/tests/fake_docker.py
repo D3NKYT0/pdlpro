@@ -222,6 +222,11 @@ is_remote() {{ [[ "$1" =~ ^[A-Za-z][A-Za-z0-9_-]+: ]]; }}
 printf '%s\\n' "$*" >> "$LOG"
 command="$1"
 shift
+positional=()
+for arg in "$@"; do
+  [[ "$arg" == -* && "$arg" != "--files-only" ]] || positional+=("$arg")
+done
+set -- "${{positional[@]}}"
 case "$command" in
   copyto)
     if is_remote "$2" && [[ "${{FAKE_RCLONE_FAIL_COPY:-0}}" == "1" ]]; then

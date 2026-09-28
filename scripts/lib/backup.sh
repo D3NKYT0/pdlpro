@@ -77,6 +77,47 @@ rclone_run() {
     "$PDL_RCLONE_IMAGE" "$@"
 }
 
+# Barra de progresso no terminal; sem terminal (timer/cron), uma linha por minuto no log.
+rclone_transfer_flags() {
+  if [[ -t 1 ]]; then
+    printf '%s\n' --progress
+  else
+    printf '%s\n' --stats=1m --stats-one-line --stats-log-level=NOTICE
+  fi
+}
+
+# Lê a saída de `rclone listremotes`; com um único remote sugere <remote>:pdl-backups.
+suggest_backup_destination() {
+  local remotes
+  remotes="$(tr -d '\r' | grep -E '^[^[:space:]]+:$' || true)"
+  if [[ -n "$remotes" && "$(printf '%s\n' "$remotes" | wc -l)" -eq 1 ]]; then
+    printf '%spdl-backups' "$remotes"
+  fi
+}
+
+# Pergunta o destino (até 3 tentativas); Enter aceita a sugestão. Prompt no stderr.
+read_backup_destination() {
+  local suggestion="$1"
+  local answer attempt
+  for attempt in 1 2 3; do
+    if [[ -n "$suggestion" ]]; then
+      printf 'Destino dos backups [%s]: ' "$suggestion" >&2
+    else
+      printf 'Destino dos backups (ex.: gdrive:pdl-backups): ' >&2
+    fi
+    answer=""
+    IFS= read -r answer || true
+    answer="$(printf '%s' "$answer" | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+    [[ -n "$answer" ]] || answer="$suggestion"
+    if [[ "$answer" == ?*:* ]]; then
+      printf '%s' "$answer"
+      return 0
+    fi
+    [[ -z "$answer" ]] || warn "destino inválido: $answer (use remote:caminho, ex.: gdrive:pdl-backups)"
+  done
+  return 1
+}
+
 remote_join() {
   local base="$1"
   local name="$2"
@@ -228,6 +269,24 @@ decrypt_backup_file() {
     fi
   done
   die "não foi possível decifrar o backup com BACKUP_ENCRYPTION_KEY nem fallbacks"
+}
+
+# Imprime (um por linha) os nomes das variáveis cujo valor difere entre dois
+# arquivos .env ou que só existem em um deles. Nunca imprime valores.
+env_changed_keys() {
+  awk '
+    /^[[:space:]]*(#|$)/ || index($0, "=") == 0 { next }
+    {
+      key = substr($0, 1, index($0, "=") - 1)
+      value = substr($0, index($0, "=") + 1)
+      sub(/\r$/, "", value)
+      if (FILENAME == ARGV[1]) { old[key] = value } else { new[key] = value }
+    }
+    END {
+      for (key in old) if (!(key in new) || old[key] != new[key]) print key
+      for (key in new) if (!(key in old)) print key
+    }
+  ' "$1" "$2" | LC_ALL=C sort
 }
 
 # Roda um script sh no container backend como root, com os volumes de mídia e

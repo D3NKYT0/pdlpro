@@ -22,8 +22,9 @@ Opções:
   -h, --help        Exibe esta ajuda.
 
 O pacote padrão pdl_<data>.tar(.enc) reúne o dump do PostgreSQL, a mídia
-(/app/media, incluindo temas) e os arquivos privados (/app/private). Com
-BACKUP_INCLUDE_FILES=false o comando volta a gravar só o dump.
+(/app/media, incluindo temas), os arquivos privados (/app/private) e o .env
+da instalação. Com BACKUP_INCLUDE_FILES=false a mídia fica de fora; com
+BACKUP_INCLUDE_ENV=false, o .env. O .env só entra em pacotes cifrados.
 
 Em produção o arquivo é cifrado com AES-256 (openssl) usando
 BACKUP_ENCRYPTION_KEY. Sem a chave, o desenvolvimento grava em claro e emite um
@@ -78,6 +79,14 @@ include_files=0
 if [[ "$db_only" -eq 0 ]] && env_flag_enabled BACKUP_INCLUDE_FILES true; then
   include_files=1
 fi
+include_env=0
+if [[ "$db_only" -eq 0 ]] && env_flag_enabled BACKUP_INCLUDE_ENV true; then
+  if [[ -n "$backup_encryption_key" ]]; then
+    include_env=1
+  else
+    warn "sem BACKUP_ENCRYPTION_KEY o .env não entra no backup (os segredos não são gravados em claro)"
+  fi
+fi
 
 if [[ -z "$backup_encryption_key" && "$settings_module" == *production* ]]; then
   die "BACKUP_ENCRYPTION_KEY é obrigatória para cifrar backups em produção"
@@ -103,18 +112,29 @@ operational_compose exec -T db sh -c 'exec pg_dump -U "$POSTGRES_USER" -d "$POST
 operational_compose exec -T db sh -c 'exec pg_restore --list' < "${work_dir}/db.dump" >/dev/null ||
   die "o dump gerado não passou na verificação do pg_restore"
 
-if [[ "$include_files" -eq 1 ]]; then
-  info "Empacotando mídia e arquivos privados..."
-  files_container "$FILES_ARCHIVE_SCRIPT" > "${work_dir}/files.tar.gz"
-  [[ -s "${work_dir}/files.tar.gz" ]] || die "o pacote de arquivos gerado está vazio"
-  tar -tzf "${work_dir}/files.tar.gz" >/dev/null || die "o pacote de arquivos gerado está corrompido"
+if [[ "$include_files" -eq 1 || "$include_env" -eq 1 ]]; then
+  members=(db.dump)
+  if [[ "$include_files" -eq 1 ]]; then
+    info "Empacotando mídia e arquivos privados..."
+    files_container "$FILES_ARCHIVE_SCRIPT" > "${work_dir}/files.tar.gz"
+    [[ -s "${work_dir}/files.tar.gz" ]] || die "o pacote de arquivos gerado está vazio"
+    tar -tzf "${work_dir}/files.tar.gz" >/dev/null || die "o pacote de arquivos gerado está corrompido"
+    members+=(files.tar.gz)
+  fi
+  if [[ "$include_env" -eq 1 ]]; then
+    (umask 077 && cp -- "$ENV_FILE" "${work_dir}/env")
+    members+=(env)
+  fi
+  contents="db"
+  [[ "$include_files" -eq 1 ]] && contents="${contents},files"
+  [[ "$include_env" -eq 1 ]] && contents="${contents},env"
   {
     printf 'format=%s\n' "$BACKUP_FORMAT"
     printf 'created_at=%s\n' "$timestamp"
     printf 'product_version=%s\n' "$(read_product_version 2>/dev/null || printf 'desconhecida')"
-    printf 'contents=db,files\n'
+    printf 'contents=%s\n' "$contents"
   } > "${work_dir}/manifest.txt"
-  tar -cf "${work_dir}/bundle.tar" -C "$work_dir" manifest.txt db.dump files.tar.gz
+  tar -cf "${work_dir}/bundle.tar" -C "$work_dir" manifest.txt "${members[@]}"
   plain_path="${work_dir}/bundle.tar"
   base_name="pdl_${timestamp}.tar"
 else
@@ -137,8 +157,9 @@ success "Backup criado e validado: $backup_path"
 
 upload_failed=0
 if [[ -n "$remote" && "$upload" -eq 1 ]]; then
-  info "Enviando para ${remote}..."
-  if rclone_run copyto "$backup_path" "$(remote_join "$remote" "$(basename "$backup_path")")" &&
+  info "Enviando $(du -h "$backup_path" | cut -f1) para ${remote}..."
+  mapfile -t transfer_flags < <(rclone_transfer_flags)
+  if rclone_run copyto "${transfer_flags[@]}" "$backup_path" "$(remote_join "$remote" "$(basename "$backup_path")")" &&
     { [[ ! -f "${backup_path}.sha256" ]] ||
       rclone_run copyto "${backup_path}.sha256" "$(remote_join "$remote" "$(basename "$backup_path").sha256")"; }; then
     success "Backup enviado para a nuvem."

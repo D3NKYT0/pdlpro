@@ -12,7 +12,7 @@ show_help() {
 Restaura um backup criado pelo comando backup (local ou da nuvem).
 
 Uso:
-  ./setup.sh restore [--path ARQUIVO | --from-cloud [NOME]] [--db-only] [--force]
+  ./setup.sh restore [--path ARQUIVO | --from-cloud [NOME]] [--db-only | --env-only] [--force]
 
 Sem --path nem --from-cloud, usa o backup mais recente de backups/db
 (ou PDL_BACKUP_DIR).
@@ -21,11 +21,15 @@ Opções:
   --path FILE         Arquivo .tar.enc, .tar, .dump.enc ou .dump a restaurar.
   --from-cloud [NOME] Baixa de BACKUP_REMOTE o backup NOME (padrão: o mais recente).
   --db-only           Restaura só o PostgreSQL, mesmo que o pacote tenha arquivos.
+  --env-only          Só substitui o .env pelo do backup (servidor novo, antes de
+                      subir os containers); o .env atual vira .env.before-restore-<data>.
   --force             Não pede confirmação interativa.
   -h, --help          Exibe esta ajuda.
 
 Pacotes .tar(.enc) restauram o banco e substituem /app/media e /app/private
-pelo conteúdo do backup. Arquivos .dump(.enc) restauram só o banco.
+pelo conteúdo do backup. Arquivos .dump(.enc) restauram só o banco. O .env do
+pacote nunca sobrescreve o atual numa restauração comum: ele é salvo como
+pdl_<data>.env ao lado do backup e as variáveis diferentes são listadas.
 EOF
 }
 
@@ -38,6 +42,7 @@ backup_path=""
 from_cloud=0
 cloud_name=""
 db_only=0
+env_only=0
 force=0
 
 while [[ $# -gt 0 ]]; do
@@ -55,6 +60,7 @@ while [[ $# -gt 0 ]]; do
       fi
       ;;
     --db-only) db_only=1 ;;
+    --env-only) env_only=1 ;;
     --force) force=1 ;;
     -h|--help) show_help; exit 0 ;;
     *) die "opção desconhecida para restore: $1" ;;
@@ -63,9 +69,10 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ -z "$backup_path" || "$from_cloud" -eq 0 ]] || die "use --path ou --from-cloud, não os dois"
+[[ "$db_only" -eq 0 || "$env_only" -eq 0 ]] || die "use --db-only ou --env-only, não os dois"
 
 require_project_files
-require_docker
+[[ "$env_only" -eq 1 ]] || require_docker
 ensure_env_file
 
 local_dir="$(backup_dir)"
@@ -98,7 +105,8 @@ if [[ "$from_cloud" -eq 1 ]]; then
   fi
   [[ "$cloud_name" =~ $BACKUP_NAME_PATTERN ]] || die "nome de backup inválido: $cloud_name"
   info "Baixando ${cloud_name} de ${remote}..."
-  rclone_run copyto "$(remote_join "$remote" "$cloud_name")" "${work_dir}/${cloud_name}"
+  mapfile -t transfer_flags < <(rclone_transfer_flags)
+  rclone_run copyto "${transfer_flags[@]}" "$(remote_join "$remote" "$cloud_name")" "${work_dir}/${cloud_name}"
   rclone_run copyto "$(remote_join "$remote" "${cloud_name}.sha256")" "${work_dir}/${cloud_name}.sha256" ||
     die "checksum ausente na nuvem para ${cloud_name}"
   mv -f -- "${work_dir}/${cloud_name}" "${local_dir}/${cloud_name}"
@@ -126,11 +134,12 @@ fi
 
 db_dump="$plain_path"
 files_archive=""
+env_archive=""
 restore_name="$(basename "$backup_path")"
 restore_name="${restore_name%.enc}"
 if [[ "$restore_name" == *.tar ]]; then
   mkdir -p "${work_dir}/bundle"
-  tar -xf "$plain_path" -C "${work_dir}/bundle" || die "pacote de backup inválido"
+  (umask 077 && tar -xf "$plain_path" -C "${work_dir}/bundle") || die "pacote de backup inválido"
   grep -Fxq "format=${BACKUP_FORMAT}" "${work_dir}/bundle/manifest.txt" 2>/dev/null ||
     die "pacote de backup sem manifesto compatível (${BACKUP_FORMAT})"
   db_dump="${work_dir}/bundle/db.dump"
@@ -139,6 +148,35 @@ if [[ "$restore_name" == *.tar ]]; then
     files_archive="${work_dir}/bundle/files.tar.gz"
     tar -tzf "$files_archive" >/dev/null || die "o pacote de arquivos do backup está corrompido"
   fi
+  [[ -s "${work_dir}/bundle/env" ]] && env_archive="${work_dir}/bundle/env"
+fi
+
+report_env_differences() {
+  local changed
+  changed="$(env_changed_keys "$ENV_FILE" "$1" | paste -sd, - | sed 's/,/, /g')"
+  if [[ -n "$changed" ]]; then
+    warn "variáveis diferentes do .env atual: ${changed}"
+  else
+    info "O .env do backup é igual ao atual."
+  fi
+}
+
+if [[ "$env_only" -eq 1 ]]; then
+  [[ -n "$env_archive" ]] || die "este backup não contém o .env (gerado sem BACKUP_INCLUDE_ENV ou antes da 2.6.4)"
+  if [[ "$force" -ne 1 ]]; then
+    [[ -t 0 ]] || die "a restauração do .env substitui a configuração atual; use --force em execução não interativa"
+    printf 'O .env atual (%s) será substituído pelo do backup. Continuar? [s/N] ' "$ENV_FILE"
+    read -r answer
+    [[ "$answer" =~ ^[sS]$ ]] || die "restauração cancelada"
+  fi
+  report_env_differences "$env_archive"
+  previous_env="${ENV_FILE}.before-restore-$(date -u +'%Y%m%dT%H%M%SZ')"
+  (umask 077 && cp -- "$ENV_FILE" "$previous_env")
+  (umask 077 && cat -- "$env_archive" > "${ENV_FILE}.tmp") && mv -f -- "${ENV_FILE}.tmp" "$ENV_FILE"
+  chmod 600 "$ENV_FILE" 2>/dev/null || true
+  success ".env restaurado de $(basename "$backup_path"); o anterior ficou em ${previous_env}"
+  info "Servidor novo: ./setup.sh install --production. Instalação em execução: ./setup.sh deploy para aplicar."
+  exit 0
 fi
 
 ensure_database_running
@@ -185,6 +223,16 @@ if [[ "$restore_files" -eq 1 ]]; then
   files_container "$FILES_RESTORE_SCRIPT" "${file_dirs[@]}" < "$files_archive"
 elif [[ -n "$files_archive" ]]; then
   info "--db-only: mídia e arquivos privados atuais foram mantidos."
+fi
+
+if [[ -n "$env_archive" ]]; then
+  saved_env="${local_dir}/${restore_name%.tar}.env"
+  (umask 077 && cp -- "$env_archive" "$saved_env")
+  info ".env do backup salvo em ${saved_env}; o .env atual não foi alterado."
+  report_env_differences "$env_archive"
+  if env_changed_keys "$ENV_FILE" "$env_archive" | grep -Eqx 'PDL_DATA_ENCRYPTION_KEY|PDL_DATA_HMAC_KEY'; then
+    warn "2FA e pacotes LGPD do banco restaurado dependem de PDL_DATA_ENCRYPTION_KEY/PDL_DATA_HMAC_KEY do backup; copie de ${saved_env} ou use --env-only"
+  fi
 fi
 
 restart_services

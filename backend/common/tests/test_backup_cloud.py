@@ -104,7 +104,7 @@ class Env:
         return self.remote_root / "fake" / "bucket" / "pdl"
 
     def local_backups(self) -> list[str]:
-        return sorted(p.name for p in self.backup_dir.glob("pdl_*") if not p.name.endswith(".sha256"))
+        return sorted(p.name for p in self.backup_dir.glob("pdl_*") if not p.name.endswith((".sha256", ".env")))
 
     def remote_backups(self) -> list[str]:
         directory = self.remote_dir()
@@ -175,6 +175,63 @@ def test_retention_keeps_newest_backup_of_recent_days_and_iso_weeks():
     ]
 
 
+def _run_lib(function_call: str, stdin: str) -> subprocess.CompletedProcess[str]:
+    script = (
+        f'source "{bash_path(SCRIPTS / "lib" / "common.sh")}"\n'
+        f'source "{bash_path(SCRIPTS / "lib" / "backup.sh")}"\n'
+        f"{function_call}\n"
+    )
+    return subprocess.run(
+        [_bash(), "-c", script],
+        input=stdin,
+        capture_output=True,
+        encoding="utf-8",
+        check=False,
+        env={**os.environ, "PDL_ENV_FILE": "/dev/null"},
+    )
+
+
+@pytest.mark.parametrize(
+    ("remotes", "expected"),
+    [
+        ("gdrive:\n", "gdrive:pdl-backups"),
+        ("gdrive:\r\n", "gdrive:pdl-backups"),
+        ("gdrive:\npdl-backup:\n", ""),
+        ("", ""),
+    ],
+)
+def test_destination_is_suggested_only_when_there_is_a_single_remote(remotes: str, expected: str):
+    result = _run_lib("suggest_backup_destination", remotes)
+
+    assert result.returncode == 0, result.stderr
+    assert result.stdout == expected
+
+
+@pytest.mark.parametrize(
+    ("suggestion", "answers", "expected"),
+    [
+        ("gdrive:pdl-backups", "\n", "gdrive:pdl-backups"),  # Enter aceita a sugestão
+        ("gdrive:pdl-backups", "r2:bucket/pdl\n", "r2:bucket/pdl"),
+        ("", "\n\n  gdrive:pasta \r\n", "gdrive:pasta"),  # linhas vazias repetem a pergunta
+        ("", "sem-dois-pontos\ngdrive:ok\n", "gdrive:ok"),
+    ],
+)
+def test_destination_prompt_retries_until_it_gets_a_remote_path(suggestion: str, answers: str, expected: str):
+    result = _run_lib(f'read_backup_destination "{suggestion}"', answers)
+
+    assert result.returncode == 0, result.stderr
+    assert result.stdout == expected
+    assert "Destino dos backups" in result.stderr
+
+
+def test_destination_prompt_gives_up_after_three_invalid_answers():
+    result = _run_lib("read_backup_destination ''", "\nnada\n:sem-remote\n")
+
+    assert result.returncode == 1
+    assert result.stdout == ""
+    assert "destino inválido: nada" in result.stderr
+
+
 def test_backup_bundles_db_and_files_encrypts_uploads_and_prunes_both_sides(tmp_path: Path):
     _require_openssl()
     env = Env(tmp_path, BACKUP_KEEP_DAILY="2", BACKUP_KEEP_WEEKLY="1")
@@ -191,9 +248,11 @@ def test_backup_bundles_db_and_files_encrypts_uploads_and_prunes_both_sides(tmp_
     assert (env.backup_dir / f"{created}.sha256").is_file()
 
     with tarfile.open(fileobj=io.BytesIO(_decrypt(env.backup_dir / created))) as bundle:
-        assert sorted(bundle.getnames()) == ["db.dump", "files.tar.gz", "manifest.txt"]
+        assert sorted(bundle.getnames()) == ["db.dump", "env", "files.tar.gz", "manifest.txt"]
         manifest = bundle.extractfile("manifest.txt").read().decode()
         assert "format=pdl-backup/1" in manifest
+        assert "contents=db,files,env" in manifest
+        assert bundle.extractfile("env").read() == env.env_file.read_bytes()
         assert bundle.extractfile("db.dump").read() == b"PGDMP original-database\n"
         with tarfile.open(fileobj=io.BytesIO(bundle.extractfile("files.tar.gz").read())) as files:
             assert "media/themes/valorem/theme.css" in files.getnames()
@@ -204,6 +263,8 @@ def test_backup_bundles_db_and_files_encrypts_uploads_and_prunes_both_sides(tmp_
     assert env.remote_backups() == ["pdl_20250103T033000Z.tar.enc", created]
     assert (env.remote_dir() / f"{created}.sha256").is_file()
     assert not (env.remote_dir() / "pdl_20250101T033000Z.tar.enc.sha256").exists()
+    upload = next(line for line in env.rclone_log.read_text(encoding="utf-8").splitlines() if created in line)
+    assert upload.startswith("copyto --stats=1m --stats-one-line --stats-log-level=NOTICE ")
     assert not list(env.backup_dir.glob(".work.*"))
     assert not (env.backup_dir / ".pdl-backup.lock").exists()
 
@@ -217,6 +278,37 @@ def test_backup_never_uploads_an_unencrypted_file(tmp_path: Path):
     assert "BACKUP_ENCRYPTION_KEY" in result.stdout + result.stderr
     assert env.local_backups() == []
     assert env.remote_backups() == []
+
+
+def test_backup_never_stores_the_env_without_encryption(tmp_path: Path):
+    env = Env(
+        tmp_path,
+        DJANGO_SETTINGS_MODULE="core.settings.development",
+        BACKUP_ENCRYPTION_KEY="",
+        BACKUP_REMOTE="",
+    )
+
+    result = env.run("backup")
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "o .env não entra no backup" in result.stdout + result.stderr
+    [created] = env.local_backups()
+    assert created.endswith(".tar")
+    with tarfile.open(env.backup_dir / created) as bundle:
+        assert "env" not in bundle.getnames()
+        assert "contents=db,files\n" in bundle.extractfile("manifest.txt").read().decode()
+
+
+def test_backup_leaves_the_env_out_when_disabled(tmp_path: Path):
+    _require_openssl()
+    env = Env(tmp_path, BACKUP_REMOTE="", BACKUP_INCLUDE_ENV="false")
+
+    result = env.run("backup")
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    [created] = env.local_backups()
+    with tarfile.open(fileobj=io.BytesIO(_decrypt(env.backup_dir / created))) as bundle:
+        assert sorted(bundle.getnames()) == ["db.dump", "files.tar.gz", "manifest.txt"]
 
 
 def test_backup_keeps_the_local_copy_and_fails_when_the_upload_fails(tmp_path: Path):
@@ -268,7 +360,9 @@ def test_restore_from_cloud_brings_back_database_media_and_private_files(tmp_pat
     stop_at = commands.index("stop backend asgi")
     assert commands.index("up -d backend asgi") > stop_at
     assert any(line.startswith("run ") for line in commands[stop_at:])
-    assert len(env.local_backups()) == 1
+    [downloaded] = env.local_backups()
+    assert (env.backup_dir / downloaded.replace(".tar.enc", ".env")).is_file()
+    assert "O .env do backup é igual ao atual." in output
 
 
 def test_restore_db_only_keeps_current_files(tmp_path: Path):
@@ -315,6 +409,74 @@ def test_restore_accepts_the_previous_dump_enc_format_and_old_keys(tmp_path: Pat
 
     assert result.returncode == 0, result.stdout + result.stderr
     assert (env.state / "restored.dump").read_bytes() == b"PGDMP original-database\n"
+
+
+def test_restore_keeps_the_current_env_and_saves_the_backup_copy(tmp_path: Path):
+    _require_openssl()
+    env = Env(tmp_path, BACKUP_REMOTE="", PDL_DATA_ENCRYPTION_KEY="fernet-from-backup")
+    assert env.run("backup").returncode == 0
+    [created] = env.local_backups()
+    original_env = env.env_file.read_bytes()
+    current_env = original_env.replace(b"fernet-from-backup", b"fernet-of-new-server") + b"EXTRA_ONLY_NOW=1\n"
+    env.env_file.write_bytes(current_env)
+
+    result = env.run("restore", "--force")
+
+    output = result.stdout + result.stderr
+    assert result.returncode == 0, output
+    assert env.env_file.read_bytes() == current_env
+    saved = env.backup_dir / created.replace(".tar.enc", ".env")
+    assert saved.read_bytes() == original_env
+    assert "EXTRA_ONLY_NOW, PDL_DATA_ENCRYPTION_KEY" in output
+    assert "use --env-only" in output
+    assert "fernet-from-backup" not in output
+    assert "fernet-of-new-server" not in output
+
+
+def test_restore_env_only_from_cloud_replaces_the_env_without_touching_data(tmp_path: Path):
+    _require_openssl()
+    env = Env(tmp_path, SECRET_KEY="secret-from-backup")
+    assert env.run("backup").returncode == 0
+    original_env = env.env_file.read_bytes()
+    shutil.rmtree(env.backup_dir)
+    fresh_env = original_env.replace(b"secret-from-backup", b"freshly-generated")
+    env.env_file.write_bytes(fresh_env)
+    (env.state / "commands.log").unlink()
+
+    result = env.run("restore", "--from-cloud", "--env-only", "--force")
+
+    output = result.stdout + result.stderr
+    assert result.returncode == 0, output
+    assert env.env_file.read_bytes() == original_env
+    [previous] = list(tmp_path.glob(".env.before-restore-*"))
+    assert previous.read_bytes() == fresh_env
+    assert "SECRET_KEY" in output
+    assert "freshly-generated" not in output
+    assert compose_commands(env.state) == []
+    assert not (env.state / "restored.dump").exists()
+
+
+def test_restore_env_only_rejects_a_backup_without_env(tmp_path: Path):
+    _require_openssl()
+    env = Env(tmp_path, BACKUP_REMOTE="")
+    assert env.run("backup", "--db-only").returncode == 0
+    before = env.env_file.read_bytes()
+
+    result = env.run("restore", "--env-only", "--force")
+
+    assert result.returncode != 0
+    assert "não contém o .env" in result.stdout + result.stderr
+    assert env.env_file.read_bytes() == before
+    assert not list(tmp_path.glob(".env.before-restore-*"))
+
+
+def test_restore_rejects_db_only_together_with_env_only(tmp_path: Path):
+    env = Env(tmp_path, BACKUP_REMOTE="")
+
+    result = env.run("restore", "--db-only", "--env-only", "--force")
+
+    assert result.returncode != 0
+    assert "--db-only ou --env-only" in result.stdout + result.stderr
 
 
 def test_restore_refuses_to_run_unattended_without_force(tmp_path: Path):

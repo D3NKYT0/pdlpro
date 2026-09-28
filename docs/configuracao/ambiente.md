@@ -31,6 +31,7 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | `BACKUP_ENCRYPTION_KEY_FALLBACKS` | Chaves antigas só para decifrar dumps | Vazio |
 | `BACKUP_REMOTE` | Destino rclone dos backups (`gdrive:pdl-backups`, `pdl-backup:bucket/pasta`); gravado por `./setup.sh backup-cloud configure` | Vazio (só local) |
 | `BACKUP_INCLUDE_FILES` | Inclui `media/` e `private/` no pacote do backup | `true` |
+| `BACKUP_INCLUDE_ENV` | Inclui o `.env` no pacote do backup (só quando cifrado) | `true` |
 | `BACKUP_KEEP_DAILY` / `BACKUP_KEEP_WEEKLY` | Retenção local e na nuvem: mais recente de cada dia / semana | `7` / `4` |
 | `BACKUP_SCHEDULE_TIME` | Horário (HH:MM, fuso do servidor) do backup diário de `backup-cloud schedule` | `03:30` |
 | `PDL_ALLOW_RUNTIME_SECRET_ROTATION` | Painel/Beat podem gravar o `.env` | `false` |

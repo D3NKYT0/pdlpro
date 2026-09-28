@@ -153,8 +153,8 @@ cloud_configure() {
       [[ -t 0 ]] || die "o assistente do rclone precisa de terminal; use --provider ou --remote"
       info "Abrindo o assistente do rclone. Crie um remote (ex.: gdrive) e volte aqui."
       rclone_run config
-      printf 'Destino dos backups (ex.: gdrive:pdl-backups): '
-      read -r remote
+      remote="$(read_backup_destination "$(rclone_run listremotes 2>/dev/null | suggest_backup_destination)")" ||
+        die "destino não informado; rode ./setup.sh backup-cloud configure --remote REMOTE:PASTA"
     fi
   fi
 

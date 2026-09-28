@@ -18,7 +18,8 @@ pacote** `pdl_<timestamp>.tar.enc` com:
 | --- | --- |
 | `db.dump` | PostgreSQL do painel (`pg_dump` formato custom, validado com `pg_restore --list`) |
 | `files.tar.gz` | `/app/media` (temas instalados, uploads, customs) e `/app/private` (pacotes LGPD) do container `backend` |
-| `manifest.txt` | Formato (`pdl-backup/1`), data e versão do produto |
+| `env` | O `.env` da instalação (segredos, chaves de dados, integrações); só em pacotes cifrados |
+| `manifest.txt` | Formato (`pdl-backup/1`), data, versão do produto e conteúdo |
 
 ```bash
 ./setup.sh backup                    # banco + mídia + privados, envia para a nuvem se configurada
@@ -31,10 +32,11 @@ pacote** `pdl_<timestamp>.tar.enc` com:
 O destino local padrão é `backups/db/`. O pacote é cifrado com `BACKUP_ENCRYPTION_KEY`
 (AES-256-CBC, PBKDF2, 200000 iterações, via `openssl`) e recebe um `.sha256`. Sem a chave, o
 desenvolvimento grava em claro com aviso; produção recusa o backup, e **nenhum arquivo em claro
-é enviado para a nuvem**. `BACKUP_INCLUDE_FILES=false` faz o comando padrão voltar a copiar
-só o banco.
+é enviado para a nuvem**. `BACKUP_INCLUDE_FILES=false` deixa a mídia de fora e
+`BACKUP_INCLUDE_ENV=false`, o `.env`. O `.env` nunca entra em um pacote sem cifra: ele contém a
+própria `BACKUP_ENCRYPTION_KEY`, por isso a chave precisa estar guardada também fora do servidor.
 
-Ficam de fora: `.env`, XMLs externos, banco Lineage, filas Redis e mídia servida por bucket
+Ficam de fora: `.rclone/rclone.conf`, XMLs externos, banco Lineage, filas Redis e mídia servida por bucket
 (`USE_S3=true`): nesse caso os arquivos já estão no provedor e o pacote leva só o que existir
 no volume local. Uma trava (`backups/db/.pdl-backup.lock`) impede que o agendamento e uma
 execução manual, ou um restore, rodem ao mesmo tempo.
@@ -68,15 +70,16 @@ no bucket; o bucket precisa existir.
 ./setup.sh backup-cloud configure
 ```
 
-O assistente do rclone cria o remote (por exemplo `gdrive`) e o script pergunta o destino
-(`gdrive:pdl-backups`). Em um servidor sem navegador, responda **não** à pergunta de
+O assistente do rclone cria o remote (por exemplo `gdrive`) e o script pergunta o destino;
+com um único remote ele sugere `gdrive:pdl-backups` e Enter aceita a sugestão. Em um servidor sem navegador, responda **não** à pergunta de
 autenticação automática e rode `rclone authorize "drive"` num computador com navegador; cole o
 token mostrado de volta no assistente. Um remote já existente pode ser usado direto:
 `./setup.sh backup-cloud configure --remote gdrive:pdl-backups`.
 
 Ao final, o comando grava `BACKUP_REMOTE` no `.env` e testa escrita, listagem e remoção no
 destino (`./setup.sh backup-cloud test` repete o teste). Depois disso, todo `./setup.sh backup`
-envia o pacote e o `.sha256`. Se o envio falhar, a cópia local é mantida e o comando termina com
+envia o pacote e o `.sha256`, com barra de progresso no terminal (no timer ou cron, uma linha
+de estatística por minuto vai para o journal/syslog). Se o envio falhar, a cópia local é mantida e o comando termina com
 erro, para o agendamento registrar a falha.
 
 **Guarde `BACKUP_ENCRYPTION_KEY` fora do servidor** (cofre de senhas). Se o servidor for
@@ -109,7 +112,7 @@ objeto), use também a política de ciclo de vida ou versionamento do provedor.
 | --- | --- |
 | PostgreSQL do painel | Pacote do `setup.sh backup`, checksum e restauração testada |
 | Mídia e arquivos privados | No mesmo pacote (volumes locais); com `USE_S3=true`, versionamento do bucket |
-| Configuração e segredos | Cópia protegida do `.env` fora do Git, com acesso restrito |
+| Configuração e segredos | `.env` no mesmo pacote cifrado; `BACKUP_ENCRYPTION_KEY` também num cofre de senhas |
 | XMLs externos | Versionamento ou cópia do diretório realmente configurado |
 | Banco Lineage | Política própria do servidor do jogo; o script do PDL não o exporta |
 | Versão do software | Versão do produto registrada no `manifest.txt` e imagem correspondente |
@@ -133,9 +136,30 @@ compatível mesmo cifrado.
 Sem `--path` nem `--from-cloud`, o script usa o `pdl_*` mais recente em `backups/db/`. Com
 `--from-cloud`, o arquivo e o `.sha256` são baixados para `backups/db/` e o checksum é
 **obrigatório**: um download corrompido é recusado antes de qualquer alteração. Pacotes
-`.tar(.enc)` e dumps antigos `.dump(.enc)` são aceitos. Para restaurar em um servidor novo,
-instale a Release, copie `BACKUP_ENCRYPTION_KEY` para o `.env`, rode
-`./setup.sh backup-cloud configure` com o mesmo destino e depois o restore.
+`.tar(.enc)` e dumps antigos `.dump(.enc)` são aceitos.
+
+Numa restauração comum o `.env` atual **não é alterado**: o do pacote é salvo como
+`backups/db/pdl_<data>.env` (permissão 600) e o comando lista só os **nomes** das variáveis que
+diferem. Se `PDL_DATA_ENCRYPTION_KEY` ou `PDL_DATA_HMAC_KEY` estiverem na lista, o 2FA e os
+pacotes LGPD do banco restaurado só abrem com os valores do backup.
+
+### Servidor novo (recuperação de desastre)
+
+```bash
+bash install.sh --dir /opt/pdlpro --domain seudominio.com --yes --no-start
+cd /opt/pdlpro
+# no .env recém-criado, troque BACKUP_ENCRYPTION_KEY pela chave guardada no cofre
+./setup.sh backup-cloud configure                  # mesmo destino (ex.: gdrive:pdl-backups)
+./setup.sh restore --from-cloud --env-only         # traz o .env antigo; o novo vira .env.before-restore-<data>
+./setup.sh install --production                    # sobe com os segredos e senhas originais
+./setup.sh restore --from-cloud --force            # banco, mídia e arquivos privados
+```
+
+O `--env-only` vem **antes** do primeiro start porque o volume do PostgreSQL é criado com a
+senha do `.env` vigente; trocar o `.env` depois deixaria a senha do banco divergente. Revise
+domínio e portas do `.env` restaurado se o servidor novo usar outros valores. Ele também traz
+as tags de imagem da versão do backup, o que mantém banco e migrações compatíveis; atualize
+depois pela Release.
 
 [restore.sh](../../scripts/restore.sh) confere o manifesto e o catálogo do dump, solicita
 confirmação em terminal interativo (`--force` suprime a pergunta e só deve entrar em automação
