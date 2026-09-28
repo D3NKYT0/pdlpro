@@ -16,6 +16,22 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+## [2.6.4] - 2026-09-28
+
+Lançamento da versão 2.6.4 do PDL PRO com o `.env` da instalação dentro do backup cifrado (e a recuperação de servidor novo com `restore --env-only`), progresso no envio e no download dos backups e a pergunta do destino do `backup-cloud` tolerante a respostas vazias.
+
+### Adicionado
+
+- **`.env` no backup cifrado**: o pacote do `./setup.sh backup` passa a levar o `.env` da instalação (segredos, `PDL_DATA_ENCRYPTION_KEY`, integrações), apenas quando cifrado com `BACKUP_ENCRYPTION_KEY`, e ele vai junto para a nuvem. A restauração comum não altera o `.env` atual: salva a cópia do backup com permissão 600 e lista só os nomes das variáveis diferentes, avisando quando as chaves do 2FA/LGPD divergem. `./setup.sh restore --env-only` recupera só o `.env` para montar um servidor novo antes do primeiro start. Desligue com `BACKUP_INCLUDE_ENV=false`.
+
+### Alterado
+
+- **Progresso no envio e no download do backup**: no terminal, `./setup.sh backup` e `restore --from-cloud` mostram o tamanho e a barra de progresso do rclone; no agendamento, uma linha de estatística por minuto vai para o journal/syslog.
+
+### Corrigido
+
+- **Destino do backup-cloud aceitando resposta vazia**: depois do assistente do rclone, uma linha vazia na pergunta do destino abortava a configuração. Agora, com um único remote, o destino `<remote>:pdl-backups` é sugerido e Enter o aceita; respostas vazias ou sem `remote:` repetem a pergunta (até três vezes).
+
 ## [2.6.3] - 2026-09-28
 
 Lançamento da versão 2.6.3 do PDL PRO com backup na nuvem (Google Drive, Cloudflare R2, S3 e demais destinos do rclone) incluindo banco, mídia e arquivos privados, restauração direto da nuvem, agendamento diário com retenção e a atualização pela release sem reinício duplo dos serviços.
