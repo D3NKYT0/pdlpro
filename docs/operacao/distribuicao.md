@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Backup](backup-e-restauracao.md) · [Tutoriais](../tutoriais/README.md) · [Problemas](solucao-de-problemas.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 28 de setembro de 2026
 
 > [!IMPORTANT]
 > **Este é o caminho recomendado.** As
@@ -223,7 +223,11 @@ acima, a partir da pasta da instalação.
 ## Atualizar
 
 Backup → rode o instalador de novo no **mesmo diretório**. Sem `--version` ele
-instala a latest. O `.env` existente é preservado; só as imagens mudam.
+instala a latest. O `.env` existente é preservado; só as imagens mudam. Os
+containers são recriados uma única vez, já com as imagens novas; com
+`--no-start`, o configurador recria na hora os serviços em execução para
+aplicar o `.env`, e a troca de versão fica para o próximo `./setup.sh install
+--production`.
 
 ```bash
 cd /opt/pdlpro

@@ -249,7 +249,8 @@ try {
             if ($dirUnix -match '^([A-Za-z]):/(.*)$') {
                 $dirUnix = '/' + $Matches[1].ToLowerInvariant() + '/' + $Matches[2]
             }
-            & $bash -lc "cd '$dirUnix' && ./setup.sh configure-production --yes --domain '$Domain' --bind-address '$BindAddress' --port '$Port'"
+            $defer = if ($NoStart) { '' } else { 'PDL_DEFER_SERVICE_RECREATE=1 ' }
+            & $bash -lc "cd '$dirUnix' && ${defer}./setup.sh configure-production --yes --domain '$Domain' --bind-address '$BindAddress' --port '$Port'"
             if ($LASTEXITCODE -ne 0) { throw 'configure-production falhou' }
         }
         else {

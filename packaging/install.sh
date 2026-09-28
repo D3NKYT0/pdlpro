@@ -367,6 +367,9 @@ info "Configurando produção em ${install_dir}..."
   cd "$install_dir"
   export PDL_ENV_FILE="${install_dir}/.env"
   export PDL_SKIP_DOCKER="${PDL_SKIP_DOCKER:-0}"
+  if [[ "$no_start" -eq 0 ]]; then
+    export PDL_DEFER_SERVICE_RECREATE=1
+  fi
   # shellcheck source=/dev/null
   source "${install_dir}/scripts/lib/common.sh"
   bash "${install_dir}/scripts/configure-production.sh" --yes \

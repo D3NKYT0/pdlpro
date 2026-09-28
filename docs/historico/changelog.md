@@ -16,6 +16,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- **Atualização pela release sem reinício duplo**: o `install.sh` / `install.ps1` deixava o `configure-production` recriar os containers em execução ainda com as imagens da versão anterior e o `.env` novo, antes de o deploy recriá-los de novo com a versão nova. Agora o configurador adia a recriação (`PDL_DEFER_SERVICE_RECREATE=1`) quando o deploy vem em seguida, e a atualização reinicia os serviços uma única vez, sem baixar a imagem antiga. Com `--no-start` o comportamento anterior é mantido.
+
 ## [2.6.2] - 2026-09-28
 
 Lançamento da versão 2.6.2 do PDL PRO com o configurador de bônus de recarga na Carteira administrativa (campanhas, faixas progressivas, incentivos de 1ª recarga e PIX e simulador), upload interativo de flyers nos banners, tráfego pago e analytics configuráveis por ambiente com respeito ao consentimento de cookies, abas do painel preservadas na URL e a correção da geração de PIX no checkout Mercado Pago.

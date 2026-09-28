@@ -18,6 +18,8 @@ sys.path.insert(0, str(SCRIPTS))
 
 import pdl_release
 
+from common.tests.fake_docker import compose_commands, install_fake_compose_docker
+
 
 def _bash() -> str:
     for candidate in (
@@ -327,6 +329,72 @@ def test_install_sh_preserves_existing_env(tmp_path: Path):
     assert _read_env(env_file, "DB_PASSWORD") == "StrongProductionPass1"
     assert _read_env(env_file, "DOMAIN") == "painel.example.com"
     assert _read_env(env_file, "PDL_BACKEND_IMAGE") == "ghcr.io/d3nkyt0/pdlpro/backend:2.4.0"
+
+
+def _run_update_over_running_install(tmp_path: Path, *extra_args: str) -> tuple[subprocess.CompletedProcess[str], list[str], Path]:
+    artifacts = pdl_release.pack_release(root=REPO_ROOT, output_dir=tmp_path / "dist", version="2.4.0")
+    dest = tmp_path / "install"
+    dest.mkdir()
+    (dest / ".env").write_text(
+        "SECRET_KEY=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+        "DB_PASSWORD=StrongProductionPass1\n"
+        "REDIS_PASSWORD=StrongRedisPassword123\n"
+        "DOMAIN=painel.example.com\n"
+        "DJANGO_SETTINGS_MODULE=core.settings.production\n"
+        "DB_NAME=pdl\n"
+        "DB_USER=pdl\n"
+        "DEBUG=false\n"
+        "PDL_BACKEND_IMAGE=ghcr.io/d3nkyt0/pdlpro/backend:2.3.0\n"
+        "PDL_WEB_IMAGE=ghcr.io/d3nkyt0/pdlpro/web:2.3.0\n",
+        encoding="utf-8",
+    )
+    bin_dir, state_dir = install_fake_compose_docker(tmp_path, running=("backend", "asgi", "celery_worker", "web"))
+    result = subprocess.run(
+        [
+            _bash(),
+            _bash_path(REPO_ROOT / "packaging" / "install.sh"),
+            "--version",
+            "2.4.0",
+            "--dir",
+            _bash_path(dest),
+            "--domain",
+            "painel.example.com",
+            "--yes",
+            "--skip-checksum",
+            *extra_args,
+        ],
+        env={
+            **_clean_env(),
+            "PATH": f"{_bash_path(bin_dir)}:{os.environ.get('PATH', '')}",
+            "PDL_RELEASE_BUNDLE": artifacts["bundle"].resolve().as_posix(),
+            "PDL_SKIP_CHECKSUM": "1",
+            "PDL_CONFIG_BACKUP_DIR": _bash_path(tmp_path / "backups"),
+        },
+        capture_output=True,
+        text=True,
+        timeout=120,
+        check=False,
+    )
+    return result, compose_commands(state_dir), dest / ".env"
+
+
+def test_install_sh_update_recreates_services_once_with_the_new_images(tmp_path: Path):
+    result, commands, env_file = _run_update_over_running_install(tmp_path)
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    recreates = [line for line in commands if "--force-recreate" in line]
+    assert recreates == ["up -d --remove-orphans --force-recreate"]
+    assert commands.index("pull") < commands.index(recreates[0])
+    assert _read_env(env_file, "PDL_BACKEND_IMAGE") == "ghcr.io/d3nkyt0/pdlpro/backend:2.4.0"
+    assert _read_env(env_file, "PDL_WEB_IMAGE") == "ghcr.io/d3nkyt0/pdlpro/web:2.4.0"
+
+
+def test_install_sh_no_start_leaves_recreation_to_the_configurator(tmp_path: Path):
+    result, commands, _env_file = _run_update_over_running_install(tmp_path, "--no-start")
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "up -d --no-deps --force-recreate backend asgi celery_worker web" in commands
+    assert "pull" not in commands
 
 
 def _powershell() -> str | None:

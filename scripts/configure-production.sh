@@ -41,6 +41,10 @@ BACKUP_ENCRYPTION_KEY sao geradas se estiverem fracas e nao acompanham
 --rotate-secret-key. A Fernet usa MultiFernet/fallbacks; PDL_DATA_HMAC_KEY e
 estavel e nao rotaciona com a Fernet. Se o banco de producao ja existir, a
 senha do role PostgreSQL e atualizada de forma coordenada.
+
+Servicos em execucao sao recriados para ler o .env novo. Com
+PDL_DEFER_SERVICE_RECREATE=1 (usado pelo instalador da release) a recriacao
+fica para o deploy que vem em seguida.
 EOF
 }
 
@@ -426,16 +430,22 @@ if [[ "${PDL_SKIP_DOCKER:-0}" != "1" ]] && command -v docker >/dev/null 2>&1 && 
   docker_ready=1
   database_container="$(production_compose ps --all --quiet db 2>/dev/null || true)"
 
-  for service in backend asgi celery_worker web; do
-    if [[ -n "$(production_compose ps --status running --quiet "$service" 2>/dev/null)" ]]; then
-      services_to_recreate+=("$service")
-    fi
-  done
+  # O instalador da release roda o deploy logo depois, com --force-recreate e as
+  # imagens novas; recriar aqui subiria a versao antiga com o .env novo.
+  if [[ "${PDL_DEFER_SERVICE_RECREATE:-0}" == "1" ]]; then
+    info "Servicos em execucao serao recriados pelo deploy seguinte."
+  else
+    for service in backend asgi celery_worker web; do
+      if [[ -n "$(production_compose ps --status running --quiet "$service" 2>/dev/null)" ]]; then
+        services_to_recreate+=("$service")
+      fi
+    done
 
-  # A senha do Redis entra pelo command do container; sem recriar, o servico segue
-  # exigindo a senha antiga que ninguem mais tem.
-  if [[ "$rotate_redis_password" -eq 1 && -n "$(production_compose ps --status running --quiet redis 2>/dev/null)" ]]; then
-    services_to_recreate+=("redis")
+    # A senha do Redis entra pelo command do container; sem recriar, o servico segue
+    # exigindo a senha antiga que ninguem mais tem.
+    if [[ "$rotate_redis_password" -eq 1 && -n "$(production_compose ps --status running --quiet redis 2>/dev/null)" ]]; then
+      services_to_recreate+=("redis")
+    fi
   fi
 
   if [[ "$rotate_db_password" -eq 1 ]]; then

@@ -10,6 +10,8 @@ from pathlib import Path
 
 import pytest
 
+from common.tests.fake_docker import compose_commands, install_fake_compose_docker
+
 REPO_ROOT = Path(__file__).resolve().parents[3]
 COMMON_SH = REPO_ROOT / "scripts" / "lib" / "common.sh"
 CONFIGURE = REPO_ROOT / "scripts" / "configure-production.sh"
@@ -332,82 +334,6 @@ def test_configure_production_writes_a_config_backup(tmp_path: Path):
     assert mode == 0o600 or os.name == "nt"
 
 
-def _install_fake_compose_docker(tmp_path: Path) -> Path:
-    """Docker de teste: recusa Compose se REDIS_PASSWORD ainda estiver vazia."""
-    bin_dir = tmp_path / "bin"
-    bin_dir.mkdir()
-    state_dir = tmp_path / "fake-docker-state"
-    state_dir.mkdir()
-    docker = bin_dir / "docker"
-    docker.write_text(
-        f"""#!/usr/bin/env bash
-set -euo pipefail
-STATE="{_bash_path(state_dir)}"
-if [[ "${{1:-}}" == "info" ]]; then
-  exit 0
-fi
-if [[ "${{1:-}}" == "compose" && "${{2:-}}" == "version" ]]; then
-  printf 'Docker Compose version v2.29.0\\n'
-  exit 0
-fi
-if [[ "${{1:-}}" != "compose" ]]; then
-  printf 'unexpected docker %s\\n' "$*" >&2
-  exit 1
-fi
-shift
-env_file=""
-args=()
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --env-file)
-      env_file="$2"
-      shift 2
-      ;;
-    --project-directory|-f|--file)
-      shift 2
-      ;;
-    *)
-      args+=("$1")
-      shift
-      ;;
-  esac
-done
-redis_pw=""
-if [[ -n "$env_file" && -f "$env_file" ]]; then
-  redis_pw="$(awk -F= '$1 == "REDIS_PASSWORD" {{ sub(/\\r$/, "", $2); print $2; exit }}' "$env_file")"
-fi
-if [[ -z "$redis_pw" ]]; then
-  printf 'error while interpolating services.redis.command: required variable REDIS_PASSWORD is missing a value: REDIS_PASSWORD is required\\n' >&2
-  exit 1
-fi
-printf '%s\\n' "${{args[*]}}" >> "$STATE/commands.log"
-set -- "${{args[@]}}"
-service="${{!#}}"
-case "$1" in
-  ps)
-    if [[ -f "$STATE/${{service}}.up" ]]; then
-      printf 'container-%s\\n' "$service"
-    fi
-    exit 0
-    ;;
-  up|start)
-    : > "$STATE/${{service}}.up"
-    exit 0
-    ;;
-  exec|stop)
-    exit 0
-    ;;
-esac
-printf 'unexpected compose %s\\n' "$*" >&2
-exit 1
-""",
-        encoding="utf-8",
-        newline="\n",
-    )
-    docker.chmod(docker.stat().st_mode | 0o111)
-    return bin_dir
-
-
 def test_configure_production_writes_redis_password_before_compose(tmp_path: Path):
     env_file = tmp_path / ".env"
     env_file.write_text(
@@ -422,7 +348,7 @@ def test_configure_production_writes_redis_password_before_compose(tmp_path: Pat
         "REDIS_URL=redis://redis:6379/0\n",
         encoding="utf-8",
     )
-    bin_dir = _install_fake_compose_docker(tmp_path)
+    bin_dir, _state = install_fake_compose_docker(tmp_path)
     path = f"{_bash_path(bin_dir)}:{os.environ.get('PATH', '')}"
 
     result = _run_configure(
@@ -442,3 +368,43 @@ def test_configure_production_writes_redis_password_before_compose(tmp_path: Pat
     assert len(redis_password) >= 16
     assert _read(env_file, "REDIS_URL") == f"redis://:{redis_password}@redis:6379/0"
     assert _read(env_file, "DB_PASSWORD") != "pdl"
+
+
+RUNNING_APP_SERVICES = ("backend", "asgi", "celery_worker", "web")
+
+
+def _configure_with_running_services(tmp_path: Path, extra_env: dict[str, str] | None = None):
+    env_file = tmp_path / ".env"
+    env_file.write_text(
+        _production_stub() + "REDIS_PASSWORD=StrongRedisPassword123\n",
+        encoding="utf-8",
+    )
+    bin_dir, state_dir = install_fake_compose_docker(tmp_path, running=RUNNING_APP_SERVICES)
+    result = _run_configure(
+        env_file,
+        tmp_path / "backups",
+        "-y",
+        skip_docker=False,
+        extra_env={"PATH": f"{_bash_path(bin_dir)}:{os.environ.get('PATH', '')}", **(extra_env or {})},
+    )
+    return result, compose_commands(state_dir)
+
+
+def test_configure_production_recreates_running_services_to_apply_the_new_env(tmp_path: Path):
+    result, commands = _configure_with_running_services(tmp_path)
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "up -d --no-deps --force-recreate backend asgi celery_worker web" in commands
+
+
+def test_configure_production_defers_recreation_when_a_deploy_follows(tmp_path: Path):
+    result, commands = _configure_with_running_services(
+        tmp_path,
+        extra_env={"PDL_DEFER_SERVICE_RECREATE": "1"},
+    )
+
+    output = result.stdout + result.stderr
+    assert result.returncode == 0, output
+    assert not [line for line in commands if line.startswith("up ")]
+    assert "Recriando" not in output
+    assert "deploy" in output.lower()
