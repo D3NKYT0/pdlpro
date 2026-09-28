@@ -1,22 +1,37 @@
 import { useEffect, useRef } from 'react'
 import { useCookieConsent } from '../../contexts/CookieConsentContext'
-import { hasAnalyticsConsent, hasFunctionalConsent } from '../../lib/cookieConsent'
+import { hasAnalyticsConsent, hasFunctionalConsent, hasMarketingConsent } from '../../lib/cookieConsent'
 import { LANGUAGE_STORAGE_KEY } from '../../i18n/locale'
 import { initializeMonitoring, shutdownMonitoring } from '../../observability'
+import { initTracking, updateTrackingConsent } from '../../lib/tracking'
 
 /**
  * Aplica efeitos reais do consentimento:
- * - analytics → Sentry/monitoramento
+ * - analytics → Sentry/monitoramento e Google Analytics (gtag)
+ * - marketing → Meta Pixel, Google Ads, TikTok Pixel
  * - functional → persiste idioma (localStorage + cookie django_language)
  */
 export function ConsentEnforcementBridge() {
   const { consent, hasDecided } = useCookieConsent()
   const monitoringStarted = useRef(false)
+  const trackingInitialized = useRef(false)
 
   useEffect(() => {
+    if (!trackingInitialized.current) {
+      initTracking()
+      trackingInitialized.current = true
+    }
+
     if (!hasDecided) return
 
     const allowAnalytics = hasAnalyticsConsent(consent)
+    const allowMarketing = hasMarketingConsent(consent)
+
+    updateTrackingConsent({
+      analytics: allowAnalytics,
+      marketing: allowMarketing,
+    })
+
     if (allowAnalytics && !monitoringStarted.current) {
       void initializeMonitoring(import.meta.env).then(() => {
         monitoringStarted.current = true

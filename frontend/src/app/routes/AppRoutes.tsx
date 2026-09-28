@@ -81,10 +81,12 @@ import { AdminGameContentPage } from '../../pages/admin/AdminGameContentPage'
 import { AdminThemesPage } from '../../pages/admin/AdminThemesPage'
 import { AdminWalletPage } from '../../pages/admin/AdminWalletPage'
 import { extensionRouteElements } from '../../extensions'
+import { TrackingRouteListener } from '../../components/analytics/TrackingRouteListener'
 
 export function AppRoutes() {
   return (
     <BrowserRouter>
+      <TrackingRouteListener />
       <GlobalLoadingOverlay />
       <Routes>
         <Route element={<PublicLayout />}>

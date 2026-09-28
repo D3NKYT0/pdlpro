@@ -12,6 +12,7 @@ import { orderDetailEntries, transactionDetailEntries } from '../components/wall
 import { useAuth } from '../contexts/AuthContext'
 import { apiErrorMessage } from '../lib/errors'
 import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument } from '../lib/payments'
+import { trackInitiateCheckout, trackPurchase } from '../lib/tracking'
 import { paymentApi, walletApi } from '../services/api'
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../services/types'
 
@@ -80,6 +81,7 @@ export function WalletPage() {
         method: paymentMethod,
       })
       setOrder(created)
+      trackInitiateCheckout(Number(created.amount), created.currency)
       if (created.method === 'mock') {
         toast.success(t('wallet.toast.orderPending'))
       }
@@ -139,6 +141,17 @@ export function WalletPage() {
               const result = await paymentApi.process(order.id, payload)
               setOrder(result)
               if (result.status === 'confirmed') {
+                trackPurchase({
+                  transactionId: result.id,
+                  amount: Number(result.amount),
+                  currency: result.currency,
+                  items: result.package_code ? [{
+                    id: result.package_code,
+                    name: result.package_code,
+                    price: Number(result.amount),
+                    quantity: 1,
+                  }] : undefined,
+                })
                 toast.success(t('wallet.toast.coinsCredited', { coins: result.coins }))
                 handleCloseCheckout()
                 await refreshWallet()
@@ -194,6 +207,17 @@ export function WalletPage() {
       const current = await paymentApi.status(order.id)
       setOrder(current)
       if (current.status === 'confirmed') {
+        trackPurchase({
+          transactionId: current.id,
+          amount: Number(current.amount),
+          currency: current.currency,
+          items: current.package_code ? [{
+            id: current.package_code,
+            name: current.package_code,
+            price: Number(current.amount),
+            quantity: 1,
+          }] : undefined,
+        })
         toast.success(t('wallet.toast.coinsCredited', { coins: current.coins }))
         setOrder(null)
         await refreshWallet()
@@ -216,6 +240,17 @@ export function WalletPage() {
       const current = await paymentApi.status(order.id)
       setOrder(current.status === 'confirmed' ? null : current)
       if (current.status === 'confirmed') {
+        trackPurchase({
+          transactionId: current.id,
+          amount: Number(current.amount),
+          currency: current.currency,
+          items: current.package_code ? [{
+            id: current.package_code,
+            name: current.package_code,
+            price: Number(current.amount),
+            quantity: 1,
+          }] : undefined,
+        })
         toast.success(t('wallet.toast.coinsCredited', { coins: current.coins }))
         await refreshWallet()
       } else {

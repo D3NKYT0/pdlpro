@@ -16,6 +16,7 @@ import { authApi, isApiError, isTwoFactorChallenge } from '../services/api'
 import { credentialJSON, requestOptions } from '../lib/webauthn'
 import { beginOAuth } from '../lib/oauth'
 import { hcaptchaLanguage } from '../i18n/locale'
+import { trackLogin } from '../lib/tracking'
 
 function safeNext(value: string | null) {
   if (value && value.startsWith('/') && !value.startsWith('//')) return value
@@ -70,6 +71,7 @@ export function LoginPage() {
     try {
       if (challenge) {
         await verifyTwoFactor(challenge, code)
+        trackLogin('2fa')
         navigate(next)
         return
       }
@@ -79,6 +81,7 @@ export function LoginPage() {
         toast.success(t('login.toast2fa'))
         return
       }
+      trackLogin('password')
       navigate(next)
     } catch (error) {
       if (isApiError(error) && error.details.captcha_required === true) {

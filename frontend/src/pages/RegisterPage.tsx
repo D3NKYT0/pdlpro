@@ -13,6 +13,7 @@ import { useLaunchAccess } from '../hooks/useLaunchAccess'
 import { beginOAuth } from '../lib/oauth'
 import { authApi } from '../services/api'
 import { hcaptchaLanguage } from '../i18n/locale'
+import { trackRegistration } from '../lib/tracking'
 
 const SESSION_MANAGER_PATH = '/panel/security'
 
@@ -71,6 +72,7 @@ export function RegisterPage() {
         accept_terms: acceptTerms,
         hcaptcha_token: captchaToken,
       })
+      trackRegistration('email')
       toast.success(t('register.success'))
       navigate('/panel')
     } catch (error) {
