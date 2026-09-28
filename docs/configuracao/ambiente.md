@@ -29,6 +29,10 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | `PDL_DATA_HMAC_KEY` | HMAC estável dos códigos de recuperação | Gerada uma vez; não acompanha a Fernet |
 | `BACKUP_ENCRYPTION_KEY` | Senha AES-256-CBC dos dumps `./setup.sh backup` | Vazio no desenvolvimento (dump em claro com aviso); obrigatória em produção |
 | `BACKUP_ENCRYPTION_KEY_FALLBACKS` | Chaves antigas só para decifrar dumps | Vazio |
+| `BACKUP_REMOTE` | Destino rclone dos backups (`gdrive:pdl-backups`, `pdl-backup:bucket/pasta`); gravado por `./setup.sh backup-cloud configure` | Vazio (só local) |
+| `BACKUP_INCLUDE_FILES` | Inclui `media/` e `private/` no pacote do backup | `true` |
+| `BACKUP_KEEP_DAILY` / `BACKUP_KEEP_WEEKLY` | Retenção local e na nuvem: mais recente de cada dia / semana | `7` / `4` |
+| `BACKUP_SCHEDULE_TIME` | Horário (HH:MM, fuso do servidor) do backup diário de `backup-cloud schedule` | `03:30` |
 | `PDL_ALLOW_RUNTIME_SECRET_ROTATION` | Painel/Beat podem gravar o `.env` | `false` |
 | `DEBUG` | Modo de debug nos settings base | `true` |
 | `ALLOWED_HOSTS` | Hosts HTTP aceitos, separados por vírgula | `localhost,127.0.0.1` |

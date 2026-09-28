@@ -51,6 +51,7 @@ yarn-error.log*
 # Docker
 *.override.yml
 backups/
+.rclone/
 /dist/
 
 # IDEs

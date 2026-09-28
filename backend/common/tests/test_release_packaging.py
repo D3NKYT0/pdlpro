@@ -452,7 +452,8 @@ def test_install_ps1_dry_run_and_production_script_contract(tmp_path: Path):
 
     backup = (REPO_ROOT / "scripts" / "backup.sh").read_text(encoding="utf-8")
     restore = (REPO_ROOT / "scripts" / "restore.sh").read_text(encoding="utf-8")
-    assert "aes-256-cbc" in backup
+    backup_lib = (REPO_ROOT / "scripts" / "lib" / "backup.sh").read_text(encoding="utf-8")
     assert "BACKUP_ENCRYPTION_KEY" in backup
-    assert ".dump.enc" in restore
-    assert "aes-256-cbc" in restore
+    assert "decrypt_backup_file" in restore
+    assert "aes-256-cbc" in backup_lib
+    assert r"(tar|dump)(\.enc)?" in backup_lib

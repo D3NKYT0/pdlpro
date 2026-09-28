@@ -253,8 +253,10 @@ catálogo; `./setup.sh help <comando>` a ajuda de cada um.
 | Criar o admin | `docker compose --env-file .env -f docker-compose.prod.yml exec backend python manage.py createsuperuser` |
 | Ligar HTTPS | `./setup.sh nginx --yes --ssl --email voce@seudominio.com` |
 | Ligar o FTP do launcher | `./setup.sh ftp --yes --http --domain launcher.seudominio.com --ssl --email voce@seudominio.com` |
-| Backup do PostgreSQL | `./setup.sh backup` |
-| Restaurar um dump | `./setup.sh restore --path backups/db/ARQUIVO.dump.enc` |
+| Backup (banco + mídia) | `./setup.sh backup` |
+| Enviar backups para Drive/R2/S3 e agendar | `./setup.sh backup-cloud configure` e `./setup.sh backup-cloud schedule` ([guia](backup-e-restauracao.md)) |
+| Restaurar o último backup da nuvem | `./setup.sh restore --from-cloud` |
+| Restaurar um arquivo local | `./setup.sh restore --path backups/db/ARQUIVO.tar.enc` |
 
 ## Se algo falhar
 
