@@ -12,6 +12,16 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+### Alterado
+
+### Corrigido
+
+## [2.6.2] - 2026-09-28
+
+Lançamento da versão 2.6.2 do PDL PRO com o configurador de bônus de recarga na Carteira administrativa (campanhas, faixas progressivas, incentivos de 1ª recarga e PIX e simulador), upload interativo de flyers nos banners, tráfego pago e analytics configuráveis por ambiente com respeito ao consentimento de cookies, abas do painel preservadas na URL e a correção da geração de PIX no checkout Mercado Pago.
+
+### Adicionado
+
 - **Campo Interativo de Imagem / Flyer para Banners Administrativos**:
   - Transformação do campo de texto de imagem em `/panel/admin/banners` (`AdminBannersPage`) em componente interativo completo com alternância entre upload local do dispositivo e URL externa.
   - Área de dropzone com suporte a arrastar e soltar (drag & drop), validação de tamanho (máximo 10MB) e formatos compatíveis (PNG, JPG, JPEG, WEBP, GIF, SVG).
@@ -35,6 +45,7 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- **Abas do painel preservadas na URL**: a aba ativa passa a ficar em `?tab=` (e sub-abas em parâmetro próprio, como `?pass=` no passe de batalha), sobrevivendo ao recarregamento e a links compartilhados em Carteira administrativa, Integrações, Configurador da loja, Pacotes e cupons, Observação de itens, Inventário, Loja e Passe de batalha. O hook compartilhado `useSearchParamTab` centraliza o comportamento, também adotado pelo Salão de jogos.
 - Os testes de interface do frontend aguardam até 5 s por renderizações assíncronas (`asyncUtilTimeout`), eliminando falhas intermitentes sob instrumentação de cobertura e em runners de CI.
 
 ### Corrigido
