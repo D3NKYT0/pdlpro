@@ -709,65 +709,83 @@ export function AdminWalletPage() {
                   <Sparkles className="w-8 h-8 animate-spin mx-auto mb-2 opacity-60" />
                   <p>{t('wallet.simulator.calculating')}</p>
                 </div>
-              ) : simResult ? (
-                <>
-                  <div className="wallet-sim-hero">
-                    <div className="wallet-sim-metric">
-                      <span>{t('wallet.simulator.baseAmount')}</span>
-                      <strong>{simResult.amount}</strong>
-                    </div>
-                    <div className="wallet-sim-metric">
-                      <span>{t('wallet.simulator.totalPercent')}</span>
-                      <strong className="is-highlight">+{Number(simResult.total_percent)}%</strong>
-                    </div>
-                    <div className="wallet-sim-metric">
-                      <span>{t('wallet.simulator.bonusCoins')}</span>
-                      <strong>+{simResult.bonus_coins}</strong>
-                    </div>
-                    <div className="wallet-sim-metric">
-                      <span>{t('wallet.simulator.totalCoins')}</span>
-                      <strong className="is-highlight">{simResult.total_coins}</strong>
-                    </div>
-                  </div>
+              ) : simResult ? (() => {
+                const breakdown = simResult.breakdown ?? {
+                  tier_bonus: simResult.tier_bonus ?? 0,
+                  promo_bonus: simResult.promo_bonus ?? 0,
+                  pix_bonus: simResult.pix_bonus ?? 0,
+                  first_purchase_bonus: simResult.first_purchase_bonus ?? 0,
+                }
+                const totalPercent = simResult.total_percent ?? simResult.percent ?? '0'
+                const bonusCoins = simResult.bonus_coins ?? simResult.bonus ?? 0
+                const totalCoins = simResult.total_coins ?? simResult.total ?? simResult.amount
+                const ruleApplied = simResult.rule_applied ?? simResult.description ?? ''
 
-                  <div className="wallet-sim-breakdown">
-                    <span className="text-xs uppercase text-gold font-semibold tracking-wider mb-1">
-                      {t('wallet.simulator.breakdownTitle')}
-                    </span>
-
-                    <div className="wallet-sim-breakdown-row">
-                      <span>{t('wallet.simulator.breakdownTier')}</span>
-                      <strong>+{simResult.breakdown.tier_bonus} moedas</strong>
-                    </div>
-
-                    <div className="wallet-sim-breakdown-row">
-                      <span>{t('wallet.simulator.breakdownPromo')}</span>
-                      <strong>+{simResult.breakdown.promo_bonus} moedas</strong>
+                return (
+                  <>
+                    <div className="wallet-sim-hero">
+                      <div className="wallet-sim-metric">
+                        <span>{t('wallet.simulator.baseAmount')}</span>
+                        <strong>{simResult.amount}</strong>
+                      </div>
+                      <div className="wallet-sim-metric">
+                        <span>{t('wallet.simulator.totalPercent')}</span>
+                        <strong className="is-highlight">+{Number(totalPercent)}%</strong>
+                      </div>
+                      <div className="wallet-sim-metric">
+                        <span>{t('wallet.simulator.bonusCoins')}</span>
+                        <strong>+{bonusCoins}</strong>
+                      </div>
+                      <div className="wallet-sim-metric">
+                        <span>{t('wallet.simulator.totalCoins')}</span>
+                        <strong className="is-highlight">{totalCoins}</strong>
+                      </div>
                     </div>
 
-                    {simResult.breakdown.pix_bonus > 0 && (
-                      <div className="wallet-sim-breakdown-row is-bonus">
-                        <span>{t('wallet.simulator.breakdownPix')}</span>
-                        <strong>+{simResult.breakdown.pix_bonus} moedas</strong>
+                    <div className="wallet-sim-breakdown">
+                      <span className="text-xs uppercase text-gold font-semibold tracking-wider mb-1">
+                        {t('wallet.simulator.breakdownTitle')}
+                      </span>
+
+                      <div className="wallet-sim-breakdown-row">
+                        <span>{t('wallet.simulator.breakdownTier')}</span>
+                        <strong>+{Number(breakdown.tier_bonus)} moedas</strong>
+                      </div>
+
+                      <div className="wallet-sim-breakdown-row">
+                        <span>{t('wallet.simulator.breakdownPromo')}</span>
+                        <strong>+{Number(breakdown.promo_bonus)} moedas</strong>
+                      </div>
+
+                      {Number(breakdown.pix_bonus) > 0 && (
+                        <div className="wallet-sim-breakdown-row is-bonus">
+                          <span>{t('wallet.simulator.breakdownPix')}</span>
+                          <strong>+{Number(breakdown.pix_bonus)} moedas</strong>
+                        </div>
+                      )}
+
+                      {Number(breakdown.first_purchase_bonus) > 0 && (
+                        <div className="wallet-sim-breakdown-row is-bonus">
+                          <span>{t('wallet.simulator.breakdownFirstPurchase')}</span>
+                          <strong>+{Number(breakdown.first_purchase_bonus)} moedas</strong>
+                        </div>
+                      )}
+                    </div>
+
+                    {ruleApplied && (
+                      <div className="wallet-sim-applied">
+                        <Sparkles className="w-4 h-4 flex-shrink-0" />
+                        <span>{ruleApplied}</span>
                       </div>
                     )}
-
-                    {simResult.breakdown.first_purchase_bonus > 0 && (
-                      <div className="wallet-sim-breakdown-row is-bonus">
-                        <span>{t('wallet.simulator.breakdownFirstPurchase')}</span>
-                        <strong>+{simResult.breakdown.first_purchase_bonus} moedas</strong>
-                      </div>
-                    )}
-                  </div>
-
-                  {simResult.rule_applied && (
-                    <div className="wallet-sim-applied">
-                      <Sparkles className="w-4 h-4 flex-shrink-0" />
-                      <span>{simResult.rule_applied}</span>
-                    </div>
-                  )}
-                </>
-              ) : null}
+                  </>
+                )
+              })() : (
+                <div className="py-12 text-center text-muted">
+                  <Calculator className="w-8 h-8 mx-auto mb-2 opacity-40" />
+                  <p>{t('wallet.simulator.text')}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

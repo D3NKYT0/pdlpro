@@ -77,18 +77,26 @@ export interface ApiStaffBonusTier {
 }
 
 export interface ApiBonusSimulationResult {
-  amount: number
-  payment_method: string
-  is_first_purchase: boolean
-  total_percent: string
-  bonus_coins: number
-  total_coins: number
-  rule_applied: string
-  breakdown: {
-    tier_bonus: number
-    promo_bonus: number
-    pix_bonus: number
-    first_purchase_bonus: number
+  amount: string | number
+  bonus?: string | number
+  percent?: string
+  total?: string | number
+  description?: string
+  tier_bonus?: string | number
+  promo_bonus?: string | number
+  pix_bonus?: string | number
+  first_purchase_bonus?: string | number
+  total_percent?: string
+  bonus_coins?: string | number
+  total_coins?: string | number
+  rule_applied?: string
+  payment_method?: string
+  is_first_purchase?: boolean
+  breakdown?: {
+    tier_bonus: string | number
+    promo_bonus: string | number
+    pix_bonus: string | number
+    first_purchase_bonus: string | number
   }
 }
 

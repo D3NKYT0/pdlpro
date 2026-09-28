@@ -522,6 +522,16 @@ class PreviewStaffBonusSimulationUseCase(UseCase[dict, dict]):
             "promo_bonus": str(result.promo_bonus),
             "pix_bonus": str(result.pix_bonus),
             "first_purchase_bonus": str(result.first_purchase_bonus),
+            "total_percent": str(result.percent),
+            "bonus_coins": str(result.bonus),
+            "total_coins": str(result.total),
+            "rule_applied": result.description,
+            "breakdown": {
+                "tier_bonus": str(result.tier_bonus),
+                "promo_bonus": str(result.promo_bonus),
+                "pix_bonus": str(result.pix_bonus),
+                "first_purchase_bonus": str(result.first_purchase_bonus),
+            },
         }
 
 

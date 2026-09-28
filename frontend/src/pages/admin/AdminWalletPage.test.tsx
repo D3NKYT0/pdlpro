@@ -242,3 +242,26 @@ it('simulador interativo calcula e apresenta métricas de bônus', async () => {
   expect(await screen.findByText('+20%')).toBeInTheDocument()
   expect(screen.getByText('1200')).toBeInTheDocument()
 })
+
+it('simulador não quebra a tela se a resposta vier sem objeto breakdown aninhado', async () => {
+  previewBonusSimulation.mockResolvedValue({
+    amount: 500,
+    bonus: 50,
+    percent: '10.00',
+    total: 550,
+    description: 'Faixa 10%',
+    tier_bonus: 50,
+    promo_bonus: 0,
+    pix_bonus: 0,
+    first_purchase_bonus: 0,
+  } as any)
+
+  const user = mount()
+  await user.click(screen.getByRole('tab', { name: /Simulador/ }))
+
+  expect(await screen.findByText('Simular Regras de Bônus')).toBeInTheDocument()
+  expect(await screen.findByText('+10%')).toBeInTheDocument()
+  expect(screen.getByText('550')).toBeInTheDocument()
+  expect(screen.getByText('+50')).toBeInTheDocument()
+})
+
