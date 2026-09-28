@@ -16,6 +16,16 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+## [2.6.3] - 2026-09-28
+
+Lançamento da versão 2.6.3 do PDL PRO com backup na nuvem (Google Drive, Cloudflare R2, S3 e demais destinos do rclone) incluindo banco, mídia e arquivos privados, restauração direto da nuvem, agendamento diário com retenção e a atualização pela release sem reinício duplo dos serviços.
+
+### Adicionado
+
+- **Backup na nuvem com mídia, retenção e agendamento**: `./setup.sh backup` passa a gerar um pacote único e cifrado com o banco, a mídia (temas, uploads) e os arquivos privados LGPD, e envia para Google Drive, Cloudflare R2, S3 e demais destinos do rclone (`./setup.sh backup-cloud configure`). `./setup.sh restore --from-cloud` baixa o último backup (ou um nome escolhido), confere o checksum e restaura banco e arquivos; `--db-only` mantém o comportamento anterior. `backup-cloud schedule` instala o backup diário (timer systemd ou crontab), com retenção configurável de diários e semanais aplicada localmente e na nuvem. Nenhum backup em claro é enviado, e dumps `.dump.enc` antigos continuam restauráveis.
+
+### Corrigido
+
 - **Atualização pela release sem reinício duplo**: o `install.sh` / `install.ps1` deixava o `configure-production` recriar os containers em execução ainda com as imagens da versão anterior e o `.env` novo, antes de o deploy recriá-los de novo com a versão nova. Agora o configurador adia a recriação (`PDL_DEFER_SERVICE_RECREATE=1`) quando o deploy vem em seguida, e a atualização reinicia os serviços uma única vez, sem baixar a imagem antiga. Com `--no-start` o comportamento anterior é mantido.
 
 ## [2.6.2] - 2026-09-28
