@@ -249,6 +249,10 @@ export function AdminWalletPage() {
                 <h2>{t('wallet.bannerTitle')}</h2>
                 <p>{t('wallet.bannerText')}</p>
               </div>
+              <div className="admin-services-summary">
+                <strong>{active ? '● ' + t('wallet.status.current') : '○ ' + t('wallet.status.inactive')}</strong>
+                <small>{stackingMode === 'sum' ? t('wallet.stackingModeSum') : t('wallet.stackingModeMax')}</small>
+              </div>
             </header>
 
             <div className="account-form-fields">
@@ -283,17 +287,19 @@ export function AdminWalletPage() {
               </Field>
 
               <Field>
-                <span className="admin-coin-metric-icon" aria-hidden="true"><Percent /></span>
                 {t('wallet.percent')}
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  step="0.01"
-                  value={percent}
-                  onChange={(event) => setPercent(event.target.value)}
-                  required
-                />
+                <span className="admin-coin-input">
+                  <b>%</b>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                    value={percent}
+                    onChange={(event) => setPercent(event.target.value)}
+                    required
+                  />
+                </span>
               </Field>
 
               <Field>
@@ -314,7 +320,7 @@ export function AdminWalletPage() {
                 />
               </Field>
 
-              <div className="field ui-field" data-theme-part="field">
+              <div className="field ui-field wallet-form-span-2" data-theme-part="field">
                 <span>{t('wallet.stackingMode')}</span>
                 <div className="wallet-stacking-options">
                   <label className={`wallet-stacking-card ${stackingMode === 'max' ? 'is-selected' : ''}`}>
@@ -347,11 +353,13 @@ export function AdminWalletPage() {
                 </div>
               </div>
 
-              <Toggle
-                label={t('wallet.activeToggle')}
-                checked={active}
-                onChange={(event) => setActive(event.target.checked)}
-              />
+              <div className="wallet-form-toggle-wrap">
+                <Toggle
+                  label={t('wallet.activeToggle')}
+                  checked={active}
+                  onChange={(event) => setActive(event.target.checked)}
+                />
+              </div>
             </div>
           </Card>
 
@@ -360,9 +368,9 @@ export function AdminWalletPage() {
             <div className="wallet-preview-header">
               <span><Eye className="w-4 h-4 inline-block mr-1" /> {t('wallet.livePreview')}</span>
               {active ? (
-                <span className="text-green-400">● {t('wallet.status.current')}</span>
+                <span className="wallet-preview-status is-active">● {t('wallet.status.current')}</span>
               ) : (
-                <span className="text-gray-400">○ {t('wallet.status.inactive')}</span>
+                <span className="wallet-preview-status is-inactive">○ {t('wallet.status.inactive')}</span>
               )}
             </div>
 
@@ -546,7 +554,7 @@ export function AdminWalletPage() {
                 onChange={(e) => setTierDraft((cur) => ({ ...cur, active: e.target.checked }))}
               />
 
-              <div className="flex justify-end gap-3 mt-4">
+              <div className="wallet-modal-actions">
                 <Button variant="ghost" onClick={() => setTierModalOpen(false)}>
                   Cancelar
                 </Button>
@@ -570,6 +578,10 @@ export function AdminWalletPage() {
                 <h2>{t('wallet.specialRules.title')}</h2>
                 <p>{t('wallet.specialRules.text')}</p>
               </div>
+              <div className="admin-services-summary">
+                <strong>{firstPurchaseActive ? '1ª Recarga: ATIVA' : '1ª Recarga: OFF'}</strong>
+                <small>PIX: +{pixBonusPercent}%</small>
+              </div>
             </header>
           </Card>
 
@@ -577,53 +589,67 @@ export function AdminWalletPage() {
             {/* 1ª Recarga */}
             <div className="wallet-rule-card">
               <div className="wallet-rule-card-header">
-                <Gift />
-                <strong>{t('wallet.specialRules.firstPurchaseTitle')}</strong>
+                <span className="admin-coin-metric-icon"><Gift /></span>
+                <div>
+                  <strong>{t('wallet.specialRules.firstPurchaseTitle')}</strong>
+                  <p>{t('wallet.specialRules.firstPurchaseText')}</p>
+                </div>
               </div>
-              <p>{t('wallet.specialRules.firstPurchaseText')}</p>
 
-              <Toggle
-                label={t('wallet.specialRules.firstPurchaseToggle')}
-                checked={firstPurchaseActive}
-                onChange={(e) => setFirstPurchaseActive(e.target.checked)}
-              />
+              <div className="wallet-rule-card-body">
+                <Toggle
+                  label={t('wallet.specialRules.firstPurchaseToggle')}
+                  checked={firstPurchaseActive}
+                  onChange={(e) => setFirstPurchaseActive(e.target.checked)}
+                />
 
-              {firstPurchaseActive && (
-                <Field>
-                  {t('wallet.specialRules.firstPurchasePercent')}
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    step="0.01"
-                    value={firstPurchasePercent}
-                    onChange={(e) => setFirstPurchasePercent(e.target.value)}
-                    required
-                  />
-                </Field>
-              )}
+                {firstPurchaseActive && (
+                  <Field>
+                    {t('wallet.specialRules.firstPurchasePercent')}
+                    <span className="admin-coin-input">
+                      <b>%</b>
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="0.01"
+                        value={firstPurchasePercent}
+                        onChange={(e) => setFirstPurchasePercent(e.target.value)}
+                        required
+                      />
+                    </span>
+                  </Field>
+                )}
+              </div>
             </div>
 
             {/* Bônus PIX */}
             <div className="wallet-rule-card">
               <div className="wallet-rule-card-header">
-                <CreditCard />
-                <strong>{t('wallet.specialRules.pixTitle')}</strong>
+                <span className="admin-coin-metric-icon"><CreditCard /></span>
+                <div>
+                  <strong>{t('wallet.specialRules.pixTitle')}</strong>
+                  <p>{t('wallet.specialRules.pixText')}</p>
+                </div>
               </div>
-              <p>{t('wallet.specialRules.pixText')}</p>
 
-              <Field>
-                {t('wallet.specialRules.pixPercent')}
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  step="0.01"
-                  value={pixBonusPercent}
-                  onChange={(e) => setPixBonusPercent(e.target.value)}
-                  required
-                />
-              </Field>
+              <div className="wallet-rule-card-body">
+                <Field>
+                  {t('wallet.specialRules.pixPercent')}
+                  <span className="admin-coin-input">
+                    <b>%</b>
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      step="0.01"
+                      value={pixBonusPercent}
+                      onChange={(e) => setPixBonusPercent(e.target.value)}
+                      required
+                    />
+                  </span>
+                </Field>
+              </div>
             </div>
           </div>
 
@@ -687,7 +713,7 @@ export function AdminWalletPage() {
                   <select
                     value={simPaymentMethod}
                     onChange={(e) => setSimPaymentMethod(e.target.value as 'standard' | 'pix')}
-                    className="w-full bg-[#181511] border border-[#c5a161]/30 p-2 text-white rounded"
+                    className="wallet-sim-select"
                   >
                     <option value="standard">{t('wallet.simulator.paymentDefault')}</option>
                     <option value="pix">{t('wallet.simulator.paymentPix')}</option>
@@ -743,7 +769,7 @@ export function AdminWalletPage() {
                     </div>
 
                     <div className="wallet-sim-breakdown">
-                      <span className="text-xs uppercase text-gold font-semibold tracking-wider mb-1">
+                      <span className="wallet-sim-breakdown-title">
                         {t('wallet.simulator.breakdownTitle')}
                       </span>
 
