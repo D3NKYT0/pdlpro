@@ -32,6 +32,8 @@ it('expõe o catálogo esmaltado com arte própria e marca estável', () => {
     'brain-orb',
     'radar-pulse',
     'gamepad',
+    'pix-bolt',
+    'gold-coin',
   ])
   icons.forEach((icon) => {
     expect(icon).toHaveAttribute('viewBox', '0 0 64 64')

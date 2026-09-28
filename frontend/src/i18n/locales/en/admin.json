@@ -327,7 +327,10 @@
       "firstPurchasePercent": "1st top-up bonus (%)",
       "pixTitle": "Payment Method Incentive (PIX)",
       "pixText": "Grant an immediate extra bonus when top-ups are paid using PIX.",
-      "pixPercent": "Extra PIX bonus (%)"
+      "pixPercent": "Extra PIX bonus (%)",
+      "firstPurchaseStatusActive": "1st Top-up: ACTIVE",
+      "firstPurchaseStatusOff": "1st Top-up: OFF",
+      "pixBonusLabel": "PIX: +{{percent}}%"
     },
     "tiers": {
       "eyebrow": "Progressive Volume",
@@ -351,7 +354,17 @@
         "deleted": "Bonus tier removed successfully",
         "error": "Could not save bonus tier"
       },
-      "confirmDelete": "Are you sure you want to remove this bonus tier?"
+      "confirmDelete": "Are you sure you want to remove this bonus tier?",
+      "tierRank": "Tier #{{order}}",
+      "coinsUnit": "Coins",
+      "activeStatus": "Active",
+      "inactiveStatus": "Inactive",
+      "orderLabel": "Order: #{{order}}",
+      "editAction": "Edit",
+      "deleteAction": "Delete",
+      "saveButton": "Save Tier",
+      "cancelButton": "Cancel",
+      "defineMaxToggle": "Set maximum coin limit"
     },
     "simulator": {
       "eyebrow": "Real-Time Calculator",
@@ -372,11 +385,68 @@
       "breakdownPromo": "Promotional Campaign:",
       "breakdownPix": "PIX Incentive:",
       "breakdownFirstPurchase": "1st Top-up Bonus:",
-      "baseAmount": "Base coins:"
+      "baseAmount": "Base coins:",
+      "engineActive": "REAL-TIME CALCULATION ACTIVE",
+      "paramsTitle": "Recharge Parameters",
+      "coinsUnit": "coins",
+      "instant": "Instant",
+      "basePlusBonus": "{{base}} base + {{bonus}} bonus"
     },
     "toast": {
       "saved": "Wallet promotion updated",
       "error": "Could not save"
+    },
+    "sections": {
+      "identity": "Campaign Identity",
+      "bonus": "Bonus & Validity",
+      "activation": "Publishing & Activation"
+    },
+    "stackingSelectMax": "Select Highest Bonus mode",
+    "stackingSelectSum": "Select Cumulative mode",
+    "quickPresets": "Quick presets:",
+    "activeStatusLabel": "System Status:",
+    "heroStats": {
+      "totalTiers": "Total tiers:",
+      "startTier": "Starting tier:",
+      "maxTier": "Top tier:",
+      "topBonus": "Max bonus:"
+    },
+    "ladder": {
+      "title": "Visual Coin Bonus Progression",
+      "subtitle": "Track the incentive curve according to coin top-up volume"
+    },
+    "previewCard": {
+      "title": "Wallet Banner Live Preview",
+      "subtitle": "Exact layout rendered for players on /panel/wallet",
+      "tip": "This banner takes prime real-estate at the top of the wallet when active."
+    },
+    "simPresets": {
+      "title": "Quick Test Scenarios:",
+      "receiptTitle": "Bonus Transaction Statement",
+      "visualComparison": "Breakdown of Player Delivery",
+      "newPlayerPix": "New Player via PIX",
+      "newPlayerPixDesc": "500 coins · PIX · 1st Top-up",
+      "regularCard": "Standard Card",
+      "regularCardDesc": "1,000 coins · Standard",
+      "whaleVip": "VIP / High Volume",
+      "whaleVipDesc": "5,000 coins · VIP PIX"
+    },
+    "rulesCards": {
+      "firstPurchaseTag": "Acquisition & Welcome",
+      "firstPurchaseTip": "Triples the activation rate of newly registered accounts.",
+      "mockFirstPurchase": "🎁 1st Top-up: +{{percent}}% Bonus Coins",
+      "pixTag": "Instant Liquidity & Low Cost",
+      "pixTip": "Eliminates chargeback risks and lowers payment processing expenses.",
+      "mockPix": "⚡ Pay with PIX and get +{{percent}}% Bonus",
+      "guideTierTitle": "1. Volume Tier",
+      "guideTierDesc": "Sets base bonus rate according to recharge volume.",
+      "guidePromoTitle": "2. Active Campaign",
+      "guidePromoDesc": "Applies selected mode (Highest Bonus or Cumulative sum).",
+      "guideIncentivesTitle": "3. Incentives (1st / PIX)",
+      "guideIncentivesDesc": "Added directly to the checkout for maximum conversion.",
+      "stackingGuideTitle": "How bonuses stack during checkout",
+      "stackingGuideText": "Priority calculation rules between volume tiers, campaigns, and payment incentives",
+      "summaryTitle": "Incentives & Conversion Rules"
     }
   },
   "services": {

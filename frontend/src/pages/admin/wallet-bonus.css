@@ -1,101 +1,401 @@
-/* PDL PRO - Admin Wallet & Bonus Configurator Styles */
+/* ==========================================================================
+   PDL PRO - Admin Wallet & Bonus Configurator Styles (Dark Fantasy Theme)
+   ========================================================================== */
 
 .wallet-bonus-workspace {
   display: grid;
-  gap: 20px;
-  padding-bottom: 72px; /* Garante que o rodapé flutuante admin-server-actions não sobreponha os campos */
+  gap: 22px;
+  padding-bottom: 90px; /* Space for sticky save bar */
 }
 
-/* Tabs personalizadas no padrão medieval do painel PDL PRO */
+/* --------------------------------------------------------------------------
+   Tabs Navigation (Elevated RPG Medieval Theme)
+   -------------------------------------------------------------------------- */
 html.pdl-panel .wallet-bonus-tabs.ui-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 6px;
-  padding: 6px;
-  border-radius: var(--panel-radius, 3px);
-  background: rgba(10, 8, 6, 0.65);
-  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 16%, transparent);
-  box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.4);
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: var(--panel-radius, 4px);
+  background: linear-gradient(180deg, rgba(16, 13, 10, 0.9) 0%, rgba(8, 7, 5, 0.98) 100%);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 22%, transparent);
+  box-shadow: inset 0 1px 0 rgba(230, 199, 125, 0.08), 0 4px 18px rgba(0, 0, 0, 0.45);
 }
 
 html.pdl-panel .wallet-bonus-tabs.ui-tabs > button {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  min-height: 42px;
-  padding: 0 18px;
-  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 20%, transparent);
-  border-radius: var(--panel-radius, 3px);
-  background: rgba(18, 15, 12, 0.65);
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 18%, transparent);
+  border-radius: var(--panel-radius, 4px);
+  background: linear-gradient(180deg, rgba(24, 20, 15, 0.75) 0%, rgba(14, 11, 8, 0.9) 100%);
   color: var(--panel-muted, #9f9a91);
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  transition: all 180ms ease;
+  transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 html.pdl-panel .wallet-bonus-tabs.ui-tabs > button svg {
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
   color: var(--panel-gold, #c5a161);
-  transition: transform 180ms ease, color 180ms ease;
+  transition: transform 180ms ease, color 180ms ease, filter 180ms ease;
   flex-shrink: 0;
 }
 
 html.pdl-panel .wallet-bonus-tabs.ui-tabs > button:hover {
-  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 48%, transparent);
-  background: rgba(28, 22, 16, 0.85);
+  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 50%, transparent);
+  background: linear-gradient(180deg, rgba(34, 27, 20, 0.85) 0%, rgba(18, 14, 10, 0.95) 100%);
   color: #fff;
-  transform: translateY(-1px);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 12px color-mix(in srgb, var(--panel-gold, #c5a161) 15%, transparent);
 }
 
 html.pdl-panel .wallet-bonus-tabs.ui-tabs > button:hover svg {
   color: var(--panel-gold-bright, #e6c77d);
-  transform: scale(1.12);
+  transform: scale(1.15);
 }
 
-html.pdl-panel .wallet-bonus-tabs.ui-tabs > button[aria-selected="true"] {
+html.pdl-panel .wallet-bonus-tabs.ui-tabs > button[aria-selected="true"],
+html.pdl-panel .wallet-bonus-tabs.ui-tabs > button.active {
   border-color: var(--panel-gold-bright, #e6c77d);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--panel-gold, #c5a161) 24%, transparent), color-mix(in srgb, var(--panel-gold, #c5a161) 8%, transparent)),
-    rgba(14, 11, 8, 0.95);
+    linear-gradient(180deg, color-mix(in srgb, var(--panel-gold, #c5a161) 28%, transparent), color-mix(in srgb, var(--panel-gold, #c5a161) 10%, transparent)),
+    rgba(14, 11, 8, 0.98);
   color: var(--panel-gold-bright, #e6c77d);
   box-shadow:
-    inset 0 1px 0 rgba(230, 199, 125, 0.35),
-    0 4px 14px rgba(0, 0, 0, 0.5);
+    inset 0 2px 0 var(--panel-gold-bright, #e6c77d),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+    0 4px 20px rgba(0, 0, 0, 0.6),
+    0 0 16px color-mix(in srgb, var(--panel-gold, #c5a161) 22%, transparent);
 }
 
-html.pdl-panel .wallet-bonus-tabs.ui-tabs > button[aria-selected="true"] svg {
+html.pdl-panel .wallet-bonus-tabs.ui-tabs > button[aria-selected="true"] svg,
+html.pdl-panel .wallet-bonus-tabs.ui-tabs > button.active svg {
   color: var(--panel-gold-bright, #e6c77d);
-  filter: drop-shadow(0 0 6px rgba(230, 199, 125, 0.6));
+  filter: drop-shadow(0 0 8px rgba(230, 199, 125, 0.7));
 }
 
-.wallet-bonus-tab-content {
+.wallet-tab-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--panel-muted, #9f9a91);
+  margin-left: 4px;
+}
+
+html.pdl-panel .wallet-bonus-tabs.ui-tabs > button[aria-selected="true"] .wallet-tab-pill {
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 25%, transparent);
+  border-color: color-mix(in srgb, var(--panel-gold-bright, #e6c77d) 50%, transparent);
+  color: var(--panel-gold-bright, #e6c77d);
+}
+
+/* --------------------------------------------------------------------------
+   Hero Headers with Illuminated Crests
+   -------------------------------------------------------------------------- */
+.wallet-hero-card {
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 25%, transparent);
+  border-radius: var(--panel-radius, 4px);
+  background:
+    radial-gradient(ellipse at top left, color-mix(in srgb, var(--panel-gold, #c5a161) 14%, transparent) 0%, transparent 65%),
+    linear-gradient(180deg, rgba(24, 19, 14, 0.95) 0%, rgba(13, 10, 8, 0.98) 100%);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(230, 199, 125, 0.12);
+}
+
+.wallet-hero-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 24px;
+}
+
+@media (max-width: 820px) {
+  .wallet-hero-header {
+    grid-template-columns: auto minmax(0, 1fr);
+    row-gap: 16px;
+  }
+  .wallet-hero-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+.wallet-header-crest {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 6px;
+  position: relative;
+  flex-shrink: 0;
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 35%, transparent);
+  background: linear-gradient(135deg, rgba(30, 24, 18, 0.9) 0%, rgba(14, 11, 8, 0.98) 100%);
+  box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.6), 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.wallet-header-crest.promo-crest {
+  border-color: rgba(230, 199, 125, 0.45);
+  box-shadow: 0 0 20px rgba(230, 199, 125, 0.2), inset 0 1px 0 rgba(230, 199, 125, 0.35);
+  color: var(--panel-gold-bright, #e6c77d);
+}
+
+.wallet-header-crest.tiers-crest {
+  border-color: rgba(96, 165, 250, 0.45);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(147, 197, 253, 0.35);
+  color: #93c5fd;
+}
+
+.wallet-header-crest.rules-crest {
+  border-color: rgba(245, 158, 11, 0.45);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2), inset 0 1px 0 rgba(251, 191, 36, 0.35);
+  color: #fcd34d;
+}
+
+.wallet-header-crest.sim-crest {
+  border-color: rgba(20, 184, 166, 0.45);
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.2), inset 0 1px 0 rgba(94, 234, 212, 0.35);
+  color: #5eead4;
+}
+
+.wallet-hero-text h2 {
+  margin: 3px 0 4px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.wallet-hero-text p {
+  margin: 0;
+  color: var(--panel-muted, #9f9a91);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.wallet-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   Badges, Pills & Status Indicators
+   -------------------------------------------------------------------------- */
+.wallet-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.wallet-status-badge.is-live {
+  background: rgba(34, 197, 94, 0.14);
+  border: 1px solid rgba(34, 197, 94, 0.45);
+  color: #4ade80;
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.18);
+}
+
+.wallet-status-badge.is-scheduled {
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  color: #fbbf24;
+}
+
+.wallet-status-badge.is-off {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--panel-muted, #9f9a91);
+}
+
+.wallet-status-badge .led-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+.wallet-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 28%, transparent);
+  color: var(--panel-gold-bright, #e6c77d);
+}
+
+/* --------------------------------------------------------------------------
+   Layouts & Responsive Grids
+   -------------------------------------------------------------------------- */
+.wallet-two-col-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.95fr);
+  gap: 22px;
+  align-items: start;
+}
+
+@media (max-width: 1080px) {
+  .wallet-two-col-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wallet-form-column {
   display: grid;
   gap: 20px;
 }
 
-/* Campos especiais de formulário */
-.wallet-form-span-2 {
-  grid-column: 1 / -1;
+.wallet-preview-column {
+  position: sticky;
+  top: 24px;
+  display: grid;
+  gap: 16px;
 }
 
-.wallet-form-toggle-wrap {
-  grid-column: 1 / -1;
-  padding-top: 14px;
-  border-top: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 14%, transparent);
+@media (max-width: 1080px) {
+  .wallet-preview-column {
+    position: static;
+  }
 }
 
-/* Seletores de Stacking Mode */
+/* --------------------------------------------------------------------------
+   Section Cards & Field Enhancements
+   -------------------------------------------------------------------------- */
+.wallet-section-card {
+  padding: 24px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 20%, transparent);
+  border-radius: var(--panel-radius, 4px);
+  background: linear-gradient(180deg, rgba(22, 18, 14, 0.88) 0%, rgba(13, 11, 9, 0.96) 100%);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(230, 199, 125, 0.08);
+}
+
+.wallet-section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 16px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 14%, transparent);
+}
+
+.wallet-section-header svg {
+  color: var(--panel-gold-bright, #e6c77d);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.wallet-section-header h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--panel-gold-bright, #e6c77d);
+  text-transform: uppercase;
+}
+
+/* Label com ícone integrado */
+.wallet-field-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--panel-gold-bright, #e6c77d);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.wallet-field-title svg {
+  width: 14px;
+  height: 14px;
+  color: var(--panel-gold, #c5a161);
+  flex-shrink: 0;
+}
+
+/* Sugestões rápidas de Badge / Pills */
+.wallet-preset-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.wallet-preset-label {
+  font-size: 11px;
+  color: var(--panel-muted, #9f9a91);
+  font-weight: 600;
+}
+
+.wallet-preset-pill {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: 3px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 24%, transparent);
+  background: rgba(18, 14, 11, 0.7);
+  color: var(--panel-gold, #c5a161);
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+
+.wallet-preset-pill:hover {
+  border-color: var(--panel-gold-bright, #e6c77d);
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 18%, transparent);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.wallet-preset-pill.is-active {
+  border-color: var(--panel-gold-bright, #e6c77d);
+  background: var(--panel-gold-bright, #e6c77d);
+  color: #0b0907;
+  box-shadow: 0 0 10px rgba(230, 199, 125, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   Stacking Mode Interactive Tiles
+   -------------------------------------------------------------------------- */
 .wallet-stacking-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 8px;
+  gap: 16px;
+  margin-top: 10px;
 }
 
 @media (max-width: 680px) {
@@ -106,48 +406,92 @@ html.pdl-panel .wallet-bonus-tabs.ui-tabs > button[aria-selected="true"] svg {
 
 .wallet-stacking-card {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
   gap: 14px;
-  padding: 16px 18px;
-  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 20%, transparent);
-  border-radius: var(--panel-radius, 3px);
-  background: linear-gradient(180deg, rgba(22, 18, 14, 0.6) 0%, rgba(12, 10, 8, 0.85) 100%);
+  padding: 18px 20px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 22%, transparent);
+  border-radius: var(--panel-radius, 4px);
+  background: linear-gradient(180deg, rgba(24, 19, 14, 0.7) 0%, rgba(13, 10, 8, 0.95) 100%);
   cursor: pointer;
-  transition: all 180ms ease;
+  transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .wallet-stacking-card:hover {
-  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 45%, transparent);
-  background: linear-gradient(180deg, rgba(30, 24, 18, 0.75) 0%, rgba(16, 13, 10, 0.92) 100%);
-  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 50%, transparent);
+  background: linear-gradient(180deg, rgba(32, 26, 19, 0.85) 0%, rgba(16, 13, 10, 0.98) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), 0 0 14px color-mix(in srgb, var(--panel-gold, #c5a161) 15%, transparent);
 }
 
 .wallet-stacking-card.is-selected {
   border-color: var(--panel-gold-bright, #e6c77d);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--panel-gold, #c5a161) 18%, transparent), color-mix(in srgb, var(--panel-gold, #c5a161) 6%, transparent)),
-    rgba(14, 11, 8, 0.95);
+    linear-gradient(180deg, color-mix(in srgb, var(--panel-gold, #c5a161) 20%, transparent), color-mix(in srgb, var(--panel-gold, #c5a161) 6%, transparent)),
+    rgba(14, 11, 8, 0.98);
   box-shadow:
-    inset 0 1px 0 rgba(230, 199, 125, 0.3),
-    0 4px 18px rgba(0, 0, 0, 0.45);
+    inset 0 2px 0 var(--panel-gold-bright, #e6c77d),
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 0 18px color-mix(in srgb, var(--panel-gold, #c5a161) 22%, transparent);
 }
 
-.wallet-stacking-card input[type="radio"] {
-  accent-color: var(--panel-gold-bright, #e6c77d);
-  width: 16px;
-  height: 16px;
-  margin-top: 3px;
-  cursor: pointer;
+.wallet-stacking-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.wallet-stacking-icon-badge {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 26%, transparent);
+  color: var(--panel-gold-bright, #e6c77d);
+  flex-shrink: 0;
+}
+
+.wallet-stacking-card.is-selected .wallet-stacking-icon-badge {
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 25%, transparent);
+  border-color: var(--panel-gold-bright, #e6c77d);
+  box-shadow: 0 0 12px rgba(230, 199, 125, 0.4);
+}
+
+.wallet-formula-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 20%, transparent);
+  color: var(--panel-gold, #c5a161);
+}
+
+.wallet-stacking-card.is-selected .wallet-formula-tag {
+  border-color: color-mix(in srgb, var(--panel-gold-bright, #e6c77d) 40%, transparent);
+  color: var(--panel-gold-bright, #e6c77d);
 }
 
 .wallet-stacking-text strong {
   display: block;
-  font-size: 13px;
-  color: var(--panel-gold-bright, #e6c77d);
-  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 5px;
   letter-spacing: 0.02em;
+}
+
+.wallet-stacking-card.is-selected .wallet-stacking-text strong {
+  color: var(--panel-gold-bright, #e6c77d);
 }
 
 .wallet-stacking-text small {
@@ -157,127 +501,341 @@ html.pdl-panel .wallet-bonus-tabs.ui-tabs > button[aria-selected="true"] svg {
   line-height: 1.45;
 }
 
-/* Moldura de Live Preview */
-.wallet-preview-section {
-  display: grid;
-  gap: 14px;
-  padding: 22px;
-  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 24%, transparent);
-  border-radius: var(--panel-radius, 3px);
-  background: linear-gradient(180deg, rgba(20, 16, 12, 0.7) 0%, rgba(10, 8, 6, 0.92) 100%);
-  box-shadow: inset 0 0 32px rgba(0, 0, 0, 0.5), 0 4px 20px rgba(0, 0, 0, 0.35);
-  position: relative;
+.wallet-stacking-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--panel-muted, #9f9a91);
 }
 
-.wallet-preview-header {
+.wallet-stacking-card input[type="radio"] {
+  accent-color: var(--panel-gold-bright, #e6c77d);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Live Banner Preview Studio (Tab 1)
+   -------------------------------------------------------------------------- */
+.wallet-preview-studio {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 26%, transparent);
+  border-radius: var(--panel-radius, 4px);
+  background:
+    radial-gradient(ellipse at top right, rgba(197, 161, 97, 0.15), transparent 70%),
+    linear-gradient(180deg, rgba(20, 16, 12, 0.95) 0%, rgba(10, 8, 6, 0.98) 100%);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(230, 199, 125, 0.15);
+}
+
+.wallet-preview-window-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: var(--panel-gold-bright, #e6c77d);
+  padding-bottom: 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 14%, transparent);
+}
+
+.wallet-preview-window-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 11px;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-weight: 700;
+  color: var(--panel-gold-bright, #e6c77d);
+}
+
+.wallet-preview-window-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.wallet-preview-window-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Custom Live Banner Rendering */
+.wallet-preview-studio .wallet-promo-banner {
+  margin: 4px 0;
+  border-radius: var(--panel-radius, 4px);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px color-mix(in srgb, var(--panel-gold, #c5a161) 18%, transparent);
+}
+
+.wallet-preview-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--panel-radius, 4px);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 14%, transparent);
+  font-size: 12px;
+  color: var(--panel-muted, #9f9a91);
+  line-height: 1.45;
+}
+
+.wallet-preview-callout svg {
+  color: var(--panel-gold, #c5a161);
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* --------------------------------------------------------------------------
+   Tab 2: Faixas Progressivas (Tiers & Ladder)
+   -------------------------------------------------------------------------- */
+.wallet-stats-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+  margin-bottom: 2px;
+}
+
+.wallet-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: var(--panel-radius, 4px);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 18%, transparent);
+  background: linear-gradient(180deg, rgba(22, 18, 14, 0.75) 0%, rgba(13, 10, 8, 0.92) 100%);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.wallet-stat-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 24%, transparent);
+  color: var(--panel-gold-bright, #e6c77d);
+  flex-shrink: 0;
+}
+
+.wallet-stat-info {
+  display: grid;
+  gap: 2px;
+}
+
+.wallet-stat-info span {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--panel-muted, #9f9a91);
+  font-weight: 600;
+}
+
+.wallet-stat-info strong {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.wallet-stat-info strong.highlight {
+  color: var(--panel-gold-bright, #e6c77d);
+}
+
+/* Escala Visual de Moedas (Visual Progression Ramp) */
+.wallet-ladder-card {
+  padding: 20px 24px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 22%, transparent);
+  border-radius: var(--panel-radius, 4px);
+  background:
+    radial-gradient(ellipse at top, color-mix(in srgb, var(--panel-gold, #c5a161) 10%, transparent), transparent 70%),
+    linear-gradient(180deg, rgba(22, 18, 14, 0.85) 0%, rgba(12, 10, 8, 0.95) 100%);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+}
+
+.wallet-ladder-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
   padding-bottom: 12px;
   border-bottom: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 12%, transparent);
 }
 
-.wallet-preview-header span svg {
-  width: 14px;
-  height: 14px;
-  vertical-align: -2px;
-}
-
-.wallet-preview-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 8px;
-  border-radius: 2px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+.wallet-ladder-head strong {
+  font-size: 13px;
   text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--panel-gold-bright, #e6c77d);
 }
 
-.wallet-preview-status.is-active {
-  background: rgba(34, 197, 94, 0.15);
-  border: 1px solid rgba(34, 197, 94, 0.4);
-  color: #4ade80;
+.wallet-ladder-head small {
+  color: var(--panel-muted, #9f9a91);
+  font-size: 12px;
 }
 
-.wallet-preview-status.is-inactive {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+.wallet-ladder-steps {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 8px 4px 12px;
+}
+
+.wallet-ladder-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.wallet-ladder-tile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: var(--panel-radius, 4px);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 24%, transparent);
+  background: linear-gradient(180deg, rgba(28, 22, 16, 0.75) 0%, rgba(16, 13, 10, 0.95) 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  transition: all 160ms ease;
+}
+
+.wallet-ladder-tile:hover {
+  border-color: var(--panel-gold-bright, #e6c77d);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5), 0 0 14px color-mix(in srgb, var(--panel-gold, #c5a161) 20%, transparent);
+}
+
+.wallet-ladder-tile-amount {
+  display: grid;
+  gap: 2px;
+}
+
+.wallet-ladder-tile-amount span {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: var(--panel-muted, #9f9a91);
 }
 
-/* Faixas Progressivas (Tab 2) */
+.wallet-ladder-tile-amount strong {
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.wallet-ladder-arrow {
+  color: var(--panel-gold, #c5a161);
+  opacity: 0.6;
+}
+
+/* Grid de Faixas Progressivas */
 .wallet-tiers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 18px;
 }
 
 .wallet-tier-card {
   display: grid;
-  gap: 14px;
-  padding: 20px;
+  gap: 16px;
+  padding: 22px;
   border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 22%, transparent);
-  border-radius: var(--panel-radius, 3px);
-  background: linear-gradient(135deg, rgba(22, 18, 14, 0.85) 0%, rgba(12, 10, 8, 0.95) 100%);
+  border-radius: var(--panel-radius, 4px);
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--panel-gold, #c5a161) 10%, transparent), transparent 60%),
+    linear-gradient(135deg, rgba(24, 19, 14, 0.88) 0%, rgba(13, 10, 8, 0.96) 100%);
   position: relative;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .wallet-tier-card:hover {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 50%, transparent);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px color-mix(in srgb, var(--panel-gold, #c5a161) 16%, transparent);
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 55%, transparent);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), 0 0 20px color-mix(in srgb, var(--panel-gold, #c5a161) 20%, transparent);
 }
 
 .wallet-tier-card.is-inactive {
   opacity: 0.55;
-  filter: grayscale(0.6);
+  filter: grayscale(0.65);
 }
 
 .wallet-tier-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
 }
 
-.wallet-tier-range {
-  font-size: 15px;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.02em;
-}
-
-.wallet-tier-range span {
+.wallet-tier-rank-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 24%, transparent);
   color: var(--panel-gold-bright, #e6c77d);
-  font-size: 17px;
 }
 
 .wallet-tier-badge {
   display: inline-flex;
   align-items: center;
-  padding: 4px 10px;
-  border-radius: 2px;
-  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.04em;
   color: #0b0907;
-  background: linear-gradient(135deg, #f3da9f 0%, #c5a161 100%);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, #fce8bd 0%, #e6c77d 50%, #c5a161 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 12px rgba(230, 199, 125, 0.4);
+}
+
+.wallet-tier-range {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.wallet-tier-range svg {
+  color: var(--panel-gold-bright, #e6c77d);
+  width: 18px;
+  height: 18px;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.wallet-tier-range span {
+  color: var(--panel-gold-bright, #e6c77d);
+  font-size: 20px;
+  font-weight: 800;
 }
 
 .wallet-tier-desc {
   font-size: 13px;
   color: var(--panel-muted, #9f9a91);
-  min-height: 20px;
+  min-height: 22px;
   line-height: 1.45;
 }
 
@@ -285,7 +843,7 @@ html.pdl-panel .wallet-bonus-tabs.ui-tabs > button[aria-selected="true"] svg {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 12px;
+  padding-top: 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.07);
   font-size: 12px;
   color: var(--panel-muted, #9f9a91);
@@ -296,33 +854,54 @@ html.pdl-panel .wallet-bonus-tabs.ui-tabs > button[aria-selected="true"] svg {
   gap: 8px;
 }
 
-/* Regras Especiais (Tab 3) */
+/* --------------------------------------------------------------------------
+   Tab 3: Regras Especiais & Incentivos
+   -------------------------------------------------------------------------- */
 .wallet-rules-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 22px;
 }
 
 .wallet-rule-card {
   display: grid;
-  gap: 16px;
-  padding: 22px;
+  gap: 18px;
+  padding: 24px;
   border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 22%, transparent);
-  border-radius: var(--panel-radius, 3px);
-  background: linear-gradient(135deg, rgba(22, 18, 14, 0.85) 0%, rgba(12, 10, 8, 0.95) 100%);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  border-radius: var(--panel-radius, 4px);
+  background: linear-gradient(135deg, rgba(24, 19, 14, 0.88) 0%, rgba(13, 10, 8, 0.96) 100%);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+  transition: all 180ms ease;
+}
+
+.wallet-rule-card.is-active-rule {
+  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 48%, transparent);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5), 0 0 20px color-mix(in srgb, var(--panel-gold, #c5a161) 16%, transparent);
+}
+
+.wallet-rule-card.theme-ruby.is-active-rule {
+  border-color: rgba(239, 68, 68, 0.45);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5), 0 0 20px rgba(239, 68, 68, 0.16);
+}
+
+.wallet-rule-card.theme-emerald.is-active-rule {
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.16);
 }
 
 .wallet-rule-card-header {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
+  gap: 16px;
 }
 
 .wallet-rule-card-header strong {
   display: block;
-  font-size: 15px;
-  color: var(--panel-gold-bright, #e6c77d);
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
   letter-spacing: 0.02em;
   margin-bottom: 4px;
 }
@@ -334,143 +913,642 @@ html.pdl-panel .wallet-bonus-tabs.ui-tabs > button[aria-selected="true"] svg {
   line-height: 1.45;
 }
 
+.wallet-rule-crest {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.wallet-rule-crest.ruby-crest {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.22) 0%, rgba(153, 27, 27, 0.4) 100%);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #f87171;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.2);
+}
+
+.wallet-rule-crest.emerald-crest {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(5, 150, 105, 0.4) 100%);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34d399;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+}
+
 .wallet-rule-card-body {
   display: grid;
-  gap: 14px;
-  padding-top: 14px;
+  gap: 16px;
+  padding-top: 16px;
   border-top: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 12%, transparent);
 }
 
-/* Simulador (Tab 4) */
+/* Mock Player Badge Preview (in checkout) */
+.wallet-mock-player-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-top: 4px;
+}
+
+.wallet-mock-player-badge.ruby-badge {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+}
+
+.wallet-mock-player-badge.emerald-badge {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #6ee7b7;
+}
+
+/* Stacking Guide Full Card */
+.wallet-rules-guide-card {
+  padding: 22px 24px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 18%, transparent);
+  border-radius: var(--panel-radius, 4px);
+  background: rgba(14, 11, 8, 0.7);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.wallet-guide-subtitle {
+  color: var(--panel-muted, #9f9a91);
+  font-size: 12px;
+  margin: 0 0 14px 0;
+  line-height: 1.45;
+}
+
+.wallet-rules-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.wallet-rules-guide-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.wallet-rules-guide-item svg {
+  color: var(--panel-gold-bright, #e6c77d);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.wallet-rules-guide-item strong {
+  display: block;
+  font-size: 13px;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.wallet-rules-guide-item p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--panel-muted, #9f9a91);
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   Tab 4: Simulador em Tempo Real (High-Tech RPG Certificate)
+   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   Tab 4: Simulador em Tempo Real (Modernizado com padrão esmaltado)
+   ========================================================================== */
 .wallet-sim-layout {
   display: grid;
-  grid-template-columns: 1fr 1.25fr;
-  gap: 20px;
+  grid-template-columns: 1.18fr 1fr;
+  gap: 22px;
   align-items: start;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1024px) {
   .wallet-sim-layout {
     grid-template-columns: 1fr;
   }
 }
 
+.wallet-sim-controls-card {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(24, 19, 15, 0.96) 0%, rgba(14, 11, 8, 0.98) 100%);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 28%, transparent);
+  border-radius: var(--panel-radius, 6px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(230, 199, 125, 0.15);
+}
+
+.wallet-sim-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wallet-sim-block .wallet-field-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--panel-gold-bright, #e6c77d);
+}
+
+/* Cenários de Teste Rápidos em Cartões */
+.wallet-scenario-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 640px) {
+  .wallet-scenario-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wallet-scenario-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--panel-radius, 6px);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 22%, transparent);
+  background: rgba(14, 11, 8, 0.85);
+  color: var(--panel-muted, #9f9a91);
+  cursor: pointer;
+  text-align: left;
+  transition: all 180ms ease;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.wallet-scenario-btn:hover {
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 14%, transparent);
+  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 50%, transparent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.wallet-scenario-btn.is-active {
+  background: linear-gradient(135deg, rgba(42, 32, 20, 0.95) 0%, rgba(18, 14, 10, 0.98) 100%);
+  border-color: var(--panel-gold-bright, #e6c77d);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(230, 199, 125, 0.35), 0 0 14px rgba(230, 199, 125, 0.2);
+}
+
+.wallet-scenario-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 180ms ease;
+}
+
+.wallet-scenario-btn:hover .wallet-scenario-badge {
+  transform: scale(1.05);
+}
+
+.wallet-scenario-badge.is-pix {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, rgba(10, 15, 12, 0.7) 100%);
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.wallet-scenario-badge.is-card {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.22) 0%, rgba(10, 12, 18, 0.7) 100%);
+  border-color: rgba(59, 130, 246, 0.35);
+}
+
+.wallet-scenario-badge.is-vip {
+  background: radial-gradient(circle, rgba(234, 179, 8, 0.24) 0%, rgba(18, 14, 8, 0.7) 100%);
+  border-color: rgba(234, 179, 8, 0.4);
+}
+
+.wallet-scenario-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.wallet-scenario-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wallet-scenario-btn.is-active .wallet-scenario-title {
+  color: var(--panel-gold-bright, #e6c77d);
+}
+
+.wallet-scenario-desc {
+  font-size: 10px;
+  color: var(--panel-gold, #c5a161);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Input com Grupo Flexível e Ícone de Moeda */
+.wallet-sim-input-group {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  background: rgba(10, 8, 6, 0.95);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 32%, transparent);
+  border-radius: var(--panel-radius, 4px);
+  padding: 0 14px;
+  gap: 12px;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  margin-top: 6px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+  cursor: text;
+}
+
+.wallet-sim-input-group:focus-within {
+  border-color: var(--panel-gold-bright, #e6c77d);
+  box-shadow: 0 0 16px rgba(230, 199, 125, 0.3), inset 0 1px 0 rgba(230, 199, 125, 0.2);
+  background: rgba(16, 12, 9, 0.98);
+}
+
+.wallet-sim-input-prefix {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+html.pdl-panel .wallet-sim-input-group input.wallet-sim-input,
+.wallet-sim-input-group input.wallet-sim-input {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: #fff !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  font-family: monospace, var(--panel-font) !important;
+  letter-spacing: 0.03em;
+}
+
+/* Remove botões nativos de spin do tipo number */
+.wallet-sim-input-group input.wallet-sim-input::-webkit-inner-spin-button,
+.wallet-sim-input-group input.wallet-sim-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.wallet-sim-input-group input.wallet-sim-input {
+  -moz-appearance: textfield;
+}
+
+.wallet-sim-input-unit {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--panel-gold-bright, #e6c77d);
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 28%, transparent);
+  padding: 5px 10px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* Chips de Quantidade de Moedas */
 .wallet-sim-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .wallet-sim-chip {
-  padding: 5px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 24%, transparent);
-  background: rgba(18, 15, 12, 0.7);
+  background: rgba(22, 17, 13, 0.85);
   color: var(--panel-muted, #9f9a91);
-  border-radius: var(--panel-radius, 3px);
   cursor: pointer;
   transition: all 140ms ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .wallet-sim-chip:hover {
-  background: color-mix(in srgb, var(--panel-gold, #c5a161) 16%, transparent);
-  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 50%, transparent);
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 20%, transparent);
+  border-color: var(--panel-gold-bright, #e6c77d);
   color: #fff;
-  transform: translateY(-1px);
+  transform: translateY(-1.5px);
 }
 
 .wallet-sim-chip.is-active {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--panel-gold, #c5a161) 24%, transparent), color-mix(in srgb, var(--panel-gold, #c5a161) 10%, transparent)),
-    rgba(14, 11, 8, 0.95);
+  background: linear-gradient(135deg, rgba(54, 42, 26, 0.95) 0%, rgba(26, 20, 14, 0.98) 100%);
   border-color: var(--panel-gold-bright, #e6c77d);
   color: var(--panel-gold-bright, #e6c77d);
-  font-weight: 700;
-  box-shadow: inset 0 1px 0 rgba(230, 199, 125, 0.3), 0 2px 8px rgba(0, 0, 0, 0.35);
+  font-weight: 800;
+  box-shadow: inset 0 1px 0 rgba(230, 199, 125, 0.3), 0 3px 10px rgba(0, 0, 0, 0.4), 0 0 10px rgba(230, 199, 125, 0.2);
 }
 
+/* Linha inferior de controles (Método + Toggle) */
+.wallet-sim-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: end;
+  margin-top: 4px;
+}
+
+@media (max-width: 720px) {
+  .wallet-sim-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wallet-sim-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wallet-sim-field .wallet-field-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--panel-gold-bright, #e6c77d);
+}
+
+html.pdl-panel .wallet-sim-select,
 .wallet-sim-select {
   width: 100%;
-  padding: 10px 12px;
-  background: rgba(10, 8, 6, 0.85);
-  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 28%, transparent);
-  border-radius: var(--panel-radius, 3px);
-  color: #fff;
-  font-size: 13px;
-  outline: none;
-  transition: border-color 160ms ease;
+  height: 52px;
+  min-height: 52px !important;
+  padding: 0 16px !important;
+  background: rgba(10, 8, 6, 0.95) !important;
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 30%, transparent) !important;
+  border-radius: var(--panel-radius, 4px) !important;
+  color: #fff !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  outline: none !important;
+  transition: border-color 160ms ease, box-shadow 160ms ease !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5) !important;
+  cursor: pointer;
 }
 
+html.pdl-panel .wallet-sim-select:focus,
 .wallet-sim-select:focus {
-  border-color: var(--panel-gold-bright, #e6c77d);
+  border-color: var(--panel-gold-bright, #e6c77d) !important;
+  box-shadow: 0 0 16px rgba(230, 199, 125, 0.3) !important;
 }
 
+/* Cartão do Toggle 1ª Recarga */
+.wallet-sim-toggle-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 14px;
+  background: rgba(14, 11, 8, 0.85);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 24%, transparent);
+  border-radius: var(--panel-radius, 4px);
+  height: 52px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.wallet-sim-toggle-card:hover {
+  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 45%, transparent);
+}
+
+.wallet-sim-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.wallet-sim-toggle-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wallet-sim-toggle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.wallet-sim-toggle-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wallet-sim-toggle-desc {
+  font-size: 10px;
+  color: var(--panel-gold, #c5a161);
+  font-weight: 600;
+}
+
+/* Extrato de Bônus da Transação (Resultado) */
 .wallet-sim-result-card {
-  display: grid;
-  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
   padding: 24px;
   border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 32%, transparent);
-  border-radius: var(--panel-radius, 3px);
+  border-radius: var(--panel-radius, 6px);
   background:
-    radial-gradient(ellipse at top right, rgba(197, 161, 97, 0.12), transparent 70%),
-    linear-gradient(180deg, #14110d 0%, #0d0b09 100%);
-  box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(230, 199, 125, 0.15);
+    radial-gradient(ellipse at top right, rgba(197, 161, 97, 0.14), transparent 65%),
+    linear-gradient(180deg, #17130f 0%, #0d0a08 100%);
+  box-shadow: 0 14px 40px -8px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(230, 199, 125, 0.2);
+  position: relative;
+}
+
+.wallet-sim-receipt-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 18%, transparent);
+}
+
+.wallet-sim-receipt-head strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--panel-gold-bright, #e6c77d);
 }
 
 .wallet-sim-hero {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  padding: 18px;
-  border-radius: var(--panel-radius, 3px);
-  background: rgba(8, 7, 5, 0.6);
-  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 16%, transparent);
 }
 
-.wallet-sim-metric {
-  display: grid;
-  gap: 4px;
+@media (max-width: 600px) {
+  .wallet-sim-hero {
+    grid-template-columns: 1fr;
+  }
 }
 
-.wallet-sim-metric span {
+.wallet-sim-metric-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: var(--panel-radius, 6px);
+  background: rgba(10, 8, 6, 0.7);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 18%, transparent);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.wallet-sim-metric-box.highlight {
+  background: linear-gradient(135deg, rgba(32, 24, 16, 0.85) 0%, rgba(14, 11, 8, 0.95) 100%);
+  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 45%, transparent);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(230, 199, 125, 0.2);
+}
+
+.wallet-sim-metric-box.total-highlight {
+  border-color: var(--panel-gold-bright, #e6c77d);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(230, 199, 125, 0.3), 0 0 16px rgba(230, 199, 125, 0.15);
+}
+
+.wallet-sim-metric-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 11px;
   text-transform: uppercase;
   color: var(--panel-muted, #9f9a91);
-  letter-spacing: 0.06em;
-  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-weight: 700;
 }
 
-.wallet-sim-metric strong {
+.wallet-sim-metric-val {
   font-size: 24px;
   font-weight: 800;
   color: #fff;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
 }
 
-.wallet-sim-metric strong.is-highlight {
+.wallet-sim-metric-val.is-highlight {
   color: var(--panel-gold-bright, #e6c77d);
-  text-shadow: 0 0 14px color-mix(in srgb, var(--panel-gold, #c5a161) 50%, transparent);
+  text-shadow: 0 0 16px color-mix(in srgb, var(--panel-gold, #c5a161) 55%, transparent);
 }
 
-.wallet-sim-breakdown {
+/* Barra Visual de Proporção */
+.wallet-sim-visual-bar-wrap {
   display: grid;
-  gap: 10px;
-  padding: 16px 18px;
-  border-radius: var(--panel-radius, 3px);
-  background: rgba(8, 7, 5, 0.4);
-  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 12%, transparent);
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: var(--panel-radius, 6px);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.wallet-sim-breakdown-title {
-  display: block;
+.wallet-sim-bar-legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
   font-size: 11px;
-  text-transform: uppercase;
-  color: var(--panel-gold-bright, #e6c77d);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  margin-bottom: 2px;
+  color: var(--panel-muted, #9f9a91);
+  font-weight: 600;
+}
+
+.wallet-sim-visual-bar {
+  display: flex;
+  height: 12px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.wallet-sim-bar-seg {
+  height: 100%;
+  transition: width 240ms ease;
+}
+
+.wallet-sim-bar-seg.seg-base {
+  background: linear-gradient(90deg, #997839, #c5a161);
+}
+
+.wallet-sim-bar-seg.seg-tier {
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+
+.wallet-sim-bar-seg.seg-promo {
+  background: linear-gradient(90deg, #d97706, #fbbf24);
+}
+
+.wallet-sim-bar-seg.seg-pix {
+  background: linear-gradient(90deg, #059669, #34d399);
+}
+
+.wallet-sim-bar-seg.seg-first {
+  background: linear-gradient(90deg, #dc2626, #f87171);
+}
+
+/* Lista de Detalhamento */
+.wallet-sim-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  border-radius: var(--panel-radius, 6px);
+  background: rgba(10, 8, 6, 0.6);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 16%, transparent);
 }
 
 .wallet-sim-breakdown-row {
@@ -478,42 +1556,122 @@ html.pdl-panel .wallet-bonus-tabs.ui-tabs > button[aria-selected="true"] svg {
   justify-content: space-between;
   align-items: center;
   font-size: 13px;
-  padding: 6px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 8px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  transition: background 140ms ease;
 }
 
 .wallet-sim-breakdown-row:last-child {
   border-bottom: none;
 }
 
-.wallet-sim-breakdown-row span {
+.wallet-sim-breakdown-row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.wallet-sim-breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   color: var(--panel-muted, #9f9a91);
+  font-weight: 600;
 }
 
 .wallet-sim-breakdown-row strong {
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .wallet-sim-breakdown-row.is-bonus strong {
   color: var(--panel-gold-bright, #e6c77d);
 }
 
+/* Regra Aplicada */
 .wallet-sim-applied {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  border-radius: var(--panel-radius, 3px);
-  background: color-mix(in srgb, var(--panel-gold, #c5a161) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 22%, transparent);
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: var(--panel-radius, 6px);
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 28%, transparent);
+  color: var(--panel-gold-bright, #e6c77d);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.wallet-sim-applied svg {
+  color: var(--panel-gold-bright, #e6c77d);
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.wallet-sim-applied-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wallet-sim-applied-label {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--panel-muted, #9f9a91);
+  font-weight: 700;
+}
+
+.wallet-sim-applied-val {
+  display: block;
+  color: #fff;
   font-size: 13px;
+  font-weight: 600;
+}
+
+/* Estados de Carregamento & Vazio */
+.wallet-sim-calc-loading {
+  padding: 48px 0;
+  text-align: center;
   color: var(--panel-gold-bright, #e6c77d);
 }
 
+.wallet-sim-calc-loading p,
+.wallet-sim-calc-empty p {
+  margin: 10px 0 0 0;
+  font-size: 13px;
+}
+
+.wallet-sim-calc-empty {
+  padding: 48px 0;
+  text-align: center;
+  color: var(--panel-muted, #9f9a91);
+}
+
+.wallet-sim-calc-loading svg {
+  margin: 0 auto;
+  display: block;
+  animation: spin 1s linear infinite;
+}
+
+.wallet-sim-calc-empty svg {
+  margin: 0 auto;
+  display: block;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* --------------------------------------------------------------------------
+   Modal Actions & Extras
+   -------------------------------------------------------------------------- */
 .wallet-modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 16px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 14%, transparent);
 }

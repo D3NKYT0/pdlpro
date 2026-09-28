@@ -238,7 +238,10 @@
       "firstPurchasePercent": "Percentual da 1ª recarga (%)",
       "pixTitle": "Incentivo por Método de Pagamento (PIX)",
       "pixText": "Conceda bônus imediato para jogadores que realizarem o pagamento via PIX.",
-      "pixPercent": "Percentual extra no PIX (%)"
+      "pixPercent": "Percentual extra no PIX (%)",
+      "firstPurchaseStatusActive": "1ª Recarga: ATIVA",
+      "firstPurchaseStatusOff": "1ª Recarga: OFF",
+      "pixBonusLabel": "PIX: +{{percent}}%"
     },
     "tiers": {
       "eyebrow": "Volume Progressivo",
@@ -262,7 +265,17 @@
         "deleted": "Faixa removida com sucesso",
         "error": "Não foi possível salvar a faixa"
       },
-      "confirmDelete": "Deseja realmente remover esta faixa de bônus?"
+      "confirmDelete": "Deseja realmente remover esta faixa de bônus?",
+      "tierRank": "Tier #{{order}}",
+      "coinsUnit": "Moedas",
+      "activeStatus": "Ativa",
+      "inactiveStatus": "Inativa",
+      "orderLabel": "Ordem: #{{order}}",
+      "editAction": "Editar",
+      "deleteAction": "Excluir",
+      "saveButton": "Salvar Faixa",
+      "cancelButton": "Cancelar",
+      "defineMaxToggle": "Definir limite máximo de moedas"
     },
     "simulator": {
       "eyebrow": "Calculadora em Tempo Real",
@@ -283,11 +296,68 @@
       "breakdownPromo": "Campanha Promocional:",
       "breakdownPix": "Incentivo PIX:",
       "breakdownFirstPurchase": "Bônus de 1ª Recarga:",
-      "baseAmount": "Moedas base:"
+      "baseAmount": "Moedas base:",
+      "engineActive": "CÁLCULO ATIVO EM TEMPO REAL",
+      "paramsTitle": "Parâmetros da Recarga",
+      "coinsUnit": "moedas",
+      "instant": "Instantâneo",
+      "basePlusBonus": "{{base}} base + {{bonus}} bônus"
     },
     "toast": {
       "saved": "Promoção da carteira atualizada",
       "error": "Não foi possível salvar"
+    },
+    "sections": {
+      "identity": "Identidade da Campanha",
+      "bonus": "Bônus & Vigência",
+      "activation": "Publicação & Ativação"
+    },
+    "stackingSelectMax": "Selecionar modo Maior Bônus",
+    "stackingSelectSum": "Selecionar modo Cumulativo",
+    "quickPresets": "Atalhos rápidos:",
+    "activeStatusLabel": "Status no Sistema:",
+    "heroStats": {
+      "totalTiers": "Total de faixas:",
+      "startTier": "Piso inicial:",
+      "maxTier": "Teto máximo:",
+      "topBonus": "Bônus máximo:"
+    },
+    "ladder": {
+      "title": "Escala Visual de Progressão de Moedas",
+      "subtitle": "Visualize a curva de incentivo conforme o volume recarregado pelo jogador"
+    },
+    "previewCard": {
+      "title": "Pré-visualização do Banner na Carteira",
+      "subtitle": "Visão idêntica à que o jogador verá em /panel/wallet",
+      "tip": "O banner ocupa posição de destaque no topo da carteira durante o período ativo."
+    },
+    "simPresets": {
+      "title": "Cenários de Teste Rápidos:",
+      "receiptTitle": "Extrato de Bônus da Transação",
+      "visualComparison": "Composição da Entrega ao Jogador",
+      "newPlayerPix": "Novo Jogador no PIX",
+      "newPlayerPixDesc": "500 moedas · PIX · 1ª Recarga",
+      "regularCard": "Cartão Padrão",
+      "regularCardDesc": "1.000 moedas · Padrão",
+      "whaleVip": "VIP / Grande Volume",
+      "whaleVipDesc": "5.000 moedas · VIP PIX"
+    },
+    "rulesCards": {
+      "firstPurchaseTag": "Aquisição & Boas-Vindas",
+      "firstPurchaseTip": "Aumenta em até 3x a taxa de ativação de contas criadas recentemente.",
+      "mockFirstPurchase": "🎁 1ª Recarga: +{{percent}}% Moedas Bônus",
+      "pixTag": "Liquidez & Menor Custo",
+      "pixTip": "Reduz despesas com gateway e elimina riscos de estorno por cartão de crédito.",
+      "mockPix": "⚡ Pague com PIX e ganhe +{{percent}}% de Bônus",
+      "guideTierTitle": "1. Faixa de Volume",
+      "guideTierDesc": "Define o percentual base pela quantidade recarregada.",
+      "guidePromoTitle": "2. Promoção Vigente",
+      "guidePromoDesc": "Aplica modo configurado (Maior Bônus ou Soma cumulativa).",
+      "guideIncentivesTitle": "3. Incentivos (1ª / PIX)",
+      "guideIncentivesDesc": "São somados diretamente na transação para incentivo máximo.",
+      "stackingGuideTitle": "Como os bônus são somados na transação",
+      "stackingGuideText": "Entenda a lógica de prioridade entre faixas, promoções e métodos de pagamento",
+      "summaryTitle": "Incentivos & Regras de Conversão"
     }
   },
   "services": {

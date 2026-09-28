@@ -2,18 +2,29 @@ import { useState, useEffect, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import {
+  ArrowRight,
+  Award,
+  Calendar,
   Calculator,
+  CheckCircle2,
+  Clock,
   Coins,
   CreditCard,
+  Crown,
   Eye,
   Gift,
+  Info,
   Layers,
   Megaphone,
   Pencil,
   Percent,
   Plus,
+  ShieldCheck,
+  Sliders,
   Sparkles,
+  Tag,
   Trash2,
+  TrendingUp,
   Zap,
 } from 'lucide-react'
 import toast from 'react-hot-toast'
@@ -26,6 +37,14 @@ import { Modal } from '../../components/ui/Modal'
 import { Tabs } from '../../components/ui/Tabs'
 import { Toggle } from '../../components/ui/Toggle'
 import { useFeedbackAction } from '../../hooks/useFeedbackAction'
+import {
+  BannerFlagIcon,
+  GiftBoxIcon,
+  GoldCoinIcon,
+  PaymentCardIcon,
+  PixBoltIcon,
+} from '../../components/icons'
+import { CrownIcon, RankIcon } from '../../components/achievements/AchievementIcons'
 import {
   staffApi,
   type ApiBonusSimulationResult,
@@ -210,14 +229,54 @@ export function AdminWalletPage() {
     }, t('wallet.tiers.toast.error'))
   }
 
-  const tabItems = [
-    { id: 'promo' as const, label: t('wallet.tabs.promo'), icon: <Megaphone className="w-4 h-4" /> },
-    { id: 'tiers' as const, label: t('wallet.tabs.tiers'), icon: <Layers className="w-4 h-4" /> },
-    { id: 'rules' as const, label: t('wallet.tabs.rules'), icon: <Zap className="w-4 h-4" /> },
-    { id: 'simulator' as const, label: t('wallet.tabs.simulator'), icon: <Calculator className="w-4 h-4" /> },
-  ]
-
   const tierRows = tiers.data ?? []
+
+  const tabItems = [
+    {
+      id: 'promo' as const,
+      label: (
+        <>
+          <span>{t('wallet.tabs.promo')}</span>
+          <span className="wallet-tab-pill">
+            {active && promo.data?.currently_active ? '● LIVE' : active ? 'ON' : 'OFF'}
+          </span>
+        </>
+      ),
+      icon: <Megaphone className="w-4 h-4" />,
+    },
+    {
+      id: 'tiers' as const,
+      label: (
+        <>
+          <span>{t('wallet.tabs.tiers')}</span>
+          <span className="wallet-tab-pill">{tierRows.length}</span>
+        </>
+      ),
+      icon: <Layers className="w-4 h-4" />,
+    },
+    {
+      id: 'rules' as const,
+      label: (
+        <>
+          <span>{t('wallet.tabs.rules')}</span>
+          <span className="wallet-tab-pill">
+            {firstPurchaseActive ? 'PIX + 1ª' : 'PIX'}
+          </span>
+        </>
+      ),
+      icon: <Zap className="w-4 h-4" />,
+    },
+    {
+      id: 'simulator' as const,
+      label: (
+        <>
+          <span>{t('wallet.tabs.simulator')}</span>
+          <span className="wallet-tab-pill">Live</span>
+        </>
+      ),
+      icon: <Calculator className="w-4 h-4" />,
+    },
+  ]
 
   return (
     <div className="account-page wallet-bonus-workspace">
@@ -240,120 +299,250 @@ export function AdminWalletPage() {
 
       {/* TAB 1: CAMPANHAS & EVENTOS */}
       {activeTab === 'promo' && (
-        <form className="admin-coins-form wallet-bonus-tab-content" onSubmit={onSubmitPromo}>
-          <Card className="admin-config-section admin-coin-identity">
-            <header className="admin-services-heading">
-              <span><Megaphone /></span>
-              <div>
+        <form className="wallet-bonus-tab-content" onSubmit={onSubmitPromo}>
+          <div className="wallet-hero-card">
+            <div className="wallet-hero-header">
+              <div className="wallet-header-crest promo-crest">
+                <Megaphone className="w-6 h-6" />
+              </div>
+              <div className="wallet-hero-text">
                 <span className="panel-eyebrow">{t('wallet.eyebrow')}</span>
                 <h2>{t('wallet.bannerTitle')}</h2>
                 <p>{t('wallet.bannerText')}</p>
               </div>
-              <div className="admin-services-summary">
-                <strong>{active ? '● ' + t('wallet.status.current') : '○ ' + t('wallet.status.inactive')}</strong>
-                <small>{stackingMode === 'sum' ? t('wallet.stackingModeSum') : t('wallet.stackingModeMax')}</small>
+              <div className="wallet-hero-actions">
+                <div
+                  className={`wallet-status-badge ${
+                    active
+                      ? promo.data?.currently_active
+                        ? 'is-live'
+                        : 'is-scheduled'
+                      : 'is-off'
+                  }`}
+                >
+                  <span className="led-dot" />
+                  <strong>
+                    {active
+                      ? promo.data?.currently_active
+                        ? t('wallet.status.current')
+                        : t('wallet.status.outOfWindow')
+                      : t('wallet.status.inactive')}
+                  </strong>
+                </div>
+                <div className="wallet-mode-badge">
+                  {stackingMode === 'sum' ? (
+                    <>
+                      <Layers className="w-3.5 h-3.5" />
+                      <span>{t('wallet.stackingModeSum')}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Crown className="w-3.5 h-3.5" />
+                      <span>{t('wallet.stackingModeMax')}</span>
+                    </>
+                  )}
+                </div>
               </div>
-            </header>
+            </div>
+          </div>
 
-            <div className="account-form-fields">
-              <Field>
-                {t('wallet.fieldTitle')}
-                <input
-                  value={title}
-                  onChange={(event) => setTitle(event.target.value)}
-                  required
-                  maxLength={120}
-                />
-              </Field>
+          <div className="wallet-two-col-layout">
+            {/* Left Column: Config Form */}
+            <div className="wallet-form-column">
+              {/* Card 1: Identidade da Campanha */}
+              <div className="wallet-section-card">
+                <div className="wallet-section-header">
+                  <Tag className="w-4 h-4" />
+                  <h3>{t('wallet.sections.identity')}</h3>
+                </div>
 
-              <Field>
-                {t('wallet.fieldDescription')}
-                <input
-                  value={description}
-                  onChange={(event) => setDescription(event.target.value)}
-                  maxLength={240}
-                  placeholder={t('wallet.descriptionPlaceholder')}
-                />
-              </Field>
+                <div className="account-form-fields">
+                  <Field>
+                    <span className="wallet-field-title">
+                      <Tag aria-hidden="true" className="w-3.5 h-3.5" />
+                      {t('wallet.fieldTitle')}
+                    </span>
+                    <input
+                      value={title}
+                      onChange={(event) => setTitle(event.target.value)}
+                      required
+                      maxLength={120}
+                    />
+                  </Field>
 
-              <Field>
-                {t('wallet.badge')}
-                <input
-                  value={badge}
-                  onChange={(event) => setBadge(event.target.value)}
-                  maxLength={40}
-                  placeholder={t('wallet.badgePlaceholder')}
-                />
-              </Field>
+                  <Field>
+                    <span className="wallet-field-title">
+                      <Sparkles aria-hidden="true" className="w-3.5 h-3.5" />
+                      {t('wallet.fieldDescription')}
+                    </span>
+                    <input
+                      value={description}
+                      onChange={(event) => setDescription(event.target.value)}
+                      maxLength={240}
+                      placeholder={t('wallet.descriptionPlaceholder')}
+                    />
+                  </Field>
 
-              <Field>
-                {t('wallet.percent')}
-                <span className="admin-coin-input">
-                  <b>%</b>
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    step="0.01"
-                    value={percent}
-                    onChange={(event) => setPercent(event.target.value)}
-                    required
-                  />
-                </span>
-              </Field>
+                  <div className="wallet-form-span-2">
+                    <Field>
+                      <span className="wallet-field-title">
+                        <Award aria-hidden="true" className="w-3.5 h-3.5" />
+                        {t('wallet.badge')}
+                      </span>
+                      <input
+                        value={badge}
+                        onChange={(event) => setBadge(event.target.value)}
+                        maxLength={40}
+                        placeholder={t('wallet.badgePlaceholder')}
+                      />
+                    </Field>
+                    <div className="wallet-preset-group">
+                      <span className="wallet-preset-label">{t('wallet.quickPresets')}</span>
+                      {['BÔNUS ESPECIAL', 'LIMITADO', 'FIM DE SEMANA', 'EVENTO VIP'].map((preset) => (
+                        <button
+                          key={preset}
+                          type="button"
+                          className={`wallet-preset-pill ${badge === preset ? 'is-active' : ''}`}
+                          onClick={() => setBadge(preset)}
+                        >
+                          {preset}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-              <Field>
-                {t('wallet.startsAt')}
-                <input
-                  type="datetime-local"
-                  value={startsAt}
-                  onChange={(event) => setStartsAt(event.target.value)}
-                />
-              </Field>
+              {/* Card 2: Bônus & Vigência */}
+              <div className="wallet-section-card">
+                <div className="wallet-section-header">
+                  <Percent className="w-4 h-4" />
+                  <h3>{t('wallet.sections.bonus')}</h3>
+                </div>
 
-              <Field>
-                {t('wallet.endsAt')}
-                <input
-                  type="datetime-local"
-                  value={endsAt}
-                  onChange={(event) => setEndsAt(event.target.value)}
-                />
-              </Field>
+                <div className="account-form-fields">
+                  <div className="wallet-form-span-2">
+                    <Field>
+                      <span className="wallet-field-title">
+                        <Percent aria-hidden="true" className="w-3.5 h-3.5" />
+                        {t('wallet.percent')}
+                      </span>
+                      <span className="admin-coin-input">
+                        <b>%</b>
+                        <input
+                          type="number"
+                          min="0"
+                          max="100"
+                          step="0.01"
+                          value={percent}
+                          onChange={(event) => setPercent(event.target.value)}
+                          required
+                        />
+                      </span>
+                    </Field>
+                    <div className="wallet-preset-group">
+                      <span className="wallet-preset-label">{t('wallet.quickPresets')}</span>
+                      {['5.00', '10.00', '15.00', '20.00', '25.00', '30.00'].map((p) => (
+                        <button
+                          key={p}
+                          type="button"
+                          className={`wallet-preset-pill ${percent === p ? 'is-active' : ''}`}
+                          onClick={() => setPercent(p)}
+                        >
+                          +{Number(p)}%
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-              <div className="field ui-field wallet-form-span-2" data-theme-part="field">
-                <span>{t('wallet.stackingMode')}</span>
+                  <Field>
+                    <span className="wallet-field-title">
+                      <Calendar aria-hidden="true" className="w-3.5 h-3.5" />
+                      {t('wallet.startsAt')}
+                    </span>
+                    <input
+                      type="datetime-local"
+                      value={startsAt}
+                      onChange={(event) => setStartsAt(event.target.value)}
+                    />
+                  </Field>
+
+                  <Field>
+                    <span className="wallet-field-title">
+                      <Clock aria-hidden="true" className="w-3.5 h-3.5" />
+                      {t('wallet.endsAt')}
+                    </span>
+                    <input
+                      type="datetime-local"
+                      value={endsAt}
+                      onChange={(event) => setEndsAt(event.target.value)}
+                    />
+                  </Field>
+                </div>
+              </div>
+
+              {/* Card 3: Modo de Aplicação */}
+              <div className="wallet-section-card">
+                <div className="wallet-section-header">
+                  <Sliders className="w-4 h-4" />
+                  <h3>{t('wallet.stackingMode')}</h3>
+                </div>
+
                 <div className="wallet-stacking-options">
                   <label className={`wallet-stacking-card ${stackingMode === 'max' ? 'is-selected' : ''}`}>
-                    <input
-                      type="radio"
-                      name="stacking_mode"
-                      value="max"
-                      checked={stackingMode === 'max'}
-                      onChange={() => setStackingMode('max')}
-                    />
+                    <div className="wallet-stacking-top">
+                      <div className="wallet-stacking-icon-badge">
+                        <Crown className="w-5 h-5" />
+                      </div>
+                      <span className="wallet-formula-tag">MAX(Faixa, Campanha)</span>
+                    </div>
                     <div className="wallet-stacking-text">
                       <strong>{t('wallet.stackingModeMax')}</strong>
                       <small>Ex: se a faixa dá 10% e a campanha 15%, o jogador ganha 15%.</small>
                     </div>
+                    <div className="wallet-stacking-footer">
+                      <input
+                        type="radio"
+                        name="stacking_mode"
+                        value="max"
+                        checked={stackingMode === 'max'}
+                        onChange={() => setStackingMode('max')}
+                      />
+                      <span>{t('wallet.stackingSelectMax')}</span>
+                    </div>
                   </label>
 
                   <label className={`wallet-stacking-card ${stackingMode === 'sum' ? 'is-selected' : ''}`}>
-                    <input
-                      type="radio"
-                      name="stacking_mode"
-                      value="sum"
-                      checked={stackingMode === 'sum'}
-                      onChange={() => setStackingMode('sum')}
-                    />
+                    <div className="wallet-stacking-top">
+                      <div className="wallet-stacking-icon-badge">
+                        <Layers className="w-5 h-5" />
+                      </div>
+                      <span className="wallet-formula-tag">Faixa + Campanha</span>
+                    </div>
                     <div className="wallet-stacking-text">
                       <strong>{t('wallet.stackingModeSum')}</strong>
                       <small>Ex: se a faixa dá 10% e a campanha 15%, o jogador ganha 25%!</small>
+                    </div>
+                    <div className="wallet-stacking-footer">
+                      <input
+                        type="radio"
+                        name="stacking_mode"
+                        value="sum"
+                        checked={stackingMode === 'sum'}
+                        onChange={() => setStackingMode('sum')}
+                      />
+                      <span>{t('wallet.stackingSelectSum')}</span>
                     </div>
                   </label>
                 </div>
               </div>
 
-              <div className="wallet-form-toggle-wrap">
+              {/* Card 4: Ativação */}
+              <div className="wallet-section-card">
+                <div className="wallet-section-header">
+                  <Zap className="w-4 h-4" />
+                  <h3>{t('wallet.sections.activation')}</h3>
+                </div>
                 <Toggle
                   label={t('wallet.activeToggle')}
                   checked={active}
@@ -361,32 +550,42 @@ export function AdminWalletPage() {
                 />
               </div>
             </div>
-          </Card>
 
-          {/* Live Banner Preview */}
-          <div className="wallet-preview-section">
-            <div className="wallet-preview-header">
-              <span><Eye className="w-4 h-4 inline-block mr-1" /> {t('wallet.livePreview')}</span>
-              {active ? (
-                <span className="wallet-preview-status is-active">● {t('wallet.status.current')}</span>
-              ) : (
-                <span className="wallet-preview-status is-inactive">○ {t('wallet.status.inactive')}</span>
-              )}
-            </div>
+            {/* Right Column: Live Preview Studio */}
+            <div className="wallet-preview-column">
+              <div className="wallet-preview-studio">
+                <div className="wallet-preview-window-head">
+                  <div className="wallet-preview-window-title">
+                    <Eye className="w-4 h-4" />
+                    <span>{t('wallet.livePreview')}</span>
+                  </div>
+                  <div className="wallet-preview-window-dots">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                </div>
 
-            <aside className="wallet-promo-banner" aria-label={title}>
-              <div className="wallet-promo-banner-art" aria-hidden="true" />
-              <div className="wallet-promo-banner-shade" aria-hidden="true" />
-              <div className="wallet-promo-banner-copy">
-                <span className="panel-eyebrow">{badge || t('wallet.eyebrow')}</span>
-                <strong>{title || t('wallet.untitled')}</strong>
-                {description ? <small>{description}</small> : null}
-                <div className="wallet-promo-banner-offer" aria-hidden="true">
-                  <b>{Number(percent || 0)}%</b>
-                  <span>BONUS</span>
+                <aside className="wallet-promo-banner" aria-label={title}>
+                  <div className="wallet-promo-banner-art" aria-hidden="true" />
+                  <div className="wallet-promo-banner-shade" aria-hidden="true" />
+                  <div className="wallet-promo-banner-copy">
+                    <span className="panel-eyebrow">{badge || t('wallet.eyebrow')}</span>
+                    <strong>{title || t('wallet.untitled')}</strong>
+                    {description ? <small>{description}</small> : null}
+                    <div className="wallet-promo-banner-offer" aria-hidden="true">
+                      <b>{Number(percent || 0)}%</b>
+                      <span>BONUS</span>
+                    </div>
+                  </div>
+                </aside>
+
+                <div className="wallet-preview-callout">
+                  <Info className="w-4 h-4" />
+                  <span>{t('wallet.previewCard.tip')}</span>
                 </div>
               </div>
-            </aside>
+            </div>
           </div>
 
           <Card as="div" className="admin-server-actions">
@@ -411,66 +610,165 @@ export function AdminWalletPage() {
       {/* TAB 2: FAIXAS PROGRESSIVAS */}
       {activeTab === 'tiers' && (
         <div className="wallet-bonus-tab-content">
-          <Card className="admin-game-panel">
-            <header className="admin-services-heading">
-              <span><Layers /></span>
-              <div>
+          <div className="wallet-hero-card">
+            <div className="wallet-hero-header">
+              <div className="wallet-header-crest tiers-crest">
+                <Layers className="w-6 h-6" />
+              </div>
+              <div className="wallet-hero-text">
                 <span className="panel-eyebrow">{t('wallet.tiers.eyebrow')}</span>
                 <h2>{t('wallet.tiers.title')}</h2>
                 <p>{t('wallet.tiers.text')}</p>
               </div>
-              <Button variant="primary" size="sm" onClick={openNewTierModal}>
-                <Plus className="w-4 h-4 mr-1 inline-block" /> {t('wallet.tiers.newButton')}
-              </Button>
-            </header>
-          </Card>
+              <div className="wallet-hero-actions">
+                <Button variant="primary" size="sm" onClick={openNewTierModal}>
+                  <Plus className="w-4 h-4 mr-1.5 inline-block" /> {t('wallet.tiers.newButton')}
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats Bar */}
+          <div className="wallet-stats-bar">
+            <div className="wallet-stat-card">
+              <div className="wallet-stat-icon">
+                <Layers className="w-5 h-5" />
+              </div>
+              <div className="wallet-stat-info">
+                <span>{t('wallet.heroStats.totalTiers')}</span>
+                <strong>{tierRows.length}</strong>
+              </div>
+            </div>
+
+            <div className="wallet-stat-card">
+              <div className="wallet-stat-icon">
+                <Coins className="w-5 h-5" />
+              </div>
+              <div className="wallet-stat-info">
+                <span>{t('wallet.heroStats.startTier')}</span>
+                <strong>
+                  {tierRows.length > 0 ? Math.min(...tierRows.map((r) => r.min_amount)) : 0} {t('wallet.tiers.coinsUnit')}
+                </strong>
+              </div>
+            </div>
+
+            <div className="wallet-stat-card">
+              <div className="wallet-stat-icon">
+                <TrendingUp className="w-5 h-5" />
+              </div>
+              <div className="wallet-stat-info">
+                <span>{t('wallet.heroStats.maxTier')}</span>
+                <strong>
+                  {tierRows.some((r) => r.max_amount === null)
+                    ? t('wallet.tiers.maxUnlimited')
+                    : tierRows.length > 0
+                    ? Math.max(...tierRows.map((r) => r.max_amount || 0)) + ' ' + t('wallet.tiers.coinsUnit')
+                    : '—'}
+                </strong>
+              </div>
+            </div>
+
+            <div className="wallet-stat-card">
+              <div className="wallet-stat-icon">
+                <Crown className="w-5 h-5" />
+              </div>
+              <div className="wallet-stat-info">
+                <span>{t('wallet.heroStats.topBonus')}</span>
+                <strong className="highlight">
+                  {tierRows.length > 0
+                    ? '+' + Math.max(...tierRows.map((r) => Number(r.percent || 0))) + '%'
+                    : '0%'}
+                </strong>
+              </div>
+            </div>
+          </div>
+
+          {/* Visual Progression Ladder */}
+          {tierRows.length > 0 && (
+            <div className="wallet-ladder-card">
+              <div className="wallet-ladder-head">
+                <strong>{t('wallet.ladder.title')}</strong>
+                <small>{t('wallet.ladder.subtitle')}</small>
+              </div>
+              <div className="wallet-ladder-steps">
+                {tierRows
+                  .slice()
+                  .sort((a, b) => a.order - b.order)
+                  .map((tier, idx, arr) => (
+                    <div key={tier.id} className="wallet-ladder-step">
+                      <div className="wallet-ladder-tile">
+                        <Coins className="w-4 h-4 text-gold flex-shrink-0" />
+                        <div className="wallet-ladder-tile-amount">
+                          <span>{t('wallet.tiers.tierRank', { order: tier.order })}</span>
+                          <strong>
+                            {tier.min_amount} {tier.max_amount ? `– ${tier.max_amount}` : '+'}
+                          </strong>
+                        </div>
+                        <span className="wallet-tier-badge">+{Number(tier.percent)}%</span>
+                      </div>
+                      {idx < arr.length - 1 && <ArrowRight className="wallet-ladder-arrow w-4 h-4" />}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
 
           {tierRows.length === 0 ? (
             <EmptyState>{t('wallet.tiers.empty')}</EmptyState>
           ) : (
             <div className="wallet-tiers-grid">
-              {tierRows.map((tier) => (
-                <div
-                  key={tier.id}
-                  className={`wallet-tier-card ${!tier.active ? 'is-inactive' : ''}`}
-                >
-                  <div className="wallet-tier-header">
+              {tierRows.map((tier, index) => {
+                const medalColors = ['#cd7f32', '#c0c0c0', '#ffd700', '#60a5fa']
+                const medalColor = medalColors[Math.min(index, medalColors.length - 1)]
+                return (
+                  <div
+                    key={tier.id}
+                    className={`wallet-tier-card ${!tier.active ? 'is-inactive' : ''}`}
+                  >
+                    <div className="wallet-tier-header">
+                      <div className="wallet-tier-rank-badge">
+                        <Award className="w-3.5 h-3.5" style={{ color: medalColor }} />
+                        <span>{t('wallet.tiers.tierRank', { order: tier.order })}</span>
+                      </div>
+                      <span className="wallet-tier-badge">+{Number(tier.percent)}%</span>
+                    </div>
+
                     <div className="wallet-tier-range">
+                      <Coins className="w-5 h-5 flex-shrink-0" />
                       <span>{tier.min_amount}</span>
-                      {tier.max_amount ? ` – ${tier.max_amount}` : ' +'} Moedas
+                      {tier.max_amount ? ` – ${tier.max_amount}` : ' +'} {t('wallet.tiers.coinsUnit')}
                     </div>
-                    <span className="wallet-tier-badge">+{Number(tier.percent)}%</span>
-                  </div>
 
-                  <div className="wallet-tier-desc">
-                    {tier.description || <em className="opacity-50">—</em>}
-                  </div>
+                    <div className="wallet-tier-desc">
+                      {tier.description || <em className="opacity-50">—</em>}
+                    </div>
 
-                  <div className="wallet-tier-meta">
-                    <span>
-                      {tier.active ? '● Ativa' : '○ Inativa'} · Ordem: #{tier.order}
-                    </span>
-                    <div className="wallet-tier-actions">
-                      <IconButton
-                        label="Editar"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => openEditTierModal(tier)}
-                      >
-                        <Pencil className="w-3.5 h-3.5" />
-                      </IconButton>
-                      <IconButton
-                        label="Excluir"
-                        variant="danger"
-                        size="sm"
-                        onClick={() => onDeleteTier(tier)}
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </IconButton>
+                    <div className="wallet-tier-meta">
+                      <span className={tier.active ? 'text-emerald-400 font-semibold' : 'text-muted'}>
+                        {tier.active ? '● ' + t('wallet.tiers.activeStatus') : '○ ' + t('wallet.tiers.inactiveStatus')} · {t('wallet.tiers.orderLabel', { order: tier.order })}
+                      </span>
+                      <div className="wallet-tier-actions">
+                        <IconButton
+                          label={t('wallet.tiers.editAction')}
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => openEditTierModal(tier)}
+                        >
+                          <Pencil className="w-3.5 h-3.5" />
+                        </IconButton>
+                        <IconButton
+                          label={t('wallet.tiers.deleteAction')}
+                          variant="danger"
+                          size="sm"
+                          onClick={() => onDeleteTier(tier)}
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </IconButton>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
 
@@ -478,11 +776,18 @@ export function AdminWalletPage() {
           <Modal
             open={tierModalOpen}
             onClose={() => setTierModalOpen(false)}
-            title={editingTierId ? t('wallet.tiers.editingTitle', { name: tierDraft.description || 'Faixa' }) : t('wallet.tiers.createTitle')}
+            title={
+              editingTierId
+                ? t('wallet.tiers.editingTitle', { name: tierDraft.description || 'Faixa' })
+                : t('wallet.tiers.createTitle')
+            }
           >
             <form onSubmit={onSaveTier} className="account-form-fields">
               <Field>
-                {t('wallet.tiers.description')}
+                <span className="wallet-field-title">
+                  <Tag className="w-3.5 h-3.5" />
+                  {t('wallet.tiers.description')}
+                </span>
                 <input
                   value={tierDraft.description ?? ''}
                   onChange={(e) => setTierDraft((cur) => ({ ...cur, description: e.target.value }))}
@@ -492,7 +797,10 @@ export function AdminWalletPage() {
               </Field>
 
               <Field>
-                {t('wallet.tiers.minAmount')}
+                <span className="wallet-field-title">
+                  <Coins className="w-3.5 h-3.5" />
+                  {t('wallet.tiers.minAmount')}
+                </span>
                 <input
                   type="number"
                   min="1"
@@ -504,14 +812,17 @@ export function AdminWalletPage() {
               </Field>
 
               <Toggle
-                label="Definir limite máximo de moedas"
+                label={t('wallet.tiers.defineMaxToggle')}
                 checked={tierHasMax}
                 onChange={(e) => setTierHasMax(e.target.checked)}
               />
 
               {tierHasMax && (
                 <Field>
-                  {t('wallet.tiers.maxAmount')}
+                  <span className="wallet-field-title">
+                    <TrendingUp className="w-3.5 h-3.5" />
+                    {t('wallet.tiers.maxAmount')}
+                  </span>
                   <input
                     type="number"
                     min={tierDraft.min_amount || 1}
@@ -524,7 +835,10 @@ export function AdminWalletPage() {
               )}
 
               <Field>
-                {t('wallet.tiers.percent')}
+                <span className="wallet-field-title">
+                  <Percent className="w-3.5 h-3.5" />
+                  {t('wallet.tiers.percent')}
+                </span>
                 <input
                   type="number"
                   min="0"
@@ -537,7 +851,10 @@ export function AdminWalletPage() {
               </Field>
 
               <Field>
-                {t('wallet.tiers.order')}
+                <span className="wallet-field-title">
+                  <Award className="w-3.5 h-3.5" />
+                  {t('wallet.tiers.order')}
+                </span>
                 <input
                   type="number"
                   min="1"
@@ -556,10 +873,10 @@ export function AdminWalletPage() {
 
               <div className="wallet-modal-actions">
                 <Button variant="ghost" onClick={() => setTierModalOpen(false)}>
-                  Cancelar
+                  {t('wallet.tiers.cancelButton')}
                 </Button>
                 <Button variant="primary" type="submit" busy={tierAction.pending}>
-                  Salvar Faixa
+                  {t('wallet.tiers.saveButton')}
                 </Button>
               </div>
             </form>
@@ -569,28 +886,43 @@ export function AdminWalletPage() {
 
       {/* TAB 3: REGRAS ESPECIAIS & INCENTIVOS */}
       {activeTab === 'rules' && (
-        <form className="admin-coins-form wallet-bonus-tab-content" onSubmit={onSubmitPromo}>
-          <Card className="admin-game-panel">
-            <header className="admin-services-heading">
-              <span><Zap /></span>
-              <div>
+        <form className="wallet-bonus-tab-content" onSubmit={onSubmitPromo}>
+          <div className="wallet-hero-card">
+            <div className="wallet-hero-header">
+              <div className="wallet-header-crest rules-crest">
+                <Zap className="w-6 h-6" />
+              </div>
+              <div className="wallet-hero-text">
                 <span className="panel-eyebrow">{t('wallet.specialRules.eyebrow')}</span>
                 <h2>{t('wallet.specialRules.title')}</h2>
                 <p>{t('wallet.specialRules.text')}</p>
               </div>
-              <div className="admin-services-summary">
-                <strong>{firstPurchaseActive ? '1ª Recarga: ATIVA' : '1ª Recarga: OFF'}</strong>
-                <small>PIX: +{pixBonusPercent}%</small>
+              <div className="wallet-hero-actions">
+                <div className={`wallet-status-badge ${firstPurchaseActive ? 'is-live' : 'is-off'}`}>
+                  <span className="led-dot" />
+                  <strong>
+                    {firstPurchaseActive
+                      ? t('wallet.specialRules.firstPurchaseStatusActive')
+                      : t('wallet.specialRules.firstPurchaseStatusOff')}
+                  </strong>
+                </div>
+                <div className="wallet-mode-badge">
+                  <Zap className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>{t('wallet.specialRules.pixBonusLabel', { percent: pixBonusPercent })}</span>
+                </div>
               </div>
-            </header>
-          </Card>
+            </div>
+          </div>
 
           <div className="wallet-rules-grid">
             {/* 1ª Recarga */}
-            <div className="wallet-rule-card">
+            <div className={`wallet-rule-card theme-ruby ${firstPurchaseActive ? 'is-active-rule' : ''}`}>
               <div className="wallet-rule-card-header">
-                <span className="admin-coin-metric-icon"><Gift /></span>
+                <div className="wallet-rule-crest ruby-crest">
+                  <Gift className="w-6 h-6" />
+                </div>
                 <div>
+                  <span className="panel-eyebrow text-red-400">{t('wallet.rulesCards.firstPurchaseTag')}</span>
                   <strong>{t('wallet.specialRules.firstPurchaseTitle')}</strong>
                   <p>{t('wallet.specialRules.firstPurchaseText')}</p>
                 </div>
@@ -604,30 +936,62 @@ export function AdminWalletPage() {
                 />
 
                 {firstPurchaseActive && (
-                  <Field>
-                    {t('wallet.specialRules.firstPurchasePercent')}
-                    <span className="admin-coin-input">
-                      <b>%</b>
-                      <input
-                        type="number"
-                        min="0"
-                        max="100"
-                        step="0.01"
-                        value={firstPurchasePercent}
-                        onChange={(e) => setFirstPurchasePercent(e.target.value)}
-                        required
-                      />
-                    </span>
-                  </Field>
+                  <>
+                    <Field>
+                      <span className="wallet-field-title">
+                        <Percent className="w-3.5 h-3.5" />
+                        {t('wallet.specialRules.firstPurchasePercent')}
+                      </span>
+                      <span className="admin-coin-input">
+                        <b>%</b>
+                        <input
+                          type="number"
+                          min="0"
+                          max="100"
+                          step="0.01"
+                          value={firstPurchasePercent}
+                          onChange={(e) => setFirstPurchasePercent(e.target.value)}
+                          required
+                        />
+                      </span>
+                    </Field>
+
+                    <div className="wallet-preset-group">
+                      <span className="wallet-preset-label">{t('wallet.quickPresets')}</span>
+                      {['10.00', '15.00', '20.00', '25.00'].map((p) => (
+                        <button
+                          key={p}
+                          type="button"
+                          className={`wallet-preset-pill ${firstPurchasePercent === p ? 'is-active' : ''}`}
+                          onClick={() => setFirstPurchasePercent(p)}
+                        >
+                          +{Number(p)}%
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="wallet-preview-callout">
+                      <Sparkles className="w-4 h-4 text-red-400" />
+                      <span>{t('wallet.rulesCards.firstPurchaseTip')}</span>
+                    </div>
+
+                    <div className="wallet-mock-player-badge ruby-badge">
+                      <Gift className="w-3.5 h-3.5 flex-shrink-0" />
+                      <span>{t('wallet.rulesCards.mockFirstPurchase', { percent: firstPurchasePercent })}</span>
+                    </div>
+                  </>
                 )}
               </div>
             </div>
 
             {/* Bônus PIX */}
-            <div className="wallet-rule-card">
+            <div className={`wallet-rule-card theme-emerald ${Number(pixBonusPercent) > 0 ? 'is-active-rule' : ''}`}>
               <div className="wallet-rule-card-header">
-                <span className="admin-coin-metric-icon"><CreditCard /></span>
+                <div className="wallet-rule-crest emerald-crest">
+                  <CreditCard className="w-6 h-6" />
+                </div>
                 <div>
+                  <span className="panel-eyebrow text-emerald-400">{t('wallet.rulesCards.pixTag')}</span>
                   <strong>{t('wallet.specialRules.pixTitle')}</strong>
                   <p>{t('wallet.specialRules.pixText')}</p>
                 </div>
@@ -635,7 +999,10 @@ export function AdminWalletPage() {
 
               <div className="wallet-rule-card-body">
                 <Field>
-                  {t('wallet.specialRules.pixPercent')}
+                  <span className="wallet-field-title">
+                    <Percent className="w-3.5 h-3.5" />
+                    {t('wallet.specialRules.pixPercent')}
+                  </span>
                   <span className="admin-coin-input">
                     <b>%</b>
                     <input
@@ -649,13 +1016,69 @@ export function AdminWalletPage() {
                     />
                   </span>
                 </Field>
+
+                <div className="wallet-preset-group">
+                  <span className="wallet-preset-label">{t('wallet.quickPresets')}</span>
+                  {['3.00', '5.00', '7.00', '10.00'].map((p) => (
+                    <button
+                      key={p}
+                      type="button"
+                      className={`wallet-preset-pill ${pixBonusPercent === p ? 'is-active' : ''}`}
+                      onClick={() => setPixBonusPercent(p)}
+                    >
+                      +{Number(p)}%
+                    </button>
+                  ))}
+                </div>
+
+                <div className="wallet-preview-callout">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                  <span>{t('wallet.rulesCards.pixTip')}</span>
+                </div>
+
+                <div className="wallet-mock-player-badge emerald-badge">
+                  <Zap className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span>{t('wallet.rulesCards.mockPix', { percent: pixBonusPercent })}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Stacking Guide Full Card */}
+          <div className="wallet-rules-guide-card">
+            <div className="wallet-section-header">
+              <Sliders className="w-4 h-4" />
+              <h3>{t('wallet.rulesCards.stackingGuideTitle')}</h3>
+            </div>
+            <p className="wallet-guide-subtitle">{t('wallet.rulesCards.stackingGuideText')}</p>
+            <div className="wallet-rules-guide-grid">
+              <div className="wallet-rules-guide-item">
+                <Layers className="w-4 h-4" />
+                <div>
+                  <strong>{t('wallet.rulesCards.guideTierTitle')}</strong>
+                  <p>{t('wallet.rulesCards.guideTierDesc')}</p>
+                </div>
+              </div>
+              <div className="wallet-rules-guide-item">
+                <Megaphone className="w-4 h-4" />
+                <div>
+                  <strong>{t('wallet.rulesCards.guidePromoTitle')}</strong>
+                  <p>{t('wallet.rulesCards.guidePromoDesc')}</p>
+                </div>
+              </div>
+              <div className="wallet-rules-guide-item">
+                <Zap className="w-4 h-4" />
+                <div>
+                  <strong>{t('wallet.rulesCards.guideIncentivesTitle')}</strong>
+                  <p>{t('wallet.rulesCards.guideIncentivesDesc')}</p>
+                </div>
               </div>
             </div>
           </div>
 
           <Card as="div" className="admin-server-actions">
             <span>
-              <strong>Incentivos & Regras de Conversão</strong>
+              <strong>{t('wallet.rulesCards.summaryTitle')}</strong>
               <small>
                 {firstPurchaseActive ? `1ª Recarga: +${firstPurchasePercent}%` : '1ª Recarga desativada'}
                 {' · '}
@@ -670,30 +1093,145 @@ export function AdminWalletPage() {
       {/* TAB 4: SIMULADOR EM TEMPO REAL */}
       {activeTab === 'simulator' && (
         <div className="wallet-bonus-tab-content">
-          <Card className="admin-game-panel">
-            <header className="admin-services-heading">
-              <span><Calculator /></span>
-              <div>
+          <div className="wallet-hero-card">
+            <div className="wallet-hero-header">
+              <div className="wallet-header-crest sim-crest">
+                <Calculator className="w-6 h-6" />
+              </div>
+              <div className="wallet-hero-text">
                 <span className="panel-eyebrow">{t('wallet.simulator.eyebrow')}</span>
                 <h2>{t('wallet.simulator.title')}</h2>
                 <p>{t('wallet.simulator.text')}</p>
               </div>
-            </header>
-          </Card>
+              <div className="wallet-hero-actions">
+                <div className="wallet-status-badge is-live">
+                  <span className="led-dot" />
+                  <strong>{t('wallet.simulator.engineActive')}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className="wallet-sim-layout">
             {/* Input Controls */}
-            <Card className="admin-config-section">
-              <div className="account-form-fields">
+            <div className="wallet-section-card wallet-sim-controls-card">
+              <div className="wallet-section-header">
+                <Sliders className="w-4 h-4 text-gold-bright" />
+                <div>
+                  <h3>{t('wallet.simulator.paramsTitle')}</h3>
+                </div>
+              </div>
+
+              {/* Cenários de Teste Rápidos em destaque no topo */}
+              <div className="wallet-sim-block">
+                <span className="wallet-field-title">
+                  <Sparkles className="w-3.5 h-3.5 text-gold-bright" />
+                  {t('wallet.simPresets.title')}
+                </span>
+                <div className="wallet-scenario-buttons">
+                  <button
+                    type="button"
+                    className={`wallet-scenario-btn ${
+                      simAmount === 500 && simPaymentMethod === 'pix' && simIsFirstPurchase
+                        ? 'is-active'
+                        : ''
+                    }`}
+                    onClick={() => {
+                      setSimAmount(500)
+                      setSimPaymentMethod('pix')
+                      setSimIsFirstPurchase(true)
+                    }}
+                  >
+                    <div className="wallet-scenario-badge is-pix">
+                      <PixBoltIcon width={28} height={28} />
+                    </div>
+                    <div className="wallet-scenario-text">
+                      <strong className="wallet-scenario-title">
+                        {t('wallet.simPresets.newPlayerPix')}
+                      </strong>
+                      <span className="wallet-scenario-desc">
+                        {t('wallet.simPresets.newPlayerPixDesc')}
+                      </span>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`wallet-scenario-btn ${
+                      simAmount === 1000 && simPaymentMethod === 'standard' && !simIsFirstPurchase
+                        ? 'is-active'
+                        : ''
+                    }`}
+                    onClick={() => {
+                      setSimAmount(1000)
+                      setSimPaymentMethod('standard')
+                      setSimIsFirstPurchase(false)
+                    }}
+                  >
+                    <div className="wallet-scenario-badge is-card">
+                      <PaymentCardIcon width={28} height={28} />
+                    </div>
+                    <div className="wallet-scenario-text">
+                      <strong className="wallet-scenario-title">
+                        {t('wallet.simPresets.regularCard')}
+                      </strong>
+                      <span className="wallet-scenario-desc">
+                        {t('wallet.simPresets.regularCardDesc')}
+                      </span>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`wallet-scenario-btn ${
+                      simAmount === 5000 && simPaymentMethod === 'pix' && !simIsFirstPurchase
+                        ? 'is-active'
+                        : ''
+                    }`}
+                    onClick={() => {
+                      setSimAmount(5000)
+                      setSimPaymentMethod('pix')
+                      setSimIsFirstPurchase(false)
+                    }}
+                  >
+                    <div className="wallet-scenario-badge is-vip">
+                      <CrownIcon width={28} height={28} />
+                    </div>
+                    <div className="wallet-scenario-text">
+                      <strong className="wallet-scenario-title">
+                        {t('wallet.simPresets.whaleVip')}
+                      </strong>
+                      <span className="wallet-scenario-desc">
+                        {t('wallet.simPresets.whaleVipDesc')}
+                      </span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Quantidade de Moedas + Chips */}
+              <div className="wallet-sim-block">
                 <Field>
-                  {t('wallet.simulator.amount')}
-                  <input
-                    type="number"
-                    min="1"
-                    step="1"
-                    value={simAmount}
-                    onChange={(e) => setSimAmount(Math.max(1, Number(e.target.value)))}
-                  />
+                  <span className="wallet-field-title">
+                    <GoldCoinIcon width={18} height={18} />
+                    {t('wallet.simulator.amount')}
+                  </span>
+                  <div className="wallet-sim-input-group">
+                    <div className="wallet-sim-input-prefix">
+                      <GoldCoinIcon width={24} height={24} />
+                    </div>
+                    <input
+                      type="number"
+                      min="1"
+                      step="1"
+                      value={simAmount}
+                      onChange={(e) => setSimAmount(Math.max(1, Number(e.target.value)))}
+                      className="wallet-sim-input"
+                    />
+                    <span className="wallet-sim-input-unit">
+                      {t('wallet.simulator.coinsUnit')}
+                    </span>
+                  </div>
                   <div className="wallet-sim-chips">
                     {[100, 250, 500, 1000, 2500, 5000].map((amt) => (
                       <button
@@ -702,14 +1240,25 @@ export function AdminWalletPage() {
                         className={`wallet-sim-chip ${simAmount === amt ? 'is-active' : ''}`}
                         onClick={() => setSimAmount(amt)}
                       >
-                        {amt} moedas
+                        <GoldCoinIcon width={16} height={16} />
+                        <span>{amt} {t('wallet.simulator.coinsUnit')}</span>
                       </button>
                     ))}
                   </div>
                 </Field>
+              </div>
 
-                <Field>
-                  {t('wallet.simulator.paymentMethod')}
+              {/* Método de Pagamento & Toggle 1ª Recarga */}
+              <div className="wallet-sim-bottom-grid">
+                <div className="wallet-sim-field">
+                  <span className="wallet-field-title">
+                    {simPaymentMethod === 'pix' ? (
+                      <PixBoltIcon width={18} height={18} />
+                    ) : (
+                      <PaymentCardIcon width={18} height={18} />
+                    )}
+                    {t('wallet.simulator.paymentMethod')}
+                  </span>
                   <select
                     value={simPaymentMethod}
                     onChange={(e) => setSimPaymentMethod(e.target.value as 'standard' | 'pix')}
@@ -718,21 +1267,48 @@ export function AdminWalletPage() {
                     <option value="standard">{t('wallet.simulator.paymentDefault')}</option>
                     <option value="pix">{t('wallet.simulator.paymentPix')}</option>
                   </select>
-                </Field>
+                </div>
 
-                <Toggle
-                  label={t('wallet.simulator.isFirstPurchase')}
-                  checked={simIsFirstPurchase}
-                  onChange={(e) => setSimIsFirstPurchase(e.target.checked)}
-                />
+                <div className="wallet-sim-toggle-card">
+                  <div className="wallet-sim-toggle-left">
+                    <div className="wallet-sim-toggle-badge">
+                      <GiftBoxIcon width={24} height={24} />
+                    </div>
+                    <div className="wallet-sim-toggle-info">
+                      <strong className="wallet-sim-toggle-title">
+                        {t('wallet.simulator.isFirstPurchase')}
+                      </strong>
+                      <span className="wallet-sim-toggle-desc">
+                        {firstPurchaseActive
+                          ? `+${firstPurchasePercent}% de bônus inicial`
+                          : 'Sem bônus extra'}
+                      </span>
+                    </div>
+                  </div>
+                  <Toggle
+                    checked={simIsFirstPurchase}
+                    onChange={(e) => setSimIsFirstPurchase(e.target.checked)}
+                  />
+                </div>
               </div>
-            </Card>
+            </div>
 
             {/* Result Simulation */}
             <div className="wallet-sim-result-card">
+              <div className="wallet-sim-receipt-head">
+                <strong>
+                  <Sparkles className="w-4 h-4 text-gold-bright" />
+                  {t('wallet.simPresets.receiptTitle')}
+                </strong>
+                <span className="wallet-status-badge is-live">
+                  <span className="led-dot" />
+                  {t('wallet.simulator.instant')}
+                </span>
+              </div>
+
               {simLoading ? (
-                <div className="py-12 text-center text-gold">
-                  <Sparkles className="w-8 h-8 animate-spin mx-auto mb-2 opacity-60" />
+                <div className="wallet-sim-calc-loading">
+                  <Sparkles className="w-8 h-8 text-gold-bright" />
                   <p>{t('wallet.simulator.calculating')}</p>
                 </div>
               ) : simResult ? (() => {
@@ -747,68 +1323,125 @@ export function AdminWalletPage() {
                 const totalCoins = simResult.total_coins ?? simResult.total ?? simResult.amount
                 const ruleApplied = simResult.rule_applied ?? simResult.description ?? ''
 
+                const totalNum = Number(totalCoins) || Number(simResult.amount) || 1
+                const pctBase = Math.round((Number(simResult.amount) / totalNum) * 100)
+                const pctBonus = 100 - pctBase
+
                 return (
                   <>
                     <div className="wallet-sim-hero">
-                      <div className="wallet-sim-metric">
-                        <span>{t('wallet.simulator.baseAmount')}</span>
-                        <strong>{simResult.amount}</strong>
+                      <div className="wallet-sim-metric-box">
+                        <div className="wallet-sim-metric-label">
+                          <GoldCoinIcon width={18} height={18} />
+                          <span>{t('wallet.simulator.baseAmount')}</span>
+                        </div>
+                        <div className="wallet-sim-metric-val">{simResult.amount}</div>
                       </div>
-                      <div className="wallet-sim-metric">
-                        <span>{t('wallet.simulator.totalPercent')}</span>
-                        <strong className="is-highlight">+{Number(totalPercent)}%</strong>
+
+                      <div className="wallet-sim-metric-box highlight">
+                        <div className="wallet-sim-metric-label">
+                          <TrendingUp className="w-4 h-4 text-gold-bright" />
+                          <span>{t('wallet.simulator.totalPercent')}</span>
+                        </div>
+                        <div className="wallet-sim-metric-val is-highlight">+{Number(totalPercent)}%</div>
                       </div>
-                      <div className="wallet-sim-metric">
-                        <span>{t('wallet.simulator.bonusCoins')}</span>
-                        <strong>+{bonusCoins}</strong>
+
+                      <div className="wallet-sim-metric-box">
+                        <div className="wallet-sim-metric-label">
+                          <GiftBoxIcon width={18} height={18} />
+                          <span>{t('wallet.simulator.bonusCoins')}</span>
+                        </div>
+                        <div className="wallet-sim-metric-val">+{bonusCoins}</div>
                       </div>
-                      <div className="wallet-sim-metric">
-                        <span>{t('wallet.simulator.totalCoins')}</span>
-                        <strong className="is-highlight">{totalCoins}</strong>
+
+                      <div className="wallet-sim-metric-box highlight total-highlight">
+                        <div className="wallet-sim-metric-label">
+                          <CrownIcon width={20} height={20} />
+                          <span>{t('wallet.simulator.totalCoins')}</span>
+                        </div>
+                        <div className="wallet-sim-metric-val is-highlight">{totalCoins}</div>
+                      </div>
+                    </div>
+
+                    {/* Visual Composition Bar */}
+                    <div className="wallet-sim-visual-bar-wrap">
+                      <div className="wallet-sim-bar-legend">
+                        <span>{t('wallet.simPresets.visualComparison')}</span>
+                        <span>{t('wallet.simulator.basePlusBonus', { base: simResult.amount, bonus: bonusCoins })}</span>
+                      </div>
+                      <div className="wallet-sim-visual-bar">
+                        <div
+                          className="wallet-sim-bar-seg seg-base"
+                          style={{ width: `${pctBase}%` }}
+                          title={`Base: ${simResult.amount} ${t('wallet.simulator.coinsUnit')}`}
+                        />
+                        <div
+                          className="wallet-sim-bar-seg seg-tier"
+                          style={{ width: `${pctBonus}%` }}
+                          title={`Bônus: +${bonusCoins} ${t('wallet.simulator.coinsUnit')}`}
+                        />
                       </div>
                     </div>
 
                     <div className="wallet-sim-breakdown">
-                      <span className="wallet-sim-breakdown-title">
-                        {t('wallet.simulator.breakdownTitle')}
-                      </span>
-
-                      <div className="wallet-sim-breakdown-row">
-                        <span>{t('wallet.simulator.breakdownTier')}</span>
-                        <strong>+{Number(breakdown.tier_bonus)} moedas</strong>
+                      <div className="wallet-section-header mb-0 pb-2">
+                        <Sliders className="w-4 h-4 text-gold-bright" />
+                        <h3>{t('wallet.simulator.breakdownTitle')}</h3>
                       </div>
 
                       <div className="wallet-sim-breakdown-row">
-                        <span>{t('wallet.simulator.breakdownPromo')}</span>
-                        <strong>+{Number(breakdown.promo_bonus)} moedas</strong>
+                        <div className="wallet-sim-breakdown-item">
+                          <RankIcon width={20} height={20} />
+                          <span>{t('wallet.simulator.breakdownTier')}</span>
+                        </div>
+                        <strong>+{Number(breakdown.tier_bonus)} {t('wallet.simulator.coinsUnit')}</strong>
+                      </div>
+
+                      <div className="wallet-sim-breakdown-row">
+                        <div className="wallet-sim-breakdown-item">
+                          <BannerFlagIcon width={20} height={20} />
+                          <span>{t('wallet.simulator.breakdownPromo')}</span>
+                        </div>
+                        <strong>+{Number(breakdown.promo_bonus)} {t('wallet.simulator.coinsUnit')}</strong>
                       </div>
 
                       {Number(breakdown.pix_bonus) > 0 && (
                         <div className="wallet-sim-breakdown-row is-bonus">
-                          <span>{t('wallet.simulator.breakdownPix')}</span>
-                          <strong>+{Number(breakdown.pix_bonus)} moedas</strong>
+                          <div className="wallet-sim-breakdown-item">
+                            <PixBoltIcon width={20} height={20} />
+                            <span>{t('wallet.simulator.breakdownPix')}</span>
+                          </div>
+                          <strong>+{Number(breakdown.pix_bonus)} {t('wallet.simulator.coinsUnit')}</strong>
                         </div>
                       )}
 
                       {Number(breakdown.first_purchase_bonus) > 0 && (
                         <div className="wallet-sim-breakdown-row is-bonus">
-                          <span>{t('wallet.simulator.breakdownFirstPurchase')}</span>
-                          <strong>+{Number(breakdown.first_purchase_bonus)} moedas</strong>
+                          <div className="wallet-sim-breakdown-item">
+                            <GiftBoxIcon width={20} height={20} />
+                            <span>{t('wallet.simulator.breakdownFirstPurchase')}</span>
+                          </div>
+                          <strong>+{Number(breakdown.first_purchase_bonus)} {t('wallet.simulator.coinsUnit')}</strong>
                         </div>
                       )}
                     </div>
 
                     {ruleApplied && (
                       <div className="wallet-sim-applied">
-                        <Sparkles className="w-4 h-4 flex-shrink-0" />
-                        <span>{ruleApplied}</span>
+                        <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-gold-bright" />
+                        <div className="wallet-sim-applied-info">
+                          <small className="wallet-sim-applied-label">
+                            {t('wallet.simulator.appliedRule')}
+                          </small>
+                          <span className="wallet-sim-applied-val">{ruleApplied}</span>
+                        </div>
                       </div>
                     )}
                   </>
                 )
               })() : (
-                <div className="py-12 text-center text-muted">
-                  <Calculator className="w-8 h-8 mx-auto mb-2 opacity-40" />
+                <div className="wallet-sim-calc-empty">
+                  <Calculator className="w-8 h-8 opacity-50" />
                   <p>{t('wallet.simulator.text')}</p>
                 </div>
               )}

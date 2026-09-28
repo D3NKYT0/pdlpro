@@ -385,6 +385,76 @@ export function GamepadIcon(props: EnamelIconProps) {
   )
 }
 
+/** Raio elétrico / insígnia PIX: liquidez instantânea e recargas rápidas. */
+export function PixBoltIcon(props: EnamelIconProps) {
+  const { id, url } = useGlyphIds()
+  return (
+    <Glyph data-enamel-icon="pix-bolt" {...props}>
+      <defs>
+        <Ramp id={id('gem')} tone="jade" x1={12} y1={8} x2={52} y2={52} />
+        <Ramp id={id('bolt')} tone="gold" x1={20} y1={12} x2={44} y2={46} />
+      </defs>
+      <Shadow rx={18} cy={59} ry={2.6} />
+      <rect
+        x="13"
+        y="11"
+        width="38"
+        height="38"
+        rx="9"
+        transform="rotate(45 32 30)"
+        fill={url('gem')}
+        stroke={INK.jade}
+        strokeWidth="3"
+      />
+      <rect
+        x="16"
+        y="14"
+        width="32"
+        height="32"
+        rx="7"
+        transform="rotate(45 32 30)"
+        fill="none"
+        stroke="#123D1A"
+        strokeWidth="1.8"
+        opacity=".6"
+      />
+      <path
+        d="M34 14 22 31h10l-3 15 15-19H33l4-13Z"
+        fill={url('bolt')}
+        stroke={INK.gold}
+        strokeWidth="2.4"
+      />
+      <path d="M32 18 25 30h8l-2 9 10-12h-7l3-7Z" fill="#FFF6D8" opacity=".7" />
+      <path d="M24 16c4.5-3 11.5-3 16 0" stroke="#F0FFE4" strokeWidth="2.4" opacity=".8" />
+      <Sparkle x={53} y={11} s={1} />
+      <Sparkle x={11} y={43} s={0.75} />
+    </Glyph>
+  )
+}
+
+/** Moeda de ouro do reino com relevo e acento PDL: recargas e saldos. */
+export function GoldCoinIcon(props: EnamelIconProps) {
+  const { id, url } = useGlyphIds()
+  return (
+    <Glyph data-enamel-icon="gold-coin" {...props}>
+      <defs>
+        <Ramp id={id('coin')} tone="gold" x1={12} y1={10} x2={52} y2={50} />
+        <Ramp id={id('back')} tone="bronze" x1={8} y1={24} x2={38} y2={56} />
+      </defs>
+      <Shadow rx={20} cy={58} ry={2.6} />
+      <circle cx="23" cy="38" r="14.5" fill={url('back')} stroke={INK.bronze} strokeWidth="2.8" />
+      <circle cx="34" cy="27" r="19" fill={url('coin')} stroke={INK.gold} strokeWidth="3" />
+      <circle cx="34" cy="27" r="14.5" fill="none" stroke="#8F6015" strokeWidth="2.2" />
+      <path d="M34 16v22M23 27h22" stroke="#8F6015" strokeWidth="3" />
+      <path d="M34 16v22M23 27h22" stroke="#FFF6D8" strokeWidth="1.6" opacity=".85" />
+      <circle cx="34" cy="27" r="4.2" fill="#FFF0BE" stroke={INK.gold} strokeWidth="1.6" />
+      <path d="M21 19c3.2-4.5 7.8-6.8 13.5-7" stroke="#FFF6D8" strokeWidth="2.8" opacity=".85" />
+      <Sparkle x={54} y={11} s={1.05} />
+      <Sparkle x={9} y={38} s={0.7} />
+    </Glyph>
+  )
+}
+
 export const ENAMEL_ICONS = {
   package: PackageBoxIcon,
   cart: CartIcon,
@@ -400,6 +470,9 @@ export const ENAMEL_ICONS = {
   brainOrb: BrainOrbIcon,
   radarPulse: RadarPulseIcon,
   gamepad: GamepadIcon,
+  pixBolt: PixBoltIcon,
+  goldCoin: GoldCoinIcon,
 } as const satisfies Record<string, ComponentType<EnamelIconProps>>
 
 export type EnamelIconKey = keyof typeof ENAMEL_ICONS
+

@@ -13,10 +13,12 @@ export {
   ENAMEL_ICONS,
   ExchangeIcon,
   GamepadIcon,
+  GoldCoinIcon,
   KeyRingIcon,
   MailSealIcon,
   PackageBoxIcon,
   PaymentCardIcon,
+  PixBoltIcon,
   PurseIcon,
   RadarPulseIcon,
   ServerTowerIcon,
@@ -24,3 +26,4 @@ export {
   type EnamelIconKey,
 } from './enamelIcons'
 export { GiftBoxIcon } from '../achievements/AchievementIcons'
+

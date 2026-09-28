@@ -327,7 +327,10 @@
       "firstPurchasePercent": "Porcentaje de la 1ª recarga (%)",
       "pixTitle": "Incentivo por Método de Pago (PIX)",
       "pixText": "Otorga un bono inmediato a los jugadores que realicen el pago mediante PIX.",
-      "pixPercent": "Porcentaje extra en PIX (%)"
+      "pixPercent": "Porcentaje extra en PIX (%)",
+      "firstPurchaseStatusActive": "1ª Recarga: ACTIVA",
+      "firstPurchaseStatusOff": "1ª Recarga: DESACTIVADA",
+      "pixBonusLabel": "PIX: +{{percent}}%"
     },
     "tiers": {
       "eyebrow": "Volumen Progresivo",
@@ -351,7 +354,17 @@
         "deleted": "Escala eliminada con éxito",
         "error": "No se pudo guardar la escala"
       },
-      "confirmDelete": "¿Realmente deseas eliminar esta escala de bono?"
+      "confirmDelete": "¿Realmente deseas eliminar esta escala de bono?",
+      "tierRank": "Escala #{{order}}",
+      "coinsUnit": "Monedas",
+      "activeStatus": "Activa",
+      "inactiveStatus": "Inactiva",
+      "orderLabel": "Orden: #{{order}}",
+      "editAction": "Editar",
+      "deleteAction": "Eliminar",
+      "saveButton": "Guardar Escala",
+      "cancelButton": "Cancelar",
+      "defineMaxToggle": "Definir límite máximo de monedas"
     },
     "simulator": {
       "eyebrow": "Calculadora en Tiempo Real",
@@ -366,17 +379,74 @@
       "totalPercent": "Bono Total Acumulado",
       "bonusCoins": "Monedas de Bono",
       "totalCoins": "Total Entregado al Jugador",
-      "appliedRule": "Regra / Descripción",
+      "appliedRule": "Regla / Descripción",
       "breakdownTitle": "Desglose de Reglas",
       "breakdownTier": "Bono por Escala de Volumen:",
       "breakdownPromo": "Campaña Promocional:",
       "breakdownPix": "Incentivo PIX:",
       "breakdownFirstPurchase": "Bono de 1ª Recarga:",
-      "baseAmount": "Monedas base:"
+      "baseAmount": "Monedas base:",
+      "engineActive": "CÁLCULO ACTIVO EN TIEMPO REAL",
+      "paramsTitle": "Parámetros de Recarga",
+      "coinsUnit": "monedas",
+      "instant": "Instantáneo",
+      "basePlusBonus": "{{base}} base + {{bonus}} bono"
     },
     "toast": {
       "saved": "Promoción de la cartera actualizada",
       "error": "No se pudo guardar"
+    },
+    "sections": {
+      "identity": "Identidad de la Campaña",
+      "bonus": "Bono y Vigencia",
+      "activation": "Publicación y Activación"
+    },
+    "stackingSelectMax": "Seleccionar modo Mayor Bono",
+    "stackingSelectSum": "Seleccionar modo Acumulativo",
+    "quickPresets": "Valores rápidos:",
+    "activeStatusLabel": "Estado del Sistema:",
+    "heroStats": {
+      "totalTiers": "Total escalas:",
+      "startTier": "Piso inicial:",
+      "maxTier": "Techo máximo:",
+      "topBonus": "Bono máximo:"
+    },
+    "ladder": {
+      "title": "Escala Visual de Progresión de Monedas",
+      "subtitle": "Comprueba la curva de incentivo según el volumen de recarga del jugador"
+    },
+    "previewCard": {
+      "title": "Vista Previa del Banner en la Cartera",
+      "subtitle": "Diseño idéntico al que verá el jugador en /panel/wallet",
+      "tip": "El banner ocupa una posición destacada en la parte superior de la cartera."
+    },
+    "simPresets": {
+      "title": "Escenarios Rápidos de Prueba:",
+      "receiptTitle": "Extracto de Bono de la Transacción",
+      "visualComparison": "Composición de la Entrega al Jugador",
+      "newPlayerPix": "Nuevo Jugador en PIX",
+      "regularCard": "Tarjeta Estándar",
+      "whaleVip": "VIP / Gran Volumen",
+      "newPlayerPixDesc": "500 monedas · PIX · 1ª Recarga",
+      "regularCardDesc": "1.000 monedas · Estándar",
+      "whaleVipDesc": "5.000 monedas · VIP PIX"
+    },
+    "rulesCards": {
+      "firstPurchaseTag": "Adquisición y Bienvenida",
+      "firstPurchaseTip": "Multiplica la tasa de activación de cuentas recién creadas.",
+      "mockFirstPurchase": "🎁 1ª Recarga: +{{percent}}% Monedas Bono",
+      "pixTag": "Liquidez y Menor Coste",
+      "pixTip": "Reduce costes de pasarela y suprime riesgos de contracargos con tarjetas.",
+      "mockPix": "⚡ Paga con PIX y obtén +{{percent}}% de Bono",
+      "guideTierTitle": "1. Escala de Volumen",
+      "guideTierDesc": "Define el porcentaje base según la cantidad recargada.",
+      "guidePromoTitle": "2. Promoción Vigente",
+      "guidePromoDesc": "Aplica el modo configurado (Mayor Bono o Suma acumulativa).",
+      "guideIncentivesTitle": "3. Incentivos (1ª / PIX)",
+      "guideIncentivesDesc": "Se suman directamente a la transacción para incentivo máximo.",
+      "stackingGuideTitle": "Cómo se combinan los bonos en la transacción",
+      "stackingGuideText": "Lógica de prioridad entre escalas, promociones y métodos de pago",
+      "summaryTitle": "Incentivos y Reglas de Conversión"
     }
   },
   "services": {
