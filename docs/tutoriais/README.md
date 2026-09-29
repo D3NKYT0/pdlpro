@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Distribuição](../operacao/distribuicao.md) · [Configurador admin](../operacao/integracoes-admin.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 28 de setembro de 2026
 
 > [!IMPORTANT]
 > Faça a [instalação pela Release](../operacao/distribuicao.md) antes. Quase
@@ -29,6 +29,7 @@
 | 9 | [Denkynho (LLM)](denkynho-llm.md) | Opcional |
 | 10 | [S3 / R2](storage-s3-r2.md) | Opcional |
 | 11 | [Sentry](sentry.md) | Opcional |
+| 12 | [Backup no Google Drive](backup-google-drive.md) | Recomendado |
 
 ## Referência técnica (não são tutoriais)
 

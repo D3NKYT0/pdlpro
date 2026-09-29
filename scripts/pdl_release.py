@@ -28,6 +28,7 @@ BUNDLE_FILES = (
     "docs/operacao/backup-e-restauracao.md",
     "docs/operacao/distribuicao.md",
     "docs/operacao/implantacao.md",
+    "docs/tutoriais/backup-google-drive.md",
     "packaging/install.ps1",
     "packaging/install.sh",
     "scripts/backup-cloud.sh",

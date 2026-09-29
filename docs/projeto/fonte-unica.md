@@ -20,7 +20,7 @@
 | Relato de vulnerabilidade | [Política](seguranca.md) | Issues públicas |
 | Sessões, proxies, cookies, liquidação | [Segurança operacional](../operacao/seguranca.md) | Distribuição, temas, frontend |
 | Soft-rotate / Fernet | [Rotação de segredos](../operacao/rotacao-de-segredos.md) | Integrações admin (só bootstrap) |
-| Backup / restore | [Backup](../operacao/backup-e-restauracao.md) | — |
+| Backup / restore | [Backup](../operacao/backup-e-restauracao.md) | Tutorial Google Drive (só setup do provedor) |
 | Logs / Sentry ops | [Observabilidade](../operacao/observabilidade.md) | Tutorial Sentry (só setup) |
 | Sintomas de instalação | [Problemas](../operacao/solucao-de-problemas.md) | — |
 | Fluxo interno de pagamento | [Pagamentos](../integracoes/pagamentos.md) | Tutoriais MP/Stripe (setup) |

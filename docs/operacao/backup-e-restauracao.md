@@ -66,6 +66,9 @@ no bucket; o bucket precisa existir.
 
 ### Google Drive e outros provedores (assistente)
 
+Passo a passo completo, com prints de terminal e problemas comuns:
+[Tutorial: backup no Google Drive](../tutoriais/backup-google-drive.md).
+
 ```bash
 ./setup.sh backup-cloud configure
 ```

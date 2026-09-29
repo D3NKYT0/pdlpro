@@ -56,7 +56,7 @@
 | [Distribuição](operacao/distribuicao.md) | Instalar, HTTPS, admin, atualizar |
 | [Tutoriais de integração](tutoriais/README.md) | Passo a passo por provedor |
 | [Configurador admin](operacao/integracoes-admin.md) | Hot-apply, abas, API staff |
-| [Backup e restauração](operacao/backup-e-restauracao.md) | Dump PostgreSQL e recuperação |
+| [Backup e restauração](operacao/backup-e-restauracao.md) | Pacote cifrado (banco, mídia, `.env`), nuvem, agendamento e recuperação |
 | [Rotação de segredos](operacao/rotacao-de-segredos.md) | Soft-rotate, Fernet, Beat |
 | [Segurança operacional](operacao/seguranca.md) | Sessões, proxies, pagamentos |
 | [Observabilidade](operacao/observabilidade.md) | Logs, Sentry, auditoria |

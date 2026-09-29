@@ -633,3 +633,4 @@ def test_release_bundle_ships_the_cloud_backup_scripts():
 
     assert "scripts/backup-cloud.sh" in pdl_release.BUNDLE_FILES
     assert "scripts/lib/backup.sh" in pdl_release.BUNDLE_FILES
+    assert "docs/tutoriais/backup-google-drive.md" in pdl_release.BUNDLE_FILES
