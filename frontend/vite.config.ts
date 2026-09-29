@@ -12,6 +12,7 @@ const sentrySourceMapsEnabled = Boolean(
 ensureFrontendLogDir()
 
 export default defineConfig({
+  envDir: process.env.DOCKER === 'true' ? '.' : '../',
   customLogger: createViteFileLogger(),
   plugins: [
     quietBackendProxyPlugin(),

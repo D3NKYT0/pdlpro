@@ -16,6 +16,7 @@ class IntegrationSettings(BaseModel):
     denkynho_blob = models.TextField(blank=True, default="")
     storage_blob = models.TextField(blank=True, default="")
     observability_blob = models.TextField(blank=True, default="")
+    analytics_blob = models.TextField(blank=True, default="")
     updated_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,

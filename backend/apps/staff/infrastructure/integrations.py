@@ -18,6 +18,7 @@ from apps.staff.domain.integrations import (
     BOOL_KEYS,
     FLOAT_KEYS,
     INT_KEYS,
+    SECTION_ANALYTICS,
     SECTION_DENKYNHO,
     SECTION_KEYS,
     SECTION_LINEAGE,
@@ -45,6 +46,7 @@ BLOB_ATTR = {
     SECTION_DENKYNHO: "denkynho_blob",
     SECTION_STORAGE: "storage_blob",
     SECTION_OBSERVABILITY: "observability_blob",
+    SECTION_ANALYTICS: "analytics_blob",
 }
 
 _local_rev: int = 0
@@ -484,6 +486,42 @@ class DjangoIntegrationProbe(IIntegrationProbe):
         if "://" not in dsn or "@" not in dsn:
             return ProbeResult(False, _("SENTRY_DSN parece inválido."), details)
         return ProbeResult(True, _("DSN do Sentry presente e com formato válido."), details)
+
+    def test_analytics(self) -> ProbeResult:
+        gtag = str(getattr(settings, "VITE_GTAG_ID", "") or "").strip()
+        google_ads = str(getattr(settings, "VITE_GOOGLE_ADS_ID", "") or "").strip()
+        google_ads_label = str(getattr(settings, "VITE_GOOGLE_ADS_CONVERSION_LABEL", "") or "").strip()
+        gtm = str(getattr(settings, "VITE_GTM_ID", "") or "").strip()
+        meta = str(getattr(settings, "VITE_META_PIXEL_ID", "") or "").strip()
+        tiktok = str(getattr(settings, "VITE_TIKTOK_PIXEL_ID", "") or "").strip()
+
+        details = {
+            "gtag_id": gtag,
+            "google_ads_id": google_ads,
+            "google_ads_conversion_label": bool(google_ads_label),
+            "gtm_id": gtm,
+            "meta_pixel_id": meta,
+            "tiktok_pixel_id": tiktok,
+        }
+
+        configured_count = sum(1 for v in (gtag, google_ads, gtm, meta, tiktok) if v)
+        if configured_count == 0:
+            return ProbeResult(True, _("Nenhum serviço de analytics configurado."), details)
+
+        if gtag and not gtag.startswith(("G-", "GT-")):
+            return ProbeResult(False, _("VITE_GTAG_ID deve iniciar com G- ou GT- (ex: G-XXXXXXXXXX)."), details)
+
+        if google_ads and not google_ads.startswith("AW-"):
+            return ProbeResult(False, _("VITE_GOOGLE_ADS_ID deve iniciar com AW- (ex: AW-XXXXXXXXXX)."), details)
+
+        if gtm and not gtm.startswith("GTM-"):
+            return ProbeResult(False, _("VITE_GTM_ID deve iniciar com GTM- (ex: GTM-XXXXXXX)."), details)
+
+        return ProbeResult(
+            True,
+            _("Configurações de analytics e pixels consistentes ({count} ativo(s)).").format(count=configured_count),
+            details,
+        )
 
 
 def _tcp_open(host: str, port: int, timeout: float) -> bool:

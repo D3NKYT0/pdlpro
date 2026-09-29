@@ -15,6 +15,7 @@ SECTION_OAUTH = "oauth"
 SECTION_DENKYNHO = "denkynho"
 SECTION_STORAGE = "storage"
 SECTION_OBSERVABILITY = "observability"
+SECTION_ANALYTICS = "analytics"
 SECTIONS = (
     SECTION_PAYMENTS,
     SECTION_LINEAGE,
@@ -23,6 +24,7 @@ SECTIONS = (
     SECTION_DENKYNHO,
     SECTION_STORAGE,
     SECTION_OBSERVABILITY,
+    SECTION_ANALYTICS,
 )
 
 # Campos sensíveis: nunca saem em claro na API.
@@ -152,6 +154,14 @@ SECTION_KEYS: dict[str, tuple[str, ...]] = {
         "SENTRY_RELEASE",
         "SENTRY_TRACES_SAMPLE_RATE",
     ),
+    SECTION_ANALYTICS: (
+        "VITE_GTAG_ID",
+        "VITE_GOOGLE_ADS_ID",
+        "VITE_GOOGLE_ADS_CONVERSION_LABEL",
+        "VITE_GTM_ID",
+        "VITE_META_PIXEL_ID",
+        "VITE_TIKTOK_PIXEL_ID",
+    ),
 }
 
 BOOL_KEYS = frozenset(
@@ -229,6 +239,7 @@ class IntegrationsStatus:
     denkynho: SectionStatus
     storage: SectionStatus
     observability: SectionStatus
+    analytics: SectionStatus
     revision: int = 0
 
 
@@ -306,4 +317,8 @@ class IIntegrationProbe(ABC):
 
     @abstractmethod
     def test_observability(self) -> ProbeResult:
+        raise NotImplementedError
+
+    @abstractmethod
+    def test_analytics(self) -> ProbeResult:
         raise NotImplementedError

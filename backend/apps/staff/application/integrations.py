@@ -16,6 +16,7 @@ from apps.staff.domain.integrations import (
     LIST_KEYS,
     MASKED_PUBLIC_KEYS,
     SECRET_KEYS,
+    SECTION_ANALYTICS,
     SECTION_DENKYNHO,
     SECTION_KEYS,
     SECTION_LINEAGE,
@@ -182,6 +183,7 @@ class GetIntegrationsStatusUseCase(UseCase[None, IntegrationsStatus]):
             denkynho=sections[SECTION_DENKYNHO],
             storage=sections[SECTION_STORAGE],
             observability=sections[SECTION_OBSERVABILITY],
+            analytics=sections[SECTION_ANALYTICS],
             revision=self._applier.current_revision(),
         )
 
@@ -230,6 +232,8 @@ class TestIntegrationSectionUseCase(UseCase[TestIntegrationSectionInput, ProbeRe
             return self._probe.test_storage()
         if section == SECTION_OBSERVABILITY:
             return self._probe.test_observability()
+        if section == SECTION_ANALYTICS:
+            return self._probe.test_analytics()
         email = (command.to_email or "").strip()
         if not email:
             raise ValidationDomainError(_("Informe o e-mail de destino do teste."))

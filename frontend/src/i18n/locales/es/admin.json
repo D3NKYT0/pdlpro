@@ -117,7 +117,7 @@
       },
       "integrations": {
         "title": "Integraciones",
-        "description": "Pagos, Lineage, SMTP/VAPID, OAuth, Denkynho, S3/R2 y Sentry (solo superadmin)"
+        "description": "Pagos, Lineage, SMTP/VAPID, OAuth, Analytics, Denkynho, S3/R2 y Sentry (solo superadmin)"
       },
       "itemWatch": {
         "title": "Observar ítems",
@@ -1134,13 +1134,14 @@
   "integrations": {
     "kicker": "Sistema",
     "title": "Integraciones",
-    "description": "Pagos, Lineage, SMTP/push, OAuth/WebAuthn, Denkynho, S3/R2 y Sentry. Los secretos se cifran y aplican sin reiniciar. Solo superadmin.",
+    "description": "Pagos, Lineage, SMTP/push, OAuth/WebAuthn, Analytics & Píxeles, Denkynho, S3/R2 y Sentry. Los secretos se cifran y aplican sin reiniciar. Solo superadmin.",
     "tabsLabel": "Secciones de integración",
     "tabs": {
       "payments": "Pagos",
       "lineage": "Lineage / Game",
       "smtp": "SMTP / Push",
       "oauth": "OAuth / Auth",
+      "analytics": "Analytics & Píxeles",
       "denkynho": "Denkynho",
       "storage": "S3 / R2",
       "observability": "Sentry"
@@ -1202,6 +1203,20 @@
       "webauthnTitle": "Passkeys / RP",
       "webauthnHint": "RP ID y origins del dominio HTTPS de producción.",
       "originsHint": "Separados por coma, ej.: https://tudominio.com"
+    },
+    "analytics": {
+      "gaEyebrow": "Google",
+      "gaTitle": "Google Analytics 4 (GA4)",
+      "gaHint": "ID de medición de Google Analytics para el seguimiento de tráfico y navegación en el sitio.",
+      "adsEyebrow": "Google Ads",
+      "adsTitle": "Conversiones de Google Ads",
+      "adsHint": "ID de conversión (AW-XXXXXXXXX) y etiqueta de conversión para rastrear compras y registros.",
+      "gtmEyebrow": "Tag Manager",
+      "gtmTitle": "Google Tag Manager (GTM)",
+      "gtmHint": "Contenedor GTM para gestionar etiquetas y scripts de terceros a través de Google Tag Manager.",
+      "pixelsEyebrow": "Redes Sociales",
+      "pixelsTitle": "Píxel de Meta y TikTok",
+      "pixelsHint": "IDs numéricos de píxel para seguimiento de campañas de publicidad en Facebook, Instagram y TikTok."
     },
     "denkynho": {
       "eyebrow": "Asistente",
@@ -1314,7 +1329,13 @@
       "SENTRY_DSN": "Sentry DSN",
       "SENTRY_ENVIRONMENT": "Entorno",
       "SENTRY_RELEASE": "Release",
-      "SENTRY_TRACES_SAMPLE_RATE": "Tasa de traces"
+      "SENTRY_TRACES_SAMPLE_RATE": "Tasa de traces",
+      "VITE_GTAG_ID": "Google Analytics 4 (ID de medición)",
+      "VITE_GOOGLE_ADS_ID": "Google Ads ID (Conversión)",
+      "VITE_GOOGLE_ADS_CONVERSION_LABEL": "Google Ads Conversion Label",
+      "VITE_GTM_ID": "Google Tag Manager ID",
+      "VITE_META_PIXEL_ID": "Meta Pixel ID (Facebook / Instagram)",
+      "VITE_TIKTOK_PIXEL_ID": "TikTok Pixel ID"
     }
   },
   "comingSoonAdmin": {

@@ -34,6 +34,7 @@ def _status_payload(status_obj) -> dict:
         "denkynho": asdict(status_obj.denkynho),
         "storage": asdict(status_obj.storage),
         "observability": asdict(status_obj.observability),
+        "analytics": asdict(status_obj.analytics),
     }
 
 

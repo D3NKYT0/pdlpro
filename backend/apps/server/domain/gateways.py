@@ -54,6 +54,12 @@ class ServerInfo:
     instagram_url: str = ""
     youtube_url: str = ""
     trailer_youtube_id: str = ""
+    gtag_id: str = ""
+    google_ads_id: str = ""
+    google_ads_conversion_label: str = ""
+    gtm_id: str = ""
+    meta_pixel_id: str = ""
+    tiktok_pixel_id: str = ""
     site_name_customized: bool = False
     site_description_customized: bool = False
 

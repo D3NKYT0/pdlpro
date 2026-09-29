@@ -4,6 +4,7 @@ import {
   initTracking,
   isTrackingConfigured,
   parseTrackingConfig,
+  reconfigureTrackingFromApi,
   resetTrackingForTesting,
   trackEvent,
   trackInitiateCheckout,
@@ -142,6 +143,21 @@ describe('Paid Traffic & Analytics tracking', () => {
 
       updateTrackingConsent({ analytics: true, marketing: true })
       expect(fbqSpy).toHaveBeenCalledWith('consent', 'grant')
+    })
+
+    it('dynamically reconfigures tracking when IDs arrive via reconfigureTrackingFromApi', () => {
+      initTracking({})
+      expect(document.getElementById('pdl-gtag-script')).toBeNull()
+
+      reconfigureTrackingFromApi({
+        gtag_id: 'G-DYNAMIC999',
+        meta_pixel_id: '9876543210',
+      })
+
+      const script = document.getElementById('pdl-gtag-script') as HTMLScriptElement
+      expect(script).not.toBeNull()
+      expect(script.src).toContain('googletagmanager.com/gtag/js?id=G-DYNAMIC999')
+      expect(typeof window.fbq).toBe('function')
     })
   })
 

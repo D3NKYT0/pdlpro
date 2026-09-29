@@ -99,6 +99,12 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
             theme.get("trailer_youtube_id"),
             getattr(settings, "TRAILER_YOUTUBE_ID", ""),
         )
+        gtag_id = str(getattr(settings, "VITE_GTAG_ID", "") or "").strip()
+        google_ads_id = str(getattr(settings, "VITE_GOOGLE_ADS_ID", "") or "").strip()
+        google_ads_conversion_label = str(getattr(settings, "VITE_GOOGLE_ADS_CONVERSION_LABEL", "") or "").strip()
+        gtm_id = str(getattr(settings, "VITE_GTM_ID", "") or "").strip()
+        meta_pixel_id = str(getattr(settings, "VITE_META_PIXEL_ID", "") or "").strip()
+        tiktok_pixel_id = str(getattr(settings, "VITE_TIKTOK_PIXEL_ID", "") or "").strip()
         info = ServerInfo(
             name=name,
             slogan=slogan,
@@ -158,6 +164,12 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
             instagram_url="",
             youtube_url="",
             trailer_youtube_id=trailer_youtube_id,
+            gtag_id=gtag_id,
+            google_ads_id=google_ads_id,
+            google_ads_conversion_label=google_ads_conversion_label,
+            gtm_id=gtm_id,
+            meta_pixel_id=meta_pixel_id,
+            tiktok_pixel_id=tiktok_pixel_id,
             site_name_customized=bool(theme.get("name")),
             site_description_customized=bool(theme.get("description")),
         )
@@ -205,6 +217,12 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
             instagram_url=first_text(getattr(row, "instagram_url", ""), info.instagram_url),
             youtube_url=first_text(getattr(row, "youtube_url", ""), info.youtube_url),
             trailer_youtube_id=first_text(getattr(row, "trailer_youtube_id", ""), info.trailer_youtube_id),
+            gtag_id=info.gtag_id,
+            google_ads_id=info.google_ads_id,
+            google_ads_conversion_label=info.google_ads_conversion_label,
+            gtm_id=info.gtm_id,
+            meta_pixel_id=info.meta_pixel_id,
+            tiktok_pixel_id=info.tiktok_pixel_id,
             site_name_customized=bool(first_text(row.name, theme.get("name"))),
             site_description_customized=bool(first_text(row.description, theme.get("description"))),
         )

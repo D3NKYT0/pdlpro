@@ -43,7 +43,7 @@
       "comingSoon": { "title": "Coming Soon", "description": "Página de lançamento e controle de acesso" },
       "server": { "title": "Painel e servidor", "description": "Nome, rates, chronicle e SEO" },
       "secrets": { "title": "Segredos e rotação", "description": "Status, soft-rotate e reencrypt (somente superadmin)" },
-      "integrations": { "title": "Integrações", "description": "Pagamentos, Lineage, SMTP/VAPID, OAuth, Denkynho, S3/R2 e Sentry (somente superadmin)" },
+      "integrations": { "title": "Integrações", "description": "Pagamentos, Lineage, SMTP/VAPID, OAuth, Analytics, Denkynho, S3/R2 e Sentry (somente superadmin)" },
       "itemWatch": { "title": "Observar itens", "description": "Economia do servidor, favoritos, snapshots e comparação entre datas" },
       "customItems": { "title": "Itens customizados", "description": "Cadastrar nome, ID, imagem e metadados no catálogo único" },
       "services": { "title": "Serviços", "description": "Preços de nick, sexo, slots, destravamento e taverna" },
@@ -1038,13 +1038,14 @@
   "integrations": {
     "kicker": "Sistema",
     "title": "Integrações",
-    "description": "Pagamentos, Lineage, SMTP/push, OAuth/WebAuthn, Denkynho, S3/R2 e Sentry. Valores sensíveis ficam cifrados e aplicam sem reiniciar. Somente superadmin.",
+    "description": "Pagamentos, Lineage, SMTP/push, OAuth/WebAuthn, Analytics & Pixels, Denkynho, S3/R2 e Sentry. Valores sensíveis ficam cifrados e aplicam sem reiniciar. Somente superadmin.",
     "tabsLabel": "Seções de integração",
     "tabs": {
       "payments": "Pagamentos",
       "lineage": "Lineage / Game",
       "smtp": "SMTP / Push",
       "oauth": "OAuth / Auth",
+      "analytics": "Analytics & Pixels",
       "denkynho": "Denkynho",
       "storage": "S3 / R2",
       "observability": "Sentry"
@@ -1106,6 +1107,20 @@
       "webauthnTitle": "Passkeys / RP",
       "webauthnHint": "RP ID e origins do domínio HTTPS de produção.",
       "originsHint": "Separados por vírgula, ex.: https://seudominio.com"
+    },
+    "analytics": {
+      "gaEyebrow": "Google",
+      "gaTitle": "Google Analytics 4 (GA4)",
+      "gaHint": "ID de métrica do Google Analytics para rastreamento de acessos e navegação no site.",
+      "adsEyebrow": "Google Ads",
+      "adsTitle": "Conversões do Google Ads",
+      "adsHint": "ID de conversão (AW-XXXXXXXXX) e rótulo de conversão para rastrear compras e cadastros.",
+      "gtmEyebrow": "Tag Manager",
+      "gtmTitle": "Google Tag Manager (GTM)",
+      "gtmHint": "Contêiner GTM para gerenciar scripts e tags de terceiros pelo painel do Google.",
+      "pixelsEyebrow": "Redes Sociais",
+      "pixelsTitle": "Pixel da Meta & TikTok",
+      "pixelsHint": "IDs numéricos de pixel para rastreamento de campanhas de tráfego pago no Facebook, Instagram e TikTok."
     },
     "denkynho": {
       "eyebrow": "Assistente",
@@ -1218,7 +1233,13 @@
       "SENTRY_DSN": "Sentry DSN",
       "SENTRY_ENVIRONMENT": "Ambiente",
       "SENTRY_RELEASE": "Release",
-      "SENTRY_TRACES_SAMPLE_RATE": "Taxa de traces"
+      "SENTRY_TRACES_SAMPLE_RATE": "Taxa de traces",
+      "VITE_GTAG_ID": "Google Analytics 4 (ID de métrica)",
+      "VITE_GOOGLE_ADS_ID": "Google Ads ID (Conversão)",
+      "VITE_GOOGLE_ADS_CONVERSION_LABEL": "Google Ads Conversion Label",
+      "VITE_GTM_ID": "Google Tag Manager ID",
+      "VITE_META_PIXEL_ID": "Meta Pixel ID (Facebook / Instagram)",
+      "VITE_TIKTOK_PIXEL_ID": "TikTok Pixel ID"
     }
   },
   "comingSoonAdmin": {

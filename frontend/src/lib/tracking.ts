@@ -78,16 +78,54 @@ function injectScript(id: string, src: string): HTMLScriptElement | null {
 }
 
 /**
- * Inicializa os provedores de tráfego pago configurados no .env respeitando o LGPD/Consent.
+ * Permite reconfigurar o tracking dinamicamente com dados da API pública (ex: /public/server/info/).
+ */
+export function reconfigureTrackingFromApi(info?: {
+  gtag_id?: string
+  google_ads_id?: string
+  google_ads_conversion_label?: string
+  gtm_id?: string
+  meta_pixel_id?: string
+  tiktok_pixel_id?: string
+}): TrackingConfig | null {
+  if (!info) return activeConfig
+  const env: TrackingEnv = {
+    VITE_GTAG_ID: info.gtag_id || activeConfig?.gtagId || import.meta.env.VITE_GTAG_ID,
+    VITE_GOOGLE_ADS_ID: info.google_ads_id || activeConfig?.googleAdsId || import.meta.env.VITE_GOOGLE_ADS_ID,
+    VITE_GOOGLE_ADS_CONVERSION_LABEL:
+      info.google_ads_conversion_label ||
+      activeConfig?.googleAdsConversionLabel ||
+      import.meta.env.VITE_GOOGLE_ADS_CONVERSION_LABEL,
+    VITE_GTM_ID: info.gtm_id || activeConfig?.gtmId || import.meta.env.VITE_GTM_ID,
+    VITE_META_PIXEL_ID: info.meta_pixel_id || activeConfig?.metaPixelId || import.meta.env.VITE_META_PIXEL_ID,
+    VITE_TIKTOK_PIXEL_ID: info.tiktok_pixel_id || activeConfig?.tiktokPixelId || import.meta.env.VITE_TIKTOK_PIXEL_ID,
+  }
+  return initTracking(env)
+}
+
+/**
+ * Inicializa os provedores de tráfego pago configurados no .env ou via API respeitando o LGPD/Consent.
  */
 export function initTracking(env: TrackingEnv = import.meta.env): TrackingConfig {
-  if (initialized && activeConfig) return activeConfig
-
   const config = parseTrackingConfig(env)
+  if (initialized && activeConfig) {
+    const isSame =
+      activeConfig.gtagId === config.gtagId &&
+      activeConfig.googleAdsId === config.googleAdsId &&
+      activeConfig.googleAdsConversionLabel === config.googleAdsConversionLabel &&
+      activeConfig.gtmId === config.gtmId &&
+      activeConfig.metaPixelId === config.metaPixelId &&
+      activeConfig.tiktokPixelId === config.tiktokPixelId
+    if (isSame) return activeConfig
+  }
+
   activeConfig = config
 
   if (typeof window === 'undefined') return config
-  if (!isTrackingConfigured(config)) return config
+  if (!isTrackingConfigured(config)) {
+    initialized = true
+    return config
+  }
 
   const allowAnalytics = hasAnalyticsConsent()
   const allowMarketing = hasMarketingConsent()

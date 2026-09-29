@@ -53,6 +53,12 @@ export interface ApiServerInfo {
   instagram_url?: string
   youtube_url?: string
   trailer_youtube_id?: string
+  gtag_id?: string
+  google_ads_id?: string
+  google_ads_conversion_label?: string
+  gtm_id?: string
+  meta_pixel_id?: string
+  tiktok_pixel_id?: string
   site_name_customized?: boolean
   site_description_customized?: boolean
 }

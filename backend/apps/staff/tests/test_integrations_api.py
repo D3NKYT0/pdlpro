@@ -337,3 +337,33 @@ def test_lineage_gateway_reset_engine_disposes_pool():
     gateway.reset_engine()
     assert fake.disposed is True
     assert gateway._engine is None
+
+
+@pytest.mark.django_db
+def test_analytics_patch_and_probe(api, superuser, hosts, settings):
+    api.force_authenticate(superuser)
+    # 1. Patch analytics
+    response = api.patch(
+        reverse("staff-integrations-section", kwargs={"section": "analytics"}),
+        {
+            "VITE_GTAG_ID": "G-TEST12345",
+            "VITE_GTM_ID": "GTM-TEST99",
+            "VITE_META_PIXEL_ID": "123456789012345",
+        },
+        format="json",
+    )
+    assert response.status_code == 200, response.content
+    assert settings.VITE_GTAG_ID == "G-TEST12345"
+    assert settings.VITE_GTM_ID == "GTM-TEST99"
+    assert settings.VITE_META_PIXEL_ID == "123456789012345"
+
+    # 2. Test probe
+    test_res = api.post(
+        reverse("staff-integrations-test", kwargs={"section": "analytics"}),
+        {},
+        format="json",
+    )
+    assert test_res.status_code == 200
+    assert test_res.json()["ok"] is True
+    assert "3 ativo(s)" in test_res.json()["message"]
+

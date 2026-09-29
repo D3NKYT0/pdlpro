@@ -44,6 +44,12 @@ class ServerInfoSerializer(serializers.Serializer):
     instagram_url = serializers.CharField(allow_blank=True)
     youtube_url = serializers.CharField(allow_blank=True)
     trailer_youtube_id = serializers.CharField(allow_blank=True)
+    gtag_id = serializers.CharField(allow_blank=True, required=False, default="")
+    google_ads_id = serializers.CharField(allow_blank=True, required=False, default="")
+    google_ads_conversion_label = serializers.CharField(allow_blank=True, required=False, default="")
+    gtm_id = serializers.CharField(allow_blank=True, required=False, default="")
+    meta_pixel_id = serializers.CharField(allow_blank=True, required=False, default="")
+    tiktok_pixel_id = serializers.CharField(allow_blank=True, required=False, default="")
     site_name_customized = serializers.BooleanField()
     site_description_customized = serializers.BooleanField()
 

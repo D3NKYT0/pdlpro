@@ -159,6 +159,18 @@ const statusFixture = {
       { key: 'SENTRY_TRACES_SAMPLE_RATE', configured: true, fingerprint: '', value: 0, masked: '' },
     ],
   },
+  analytics: {
+    section: 'analytics',
+    updated_at: null,
+    fields: [
+      { key: 'VITE_GTAG_ID', configured: true, fingerprint: '', value: 'G-TEST123456', masked: '' },
+      { key: 'VITE_GOOGLE_ADS_ID', configured: false, fingerprint: '', value: '', masked: '' },
+      { key: 'VITE_GOOGLE_ADS_CONVERSION_LABEL', configured: false, fingerprint: '', value: '', masked: '' },
+      { key: 'VITE_GTM_ID', configured: false, fingerprint: '', value: '', masked: '' },
+      { key: 'VITE_META_PIXEL_ID', configured: false, fingerprint: '', value: '', masked: '' },
+      { key: 'VITE_TIKTOK_PIXEL_ID', configured: false, fingerprint: '', value: '', masked: '' },
+    ],
+  },
 }
 
 function renderPage(path = '/panel/admin/integrations') {
@@ -257,5 +269,17 @@ describe('AdminIntegrationsPage', () => {
     const smtpRealOption = await screen.findByRole('option', { name: /smtp real/i })
     await user.click(smtpRealOption)
     expect(screen.getByText(/smtp real/i)).toBeInTheDocument()
+  })
+
+  it('alterna para Analytics e exibe campos de GA4, Ads, GTM e Pixels', async () => {
+    const user = userEvent.setup()
+    renderPage()
+    await user.click(await screen.findByRole('tab', { name: /analytics/i }))
+    expect(await screen.findByRole('heading', { name: /google analytics 4/i })).toBeInTheDocument()
+    expect(screen.getByDisplayValue('G-TEST123456')).toBeInTheDocument()
+    expect(screen.getByLabelText(/google tag manager/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/meta pixel id/i)).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /testar/i }))
+    await waitFor(() => expect(staffApi.testIntegrationSection).toHaveBeenCalledWith('analytics'))
   })
 })

@@ -7,7 +7,8 @@ from django.core.exceptions import ImproperlyConfigured
 _CSP_SCRIPT_HOSTS = (
     "https://cdn.jsdelivr.net https://js.stripe.com https://sdk.mercadopago.com "
     "https://*.mlstatic.com https://http2.mlstatic.com "
-    "https://hcaptcha.com https://*.hcaptcha.com"
+    "https://hcaptcha.com https://*.hcaptcha.com "
+    "https://www.googletagmanager.com https://connect.facebook.net https://analytics.tiktok.com"
 )
 _CSP_STYLE = (
     "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net "

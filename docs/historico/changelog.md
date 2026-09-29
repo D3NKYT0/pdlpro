@@ -12,9 +12,13 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- **Configurador de Analytics & Pixels nas Integrações Administrativas**: nova aba "Analytics & Pixels" em `/panel/admin/integrations` permitindo que superadministradores configurem e validem Google Analytics 4 (`VITE_GTAG_ID`), Google Ads (`VITE_GOOGLE_ADS_ID`, `VITE_GOOGLE_ADS_CONVERSION_LABEL`), Google Tag Manager (`VITE_GTM_ID`), Meta Pixel (`VITE_META_PIXEL_ID`) e TikTok Pixel (`VITE_TIKTOK_PIXEL_ID`), com teste e salvamento a quente sem reiniciar containers.
+- **Injeção dinâmica de rastreamento no frontend**: sincronização automática dos IDs de tráfego pago a partir de `/api/v1/public/server/info/`, permitindo que tags configuradas no `.env` ou no painel administrativo passem a carregar imediatamente na SPA sem necessidade de rebuild do bundle em produção.
 - **Tutorial de backup no Google Drive**: passo a passo do login pelo `rclone authorize`, agendamento, conferência do pacote, renovação do acesso e problemas comuns (`redirect_uri_mismatch`, `Waiting for code...`, lixeira do Drive), incluído também no ZIP da release.
 
 ### Alterado
+
+- **Content-Security-Policy (CSP) para ferramentas de tráfego pago**: inclusão de `https://www.googletagmanager.com`, `https://connect.facebook.net` e `https://analytics.tiktok.com` na diretiva `script-src` tanto no Nginx quanto nos headers do Django.
 
 ### Corrigido
 

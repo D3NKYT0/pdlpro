@@ -124,3 +124,23 @@ def test_public_server_info_falls_back_to_env_seo(settings):
     assert response.data["seo_description"] == "Env desc"
     assert response.data["discord_url"] == "https://discord.gg/env"
     assert response.data["site_name_customized"] is False
+
+
+@pytest.mark.django_db
+def test_public_server_info_exposes_tracking_fields(settings):
+    settings.VITE_GTAG_ID = "G-12345678"
+    settings.VITE_GOOGLE_ADS_ID = "AW-998877"
+    settings.VITE_GOOGLE_ADS_CONVERSION_LABEL = "label123"
+    settings.VITE_GTM_ID = "GTM-ABCDEF"
+    settings.VITE_META_PIXEL_ID = "1122334455"
+    settings.VITE_TIKTOK_PIXEL_ID = "C112233"
+
+    response = APIClient().get("/api/v1/public/server/info/")
+    assert response.status_code == 200
+    assert response.data["gtag_id"] == "G-12345678"
+    assert response.data["google_ads_id"] == "AW-998877"
+    assert response.data["google_ads_conversion_label"] == "label123"
+    assert response.data["gtm_id"] == "GTM-ABCDEF"
+    assert response.data["meta_pixel_id"] == "1122334455"
+    assert response.data["tiktok_pixel_id"] == "C112233"
+

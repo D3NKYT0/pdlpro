@@ -300,6 +300,7 @@ export interface ApiIntegrationsStatus {
   denkynho: ApiIntegrationSection
   storage: ApiIntegrationSection
   observability: ApiIntegrationSection
+  analytics: ApiIntegrationSection
 }
 
 export interface ApiIntegrationProbeResult {
@@ -313,6 +314,7 @@ export type IntegrationSectionId =
   | 'lineage'
   | 'smtp'
   | 'oauth'
+  | 'analytics'
   | 'denkynho'
   | 'storage'
   | 'observability'

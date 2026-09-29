@@ -5,6 +5,7 @@ import { Select } from '../../components/ui/Select'
 import { Tabs } from '../../components/ui/Tabs'
 import { Toggle } from '../../components/ui/Toggle'
 import {
+  BannerFlagIcon,
   BrainOrbIcon,
   CloudBucketIcon,
   ExchangeIcon,
@@ -111,6 +112,7 @@ type IntegrationTone =
   | 'discord'
   | 'hcaptcha'
   | 'webauthn'
+  | 'analytics'
   | 'denkynho'
   | 'storage'
   | 'observability'
@@ -205,6 +207,7 @@ const INTEGRATION_TABS: readonly IntegrationSectionId[] = [
   'lineage',
   'smtp',
   'oauth',
+  'analytics',
   'denkynho',
   'storage',
   'observability',
@@ -215,6 +218,7 @@ const EMPTY_DRAFTS: Record<IntegrationSectionId, Draft> = {
   lineage: {},
   smtp: {},
   oauth: {},
+  analytics: {},
   denkynho: {},
   storage: {},
   observability: {},
@@ -239,6 +243,7 @@ export function AdminIntegrationsPage() {
       lineage: draftFromStatus(status.data, 'lineage'),
       smtp: draftFromStatus(status.data, 'smtp'),
       oauth: draftFromStatus(status.data, 'oauth'),
+      analytics: draftFromStatus(status.data, 'analytics'),
       denkynho: draftFromStatus(status.data, 'denkynho'),
       storage: draftFromStatus(status.data, 'storage'),
       observability: draftFromStatus(status.data, 'observability'),
@@ -272,6 +277,7 @@ export function AdminIntegrationsPage() {
         { id: 'lineage' as const, label: t('integrations.tabs.lineage'), icon: <ServerTowerIcon width={28} height={28} /> },
         { id: 'smtp' as const, label: t('integrations.tabs.smtp'), icon: <MailSealIcon width={28} height={28} /> },
         { id: 'oauth' as const, label: t('integrations.tabs.oauth'), icon: <KeyRingIcon width={28} height={28} /> },
+        { id: 'analytics' as const, label: t('integrations.tabs.analytics'), icon: <BannerFlagIcon width={28} height={28} /> },
         { id: 'denkynho' as const, label: t('integrations.tabs.denkynho'), icon: <BrainOrbIcon width={28} height={28} /> },
         { id: 'storage' as const, label: t('integrations.tabs.storage'), icon: <CloudBucketIcon width={28} height={28} /> },
         {
@@ -619,6 +625,61 @@ export function AdminIntegrationsPage() {
                   {renderText('WEBAUTHN_RP_ID')}
                   {renderText('WEBAUTHN_RP_NAME')}
                   {renderText('WEBAUTHN_ORIGINS', 'text', t('integrations.oauth.originsHint'))}
+                </div>
+              </SectionCard>
+            </>
+          ) : null}
+
+          {tab === 'analytics' ? (
+            <>
+              <SectionCard
+                icon={<BannerFlagIcon />}
+                tone="analytics"
+                eyebrow={t('integrations.analytics.gaEyebrow')}
+                title={t('integrations.analytics.gaTitle')}
+                description={t('integrations.analytics.gaHint')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderText('VITE_GTAG_ID', 'text', 'G-XXXXXXXXXX ou GT-XXXXXXXXXX')}
+                </div>
+              </SectionCard>
+              <SectionCard
+                icon={<BannerFlagIcon />}
+                tone="analytics"
+                eyebrow={t('integrations.analytics.adsEyebrow')}
+                title={t('integrations.analytics.adsTitle')}
+                description={t('integrations.analytics.adsHint')}
+              >
+                <div className="admin-integrations-stack">
+                  <div className="account-form-fields">
+                    {renderText('VITE_GOOGLE_ADS_ID', 'text', 'AW-XXXXXXXXX')}
+                    {renderText('VITE_GOOGLE_ADS_CONVERSION_LABEL', 'text', 'Ex: abCdEFgh123')}
+                  </div>
+                </div>
+              </SectionCard>
+              <SectionCard
+                icon={<RadarPulseIcon />}
+                tone="analytics"
+                eyebrow={t('integrations.analytics.gtmEyebrow')}
+                title={t('integrations.analytics.gtmTitle')}
+                description={t('integrations.analytics.gtmHint')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderText('VITE_GTM_ID', 'text', 'GTM-XXXXXXX')}
+                </div>
+              </SectionCard>
+              <SectionCard
+                icon={<RadarPulseIcon />}
+                tone="analytics"
+                eyebrow={t('integrations.analytics.pixelsEyebrow')}
+                title={t('integrations.analytics.pixelsTitle')}
+                description={t('integrations.analytics.pixelsHint')}
+              >
+                <div className="admin-integrations-stack">
+                  <div className="account-form-fields">
+                    {renderText('VITE_META_PIXEL_ID', 'text', 'Ex: 123456789012345')}
+                    {renderText('VITE_TIKTOK_PIXEL_ID', 'text', 'Ex: CXXXXXXXXXXXXXXX')}
+                  </div>
                 </div>
               </SectionCard>
             </>

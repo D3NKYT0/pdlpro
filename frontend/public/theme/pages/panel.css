@@ -19831,6 +19831,14 @@ html.pdl-panel .admin-integrations-tabs[data-tone='observability'] {
   --admin-tone-border: rgba(251, 113, 133, 0.3);
 }
 
+html.pdl-panel .admin-integrations-section[data-tone='analytics'],
+html.pdl-panel .admin-integrations-tabs[data-tone='analytics'] {
+  --admin-tone: #f59e0b;
+  --admin-tone-soft: rgba(245, 158, 11, 0.15);
+  --admin-tone-mid: rgba(245, 158, 11, 0.09);
+  --admin-tone-border: rgba(245, 158, 11, 0.3);
+}
+
 html.pdl-panel .admin-integrations-section > header {
   border-bottom-color: color-mix(in srgb, var(--admin-tone) 28%, transparent);
 }

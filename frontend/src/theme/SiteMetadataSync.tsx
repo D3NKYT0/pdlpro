@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { serverApi } from '../services/api'
 import { applyDocumentMetadata, resolveSiteMetadata } from '../lib/site-metadata'
+import { reconfigureTrackingFromApi } from '../lib/tracking'
 import { useTheme } from './ThemeProvider'
 
 export function SiteMetadataSync() {
@@ -15,6 +16,9 @@ export function SiteMetadataSync() {
         trailerYoutubeId: import.meta.env.VITE_TRAILER_YOUTUBE_ID,
       }),
     )
+    if (info.data) {
+      reconfigureTrackingFromApi(info.data)
+    }
   }, [info.data, theme])
 
   return null

@@ -259,6 +259,14 @@ PROJECT_URL = env("PROJECT_URL", default="http://localhost")
 FRONTEND_URL = env("FRONTEND_URL", default="http://localhost:3000")
 # Exposed to Jazzmin chrome (admin header → Painel), matching OpenAPI docs topbar.
 JAZZMIN_SETTINGS["frontend_url"] = FRONTEND_URL
+VITE_GTAG_ID = env("VITE_GTAG_ID", default=env("GTAG_ID", default=""))
+VITE_GOOGLE_ADS_ID = env("VITE_GOOGLE_ADS_ID", default=env("GOOGLE_ADS_ID", default=""))
+VITE_GOOGLE_ADS_CONVERSION_LABEL = env(
+    "VITE_GOOGLE_ADS_CONVERSION_LABEL", default=env("GOOGLE_ADS_CONVERSION_LABEL", default="")
+)
+VITE_GTM_ID = env("VITE_GTM_ID", default=env("GTM_ID", default=""))
+VITE_META_PIXEL_ID = env("VITE_META_PIXEL_ID", default=env("META_PIXEL_ID", default=""))
+VITE_TIKTOK_PIXEL_ID = env("VITE_TIKTOK_PIXEL_ID", default=env("TIKTOK_PIXEL_ID", default=""))
 WEBAUTHN_RP_ID = env("WEBAUTHN_RP_ID", default="")
 WEBAUTHN_RP_NAME = env("WEBAUTHN_RP_NAME", default="PDL PRO")
 WEBAUTHN_ORIGINS = env.list("WEBAUTHN_ORIGINS", default=[])
