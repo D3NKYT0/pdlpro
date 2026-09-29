@@ -2,13 +2,15 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 28 de setembro de 2026
+> **Atualizado:** 29 de setembro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
-## [Não publicado]
+## [2.6.5] - 2026-09-29
+
+Lançamento da versão 2.6.5 do PDL PRO com o configurador de Analytics & Pixels nas integrações administrativas, injeção dinâmica de rastreamento no frontend sem necessidade de rebuild e liberação de CSP para ferramentas de tráfego pago.
 
 ### Adicionado
 
