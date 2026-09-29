@@ -12,9 +12,13 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- **Tutorial de backup no Google Drive**: passo a passo do login pelo `rclone authorize`, agendamento, conferência do pacote, renovação do acesso e problemas comuns (`redirect_uri_mismatch`, `Waiting for code...`, lixeira do Drive), incluído também no ZIP da release.
+
 ### Alterado
 
 ### Corrigido
+
+- **Barra de progresso do backup no terminal**: o envio e o download mostravam a linha de estatística do agendamento mesmo no terminal, porque o modo era decidido dentro de uma substituição de processo. Agora a barra do rclone aparece no terminal, e o timer/cron continua com uma linha por minuto.
 
 ## [2.6.4] - 2026-09-28
 

@@ -191,6 +191,33 @@ def _run_lib(function_call: str, stdin: str) -> subprocess.CompletedProcess[str]
     )
 
 
+@pytest.mark.skipif(sys.platform == "win32", reason="pseudo-terminal (pty) só existe em POSIX")
+def test_transfer_shows_the_progress_bar_when_run_from_a_terminal():
+    import pty
+
+    primary, secondary = pty.openpty()
+    try:
+        script = (
+            f'source "{bash_path(SCRIPTS / "lib" / "common.sh")}"\n'
+            f'source "{bash_path(SCRIPTS / "lib" / "backup.sh")}"\n'
+            'mapfile -t flags < <(rclone_transfer_flags)\nprintf "%s\\n" "${flags[@]}"\n'
+        )
+        result = subprocess.run(
+            [_bash(), "-c", script],
+            stdout=subprocess.PIPE,
+            stderr=secondary,
+            encoding="utf-8",
+            check=False,
+            env={**os.environ, "PDL_ENV_FILE": "/dev/null"},
+        )
+    finally:
+        os.close(secondary)
+        os.close(primary)
+
+    assert result.returncode == 0
+    assert result.stdout.split() == ["--progress"]
+
+
 @pytest.mark.parametrize(
     ("remotes", "expected"),
     [

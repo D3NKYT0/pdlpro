@@ -78,8 +78,9 @@ rclone_run() {
 }
 
 # Barra de progresso no terminal; sem terminal (timer/cron), uma linha por minuto no log.
+# Testa o stderr: quem chama usa `< <(rclone_transfer_flags)`, onde o stdout é um pipe.
 rclone_transfer_flags() {
-  if [[ -t 1 ]]; then
+  if [[ -t 2 ]]; then
     printf '%s\n' --progress
   else
     printf '%s\n' --stats=1m --stats-one-line --stats-log-level=NOTICE
