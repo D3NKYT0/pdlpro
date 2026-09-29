@@ -173,15 +173,20 @@ const statusFixture = {
   },
 }
 
-function renderPage(path = '/panel/admin/integrations') {
-  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
-  return render(
-    createElement(
-      QueryClientProvider,
-      { client },
-      createElement(MemoryRouter, { initialEntries: [path] }, createElement(AdminIntegrationsPage)),
+function renderPage(
+  path = '/panel/admin/integrations',
+  client = new QueryClient({ defaultOptions: { queries: { retry: false } } }),
+) {
+  return {
+    ...render(
+      createElement(
+        QueryClientProvider,
+        { client },
+        createElement(MemoryRouter, { initialEntries: [path] }, createElement(AdminIntegrationsPage)),
+      ),
     ),
-  )
+    client,
+  }
 }
 
 describe('AdminIntegrationsPage', () => {
@@ -281,5 +286,21 @@ describe('AdminIntegrationsPage', () => {
     expect(screen.getByLabelText(/meta pixel id/i)).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /testar/i }))
     await waitFor(() => expect(staffApi.testIntegrationSection).toHaveBeenCalledWith('analytics'))
+  })
+
+  it('invalida staff-integrations e server-info após salvar com sucesso', async () => {
+    const user = userEvent.setup()
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    const invalidateSpy = vi.spyOn(client, 'invalidateQueries')
+
+    renderPage('/panel/admin/integrations', client)
+    const saveButton = await screen.findByRole('button', { name: /salvar/i })
+    await user.click(saveButton)
+
+    await waitFor(() => expect(staffApi.saveIntegrationSection).toHaveBeenCalledTimes(1))
+    await waitFor(() => {
+      expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ['staff-integrations'] })
+      expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ['server-info'] })
+    })
   })
 })

@@ -145,6 +145,35 @@ describe('Paid Traffic & Analytics tracking', () => {
       expect(fbqSpy).toHaveBeenCalledWith('consent', 'grant')
     })
 
+    it('retroactively dispatches PageView to Meta and TikTok when marketing consent is granted without duplicating', () => {
+      vi.spyOn(cookieConsent, 'hasMarketingConsent').mockReturnValue(false)
+
+      initTracking({
+        VITE_META_PIXEL_ID: 'META-12345',
+        VITE_TIKTOK_PIXEL_ID: 'TT-12345',
+      })
+
+      const fbqSpy = vi.fn()
+      window.fbq = fbqSpy
+      const ttqPageSpy = vi.fn()
+      window.ttq = { page: ttqPageSpy, track: vi.fn(), grantConsent: vi.fn(), revokeConsent: vi.fn() }
+
+      updateTrackingConsent({ analytics: true, marketing: true })
+
+      expect(fbqSpy).toHaveBeenCalledWith('track', 'PageView')
+      expect(ttqPageSpy).toHaveBeenCalled()
+
+      // Segunda chamada com o mesmo consentimento não deve reenviar PageView duplicado
+      fbqSpy.mockClear()
+      ttqPageSpy.mockClear()
+      updateTrackingConsent({ analytics: true, marketing: true })
+
+      expect(fbqSpy).not.toHaveBeenCalledWith('track', 'PageView')
+      expect(ttqPageSpy).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('reconfigureTrackingFromApi', () => {
     it('dynamically reconfigures tracking when IDs arrive via reconfigureTrackingFromApi', () => {
       initTracking({})
       expect(document.getElementById('pdl-gtag-script')).toBeNull()
@@ -159,12 +188,30 @@ describe('Paid Traffic & Analytics tracking', () => {
       expect(script.src).toContain('googletagmanager.com/gtag/js?id=G-DYNAMIC999')
       expect(typeof window.fbq).toBe('function')
     })
+
+    it('dispatches pageview for the active page when tracking is dynamically reconfigured', () => {
+      initTracking({})
+      const calls = (window.dataLayer as any[]) || []
+      expect(calls.some((item) => item[0] === 'event' && item[1] === 'page_view')).toBe(false)
+
+      reconfigureTrackingFromApi({
+        gtag_id: 'G-DYNAMIC-PAGEVIEW',
+      })
+
+      const updatedCalls = (window.dataLayer as any[]) || []
+      expect(
+        updatedCalls.some(
+          (item) => item[0] === 'event' && item[1] === 'page_view' && item[2]?.page_path === window.location.pathname,
+        ),
+      ).toBe(true)
+    })
   })
 
   describe('event dispatchers', () => {
     beforeEach(() => {
       initTracking({
         VITE_GTAG_ID: 'G-TEST',
+        VITE_GTM_ID: 'GTM-TEST',
         VITE_GOOGLE_ADS_ID: 'AW-ADS',
         VITE_GOOGLE_ADS_CONVERSION_LABEL: 'conv_label_123',
         VITE_META_PIXEL_ID: 'META-123',
@@ -186,6 +233,11 @@ describe('Paid Traffic & Analytics tracking', () => {
         page_path: '/panel/wallet',
         page_title: 'Minha Carteira',
       })
+      expect(
+        (window.dataLayer as any[])?.some(
+          (item) => item.event === 'page_view' && item.page_path === '/panel/wallet',
+        ),
+      ).toBe(true)
       expect(window.fbq).toHaveBeenCalledWith('track', 'PageView')
       expect(window.ttq?.page).toHaveBeenCalled()
     })
@@ -264,6 +316,17 @@ describe('Paid Traffic & Analytics tracking', () => {
       expect(window.gtag).toHaveBeenCalled()
       expect(window.fbq).not.toHaveBeenCalled()
       expect(window.ttq?.page).not.toHaveBeenCalled()
+    })
+
+    it('dispatches pageview to Google Tag in Consent Mode v2 even before analytics consent is granted', () => {
+      vi.spyOn(cookieConsent, 'hasAnalyticsConsent').mockReturnValue(false)
+
+      trackPageView('/home')
+
+      expect(window.gtag).toHaveBeenCalledWith('event', 'page_view', {
+        page_path: '/home',
+        page_title: '',
+      })
     })
   })
 })

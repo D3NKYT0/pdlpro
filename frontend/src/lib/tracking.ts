@@ -32,8 +32,27 @@ export interface PurchaseTrackingPayload {
   items?: PurchaseItem[]
 }
 
+declare global {
+  interface Window {
+    dataLayer?: unknown[]
+    gtag?: (...args: unknown[]) => void
+    fbq?: (...args: unknown[]) => void
+    _fbq?: unknown
+    ttq?: {
+      page: () => void
+      track: (event: string, params?: Record<string, unknown>) => void
+      grantConsent?: () => void
+      revokeConsent?: () => void
+      [key: string]: unknown
+    }
+  }
+}
+
 let initialized = false
 let activeConfig: TrackingConfig | null = null
+let lastDispatchedPath: string | null = null
+let lastMetaDispatchedPath: string | null = null
+let lastTiktokDispatchedPath: string | null = null
 
 /**
  * Normaliza e higieniza variáveis de ambiente de tráfego pago e métricas.
@@ -242,6 +261,15 @@ export function initTracking(env: TrackingEnv = import.meta.env): TrackingConfig
   }
 
   initialized = true
+
+  // Se o tracking foi configurado e a rota inicial ainda não teve page_view disparado, dispara agora
+  if (typeof window !== 'undefined' && isTrackingConfigured(config)) {
+    const currentPath = (window.location.pathname || '/') + (window.location.search || '')
+    if (lastDispatchedPath !== currentPath) {
+      trackPageView(currentPath, typeof document !== 'undefined' ? document.title : undefined)
+    }
+  }
+
   return config
 }
 
@@ -250,6 +278,9 @@ export function initTracking(env: TrackingEnv = import.meta.env): TrackingConfig
  */
 export function updateTrackingConsent(consent: { analytics: boolean; marketing: boolean }) {
   if (typeof window === 'undefined') return
+
+  const currentPath =
+    lastDispatchedPath || (typeof window !== 'undefined' ? (window.location.pathname || '/') + (window.location.search || '') : null)
 
   // Google Consent Mode v2
   if (typeof window.gtag === 'function') {
@@ -264,12 +295,32 @@ export function updateTrackingConsent(consent: { analytics: boolean; marketing: 
   // Meta Pixel
   if (typeof window.fbq === 'function') {
     window.fbq('consent', consent.marketing ? 'grant' : 'revoke')
+    if (
+      consent.marketing &&
+      activeConfig?.metaPixelId &&
+      currentPath &&
+      lastMetaDispatchedPath !== currentPath
+    ) {
+      window.fbq('track', 'PageView')
+      lastMetaDispatchedPath = currentPath
+      lastDispatchedPath = currentPath
+    }
   }
 
   // TikTok Pixel
   if (typeof window.ttq === 'object' && window.ttq) {
     if (consent.marketing && typeof window.ttq.grantConsent === 'function') {
       window.ttq.grantConsent()
+      if (
+        typeof window.ttq.page === 'function' &&
+        activeConfig?.tiktokPixelId &&
+        currentPath &&
+        lastTiktokDispatchedPath !== currentPath
+      ) {
+        window.ttq.page()
+        lastTiktokDispatchedPath = currentPath
+        lastDispatchedPath = currentPath
+      }
     } else if (!consent.marketing && typeof window.ttq.revokeConsent === 'function') {
       window.ttq.revokeConsent()
     }
@@ -282,11 +333,11 @@ export function updateTrackingConsent(consent: { analytics: boolean; marketing: 
 export function trackPageView(path: string, title?: string) {
   if (typeof window === 'undefined') return
 
-  const allowAnalytics = hasAnalyticsConsent()
+  lastDispatchedPath = path
   const allowMarketing = hasMarketingConsent()
 
-  // Google Analytics (Gtag)
-  if (allowAnalytics && typeof window.gtag === 'function' && activeConfig?.gtagId) {
+  // Google Analytics (Gtag) - opera com Google Consent Mode v2 (armazenamento gerenciado pela tag)
+  if (typeof window.gtag === 'function' && activeConfig?.gtagId) {
     window.gtag('event', 'page_view', {
       page_path: path,
       page_title: title || (typeof document !== 'undefined' ? document.title : ''),
@@ -305,11 +356,13 @@ export function trackPageView(path: string, title?: string) {
   // Meta Pixel
   if (allowMarketing && typeof window.fbq === 'function' && activeConfig?.metaPixelId) {
     window.fbq('track', 'PageView')
+    lastMetaDispatchedPath = path
   }
 
   // TikTok Pixel
   if (allowMarketing && window.ttq && typeof window.ttq.page === 'function' && activeConfig?.tiktokPixelId) {
     window.ttq.page()
+    lastTiktokDispatchedPath = path
   }
 }
 
@@ -319,7 +372,7 @@ export function trackPageView(path: string, title?: string) {
 export function trackEvent(name: string, params?: Record<string, unknown>) {
   if (typeof window === 'undefined') return
 
-  if (hasAnalyticsConsent() && typeof window.gtag === 'function') {
+  if (typeof window.gtag === 'function') {
     window.gtag('event', name, params)
   }
 
@@ -342,7 +395,7 @@ export function trackEvent(name: string, params?: Record<string, unknown>) {
 export function trackRegistration(method = 'email') {
   if (typeof window === 'undefined') return
 
-  if (hasAnalyticsConsent() && typeof window.gtag === 'function') {
+  if (typeof window.gtag === 'function') {
     window.gtag('event', 'sign_up', { method })
   }
 
@@ -365,7 +418,7 @@ export function trackRegistration(method = 'email') {
 export function trackLogin(method = 'password') {
   if (typeof window === 'undefined') return
 
-  if (hasAnalyticsConsent() && typeof window.gtag === 'function') {
+  if (typeof window.gtag === 'function') {
     window.gtag('event', 'login', { method })
   }
 
@@ -380,7 +433,7 @@ export function trackLogin(method = 'password') {
 export function trackInitiateCheckout(amount: number, currency = 'BRL') {
   if (typeof window === 'undefined') return
 
-  if (hasAnalyticsConsent() && typeof window.gtag === 'function') {
+  if (typeof window.gtag === 'function') {
     window.gtag('event', 'begin_checkout', { value: amount, currency })
   }
 
@@ -404,8 +457,8 @@ export function trackPurchase(payload: PurchaseTrackingPayload) {
   if (typeof window === 'undefined') return
   const currency = payload.currency || 'BRL'
 
-  // Google Analytics 4 (Purchase)
-  if (hasAnalyticsConsent() && typeof window.gtag === 'function') {
+  // Google Analytics 4 (Purchase) & Google Ads
+  if (typeof window.gtag === 'function') {
     window.gtag('event', 'purchase', {
       transaction_id: payload.transactionId,
       value: payload.amount,
@@ -463,4 +516,7 @@ export function trackPurchase(payload: PurchaseTrackingPayload) {
 export function resetTrackingForTesting() {
   initialized = false
   activeConfig = null
+  lastDispatchedPath = null
+  lastMetaDispatchedPath = null
+  lastTiktokDispatchedPath = null
 }

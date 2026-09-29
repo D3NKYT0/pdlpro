@@ -256,7 +256,10 @@ export function AdminIntegrationsPage() {
       staffApi.saveIntegrationSection(section, payload),
     onSuccess: async () => {
       toast.success(t('integrations.toastSaved'))
-      await queryClient.invalidateQueries({ queryKey: ['staff-integrations'] })
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['staff-integrations'] }),
+        queryClient.invalidateQueries({ queryKey: ['server-info'] }),
+      ])
     },
     onError: (error) => toast.error(apiErrorMessage(error, t('integrations.toastSaveFail'))),
   })
