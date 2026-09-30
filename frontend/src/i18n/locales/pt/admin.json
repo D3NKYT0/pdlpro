@@ -48,7 +48,9 @@
       "customItems": { "title": "Itens customizados", "description": "Cadastrar nome, ID, imagem e metadados no catálogo único" },
       "services": { "title": "Serviços", "description": "Preços de nick, sexo, slots, destravamento e taverna" },
       "lineageAccounts": { "title": "Contas Lineage", "description": "Consultar login e remover o vínculo com o painel" },
-      "moderation": { "title": "Moderação", "description": "Kick, prisão, banimento e teleporte de personagens" }
+      "moderation": { "title": "Moderação", "description": "Kick, prisão, banimento e teleporte de personagens" },
+      "metrics": { "title": "Métricas", "description": "Dashboard de KPIs, registros, logins, receita e auditoria" },
+      "auditLog": { "title": "Auditoria", "description": "Trail de operações staff com filtros e paginação" }
     }
   },
   "chrome": {
@@ -2133,6 +2135,56 @@
       "deleted": "Banner excluído com sucesso",
       "error": "Não foi possível salvar o banner"
     }
+  },
+  "auditLog": {
+    "kicker": "Observabilidade",
+    "title": "Log de Auditoria",
+    "description": "Trail completo das operações staff com filtros, busca e paginação.",
+    "badge": "Auditoria",
+    "searchPlaceholder": "Buscar por ação, path, IP ou request ID…",
+    "filters": "Filtros",
+    "filterActor": "Ator",
+    "filterAction": "Ação",
+    "filterMethod": "Método",
+    "filterDateFrom": "Data início",
+    "filterDateTo": "Data fim",
+    "allMethods": "Todos",
+    "colDate": "Data",
+    "colActor": "Ator",
+    "colMethod": "Método",
+    "colAction": "Ação",
+    "colStatus": "Status",
+    "colIp": "IP",
+    "colPath": "Path",
+    "showing": "{{from}}–{{to}} de {{total}}",
+    "empty": "Nenhum registro de auditoria encontrado.",
+    "error": "Não foi possível carregar os logs de auditoria."
+  },
+  "metrics": {
+    "kicker": "Observabilidade",
+    "title": "Dashboard de Métricas",
+    "description": "KPIs do sistema em tempo real, séries diárias e atividade recente.",
+    "badge": "Ao vivo",
+    "error": "Não foi possível carregar as métricas.",
+    "registrationsToday": "Registros hoje",
+    "loginsToday": "Logins hoje",
+    "revenueToday": "Receita hoje",
+    "activeUsers24h": "Ativos (24h)",
+    "totalUsers": "Total de usuários",
+    "totalOrders": "Total de pedidos",
+    "pendingOrders": "Pedidos pendentes",
+    "failedWebhooks": "Webhooks falhos (24h)",
+    "auditEvents24h": "Eventos audit (24h)",
+    "registrationsSeries": "Registros (7 dias)",
+    "revenueSeries": "Receita (7 dias)",
+    "topActions": "Ações mais frequentes (24h)",
+    "recentAudit": "Auditoria recente",
+    "noRecentAudit": "Nenhuma atividade recente.",
+    "noActions": "Nenhuma ação registrada.",
+    "colDate": "Data",
+    "colActor": "Ator",
+    "colAction": "Ação",
+    "colStatus": "Status"
   }
 }
 

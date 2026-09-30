@@ -168,6 +168,8 @@ class ObservabilityMiddleware:
                 "user_id": self._user_id(request),
             },
         )
+        if status_code == 429:
+            self._log_throttle(request, duration_ms)
         self._audit_staff_write(request, response)
         return response
 
@@ -181,6 +183,24 @@ class ObservabilityMiddleware:
         match = getattr(request, "resolver_match", None)
         route = getattr(match, "route", "")
         return f"/{route}" if route else request.path_info
+
+    def _log_throttle(self, request, duration_ms) -> None:
+        """Emit a structured event when a request is rate-limited (429)."""
+
+        from common.client_ip import extract_client_ip
+
+        logger.warning(
+            "Rate limited request",
+            extra={
+                "event": "http.throttle",
+                "http_method": request.method,
+                "http_path": self._route(request),
+                "http_status": 429,
+                "duration_ms": duration_ms,
+                "user_id": self._user_id(request),
+                "ip_address": extract_client_ip(request),
+            },
+        )
 
     def _audit_staff_write(self, request, response) -> None:
         if (

@@ -192,7 +192,7 @@ _BOOT_MEDIA_URL = MEDIA_URL
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-REST_FRAMEWORK = get_rest_framework_settings(TRUSTED_PROXY_COUNT)
+REST_FRAMEWORK = get_rest_framework_settings(TRUSTED_PROXY_COUNT, env=env)
 SPECTACULAR_SETTINGS = get_spectacular_settings(API_VERSION)
 LOGGING = get_logging_config(env)
 globals().update(get_celery_settings(env))

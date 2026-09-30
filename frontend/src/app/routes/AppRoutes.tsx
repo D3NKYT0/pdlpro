@@ -80,6 +80,8 @@ import { AdminCommercePage } from '../../pages/admin/AdminCommercePage'
 import { AdminGameContentPage } from '../../pages/admin/AdminGameContentPage'
 import { AdminThemesPage } from '../../pages/admin/AdminThemesPage'
 import { AdminWalletPage } from '../../pages/admin/AdminWalletPage'
+import { AdminAuditLogPage } from '../../pages/admin/AdminAuditLogPage'
+import { AdminMetricsPage } from '../../pages/admin/AdminMetricsPage'
 import { extensionRouteElements } from '../../extensions'
 import { TrackingRouteListener } from '../../components/analytics/TrackingRouteListener'
 
@@ -178,6 +180,8 @@ export function AppRoutes() {
               <Route path="/panel/admin/games" element={<AdminGamesPage />} />
               <Route path="/panel/admin/support" element={<AdminSupportPage />} />
               <Route path="/panel/admin/themes" element={<AdminThemesPage />} />
+              <Route path="/panel/admin/audit" element={<AdminAuditLogPage />} />
+              <Route path="/panel/admin/metrics" element={<AdminMetricsPage />} />
             </Route>
           </Route>
         </Route>

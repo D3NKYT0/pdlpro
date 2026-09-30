@@ -98,6 +98,12 @@ export type {
   ApiStaffWalletPromo,
   ApiStaffBonusTier,
   ApiBonusSimulationResult,
+  ApiAuditLogEntry,
+  ApiAuditLogPage,
+  ApiAuditLogFilters,
+  ApiMetricsDashboard,
+  ApiMetricSeries,
+  ApiRecentAuditEntry,
 } from './domain/staff.service'
 export { programsApi } from './domain/programs.service'
 export type {

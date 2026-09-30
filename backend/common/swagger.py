@@ -252,6 +252,19 @@ pdl_swagger_tags: list[dict[str, Any]] = [
         ),
     },
     {
+        "name": "Staff - Auditoria",
+        "description": _(
+            "Consulta paginada e filtrada do trail de auditoria das operações staff."
+        ),
+    },
+    {
+        "name": "Staff - Métricas",
+        "description": _(
+            "Dashboard de métricas em tempo real: registros, logins, receita, "
+            "audit recente e séries diárias."
+        ),
+    },
+    {
         "name": "docs",
         "description": _("Interfaces Swagger UI e ReDoc desta documentação OpenAPI."),
     },

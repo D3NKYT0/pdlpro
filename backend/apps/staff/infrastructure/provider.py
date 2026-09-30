@@ -1,3 +1,4 @@
+from apps.staff.application.audit import ListAuditLogsUseCase
 from apps.staff.application.cms import (
     DeleteStaffBannerUseCase,
     DeleteStaffCalendarUseCase,
@@ -21,6 +22,7 @@ from apps.staff.application.integrations import (
     PatchIntegrationSectionUseCase,
     TestIntegrationSectionUseCase,
 )
+from apps.staff.application.metrics import GetMetricsDashboardUseCase
 from apps.staff.application.notifications import (
     DeleteStaffNotificationUseCase,
     ListStaffNotificationsUseCase,
@@ -57,12 +59,14 @@ from apps.staff.application.use_cases import (
     UpsertStaffServicePricesUseCase,
     UpsertStaffShopItemUseCase,
 )
+from apps.staff.domain.audit import IAuditLogReadRepository
 from apps.staff.domain.financial_reports import IFinancialReportRepository
 from apps.staff.domain.integrations import (
     IIntegrationConfigStore,
     IIntegrationProbe,
     IRuntimeSettingsApplier,
 )
+from apps.staff.domain.metrics import IMetricsRepository
 from apps.staff.domain.observability import IObservabilityLogRepository
 from apps.staff.domain.operational_reports import IOperationalReportRepository
 from apps.staff.domain.secrets import (
@@ -71,12 +75,14 @@ from apps.staff.domain.secrets import (
     ISecretRotationJobStore,
     ISecretsEnvStore,
 )
+from apps.staff.infrastructure.audit import DjangoAuditLogReadRepository
 from apps.staff.infrastructure.financial_reports import DjangoFinancialReportRepository
 from apps.staff.infrastructure.integrations import (
     DjangoIntegrationConfigStore,
     DjangoIntegrationProbe,
     DjangoRuntimeSettingsApplier,
 )
+from apps.staff.infrastructure.metrics import DjangoMetricsRepository
 from apps.staff.infrastructure.observability import DjangoObservabilityLogRepository
 from apps.staff.infrastructure.operational_reports import (
     DjangoOperationalReportRepository,
@@ -101,6 +107,7 @@ class StaffProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
+        container.register(IAuditLogReadRepository, DjangoAuditLogReadRepository, lifetime=Lifetime.SCOPED)
         container.register(IFinancialReportRepository, DjangoFinancialReportRepository, lifetime=Lifetime.SCOPED)
         container.register(
             IOperationalReportRepository, DjangoOperationalReportRepository, lifetime=Lifetime.SCOPED
@@ -108,6 +115,7 @@ class StaffProvider(AppProvider):
         container.register(
             IObservabilityLogRepository, DjangoObservabilityLogRepository, lifetime=Lifetime.SCOPED
         )
+        container.register(IMetricsRepository, DjangoMetricsRepository, lifetime=Lifetime.SCOPED)
         container.register(ISecretsEnvStore, DjangoSecretsEnvStore, lifetime=Lifetime.SCOPED)
         container.register(ISealedDataReencryptor, DjangoSealedDataReencryptor, lifetime=Lifetime.SCOPED)
         container.register(IGlobalSessionRevoker, DjangoGlobalSessionRevoker, lifetime=Lifetime.SCOPED)
@@ -116,6 +124,8 @@ class StaffProvider(AppProvider):
         container.register(IRuntimeSettingsApplier, DjangoRuntimeSettingsApplier, lifetime=Lifetime.SCOPED)
         container.register(IIntegrationProbe, DjangoIntegrationProbe, lifetime=Lifetime.SCOPED)
         for use_case in (
+            ListAuditLogsUseCase,
+            GetMetricsDashboardUseCase,
             GetFinancialReportUseCase,
             GetOperationalReportUseCase,
             PruneObservabilityLogsUseCase,

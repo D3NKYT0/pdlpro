@@ -138,6 +138,14 @@
       "moderation": {
         "title": "Moderación",
         "description": "Kick, prisión, ban y teleporte de personajes"
+      },
+      "metrics": {
+        "title": "Métricas",
+        "description": "Dashboard de KPIs, registros, logins, ingresos y auditoría"
+      },
+      "auditLog": {
+        "title": "Auditoría",
+        "description": "Trail de operaciones staff con filtros y paginación"
       }
     }
   },
@@ -2325,5 +2333,55 @@
       "deleted": "Banner eliminado con éxito",
       "error": "No se pudo guardar el banner"
     }
+  },
+  "auditLog": {
+    "kicker": "Observabilidad",
+    "title": "Registro de Auditoría",
+    "description": "Rastro completo de las operaciones del staff con filtros, búsqueda y paginación.",
+    "badge": "Auditoría",
+    "searchPlaceholder": "Buscar por acción, path, IP o ID de solicitud…",
+    "filters": "Filtros",
+    "filterActor": "Actor",
+    "filterAction": "Acción",
+    "filterMethod": "Método",
+    "filterDateFrom": "Fecha inicio",
+    "filterDateTo": "Fecha fin",
+    "allMethods": "Todos",
+    "colDate": "Fecha",
+    "colActor": "Actor",
+    "colMethod": "Método",
+    "colAction": "Acción",
+    "colStatus": "Estado",
+    "colIp": "IP",
+    "colPath": "Ruta",
+    "showing": "{{from}}–{{to}} de {{total}}",
+    "empty": "No se encontraron registros de auditoría.",
+    "error": "No se pudieron cargar los registros de auditoría."
+  },
+  "metrics": {
+    "kicker": "Observabilidad",
+    "title": "Panel de Métricas",
+    "description": "KPIs del sistema en tiempo real, series diarias y actividad reciente.",
+    "badge": "En vivo",
+    "error": "No se pudieron cargar las métricas.",
+    "registrationsToday": "Registros hoy",
+    "loginsToday": "Inicios de sesión hoy",
+    "revenueToday": "Ingresos hoy",
+    "activeUsers24h": "Activos (24h)",
+    "totalUsers": "Total de usuarios",
+    "totalOrders": "Total de pedidos",
+    "pendingOrders": "Pedidos pendientes",
+    "failedWebhooks": "Webhooks fallidos (24h)",
+    "auditEvents24h": "Eventos de auditoría (24h)",
+    "registrationsSeries": "Registros (7 días)",
+    "revenueSeries": "Ingresos (7 días)",
+    "topActions": "Acciones más frecuentes (24h)",
+    "recentAudit": "Auditoría reciente",
+    "noRecentAudit": "Sin actividad reciente.",
+    "noActions": "Ninguna acción registrada.",
+    "colDate": "Fecha",
+    "colActor": "Actor",
+    "colAction": "Acción",
+    "colStatus": "Estado"
   }
 }

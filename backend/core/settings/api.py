@@ -1,7 +1,8 @@
 from common.swagger import OPENAPI_DESCRIPTION, OPENAPI_TITLE, pdl_swagger_tags
+from core.settings.throttle import get_throttle_rates
 
 
-def get_rest_framework_settings(trusted_proxy_count=0):
+def get_rest_framework_settings(trusted_proxy_count=0, env=None):
     return {
         "NUM_PROXIES": trusted_proxy_count,
         "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -24,16 +25,7 @@ def get_rest_framework_settings(trusted_proxy_count=0):
             "rest_framework.throttling.AnonRateThrottle",
             "rest_framework.throttling.UserRateThrottle",
         ],
-        "DEFAULT_THROTTLE_RATES": {
-            "anon": "1000/hour",
-            "user": "10000/hour",
-            "login": "10/minute",
-            "register": "10/hour",
-            "twofa": "10/minute",
-            "password_reset": "5/hour",
-            "lgpd_export": "5/hour",
-            "lgpd_delete": "10/hour",
-        },
+        "DEFAULT_THROTTLE_RATES": get_throttle_rates(env),
         "EXCEPTION_HANDLER": "common.exceptions.custom_exception_handler",
         "DEFAULT_SCHEMA_CLASS": "common.openapi_schema.PdlAutoSchema",
     }

@@ -309,6 +309,69 @@ export interface ApiIntegrationProbeResult {
   details: Record<string, unknown>
 }
 
+export interface ApiAuditLogEntry {
+  id: number
+  actor_id: number | null
+  actor_username: string
+  action: string
+  request_id: string
+  ip_address: string | null
+  method: string
+  path: string
+  status_code: number
+  target_type: string
+  target_id: string
+  payload: Record<string, unknown>
+  created_at: string
+}
+
+export interface ApiAuditLogPage {
+  count: number
+  total_pages: number
+  results: ApiAuditLogEntry[]
+}
+
+export interface ApiAuditLogFilters {
+  actor?: string
+  action?: string
+  method?: string
+  status_min?: number
+  status_max?: number
+  date_from?: string
+  date_to?: string
+  search?: string
+  page?: number
+  page_size?: number
+}
+
+export interface ApiMetricSeries {
+  label: string
+  value: number
+}
+
+export interface ApiRecentAuditEntry {
+  actor_username: string
+  action: string
+  status_code: number
+  created_at: string
+}
+
+export interface ApiMetricsDashboard {
+  registrations_today: number
+  logins_today: number
+  revenue_today_brl: number
+  active_users_24h: number
+  total_users: number
+  total_orders: number
+  pending_orders: number
+  failed_webhooks_24h: number
+  audit_events_24h: number
+  registrations_series: ApiMetricSeries[]
+  revenue_series: ApiMetricSeries[]
+  recent_audit: ApiRecentAuditEntry[]
+  top_actions: ApiMetricSeries[]
+}
+
 export type IntegrationSectionId =
   | 'payments'
   | 'lineage'
@@ -457,4 +520,14 @@ export const staffApi = {
   },
   deleteBanner: (id: string) =>
     request<{ deleted: boolean }>('/staff/banners/', { method: 'DELETE', body: JSON.stringify({ id }) }),
+  auditLogs: (params?: ApiAuditLogFilters) => {
+    const qs = params
+      ? '?' + Object.entries(params)
+          .filter(([, v]) => v !== undefined && v !== '')
+          .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
+          .join('&')
+      : ''
+    return request<ApiAuditLogPage>(`/staff/audit-logs/${qs}`)
+  },
+  metricsDashboard: () => request<ApiMetricsDashboard>('/staff/metrics/dashboard/'),
 }

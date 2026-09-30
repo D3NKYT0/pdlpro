@@ -138,6 +138,14 @@
       "moderation": {
         "title": "Moderation",
         "description": "Kick, jail, ban and teleport characters"
+      },
+      "metrics": {
+        "title": "Metrics",
+        "description": "KPI dashboard with registrations, logins, revenue and audit trail"
+      },
+      "auditLog": {
+        "title": "Audit Log",
+        "description": "Staff operations trail with filters and pagination"
       }
     }
   },
@@ -2325,5 +2333,55 @@
       "deleted": "Banner deleted successfully",
       "error": "Could not save banner"
     }
+  },
+  "auditLog": {
+    "kicker": "Observability",
+    "title": "Audit Log",
+    "description": "Complete trail of staff operations with filters, search and pagination.",
+    "badge": "Audit",
+    "searchPlaceholder": "Search by action, path, IP or request ID…",
+    "filters": "Filters",
+    "filterActor": "Actor",
+    "filterAction": "Action",
+    "filterMethod": "Method",
+    "filterDateFrom": "From",
+    "filterDateTo": "To",
+    "allMethods": "All",
+    "colDate": "Date",
+    "colActor": "Actor",
+    "colMethod": "Method",
+    "colAction": "Action",
+    "colStatus": "Status",
+    "colIp": "IP",
+    "colPath": "Path",
+    "showing": "{{from}}–{{to}} of {{total}}",
+    "empty": "No audit records found.",
+    "error": "Could not load audit logs."
+  },
+  "metrics": {
+    "kicker": "Observability",
+    "title": "Metrics Dashboard",
+    "description": "Real-time system KPIs, daily series and recent activity.",
+    "badge": "Live",
+    "error": "Could not load metrics.",
+    "registrationsToday": "Registrations today",
+    "loginsToday": "Logins today",
+    "revenueToday": "Revenue today",
+    "activeUsers24h": "Active (24h)",
+    "totalUsers": "Total users",
+    "totalOrders": "Total orders",
+    "pendingOrders": "Pending orders",
+    "failedWebhooks": "Failed webhooks (24h)",
+    "auditEvents24h": "Audit events (24h)",
+    "registrationsSeries": "Registrations (7 days)",
+    "revenueSeries": "Revenue (7 days)",
+    "topActions": "Top actions (24h)",
+    "recentAudit": "Recent audit",
+    "noRecentAudit": "No recent activity.",
+    "noActions": "No actions recorded.",
+    "colDate": "Date",
+    "colActor": "Actor",
+    "colAction": "Action",
+    "colStatus": "Status"
   }
 }
