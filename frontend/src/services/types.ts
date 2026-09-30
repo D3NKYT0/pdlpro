@@ -176,7 +176,18 @@ export interface ApiWalletPromo {
 
 export interface ApiPaymentCatalog {
   currency: string
-  methods: Array<{ id: string; public_key: string; currencies: string[]; auto_confirm?: boolean }>
+  methods: Array<{
+    id: string
+    public_key: string
+    currencies: string[]
+    auto_confirm?: boolean
+    options?: {
+      pix?: boolean
+      boleto?: boolean
+      credit_card?: boolean
+      debit_card?: boolean
+    }
+  }>
   packages: ApiCoinPackage[]
   allow_custom_amount: boolean
   promo: ApiWalletPromo | null

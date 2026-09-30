@@ -124,3 +124,40 @@ def test_mercadopago_missing_payment_returns_none(order, mocker):
     sdk = mocker.patch("mercadopago.SDK").return_value
     sdk.payment.return_value.get.return_value = {"status": 404}
     assert MercadoPagoGateway().fetch_status(order) is None
+
+
+def test_mercadopago_rejects_disabled_payment_options(order, settings, mocker):
+    sdk = mocker.patch("mercadopago.SDK")
+
+    payer_payload = {
+        "payer": {"identification": {"type": "CPF", "number": "123.456.789-09"}},
+    }
+
+    # PIX disabled
+    settings.MERCADO_PAGO_ENABLE_PIX = False
+    with pytest.raises(PaymentGatewayError, match="PIX"):
+        MercadoPagoGateway().process_payment(order, {**payer_payload, "payment_method_id": "pix"})
+
+    # Boleto disabled
+    settings.MERCADO_PAGO_ENABLE_PIX = True
+    settings.MERCADO_PAGO_ENABLE_BOLETO = False
+    with pytest.raises(PaymentGatewayError, match="Boleto"):
+        MercadoPagoGateway().process_payment(order, {**payer_payload, "payment_method_id": "bolbradesco"})
+
+    # Credit card disabled
+    settings.MERCADO_PAGO_ENABLE_BOLETO = True
+    settings.MERCADO_PAGO_ENABLE_CREDIT_CARD = False
+    with pytest.raises(PaymentGatewayError, match="Cartão de Crédito"):
+        MercadoPagoGateway().process_payment(order, {**payer_payload, "token": "card-token-123"})
+
+    # Debit card disabled
+    settings.MERCADO_PAGO_ENABLE_CREDIT_CARD = True
+    settings.MERCADO_PAGO_ENABLE_DEBIT_CARD = False
+    with pytest.raises(PaymentGatewayError, match="Cartão de Débito"):
+        MercadoPagoGateway().process_payment(
+            order,
+            {**payer_payload, "token": "card-token-123", "payment_type_id": "debit_card"},
+        )
+
+    sdk.assert_not_called()
+

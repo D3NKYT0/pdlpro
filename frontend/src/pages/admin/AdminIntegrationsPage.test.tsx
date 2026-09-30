@@ -44,6 +44,10 @@ const statusFixture = {
       { key: 'MERCADO_PAGO_PUBLIC_KEY', configured: false, fingerprint: '', value: null, masked: '' },
       { key: 'MERCADO_PAGO_WEBHOOK_SECRET', configured: false, fingerprint: '', value: null, masked: '' },
       { key: 'MERCADO_PAGO_ACTIVATE_PAYMENTS', configured: true, fingerprint: '', value: false, masked: '' },
+      { key: 'MERCADO_PAGO_ENABLE_PIX', configured: true, fingerprint: '', value: true, masked: '' },
+      { key: 'MERCADO_PAGO_ENABLE_BOLETO', configured: true, fingerprint: '', value: true, masked: '' },
+      { key: 'MERCADO_PAGO_ENABLE_CREDIT_CARD', configured: true, fingerprint: '', value: true, masked: '' },
+      { key: 'MERCADO_PAGO_ENABLE_DEBIT_CARD', configured: true, fingerprint: '', value: true, masked: '' },
       { key: 'PAYMENT_METHODS', configured: true, fingerprint: '', value: ['mercadopago', 'stripe'], masked: '' },
       { key: 'PAYMENT_WEBHOOK_BASE_URL', configured: false, fingerprint: '', value: '', masked: '' },
       { key: 'COINS_PER_USD', configured: true, fingerprint: '', value: '5.00', masked: '' },
@@ -302,5 +306,37 @@ describe('AdminIntegrationsPage', () => {
       expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ['staff-integrations'] })
       expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ['server-info'] })
     })
+  })
+
+  it('exibe opções de checkout do Mercado Pago (PIX, Boleto, Cartões) e permite alternar', async () => {
+    const user = userEvent.setup()
+    renderPage('/panel/admin/integrations?tab=payments')
+
+    const pixToggle = await screen.findByRole('checkbox', { name: /habilitar pix/i })
+    const boletoToggle = screen.getByRole('checkbox', { name: /habilitar boleto/i })
+    const creditToggle = screen.getByRole('checkbox', { name: /habilitar cartão de crédito/i })
+    const debitToggle = screen.getByRole('checkbox', { name: /habilitar cartão de débito/i })
+
+    expect(pixToggle).toBeChecked()
+    expect(boletoToggle).toBeChecked()
+    expect(creditToggle).toBeChecked()
+    expect(debitToggle).toBeChecked()
+
+    // Disable boleto
+    await user.click(boletoToggle)
+    expect(boletoToggle).not.toBeChecked()
+
+    const saveButton = screen.getByRole('button', { name: /salvar/i })
+    await user.click(saveButton)
+
+    await waitFor(() =>
+      expect(staffApi.saveIntegrationSection).toHaveBeenCalledWith(
+        'payments',
+        expect.objectContaining({
+          MERCADO_PAGO_ENABLE_PIX: true,
+          MERCADO_PAGO_ENABLE_BOLETO: false,
+        }),
+      ),
+    )
   })
 })

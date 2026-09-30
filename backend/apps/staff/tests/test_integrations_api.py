@@ -367,3 +367,46 @@ def test_analytics_patch_and_probe(api, superuser, hosts, settings):
     assert test_res.json()["ok"] is True
     assert "3 ativo(s)" in test_res.json()["message"]
 
+
+@pytest.mark.django_db
+def test_payments_mercadopago_options_patch_and_probe(api, superuser, hosts, settings):
+    api.force_authenticate(superuser)
+
+    # 1. Patch Mercado Pago options
+    response = api.patch(
+        reverse("staff-integrations-section", kwargs={"section": "payments"}),
+        {
+            "MERCADO_PAGO_ENABLE_PIX": True,
+            "MERCADO_PAGO_ENABLE_BOLETO": False,
+            "MERCADO_PAGO_ENABLE_CREDIT_CARD": False,
+            "MERCADO_PAGO_ENABLE_DEBIT_CARD": False,
+        },
+        format="json",
+    )
+    assert response.status_code == 200, response.content
+    assert settings.MERCADO_PAGO_ENABLE_PIX is True
+    assert settings.MERCADO_PAGO_ENABLE_BOLETO is False
+    assert settings.MERCADO_PAGO_ENABLE_CREDIT_CARD is False
+    assert settings.MERCADO_PAGO_ENABLE_DEBIT_CARD is False
+
+    # Status returns boolean fields
+    body = api.get(reverse("staff-integrations-status")).json()
+    pix_field = next(f for f in body["payments"]["fields"] if f["key"] == "MERCADO_PAGO_ENABLE_PIX")
+    assert pix_field["value"] is True
+    boleto_field = next(f for f in body["payments"]["fields"] if f["key"] == "MERCADO_PAGO_ENABLE_BOLETO")
+    assert boleto_field["value"] is False
+
+    # 2. Test probe fails if active but all options disabled
+    settings.MERCADO_PAGO_ACTIVATE_PAYMENTS = True
+    settings.MERCADO_PAGO_ACCESS_TOKEN = "mp-token"
+    settings.MERCADO_PAGO_ENABLE_PIX = False
+    test_res = api.post(
+        reverse("staff-integrations-test", kwargs={"section": "payments"}),
+        {},
+        format="json",
+    )
+    assert test_res.status_code == 200
+    assert test_res.json()["ok"] is False
+    assert "Mercado Pago não possui nenhuma forma de pagamento habilitada" in test_res.json()["message"]
+
+

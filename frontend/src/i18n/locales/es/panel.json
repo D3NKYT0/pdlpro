@@ -25,6 +25,8 @@
       "noteManualConfirm": "Pago simulado: el saldo entra solo después de que el equipo confirme el pedido en el admin. Los jugadores no pueden acreditarse solos.",
       "noteStripe": "Tarjeta procesada con seguridad en el propio sitio.",
       "noteMercadoPago": "Paga con tarjeta, PIX o boleto sin salir del panel.",
+      "noteMercadoPagoPixOnly": "Paga con PIX con confirmación instantánea sin salir del panel.",
+      "noteMercadoPagoBoletoOnly": "Paga con boleto bancario sin salir del panel.",
       "noteUnavailable": "No se creará ningún cobro mientras el servicio de pago no esté disponible.",
       "packAria": "Comprar {{coins}} monedas por {{price}}",
       "packCoins": "monedas",

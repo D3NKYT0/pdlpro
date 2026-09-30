@@ -25,6 +25,8 @@
       "noteManualConfirm": "Simulated payment: the balance is added only after staff confirms the order in admin. Players cannot credit themselves.",
       "noteStripe": "Card processed securely on this site.",
       "noteMercadoPago": "Pay by card, PIX or bank slip without leaving the panel.",
+      "noteMercadoPagoPixOnly": "Pay with PIX with instant confirmation without leaving the panel.",
+      "noteMercadoPagoBoletoOnly": "Pay with bank slip without leaving the panel.",
       "noteUnavailable": "No charge will be created while the payment service is unavailable.",
       "packAria": "Buy {{coins}} coins for {{price}}",
       "packCoins": "coins",

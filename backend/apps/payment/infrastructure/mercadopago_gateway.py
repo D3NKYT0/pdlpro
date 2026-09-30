@@ -64,6 +64,27 @@ class MercadoPagoGateway(IPaymentGateway):
         if document_type not in {"CPF", "CNPJ"} or not document_number:
             raise PaymentGatewayError("Informe um CPF ou CNPJ válido para o Mercado Pago.")
 
+        payment_method_id = str(payload.get("payment_method_id") or "").lower()
+        payment_type_id = str(payload.get("payment_type_id") or "").lower()
+
+        is_pix = payment_method_id == "pix" or payment_type_id in {"bank_transfer", "pix"}
+        is_ticket = (
+            payment_type_id == "ticket"
+            or "boleto" in payment_method_id
+            or payment_method_id in {"bolbradesco", "pec"}
+        )
+        is_card = bool(payload.get("token")) or payment_type_id in {"credit_card", "debit_card"}
+
+        if is_pix and not getattr(settings, "MERCADO_PAGO_ENABLE_PIX", True):
+            raise PaymentGatewayError("Pagamento via PIX não está habilitado.")
+        if is_ticket and not getattr(settings, "MERCADO_PAGO_ENABLE_BOLETO", True):
+            raise PaymentGatewayError("Pagamento via Boleto não está habilitado.")
+        if is_card:
+            if payment_type_id == "debit_card" and not getattr(settings, "MERCADO_PAGO_ENABLE_DEBIT_CARD", True):
+                raise PaymentGatewayError("Pagamento via Cartão de Débito não está habilitado.")
+            elif payment_type_id != "debit_card" and not getattr(settings, "MERCADO_PAGO_ENABLE_CREDIT_CARD", True):
+                raise PaymentGatewayError("Pagamento via Cartão de Crédito não está habilitado.")
+
         first_name = str(payer.get("first_name") or "").strip() or "Jogador"
         last_name = str(payer.get("last_name") or "").strip() or first_name
 

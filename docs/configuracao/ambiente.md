@@ -134,6 +134,10 @@ permite script inline do Jazzmin/Spectacular. Produção acrescenta
 | `MERCADO_PAGO_PUBLIC_KEY` | Chave pública do Mercado Pago |
 | `MERCADO_PAGO_WEBHOOK_SECRET` | Segredo para validar notificações |
 | `MERCADO_PAGO_ACTIVATE_PAYMENTS` | Libera processamento real no provedor |
+| `MERCADO_PAGO_ENABLE_PIX` | Habilita PIX no checkout do Mercado Pago (padrão `true`) |
+| `MERCADO_PAGO_ENABLE_BOLETO` | Habilita boleto no checkout do Mercado Pago (padrão `true`) |
+| `MERCADO_PAGO_ENABLE_CREDIT_CARD` | Habilita cartão de crédito no checkout do Mercado Pago (padrão `true`) |
+| `MERCADO_PAGO_ENABLE_DEBIT_CARD` | Habilita cartão de débito no checkout do Mercado Pago (padrão `true`) |
 | `STRIPE_SECRET_KEY` | Chave secreta da Stripe |
 | `STRIPE_PUBLISHABLE_KEY` | Chave publicável da Stripe |
 | `STRIPE_WEBHOOK_SECRET` | Segredo de assinatura do endpoint |

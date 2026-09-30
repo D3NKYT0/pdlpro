@@ -48,14 +48,20 @@ class PaymentGatewayRegistry(IPaymentGatewayRegistry):
             gateway = self._gateways.get(name)
             if gateway is None or not gateway.is_available():
                 continue
-            methods.append(
-                {
-                    "id": name,
-                    "public_key": gateway.public_key(),
-                    "currencies": ["BRL"] if name == "mercadopago" else ["USD", "BRL"] if name == "stripe" else ["BRL", "USD"],
-                    "auto_confirm": name == "mock" and getattr(settings, "PAYMENT_MOCK_AUTO_CONFIRM", False),
+            entry: dict[str, object] = {
+                "id": name,
+                "public_key": gateway.public_key(),
+                "currencies": ["BRL"] if name == "mercadopago" else ["USD", "BRL"] if name == "stripe" else ["BRL", "USD"],
+                "auto_confirm": name == "mock" and getattr(settings, "PAYMENT_MOCK_AUTO_CONFIRM", False),
+            }
+            if name == "mercadopago":
+                entry["options"] = {
+                    "pix": getattr(settings, "MERCADO_PAGO_ENABLE_PIX", True),
+                    "boleto": getattr(settings, "MERCADO_PAGO_ENABLE_BOLETO", True),
+                    "credit_card": getattr(settings, "MERCADO_PAGO_ENABLE_CREDIT_CARD", True),
+                    "debit_card": getattr(settings, "MERCADO_PAGO_ENABLE_DEBIT_CARD", True),
                 }
-            )
+            methods.append(entry)
         return methods
 
     def register(self, gateway: IPaymentGateway) -> None:

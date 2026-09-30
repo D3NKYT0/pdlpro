@@ -74,6 +74,14 @@ export async function mountMercadoPagoBrick(options: {
   firstName?: string
   lastName?: string
   containerId: string
+  paymentOptions?: {
+    pix?: boolean
+    boleto?: boolean
+    credit_card?: boolean
+    debit_card?: boolean
+    ticket?: boolean
+    bankTransfer?: boolean
+  }
   onSubmit: (formData: Record<string, unknown>) => Promise<void>
   onReady: () => void
   onError: (message: string) => void
@@ -82,6 +90,18 @@ export async function mountMercadoPagoBrick(options: {
   const MercadoPago = (window as any).MercadoPago
   const mp = new MercadoPago(options.publicKey, { locale: mercadoPagoLocale() })
   const docType = inferDocumentType(sanitizeDocument(options.document))
+
+  const enabledMethods: Record<string, string> = {}
+  const opts = options.paymentOptions
+  if (!opts || opts.credit_card !== false) enabledMethods.creditCard = 'all'
+  if (!opts || opts.debit_card !== false) enabledMethods.debitCard = 'all'
+  if (!opts || (opts.ticket !== false && opts.boleto !== false)) enabledMethods.ticket = 'all'
+  if (!opts || (opts.bankTransfer !== false && opts.pix !== false)) enabledMethods.bankTransfer = 'all'
+
+  const paymentMethods = Object.keys(enabledMethods).length > 0
+    ? enabledMethods
+    : { creditCard: 'all', debitCard: 'all', ticket: 'all', bankTransfer: 'all' }
+
   const controller = await mp.bricks().create('payment', options.containerId, {
     initialization: {
       amount: options.amount,
@@ -93,7 +113,7 @@ export async function mountMercadoPagoBrick(options: {
       },
     },
     customization: {
-      paymentMethods: { creditCard: 'all', debitCard: 'all', ticket: 'all', bankTransfer: 'all' },
+      paymentMethods,
       visual: {
         style: {
           theme: 'dark',

@@ -71,3 +71,43 @@ it('monta Mercado Pago com documento normalizado e encaminha callbacks', async (
   config.callbacks.onError({ message: 'Recusado' })
   expect(onError).toHaveBeenCalledWith('Recusado')
 })
+
+it('monta Mercado Pago respeitando paymentOptions restritas (ex.: apenas PIX)', async () => {
+  const create = vi.fn().mockResolvedValue({ unmount: vi.fn() })
+  vi.stubGlobal('MercadoPago', class { bricks() { return { create } } })
+  const tag = document.createElement('script')
+  tag.src = 'https://sdk.mercadopago.com/js/v2'
+  document.body.appendChild(tag)
+  const onSubmit = vi.fn().mockResolvedValue(undefined), onReady = vi.fn(), onError = vi.fn()
+
+  // Case 1: Only PIX
+  await mountMercadoPagoBrick({
+    publicKey: 'pk-test',
+    amount: 50,
+    email: 'pix@test.dev',
+    document: '123.456.789-09',
+    containerId: 'checkout-pix',
+    paymentOptions: { pix: true, boleto: false, credit_card: false, debit_card: false },
+    onSubmit,
+    onReady,
+    onError,
+  })
+  const pixConfig = create.mock.calls[0][2]
+  expect(pixConfig.customization.paymentMethods).toEqual({ bankTransfer: 'all' })
+
+  // Case 2: Only Boleto
+  await mountMercadoPagoBrick({
+    publicKey: 'pk-test',
+    amount: 100,
+    email: 'boleto@test.dev',
+    document: '123.456.789-09',
+    containerId: 'checkout-boleto',
+    paymentOptions: { pix: false, boleto: true, credit_card: false, debit_card: false },
+    onSubmit,
+    onReady,
+    onError,
+  })
+  const boletoConfig = create.mock.calls[1][2]
+  expect(boletoConfig.customization.paymentMethods).toEqual({ ticket: 'all' })
+})
+

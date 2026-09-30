@@ -117,6 +117,7 @@ export function WalletPage() {
           lastName,
           document: sanitized,
           containerId: 'payment-brick',
+          paymentOptions: mp.options,
           onReady: () => {
             if (!cancelled) setIsBrickReady(true)
           },
@@ -302,6 +303,7 @@ export function WalletPage() {
           onCustomAmountChange={setCustomAmount}
           busy={busy}
           onStartPurchase={startPurchase}
+          mpOptions={mp?.options}
         />
 
         <aside className="wallet-side-column">

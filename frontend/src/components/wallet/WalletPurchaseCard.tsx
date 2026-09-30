@@ -27,6 +27,12 @@ type WalletPurchaseCardProps = {
   onCustomAmountChange: (value: string) => void
   busy: boolean
   onStartPurchase: (packageId?: string) => void
+  mpOptions?: {
+    pix?: boolean
+    boleto?: boolean
+    credit_card?: boolean
+    debit_card?: boolean
+  }
 }
 
 export function WalletPurchaseCard({
@@ -41,6 +47,7 @@ export function WalletPurchaseCard({
   onCustomAmountChange,
   busy,
   onStartPurchase,
+  mpOptions,
 }: WalletPurchaseCardProps) {
   const { t } = useTranslation('panel')
   const priceKey = currency === 'USD' ? 'price_usd' : 'price_brl'
@@ -52,9 +59,16 @@ export function WalletPurchaseCard({
         ? 'Stripe'
         : 'MercadoPago'
   const noteTitle = t(`wallet.purchase.note${noteVariant}Title`)
-  const noteText = noteVariant === 'Simulated'
-    ? t('wallet.purchase.noteManualConfirm')
-    : t(`wallet.purchase.note${noteVariant}`)
+  const noteText =
+    noteVariant === 'Simulated'
+      ? t('wallet.purchase.noteManualConfirm')
+      : noteVariant === 'MercadoPago'
+        ? mpOptions && mpOptions.pix !== false && mpOptions.boleto === false && mpOptions.credit_card === false && mpOptions.debit_card === false
+          ? t('wallet.purchase.noteMercadoPagoPixOnly', { defaultValue: 'Pague com PIX com liberação imediata sem sair do painel.' })
+          : mpOptions && mpOptions.boleto !== false && mpOptions.pix === false && mpOptions.credit_card === false && mpOptions.debit_card === false
+            ? t('wallet.purchase.noteMercadoPagoBoletoOnly', { defaultValue: 'Pague com boleto bancário sem sair do painel.' })
+            : t('wallet.purchase.noteMercadoPago')
+        : t(`wallet.purchase.note${noteVariant}`)
 
   return (
     <Card className="wallet-purchase-card">

@@ -20228,6 +20228,28 @@ html.pdl-panel .admin-integrations-toggles {
   gap: 10px 14px;
 }
 
+html.pdl-panel .admin-integrations-subsection {
+  display: grid;
+  gap: 8px;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--admin-tone) 22%, transparent);
+}
+
+html.pdl-panel .admin-integrations-subsection h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--admin-tone) 45%, #fff);
+}
+
+html.pdl-panel .admin-integrations-subsection p.muted {
+  margin: 0 0 4px;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--panel-muted);
+}
+
 html.pdl-panel .admin-integrations-secret {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

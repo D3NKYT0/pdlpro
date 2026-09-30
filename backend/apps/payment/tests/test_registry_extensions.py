@@ -26,3 +26,24 @@ def test_registry_accepts_gateway_from_extension(settings):
     assert registry.get("pix").public_key() == "pix-public"
     methods = registry.available_methods(["mock", "pix"])
     assert {item["id"] for item in methods} >= {"mock", "pix"}
+
+
+def test_registry_mercadopago_exposes_payment_options(settings):
+    settings.MERCADO_PAGO_ACTIVATE_PAYMENTS = True
+    settings.MERCADO_PAGO_ACCESS_TOKEN = "token"
+    settings.MERCADO_PAGO_PUBLIC_KEY = "pk"
+    settings.MERCADO_PAGO_ENABLE_PIX = True
+    settings.MERCADO_PAGO_ENABLE_BOLETO = False
+    settings.MERCADO_PAGO_ENABLE_CREDIT_CARD = True
+    settings.MERCADO_PAGO_ENABLE_DEBIT_CARD = False
+
+    registry = PaymentGatewayRegistry(MockPaymentGateway(), MercadoPagoGateway(), StripeGateway())
+    methods = registry.available_methods(["mercadopago"])
+    mp = next(m for m in methods if m["id"] == "mercadopago")
+    assert mp["options"] == {
+        "pix": True,
+        "boleto": False,
+        "credit_card": True,
+        "debit_card": False,
+    }
+

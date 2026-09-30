@@ -35,10 +35,16 @@ Comece em **credenciais de teste**. Só ative produção depois de homologar.
 1. `/panel/admin/integrations` → **Pagamentos**.
 2. Preencha token, public key e webhook secret.
 3. `MERCADO_PAGO_ACTIVATE_PAYMENTS` = ligado.
-4. `PAYMENT_METHODS` deve incluir `mercadopago` (ex.: `mercadopago,stripe`).
-5. `PAYMENT_WEBHOOK_BASE_URL` = `https://seudominio.com`.
-6. Em produção: `PAYMENT_ALLOW_MOCK` = desligado.
-7. Salve → **Testar**.
+4. **Opções de pagamento no checkout**: selecione quais métodos estarão disponíveis para os jogadores:
+   - `MERCADO_PAGO_ENABLE_PIX` = ligado (permite pagamento via PIX com aprovação instantânea);
+   - `MERCADO_PAGO_ENABLE_BOLETO` = ligado (permite emissão de boleto bancário);
+   - `MERCADO_PAGO_ENABLE_CREDIT_CARD` = ligado (permite cartão de crédito);
+   - `MERCADO_PAGO_ENABLE_DEBIT_CARD` = ligado (permite cartão de débito virtual).
+   *(Se você quiser usar apenas PIX ou apenas boleto, basta desligar as demais opções nesta seção)*.
+5. `PAYMENT_METHODS` deve incluir `mercadopago` (ex.: `mercadopago,stripe`).
+6. `PAYMENT_WEBHOOK_BASE_URL` = `https://seudominio.com`.
+7. Em produção: `PAYMENT_ALLOW_MOCK` = desligado.
+8. Salve → **Testar**.
 
 Pacotes de moedas e promoções: `/panel/admin/wallet` e admin de pacotes —
 não ficam nesta aba.

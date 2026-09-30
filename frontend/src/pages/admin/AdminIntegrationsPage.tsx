@@ -82,6 +82,10 @@ const EMAIL_BACKEND_OPTIONS = [
 const BOOL_KEYS = new Set([
   'STRIPE_ACTIVATE_PAYMENTS',
   'MERCADO_PAGO_ACTIVATE_PAYMENTS',
+  'MERCADO_PAGO_ENABLE_PIX',
+  'MERCADO_PAGO_ENABLE_BOLETO',
+  'MERCADO_PAGO_ENABLE_CREDIT_CARD',
+  'MERCADO_PAGO_ENABLE_DEBIT_CARD',
   'LINEAGE_DB_ENABLED',
   'LINEAGE_DB_SSL',
   'LINEAGE_DB_SSL_VERIFY',
@@ -445,6 +449,16 @@ export function AdminIntegrationsPage() {
                   {renderSecret('MERCADO_PAGO_PUBLIC_KEY')}
                   {renderSecret('MERCADO_PAGO_WEBHOOK_SECRET')}
                   {renderBool('MERCADO_PAGO_ACTIVATE_PAYMENTS')}
+                  <div className="admin-integrations-subsection">
+                    <h4>{t('integrations.payments.mpMethodsTitle', { defaultValue: 'Opções de pagamento no checkout' })}</h4>
+                    <p className="muted">{t('integrations.payments.mpMethodsHint', { defaultValue: 'Selecione quais opções serão disponibilizadas para os jogadores (ex.: somente PIX, somente boleto ou todas).' })}</p>
+                    <div className="admin-integrations-toggles">
+                      {renderBool('MERCADO_PAGO_ENABLE_PIX')}
+                      {renderBool('MERCADO_PAGO_ENABLE_BOLETO')}
+                      {renderBool('MERCADO_PAGO_ENABLE_CREDIT_CARD')}
+                      {renderBool('MERCADO_PAGO_ENABLE_DEBIT_CARD')}
+                    </div>
+                  </div>
                 </div>
               </SectionCard>
               <SectionCard

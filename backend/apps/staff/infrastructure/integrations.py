@@ -233,11 +233,21 @@ class DjangoIntegrationProbe(IIntegrationProbe):
         mp_ok = bool(getattr(settings, "MERCADO_PAGO_ACCESS_TOKEN", "") or "")
         mp_on = bool(getattr(settings, "MERCADO_PAGO_ACTIVATE_PAYMENTS", False))
         methods = [str(m).lower() for m in (getattr(settings, "PAYMENT_METHODS", []) or [])]
+        mp_pix = bool(getattr(settings, "MERCADO_PAGO_ENABLE_PIX", True))
+        mp_boleto = bool(getattr(settings, "MERCADO_PAGO_ENABLE_BOLETO", True))
+        mp_credit = bool(getattr(settings, "MERCADO_PAGO_ENABLE_CREDIT_CARD", True))
+        mp_debit = bool(getattr(settings, "MERCADO_PAGO_ENABLE_DEBIT_CARD", True))
         details = {
             "stripe_configured": stripe_ok,
             "stripe_active": stripe_on,
             "mercado_pago_configured": mp_ok,
             "mercado_pago_active": mp_on,
+            "mercado_pago_options": {
+                "pix": mp_pix,
+                "boleto": mp_boleto,
+                "credit_card": mp_credit,
+                "debit_card": mp_debit,
+            },
             "payment_methods": methods,
             "webhook_base": bool(str(getattr(settings, "PAYMENT_WEBHOOK_BASE_URL", "") or "").strip()),
             "coins_per_usd": str(getattr(settings, "COINS_PER_USD", "") or ""),
@@ -248,6 +258,8 @@ class DjangoIntegrationProbe(IIntegrationProbe):
             return ProbeResult(False, _("Stripe ativo sem chave secreta."), details)
         if mp_on and not mp_ok:
             return ProbeResult(False, _("Mercado Pago ativo sem access token."), details)
+        if (mp_on or "mercadopago" in methods) and not (mp_pix or mp_boleto or mp_credit or mp_debit):
+            return ProbeResult(False, _("Mercado Pago não possui nenhuma forma de pagamento habilitada (PIX, Boleto ou Cartão)."), details)
         if "stripe" in methods and not stripe_ok:
             return ProbeResult(False, _("PAYMENT_METHODS inclui stripe sem chave secreta."), details)
         if "mercadopago" in methods and not mp_ok:
