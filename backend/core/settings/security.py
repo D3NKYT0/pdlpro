@@ -8,7 +8,10 @@ _CSP_SCRIPT_HOSTS = (
     "https://cdn.jsdelivr.net https://js.stripe.com https://sdk.mercadopago.com "
     "https://*.mlstatic.com https://http2.mlstatic.com "
     "https://hcaptcha.com https://*.hcaptcha.com "
-    "https://www.googletagmanager.com https://connect.facebook.net https://analytics.tiktok.com"
+    "https://www.googletagmanager.com https://*.googletagmanager.com https://tagmanager.google.com "
+    "https://www.google-analytics.com https://*.google-analytics.com "
+    "https://*.googleadservices.com https://*.google.com https://*.doubleclick.net "
+    "https://connect.facebook.net https://analytics.tiktok.com"
 )
 _CSP_STYLE = (
     "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net "
