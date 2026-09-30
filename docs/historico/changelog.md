@@ -2,11 +2,26 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 29 de setembro de 2026
+> **Atualizado:** 30 de setembro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
+
+## [2.6.6] - 2026-09-30
+
+Lançamento da versão 2.6.6 do PDL PRO com o dashboard de métricas staff em tempo real e observabilidade, log de auditoria administrativa, cobertura completa de domínios Google na política de CSP e harmonização visual com a identidade do tema.
+
+### Adicionado
+
+- **Dashboard de Métricas Administrativas**: tela de observabilidade em `/panel/admin/metrics` com contadores de registros hoje, logins hoje, receita diária, usuários ativos em 24h, total de pedidos, pedidos pendentes, webhooks falhos e eventos de auditoria em tempo real.
+- **Séries diárias de 7 dias**: gráficos compactos de barras para registros e receita com preenchimento determinístico de todos os 7 dias, rótulos resumidos (`DD/MM`), linha base para dias sem movimentação e tooltips informativos com valores e moeda formatados.
+- **Log de Auditoria Administrativo**: visualização e filtragem de auditoria em `/panel/admin/audit-logs` com paginação, filtros de ator, método, data e status HTTP.
+
+### Alterado
+
+- **Content-Security-Policy (CSP) Completa para Google Tag Manager e GA4**: inclusão de `https://*.googletagmanager.com`, `https://tagmanager.google.com`, `https://*.google-analytics.com`, `https://www.google-analytics.com`, `https://*.googleadservices.com`, `https://*.google.com` e `https://*.doubleclick.net` na diretiva `script-src` tanto no Nginx (produção e borda) quanto nos cabeçalhos Django, resolvendo o bloqueio de tags pelo Google Tag Assistant em domínios de produção.
+- **Paleta visual de observabilidade**: substituição de gradientes roxos genéricos por tons nobres de ouro (`--panel-gold`, `#c5a161` e `#e6c77d`) e esmeralda financeiro (`#7eaa83`), integrando perfeitamente os gráficos e KPIs à identidade visual do painel.
 
 ## [2.6.5] - 2026-09-29
 
