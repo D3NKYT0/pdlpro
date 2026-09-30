@@ -30,7 +30,7 @@
     "@tiptap/pm": "^3.31.3",
     "@tiptap/react": "^3.31.3",
     "@tiptap/starter-kit": "^3.31.3",
-    "dompurify": "^3.4.15",
+    "dompurify": "^3.4.16",
     "i18next": "^26.4.2",
     "lucide-react": "^0.577.0",
     "react": "^19.2.8",

@@ -43,6 +43,10 @@ class DjangoTicketRepository(ITicketRepository):
     def _base_qs(self):
         return Ticket.objects.select_related("assigned_to", "user")
 
+    def _locked_ticket(self, ticket_id: UUID) -> Ticket:
+        """Bloqueia apenas a linha do chamado (of='self') para evitar erro no PostgreSQL com LEFT JOIN."""
+        return self._base_qs().select_for_update(of=("self",)).get(id=ticket_id)
+
     def list_for_user(self, user_id: UUID) -> list[Any]:
         return list(self._base_qs().filter(user__id=user_id))
 
@@ -84,7 +88,9 @@ class DjangoTicketRepository(ITicketRepository):
     def get_by_id(self, ticket_id: UUID) -> Any | None:
         return self._base_qs().filter(id=ticket_id).first()
 
-    def dump_ticket(self, ticket: Ticket, *, detail: bool = False, staff: bool = False) -> dict:
+    def dump_ticket(
+        self, ticket: Ticket, *, detail: bool = False, staff: bool = False
+    ) -> dict:
         from apps.support.domain.ticket import (
             TicketCategory,
             TicketPriority,
@@ -103,13 +109,19 @@ class DjangoTicketRepository(ITicketRepository):
             "subject": ticket.subject,
             "description": ticket.description,
             "category": ticket.category,
-            "category_label": TicketCategory.labels.get(ticket.category, ticket.category),
+            "category_label": TicketCategory.labels.get(
+                ticket.category, ticket.category
+            ),
             "priority": ticket.priority,
-            "priority_label": TicketPriority.labels.get(ticket.priority, ticket.priority),
+            "priority_label": TicketPriority.labels.get(
+                ticket.priority, ticket.priority
+            ),
             "status": ticket.status,
             "status_label": TicketStatus.labels.get(ticket.status, ticket.status),
             "context": ticket.context,
-            "assigned_to": _name(ticket.assigned_to) if ticket.assigned_to else "Equipe PDL",
+            "assigned_to": _name(ticket.assigned_to)
+            if ticket.assigned_to
+            else "Equipe PDL",
             "created_at": ticket.created_at,
             "updated_at": ticket.updated_at,
             "last_activity_at": ticket.last_activity_at,
@@ -147,7 +159,7 @@ class DjangoTicketRepository(ITicketRepository):
         return payload
 
     def add_customer_reply(self, ticket_id: UUID, author_id: UUID, body: str) -> Any:
-        ticket = self._base_qs().select_for_update().get(id=ticket_id)
+        ticket = self._locked_ticket(ticket_id)
         author = User.objects.get(id=author_id)
         TicketMessage.objects.create(ticket=ticket, author=author, body=body)
         ticket.status = Ticket.Status.IN_PROGRESS
@@ -163,8 +175,10 @@ class DjangoTicketRepository(ITicketRepository):
             )
         return ticket
 
-    def apply_customer_action(self, ticket_id: UUID, author_id: UUID, action: str) -> Any:
-        ticket = self._base_qs().select_for_update().get(id=ticket_id)
+    def apply_customer_action(
+        self, ticket_id: UUID, author_id: UUID, action: str
+    ) -> Any:
+        ticket = self._locked_ticket(ticket_id)
         author = User.objects.get(id=author_id)
         now = timezone.now()
         if action == "close":
@@ -177,7 +191,15 @@ class DjangoTicketRepository(ITicketRepository):
             ticket.resolved_at = None
             event_body = "Chamado reaberto pelo jogador."
         ticket.last_activity_at = now
-        ticket.save(update_fields=["status", "closed_at", "resolved_at", "last_activity_at", "updated_at"])
+        ticket.save(
+            update_fields=[
+                "status",
+                "closed_at",
+                "resolved_at",
+                "last_activity_at",
+                "updated_at",
+            ]
+        )
         TicketMessage.objects.create(ticket=ticket, author=author, body=event_body)
         return ticket
 
@@ -208,7 +230,9 @@ class DjangoTicketRepository(ITicketRepository):
         return {
             "open": all_tickets.filter(status=Ticket.Status.OPEN).count(),
             "in_progress": all_tickets.filter(status=Ticket.Status.IN_PROGRESS).count(),
-            "waiting_user": all_tickets.filter(status=Ticket.Status.WAITING_USER).count(),
+            "waiting_user": all_tickets.filter(
+                status=Ticket.Status.WAITING_USER
+            ).count(),
             "unassigned": all_tickets.filter(assigned_to=None)
             .exclude(status__in=[Ticket.Status.RESOLVED, Ticket.Status.CLOSED])
             .count(),
@@ -229,7 +253,7 @@ class DjangoTicketRepository(ITicketRepository):
         *,
         is_internal: bool,
     ) -> Any:
-        ticket = self._base_qs().select_for_update().get(id=ticket_id)
+        ticket = self._locked_ticket(ticket_id)
         author = User.objects.get(id=author_id)
         TicketMessage.objects.create(
             ticket=ticket,
@@ -252,7 +276,13 @@ class DjangoTicketRepository(ITicketRepository):
             )
         ticket.last_activity_at = now
         ticket.save(
-            update_fields=["assigned_to", "status", "first_response_at", "last_activity_at", "updated_at"]
+            update_fields=[
+                "assigned_to",
+                "status",
+                "first_response_at",
+                "last_activity_at",
+                "updated_at",
+            ]
         )
         return ticket
 
@@ -261,7 +291,10 @@ class DjangoTicketRepository(ITicketRepository):
             return User.objects.filter(id=actor_id).first()
         return (
             User.objects.filter(id=assignee)
-            .filter(Q(is_staff=True) | Q(role__in=[User.Role.MODERATOR, User.Role.STAFF, User.Role.ADMIN]))
+            .filter(
+                Q(is_staff=True)
+                | Q(role__in=[User.Role.MODERATOR, User.Role.STAFF, User.Role.ADMIN])
+            )
             .first()
         )
 
@@ -277,7 +310,7 @@ class DjangoTicketRepository(ITicketRepository):
         assignee: Any = None,
         update_assignee: bool = False,
     ) -> Any:
-        ticket = self._base_qs().select_for_update().get(id=ticket_id)
+        ticket = self._locked_ticket(ticket_id)
         actor = User.objects.get(id=actor_id)
         update_fields = ["updated_at", "last_activity_at"]
         audit_events: list[str] = []

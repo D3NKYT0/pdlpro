@@ -12,6 +12,8 @@ require_production_data_encryption_key(PDL_DATA_ENCRYPTION_KEY)
 DEBUG = False
 # Cópia de .env.example não pode abrir schema/Swagger em produção.
 OPENAPI_DOCS_PUBLIC = False
+# Pagamento simulado (mock) desligado no boot de produção.
+PAYMENT_ALLOW_MOCK = False
 REST_FRAMEWORK["NUM_PROXIES"] = env.int("TRUSTED_PROXY_COUNT", default=2)
 LOGGING = get_logging_config(env, default_format="json", default_environment="production")
 SENTRY_ENABLED = configure_error_monitoring(env)

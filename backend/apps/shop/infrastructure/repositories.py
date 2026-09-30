@@ -96,9 +96,7 @@ class DjangoShopRepository(IShopRepository):
         }
 
     def list_all_packages(self) -> list[ShopPackage]:
-        return list(
-            ShopPackage.objects.all().prefetch_related("package_items__item")
-        )
+        return list(ShopPackage.objects.all().prefetch_related("package_items__item"))
 
     def get_package(self, package_id: UUID) -> ShopPackage | None:
         return ShopPackage.objects.filter(id=package_id).first()
@@ -106,10 +104,16 @@ class DjangoShopRepository(IShopRepository):
     def get_active_package(self, package_id: UUID) -> ShopPackage | None:
         return ShopPackage.objects.filter(id=package_id, active=True).first()
 
-    def create_package(self, *, name: str, total_price, active: bool, items: list[dict]) -> ShopPackage:
-        pack = ShopPackage.objects.create(name=name, total_price=total_price, active=active)
+    def create_package(
+        self, *, name: str, total_price, active: bool, items: list[dict]
+    ) -> ShopPackage:
+        pack = ShopPackage.objects.create(
+            name=name, total_price=total_price, active=active
+        )
         for entry in items:
-            ShopPackageItem.objects.create(package=pack, item=entry["item"], quantity=entry["quantity"])
+            ShopPackageItem.objects.create(
+                package=pack, item=entry["item"], quantity=entry["quantity"]
+            )
         return pack
 
     def save_package(self, pack: ShopPackage) -> ShopPackage:
@@ -119,7 +123,9 @@ class DjangoShopRepository(IShopRepository):
     def replace_package_items(self, pack: ShopPackage, items: list[dict]) -> None:
         pack.package_items.all().delete()
         for entry in items:
-            ShopPackageItem.objects.create(package=pack, item=entry["item"], quantity=entry["quantity"])
+            ShopPackageItem.objects.create(
+                package=pack, item=entry["item"], quantity=entry["quantity"]
+            )
 
     def list_all_promos(self) -> list[PromotionCode]:
         return list(PromotionCode.objects.all())
@@ -127,9 +133,13 @@ class DjangoShopRepository(IShopRepository):
     def get_promo(self, promo_id: UUID) -> PromotionCode | None:
         return PromotionCode.objects.filter(id=promo_id).first()
 
-    def find_active_promo_by_code(self, code: str, *, lock: bool = False) -> PromotionCode | None:
+    def find_active_promo_by_code(
+        self, code: str, *, lock: bool = False
+    ) -> PromotionCode | None:
         rows = (
-            PromotionCode.objects.select_for_update().select_related("supporter")
+            PromotionCode.objects.select_for_update(of=("self",)).select_related(
+                "supporter"
+            )
             if lock
             else PromotionCode.objects.select_related("supporter")
         )
@@ -149,9 +159,15 @@ class DjangoShopRepository(IShopRepository):
         return promo
 
     def list_purchases(self, user_id: UUID, *, limit: int = 100) -> list[ShopPurchase]:
-        return list(ShopPurchase.objects.filter(user__id=user_id).order_by("-created_at")[:limit])
+        return list(
+            ShopPurchase.objects.filter(user__id=user_id).order_by("-created_at")[
+                :limit
+            ]
+        )
 
-    def find_purchase_by_request_key(self, user, request_key: UUID) -> ShopPurchase | None:
+    def find_purchase_by_request_key(
+        self, user, request_key: UUID
+    ) -> ShopPurchase | None:
         return ShopPurchase.objects.filter(user=user, request_key=request_key).first()
 
     def create_purchase(self, **fields) -> ShopPurchase:
@@ -181,7 +197,9 @@ class DjangoCartRepository(ICartRepository):
         return Cart.objects.select_for_update().get(pk=cart.pk)
 
     def get_or_create_item(self, cart, item, *, quantity: int) -> tuple[CartItem, bool]:
-        return CartItem.objects.get_or_create(cart=cart, item=item, defaults={"quantity": quantity})
+        return CartItem.objects.get_or_create(
+            cart=cart, item=item, defaults={"quantity": quantity}
+        )
 
     def get_locked_item(self, cart_item_id: UUID, user_id: UUID) -> CartItem | None:
         return (
@@ -282,4 +300,6 @@ class DjangoSupporterCommissionAdapter(ISupporterCommissionPort):
             Decimal("0.01"), rounding=ROUND_HALF_UP
         )
         if amount > 0 and supporter.status == "approved":
-            Commission.objects.create(supporter=supporter, purchase=purchase, amount=amount)
+            Commission.objects.create(
+                supporter=supporter, purchase=purchase, amount=amount
+            )
