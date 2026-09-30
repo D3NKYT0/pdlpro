@@ -3,7 +3,11 @@ from __future__ import annotations
 from django.conf import settings
 
 from apps.payment.domain.exceptions import PaymentMethodUnavailableError
-from apps.payment.domain.gateways import IPaymentGateway, IPaymentGatewayRegistry
+from apps.payment.domain.gateways import (
+    IPaymentGateway,
+    IPaymentGatewayRegistry,
+    normalize_brl_method_priority,
+)
 from apps.payment.infrastructure.mercadopago_gateway import MercadoPagoGateway
 from apps.payment.infrastructure.mock_gateway import MockPaymentGateway
 from apps.payment.infrastructure.stripe_gateway import StripeGateway
@@ -62,7 +66,32 @@ class PaymentGatewayRegistry(IPaymentGatewayRegistry):
                     "debit_card": getattr(settings, "MERCADO_PAGO_ENABLE_DEBIT_CARD", True),
                 }
             methods.append(entry)
-        return methods
+        return self._apply_brl_priority(methods)
+
+    def _apply_brl_priority(self, methods: list[dict]) -> list[dict]:
+        """Quando os dois gateways estão ativos, a política do admin restringe o BRL.
+
+        ``user_choice`` mantém os dois. ``mercadopago`` tira BRL do Stripe (USD continua).
+        ``stripe`` tira o Mercado Pago. Com só um gateway disponível, a política não muda a lista.
+        """
+
+        priority = normalize_brl_method_priority(getattr(settings, "PAYMENT_BRL_METHOD_PRIORITY", "user_choice"))
+        if priority == "user_choice":
+            return methods
+        ids = {str(item["id"]) for item in methods}
+        if "mercadopago" not in ids or "stripe" not in ids:
+            return methods
+        if priority == "stripe":
+            return [item for item in methods if item["id"] != "mercadopago"]
+        narrowed: list[dict] = []
+        for item in methods:
+            if item["id"] != "stripe":
+                narrowed.append(item)
+                continue
+            currencies = [code for code in item.get("currencies", []) if code != "BRL"]
+            if currencies:
+                narrowed.append({**item, "currencies": currencies})
+        return narrowed
 
     def register(self, gateway: IPaymentGateway) -> None:
         """Inclui um adaptador da extensão. Inclua o ``method_name`` em ``PAYMENT_METHODS``."""

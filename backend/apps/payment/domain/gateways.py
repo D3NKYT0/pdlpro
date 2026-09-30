@@ -8,6 +8,19 @@ from apps.payment.domain.entities import (
     ProcessResult,
 )
 
+BRL_METHOD_PRIORITIES = frozenset({"user_choice", "mercadopago", "stripe"})
+
+
+def normalize_brl_method_priority(value: object) -> str:
+    """Normaliza a política de BRL quando Mercado Pago e Stripe estão ativos juntos.
+
+    ``user_choice`` deixa o jogador escolher. ``mercadopago`` e ``stripe`` fixam um
+    método. Qualquer outro valor volta para ``user_choice``.
+    """
+
+    text = str(value or "").strip().lower()
+    return text if text in BRL_METHOD_PRIORITIES else "user_choice"
+
 
 class IPaymentGateway(ABC):
     """Porta comum dos provedores de pagamento usados pelo painel.

@@ -45,6 +45,7 @@ export function WalletPage() {
   const brickRef = useRef<{ unmount: () => void } | null>(null)
 
   const methods = catalog.data?.methods ?? []
+  const brlPriority = catalog.data?.brl_method_priority ?? 'user_choice'
   const availableCurrencies: ('BRL' | 'USD')[] = catalog.data
     ? (['BRL', 'USD'] as const).filter((c) => methods.some((m) => m.currencies.includes(c)))
     : ['BRL', 'USD']
@@ -62,14 +63,25 @@ export function WalletPage() {
   const mpConfig = methods.find((item) => item.id === 'mercadopago')
   const stripeConfig = methods.find((item) => item.id === 'stripe')
 
+  // Com os dois gateways ativos, o admin pode deixar o jogador escolher ou fixar um.
+  const brlFixedMethod =
+    currency === 'BRL' && (brlPriority === 'mercadopago' || brlPriority === 'stripe')
+      ? brlPriority
+      : null
+  const lockedMethod =
+    brlFixedMethod && methodsForCurrency.some((item) => item.id === brlFixedMethod)
+      ? brlFixedMethod
+      : null
+
   const defaultMethodId =
     currency === 'BRL'
-      ? mp?.id || stripe?.id || mock?.id || methodsForCurrency[0]?.id || ''
+      ? lockedMethod || mp?.id || stripe?.id || mock?.id || methodsForCurrency[0]?.id || ''
       : stripe?.id || mock?.id || methodsForCurrency[0]?.id || ''
 
-  const activeMethod =
-    methodsForCurrency.find((item) => item.id === selectedMethodId) ||
-    methodsForCurrency.find((item) => item.id === defaultMethodId)
+  const activeMethod = lockedMethod
+    ? methodsForCurrency.find((item) => item.id === lockedMethod)
+    : methodsForCurrency.find((item) => item.id === selectedMethodId) ||
+      methodsForCurrency.find((item) => item.id === defaultMethodId)
 
   const paymentMethod = activeMethod?.id
   const paymentAvailable = Boolean(paymentMethod)
@@ -325,6 +337,7 @@ export function WalletPage() {
           paymentMethod={paymentMethod}
           availableMethods={methodsForCurrency}
           onMethodChange={setSelectedMethodId}
+          brlMethodFixed={lockedMethod}
           paymentAvailable={paymentAvailable}
           simulatedPayment={simulatedPayment}
           packages={packages}

@@ -1177,7 +1177,12 @@
       "policyEyebrow": "Policy",
       "policyTitle": "Methods, webhook and quote",
       "policyHint": "Which providers the shop exposes and the public webhook base URL.",
-      "methodsHint": "Comma-separated: mercadopago, stripe, mock"
+      "methodsHint": "Comma-separated: mercadopago, stripe, mock",
+      "brlPriorityInactive": "Turn on Mercado Pago and Stripe together to choose whether the player picks the method or one stays fixed.",
+      "brlPriorityHint": "The player can choose between both, or the wallet uses only the fixed method.",
+      "brlPriorityUserChoice": "Player chooses (Mercado Pago by default)",
+      "brlPriorityMercadoPago": "Lock Mercado Pago",
+      "brlPriorityStripe": "Lock Stripe (card)"
     },
     "lineage": {
       "dbEyebrow": "MySQL L2",
@@ -1274,6 +1279,7 @@
       "MERCADO_PAGO_ENABLE_CREDIT_CARD": "Enable Credit card",
       "MERCADO_PAGO_ENABLE_DEBIT_CARD": "Enable Debit card",
       "PAYMENT_METHODS": "Payment methods",
+      "PAYMENT_BRL_METHOD_PRIORITY": "BRL method when both gateways are active",
       "PAYMENT_WEBHOOK_BASE_URL": "Webhook base URL",
       "COINS_PER_USD": "Coins per USD",
       "PAYMENT_ALLOW_MOCK": "Allow mock method",

@@ -191,6 +191,8 @@ export interface ApiPaymentCatalog {
   packages: ApiCoinPackage[]
   allow_custom_amount: boolean
   promo: ApiWalletPromo | null
+  /** Prioridade de método para BRL quando ambos os gateways estão ativos. */
+  brl_method_priority?: 'user_choice' | 'mercadopago' | 'stripe'
 }
 
 export interface ApiBonusPreview {

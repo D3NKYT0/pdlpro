@@ -4890,3 +4890,6 @@ msgstr ""
 
 msgid "Modo desativado (Dummy). A mensagem foi descartada propositalmente."
 msgstr ""
+
+msgid "%(key)s aceita apenas %(allowed)s."
+msgstr ""

@@ -5323,5 +5323,8 @@ msgstr "Correo simulado en los logs del servidor (Mock). No se envió ningún co
 msgid "Modo desativado (Dummy). A mensagem foi descartada propositalmente."
 msgstr "Modo desactivado (Dummy). El mensaje de prueba fue descartado a propósito."
 
+msgid "%(key)s aceita apenas %(allowed)s."
+msgstr "%(key)s acepta solo %(allowed)s."
+
 #~ msgid "Extensão de exemplo"
 #~ msgstr "Extensión de ejemplo"

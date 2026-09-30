@@ -245,7 +245,11 @@ def test_quote_uses_active_exchange_rate_and_decimal_rounding(currency, expected
 
 def test_create_order_resolves_stripe_for_brl_when_mercadopago_inactive(owner, mocker, settings):
     from types import SimpleNamespace
-    from apps.payment.application.use_cases import CreatePaymentOrderInput, CreatePaymentOrderUseCase
+
+    from apps.payment.application.use_cases import (
+        CreatePaymentOrderInput,
+        CreatePaymentOrderUseCase,
+    )
 
     settings.STRIPE_ACTIVATE_PAYMENTS = True
     settings.STRIPE_SECRET_KEY = "sk-test"
@@ -260,8 +264,88 @@ def test_create_order_resolves_stripe_for_brl_when_mercadopago_inactive(owner, m
     assert order.currency == "BRL"
 
 
+def _enable_both_gateways(settings):
+    settings.PAYMENT_METHODS = ["mercadopago", "stripe"]
+    settings.STRIPE_ACTIVATE_PAYMENTS = True
+    settings.STRIPE_SECRET_KEY = "sk-test"
+    settings.STRIPE_PUBLISHABLE_KEY = "pk-test"
+    settings.MERCADO_PAGO_ACTIVATE_PAYMENTS = True
+    settings.MERCADO_PAGO_ACCESS_TOKEN = "mp-token"
+    settings.MERCADO_PAGO_PUBLIC_KEY = "mp-pk"
+
+
+def test_create_order_rejects_stripe_brl_when_admin_locks_mercadopago(owner, settings):
+    from apps.payment.application.use_cases import (
+        CreatePaymentOrderInput,
+        CreatePaymentOrderUseCase,
+    )
+
+    _enable_both_gateways(settings)
+    settings.PAYMENT_BRL_METHOD_PRIORITY = "mercadopago"
+    use_case = DependencyInjection.root().create_scope().resolve(CreatePaymentOrderUseCase)
+    with pytest.raises(ValidationDomainError):
+        use_case.execute(
+            CreatePaymentOrderInput(user_id=owner.id, amount=Decimal("10.00"), currency="BRL", method="stripe")
+        )
+
+
+def test_create_order_rejects_mercadopago_when_admin_locks_stripe(owner, settings):
+    from apps.payment.application.use_cases import (
+        CreatePaymentOrderInput,
+        CreatePaymentOrderUseCase,
+    )
+    from apps.payment.domain.exceptions import PaymentMethodUnavailableError
+
+    _enable_both_gateways(settings)
+    settings.PAYMENT_BRL_METHOD_PRIORITY = "stripe"
+    use_case = DependencyInjection.root().create_scope().resolve(CreatePaymentOrderUseCase)
+    with pytest.raises(PaymentMethodUnavailableError):
+        use_case.execute(
+            CreatePaymentOrderInput(user_id=owner.id, amount=Decimal("10.00"), currency="BRL", method="mercadopago")
+        )
+
+
+def test_create_order_uses_fixed_stripe_for_brl(owner, mocker, settings):
+    from types import SimpleNamespace
+
+    from apps.payment.application.use_cases import (
+        CreatePaymentOrderInput,
+        CreatePaymentOrderUseCase,
+    )
+
+    _enable_both_gateways(settings)
+    settings.PAYMENT_BRL_METHOD_PRIORITY = "stripe"
+    mocker.patch("stripe.PaymentIntent.create", return_value=SimpleNamespace(id="pi-fixed", client_secret="cs-fixed"))
+    use_case = DependencyInjection.root().create_scope().resolve(CreatePaymentOrderUseCase)
+    order = use_case.execute(CreatePaymentOrderInput(user_id=owner.id, amount=Decimal("40.00"), currency="BRL"))
+    assert order.method == "stripe"
+    assert order.currency == "BRL"
+
+
+def test_create_order_keeps_stripe_usd_when_mercadopago_is_fixed_for_brl(owner, mocker, settings):
+    from types import SimpleNamespace
+
+    from apps.payment.application.use_cases import (
+        CreatePaymentOrderInput,
+        CreatePaymentOrderUseCase,
+    )
+
+    _enable_both_gateways(settings)
+    settings.PAYMENT_BRL_METHOD_PRIORITY = "mercadopago"
+    mocker.patch("stripe.PaymentIntent.create", return_value=SimpleNamespace(id="pi-usd", client_secret="cs-usd"))
+    use_case = DependencyInjection.root().create_scope().resolve(CreatePaymentOrderUseCase)
+    order = use_case.execute(
+        CreatePaymentOrderInput(user_id=owner.id, amount=Decimal("10.00"), currency="USD", method="stripe")
+    )
+    assert order.method == "stripe"
+    assert order.currency == "USD"
+
+
 def test_create_order_rejects_mercadopago_for_usd(owner, settings):
-    from apps.payment.application.use_cases import CreatePaymentOrderInput, CreatePaymentOrderUseCase
+    from apps.payment.application.use_cases import (
+        CreatePaymentOrderInput,
+        CreatePaymentOrderUseCase,
+    )
 
     settings.MERCADO_PAGO_ACCESS_TOKEN = "mp-token"
     settings.PAYMENT_METHODS = ["mercadopago"]

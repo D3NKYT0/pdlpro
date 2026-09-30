@@ -67,7 +67,7 @@ A API **nunca** devolve segredos em claro: apenas `configured`, `fingerprint`
 
 | Aba | Chaves principais |
 | --- | --- |
-| Pagamentos | Stripe/MP + `PAYMENT_METHODS`, `PAYMENT_WEBHOOK_BASE_URL`, `COINS_PER_USD` |
+| Pagamentos | Stripe/MP + `PAYMENT_METHODS`, `PAYMENT_BRL_METHOD_PRIORITY` (escolha ou método fixo quando os dois estão ativos), `PAYMENT_WEBHOOK_BASE_URL`, `COINS_PER_USD` |
 | Lineage / Game | MySQL L2, SSL, pool, IP/portas, `FAKE_PLAYERS_*` |
 | SMTP / Push | SMTP + `VAPID_*` |
 | OAuth / Auth | Google, Discord, hCaptcha, `WEBAUTHN_*` |

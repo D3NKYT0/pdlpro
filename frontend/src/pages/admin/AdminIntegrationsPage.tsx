@@ -470,6 +470,26 @@ export function AdminIntegrationsPage() {
               >
                 <div className="admin-integrations-stack">
                   {renderText('PAYMENT_METHODS', 'text', t('integrations.payments.methodsHint'))}
+                  {draft.MERCADO_PAGO_ACTIVATE_PAYMENTS === true && draft.STRIPE_ACTIVATE_PAYMENTS === true ? (
+                    <Field
+                      label={t('integrations.fields.PAYMENT_BRL_METHOD_PRIORITY')}
+                      hint={t('integrations.payments.brlPriorityHint')}
+                    >
+                      <Select
+                        aria-label={t('integrations.fields.PAYMENT_BRL_METHOD_PRIORITY')}
+                        value={String(draft.PAYMENT_BRL_METHOD_PRIORITY ?? 'user_choice')}
+                        disabled={save.isPending}
+                        options={[
+                          { value: 'user_choice', label: t('integrations.payments.brlPriorityUserChoice') },
+                          { value: 'mercadopago', label: t('integrations.payments.brlPriorityMercadoPago') },
+                          { value: 'stripe', label: t('integrations.payments.brlPriorityStripe') },
+                        ]}
+                        onChange={(value) => setField('PAYMENT_BRL_METHOD_PRIORITY', value)}
+                      />
+                    </Field>
+                  ) : (
+                    <p className="muted">{t('integrations.payments.brlPriorityInactive')}</p>
+                  )}
                   {renderText('PAYMENT_WEBHOOK_BASE_URL')}
                   {renderText('COINS_PER_USD')}
                   {renderText('PAYMENT_REUSE_HOURS', 'number')}

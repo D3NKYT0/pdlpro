@@ -239,6 +239,73 @@ it('permite recarga em BRL via Stripe quando Mercado Pago estiver inativo', asyn
   })
 })
 
+it('oculta o seletor e cobra no Stripe quando o admin fixa o cartão em BRL', async () => {
+  vi.mocked(paymentApi.catalog).mockResolvedValue({
+    currency: 'BRL',
+    brl_method_priority: 'stripe',
+    methods: [
+      { id: 'mercadopago', public_key: 'mp-key', currencies: ['BRL'] },
+      { id: 'stripe', public_key: 'pk-test', currencies: ['USD', 'BRL'] },
+    ],
+    packages: [],
+    allow_custom_amount: true,
+    promo: null,
+  })
+  vi.mocked(paymentApi.create).mockResolvedValue({
+    id: 'ord-fixed-stripe',
+    amount: '20.00',
+    coins: '20.00',
+    currency: 'BRL',
+    package_code: '',
+    method: 'stripe',
+    status: 'pending',
+    client_secret: 'sec-fixed',
+    checkout_url: '',
+    bonus_applied: '0.00',
+    total_credited: '0.00',
+    created_at: '2026-09-12T12:00:00Z',
+    paid_at: null,
+  })
+  const user = mount()
+  expect(await screen.findByText('Pagamento com cartão via Stripe')).toBeTruthy()
+  expect(screen.queryByRole('radio', { name: 'Mercado Pago' })).toBeNull()
+  expect(screen.queryByRole('radio', { name: 'Stripe (Cartão)' })).toBeNull()
+  await user.type(screen.getByLabelText('Valor em BRL'), '20')
+  await user.click(screen.getByRole('button', { name: 'Comprar agora' }))
+  await waitFor(() => {
+    expect(paymentApi.create).toHaveBeenCalledWith({
+      package_id: undefined,
+      amount: '20',
+      currency: 'BRL',
+      method: 'stripe',
+    })
+  })
+})
+
+it('oculta o seletor e cobra no Mercado Pago quando o admin fixa esse método', async () => {
+  vi.mocked(paymentApi.catalog).mockResolvedValue({
+    currency: 'BRL',
+    brl_method_priority: 'mercadopago',
+    methods: [
+      { id: 'mercadopago', public_key: 'mp-key', currencies: ['BRL'] },
+      { id: 'stripe', public_key: 'pk-test', currencies: ['USD', 'BRL'] },
+    ],
+    packages: [],
+    allow_custom_amount: true,
+    promo: null,
+  })
+  const user = mount()
+  expect(await screen.findByText('Pagamento nacional via Mercado Pago')).toBeTruthy()
+  expect(screen.queryByRole('radio', { name: 'Mercado Pago' })).toBeNull()
+  await user.type(screen.getByLabelText('Valor em BRL'), '15')
+  await user.click(screen.getByRole('button', { name: 'Comprar agora' }))
+  await waitFor(() => {
+    expect(paymentApi.create).toHaveBeenCalledWith(
+      expect.objectContaining({ currency: 'BRL', method: 'mercadopago', amount: '15' }),
+    )
+  })
+})
+
 it('permite alternar entre Mercado Pago e Stripe quando ambos suportam BRL', async () => {
   vi.mocked(paymentApi.catalog).mockResolvedValue({
     currency: 'BRL',

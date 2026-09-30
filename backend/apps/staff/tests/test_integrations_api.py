@@ -298,6 +298,29 @@ def test_storage_patch_toggles_s3_backend(api, superuser, hosts, settings):
 
 
 @pytest.mark.django_db
+def test_payments_patch_brl_method_priority(api, superuser, hosts, settings):
+    api.force_authenticate(superuser)
+    response = api.patch(
+        reverse("staff-integrations-section", kwargs={"section": "payments"}),
+        {"PAYMENT_BRL_METHOD_PRIORITY": " Stripe "},
+        format="json",
+    )
+    assert response.status_code == 200, response.content
+    assert settings.PAYMENT_BRL_METHOD_PRIORITY == "stripe"
+    body = api.get(reverse("staff-integrations-status")).json()
+    field = next(item for item in body["payments"]["fields"] if item["key"] == "PAYMENT_BRL_METHOD_PRIORITY")
+    assert field["value"] == "stripe"
+
+    rejected = api.patch(
+        reverse("staff-integrations-section", kwargs={"section": "payments"}),
+        {"PAYMENT_BRL_METHOD_PRIORITY": "paypal"},
+        format="json",
+    )
+    assert rejected.status_code == 400
+    assert settings.PAYMENT_BRL_METHOD_PRIORITY == "stripe"
+
+
+@pytest.mark.django_db
 def test_payments_patch_methods_list(api, superuser, hosts, settings):
     api.force_authenticate(superuser)
     response = api.patch(

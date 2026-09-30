@@ -22,6 +22,8 @@ type WalletPurchaseCardProps = {
   paymentMethod?: string
   availableMethods?: { id: string; name?: string }[]
   onMethodChange?: (methodId: string) => void
+  /** Quando definido, o admin fixou este gateway para BRL e o seletor de método é ocultado. */
+  brlMethodFixed?: string | null
   paymentAvailable: boolean
   simulatedPayment: boolean
   packages: ApiCoinPackage[]
@@ -46,6 +48,7 @@ export function WalletPurchaseCard({
   paymentMethod,
   availableMethods,
   onMethodChange,
+  brlMethodFixed,
   paymentAvailable,
   simulatedPayment,
   packages,
@@ -131,7 +134,8 @@ export function WalletPurchaseCard({
         ) : null}
       </header>
 
-      {availableMethods && availableMethods.length > 1 ? (
+      {/* Seletor de método: ocultado quando admin fixou o gateway */}
+      {!brlMethodFixed && availableMethods && availableMethods.length > 1 ? (
         <div className="wallet-method-switcher" role="radiogroup" aria-label={t('wallet.purchase.methodGroup')}>
           {availableMethods.map((m) => {
             const label =

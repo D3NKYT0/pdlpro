@@ -5214,5 +5214,8 @@ msgstr "Email simulated in server logs (Mock). No real email was sent over the n
 msgid "Modo desativado (Dummy). A mensagem foi descartada propositalmente."
 msgstr "Disabled mode (Dummy). The test message was discarded on purpose."
 
+msgid "%(key)s aceita apenas %(allowed)s."
+msgstr "%(key)s accepts only %(allowed)s."
+
 #~ msgid "Extensão de exemplo"
 #~ msgstr "Sample extension"

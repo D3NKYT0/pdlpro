@@ -17,7 +17,10 @@ from apps.payment.domain.exceptions import (
     PaymentNotPendingError,
     PaymentOrderNotFoundError,
 )
-from apps.payment.domain.gateways import IPaymentGatewayRegistry
+from apps.payment.domain.gateways import (
+    IPaymentGatewayRegistry,
+    normalize_brl_method_priority,
+)
 from apps.payment.domain.repositories import IPaymentOrderRepository
 from apps.wallet.domain.bonus import IPurchaseBonusPolicy
 from apps.wallet.domain.repositories import IWalletRepository
@@ -76,6 +79,9 @@ class GetPaymentCatalogUseCase(UseCase[None, dict]):
             "packages": packages,
             "allow_custom_amount": True,
             "promo": self._wallets.get_current_purchase_promo(),
+            "brl_method_priority": normalize_brl_method_priority(
+                getattr(settings, "PAYMENT_BRL_METHOD_PRIORITY", "user_choice")
+            ),
         }
 
 
@@ -171,12 +177,21 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
             if currencies and currency not in currencies:
                 raise ValidationDomainError(f"Método '{method}' não aceita {currency}.")
             return method
-        if currency == "USD" and "stripe" in methods_by_id:
-            return "stripe"
-        if currency == "BRL" and "mercadopago" in methods_by_id:
-            return "mercadopago"
-        if currency == "BRL" and "stripe" in methods_by_id:
-            return "stripe"
+        priority = normalize_brl_method_priority(getattr(settings, "PAYMENT_BRL_METHOD_PRIORITY", "user_choice"))
+        if currency == "USD":
+            if "stripe" in methods_by_id:
+                return "stripe"
+        elif currency == "BRL":
+            if priority == "mercadopago" and "mercadopago" in methods_by_id:
+                return "mercadopago"
+            if priority == "stripe" and "stripe" in methods_by_id:
+                # Stripe fixo para BRL: Mercado Pago fica indisponível para BRL
+                return "stripe"
+            # user_choice ou fallback automático
+            if "mercadopago" in methods_by_id:
+                return "mercadopago"
+            if "stripe" in methods_by_id:
+                return "stripe"
         if "mock" in methods_by_id:
             return "mock"
         raise PaymentMethodUnavailableError()

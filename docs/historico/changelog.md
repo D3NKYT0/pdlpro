@@ -8,6 +8,24 @@ Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [Unreleased]
+
+### Adicionado
+
+- **Opções do checkout Mercado Pago**: em Integrações → Pagamentos, o admin liga ou desliga PIX, boleto, cartão de crédito e cartão de débito. O checkout só oferece o que estiver ativo, e a carteira explica o fluxo quando resta só PIX ou só boleto.
+- **Recarga em BRL pelo Stripe**: com o Mercado Pago inativo, a carteira cobra em reais pelo Stripe. Com os dois ativos, o jogador vê um seletor, Mercado Pago por padrão e Stripe como cartão.
+- **Método fixo em BRL**: no mesmo cartão de política, quando Mercado Pago e Stripe estão ativos ao mesmo tempo, o admin escolhe se o jogador seleciona o método ou se um fica fixo. Mercado Pago fixo reserva o Stripe para USD; Stripe fixo tira o Mercado Pago da carteira. A criação do pedido recusa o método que ficou de fora.
+- **Gerenciar conta do jogo**: em Contas, o jogador altera a senha do jogo, define a conta ativa e desvincula uma conta adicional sem apagá-la no servidor.
+
+### Alterado
+
+- **Carteira**: a troca de moeda só mostra BRL ou USD quando existe um método que a aceita. Os avisos separam o Stripe em dólar e em real.
+- **Produção**: o boot de produção mantém o pagamento simulado desligado. O Nginx aumenta os buffers do proxy e envia `X-Frame-Options: DENY`.
+
+### Corrigido
+
+- **Bloqueio de chamado e cupom no PostgreSQL**: o lock passa a pegar só a linha do chamado e do código promocional, sem o `LEFT JOIN`, e deixa de falhar no `SELECT FOR UPDATE`.
+
 ## [2.6.6] - 2026-09-30
 
 Lançamento da versão 2.6.6 do PDL PRO com o dashboard de métricas staff em tempo real e observabilidade, log de auditoria administrativa, cobertura completa de domínios Google na política de CSP e harmonização visual com a identidade do tema.

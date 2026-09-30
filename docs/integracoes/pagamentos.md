@@ -49,6 +49,12 @@ As flags de ativação dos provedores controlam o processamento real. O mock é
 exclusivo de desenvolvimento e testes; `core.settings.test` o habilita
 explicitamente.
 
+Quando Mercado Pago e Stripe estão ativos ao mesmo tempo, `PAYMENT_BRL_METHOD_PRIORITY`
+(aba Pagamentos) decide o BRL: `user_choice` mostra o seletor e deixa Mercado Pago
+como padrão; `mercadopago` fixa o Mercado Pago e reserva o Stripe para USD;
+`stripe` fixa o cartão e tira o Mercado Pago do catálogo. A mesma regra vale na
+criação do pedido: o cliente não escolhe o método que o admin fixou.
+
 `PAYMENT_WEBHOOK_BASE_URL` deve ser o HTTPS público da instalação. Rotas:
 `/api/v1/system/webhooks/mercadopago/` e `/api/v1/system/webhooks/stripe/`.
 Não copie URL de outro ambiente sem conferir o domínio.

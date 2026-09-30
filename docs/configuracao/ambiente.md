@@ -127,6 +127,7 @@ permite script inline do Jazzmin/Spectacular. Produção acrescenta
 | Variável | Descrição |
 |---|---|
 | `PAYMENT_METHODS` | Provedores expostos, como `mock,mercadopago,stripe` |
+| `PAYMENT_BRL_METHOD_PRIORITY` | Com Mercado Pago e Stripe ativos juntos em BRL: `user_choice` (o jogador escolhe; padrão), `mercadopago` ou `stripe` (método fixo). Stripe em USD não muda |
 | `PAYMENT_REUSE_HOURS` | Janela de reaproveitamento de pedidos pendentes |
 | `PAYMENT_WEBHOOK_BASE_URL` | Base pública usada para montar callbacks |
 | `COINS_PER_USD` | Conversão padrão quando não há configuração no banco |

@@ -10,6 +10,7 @@ from django.utils.translation import gettext as _
 
 from apps.staff.domain.integrations import (
     BOOL_KEYS,
+    CHOICE_KEYS,
     CLEAR_SENTINEL,
     FLOAT_KEYS,
     INT_KEYS,
@@ -70,6 +71,14 @@ def _coerce_value(key: str, raw: Any) -> Any:
             raise ValidationDomainError(_("%(key)s precisa ser um número.") % {"key": key}) from exc
     if key in LIST_KEYS:
         return _coerce_list(raw)
+    if key in CHOICE_KEYS:
+        text = "" if raw is None else str(raw).strip().lower()
+        if text not in CHOICE_KEYS[key]:
+            allowed = ", ".join(sorted(CHOICE_KEYS[key]))
+            raise ValidationDomainError(
+                _("%(key)s aceita apenas %(allowed)s.") % {"key": key, "allowed": allowed}
+            )
+        return text
     text = "" if raw is None else str(raw).strip()
     return text
 

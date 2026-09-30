@@ -75,6 +75,7 @@ SECTION_KEYS: dict[str, tuple[str, ...]] = {
         "MERCADO_PAGO_ENABLE_CREDIT_CARD",
         "MERCADO_PAGO_ENABLE_DEBIT_CARD",
         "PAYMENT_METHODS",
+        "PAYMENT_BRL_METHOD_PRIORITY",
         "PAYMENT_WEBHOOK_BASE_URL",
         "COINS_PER_USD",
         "PAYMENT_ALLOW_MOCK",
@@ -220,6 +221,11 @@ LIST_KEYS = frozenset(
         "WEBAUTHN_ORIGINS",
     }
 )
+
+# Valores fechados aceitos pelo configurador.
+CHOICE_KEYS: dict[str, frozenset[str]] = {
+    "PAYMENT_BRL_METHOD_PRIORITY": frozenset({"user_choice", "mercadopago", "stripe"}),
+}
 
 
 @dataclass(frozen=True)

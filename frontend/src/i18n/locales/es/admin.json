@@ -1177,7 +1177,12 @@
       "policyEyebrow": "Política",
       "policyTitle": "Métodos, webhook y cotización",
       "policyHint": "Define qué proveedores expone la tienda y la URL pública de webhooks.",
-      "methodsHint": "Separados por coma: mercadopago, stripe, mock"
+      "methodsHint": "Separados por coma: mercadopago, stripe, mock",
+      "brlPriorityInactive": "Activa Mercado Pago y Stripe a la vez para elegir si el jugador selecciona el método o si uno queda fijo.",
+      "brlPriorityHint": "El jugador puede elegir entre los dos, o la cartera usa solo el método fijo.",
+      "brlPriorityUserChoice": "El jugador elige (Mercado Pago por defecto)",
+      "brlPriorityMercadoPago": "Fijar Mercado Pago",
+      "brlPriorityStripe": "Fijar Stripe (tarjeta)"
     },
     "lineage": {
       "dbEyebrow": "MySQL L2",
@@ -1274,6 +1279,7 @@
       "MERCADO_PAGO_ENABLE_CREDIT_CARD": "Habilitar Tarjeta de crédito",
       "MERCADO_PAGO_ENABLE_DEBIT_CARD": "Habilitar Tarjeta de débito",
       "PAYMENT_METHODS": "Métodos de pago",
+      "PAYMENT_BRL_METHOD_PRIORITY": "Método en BRL con los dos gateways activos",
       "PAYMENT_WEBHOOK_BASE_URL": "URL base de webhooks",
       "COINS_PER_USD": "Monedas por USD",
       "PAYMENT_ALLOW_MOCK": "Permitir método mock",

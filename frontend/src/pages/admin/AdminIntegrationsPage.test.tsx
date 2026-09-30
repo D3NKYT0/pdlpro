@@ -49,6 +49,7 @@ const statusFixture = {
       { key: 'MERCADO_PAGO_ENABLE_CREDIT_CARD', configured: true, fingerprint: '', value: true, masked: '' },
       { key: 'MERCADO_PAGO_ENABLE_DEBIT_CARD', configured: true, fingerprint: '', value: true, masked: '' },
       { key: 'PAYMENT_METHODS', configured: true, fingerprint: '', value: ['mercadopago', 'stripe'], masked: '' },
+      { key: 'PAYMENT_BRL_METHOD_PRIORITY', configured: true, fingerprint: '', value: 'user_choice', masked: '' },
       { key: 'PAYMENT_WEBHOOK_BASE_URL', configured: false, fingerprint: '', value: '', masked: '' },
       { key: 'COINS_PER_USD', configured: true, fingerprint: '', value: '5.00', masked: '' },
       { key: 'PAYMENT_ALLOW_MOCK', configured: true, fingerprint: '', value: false, masked: '' },
@@ -247,6 +248,29 @@ describe('AdminIntegrationsPage', () => {
     await user.click(saveButton)
     expect(staffApi.saveIntegrationSection).toHaveBeenCalledTimes(1)
     resolveSave(statusFixture)
+  })
+
+  it('mostra a escolha de método BRL só quando Mercado Pago e Stripe estão ativos', async () => {
+    const user = userEvent.setup()
+    renderPage()
+    expect(await screen.findByText(/ative mercado pago e stripe ao mesmo tempo/i)).toBeInTheDocument()
+    expect(screen.queryByRole('combobox', { name: /método em brl com os dois gateways ativos/i })).toBeNull()
+
+    await user.click(screen.getByRole('checkbox', { name: /ativar mercado pago/i }))
+    await user.click(screen.getByRole('checkbox', { name: /ativar stripe/i }))
+    await user.click(screen.getByRole('combobox', { name: /método em brl com os dois gateways ativos/i }))
+    await user.click(await screen.findByRole('option', { name: /fixar stripe \(cartão\)/i }))
+    await user.click(screen.getByRole('button', { name: /salvar/i }))
+    await waitFor(() =>
+      expect(staffApi.saveIntegrationSection).toHaveBeenCalledWith(
+        'payments',
+        expect.objectContaining({
+          MERCADO_PAGO_ACTIVATE_PAYMENTS: true,
+          STRIPE_ACTIVATE_PAYMENTS: true,
+          PAYMENT_BRL_METHOD_PRIORITY: 'stripe',
+        }),
+      ),
+    )
   })
 
   it('abre Denkynho e mostra o campo do modelo de IA', async () => {

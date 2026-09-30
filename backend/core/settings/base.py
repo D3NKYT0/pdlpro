@@ -315,6 +315,11 @@ PAYMENT_ALLOW_MOCK = env.bool("PAYMENT_ALLOW_MOCK", default=False)
 PAYMENT_MOCK_AUTO_CONFIRM = env.bool("PAYMENT_MOCK_AUTO_CONFIRM", default=False)
 PAYMENT_REUSE_HOURS = env.int("PAYMENT_REUSE_HOURS", default=2)
 PAYMENT_WEBHOOK_BASE_URL = env("PAYMENT_WEBHOOK_BASE_URL", default="")
+# Quando Mercado Pago e Stripe estão ativos ao mesmo tempo em BRL.
+# "user_choice" = o jogador escolhe (Mercado Pago por padrão).
+# "mercadopago" = só Mercado Pago em BRL; Stripe continua em USD.
+# "stripe"      = só Stripe em BRL; Mercado Pago fica indisponível.
+PAYMENT_BRL_METHOD_PRIORITY = env("PAYMENT_BRL_METHOD_PRIORITY", default="user_choice")
 COINS_PER_USD = env("COINS_PER_USD", default="5.00")
 MERCADO_PAGO_ACCESS_TOKEN = env("MERCADO_PAGO_ACCESS_TOKEN", default="")
 MERCADO_PAGO_PUBLIC_KEY = env("MERCADO_PAGO_PUBLIC_KEY", default="")
