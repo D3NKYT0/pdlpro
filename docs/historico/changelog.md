@@ -8,7 +8,9 @@ Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
-## [Unreleased]
+## [2.6.7] - 2026-09-30
+
+Lançamento da versão 2.6.7 do PDL PRO com a escolha do método de recarga em BRL, as opções do checkout Mercado Pago, a recarga em reais pelo Stripe e o gerenciamento da conta do jogo.
 
 ### Adicionado
 
