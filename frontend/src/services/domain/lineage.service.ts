@@ -161,6 +161,11 @@ export const lineageApi = {
     }),
   unlink: (login: string) =>
     request('/customer/server/accounts/unlink/', { method: 'POST', body: JSON.stringify({ login }) }),
+  changePassword: (login: string, password: string) =>
+    request<{ ok: boolean }>('/customer/server/accounts/password/', {
+      method: 'POST',
+      body: JSON.stringify({ login, password }),
+    }),
   characters: (login?: string) =>
     request<ApiGameCharacter[]>(`/customer/server/characters/${login ? `?login=${encodeURIComponent(login)}` : ''}`),
   character: (login: string, charId: number) =>

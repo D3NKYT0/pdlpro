@@ -22,6 +22,8 @@ vi.mock('../services/domain/lineage.service', () => ({
     servicePrices: vi.fn(),
     purchaseSlots: vi.fn(),
     createCharacter: vi.fn(),
+    changePassword: vi.fn(),
+    unlink: vi.fn(),
   },
   serviceAvailable: vi.fn(() => true),
 }))
@@ -298,6 +300,29 @@ it('renderiza as 7 vagas de personagens exibindo as desocupadas como vazias e cl
   await user.click(emptySlotButtons[0])
 
   expect(await screen.findByText('Criar Novo Personagem')).toBeVisible()
+})
+
+it('exibe botão Gerenciar para as contas e abre o modal de gerenciamento ao clicar', async () => {
+  vi.mocked(lineageApi.accounts).mockResolvedValue({
+    accounts: [
+      { login: 'denky', is_primary: true, linked: true },
+      { login: 'alt1', is_primary: false, linked: true },
+    ],
+    slots: { used: 2, total: 3, can_link: true },
+    primary: { login: 'denky', status: 'owned' },
+  } as Awaited<ReturnType<typeof lineageApi.accounts>>)
+  vi.mocked(lineageApi.characters).mockResolvedValue([])
+
+  const user = mount()
+
+  const manageButtons = await screen.findAllByRole('button', { name: /^Gerenciar/i })
+  expect(manageButtons).toHaveLength(2)
+  expect(manageButtons[0]).toHaveClass('ui-button--orange', 'account-manage-btn')
+
+  await user.click(manageButtons[0])
+
+  expect(await screen.findByText('Gerenciar Conta: denky')).toBeVisible()
+  expect(screen.getByText('Alterar senha do jogo')).toBeVisible()
 })
 
 

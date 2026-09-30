@@ -58,6 +58,7 @@ function Showcase() {
             <Button variant="secondary" onClick={() => setLastAction('Edição cancelada no exemplo.')}>Cancelar</Button>
             <Button variant="success" onClick={() => setLastAction('Solicitação aprovada no exemplo.')}><Check aria-hidden="true" /> Aprovar</Button>
             <Button variant="warning" onClick={() => setLastAction('Solicitação enviada para revisão no exemplo.')}><ShieldAlert aria-hidden="true" /> Revisar</Button>
+            <Button variant="orange" onClick={() => setLastAction('Ação com destaque laranja no exemplo.')}>Gerenciar</Button>
             <Button variant="danger" onClick={() => setLastAction('Item removido apenas neste exemplo.')}><Trash2 aria-hidden="true" /> Remover</Button>
             <Button variant="muted" disabled>Bloqueado</Button>
           </div>

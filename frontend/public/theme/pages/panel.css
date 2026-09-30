@@ -1328,6 +1328,315 @@ html.pdl-panel .buy-slots-actions {
   margin-top: 6px;
 }
 
+/* ========================================================
+   MODAL DE GERENCIAMENTO DE CONTA LINEAGE
+   ======================================================== */
+html.pdl-panel .account-manage-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  --ui-button-tone: hue-rotate(-22deg) saturate(2.4) brightness(1.1);
+}
+
+html.pdl-panel .account-manage-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+html.pdl-panel .manage-account-modal {
+  max-width: 520px;
+  width: 100%;
+}
+
+html.pdl-panel .manage-account-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+html.pdl-panel .manage-account-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 15px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 22%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+html.pdl-panel .manage-account-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+html.pdl-panel .manage-account-icon-wrap {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 30%, transparent);
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 10%, transparent);
+  color: var(--panel-gold-bright, #e5a93b);
+  transform: rotate(45deg);
+}
+
+html.pdl-panel .manage-account-icon-wrap.is-active {
+  border-color: color-mix(in srgb, var(--panel-gold-bright, #e5a93b) 60%, transparent);
+  background: color-mix(in srgb, var(--panel-gold-bright, #e5a93b) 22%, transparent);
+  box-shadow: 0 0 12px rgba(229, 169, 59, 0.2);
+}
+
+html.pdl-panel .manage-account-icon-wrap svg {
+  width: 17px;
+  height: 17px;
+  transform: rotate(-45deg);
+}
+
+html.pdl-panel .manage-account-hero-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+html.pdl-panel .manage-account-hero-login {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+  word-break: break-all;
+}
+
+html.pdl-panel .manage-account-badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+html.pdl-panel .manage-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+html.pdl-panel .manage-badge svg {
+  width: 11px;
+  height: 11px;
+}
+
+html.pdl-panel .manage-badge.is-gold {
+  background: rgba(229, 169, 59, 0.15);
+  border: 1px solid rgba(229, 169, 59, 0.4);
+  color: var(--panel-gold-bright, #e5a93b);
+}
+
+html.pdl-panel .manage-badge.is-blue {
+  background: rgba(80, 140, 220, 0.12);
+  border: 1px solid rgba(80, 140, 220, 0.35);
+  color: #8bb6e8;
+}
+
+html.pdl-panel .manage-badge.is-green {
+  background: rgba(128, 201, 135, 0.12);
+  border: 1px solid rgba(128, 201, 135, 0.35);
+  color: #80c987;
+}
+
+html.pdl-panel .manage-badge.is-muted {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.45);
+}
+
+html.pdl-panel .manage-account-section {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 14px 16px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html.pdl-panel .manage-account-section.is-danger-zone {
+  border-color: rgba(229, 83, 83, 0.22);
+  background: rgba(229, 83, 83, 0.04);
+}
+
+html.pdl-panel .manage-account-section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+html.pdl-panel .manage-account-section-header > svg {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  color: var(--panel-gold-bright, #e5a93b);
+}
+
+html.pdl-panel .manage-account-section.is-danger-zone .manage-account-section-header > svg {
+  color: var(--danger, #e55353);
+}
+
+html.pdl-panel .manage-account-section-header h3 {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.02em;
+}
+
+html.pdl-panel .manage-account-section-header p {
+  margin: 3px 0 0;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.45;
+}
+
+html.pdl-panel .manage-account-password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+html.pdl-panel .manage-password-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+html.pdl-panel .manage-password-input-wrap input {
+  width: 100%;
+  height: 38px;
+  padding-right: 38px;
+}
+
+html.pdl-panel .manage-password-toggle-btn {
+  position: absolute;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+html.pdl-panel .manage-password-toggle-btn:hover {
+  color: var(--panel-gold-bright, #e5a93b);
+}
+
+html.pdl-panel .manage-password-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+html.pdl-panel .manage-password-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border-radius: 4px;
+  background: rgba(229, 83, 83, 0.12);
+  border: 1px solid rgba(229, 83, 83, 0.35);
+  color: #fca5a5;
+  font-size: 11.5px;
+}
+
+html.pdl-panel .manage-password-error svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+html.pdl-panel .manage-password-submit-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+html.pdl-panel .manage-unlink-notice {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11.5px;
+  padding: 9px 12px;
+  border-radius: 4px;
+}
+
+html.pdl-panel .manage-unlink-notice.is-primary-locked {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+html.pdl-panel .manage-unlink-notice svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: #80c987;
+}
+
+html.pdl-panel .manage-unlink-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+html.pdl-panel .manage-unlink-confirm-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 11px 13px;
+  border-radius: 4px;
+  background: rgba(229, 83, 83, 0.08);
+  border: 1px solid rgba(229, 83, 83, 0.3);
+}
+
+html.pdl-panel .manage-unlink-confirm-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11.5px;
+  color: #fca5a5;
+  line-height: 1.4;
+}
+
+html.pdl-panel .manage-unlink-confirm-text svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+html.pdl-panel .manage-unlink-confirm-btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
 html.pdl-panel .buy-slots-actions .btn {
   height: 42px;
   padding: 0 20px;

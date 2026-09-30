@@ -12,6 +12,7 @@ html.pdl-panel .btn.ui-button:disabled {
 html.pdl-panel .btn.ui-button--success { --ui-button-tone: hue-rotate(65deg) saturate(1.35); filter: var(--ui-button-tone); }
 html.pdl-panel .btn.ui-button--yellow { --ui-button-tone: hue-rotate(22deg) saturate(1.6) brightness(1.24); filter: var(--ui-button-tone); }
 html.pdl-panel .btn.ui-button--warning { --ui-button-tone: hue-rotate(-12deg) saturate(1.8) brightness(1.12); filter: var(--ui-button-tone); }
+html.pdl-panel .btn.ui-button--orange { --ui-button-tone: hue-rotate(-22deg) saturate(2.4) brightness(1.1); filter: var(--ui-button-tone); }
 html.pdl-panel .btn.ui-button--danger { --ui-button-tone: hue-rotate(-38deg) saturate(2); filter: var(--ui-button-tone); }
 html.pdl-panel .btn.ui-button--muted { --ui-button-tone: saturate(0) brightness(0.88); filter: var(--ui-button-tone); }
 html.pdl-panel .btn.ui-button.ui-button--sm { height: 36px; padding: 0 14px; font-size: 12px; }

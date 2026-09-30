@@ -14,9 +14,10 @@ import { useActiveAccount } from '../contexts/ActiveAccountContext'
 import { CharacterAvatar } from '../components/character/CharacterAvatar'
 import { BuySlotsModal } from '../components/character/BuySlotsModal'
 import { CreateCharacterModal } from '../components/character/CreateCharacterModal'
+import { ManageAccountModal } from '../components/character/ManageAccountModal'
 import { GamepadIcon } from '../components/icons'
 import { getClassName } from '../lib/lineage'
-import { isApiError, lineageApi, serviceAvailable, walletApi } from '../services/api'
+import { isApiError, lineageApi, serviceAvailable, walletApi, type ApiAccessibleAccount } from '../services/api'
 import { useLaunchAccess } from '../hooks/useLaunchAccess'
 
 export function AccountsPage() {
@@ -43,6 +44,7 @@ export function AccountsPage() {
   const [buyingSlots, setBuyingSlots] = useState(false)
   const [createCharacterOpen, setCreateCharacterOpen] = useState(false)
   const [creatingCharacter, setCreatingCharacter] = useState(false)
+  const [managingAccount, setManagingAccount] = useState<ApiAccessibleAccount | null>(null)
 
   const linkedAccounts = accounts.data?.accounts ?? []
   const primaryAccount = linkedAccounts.find((item) => item.is_primary)
@@ -276,6 +278,17 @@ export function AccountsPage() {
                         <b className={characters.isError && item.login === selectedLogin ? 'is-invalid' : ''}>
                           {characters.isError && item.login === selectedLogin ? t('accounts.invalid') : t('accounts.linked')}
                         </b>
+                        <Button
+                          variant="orange"
+                          size="sm"
+                          type="button"
+                          className="account-manage-btn"
+                          onClick={() => setManagingAccount(item)}
+                          aria-label={t('accounts.manageAccount', { defaultValue: 'Gerenciar conta {{login}}', login: item.login })}
+                        >
+                          <KeyRound aria-hidden="true" />
+                          <span>{t('accounts.manage', { defaultValue: 'Gerenciar' })}</span>
+                        </Button>
                         {isActive ? (
                           <span className="account-status-active">{t('accounts.active', { defaultValue: 'Ativa' })}</span>
                         ) : (
@@ -754,6 +767,22 @@ export function AccountsPage() {
         onClose={() => setCreateCharacterOpen(false)}
         onConfirm={handleCreateCharacter}
       />
+
+      {managingAccount ? (
+        <ManageAccountModal
+          open={Boolean(managingAccount)}
+          account={managingAccount}
+          isActive={managingAccount.login.toLowerCase() === selectedLogin?.toLowerCase()}
+          onClose={() => setManagingAccount(null)}
+          onSelectActive={(login) => {
+            void selectActiveAccount(login)
+          }}
+          onUnlinkSuccess={() => {
+            setManagingAccount(null)
+            void queryClient.invalidateQueries({ queryKey: ['lineage-accounts'] })
+          }}
+        />
+      ) : null}
     </div>
   )
 }

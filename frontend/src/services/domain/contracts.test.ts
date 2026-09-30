@@ -132,6 +132,7 @@ const contracts: Contract[] = [
   ['lineage.emailLink', () => lineageApi.requestLinkByEmail('a@b.dev'), '/customer/server/accounts/link-email/', 'POST', { email: 'a@b.dev' }],
   ['lineage.confirmLink', () => lineageApi.confirmLinkByEmail('token'), '/customer/server/accounts/link-email/confirm/', 'POST', { token: 'token' }],
   ['lineage.unlink', () => lineageApi.unlink('hero'), '/customer/server/accounts/unlink/', 'POST', { login: 'hero' }],
+  ['lineage.changePassword', () => lineageApi.changePassword('hero', 'newsecret123'), '/customer/server/accounts/password/', 'POST', { login: 'hero', password: 'newsecret123' }],
   ['lineage.characters', () => lineageApi.characters(), '/customer/server/characters/'],
   ['lineage.accountCharacters', () => lineageApi.characters('a&b'), '/customer/server/characters/?login=a%26b'],
   ['lineage.character', () => lineageApi.character('a&b', 7), '/customer/server/characters/7/?login=a%26b'],

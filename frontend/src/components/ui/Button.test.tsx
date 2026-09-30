@@ -33,3 +33,12 @@ it('aplica a variante amarela sem reusar o âmbar de alerta', () => {
   expect(button).toHaveClass('ui-button--yellow')
   expect(button).not.toHaveClass('ui-button--warning')
 })
+
+it('aplica a variante laranja com sua classe correspondente', () => {
+  render(<Button variant="orange">Gerenciar</Button>)
+  const button = screen.getByRole('button', { name: 'Gerenciar' })
+  expect(button).toHaveClass('ui-button--orange')
+  expect(button).not.toHaveClass('ui-button--warning')
+  expect(button).not.toHaveClass('ghost')
+})
+
