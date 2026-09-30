@@ -134,20 +134,29 @@ class DjangoMetricsRepository(IMetricsRepository):
             return 0
 
     @staticmethod
-    def _daily_series(qs, *, date_field: str) -> list[MetricSeries]:
+    def _daily_series(qs, *, date_field: str, days: int = 7) -> list[MetricSeries]:
+        today = timezone.localdate()
+        target_dates = [today - timedelta(days=i) for i in range(days - 1, -1, -1)]
         rows = (
             qs.annotate(day=TruncDate(date_field))
             .values("day")
             .annotate(total=Count("id"))
             .order_by("day")
         )
+        counts = {
+            (r["day"].isoformat() if hasattr(r["day"], "isoformat") else str(r["day"])[:10]): r["total"]
+            for r in rows
+            if r["day"]
+        }
         return [
-            MetricSeries(label=row["day"].isoformat() if row["day"] else "", value=row["total"])
-            for row in rows
+            MetricSeries(label=d.isoformat(), value=counts.get(d.isoformat(), 0))
+            for d in target_dates
         ]
 
     @staticmethod
-    def _revenue_series(since) -> list[MetricSeries]:
+    def _revenue_series(since, days: int = 7) -> list[MetricSeries]:
+        today = timezone.localdate()
+        target_dates = [today - timedelta(days=i) for i in range(days - 1, -1, -1)]
         try:
             from apps.payment.infrastructure.models import PedidoPagamento
 
@@ -158,12 +167,17 @@ class DjangoMetricsRepository(IMetricsRepository):
                 .annotate(total=Sum("amount"))
                 .order_by("day")
             )
+            totals = {
+                (r["day"].isoformat() if hasattr(r["day"], "isoformat") else str(r["day"])[:10]): float(r["total"] or 0)
+                for r in rows
+                if r["day"]
+            }
             return [
                 MetricSeries(
-                    label=row["day"].isoformat() if row["day"] else "",
-                    value=float(row["total"] or 0),
+                    label=d.isoformat(),
+                    value=totals.get(d.isoformat(), 0.0),
                 )
-                for row in rows
+                for d in target_dates
             ]
         except (DatabaseError, ImportError, AttributeError):
-            return []
+            return [MetricSeries(label=d.isoformat(), value=0.0) for d in target_dates]

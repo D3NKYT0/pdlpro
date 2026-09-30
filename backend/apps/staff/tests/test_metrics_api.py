@@ -52,6 +52,8 @@ def test_metrics_dashboard_success(api, staff_user):
     assert "audit_events_24h" in data
     assert "registrations_series" in data
     assert "revenue_series" in data
+    assert len(data["registrations_series"]) == 7
+    assert len(data["revenue_series"]) == 7
     assert "recent_audit" in data
     assert "top_actions" in data
     assert isinstance(data["registrations_today"], int)

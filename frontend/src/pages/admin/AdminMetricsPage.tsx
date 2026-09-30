@@ -39,19 +39,53 @@ function KpiCard({
   )
 }
 
-function MiniBar({ series, height = 48 }: { series: ApiMetricSeries[]; height?: number }) {
+function formatDayLabel(isoDate: string): string {
+  if (!isoDate) return ''
+  const parts = isoDate.split('-')
+  if (parts.length === 3) {
+    return `${parts[2]}/${parts[1]}`
+  }
+  return isoDate
+}
+
+function MiniBar({
+  series,
+  height = 72,
+  tone = 'gold',
+  formatter,
+}: {
+  series: ApiMetricSeries[]
+  height?: number
+  tone?: 'gold' | 'finance'
+  formatter?: (val: number) => string
+}) {
   if (!series.length) return <span className="muted">—</span>
   const max = Math.max(...series.map((s) => s.value), 1)
+
   return (
-    <div className="metrics-minibar" style={{ height }} role="img" aria-label="sparkline">
-      {series.map((s, i) => (
-        <div
-          key={i}
-          className="metrics-minibar-col"
-          style={{ height: `${(s.value / max) * 100}%` }}
-          title={`${s.label}: ${s.value}`}
-        />
-      ))}
+    <div className="metrics-minibar-wrapper">
+      <div className="metrics-minibar" style={{ height }} role="img" aria-label="sparkline" data-tone={tone}>
+        {series.map((s, i) => {
+          const isZero = s.value === 0
+          const pct = isZero ? 0 : Math.max(Math.round((s.value / max) * 100), 8)
+          const displayVal = formatter ? formatter(s.value) : s.value
+          const dayLabel = formatDayLabel(s.label)
+          const tooltip = `${dayLabel} (${s.label}): ${displayVal}`
+
+          return (
+            <div key={i} className="metrics-minibar-item" title={tooltip}>
+              <div className="metrics-minibar-track">
+                <div
+                  className="metrics-minibar-col"
+                  style={{ height: isZero ? '3px' : `${pct}%` }}
+                  data-zero={isZero ? 'true' : undefined}
+                />
+              </div>
+              <span className="metrics-minibar-label">{dayLabel}</span>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
@@ -155,11 +189,16 @@ export function AdminMetricsPage() {
           <div className="metrics-charts-row">
             <Card className="metrics-chart-card">
               <h3>{t('metrics.registrationsSeries')}</h3>
-              <MiniBar series={d.registrations_series} height={64} />
+              <MiniBar series={d.registrations_series} height={72} tone="gold" />
             </Card>
             <Card className="metrics-chart-card">
               <h3>{t('metrics.revenueSeries')}</h3>
-              <MiniBar series={d.revenue_series} height={64} />
+              <MiniBar
+                series={d.revenue_series}
+                height={72}
+                tone="finance"
+                formatter={(val) => `R$ ${val.toFixed(2)}`}
+              />
             </Card>
           </div>
 

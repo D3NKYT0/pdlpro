@@ -152,4 +152,29 @@ describe('AdminMetricsPage', () => {
       client.clear()
     }
   })
+
+  it('renders series charts with day labels and tones', () => {
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: Infinity } } })
+    client.setQueryData(['staff-metrics-dashboard'], mockMetrics)
+
+    try {
+      const html = renderToStaticMarkup(
+        wrap(
+          <QueryClientProvider client={client}>
+            <MemoryRouter>
+              <AdminMetricsPage />
+            </MemoryRouter>
+          </QueryClientProvider>,
+        ),
+      )
+      expect(html).toContain('data-tone="gold"')
+      expect(html).toContain('data-tone="finance"')
+      expect(html).toContain('24/09')
+      expect(html).toContain('25/09')
+      expect(html).toContain('26/09')
+      expect(html).toContain('R$ 1500.50')
+    } finally {
+      client.clear()
+    }
+  })
 })
