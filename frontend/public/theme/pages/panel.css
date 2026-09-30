@@ -8084,37 +8084,53 @@ html.pdl-panel .wallet-currency-badge span {
 }
 
 html.pdl-panel .wallet-method-switcher {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 3px;
   margin-bottom: 14px;
+  padding: 3px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 19%, transparent);
+  background: rgba(4, 4, 3, 0.55);
 }
 
 html.pdl-panel .wallet-method-btn {
   display: inline-flex;
+  min-height: 34px;
   align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
-  background: rgba(4, 4, 3, 0.5);
-  color: rgba(255, 255, 255, 0.55);
+  justify-content: center;
+  gap: 7px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.42);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   cursor: pointer;
-  transition: all 170ms ease;
+  transition: color 170ms ease, border-color 170ms ease, background 170ms ease;
+}
+
+html.pdl-panel .wallet-method-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 1.6;
 }
 
 html.pdl-panel .wallet-method-btn:hover {
-  color: rgba(255, 255, 255, 0.85);
-  border-color: color-mix(in srgb, var(--panel-gold) 45%, transparent);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 html.pdl-panel .wallet-method-btn.is-active {
-  border-color: color-mix(in srgb, var(--panel-gold-bright) 45%, transparent);
-  background: linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 20%, transparent), color-mix(in srgb, var(--panel-gold) 7%, transparent));
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 27%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 18%, transparent), color-mix(in srgb, var(--panel-gold) 6%, transparent));
   color: var(--panel-gold-bright);
-  box-shadow: inset 0 0 14px color-mix(in srgb, var(--panel-gold) 4%, transparent);
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--panel-gold) 3.5%, transparent);
+}
+
+html.pdl-panel .wallet-method-btn:focus-visible {
+  outline: 1px solid color-mix(in srgb, var(--panel-gold-bright) 55%, transparent);
+  outline-offset: 2px;
 }
 
 html.pdl-panel .wallet-currency-switch button {

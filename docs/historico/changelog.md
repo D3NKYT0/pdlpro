@@ -21,7 +21,7 @@ Lançamento da versão 2.6.7 do PDL PRO com a escolha do método de recarga em B
 
 ### Alterado
 
-- **Carteira**: a troca de moeda só mostra BRL ou USD quando existe um método que a aceita. Os avisos separam o Stripe em dólar e em real.
+- **Carteira**: a troca de moeda só mostra BRL ou USD quando existe um método que a aceita. Os avisos separam o Stripe em dólar e em real. O seletor de Mercado Pago e Stripe usa a mesma faixa da troca de moeda.
 - **Produção**: o boot de produção mantém o pagamento simulado desligado. O Nginx aumenta os buffers do proxy e envia `X-Frame-Options: DENY`.
 
 ### Corrigido

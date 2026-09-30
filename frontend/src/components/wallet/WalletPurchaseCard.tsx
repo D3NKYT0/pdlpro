@@ -144,6 +144,8 @@ export function WalletPurchaseCard({
                 : m.id === 'stripe'
                   ? t('wallet.purchase.methodStripe')
                   : m.name || m.id
+            const icon =
+              m.id === 'mercadopago' ? <Banknote aria-hidden="true" /> : m.id === 'stripe' ? <CreditCard aria-hidden="true" /> : null
             return (
               <button
                 key={m.id}
@@ -153,6 +155,7 @@ export function WalletPurchaseCard({
                 className={`wallet-method-btn ${paymentMethod === m.id ? 'is-active' : ''}`}
                 onClick={() => onMethodChange?.(m.id)}
               >
+                {icon}
                 {label}
               </button>
             )
