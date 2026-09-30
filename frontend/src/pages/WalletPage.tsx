@@ -41,13 +41,37 @@ export function WalletPage() {
   const [busy, setBusy] = useState(false)
   const [transferBusy, setTransferBusy] = useState(false)
   const [isBrickReady, setIsBrickReady] = useState(false)
+  const [selectedMethodId, setSelectedMethodId] = useState<string>('')
   const brickRef = useRef<{ unmount: () => void } | null>(null)
 
   const methods = catalog.data?.methods ?? []
-  const mp = methods.find((item) => item.id === 'mercadopago' && item.currencies.includes(currency))
-  const stripe = methods.find((item) => item.id === 'stripe' && item.currencies.includes(currency))
-  const mock = methods.find((item) => item.id === 'mock' && item.currencies.includes(currency))
-  const paymentMethod = currency === 'USD' ? stripe?.id || mock?.id : mp?.id || mock?.id
+  const availableCurrencies: ('BRL' | 'USD')[] = catalog.data
+    ? (['BRL', 'USD'] as const).filter((c) => methods.some((m) => m.currencies.includes(c)))
+    : ['BRL', 'USD']
+
+  useEffect(() => {
+    if (catalog.data && availableCurrencies.length > 0 && !availableCurrencies.includes(currency)) {
+      setCurrency(availableCurrencies[0])
+    }
+  }, [availableCurrencies, currency, catalog.data])
+
+  const methodsForCurrency = methods.filter((item) => item.currencies.includes(currency))
+  const mp = methodsForCurrency.find((item) => item.id === 'mercadopago')
+  const stripe = methodsForCurrency.find((item) => item.id === 'stripe')
+  const mock = methodsForCurrency.find((item) => item.id === 'mock')
+  const mpConfig = methods.find((item) => item.id === 'mercadopago')
+  const stripeConfig = methods.find((item) => item.id === 'stripe')
+
+  const defaultMethodId =
+    currency === 'BRL'
+      ? mp?.id || stripe?.id || mock?.id || methodsForCurrency[0]?.id || ''
+      : stripe?.id || mock?.id || methodsForCurrency[0]?.id || ''
+
+  const activeMethod =
+    methodsForCurrency.find((item) => item.id === selectedMethodId) ||
+    methodsForCurrency.find((item) => item.id === defaultMethodId)
+
+  const paymentMethod = activeMethod?.id
   const paymentAvailable = Boolean(paymentMethod)
   const simulatedPayment = paymentMethod === 'mock'
 
@@ -94,7 +118,7 @@ export function WalletPage() {
 
   useEffect(() => {
     setIsBrickReady(false)
-    if (!order || order.method !== 'mercadopago' || !mp?.public_key || order.pix_qr_code) return
+    if (!order || order.method !== 'mercadopago' || !mpConfig?.public_key || order.pix_qr_code) return
     const sanitized = sanitizeDocument(document)
     if (!inferDocumentType(sanitized)) {
       void brickRef.current?.unmount()
@@ -110,14 +134,14 @@ export function WalletPage() {
         const firstName = nameParts[0] || ''
         const lastName = nameParts.slice(1).join(' ') || firstName
         const controller = await mountMercadoPagoBrick({
-          publicKey: mp.public_key,
+          publicKey: mpConfig.public_key,
           amount: Number(order.amount),
           email: user?.email || '',
           firstName,
           lastName,
           document: sanitized,
           containerId: 'payment-brick',
-          paymentOptions: mp.options,
+          paymentOptions: mpConfig.options,
           onReady: () => {
             if (!cancelled) setIsBrickReady(true)
           },
@@ -181,15 +205,15 @@ export function WalletPage() {
       void brickRef.current?.unmount()
       brickRef.current = null
     }
-  }, [order?.id, order?.method, order?.pix_qr_code, sanitizeDocument(document), mp?.public_key])
+  }, [order?.id, order?.method, order?.pix_qr_code, sanitizeDocument(document), mpConfig?.public_key])
 
   useEffect(() => {
-    if (!order || order.method !== 'stripe' || !stripe?.public_key || !order.client_secret) return
+    if (!order || order.method !== 'stripe' || !stripeConfig?.public_key || !order.client_secret) return
     let unmount: (() => void) | undefined
     void (async () => {
       try {
         const session = await confirmStripePayment({
-          publicKey: stripe.public_key,
+          publicKey: stripeConfig.public_key,
           clientSecret: order.client_secret || '',
           containerId: 'stripe-element',
         })
@@ -200,7 +224,7 @@ export function WalletPage() {
       }
     })()
     return () => unmount?.()
-  }, [order?.id, order?.client_secret, stripe?.public_key])
+  }, [order?.id, order?.client_secret, stripeConfig?.public_key])
 
   useEffect(() => {
     if (!order || order.status === 'confirmed' || !order.pix_qr_code) return
@@ -293,7 +317,14 @@ export function WalletPage() {
       <div className="wallet-main-grid">
         <WalletPurchaseCard
           currency={currency}
-          onCurrencyChange={setCurrency}
+          onCurrencyChange={(c) => {
+            setCurrency(c)
+            setSelectedMethodId('')
+          }}
+          availableCurrencies={availableCurrencies}
+          paymentMethod={paymentMethod}
+          availableMethods={methodsForCurrency}
+          onMethodChange={setSelectedMethodId}
           paymentAvailable={paymentAvailable}
           simulatedPayment={simulatedPayment}
           packages={packages}
@@ -303,7 +334,7 @@ export function WalletPage() {
           onCustomAmountChange={setCustomAmount}
           busy={busy}
           onStartPurchase={startPurchase}
-          mpOptions={mp?.options}
+          mpOptions={mpConfig?.options}
         />
 
         <aside className="wallet-side-column">

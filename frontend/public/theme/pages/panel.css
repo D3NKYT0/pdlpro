@@ -8049,13 +8049,72 @@ html.pdl-panel .wallet-section-icon svg {
 }
 
 html.pdl-panel .wallet-currency-switch {
-  display: inline-grid;
-  grid-template-columns: repeat(2, minmax(86px, 1fr));
+  display: inline-flex;
   gap: 3px;
   margin-left: auto;
   padding: 3px;
   border: 1px solid color-mix(in srgb, var(--panel-gold) 19%, transparent);
   background: rgba(4, 4, 3, 0.5);
+}
+
+html.pdl-panel .wallet-currency-badge {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-left: auto;
+  padding: 0 14px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 27%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 18%, transparent), color-mix(in srgb, var(--panel-gold) 6%, transparent));
+  color: var(--panel-gold-bright);
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--panel-gold) 3.5%, transparent);
+}
+
+html.pdl-panel .wallet-currency-badge span {
+  display: grid;
+  width: 19px;
+  height: 19px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 9px;
+}
+
+html.pdl-panel .wallet-method-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+html.pdl-panel .wallet-method-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
+  background: rgba(4, 4, 3, 0.5);
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 170ms ease;
+}
+
+html.pdl-panel .wallet-method-btn:hover {
+  color: rgba(255, 255, 255, 0.85);
+  border-color: color-mix(in srgb, var(--panel-gold) 45%, transparent);
+}
+
+html.pdl-panel .wallet-method-btn.is-active {
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 45%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 20%, transparent), color-mix(in srgb, var(--panel-gold) 7%, transparent));
+  color: var(--panel-gold-bright);
+  box-shadow: inset 0 0 14px color-mix(in srgb, var(--panel-gold) 4%, transparent);
 }
 
 html.pdl-panel .wallet-currency-switch button {

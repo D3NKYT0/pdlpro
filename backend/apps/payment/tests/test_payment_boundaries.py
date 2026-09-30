@@ -241,3 +241,31 @@ def test_quote_uses_active_exchange_rate_and_decimal_rounding(currency, expected
     quote = _pricing().quote(package_id=None, amount=Decimal("10.01"), currency=currency)
     # Decimal usa ROUND_HALF_EVEN: 25.025 arredonda para 25.02.
     assert quote.coins == Decimal(expected)
+
+
+def test_create_order_resolves_stripe_for_brl_when_mercadopago_inactive(owner, mocker, settings):
+    from types import SimpleNamespace
+    from apps.payment.application.use_cases import CreatePaymentOrderInput, CreatePaymentOrderUseCase
+
+    settings.STRIPE_ACTIVATE_PAYMENTS = True
+    settings.STRIPE_SECRET_KEY = "sk-test"
+    settings.STRIPE_PUBLISHABLE_KEY = "pk-test"
+    settings.MERCADO_PAGO_ACCESS_TOKEN = ""
+    settings.PAYMENT_METHODS = ["stripe"]
+    mocker.patch("stripe.PaymentIntent.create", return_value=SimpleNamespace(id="pi-brl", client_secret="cs-brl"))
+
+    use_case = DependencyInjection.root().create_scope().resolve(CreatePaymentOrderUseCase)
+    order = use_case.execute(CreatePaymentOrderInput(user_id=owner.id, amount=Decimal("50.00"), currency="BRL"))
+    assert order.method == "stripe"
+    assert order.currency == "BRL"
+
+
+def test_create_order_rejects_mercadopago_for_usd(owner, settings):
+    from apps.payment.application.use_cases import CreatePaymentOrderInput, CreatePaymentOrderUseCase
+
+    settings.MERCADO_PAGO_ACCESS_TOKEN = "mp-token"
+    settings.PAYMENT_METHODS = ["mercadopago"]
+    use_case = DependencyInjection.root().create_scope().resolve(CreatePaymentOrderUseCase)
+    with pytest.raises(ValidationDomainError):
+        use_case.execute(CreatePaymentOrderInput(user_id=owner.id, amount=Decimal("10.00"), currency="USD", method="mercadopago"))
+

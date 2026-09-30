@@ -182,3 +182,79 @@ it('informa indisponibilidade de recarga sem criar pedido', async () => {
   expect(await screen.findByText('Recargas temporariamente indisponíveis')).toBeTruthy()
   expect(paymentApi.create).not.toHaveBeenCalled()
 })
+
+it('oculta USD quando apenas Mercado Pago estiver ativo', async () => {
+  vi.mocked(paymentApi.catalog).mockResolvedValue({
+    currency: 'BRL',
+    methods: [{ id: 'mercadopago', public_key: 'mp-key', currencies: ['BRL'] }],
+    packages: [],
+    allow_custom_amount: true,
+    promo: null,
+  })
+  mount()
+  await screen.findByText('Escolha sua recarga')
+  await waitFor(() => {
+    expect(screen.queryByRole('button', { name: /USD/ })).toBeNull()
+  })
+  expect(screen.getByText('BRL')).toBeTruthy()
+})
+
+it('permite recarga em BRL via Stripe quando Mercado Pago estiver inativo', async () => {
+  vi.mocked(paymentApi.catalog).mockResolvedValue({
+    currency: 'BRL',
+    methods: [{ id: 'stripe', public_key: 'pk-test', currencies: ['USD', 'BRL'] }],
+    packages: [],
+    allow_custom_amount: true,
+    promo: null,
+  })
+  vi.mocked(paymentApi.create).mockResolvedValue({
+    id: 'ord-stripe-brl',
+    amount: '50.00',
+    coins: '50.00',
+    currency: 'BRL',
+    package_code: '',
+    method: 'stripe',
+    status: 'pending',
+    client_secret: 'sec-brl',
+    checkout_url: '',
+    bonus_applied: '0.00',
+    total_credited: '0.00',
+    created_at: '2026-09-12T12:00:00Z',
+    paid_at: null,
+  })
+  const user = mount()
+  expect(await screen.findByRole('button', { name: /BRL/ })).toBeTruthy()
+  expect(screen.getByRole('button', { name: /USD/ })).toBeTruthy()
+  expect(await screen.findByText('Pagamento com cartão via Stripe')).toBeTruthy()
+
+  await user.type(screen.getByLabelText('Valor em BRL'), '50')
+  await user.click(screen.getByRole('button', { name: 'Comprar agora' }))
+  await waitFor(() => {
+    expect(paymentApi.create).toHaveBeenCalledWith({
+      package_id: undefined,
+      amount: '50',
+      currency: 'BRL',
+      method: 'stripe',
+    })
+  })
+})
+
+it('permite alternar entre Mercado Pago e Stripe quando ambos suportam BRL', async () => {
+  vi.mocked(paymentApi.catalog).mockResolvedValue({
+    currency: 'BRL',
+    methods: [
+      { id: 'mercadopago', public_key: 'mp-key', currencies: ['BRL'] },
+      { id: 'stripe', public_key: 'pk-test', currencies: ['USD', 'BRL'] },
+    ],
+    packages: [],
+    allow_custom_amount: true,
+    promo: null,
+  })
+  const user = mount()
+  expect(await screen.findByRole('radio', { name: 'Mercado Pago' })).toBeTruthy()
+  expect(screen.getByRole('radio', { name: 'Stripe (Cartão)' })).toBeTruthy()
+  expect(screen.getByText('Pagamento nacional via Mercado Pago')).toBeTruthy()
+
+  await user.click(screen.getByRole('radio', { name: 'Stripe (Cartão)' }))
+  expect(await screen.findByText('Pagamento com cartão via Stripe')).toBeTruthy()
+})

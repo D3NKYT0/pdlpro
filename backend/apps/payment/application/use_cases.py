@@ -161,17 +161,23 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
         self._pricing = pricing
 
     def _resolve_method(self, currency: str, requested: str) -> str:
-        available = {item["id"] for item in self._gateways.available_methods(_configured_methods())}
+        methods_by_id = {item["id"]: item for item in self._gateways.available_methods(_configured_methods())}
         if requested:
             method = requested.lower()
-            if method not in available:
+            entry = methods_by_id.get(method)
+            if entry is None:
                 raise PaymentMethodUnavailableError(f"Método '{method}' não está habilitado.")
+            currencies = entry.get("currencies", [])
+            if currencies and currency not in currencies:
+                raise ValidationDomainError(f"Método '{method}' não aceita {currency}.")
             return method
-        if currency == "USD" and "stripe" in available:
+        if currency == "USD" and "stripe" in methods_by_id:
             return "stripe"
-        if currency == "BRL" and "mercadopago" in available:
+        if currency == "BRL" and "mercadopago" in methods_by_id:
             return "mercadopago"
-        if "mock" in available:
+        if currency == "BRL" and "stripe" in methods_by_id:
+            return "stripe"
+        if "mock" in methods_by_id:
             return "mock"
         raise PaymentMethodUnavailableError()
 

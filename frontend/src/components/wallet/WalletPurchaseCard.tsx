@@ -18,6 +18,10 @@ import { WalletPromoBanner } from './WalletPromoBanner'
 type WalletPurchaseCardProps = {
   currency: 'BRL' | 'USD'
   onCurrencyChange: (currency: 'BRL' | 'USD') => void
+  availableCurrencies?: ('BRL' | 'USD')[]
+  paymentMethod?: string
+  availableMethods?: { id: string; name?: string }[]
+  onMethodChange?: (methodId: string) => void
   paymentAvailable: boolean
   simulatedPayment: boolean
   packages: ApiCoinPackage[]
@@ -38,6 +42,10 @@ type WalletPurchaseCardProps = {
 export function WalletPurchaseCard({
   currency,
   onCurrencyChange,
+  availableCurrencies,
+  paymentMethod,
+  availableMethods,
+  onMethodChange,
   paymentAvailable,
   simulatedPayment,
   packages,
@@ -51,14 +59,24 @@ export function WalletPurchaseCard({
 }: WalletPurchaseCardProps) {
   const { t } = useTranslation('panel')
   const priceKey = currency === 'USD' ? 'price_usd' : 'price_brl'
+  const currenciesList = availableCurrencies && availableCurrencies.length > 0 ? availableCurrencies : ['BRL', 'USD']
   const noteVariant = !paymentAvailable
     ? 'Unavailable'
     : simulatedPayment
       ? 'Simulated'
-      : currency === 'USD'
-        ? 'Stripe'
+      : paymentMethod === 'stripe'
+        ? currency === 'USD'
+          ? 'StripeUsd'
+          : 'StripeBrl'
         : 'MercadoPago'
-  const noteTitle = t(`wallet.purchase.note${noteVariant}Title`)
+  const noteTitle = t(`wallet.purchase.note${noteVariant}Title`, {
+    defaultValue:
+      noteVariant === 'StripeUsd'
+        ? t('wallet.purchase.noteStripeTitle')
+        : noteVariant === 'StripeBrl'
+          ? t('wallet.purchase.noteStripeTitle')
+          : undefined,
+  })
   const noteText =
     noteVariant === 'Simulated'
       ? t('wallet.purchase.noteManualConfirm')
@@ -68,7 +86,11 @@ export function WalletPurchaseCard({
           : mpOptions && mpOptions.boleto !== false && mpOptions.pix === false && mpOptions.credit_card === false && mpOptions.debit_card === false
             ? t('wallet.purchase.noteMercadoPagoBoletoOnly', { defaultValue: 'Pague com boleto bancário sem sair do painel.' })
             : t('wallet.purchase.noteMercadoPago')
-        : t(`wallet.purchase.note${noteVariant}`)
+        : noteVariant === 'StripeUsd'
+          ? t('wallet.purchase.noteStripeUsd', { defaultValue: t('wallet.purchase.noteStripe') })
+          : noteVariant === 'StripeBrl'
+            ? t('wallet.purchase.noteStripeBrl', { defaultValue: t('wallet.purchase.noteStripe') })
+            : t(`wallet.purchase.note${noteVariant}`)
 
   return (
     <Card className="wallet-purchase-card">
@@ -79,25 +101,60 @@ export function WalletPurchaseCard({
           <h2>{t('wallet.purchase.title')}</h2>
           <p>{t('wallet.purchase.subtitle')}</p>
         </div>
-        <div className="wallet-currency-switch" role="group" aria-label={t('wallet.purchase.currencyGroup')}>
-          <button
-            className={currency === 'BRL' ? 'is-active' : ''}
-            type="button"
-            aria-pressed={currency === 'BRL'}
-            onClick={() => onCurrencyChange('BRL')}
-          >
-            <span>R$</span> BRL
-          </button>
-          <button
-            className={currency === 'USD' ? 'is-active' : ''}
-            type="button"
-            aria-pressed={currency === 'USD'}
-            onClick={() => onCurrencyChange('USD')}
-          >
-            <span>$</span> USD
-          </button>
-        </div>
+        {currenciesList.length > 1 ? (
+          <div className="wallet-currency-switch" role="group" aria-label={t('wallet.purchase.currencyGroup')}>
+            {currenciesList.includes('BRL') ? (
+              <button
+                className={currency === 'BRL' ? 'is-active' : ''}
+                type="button"
+                aria-pressed={currency === 'BRL'}
+                onClick={() => onCurrencyChange('BRL')}
+              >
+                <span>R$</span> BRL
+              </button>
+            ) : null}
+            {currenciesList.includes('USD') ? (
+              <button
+                className={currency === 'USD' ? 'is-active' : ''}
+                type="button"
+                aria-pressed={currency === 'USD'}
+                onClick={() => onCurrencyChange('USD')}
+              >
+                <span>$</span> USD
+              </button>
+            ) : null}
+          </div>
+        ) : currenciesList.length === 1 ? (
+          <div className="wallet-currency-badge" aria-label={t('wallet.purchase.currencyGroup')}>
+            <span>{currenciesList[0] === 'USD' ? '$' : 'R$'}</span> {currenciesList[0]}
+          </div>
+        ) : null}
       </header>
+
+      {availableMethods && availableMethods.length > 1 ? (
+        <div className="wallet-method-switcher" role="radiogroup" aria-label={t('wallet.purchase.methodGroup')}>
+          {availableMethods.map((m) => {
+            const label =
+              m.id === 'mercadopago'
+                ? t('wallet.purchase.methodMercadoPago')
+                : m.id === 'stripe'
+                  ? t('wallet.purchase.methodStripe')
+                  : m.name || m.id
+            return (
+              <button
+                key={m.id}
+                type="button"
+                role="radio"
+                aria-checked={paymentMethod === m.id}
+                className={`wallet-method-btn ${paymentMethod === m.id ? 'is-active' : ''}`}
+                onClick={() => onMethodChange?.(m.id)}
+              >
+                {label}
+              </button>
+            )
+          })}
+        </div>
+      ) : null}
 
       <div className={`wallet-payment-note${paymentAvailable ? '' : ' is-unavailable'}`}>
         <ShieldCheck aria-hidden="true" />
