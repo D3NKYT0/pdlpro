@@ -107,6 +107,7 @@ def test_nginx_write_config_http_keeps_proxy_on_port_80(tmp_path: Path):
     assert "listen 80;" in text
     assert "listen 443" not in text
     assert "proxy_pass http://127.0.0.1:8080;" in text
+    assert "proxy_buffer_size 128k;" in text
     assert "location /ws/" in text
     assert "acme-challenge" in text
     assert "return 444;" in text
@@ -133,6 +134,7 @@ def test_nginx_write_config_ssl_is_one_file_with_redirect_and_https(tmp_path: Pa
     assert "listen 443 ssl;" in text
     assert "ssl_certificate     /etc/letsencrypt/live/l2saga.club/fullchain.pem;" in text
     assert "X-Forwarded-Proto https;" in text
+    assert "proxy_buffer_size 128k;" in text
     assert text.count("location /ws/") == 1
     assert "{{#ssl}}" not in text
 
