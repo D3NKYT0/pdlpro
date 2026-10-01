@@ -143,6 +143,7 @@ class CreatePaymentOrderInput:
     method: str = ""
     currency: str = "BRL"
     package_id: str = ""
+    source_order_id: UUID | None = None
 
 
 class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEntity]):
@@ -196,10 +197,25 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
             return "mock"
         raise PaymentMethodUnavailableError()
 
+    def _quote_input(self, data: CreatePaymentOrderInput) -> tuple[str | None, Decimal | None]:
+        """Usa o pedido de origem para repetir a mesma compra na moeda pedida."""
+
+        if data.source_order_id is None:
+            return data.package_id or None, data.amount
+        source = self._orders.get_by_id(data.source_order_id)
+        if source is None or source.user_id != data.user_id:
+            raise PaymentOrderNotFoundError()
+        if source.status not in {"pending", "processing"}:
+            raise PaymentNotPendingError()
+        if source.package_code:
+            return source.package_code, None
+        return None, self._pricing.amount_for_coins(source.coins, data.currency)
+
     def execute(self, data: CreatePaymentOrderInput) -> PaymentOrderEntity:
+        package_id, amount = self._quote_input(data)
         quote = self._pricing.quote(
-            package_id=data.package_id or None,
-            amount=data.amount,
+            package_id=package_id,
+            amount=amount,
             currency=data.currency,
         )
         if quote.amount <= 0 or quote.coins <= 0:

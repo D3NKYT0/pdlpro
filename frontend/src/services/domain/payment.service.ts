@@ -13,7 +13,7 @@ export const paymentApi = {
   catalog: () => request<ApiPaymentCatalog>('/customer/payments/catalog/'),
   list: (params?: { page?: number; page_size?: number }) =>
     request<ApiPage<ApiPaymentOrder>>(`/customer/payments/${listQuery(params)}`),
-  create: (payload: { amount?: string; method?: string; currency?: string; package_id?: string }) =>
+  create: (payload: { amount?: string; method?: string; currency?: string; package_id?: string; source_order_id?: string }) =>
     request<ApiPaymentOrder>('/customer/payments/', {
       method: 'POST',
       body: JSON.stringify(payload),

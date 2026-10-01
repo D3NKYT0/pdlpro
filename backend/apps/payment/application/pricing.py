@@ -63,3 +63,24 @@ class CoinPricingService:
         )
         coins = (amount * brl_rate if currency == "BRL" else amount * usd_rate).quantize(Decimal("0.01"))
         return CoinQuote(coins=coins, amount=amount, currency=currency, package_code="", package_name="")
+
+    def amount_for_coins(self, coins: Decimal, currency: str) -> Decimal:
+        """Converte moedas já cotadas no valor da moeda pedida, com a taxa ativa."""
+
+        currency = currency.upper()
+        if currency not in {"BRL", "USD"}:
+            raise ValidationDomainError("Moeda inválida. Use BRL ou USD.")
+        if coins <= 0:
+            raise ValidationDomainError("Informe um pacote ou um valor válido.")
+        config = self._wallets.get_active_coin_config()
+        if currency == "BRL":
+            rate = Decimal(config["multiplier"]) if config else Decimal("1.00")
+        else:
+            rate = (
+                Decimal(config["usd_multiplier"])
+                if config and config.get("usd_multiplier") is not None
+                else Decimal(str(getattr(settings, "COINS_PER_USD", "5.00")))
+            )
+        if rate <= 0:
+            raise ValidationDomainError("Moeda inválida. Use BRL ou USD.")
+        return (coins / rate).quantize(Decimal("0.01"))

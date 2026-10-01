@@ -7,13 +7,14 @@ class CreatePaymentOrderSerializer(serializers.Serializer):
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
     validated_data. A autorização pertence ao fluxo chamador.
 
-    Campos declarados: ``amount``, ``method``, ``currency``, ``package_id``.
+    Campos declarados: ``amount``, ``method``, ``currency``, ``package_id``, ``source_order_id``.
     """
 
     amount = serializers.DecimalField(max_digits=12, decimal_places=2, required=False)
     method = serializers.CharField(max_length=20, required=False, allow_blank=True, default="")
     currency = serializers.ChoiceField(choices=["BRL", "USD"], default="BRL")
     package_id = serializers.CharField(required=False, allow_blank=True, default="")
+    source_order_id = serializers.UUIDField(required=False)
 
 
 class PreviewBonusSerializer(serializers.Serializer):

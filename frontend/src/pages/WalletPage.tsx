@@ -8,10 +8,10 @@ import { WalletCheckoutModal } from '../components/wallet/WalletCheckoutModal'
 import { WalletHero } from '../components/wallet/WalletHero'
 import { WalletPurchaseCard } from '../components/wallet/WalletPurchaseCard'
 import { WalletTransferCard } from '../components/wallet/WalletTransferCard'
-import { orderDetailEntries, transactionDetailEntries } from '../components/wallet/walletHistory'
+import { formatWalletMoney, orderDetailEntries, transactionDetailEntries } from '../components/wallet/walletHistory'
 import { useAuth } from '../contexts/AuthContext'
 import { apiErrorMessage } from '../lib/errors'
-import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument } from '../lib/payments'
+import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument, stripeCardNeedsBrl } from '../lib/payments'
 import { trackInitiateCheckout, trackPurchase } from '../lib/tracking'
 import { paymentApi, walletApi } from '../services/api'
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../services/types'
@@ -265,12 +265,25 @@ export function WalletPage() {
 
   async function payStripe(event: FormEvent) {
     event.preventDefault()
-    const session = brickRef.current as { confirm?: () => Promise<{ error?: { message?: string } }> } | null
+    const session = brickRef.current as { confirm?: () => Promise<{ error?: { message?: string; decline_code?: string } }> } | null
     if (!order || !session?.confirm) return
     setBusy(true)
     try {
       const result = await session.confirm()
       if (result.error) {
+        if (stripeCardNeedsBrl(result.error) && order.currency === 'USD') {
+          const reopened = await paymentApi.create({
+            source_order_id: order.id,
+            currency: 'BRL',
+            method: 'stripe',
+          })
+          setCurrency('BRL')
+          setOrder(reopened)
+          toast(t('wallet.toast.stripeBrazilReopened', {
+            amount: formatWalletMoney(reopened.amount, 'BRL'),
+          }))
+          return
+        }
         toast.error(result.error.message || t('wallet.toast.paymentDeclined'))
         return
       }

@@ -164,6 +164,10 @@ export async function mountMercadoPagoBrick(options: {
   return controller as { unmount: () => Promise<void> | void }
 }
 
+export function stripeCardNeedsBrl(error: { decline_code?: string } | null | undefined) {
+  return error?.decline_code === 'currency_not_supported'
+}
+
 export async function confirmStripePayment(options: {
   publicKey: string
   clientSecret: string

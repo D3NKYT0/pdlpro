@@ -206,6 +206,9 @@ export function WalletCheckoutModal({
 
       {!isPix && order.method === 'stripe' ? (
         <form className="wallet-stripe-form" onSubmit={(event) => void onPayStripe(event)}>
+          {currency === 'USD' ? (
+            <p className="wallet-document-prompt">{t('wallet.purchase.stripeBrazilUsdHint')}</p>
+          ) : null}
           <div id="stripe-element" />
           <Button type="submit" disabled={busy}>
             <CreditCard aria-hidden="true" /> {t('wallet.purchase.payCard')}

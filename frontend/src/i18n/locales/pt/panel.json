@@ -64,6 +64,7 @@
       "checkoutTotal": "Total a pagar",
       "checkoutCancel": "Cancelar e voltar",
       "checkoutSecure": "Ambiente de pagamento seguro e criptografado",
+      "stripeBrazilUsdHint": "Cartão emitido no Brasil não passa em dólar. Se isso acontecer, a cobrança reabre em reais.",
       "loadingBrick": "Carregando opções de pagamento...",
       "mockTitle": "Pedido simulado criado",
       "mockNotice": "Ambiente de testes: seu pedido foi registrado com sucesso. A equipe do servidor confirmará o pagamento no painel administrativo para creditar as moedas.",
@@ -150,6 +151,7 @@
       "paymentDeclined": "Pagamento recusado",
       "paymentSent": "Pagamento enviado. Aguarde a confirmação.",
       "stripeFailed": "Falha no Stripe",
+      "stripeBrazilReopened": "Cartões do Brasil só aceitam cobrança em reais. O pagamento foi reaberto em {{amount}}.",
       "transferSent": "Transferência enviada",
       "transferFailed": "Falha na transferência"
     }

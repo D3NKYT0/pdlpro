@@ -1,6 +1,12 @@
 // @vitest-environment jsdom
 import { afterEach, expect, it, vi } from 'vitest'
-import { confirmStripePayment, formatDocument, inferDocumentType, loadScript, mountMercadoPagoBrick, sanitizeDocument } from './payments'
+import { confirmStripePayment, formatDocument, inferDocumentType, loadScript, mountMercadoPagoBrick, sanitizeDocument, stripeCardNeedsBrl } from './payments'
+
+it('identifica recusa de cartão brasileiro em moeda estrangeira', () => {
+  expect(stripeCardNeedsBrl({ decline_code: 'currency_not_supported' })).toBe(true)
+  expect(stripeCardNeedsBrl({ decline_code: 'insufficient_funds' })).toBe(false)
+  expect(stripeCardNeedsBrl(undefined)).toBe(false)
+})
 
 afterEach(() => { document.body.innerHTML = ''; vi.unstubAllGlobals() })
 it.each([['123.456.789-09', '12345678909'], ['12.345.678/0001-90', '12345678000190'], ['x abc', '']])('normaliza documento %s', (value, digits) => {

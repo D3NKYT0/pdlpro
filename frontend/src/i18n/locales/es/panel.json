@@ -64,6 +64,7 @@
       "checkoutTotal": "Total a pagar",
       "checkoutCancel": "Cancelar y volver",
       "checkoutSecure": "Ambiente de pago seguro y encriptado",
+      "stripeBrazilUsdHint": "Una tarjeta emitida en Brasil no se cobra en dólares. Si ocurre, el cobro se reabre en reales.",
       "loadingBrick": "Cargando opciones de pago...",
       "mockTitle": "Pedido simulado creado",
       "mockNotice": "Entorno de pruebas: tu pedido fue registrado con éxito. El equipo del servidor confirmará el pago en el panel administrativo para acreditar tus monedas.",
@@ -150,6 +151,7 @@
       "paymentDeclined": "Pago rechazado",
       "paymentSent": "Pago enviado. Espera la confirmación.",
       "stripeFailed": "Fallo en Stripe",
+      "stripeBrazilReopened": "Las tarjetas de Brasil solo aceptan cobro en reales. El pago se reabrió en {{amount}}.",
       "transferSent": "Transferencia enviada",
       "transferFailed": "Fallo en la transferencia"
     }

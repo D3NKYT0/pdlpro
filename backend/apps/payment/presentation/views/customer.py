@@ -109,6 +109,7 @@ class PaymentOrderListView(InjectedAPIView):
                 method=data.get("method") or "",
                 currency=data.get("currency") or "BRL",
                 package_id=data.get("package_id") or "",
+                source_order_id=data.get("source_order_id"),
             )
         )
         return Response(dump_order(order))

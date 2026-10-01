@@ -353,3 +353,84 @@ def test_create_order_rejects_mercadopago_for_usd(owner, settings):
     with pytest.raises(ValidationDomainError):
         use_case.execute(CreatePaymentOrderInput(user_id=owner.id, amount=Decimal("10.00"), currency="USD", method="mercadopago"))
 
+
+def test_reopen_usd_package_charges_the_brl_price(owner, mocker, settings):
+    from types import SimpleNamespace
+
+    from apps.payment.application.use_cases import (
+        CreatePaymentOrderInput,
+        CreatePaymentOrderUseCase,
+    )
+
+    CoinPackage.objects.create(code="brl-reopen", name="Reopen", coins=5, price_brl=Decimal("9.90"), price_usd=Decimal("1.00"))
+    source = PedidoPagamento.objects.create(
+        user=owner,
+        amount=Decimal("1.00"),
+        coins=5,
+        currency="USD",
+        method="stripe",
+        status="pending",
+        package_code="brl-reopen",
+    )
+    _enable_both_gateways(settings)
+    mocker.patch("stripe.PaymentIntent.create", return_value=SimpleNamespace(id="pi-brl", client_secret="cs-brl"))
+    use_case = DependencyInjection.root().create_scope().resolve(CreatePaymentOrderUseCase)
+    order = use_case.execute(
+        CreatePaymentOrderInput(user_id=owner.id, currency="BRL", method="stripe", source_order_id=source.id)
+    )
+    assert order.currency == "BRL"
+    assert order.amount == Decimal("9.90")
+    assert order.coins == Decimal("5.00")
+    assert order.method == "stripe"
+
+
+def test_reopen_custom_usd_order_uses_the_brl_rate(owner, mocker, settings):
+    from types import SimpleNamespace
+
+    from apps.payment.application.use_cases import (
+        CreatePaymentOrderInput,
+        CreatePaymentOrderUseCase,
+    )
+
+    CoinConfig.objects.create(name="Taxa", multiplier="2.00", usd_multiplier="5")
+    source = PedidoPagamento.objects.create(
+        user=owner,
+        amount=Decimal("1.00"),
+        coins=Decimal("5.00"),
+        currency="USD",
+        method="stripe",
+        status="pending",
+    )
+    _enable_both_gateways(settings)
+    mocker.patch("stripe.PaymentIntent.create", return_value=SimpleNamespace(id="pi-custom", client_secret="cs-custom"))
+    use_case = DependencyInjection.root().create_scope().resolve(CreatePaymentOrderUseCase)
+    order = use_case.execute(
+        CreatePaymentOrderInput(user_id=owner.id, currency="BRL", method="stripe", source_order_id=source.id)
+    )
+    assert order.amount == Decimal("2.50")
+    assert order.coins == Decimal("5.00")
+    assert order.currency == "BRL"
+
+
+def test_reopen_rejects_another_users_order(owner):
+    from apps.payment.application.use_cases import (
+        CreatePaymentOrderInput,
+        CreatePaymentOrderUseCase,
+    )
+    from apps.payment.domain.exceptions import PaymentOrderNotFoundError
+
+    other = get_user_model().objects.create_user(username="otherpay", email="other-pay@test.dev")
+    source = PedidoPagamento.objects.create(
+        user=other,
+        amount=Decimal("1.00"),
+        coins=5,
+        currency="USD",
+        method="stripe",
+        status="pending",
+    )
+    use_case = DependencyInjection.root().create_scope().resolve(CreatePaymentOrderUseCase)
+    with pytest.raises(PaymentOrderNotFoundError):
+        use_case.execute(
+            CreatePaymentOrderInput(user_id=owner.id, currency="BRL", method="stripe", source_order_id=source.id)
+        )
+
