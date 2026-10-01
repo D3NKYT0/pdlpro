@@ -19,6 +19,7 @@ const EMPTY: Omit<ApiStaffCoinPackage, 'id'> = {
   coins: '',
   price_brl: '',
   price_usd: '',
+  prices: {},
   badge: '',
   active: true,
   sort_order: 0,
@@ -28,12 +29,20 @@ export function AdminCoinPackagesPage() {
   const { t } = useTranslation('admin')
   const queryClient = useQueryClient()
   const packages = useQuery({ queryKey: ['staff-coin-packages'], queryFn: staffApi.coinPackages })
+  const chargeCurrencies = useQuery({ queryKey: ['staff-charge-currencies'], queryFn: staffApi.chargeCurrencies })
   const [draft, setDraft] = useState<Partial<ApiStaffCoinPackage>>(EMPTY)
   const [editingId, setEditingId] = useState<string | null>(null)
   const action = useFeedbackAction()
   const saving = action.pending
   const rows = packages.data ?? []
   const activeCount = rows.filter((row) => row.active).length
+  const currenciesList =
+    chargeCurrencies.data && chargeCurrencies.data.length > 0
+      ? chargeCurrencies.data
+      : [
+          { id: '1', code: 'BRL', symbol: 'R$', name: 'Real', is_settlement: true, enabled: true, sort_order: 0 },
+          { id: '2', code: 'USD', symbol: '$', name: 'Dólar', is_settlement: false, enabled: true, sort_order: 1 },
+        ]
 
   function reset() {
     setDraft({ ...EMPTY })
@@ -42,7 +51,10 @@ export function AdminCoinPackagesPage() {
 
   function open(row: ApiStaffCoinPackage) {
     setEditingId(row.id)
-    setDraft({ ...row })
+    const initialPrices: Record<string, string> = { ...(row.prices || {}) }
+    if (!initialPrices.BRL && row.price_brl) initialPrices.BRL = row.price_brl
+    if (!initialPrices.USD && row.price_usd) initialPrices.USD = row.price_usd
+    setDraft({ ...row, prices: initialPrices })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -58,13 +70,16 @@ export function AdminCoinPackagesPage() {
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
     await action.run(async () => {
+      const priceBrl = draft.prices?.BRL || draft.price_brl || ''
+      const priceUsd = draft.prices?.USD || draft.price_usd || ''
       await staffApi.saveCoinPackage({
         id: editingId || undefined,
         code: draft.code,
         name: draft.name,
         coins: draft.coins,
-        price_brl: draft.price_brl,
-        price_usd: draft.price_usd,
+        price_brl: priceBrl,
+        price_usd: priceUsd,
+        prices: draft.prices,
         badge: draft.badge,
         active: draft.active ?? true,
         sort_order: Number(draft.sort_order ?? 0),
@@ -182,42 +197,43 @@ export function AdminCoinPackagesPage() {
                 />
               </span>
             </Field>
-            <Field className="card admin-coin-metric">
-              <span className="admin-coin-metric-icon"><span aria-hidden="true">R$</span></span>
-              <span>
-                <b>{t('coinPackages.priceBrl')}</b>
-                <small>{t('coinPackages.priceBrlHint')}</small>
-              </span>
-              <span className="admin-coin-input">
-                <b>R$</b>
-                <input
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={draft.price_brl ?? ''}
-                  onChange={(event) => setDraft((current) => ({ ...current, price_brl: event.target.value }))}
-                  required
-                />
-              </span>
-            </Field>
-            <Field className="card admin-coin-metric">
-              <span className="admin-coin-metric-icon"><span aria-hidden="true">$</span></span>
-              <span>
-                <b>{t('coinPackages.priceUsd')}</b>
-                <small>{t('coinPackages.priceUsdHint')}</small>
-              </span>
-              <span className="admin-coin-input">
-                <b>$</b>
-                <input
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={draft.price_usd ?? ''}
-                  onChange={(event) => setDraft((current) => ({ ...current, price_usd: event.target.value }))}
-                  required
-                />
-              </span>
-            </Field>
+            {currenciesList.filter((c) => c.enabled).map((c) => {
+              const currentVal =
+                draft.prices?.[c.code] ??
+                (c.code === 'BRL' ? draft.price_brl : c.code === 'USD' ? draft.price_usd : '') ??
+                ''
+              return (
+                <Field key={c.code} className="card admin-coin-metric">
+                  <span className="admin-coin-metric-icon"><span aria-hidden="true">{c.symbol || c.code}</span></span>
+                  <span>
+                    <b>{c.code} ({c.name})</b>
+                    <small>{c.is_settlement ? t('coinPackages.settlementHint', { defaultValue: 'Moeda de liquidação' }) : t('coinPackages.chargeHint', { defaultValue: 'Moeda de cobrança' })}</small>
+                  </span>
+                  <span className="admin-coin-input">
+                    <b>{c.symbol || c.code}</b>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={currentVal}
+                      onChange={(event) => {
+                        const val = event.target.value
+                        setDraft((current) => ({
+                          ...current,
+                          price_brl: c.code === 'BRL' ? val : current.price_brl,
+                          price_usd: c.code === 'USD' ? val : current.price_usd,
+                          prices: {
+                            ...(current.prices || {}),
+                            [c.code]: val,
+                          },
+                        }))
+                      }}
+                      required={c.is_settlement}
+                    />
+                  </span>
+                </Field>
+              )
+            })}
           </div>
 
           <Toggle
@@ -286,8 +302,16 @@ export function AdminCoinPackagesPage() {
                       <Coins aria-hidden="true" /> {row.coins}
                     </span>
                     <div className="admin-coin-package-prices">
-                      <strong>R$ {row.price_brl}</strong>
-                      <span>$ {row.price_usd}</span>
+                      {row.prices && Object.keys(row.prices).length > 0 ? (
+                        Object.entries(row.prices).map(([curr, price]) => (
+                          <span key={curr}><strong>{curr}</strong> {price}</span>
+                        ))
+                      ) : (
+                        <>
+                          <strong>R$ {row.price_brl}</strong>
+                          <span>$ {row.price_usd}</span>
+                        </>
+                      )}
                     </div>
                     <div className="admin-coin-package-meta">
                       <span className={`account-status-pill${row.active ? ' is-active' : ''}`}>

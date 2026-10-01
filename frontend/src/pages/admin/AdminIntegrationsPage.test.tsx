@@ -18,6 +18,9 @@ vi.mock('../../services/domain/staff.service', async (importOriginal) => {
       integrationsStatus: vi.fn(),
       saveIntegrationSection: vi.fn(),
       testIntegrationSection: vi.fn(),
+      chargeCurrencies: vi.fn(),
+      saveChargeCurrency: vi.fn(),
+      deleteChargeCurrency: vi.fn(),
     },
   }
 })
@@ -52,6 +55,7 @@ const statusFixture = {
       { key: 'PAYMENT_BRL_METHOD_PRIORITY', configured: true, fingerprint: '', value: 'user_choice', masked: '' },
       { key: 'PAYMENT_WEBHOOK_BASE_URL', configured: false, fingerprint: '', value: '', masked: '' },
       { key: 'COINS_PER_USD', configured: true, fingerprint: '', value: '5.00', masked: '' },
+      { key: 'STRIPE_PRESENTMENT_CURRENCIES', configured: true, fingerprint: '', value: 'BRL, USD', masked: '' },
       { key: 'PAYMENT_ALLOW_MOCK', configured: true, fingerprint: '', value: false, masked: '' },
       { key: 'PAYMENT_REUSE_HOURS', configured: true, fingerprint: '', value: 2, masked: '' },
     ],
@@ -208,6 +212,10 @@ describe('AdminIntegrationsPage', () => {
       message: 'ok',
       details: {},
     })
+    vi.mocked(staffApi.chargeCurrencies).mockResolvedValue([
+      { id: 'curr-1', code: 'BRL', symbol: 'R$', name: 'Real', coins_per_unit: '1.00', is_settlement: true, enabled: true, sort_order: 0 },
+      { id: 'curr-2', code: 'USD', symbol: '$', name: 'Dólar', coins_per_unit: '0.20', is_settlement: false, enabled: true, sort_order: 1 },
+    ] as never)
   })
 
   it('mostra abas e mascara segredos configurados', async () => {
@@ -362,5 +370,16 @@ describe('AdminIntegrationsPage', () => {
         }),
       ),
     )
+  })
+
+  it('exibe moedas de cobrança da loja e campo de moedas do Stripe', async () => {
+    renderPage('/panel/admin/integrations?tab=payments')
+
+    expect(await screen.findByDisplayValue('BRL, USD')).toBeInTheDocument()
+    expect(screen.getByText('Moedas de Cobrança da Loja')).toBeInTheDocument()
+    expect(screen.getByText('BRL')).toBeInTheDocument()
+    expect(screen.getByText('USD')).toBeInTheDocument()
+    expect(screen.getByText('Liquidação')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /adicionar moeda/i })).toBeInTheDocument()
   })
 })

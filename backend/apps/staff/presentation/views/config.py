@@ -8,11 +8,13 @@ from apps.server.presentation.item_metadata import ItemCatalogAPIView
 from apps.shop.application.staff_autoconfig import BootstrapStaffShopUseCase
 from apps.staff.application.use_cases import (
     DeleteStaffBonusTierUseCase,
+    DeleteStaffChargeCurrencyUseCase,
     DeleteStaffCoinPackageUseCase,
     GetPanelSettingsUseCase,
     GetStaffCoinConfigUseCase,
     GetStaffWalletPromoUseCase,
     ListStaffBonusTiersUseCase,
+    ListStaffChargeCurrenciesUseCase,
     ListStaffCoinPackagesUseCase,
     ListStaffGamesUseCase,
     ListStaffNewsUseCase,
@@ -24,6 +26,7 @@ from apps.staff.application.use_cases import (
     UpdateStaffCoinConfigUseCase,
     UpdateStaffWalletPromoUseCase,
     UpsertStaffBonusTierUseCase,
+    UpsertStaffChargeCurrencyUseCase,
     UpsertStaffCoinPackageUseCase,
     UpsertStaffNewsUseCase,
     UpsertStaffServicePricesUseCase,
@@ -236,6 +239,49 @@ class StaffCoinPackagesView(InjectedAPIView):
     )
     def delete(self, request):
         return Response(self.resolve(DeleteStaffCoinPackageUseCase).execute(request.data or {}))
+
+
+class StaffChargeCurrenciesView(InjectedAPIView):
+    """Entrada HTTP para ``ListStaffChargeCurrenciesUseCase``, ``UpsertStaffChargeCurrencyUseCase``,
+    ``DeleteStaffChargeCurrencyUseCase``.
+
+    Implementa GET, POST, PUT, DELETE; registre ``as_view()`` nas URLs do módulo. Controle de
+    acesso declarado: [IsAuthenticated, IsStaffMember].
+    """
+
+    permission_classes = [IsAuthenticated, IsStaffMember]
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Listar moedas de cobrança"),
+        description=gettext_lazy("Lista as moedas de cobrança da loja, inclusive inativas."),
+    )
+    def get(self, request):
+        return Response(self.resolve(ListStaffChargeCurrenciesUseCase).execute())
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Criar moeda de cobrança"),
+        description=gettext_lazy("Cria ou atualiza uma moeda de cobrança."),
+    )
+    def post(self, request):
+        return Response(self.resolve(UpsertStaffChargeCurrencyUseCase).execute(request.data or {}))
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Atualizar moeda de cobrança"),
+        description=gettext_lazy("Atualiza uma moeda de cobrança existente."),
+    )
+    def put(self, request):
+        return Response(self.resolve(UpsertStaffChargeCurrencyUseCase).execute(request.data or {}))
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Remover moeda de cobrança"),
+        description=gettext_lazy("Remove uma moeda de cobrança."),
+    )
+    def delete(self, request):
+        return Response(self.resolve(DeleteStaffChargeCurrencyUseCase).execute(request.data or {}))
 
 
 class StaffShopItemsView(ItemCatalogAPIView):

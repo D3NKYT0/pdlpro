@@ -56,10 +56,39 @@ class GetPaymentCatalogUseCase(UseCase[None, dict]):
         self._wallets = wallets
 
     def execute(self, data: None = None) -> dict:
-        methods = self._gateways.available_methods(_configured_methods())
+        enabled_currencies = self._wallets.list_enabled_charge_currencies()
+        enabled_currency_codes = {c["code"] for c in enabled_currencies}
+
+        raw_methods = self._gateways.available_methods(_configured_methods())
+        methods = []
+        accepted_by_gateways: set[str] = set()
+
+        for method in raw_methods:
+            method_currencies = [c for c in method.get("currencies", []) if c in enabled_currency_codes]
+            if method_currencies:
+                accepted_by_gateways.update(method_currencies)
+                methods.append({**method, "currencies": method_currencies})
+
+        catalog_currencies = [
+            {"code": c["code"], "settlement": bool(c["settlement"])}
+            for c in enabled_currencies
+            if c["code"] in accepted_by_gateways
+        ]
+        settlement_code = next((c["code"] for c in catalog_currencies if c["settlement"]), "BRL")
+
         packages = []
         for row in self._wallets.list_active_coin_packages():
             preview = self._bonus_policy.preview(row["coins"])
+            prices_dict = {
+                curr: str(amt)
+                for curr, amt in (row.get("prices") or {}).items()
+                if curr in accepted_by_gateways
+            }
+            if "BRL" not in prices_dict and row.get("price_brl") and "BRL" in accepted_by_gateways:
+                prices_dict["BRL"] = str(row["price_brl"])
+            if "USD" not in prices_dict and row.get("price_usd") and "USD" in accepted_by_gateways:
+                prices_dict["USD"] = str(row["price_usd"])
+
             packages.append(
                 {
                     "id": row["id"],
@@ -68,13 +97,15 @@ class GetPaymentCatalogUseCase(UseCase[None, dict]):
                     "coins": str(row["coins"]),
                     "price_brl": str(row["price_brl"]),
                     "price_usd": str(row["price_usd"]),
+                    "prices": prices_dict,
                     "badge": row["badge"],
                     "bonus": str(preview.bonus),
                     "total_coins": str(preview.total),
                 }
             )
         return {
-            "currency": "BRL",
+            "currency": settlement_code,
+            "currencies": catalog_currencies,
             "methods": methods,
             "packages": packages,
             "allow_custom_amount": True,
@@ -179,10 +210,7 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
                 raise ValidationDomainError(f"Método '{method}' não aceita {currency}.")
             return method
         priority = normalize_brl_method_priority(getattr(settings, "PAYMENT_BRL_METHOD_PRIORITY", "user_choice"))
-        if currency == "USD":
-            if "stripe" in methods_by_id:
-                return "stripe"
-        elif currency == "BRL":
+        if currency == "BRL":
             if priority == "mercadopago" and "mercadopago" in methods_by_id:
                 return "mercadopago"
             if priority == "stripe" and "stripe" in methods_by_id:
@@ -193,6 +221,12 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
                 return "mercadopago"
             if "stripe" in methods_by_id:
                 return "stripe"
+        else:
+            if "stripe" in methods_by_id and currency in methods_by_id["stripe"].get("currencies", []):
+                return "stripe"
+            for m_id, entry in methods_by_id.items():
+                if currency in entry.get("currencies", []):
+                    return m_id
         if "mock" in methods_by_id:
             return "mock"
         raise PaymentMethodUnavailableError()

@@ -64,7 +64,7 @@
       "checkoutTotal": "Total a pagar",
       "checkoutCancel": "Cancelar y volver",
       "checkoutSecure": "Ambiente de pago seguro y encriptado",
-      "stripeCurrencyHint": "Si el emisor rechaza esta moneda, el mismo pedido se reabre en la otra: reales o dólares.",
+      "stripeCurrencyHint": "Si el emisor rechaza la moneda, el mismo pedido se reabre una vez en otra moneda admitida.",
       "loadingBrick": "Cargando opciones de pago...",
       "mockTitle": "Pedido simulado creado",
       "mockNotice": "Entorno de pruebas: tu pedido fue registrado con éxito. El equipo del servidor confirmará el pago en el panel administrativo para acreditar tus monedas.",

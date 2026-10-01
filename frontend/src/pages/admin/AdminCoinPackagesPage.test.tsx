@@ -12,6 +12,7 @@ import { AdminCoinPackagesPage } from './AdminCoinPackagesPage'
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 
 const coinPackages = vi.fn()
+const chargeCurrencies = vi.fn()
 const saveCoinPackage = vi.fn()
 const deleteCoinPackage = vi.fn()
 
@@ -22,6 +23,7 @@ vi.mock('../../services/api', async () => {
     staffApi: {
       ...actual.staffApi,
       coinPackages: (...args: unknown[]) => coinPackages(...args),
+      chargeCurrencies: (...args: unknown[]) => chargeCurrencies(...args),
       saveCoinPackage: (...args: unknown[]) => saveCoinPackage(...args),
       deleteCoinPackage: (...args: unknown[]) => deleteCoinPackage(...args),
     },
@@ -55,6 +57,10 @@ function mount() {
 beforeEach(() => {
   vi.clearAllMocks()
   coinPackages.mockResolvedValue([starter])
+  chargeCurrencies.mockResolvedValue([
+    { id: 'c-1', code: 'BRL', symbol: 'R$', name: 'Real', coins_per_unit: '1.00', is_settlement: true, enabled: true, sort_order: 0 },
+    { id: 'c-2', code: 'USD', symbol: '$', name: 'Dólar', coins_per_unit: '0.20', is_settlement: false, enabled: true, sort_order: 1 },
+  ])
   saveCoinPackage.mockImplementation(async (payload: Record<string, unknown>) => ({
     id: String(payload.id || 'pack-2'),
     code: String(payload.code || ''),

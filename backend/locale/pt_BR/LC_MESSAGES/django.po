@@ -4893,3 +4893,43 @@ msgstr ""
 
 msgid "%(key)s aceita apenas %(allowed)s."
 msgstr ""
+
+msgid "Moeda de cobrança '{currency}' não está habilitada na loja."
+msgstr "Moeda de cobrança '{currency}' não está habilitada na loja."
+
+msgid "Pacote não possui preço configurado para a moeda '{currency}'."
+msgstr "Pacote não possui preço configurado para a moeda '{currency}'."
+
+msgid "Moeda de liquidação não pode ser desativada ou removida."
+msgstr "Moeda de liquidação não pode ser desativada ou removida."
+
+msgid "Moeda de cobrança já cadastrada."
+msgstr "Moeda de cobrança já cadastrada."
+
+msgid "Código de moeda inválido (deve ter 3 letras ISO 4217)."
+msgstr "Código de moeda inválido (deve ter 3 letras ISO 4217)."
+
+msgid "Moeda não encontrada."
+msgstr "Moeda não encontrada."
+
+msgid "Moeda de Cobrança"
+msgstr "Moeda de Cobrança"
+
+msgid "Moedas de Cobrança"
+msgstr "Moedas de Cobrança"
+
+msgid "Coins por Unidade"
+msgstr "Coins por Unidade"
+
+msgid "Moeda de Liquidação"
+msgstr "Moeda de Liquidação"
+
+msgid "Preço do Pacote por Moeda"
+msgstr "Preço do Pacote por Moeda"
+
+msgid "Preços dos Pacotes por Moeda"
+msgstr "Preços dos Pacotes por Moeda"
+
+msgid "País (ISO 3166-1 alpha-2)"
+msgstr "País (ISO 3166-1 alpha-2)"
+

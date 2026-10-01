@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Configuração](../configuracao/ambiente.md) · [Tutoriais](../tutoriais/README.md) · [Testes](../desenvolvimento/testes.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 30 de setembro de 2026
 
 `apps/payment` coordena compra de moedas; `apps/wallet` mantém saldo e extrato. Os adaptadores disponíveis são mock, Mercado Pago e Stripe. Este guia descreve o fluxo implementado pelo painel; credenciais e homologação devem corresponder ao ambiente do provedor escolhido.
 
@@ -20,6 +20,8 @@
 | Liquidação | `SettlePaymentUseCase` | Credita moedas/bônus e confirma o pedido no banco do painel |
 
 Os tipos e limites estão em [application/use_cases.py](../../backend/apps/payment/application/use_cases.py). `amount` pertence à moeda indicada por `currency`; `coins` representa saldo do painel. Não some valores de BRL e USD nem confunda bônus com saldo principal.
+
+A loja publicada cobra em BRL e USD. O desenho para o admin ligar outras moedas, com preço por pacote e apresentação da Stripe, está no [plano de moedas de cobrança](../historico/2026-09-30-plano-moedas-de-cobranca.md). Esse texto é planejamento, não o comportamento deste guia.
 
 A listagem do jogador `GET /api/v1/customer/payments/` usa paginação padrão (`page`, `page_size`, envelope com `count`, `total_pages`, `results`) e inclui `created_at` / `paid_at`. O extrato `GET /api/v1/shared/wallet/transactions/` segue o mesmo envelope.
 

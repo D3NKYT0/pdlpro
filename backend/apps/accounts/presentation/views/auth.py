@@ -166,6 +166,7 @@ class RegisterView(InjectedAPIView):
                 email=data["email"],
                 password=data["password"],
                 display_name=data.get("display_name", ""),
+                country=data.get("country", ""),
                 accept_terms=data["accept_terms"],
                 ip=client_ip(request),
                 user_agent=client_user_agent(request),

@@ -80,6 +80,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, db_index=True)
     first_name = models.CharField(_("Nome"), max_length=60, blank=True, default="")
     last_name = models.CharField(_("Sobrenome"), max_length=60, blank=True, default="")
+    country = models.CharField(_("País (ISO 3166-1 alpha-2)"), max_length=2, blank=True, default="")
     display_name = models.CharField(max_length=80, blank=True)
     bio = models.TextField(max_length=500, blank=True)
     avatar = models.ImageField(upload_to="avatars/", null=True, blank=True)

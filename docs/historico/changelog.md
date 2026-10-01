@@ -8,6 +8,26 @@ Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [2.6.8] - 2026-10-01
+
+Lançamento da versão 2.6.8 do PDL PRO com suporte a moedas dinâmicas de cobrança na carteira, preços de pacotes configuráveis por moeda, resolução inteligente da moeda inicial pelo país da conta e gestão de moedas e apresentações no Stripe.
+
+### Adicionado
+
+- **Moedas de cobrança dinâmicas**: tabela `wallet_charge_currency` e catálogo dinâmico de moedas (`WalletChargeCurrency`), permitindo habilitar e cotar qualquer moeda ISO 4217 com taxa própria de conversão para coins (`coins_per_unit`), mantendo compatibilidade de espelho com BRL e USD legados.
+- **Preços de pacotes por moeda**: suporte a preços independentes por moeda em cada pacote de recarga (`CoinPackagePrice`), com edição dinâmica no painel administrativo (`/panel/admin/coin-packages`) e filtragem inteligente na carteira do jogador para pacotes com preço disponível na moeda ativa.
+- **Gestão de moedas e Stripe Presentment no Admin**: seção "Moedas de Cobrança da Loja" em `/panel/admin/integrations` com listagem, adição, ajuste de taxa (`coins_per_unit`) e ativação/desativação, além da configuração de `STRIPE_PRESENTMENT_CURRENCIES` para limitar moedas ofertadas no Stripe. Proteção contra desativação ou exclusão da moeda de liquidação.
+- **Resolução inteligente de moeda inicial**: hierarquia na carteira (`localStorage` > país da conta do jogador `user.country` > moeda de liquidação da loja).
+- **Tratamento de recusa Stripe multimoeda**: reabertura automática de pedido com fallback inteligente para a moeda de liquidação em cartões nacionais (BR) e moeda alternativa em cartões estrangeiros quando houver código de recusa `currency_not_supported`.
+- **País na conta do usuário**: campo `country` (ISO 3166-1 alpha-2) integrado à entidade, repositório, perfil e serializadores de usuário.
+- **Internacionalização completa**: strings de interface e mensagens de domínio traduzidas em português, inglês e espanhol (`.po`/`.mo` e JSONs).
+
+### Alterado
+
+- **Cotação de carteira (`CoinPricingService`)**: cotação de pacotes e valores avulsos baseada no repositório de moedas ativas e preços cadastrados, sem dependência estática de settings Django.
+- **Catálogo de pagamento**: `/api/v1/customer/payments/catalog/` expõe a interseção entre moedas habilitadas na loja e suportadas pelos gateways ativos (`currencies` e `packages[].prices`).
+- **Modal de checkout**: aviso genérico no Stripe sobre reabertura em moeda alternativa sem fixar termos apenas para real/dólar.
+
 ## [2.6.7] - 2026-09-30
 
 Lançamento da versão 2.6.7 do PDL PRO com a escolha do método de recarga em BRL, as opções do checkout Mercado Pago, a recarga em reais pelo Stripe e o gerenciamento da conta do jogo.

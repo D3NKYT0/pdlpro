@@ -83,6 +83,7 @@ export type {
   IntegrationSectionId,
   ApiStaffCoin,
   ApiStaffCoinPackage,
+  ApiStaffChargeCurrency,
   ApiStaffGame,
   ApiStaffGameAccount,
   ApiStaffGameAutoconfig,

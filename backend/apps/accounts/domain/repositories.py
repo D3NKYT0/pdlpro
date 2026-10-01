@@ -100,6 +100,7 @@ class IUserRepository(ABC):
         first_name: str = "",
         last_name: str = "",
         display_name: str = "",
+        country: str = "",
     ) -> UserEntity:
         raise NotImplementedError
 
@@ -115,6 +116,7 @@ class IUserRepository(ABC):
         display_name: str | None = None,
         first_name: str | None = None,
         last_name: str | None = None,
+        country: str | None = None,
         bio: str | None = None,
         avatar: object | None = None,
     ) -> UserEntity:

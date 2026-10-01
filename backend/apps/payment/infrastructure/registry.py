@@ -13,6 +13,17 @@ from apps.payment.infrastructure.mock_gateway import MockPaymentGateway
 from apps.payment.infrastructure.stripe_gateway import StripeGateway
 
 
+def _stripe_presentment_currencies() -> list[str]:
+    raw = getattr(settings, "STRIPE_PRESENTMENT_CURRENCIES", "BRL,USD")
+    if isinstance(raw, str):
+        currencies = [c.strip().upper() for c in raw.split(",") if c.strip()]
+    elif isinstance(raw, (list, tuple, set)):
+        currencies = [str(c).strip().upper() for c in raw if str(c).strip()]
+    else:
+        currencies = ["BRL", "USD"]
+    return currencies or ["BRL", "USD"]
+
+
 class PaymentGatewayRegistry(IPaymentGatewayRegistry):
     """Seleciona adaptadores de pagamento por nome do método.
 
@@ -52,10 +63,16 @@ class PaymentGatewayRegistry(IPaymentGatewayRegistry):
             gateway = self._gateways.get(name)
             if gateway is None or not gateway.is_available():
                 continue
+            if name == "mercadopago":
+                currencies = ["BRL"]
+            elif name == "stripe":
+                currencies = _stripe_presentment_currencies()
+            else:
+                currencies = ["BRL", "USD"]
             entry: dict[str, object] = {
                 "id": name,
                 "public_key": gateway.public_key(),
-                "currencies": ["BRL"] if name == "mercadopago" else ["USD", "BRL"] if name == "stripe" else ["BRL", "USD"],
+                "currencies": currencies,
                 "auto_confirm": name == "mock" and getattr(settings, "PAYMENT_MOCK_AUTO_CONFIRM", False),
             }
             if name == "mercadopago":

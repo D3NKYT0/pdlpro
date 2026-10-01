@@ -166,12 +166,94 @@ export async function mountMercadoPagoBrick(options: {
 
 export function alternateStripeCurrency(
   error: { decline_code?: string; payment_method?: { card?: { country?: string } } } | null | undefined,
-  currency: 'BRL' | 'USD',
-): 'BRL' | 'USD' | null {
+  currency: string,
+  availableCurrencies: string[] = ['BRL', 'USD'],
+  settlementCurrency = 'BRL',
+): string | null {
   if (error?.decline_code !== 'currency_not_supported') return null
+  const currentUpper = currency.toUpperCase()
   const country = error.payment_method?.card?.country?.toUpperCase()
-  if (country === 'BR') return currency === 'USD' ? 'BRL' : null
-  return currency === 'USD' ? 'BRL' : 'USD'
+  const upperSettlement = settlementCurrency.toUpperCase()
+  const upperAvailable = availableCurrencies.map(c => c.toUpperCase())
+
+  if (country === 'BR') {
+    if (currentUpper !== upperSettlement && upperAvailable.includes(upperSettlement)) {
+      return upperSettlement
+    }
+    return null
+  }
+
+  const alternatives = upperAvailable.filter(c => c !== currentUpper)
+  if (alternatives.length === 0) return null
+
+  const EURO_ZONE_COUNTRIES = [
+    'AT', 'BE', 'CY', 'EE', 'FI', 'FR', 'DE', 'GR', 'IE', 'IT',
+    'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'SK', 'SI', 'ES', 'HR'
+  ]
+  if (country && EURO_ZONE_COUNTRIES.includes(country) && upperAvailable.includes('EUR') && currentUpper !== 'EUR') {
+    return 'EUR'
+  }
+
+  if (currentUpper === 'USD' && alternatives.includes(upperSettlement)) {
+    return upperSettlement
+  }
+  if (alternatives.includes('USD')) {
+    return 'USD'
+  }
+  return alternatives[0]
+}
+
+export interface ResolveInitialCurrencyOptions {
+  savedCurrency?: string | null
+  userCountry?: string | null
+  availableCurrencies: string[]
+  settlementCurrency?: string
+}
+
+export function resolveInitialCurrency({
+  savedCurrency,
+  userCountry,
+  availableCurrencies,
+  settlementCurrency = 'BRL',
+}: ResolveInitialCurrencyOptions): string {
+  const upperAvailable = availableCurrencies.map(c => c.toUpperCase())
+  if (upperAvailable.length === 0) {
+    return settlementCurrency.toUpperCase()
+  }
+
+  // 1. Preferência salva do jogador se ainda estiver ativa no catálogo
+  if (savedCurrency) {
+    const savedUpper = savedCurrency.toUpperCase()
+    if (upperAvailable.includes(savedUpper)) {
+      return savedUpper
+    }
+  }
+
+  // 2. Moeda correspondente ao país da conta do jogador
+  if (userCountry) {
+    const countryUpper = userCountry.trim().toUpperCase()
+    if (countryUpper === 'BR' && upperAvailable.includes('BRL')) {
+      return 'BRL'
+    }
+    const EURO_ZONE_COUNTRIES = [
+      'AT', 'BE', 'CY', 'EE', 'FI', 'FR', 'DE', 'GR', 'IE', 'IT',
+      'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'SK', 'SI', 'ES', 'HR'
+    ]
+    if (EURO_ZONE_COUNTRIES.includes(countryUpper) && upperAvailable.includes('EUR')) {
+      return 'EUR'
+    }
+    if (upperAvailable.includes('USD')) {
+      return 'USD'
+    }
+  }
+
+  // 3. Moeda de liquidação da loja (fallback BRL)
+  const settlementUpper = settlementCurrency.toUpperCase()
+  if (upperAvailable.includes(settlementUpper)) {
+    return settlementUpper
+  }
+
+  return upperAvailable[0]
 }
 
 export async function confirmStripePayment(options: {

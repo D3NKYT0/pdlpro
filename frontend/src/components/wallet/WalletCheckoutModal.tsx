@@ -53,7 +53,7 @@ export function WalletCheckoutModal({
   const sanitized = sanitizeDocument(document)
   const docType = inferDocumentType(sanitized)
   const isValidDoc = Boolean(docType)
-  const currency = (order.currency as 'BRL' | 'USD') || 'BRL'
+  const currency = order.currency || 'BRL'
 
   const pack = packages.find(
     (item) => item.id === order.package_code || item.name === order.package_code,

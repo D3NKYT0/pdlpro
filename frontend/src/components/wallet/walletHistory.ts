@@ -6,7 +6,7 @@ export type WalletTranslate = (key: string, options?: Record<string, unknown>) =
 
 const orderStatusKeys = ['pending', 'processing', 'confirmed', 'paid', 'failed', 'cancelled']
 
-export function formatWalletMoney(value: string, currency: 'BRL' | 'USD') {
+export function formatWalletMoney(value: string, currency = 'BRL') {
   return formatCurrency(value, currency)
 }
 
@@ -37,7 +37,7 @@ export function getTransactionPresentation(kind: string, amount: string, t: Wall
 }
 
 export function orderDetailEntries(order: ApiPaymentOrder, t: WalletTranslate) {
-  const currency = order.currency === 'USD' ? 'USD' : 'BRL'
+  const currency = order.currency || 'BRL'
   return [
     [t('wallet.detail.status'), getOrderStatus(order.status, t).label],
     [t('wallet.detail.coins'), t('wallet.detail.coinsValue', { coins: order.coins })],

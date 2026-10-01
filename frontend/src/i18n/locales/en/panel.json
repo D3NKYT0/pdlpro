@@ -64,7 +64,7 @@
       "checkoutTotal": "Total to pay",
       "checkoutCancel": "Cancel and go back",
       "checkoutSecure": "Secure and encrypted payment environment",
-      "stripeCurrencyHint": "If the issuer rejects this currency, the same order reopens in the other one: reais or dollars.",
+      "stripeCurrencyHint": "If the issuer rejects the currency, the same order reopens once in another supported currency.",
       "loadingBrick": "Loading payment options...",
       "mockTitle": "Simulated order created",
       "mockNotice": "Test environment: your order was registered successfully. Server staff will confirm the payment in the admin panel to credit your coins.",

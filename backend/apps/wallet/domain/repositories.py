@@ -115,6 +115,18 @@ class IWalletRepository(ABC):
 
         raise NotImplementedError
 
+    @abstractmethod
+    def list_enabled_charge_currencies(self) -> list[dict]:
+        """Lista moedas de cobrança ativas ordenadas por sort_order e código."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def find_enabled_charge_currency(self, code: str) -> dict | None:
+        """Localiza moeda de cobrança ativa por código ISO 4217; None se inexistente ou desabilitada."""
+
+        raise NotImplementedError
+
 
 class ICoinAdminRepository(ABC):
     """Porta administrativa de configuração de moeda e promoção de recarga.
@@ -191,7 +203,7 @@ class ICoinAdminRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def save_coin_package(self, row: Any) -> Any:
+    def save_coin_package(self, row: Any, *, prices: dict[str, Decimal] | None = None) -> Any:
         """Persiste o pacote de recarga e devolve a linha salva."""
 
         raise NotImplementedError
@@ -229,6 +241,44 @@ class ICoinAdminRepository(ABC):
     @abstractmethod
     def delete_bonus_tier(self, row: Any) -> None:
         """Remove a faixa de bônus."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_charge_currencies(self) -> list[Any]:
+        """Lista todas as moedas de cobrança cadastradas (ativas e inativas), ordenadas."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_charge_currency(self, code: str) -> Any | None:
+        """Localiza uma moeda de cobrança pelo código ISO 4217; None se inexistente."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def new_charge_currency(
+        self,
+        *,
+        code: str,
+        coins_per_unit: Decimal = Decimal("1.00"),
+        enabled: bool = True,
+        sort_order: int = 0,
+        settlement: bool = False,
+    ) -> Any:
+        """Instancia uma moeda de cobrança ainda não persistida."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def save_charge_currency(self, row: Any) -> Any:
+        """Persiste a moeda de cobrança e devolve a linha salva."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete_charge_currency(self, row: Any) -> None:
+        """Remove a moeda de cobrança."""
 
         raise NotImplementedError
 

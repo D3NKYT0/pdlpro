@@ -325,3 +325,54 @@ it('permite alternar entre Mercado Pago e Stripe quando ambos suportam BRL', asy
   await user.click(screen.getByRole('radio', { name: 'Stripe (Cartão)' }))
   expect(await screen.findByText('Pagamento com cartão via Stripe')).toBeTruthy()
 })
+
+it('renderiza seletor de moedas dinâmico e filtra pacotes conforme moeda', async () => {
+  vi.mocked(paymentApi.catalog).mockResolvedValue({
+    currency: 'BRL',
+    currencies: [
+      { code: 'BRL', symbol: 'R$', name: 'Real', coins_per_unit: '1.00', is_settlement: true },
+      { code: 'USD', symbol: '$', name: 'Dólar', coins_per_unit: '0.20', is_settlement: false },
+      { code: 'EUR', symbol: '€', name: 'Euro', coins_per_unit: '0.18', is_settlement: false },
+    ],
+    methods: [
+      { id: 'stripe', public_key: 'pk-test', currencies: ['BRL', 'USD', 'EUR'] },
+    ],
+    packages: [
+      {
+        id: 'pkg-1',
+        code: 'pack-all',
+        name: 'Pacote Global',
+        coins: '100',
+        price_brl: '50.00',
+        price_usd: '10.00',
+        prices: { BRL: '50.00', USD: '10.00', EUR: '9.00' },
+        badge: '',
+        bonus: '0',
+        total_coins: '100',
+      },
+      {
+        id: 'pkg-2',
+        code: 'pack-brl-only',
+        name: 'Pacote Brasil',
+        coins: '50',
+        price_brl: '25.00',
+        price_usd: '',
+        prices: { BRL: '25.00' },
+        badge: '',
+        bonus: '0',
+        total_coins: '50',
+      },
+    ],
+    allow_custom_amount: true,
+    promo: null,
+  })
+  const user = mount()
+
+  expect(await screen.findByText('Pacote Global')).toBeTruthy()
+  expect(screen.getByText('Pacote Brasil')).toBeTruthy()
+  expect(screen.getByRole('button', { name: /EUR/ })).toBeTruthy()
+
+  await user.click(screen.getByRole('button', { name: /EUR/ }))
+  expect(await screen.findByText('Pacote Global')).toBeTruthy()
+  expect(screen.queryByText('Pacote Brasil')).toBeNull()
+})

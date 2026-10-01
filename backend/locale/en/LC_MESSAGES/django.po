@@ -5217,5 +5217,45 @@ msgstr "Disabled mode (Dummy). The test message was discarded on purpose."
 msgid "%(key)s aceita apenas %(allowed)s."
 msgstr "%(key)s accepts only %(allowed)s."
 
+msgid "Moeda de cobrança '{currency}' não está habilitada na loja."
+msgstr "Charge currency '{currency}' is not enabled in the store."
+
+msgid "Pacote não possui preço configurado para a moeda '{currency}'."
+msgstr "Package has no configured price for currency '{currency}'."
+
+msgid "Moeda de liquidação não pode ser desativada ou removida."
+msgstr "Settlement currency cannot be disabled or removed."
+
+msgid "Moeda de cobrança já cadastrada."
+msgstr "Charge currency already registered."
+
+msgid "Código de moeda inválido (deve ter 3 letras ISO 4217)."
+msgstr "Invalid currency code (must be 3 ISO 4217 letters)."
+
+msgid "Moeda não encontrada."
+msgstr "Currency not found."
+
+msgid "Moeda de Cobrança"
+msgstr "Charge Currency"
+
+msgid "Moedas de Cobrança"
+msgstr "Charge Currencies"
+
+msgid "Coins por Unidade"
+msgstr "Coins per Unit"
+
+msgid "Moeda de Liquidação"
+msgstr "Settlement Currency"
+
+msgid "Preço do Pacote por Moeda"
+msgstr "Package Price by Currency"
+
+msgid "Preços dos Pacotes por Moeda"
+msgstr "Package Prices by Currency"
+
+msgid "País (ISO 3166-1 alpha-2)"
+msgstr "Country (ISO 3166-1 alpha-2)"
+
+
 #~ msgid "Extensão de exemplo"
 #~ msgstr "Sample extension"

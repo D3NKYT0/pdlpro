@@ -44,6 +44,7 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
     email = serializers.EmailField(read_only=True)
     first_name = serializers.CharField(read_only=True, required=False)
     last_name = serializers.CharField(read_only=True, required=False)
+    country = serializers.CharField(read_only=True, required=False)
     display_name = serializers.CharField()
     role = serializers.CharField(read_only=True)
     is_email_verified = serializers.BooleanField(read_only=True)
@@ -83,6 +84,7 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
                 "email": instance.email,
                 "first_name": instance.first_name,
                 "last_name": instance.last_name,
+                "country": getattr(instance, "country", ""),
                 "display_name": instance.display_name,
                 "bio": instance.bio,
                 "role": instance.role,
@@ -105,6 +107,7 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
         data = super().to_representation(instance)
         data["first_name"] = getattr(instance, "first_name", "")
         data["last_name"] = getattr(instance, "last_name", "")
+        data["country"] = getattr(instance, "country", "")
         data["avatar_url"] = instance.avatar.url if getattr(instance, "avatar", None) else None
         data["is_staff"] = bool(getattr(instance, "is_staff", False))
         data["is_superuser"] = bool(getattr(instance, "is_superuser", False))
@@ -158,6 +161,7 @@ class RegisterSerializer(serializers.Serializer):
 
     first_name = serializers.CharField(required=False, allow_blank=True, max_length=60)
     last_name = serializers.CharField(required=False, allow_blank=True, max_length=60)
+    country = serializers.CharField(required=False, allow_blank=True, max_length=2)
     username = serializers.CharField(required=False, allow_blank=True, max_length=16, validators=[validate_ascii_username])
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True, min_length=8)
@@ -192,6 +196,7 @@ class UpdateProfileSerializer(serializers.Serializer):
 
     first_name = serializers.CharField(required=False, allow_blank=True, max_length=60)
     last_name = serializers.CharField(required=False, allow_blank=True, max_length=60)
+    country = serializers.CharField(required=False, allow_blank=True, max_length=2)
     display_name = serializers.CharField(required=False, allow_blank=True, max_length=80)
     bio = serializers.CharField(required=False, allow_blank=True, max_length=500)
     avatar = serializers.ImageField(required=False)

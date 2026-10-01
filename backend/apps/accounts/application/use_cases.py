@@ -30,6 +30,7 @@ class RegisterUserInput:
     password: str
     first_name: str = ""
     last_name: str = ""
+    country: str = ""
     username: str = ""
     display_name: str = ""
     accept_terms: bool = False
@@ -83,6 +84,7 @@ class RegisterUserUseCase(UseCase[RegisterUserInput, UserEntity]):
                 first_name=first_name,
                 last_name=last_name,
                 display_name=display_name or username,
+                country=data.country,
             )
             user = self._users.accept_terms(
                 user.id,
@@ -172,6 +174,7 @@ class UpdateProfileInput:
     display_name: str | None = None
     first_name: str | None = None
     last_name: str | None = None
+    country: str | None = None
     bio: str | None = None
     avatar: object | None = None
 
@@ -196,6 +199,7 @@ class UpdateProfileUseCase(UseCase[UpdateProfileInput, UserEntity]):
                 display_name=data.display_name,
                 first_name=data.first_name,
                 last_name=data.last_name,
+                country=data.country,
                 bio=data.bio,
                 avatar=data.avatar,
             )

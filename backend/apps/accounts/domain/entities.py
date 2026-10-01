@@ -23,6 +23,7 @@ class UserEntity:
     avatar_url: str | None
     first_name: str = ""
     last_name: str = ""
+    country: str = ""
     is_2fa_enabled: bool = False
     is_staff: bool = False
     is_superuser: bool = False

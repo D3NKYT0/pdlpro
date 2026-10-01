@@ -81,6 +81,16 @@ class CoinConfig(BaseModel):
             if self.active:
                 CoinConfig.objects.exclude(pk=self.pk).update(active=False)
             super().save(*args, **kwargs)
+            if self.active:
+                WalletChargeCurrency.objects.update_or_create(
+                    code="BRL",
+                    defaults={"coins_per_unit": self.multiplier, "settlement": True, "enabled": True, "sort_order": 0},
+                )
+                if self.usd_multiplier is not None:
+                    WalletChargeCurrency.objects.update_or_create(
+                        code="USD",
+                        defaults={"coins_per_unit": self.usd_multiplier, "settlement": False, "enabled": True, "sort_order": 1},
+                    )
 
 
 class CoinPurchaseBonus(BaseModel):
@@ -188,3 +198,86 @@ class CoinPackage(BaseModel):
 
     def __str__(self) -> str:
         return self.name
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.price_brl is not None and self.price_brl > 0:
+            CoinPackagePrice.objects.update_or_create(
+                package=self,
+                currency_code="BRL",
+                defaults={"amount": self.price_brl},
+            )
+        if self.price_usd is not None and self.price_usd > 0:
+            CoinPackagePrice.objects.update_or_create(
+                package=self,
+                currency_code="USD",
+                defaults={"amount": self.price_usd},
+            )
+
+
+class WalletChargeCurrency(BaseModel):
+    """Moeda de cobrança disponível para a loja do servidor.
+
+    ``code`` é a sigla ISO 4217 única em maiúsculas (BRL, USD, EUR).
+    ``enabled`` indica se a moeda aparece no catálogo e na cotação.
+    ``coins_per_unit`` é a taxa para compras de valor avulso (1 unidade compra X coins).
+    ``sort_order`` define a ordem no seletor de moedas da carteira.
+    ``settlement`` marca a moeda de liquidação (padrão e destino obrigatório no Brasil).
+    No máximo uma moeda pode ter ``settlement=True``.
+    """
+
+    code = models.CharField(max_length=10, unique=True)
+    enabled = models.BooleanField(default=True)
+    coins_per_unit = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal("1.00"))
+    sort_order = models.PositiveIntegerField(default=0)
+    settlement = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = "wallet_charge_currency"
+        verbose_name = _("Moeda de cobrança")
+        verbose_name_plural = _("Moedas de cobrança")
+        ordering = ["sort_order", "code"]
+
+    def __str__(self) -> str:
+        return f"{self.code} ({self.coins_per_unit})"
+
+    def save(self, *args, **kwargs):
+        self.code = (self.code or "").strip().upper()
+        with transaction.atomic():
+            if self.settlement:
+                WalletChargeCurrency.objects.exclude(pk=self.pk).update(settlement=False)
+            super().save(*args, **kwargs)
+            if self.code == "BRL":
+                CoinConfig.objects.filter(active=True).update(multiplier=self.coins_per_unit)
+            elif self.code == "USD":
+                CoinConfig.objects.filter(active=True).update(usd_multiplier=self.coins_per_unit)
+
+
+class CoinPackagePrice(BaseModel):
+    """Preço comercial de um pacote de moedas em uma moeda de cobrança específica.
+
+    Relaciona com ``CoinPackage`` e armazena o valor decimal maior que zero.
+    """
+
+    package = models.ForeignKey(CoinPackage, on_delete=models.CASCADE, related_name="prices")
+    currency_code = models.CharField(max_length=10)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+
+    class Meta:
+        db_table = "wallet_coin_package_price"
+        unique_together = [("package", "currency_code")]
+        verbose_name = _("Preço de pacote de moedas")
+        verbose_name_plural = _("Preços de pacotes de moedas")
+        ordering = ["currency_code"]
+
+    def __str__(self) -> str:
+        return f"{self.package.name} - {self.currency_code} {self.amount}"
+
+    def save(self, *args, **kwargs):
+        self.currency_code = (self.currency_code or "").strip().upper()
+        super().save(*args, **kwargs)
+        if self.currency_code == "BRL":
+            CoinPackage.objects.filter(pk=self.package_id).update(price_brl=self.amount)
+        elif self.currency_code == "USD":
+            CoinPackage.objects.filter(pk=self.package_id).update(price_usd=self.amount)
+

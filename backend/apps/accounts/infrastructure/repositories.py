@@ -72,6 +72,7 @@ class DjangoUserRepository(IUserRepository):
             display_name=user.display_name or user.get_full_name(),
             first_name=getattr(user, "first_name", ""),
             last_name=getattr(user, "last_name", ""),
+            country=getattr(user, "country", ""),
             bio=user.bio,
             role=user.role,
             is_email_verified=user.is_email_verified,
@@ -125,6 +126,7 @@ class DjangoUserRepository(IUserRepository):
         first_name: str = "",
         last_name: str = "",
         display_name: str = "",
+        country: str = "",
     ) -> UserEntity:
         if not display_name and (first_name or last_name):
             display_name = f"{first_name} {last_name}".strip()
@@ -135,6 +137,7 @@ class DjangoUserRepository(IUserRepository):
             first_name=first_name,
             last_name=last_name,
             display_name=display_name,
+            country=(country or "").strip().upper()[:2],
         )
         return self._to_entity(user)
 
@@ -149,6 +152,7 @@ class DjangoUserRepository(IUserRepository):
         display_name: str | None = None,
         first_name: str | None = None,
         last_name: str | None = None,
+        country: str | None = None,
         bio: str | None = None,
         avatar: object | None = None,
     ) -> UserEntity:
@@ -160,6 +164,9 @@ class DjangoUserRepository(IUserRepository):
         if last_name is not None:
             user.last_name = last_name
             update_fields.append("last_name")
+        if country is not None:
+            user.country = (country or "").strip().upper()[:2]
+            update_fields.append("country")
         if display_name is not None:
             user.display_name = display_name
             update_fields.append("display_name")

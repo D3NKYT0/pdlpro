@@ -101,6 +101,17 @@ export interface ApiBonusSimulationResult {
 }
 
 
+export interface ApiStaffChargeCurrency {
+  id: string
+  code: string
+  symbol: string
+  name: string
+  coins_per_unit: string
+  is_settlement: boolean
+  enabled: boolean
+  sort_order: number
+}
+
 export interface ApiStaffCoinPackage {
   id: string
   code: string
@@ -108,6 +119,7 @@ export interface ApiStaffCoinPackage {
   coins: string
   price_brl: string
   price_usd: string
+  prices?: Record<string, string>
   badge: string
   active: boolean
   sort_order: number
@@ -416,6 +428,17 @@ export const staffApi = {
     }),
   deleteCoinPackage: (id: string) =>
     request<{ deleted: boolean }>('/staff/coin-packages/', { method: 'DELETE', body: JSON.stringify({ id }) }),
+  chargeCurrencies: () => request<ApiStaffChargeCurrency[]>('/staff/charge-currencies/'),
+  saveChargeCurrency: (payload: Partial<ApiStaffChargeCurrency>) =>
+    request<ApiStaffChargeCurrency>('/staff/charge-currencies/', {
+      method: payload.id ? 'PUT' : 'POST',
+      body: JSON.stringify(payload),
+    }),
+  deleteChargeCurrency: (id: string) =>
+    request<{ deleted: boolean }>('/staff/charge-currencies/', {
+      method: 'DELETE',
+      body: JSON.stringify({ id }),
+    }),
   shop: () => request<ApiStaffShopItem[]>('/staff/shop/'),
   saveShopItem: (payload: Partial<ApiStaffShopItem>) =>
     request<ApiStaffShopItem>('/staff/shop/', {

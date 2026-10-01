@@ -11,14 +11,15 @@ import {
 import { Card } from '../ui/Card'
 import { Field } from '../ui/Field'
 import { Button } from '../ui/Button'
-import type { ApiCoinPackage, ApiWalletPromo } from '../../services/types'
+import type { ApiChargeCurrencyCatalogItem, ApiCoinPackage, ApiWalletPromo } from '../../services/types'
 import { formatWalletMoney } from './walletHistory'
 import { WalletPromoBanner } from './WalletPromoBanner'
 
 type WalletPurchaseCardProps = {
-  currency: 'BRL' | 'USD'
-  onCurrencyChange: (currency: 'BRL' | 'USD') => void
-  availableCurrencies?: ('BRL' | 'USD')[]
+  currency: string
+  onCurrencyChange: (currency: string) => void
+  availableCurrencies?: string[]
+  catalogCurrencies?: ApiChargeCurrencyCatalogItem[]
   paymentMethod?: string
   availableMethods?: { id: string; name?: string }[]
   onMethodChange?: (methodId: string) => void
@@ -41,10 +42,24 @@ type WalletPurchaseCardProps = {
   }
 }
 
+function getPackagePrice(pack: ApiCoinPackage, curr: string): string | null {
+  if (pack.prices && pack.prices[curr] !== undefined && pack.prices[curr] !== '') {
+    return pack.prices[curr]
+  }
+  if (curr === 'BRL' && pack.price_brl) {
+    return pack.price_brl
+  }
+  if (curr === 'USD' && pack.price_usd) {
+    return pack.price_usd
+  }
+  return null
+}
+
 export function WalletPurchaseCard({
   currency,
   onCurrencyChange,
   availableCurrencies,
+  catalogCurrencies,
   paymentMethod,
   availableMethods,
   onMethodChange,
@@ -61,7 +76,6 @@ export function WalletPurchaseCard({
   mpOptions,
 }: WalletPurchaseCardProps) {
   const { t } = useTranslation('panel')
-  const priceKey = currency === 'USD' ? 'price_usd' : 'price_brl'
   const currenciesList = availableCurrencies && availableCurrencies.length > 0 ? availableCurrencies : ['BRL', 'USD']
   const noteVariant = !paymentAvailable
     ? 'Unavailable'
@@ -70,15 +84,15 @@ export function WalletPurchaseCard({
       : paymentMethod === 'stripe'
         ? currency === 'USD'
           ? 'StripeUsd'
-          : 'StripeBrl'
+          : currency === 'BRL'
+            ? 'StripeBrl'
+            : 'Stripe'
         : 'MercadoPago'
   const noteTitle = t(`wallet.purchase.note${noteVariant}Title`, {
     defaultValue:
-      noteVariant === 'StripeUsd'
+      noteVariant === 'StripeUsd' || noteVariant === 'StripeBrl' || noteVariant === 'Stripe'
         ? t('wallet.purchase.noteStripeTitle')
-        : noteVariant === 'StripeBrl'
-          ? t('wallet.purchase.noteStripeTitle')
-          : undefined,
+        : undefined,
   })
   const noteText =
     noteVariant === 'Simulated'
@@ -93,7 +107,9 @@ export function WalletPurchaseCard({
           ? t('wallet.purchase.noteStripeUsd', { defaultValue: t('wallet.purchase.noteStripe') })
           : noteVariant === 'StripeBrl'
             ? t('wallet.purchase.noteStripeBrl', { defaultValue: t('wallet.purchase.noteStripe') })
-            : t(`wallet.purchase.note${noteVariant}`)
+            : t('wallet.purchase.noteStripe', { defaultValue: t(`wallet.purchase.note${noteVariant}`) })
+
+  const visiblePackages = packages.filter((pack) => Boolean(getPackagePrice(pack, currency)))
 
   return (
     <Card className="wallet-purchase-card">
@@ -106,30 +122,25 @@ export function WalletPurchaseCard({
         </div>
         {currenciesList.length > 1 ? (
           <div className="wallet-currency-switch" role="group" aria-label={t('wallet.purchase.currencyGroup')}>
-            {currenciesList.includes('BRL') ? (
-              <button
-                className={currency === 'BRL' ? 'is-active' : ''}
-                type="button"
-                aria-pressed={currency === 'BRL'}
-                onClick={() => onCurrencyChange('BRL')}
-              >
-                <span>R$</span> BRL
-              </button>
-            ) : null}
-            {currenciesList.includes('USD') ? (
-              <button
-                className={currency === 'USD' ? 'is-active' : ''}
-                type="button"
-                aria-pressed={currency === 'USD'}
-                onClick={() => onCurrencyChange('USD')}
-              >
-                <span>$</span> USD
-              </button>
-            ) : null}
+            {currenciesList.map((c) => {
+              const meta = catalogCurrencies?.find((item) => item.code === c)
+              const symbol = meta?.symbol || (c === 'BRL' ? 'R$' : c === 'USD' ? '$' : c === 'EUR' ? '€' : '')
+              return (
+                <button
+                  key={c}
+                  className={currency === c ? 'is-active' : ''}
+                  type="button"
+                  aria-pressed={currency === c}
+                  onClick={() => onCurrencyChange(c)}
+                >
+                  {symbol ? <span>{symbol}</span> : null} {c}
+                </button>
+              )
+            })}
           </div>
         ) : currenciesList.length === 1 ? (
           <div className="wallet-currency-badge" aria-label={t('wallet.purchase.currencyGroup')}>
-            <span>{currenciesList[0] === 'USD' ? '$' : 'R$'}</span> {currenciesList[0]}
+            <span>{catalogCurrencies?.find((item) => item.code === currenciesList[0])?.symbol || (currenciesList[0] === 'USD' ? '$' : 'R$')}</span> {currenciesList[0]}
           </div>
         ) : null}
       </header>
@@ -172,27 +183,30 @@ export function WalletPurchaseCard({
       </div>
 
       <div className="pay-packs">
-        {packages.map((pack) => (
-          <button
-            key={pack.id}
-            className={`pay-pack ${pack.badge ? 'is-featured' : ''}`}
-            type="button"
-            disabled={busy || !paymentAvailable}
-            aria-label={t('wallet.purchase.packAria', {
-              coins: pack.total_coins,
-              price: formatWalletMoney(pack[priceKey], currency),
-            })}
-            onClick={() => void onStartPurchase(pack.id)}
-          >
-            {pack.badge ? <span className="pay-pack-badge"><Sparkles aria-hidden="true" /> {pack.badge}</span> : null}
-            <span className="pay-pack-name">{pack.name}</span>
-            <span className="pay-pack-coins"><Coins aria-hidden="true" /> {pack.total_coins}</span>
-            <small>{t('wallet.purchase.packCoins')}</small>
-            {Number(pack.bonus) > 0 ? <span className="pay-pack-bonus">{t('wallet.purchase.packBonus', { bonus: pack.bonus })}</span> : null}
-            <strong className="pay-pack-price">{formatWalletMoney(pack[priceKey], currency)}</strong>
-            <span className="pay-pack-action">{paymentAvailable ? t('wallet.purchase.packChoose') : t('wallet.purchase.packUnavailable')}</span>
-          </button>
-        ))}
+        {visiblePackages.map((pack) => {
+          const price = getPackagePrice(pack, currency) || '0'
+          return (
+            <button
+              key={pack.id}
+              className={`pay-pack ${pack.badge ? 'is-featured' : ''}`}
+              type="button"
+              disabled={busy || !paymentAvailable}
+              aria-label={t('wallet.purchase.packAria', {
+                coins: pack.total_coins,
+                price: formatWalletMoney(price, currency),
+              })}
+              onClick={() => void onStartPurchase(pack.id)}
+            >
+              {pack.badge ? <span className="pay-pack-badge"><Sparkles aria-hidden="true" /> {pack.badge}</span> : null}
+              <span className="pay-pack-name">{pack.name}</span>
+              <span className="pay-pack-coins"><Coins aria-hidden="true" /> {pack.total_coins}</span>
+              <small>{t('wallet.purchase.packCoins')}</small>
+              {Number(pack.bonus) > 0 ? <span className="pay-pack-bonus">{t('wallet.purchase.packBonus', { bonus: pack.bonus })}</span> : null}
+              <strong className="pay-pack-price">{formatWalletMoney(price, currency)}</strong>
+              <span className="pay-pack-action">{paymentAvailable ? t('wallet.purchase.packChoose') : t('wallet.purchase.packUnavailable')}</span>
+            </button>
+          )
+        })}
       </div>
 
       {catalogLoading ? <div className="wallet-inline-state"><Clock3 aria-hidden="true" /> {t('wallet.purchase.loadingPackages')}</div> : null}

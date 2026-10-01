@@ -179,6 +179,12 @@ def _bonus_tier_payload(row) -> dict:
 
 
 def _coin_package_payload(row) -> dict:
+    prices = {p.currency_code: str(p.amount) for p in row.prices.all()}
+    if not prices:
+        if row.price_brl:
+            prices["BRL"] = str(row.price_brl)
+        if row.price_usd:
+            prices["USD"] = str(row.price_usd)
     return {
         "id": str(row.id),
         "code": row.code,
@@ -186,6 +192,7 @@ def _coin_package_payload(row) -> dict:
         "coins": str(row.coins),
         "price_brl": str(row.price_brl),
         "price_usd": str(row.price_usd),
+        "prices": prices,
         "badge": row.badge or "",
         "active": bool(row.active),
         "sort_order": int(row.sort_order or 0),
@@ -597,6 +604,28 @@ class UpsertStaffCoinPackageUseCase(UseCase[dict, dict]):
         if sort_order < 0:
             raise ValidationDomainError("A ordem de exibição não pode ser negativa.")
 
+        prices_input = data.get("prices")
+        prices_to_save: dict[str, Decimal] = {}
+        if isinstance(prices_input, dict):
+            for curr, amt in prices_input.items():
+                curr = str(curr).strip().upper()
+                if curr and amt is not None and str(amt).strip():
+                    try:
+                        amt_dec = Decimal(str(amt))
+                        if amt_dec >= 0:
+                            prices_to_save[curr] = amt_dec
+                            if curr == "BRL":
+                                price_brl = amt_dec
+                            elif curr == "USD":
+                                price_usd = amt_dec
+                    except (ArithmeticError, ValueError):
+                        continue
+        else:
+            if price_brl > 0:
+                prices_to_save["BRL"] = price_brl
+            if price_usd > 0:
+                prices_to_save["USD"] = price_usd
+
         row.code = code
         row.name = name
         row.coins = coins
@@ -605,7 +634,7 @@ class UpsertStaffCoinPackageUseCase(UseCase[dict, dict]):
         row.badge = badge
         row.active = bool(data.get("active", True if row.id is None else row.active))
         row.sort_order = sort_order
-        self._coins.save_coin_package(row)
+        self._coins.save_coin_package(row, prices=prices_to_save)
         return _coin_package_payload(row)
 
 
@@ -628,6 +657,88 @@ class DeleteStaffCoinPackageUseCase(UseCase[dict, dict]):
             raise EntityNotFoundError("Pacote de moedas não encontrado.")
         self._coins.delete_coin_package(row)
         return {"deleted": True}
+
+
+def _charge_currency_payload(row) -> dict:
+    return {
+        "code": row.code,
+        "enabled": bool(row.enabled),
+        "coins_per_unit": str(row.coins_per_unit),
+        "sort_order": int(row.sort_order or 0),
+        "settlement": bool(row.settlement),
+    }
+
+
+class ListStaffChargeCurrenciesUseCase(UseCase[None, list[dict]]):
+    """Lista todas as moedas de cobrança para administração.
+
+    Uso: resolva pelo container e chame ``execute()``. O retorno é ``list[dict]``.
+    """
+
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
+    def execute(self, data: None = None) -> list[dict]:
+        return [_charge_currency_payload(row) for row in self._coins.list_charge_currencies()]
+
+
+class UpsertStaffChargeCurrencyUseCase(UseCase[dict, dict]):
+    """Cria ou atualiza uma moeda de cobrança."""
+
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
+    def execute(self, data: dict) -> dict:
+        import re
+
+        code = str(data.get("code") or "").strip().upper()
+        if not re.match(r"^[A-Z]{3}$", code):
+            raise ValidationDomainError("Código de moeda inválido. Use 3 letras maiúsculas (ISO 4217).")
+
+        row = self._coins.get_charge_currency(code)
+        if row is None:
+            row = self._coins.new_charge_currency(code=code)
+
+        coins_per_unit = Decimal(str(data.get("coins_per_unit") if data.get("coins_per_unit") is not None else getattr(row, "coins_per_unit", "1.00") or "1.00"))
+        if coins_per_unit <= 0:
+            raise ValidationDomainError("A taxa da moeda deve ser maior que zero.")
+
+        enabled = bool(data.get("enabled", True if getattr(row, "pk", None) is None else row.enabled))
+        settlement = bool(data.get("settlement", False if getattr(row, "pk", None) is None else row.settlement))
+
+        if row.settlement and not enabled:
+            raise ValidationDomainError("A moeda de liquidação não pode ser desabilitada.")
+
+        if settlement and not enabled:
+            raise ValidationDomainError("A moeda de liquidação deve estar habilitada.")
+
+        row.code = code
+        row.coins_per_unit = coins_per_unit
+        row.enabled = enabled
+        row.sort_order = int(data.get("sort_order") if data.get("sort_order") is not None else getattr(row, "sort_order", 0) or 0)
+        row.settlement = settlement
+
+        self._coins.save_charge_currency(row)
+        return _charge_currency_payload(row)
+
+
+class DeleteStaffChargeCurrencyUseCase(UseCase[dict, dict]):
+    """Remove uma moeda de cobrança."""
+
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
+    def execute(self, data: dict) -> dict:
+        code = str(data.get("code") or "").strip().upper()
+        if not code:
+            raise ValidationDomainError("Informe a moeda a remover.")
+        row = self._coins.get_charge_currency(code)
+        if row is None:
+            raise EntityNotFoundError("Moeda de cobrança não encontrada.")
+        if row.settlement:
+            raise ValidationDomainError("A moeda de liquidação não pode ser removida.")
+        self._coins.delete_charge_currency(row)
+        return {"deleted": True, "code": code}
 
 
 class ListStaffShopItemsUseCase(UseCase[None, list[dict]]):

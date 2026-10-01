@@ -5326,5 +5326,45 @@ msgstr "Modo desactivado (Dummy). El mensaje de prueba fue descartado a propósi
 msgid "%(key)s aceita apenas %(allowed)s."
 msgstr "%(key)s acepta solo %(allowed)s."
 
+msgid "Moeda de cobrança '{currency}' não está habilitada na loja."
+msgstr "La moneda de cobro '{currency}' no está habilitada en la tienda."
+
+msgid "Pacote não possui preço configurado para a moeda '{currency}'."
+msgstr "El paquete no tiene un precio configurado para la moneda '{currency}'."
+
+msgid "Moeda de liquidação não pode ser desativada ou removida."
+msgstr "La moneda de liquidación no se puede desactivar ni eliminar."
+
+msgid "Moeda de cobrança já cadastrada."
+msgstr "La moneda de cobro ya está registrada."
+
+msgid "Código de moeda inválido (deve ter 3 letras ISO 4217)."
+msgstr "Código de moneda inválido (debe tener 3 letras ISO 4217)."
+
+msgid "Moeda não encontrada."
+msgstr "Moneda no encontrada."
+
+msgid "Moeda de Cobrança"
+msgstr "Moneda de Cobro"
+
+msgid "Moedas de Cobrança"
+msgstr "Monedas de Cobro"
+
+msgid "Coins por Unidade"
+msgstr "Coins por Unidad"
+
+msgid "Moeda de Liquidação"
+msgstr "Moneda de Liquidación"
+
+msgid "Preço do Pacote por Moeda"
+msgstr "Precio del Paquete por Moneda"
+
+msgid "Preços dos Pacotes por Moeda"
+msgstr "Precios de los Paquetes por Moneda"
+
+msgid "País (ISO 3166-1 alpha-2)"
+msgstr "País (ISO 3166-1 alpha-2)"
+
+
 #~ msgid "Extensão de exemplo"
 #~ msgstr "Extensión de ejemplo"

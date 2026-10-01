@@ -17,9 +17,11 @@ from apps.wallet.infrastructure.exchange_models import GameExchange
 from apps.wallet.infrastructure.models import (
     CoinConfig,
     CoinPackage,
+    CoinPackagePrice,
     CoinPurchaseBonus,
     CoinPurchasePromo,
     Wallet,
+    WalletChargeCurrency,
     WalletTransaction,
 )
 
@@ -144,6 +146,12 @@ class DjangoWalletRepository(IWalletRepository):
         }
 
     def _serialize_package(self, row: CoinPackage) -> dict:
+        prices = {p.currency_code: p.amount for p in row.prices.all()}
+        if not prices:
+            if row.price_brl:
+                prices["BRL"] = row.price_brl
+            if row.price_usd:
+                prices["USD"] = row.price_usd
         return {
             "id": str(row.id),
             "code": row.code,
@@ -151,6 +159,7 @@ class DjangoWalletRepository(IWalletRepository):
             "coins": row.coins,
             "price_brl": row.price_brl,
             "price_usd": row.price_usd,
+            "prices": prices,
             "badge": row.badge,
         }
 
@@ -185,6 +194,47 @@ class DjangoWalletRepository(IWalletRepository):
             dict(exchange_dump(row), login=row.login, character_id=row.character_id)
             for row in rows
         ]
+
+    def _serialize_charge_currency(self, row: WalletChargeCurrency) -> dict:
+        return {
+            "code": row.code,
+            "coins_per_unit": row.coins_per_unit,
+            "sort_order": row.sort_order,
+            "settlement": bool(row.settlement),
+            "enabled": bool(row.enabled),
+        }
+
+    def list_enabled_charge_currencies(self) -> list[dict]:
+        qs = WalletChargeCurrency.objects.filter(enabled=True).order_by("sort_order", "code")
+        rows = list(qs)
+        if not rows:
+            active_config = self.get_active_coin_config()
+            brl_rate = Decimal(active_config["multiplier"]) if active_config else Decimal("1.00")
+            usd_rate = (
+                Decimal(active_config["usd_multiplier"])
+                if active_config and active_config.get("usd_multiplier") is not None
+                else Decimal("5.00")
+            )
+            brl, _ = WalletChargeCurrency.objects.get_or_create(
+                code="BRL",
+                defaults={"coins_per_unit": brl_rate, "settlement": True, "enabled": True, "sort_order": 0},
+            )
+            usd, _ = WalletChargeCurrency.objects.get_or_create(
+                code="USD",
+                defaults={"coins_per_unit": usd_rate, "settlement": False, "enabled": True, "sort_order": 1},
+            )
+            rows = [brl, usd]
+        return [self._serialize_charge_currency(r) for r in rows]
+
+    def find_enabled_charge_currency(self, code: str) -> dict | None:
+        code = (code or "").strip().upper()
+        if not code:
+            return None
+        row = WalletChargeCurrency.objects.filter(code=code, enabled=True).first()
+        if row is None and code in {"BRL", "USD"}:
+            self.list_enabled_charge_currencies()
+            row = WalletChargeCurrency.objects.filter(code=code, enabled=True).first()
+        return self._serialize_charge_currency(row) if row else None
 
 
 class DjangoCoinAdminRepository(ICoinAdminRepository):
@@ -239,8 +289,22 @@ class DjangoCoinAdminRepository(ICoinAdminRepository):
     def new_coin_package(self) -> CoinPackage:
         return CoinPackage()
 
-    def save_coin_package(self, row: CoinPackage) -> CoinPackage:
+    def save_coin_package(self, row: CoinPackage, *, prices: dict[str, Decimal] | None = None) -> CoinPackage:
         row.save()
+        if prices is not None:
+            for curr, amt in prices.items():
+                curr = (curr or "").strip().upper()
+                if not curr:
+                    continue
+                amt_dec = Decimal(str(amt))
+                if amt_dec > 0:
+                    CoinPackagePrice.objects.update_or_create(
+                        package=row,
+                        currency_code=curr,
+                        defaults={"amount": amt_dec},
+                    )
+                elif amt_dec == 0:
+                    CoinPackagePrice.objects.filter(package=row, currency_code=curr).delete()
         return row
 
     def delete_coin_package(self, row: CoinPackage) -> None:
@@ -264,6 +328,47 @@ class DjangoCoinAdminRepository(ICoinAdminRepository):
         return row
 
     def delete_bonus_tier(self, row: CoinPurchaseBonus) -> None:
+        row.delete()
+
+    def list_charge_currencies(self) -> list[WalletChargeCurrency]:
+        qs = WalletChargeCurrency.objects.order_by("sort_order", "code")
+        if not qs.exists():
+            WalletChargeCurrency.objects.get_or_create(
+                code="BRL",
+                defaults={"coins_per_unit": Decimal("1.00"), "settlement": True, "enabled": True, "sort_order": 0},
+            )
+            WalletChargeCurrency.objects.get_or_create(
+                code="USD",
+                defaults={"coins_per_unit": Decimal("5.00"), "settlement": False, "enabled": True, "sort_order": 1},
+            )
+            qs = WalletChargeCurrency.objects.order_by("sort_order", "code")
+        return list(qs)
+
+    def get_charge_currency(self, code: str) -> WalletChargeCurrency | None:
+        return WalletChargeCurrency.objects.filter(code=(code or "").strip().upper()).first()
+
+    def new_charge_currency(
+        self,
+        *,
+        code: str,
+        coins_per_unit: Decimal = Decimal("1.00"),
+        enabled: bool = True,
+        sort_order: int = 0,
+        settlement: bool = False,
+    ) -> WalletChargeCurrency:
+        return WalletChargeCurrency(
+            code=(code or "").strip().upper(),
+            coins_per_unit=coins_per_unit,
+            enabled=enabled,
+            sort_order=sort_order,
+            settlement=settlement,
+        )
+
+    def save_charge_currency(self, row: WalletChargeCurrency) -> WalletChargeCurrency:
+        row.save()
+        return row
+
+    def delete_charge_currency(self, row: WalletChargeCurrency) -> None:
         row.delete()
 
 

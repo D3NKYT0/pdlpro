@@ -22,12 +22,13 @@ import { useSearchParamTab } from '../../hooks/useSearchParamTab'
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { PlugZap, Trash2 } from 'lucide-react'
+import { Coins, PlugZap, Plus, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import {
   staffApi,
   type ApiIntegrationField,
   type ApiIntegrationsStatus,
+  type ApiStaffChargeCurrency,
   type IntegrationSectionId,
 } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
@@ -203,6 +204,278 @@ function SectionCard({
       </header>
       {children}
     </Card>
+  )
+}
+
+function ChargeCurrenciesSection() {
+  const { t } = useTranslation('admin')
+  const queryClient = useQueryClient()
+  const currencies = useQuery({
+    queryKey: ['staff-charge-currencies'],
+    queryFn: staffApi.chargeCurrencies,
+  })
+
+  const [newCurrency, setNewCurrency] = useState({
+    code: '',
+    symbol: '',
+    name: '',
+    coins_per_unit: '1.00',
+    sort_order: 0,
+    enabled: true,
+  })
+  const [adding, setAdding] = useState(false)
+  const [editingRows, setEditingRows] = useState<Record<string, { coins_per_unit: string; enabled: boolean; sort_order: number }>>({})
+
+  const saveMutation = useMutation({
+    mutationFn: staffApi.saveChargeCurrency,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['staff-charge-currencies'] })
+      queryClient.invalidateQueries({ queryKey: ['payment-catalog'] })
+      toast.success(t('integrations.currencies.toastSaved', { defaultValue: 'Moeda salva com sucesso' }))
+    },
+    onError: (err) => {
+      toast.error(apiErrorMessage(err, t('integrations.currencies.toastError', { defaultValue: 'Erro ao salvar moeda' })))
+    },
+  })
+
+  const deleteMutation = useMutation({
+    mutationFn: staffApi.deleteChargeCurrency,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['staff-charge-currencies'] })
+      queryClient.invalidateQueries({ queryKey: ['payment-catalog'] })
+      toast.success(t('integrations.currencies.toastDeleted', { defaultValue: 'Moeda excluída com sucesso' }))
+    },
+    onError: (err) => {
+      toast.error(apiErrorMessage(err, t('integrations.currencies.toastError', { defaultValue: 'Erro ao excluir moeda' })))
+    },
+  })
+
+  const items = currencies.data ?? []
+
+  async function handleAdd(e: FormEvent) {
+    e.preventDefault()
+    setAdding(true)
+    try {
+      await saveMutation.mutateAsync({
+        code: newCurrency.code.trim().toUpperCase(),
+        symbol: newCurrency.symbol.trim(),
+        name: newCurrency.name.trim(),
+        coins_per_unit: newCurrency.coins_per_unit,
+        sort_order: Number(newCurrency.sort_order),
+        enabled: newCurrency.enabled,
+      })
+      setNewCurrency({ code: '', symbol: '', name: '', coins_per_unit: '1.00', sort_order: items.length + 1, enabled: true })
+    } finally {
+      setAdding(false)
+    }
+  }
+
+  function handleRowChange(id: string, field: 'coins_per_unit' | 'enabled' | 'sort_order', value: any) {
+    setEditingRows((prev) => {
+      const current = prev[id] || {
+        coins_per_unit: items.find((i) => i.id === id)?.coins_per_unit || '1.00',
+        enabled: items.find((i) => i.id === id)?.enabled ?? true,
+        sort_order: items.find((i) => i.id === id)?.sort_order ?? 0,
+      }
+      return {
+        ...prev,
+        [id]: {
+          ...current,
+          [field]: value,
+        },
+      }
+    })
+  }
+
+  async function handleSaveRow(item: ApiStaffChargeCurrency) {
+    const edits = editingRows[item.id]
+    if (!edits) return
+    await saveMutation.mutateAsync({
+      id: item.id,
+      coins_per_unit: edits.coins_per_unit,
+      enabled: edits.enabled,
+      sort_order: edits.sort_order,
+    })
+    setEditingRows((prev) => {
+      const next = { ...prev }
+      delete next[item.id]
+      return next
+    })
+  }
+
+  return (
+    <SectionCard
+      icon={<Coins />}
+      tone="policy"
+      eyebrow={t('integrations.currencies.eyebrow', { defaultValue: 'Billing & Câmbio' })}
+      title={t('integrations.currencies.title', { defaultValue: 'Moedas de Cobrança da Loja' })}
+      description={t('integrations.currencies.description', {
+        defaultValue: 'Gerencie as moedas aceitas nas recargas de moedas. A taxa define a proporção de coins por unidade monetária.',
+      })}
+    >
+      <div className="admin-integrations-stack">
+        <div className="ui-table-container">
+          <table className="ui-table">
+            <thead>
+              <tr>
+                <th>{t('integrations.currencies.code', { defaultValue: 'Código' })}</th>
+                <th>{t('integrations.currencies.name', { defaultValue: 'Nome' })}</th>
+                <th>{t('integrations.currencies.symbol', { defaultValue: 'Símbolo' })}</th>
+                <th>{t('integrations.currencies.coinsPerUnit', { defaultValue: 'Coins por Unidade' })}</th>
+                <th>{t('integrations.currencies.order', { defaultValue: 'Ordem' })}</th>
+                <th>{t('integrations.currencies.status', { defaultValue: 'Status' })}</th>
+                <th>{t('chrome.actions', { defaultValue: 'Ações' })}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item) => {
+                const edits = editingRows[item.id]
+                const coinsPerUnit = edits?.coins_per_unit ?? item.coins_per_unit
+                const isEnabled = edits?.enabled ?? item.enabled
+                const sortOrder = edits?.sort_order ?? item.sort_order
+                const hasEdits = Boolean(edits)
+
+                return (
+                  <tr key={item.id}>
+                    <td>
+                      <strong>{item.code}</strong>
+                      {item.is_settlement ? (
+                        <span className="account-status-pill is-active" style={{ marginLeft: 6, fontSize: '0.75rem' }}>
+                          {t('integrations.currencies.settlementBadge', { defaultValue: 'Liquidação' })}
+                        </span>
+                      ) : null}
+                    </td>
+                    <td>{item.name}</td>
+                    <td><code>{item.symbol}</code></td>
+                    <td>
+                      <input
+                        type="number"
+                        min="0.0001"
+                        step="0.0001"
+                        value={coinsPerUnit}
+                        onChange={(e) => handleRowChange(item.id, 'coins_per_unit', e.target.value)}
+                        style={{ width: '90px' }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        min="0"
+                        step="1"
+                        value={sortOrder}
+                        onChange={(e) => handleRowChange(item.id, 'sort_order', Number(e.target.value))}
+                        style={{ width: '60px' }}
+                      />
+                    </td>
+                    <td>
+                      {item.is_settlement ? (
+                        <span className="muted" title={t('integrations.currencies.settlementCannotDisable', { defaultValue: 'Moeda de liquidação deve permanecer ativa' })}>
+                          {t('coinPackages.activeLabel', { defaultValue: 'Ativo' })}
+                        </span>
+                      ) : (
+                        <label style={{ display: 'inline-flex', alignItems: 'center', gap: 6, cursor: 'pointer' }}>
+                          <input
+                            type="checkbox"
+                            checked={isEnabled}
+                            onChange={(e) => handleRowChange(item.id, 'enabled', e.target.checked)}
+                          />
+                          <span>{isEnabled ? t('coinPackages.activeLabel', { defaultValue: 'Ativo' }) : t('coinPackages.inactive', { defaultValue: 'Inativo' })}</span>
+                        </label>
+                      )}
+                    </td>
+                    <td>
+                      <div style={{ display: 'flex', gap: 6 }}>
+                        <Button
+                          type="button"
+                          size="sm"
+                          disabled={!hasEdits || saveMutation.isPending}
+                          onClick={() => void handleSaveRow(item)}
+                        >
+                          {t('chrome.apply', { defaultValue: 'Aplicar' })}
+                        </Button>
+                        {!item.is_settlement ? (
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="danger"
+                            disabled={deleteMutation.isPending}
+                            onClick={() => {
+                              if (window.confirm(t('integrations.currencies.confirmDelete', { code: item.code, defaultValue: `Excluir moeda ${item.code}?` }))) {
+                                deleteMutation.mutate(item.id)
+                              }
+                            }}
+                          >
+                            <Trash2 aria-hidden="true" />
+                          </Button>
+                        ) : null}
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="admin-integrations-subsection">
+          <h4>{t('integrations.currencies.addTitle', { defaultValue: 'Adicionar Moeda de Cobrança' })}</h4>
+          <div className="account-form-fields" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' }}>
+            <Field label={t('integrations.currencies.code', { defaultValue: 'Código ISO' })}>
+              <input
+                maxLength={3}
+                placeholder="EUR"
+                value={newCurrency.code}
+                onChange={(e) => setNewCurrency((c) => ({ ...c, code: e.target.value.toUpperCase() }))}
+              />
+            </Field>
+            <Field label={t('integrations.currencies.symbol', { defaultValue: 'Símbolo' })}>
+              <input
+                maxLength={6}
+                placeholder="€"
+                value={newCurrency.symbol}
+                onChange={(e) => setNewCurrency((c) => ({ ...c, symbol: e.target.value }))}
+              />
+            </Field>
+            <Field label={t('integrations.currencies.name', { defaultValue: 'Nome' })}>
+              <input
+                maxLength={40}
+                placeholder="Euro"
+                value={newCurrency.name}
+                onChange={(e) => setNewCurrency((c) => ({ ...c, name: e.target.value }))}
+              />
+            </Field>
+            <Field label={t('integrations.currencies.coinsPerUnit', { defaultValue: 'Coins / unidade' })}>
+              <input
+                type="number"
+                min="0.0001"
+                step="0.0001"
+                placeholder="1.10"
+                value={newCurrency.coins_per_unit}
+                onChange={(e) => setNewCurrency((c) => ({ ...c, coins_per_unit: e.target.value }))}
+              />
+            </Field>
+            <Field label={t('integrations.currencies.order', { defaultValue: 'Ordem' })}>
+              <input
+                type="number"
+                min="0"
+                step="1"
+                value={newCurrency.sort_order}
+                onChange={(e) => setNewCurrency((c) => ({ ...c, sort_order: Number(e.target.value) }))}
+              />
+            </Field>
+          </div>
+          <div style={{ marginTop: 12 }}>
+            <Button
+              type="button"
+              disabled={adding || !newCurrency.code || !newCurrency.symbol || !newCurrency.name}
+              onClick={(e) => void handleAdd(e)}
+            >
+              <Plus aria-hidden="true" /> {t('integrations.currencies.addButton', { defaultValue: 'Adicionar Moeda' })}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </SectionCard>
   )
 }
 
@@ -436,6 +709,7 @@ export function AdminIntegrationsPage() {
                   {renderSecret('STRIPE_PUBLISHABLE_KEY')}
                   {renderSecret('STRIPE_WEBHOOK_SECRET')}
                   {renderBool('STRIPE_ACTIVATE_PAYMENTS')}
+                  {renderText('STRIPE_PRESENTMENT_CURRENCIES', 'text', t('integrations.payments.stripePresentmentHint', { defaultValue: 'Moedas de cobrança suportadas no Stripe, separadas por vírgula. Ex.: BRL, USD, EUR' }))}
                 </div>
               </SectionCard>
               <SectionCard
@@ -496,6 +770,7 @@ export function AdminIntegrationsPage() {
                   {renderBool('PAYMENT_ALLOW_MOCK')}
                 </div>
               </SectionCard>
+              <ChargeCurrenciesSection />
             </>
           ) : null}
 

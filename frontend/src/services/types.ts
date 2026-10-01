@@ -163,9 +163,18 @@ export interface ApiCoinPackage {
   coins: string
   price_brl: string
   price_usd: string
+  prices?: Record<string, string>
   badge: string
   bonus: string
   total_coins: string
+}
+
+export interface ApiChargeCurrencyCatalogItem {
+  code: string
+  symbol: string
+  name: string
+  coins_per_unit: string
+  is_settlement: boolean
 }
 
 export interface ApiWalletPromo {
@@ -176,6 +185,7 @@ export interface ApiWalletPromo {
 
 export interface ApiPaymentCatalog {
   currency: string
+  currencies?: ApiChargeCurrencyCatalogItem[]
   methods: Array<{
     id: string
     public_key: string

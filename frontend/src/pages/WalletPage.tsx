@@ -11,7 +11,7 @@ import { WalletTransferCard } from '../components/wallet/WalletTransferCard'
 import { formatWalletMoney, orderDetailEntries, transactionDetailEntries } from '../components/wallet/walletHistory'
 import { useAuth } from '../contexts/AuthContext'
 import { apiErrorMessage } from '../lib/errors'
-import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument, alternateStripeCurrency } from '../lib/payments'
+import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument, alternateStripeCurrency, resolveInitialCurrency } from '../lib/payments'
 import { trackInitiateCheckout, trackPurchase } from '../lib/tracking'
 import { paymentApi, walletApi } from '../services/api'
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../services/types'
@@ -32,7 +32,7 @@ export function WalletPage() {
   const catalog = useQuery({ queryKey: ['payment-catalog'], queryFn: paymentApi.catalog })
   const [recipient, setRecipient] = useState('')
   const [amount, setAmount] = useState('')
-  const [currency, setCurrency] = useState<'BRL' | 'USD'>('BRL')
+  const [currency, setCurrency] = useState<string>('BRL')
   const [customAmount, setCustomAmount] = useState('')
   const [document, setDocument] = useState('')
   const [order, setOrder] = useState<ApiPaymentOrder | null>(null)
@@ -44,18 +44,45 @@ export function WalletPage() {
   const [selectedMethodId, setSelectedMethodId] = useState<string>('')
   const brickRef = useRef<{ unmount: () => void } | null>(null)
   const stripeCurrencyRetry = useRef(false)
+  const initialCurrencyResolved = useRef(false)
 
   const methods = catalog.data?.methods ?? []
   const brlPriority = catalog.data?.brl_method_priority ?? 'user_choice'
-  const availableCurrencies: ('BRL' | 'USD')[] = catalog.data
-    ? (['BRL', 'USD'] as const).filter((c) => methods.some((m) => m.currencies.includes(c)))
-    : ['BRL', 'USD']
+  const catalogCurrencies = catalog.data?.currencies ?? []
+  const settlementCurrency =
+    catalogCurrencies.find((c) => c.is_settlement)?.code || catalog.data?.currency || 'BRL'
+
+  const availableCurrencies: string[] = catalogCurrencies.length > 0
+    ? catalogCurrencies.map((c) => c.code)
+    : catalog.data
+      ? Array.from(new Set(methods.flatMap((m) => m.currencies)))
+      : ['BRL', 'USD']
 
   useEffect(() => {
-    if (catalog.data && availableCurrencies.length > 0 && !availableCurrencies.includes(currency)) {
-      setCurrency(availableCurrencies[0])
+    if (!catalog.data || availableCurrencies.length === 0) return
+
+    if (!initialCurrencyResolved.current) {
+      initialCurrencyResolved.current = true
+      let saved: string | null = null
+      try {
+        saved = localStorage.getItem('pdl_currency')
+      } catch {
+        // ignore
+      }
+      const initial = resolveInitialCurrency({
+        savedCurrency: saved,
+        userCountry: (user as any)?.country,
+        availableCurrencies,
+        settlementCurrency,
+      })
+      setCurrency(initial)
+      return
     }
-  }, [availableCurrencies, currency, catalog.data])
+
+    if (!availableCurrencies.includes(currency)) {
+      setCurrency(availableCurrencies[0] || settlementCurrency)
+    }
+  }, [availableCurrencies, catalog.data, currency, settlementCurrency, user])
 
   const methodsForCurrency = methods.filter((item) => item.currencies.includes(currency))
   const mp = methodsForCurrency.find((item) => item.id === 'mercadopago')
@@ -274,11 +301,16 @@ export function WalletPage() {
       }>
     } | null
     if (!order || !session?.confirm) return
-    const chargeCurrency = order.currency === 'USD' ? 'USD' : 'BRL'
+    const chargeCurrency = order.currency || currency
     setBusy(true)
     try {
       const result = await session.confirm()
-      const nextCurrency = alternateStripeCurrency(result.error, chargeCurrency)
+      const nextCurrency = alternateStripeCurrency(
+        result.error,
+        chargeCurrency,
+        availableCurrencies,
+        settlementCurrency,
+      )
       if (result.error && nextCurrency && !stripeCurrencyRetry.current) {
         stripeCurrencyRetry.current = true
         const reopened = await paymentApi.create({
@@ -287,6 +319,11 @@ export function WalletPage() {
           method: 'stripe',
         })
         setCurrency(nextCurrency)
+        try {
+          localStorage.setItem('pdl_currency', nextCurrency)
+        } catch {
+          // ignore
+        }
         setOrder(reopened)
         const brazilCard = result.error.payment_method?.card?.country?.toUpperCase() === 'BR'
         toast(t(brazilCard ? 'wallet.toast.stripeBrazilReopened' : 'wallet.toast.stripeCurrencyReopened', {
@@ -356,8 +393,14 @@ export function WalletPage() {
           onCurrencyChange={(c) => {
             setCurrency(c)
             setSelectedMethodId('')
+            try {
+              localStorage.setItem('pdl_currency', c)
+            } catch {
+              // ignore
+            }
           }}
           availableCurrencies={availableCurrencies}
+          catalogCurrencies={catalogCurrencies}
           paymentMethod={paymentMethod}
           availableMethods={methodsForCurrency}
           onMethodChange={setSelectedMethodId}

@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 30 de setembro de 2026
 
 > [!NOTE]
 > Pasta de **arquivo**: changelog vivo e registros datados. Não use estes
@@ -19,3 +19,4 @@
 | [2026-09-04 Denkynho](2026-09-04-denkynho-evolucao.md) | Registro |
 | [2026-09-04 segurança](2026-09-04-seguranca.md) | Registro |
 | [2026-09-10 auditoria Python](2026-09-10-auditoria-python.md) | Registro |
+| [2026-09-30 moedas de cobrança](2026-09-30-plano-moedas-de-cobranca.md) | Plano |

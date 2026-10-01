@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, expect, it, vi } from 'vitest'
-import { alternateStripeCurrency, confirmStripePayment, formatDocument, inferDocumentType, loadScript, mountMercadoPagoBrick, sanitizeDocument } from './payments'
+import { alternateStripeCurrency, confirmStripePayment, formatDocument, inferDocumentType, loadScript, mountMercadoPagoBrick, resolveInitialCurrency, sanitizeDocument } from './payments'
 
 it('escolhe a outra moeda quando o cartão recusa a cobrança', () => {
   const declined = { decline_code: 'currency_not_supported' as const }
@@ -13,6 +13,83 @@ it('escolhe a outra moeda quando o cartão recusa a cobrança', () => {
   expect(alternateStripeCurrency(declined, 'USD')).toBe('BRL')
   expect(alternateStripeCurrency({ decline_code: 'insufficient_funds' }, 'USD')).toBeNull()
   expect(alternateStripeCurrency(undefined, 'BRL')).toBeNull()
+
+  // Testes com catálogo dinâmico de moedas
+  const dynamicAvailable = ['BRL', 'USD', 'EUR']
+  expect(alternateStripeCurrency(brazil, 'USD', dynamicAvailable, 'BRL')).toBe('BRL')
+  expect(alternateStripeCurrency(brazil, 'EUR', dynamicAvailable, 'BRL')).toBe('BRL')
+  expect(alternateStripeCurrency(brazil, 'BRL', dynamicAvailable, 'BRL')).toBeNull()
+  expect(alternateStripeCurrency(europe, 'USD', dynamicAvailable, 'BRL')).toBe('EUR')
+  expect(alternateStripeCurrency(europe, 'EUR', dynamicAvailable, 'BRL')).toBe('USD')
+})
+
+it('resolve a moeda inicial respeitando a hierarquia: preferência > país > liquidação', () => {
+  const available = ['BRL', 'USD', 'EUR']
+
+  // 1. Preferência salva tem precedência se ativa
+  expect(
+    resolveInitialCurrency({
+      savedCurrency: 'EUR',
+      userCountry: 'BR',
+      availableCurrencies: available,
+    })
+  ).toBe('EUR')
+
+  // Preferência salva é ignorada se não estiver ativa no catálogo
+  expect(
+    resolveInitialCurrency({
+      savedCurrency: 'GBP',
+      userCountry: 'BR',
+      availableCurrencies: available,
+    })
+  ).toBe('BRL')
+
+  // 2. País da conta do usuário
+  expect(
+    resolveInitialCurrency({
+      userCountry: 'BR',
+      availableCurrencies: available,
+    })
+  ).toBe('BRL')
+
+  expect(
+    resolveInitialCurrency({
+      userCountry: 'DE',
+      availableCurrencies: available,
+    })
+  ).toBe('EUR')
+
+  // País europeu sem EUR no catálogo cai para USD se disponível
+  expect(
+    resolveInitialCurrency({
+      userCountry: 'DE',
+      availableCurrencies: ['BRL', 'USD'],
+    })
+  ).toBe('USD')
+
+  // Outros países caem para USD se disponível
+  expect(
+    resolveInitialCurrency({
+      userCountry: 'JP',
+      availableCurrencies: available,
+    })
+  ).toBe('USD')
+
+  // 3. Sem país ou país desconhecido sem USD: liquidação
+  expect(
+    resolveInitialCurrency({
+      availableCurrencies: ['BRL'],
+      settlementCurrency: 'BRL',
+    })
+  ).toBe('BRL')
+
+  expect(
+    resolveInitialCurrency({
+      userCountry: 'JP',
+      availableCurrencies: ['EUR', 'BRL'],
+      settlementCurrency: 'EUR',
+    })
+  ).toBe('EUR')
 })
 
 afterEach(() => { document.body.innerHTML = ''; vi.unstubAllGlobals() })
