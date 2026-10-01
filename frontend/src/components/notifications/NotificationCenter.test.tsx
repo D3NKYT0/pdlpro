@@ -119,3 +119,16 @@ it('mostra estado vazio quando não há avisos', async () => {
   await user.click(await screen.findByRole('button', { name: 'Abrir notificações' }))
   expect(await screen.findByText('Nenhum aviso ainda.')).toBeTruthy()
 })
+
+it('não renderiza nem executa chamadas quando enabled=false', () => {
+  render(
+    <MemoryRouter>
+      <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+        <NotificationCenter enabled={false} />
+      </QueryClientProvider>
+    </MemoryRouter>,
+  )
+  expect(notificationApi.list).not.toHaveBeenCalled()
+  expect(pushApi.vapid).not.toHaveBeenCalled()
+  expect(screen.queryByRole('button', { name: /notificações/i })).toBeNull()
+})

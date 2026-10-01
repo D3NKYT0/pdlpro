@@ -5,7 +5,7 @@ import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
-import { contentApi, serverApi } from '../services/api'
+import { contentApi, programsApi, serverApi } from '../services/api'
 import { HomePage } from './HomePage'
 
 vi.mock('../theme/ThemeProvider', () => ({
@@ -13,6 +13,9 @@ vi.mock('../theme/ThemeProvider', () => ({
 }))
 vi.mock('../services/domain/content.service', () => ({
   contentApi: { news: vi.fn(), wiki: vi.fn() },
+}))
+vi.mock('../services/domain/programs.service', () => ({
+  programsApi: { resources: vi.fn() },
 }))
 vi.mock('../services/domain/server.service', () => ({
   serverApi: { status: vi.fn(), rankings: vi.fn(), info: vi.fn() },
@@ -30,6 +33,7 @@ function mount() {
 }
 
 beforeEach(async () => {
+  vi.clearAllMocks()
   const { useTheme } = await import('../theme/ThemeProvider')
   vi.mocked(useTheme).mockReturnValue({ presentation: null, name: undefined, description: undefined } as never)
   vi.mocked(serverApi.status).mockResolvedValue({ players_online: 12, game_online: true, login_online: true } as never)
@@ -39,6 +43,7 @@ beforeEach(async () => {
     description: '',
     site_name_customized: false,
   } as never)
+  vi.mocked(programsApi.resources).mockResolvedValue([])
   vi.mocked(contentApi.news).mockResolvedValue([])
   vi.mocked(contentApi.wiki).mockResolvedValue([])
 })
@@ -189,6 +194,17 @@ it('prioriza páginas e notícias publicadas na seção de crônica', async () =
   expect(contentApi.wiki).toHaveBeenCalledWith(undefined, 'pt')
   expect(screen.queryByRole('link', { name: /Rates e progressão/i })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: /Notícias do reino/i })).not.toBeInTheDocument()
+})
+
+it('não consulta nem exibe wiki quando o recurso está desabilitado', async () => {
+  vi.mocked(programsApi.resources).mockResolvedValue([{ code: 'wiki', enabled: false }] as never)
+
+  mount()
+  await screen.findByRole('link', { name: /Baixe o Jogo/i })
+
+  expect(contentApi.wiki).not.toHaveBeenCalled()
+  expect(screen.queryByRole('heading', { name: /Guias e Enciclopédia/i })).not.toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: /Abrir enciclopédia/i })).not.toBeInTheDocument()
 })
 
 it('marca a home default com data-theme-part e usa nome/descrição de pacote customizado', async () => {

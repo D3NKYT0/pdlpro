@@ -89,6 +89,8 @@ export function PrivateLayout() {
   });
   const resourceEnabled = (code: string) =>
     !resources.data?.some((r) => r.code === code && !r.enabled);
+  const resourceActive = (code: string) =>
+    Boolean(resources.data) && resourceEnabled(code);
   const { user, logout } = useAuth();
   const landingPath = useLandingPath();
   const navigate = useNavigate();
@@ -100,8 +102,9 @@ export function PrivateLayout() {
     ? (isAdmin ? theme.presentation?.shells?.admin : theme.presentation?.shells?.panel)
     : undefined;
   const [menuOpen, setMenuOpen] = useState(false);
-  const helpOn = resourceEnabled("help");
-  const supportOn = resourceEnabled("support");
+  const helpOn = resourceActive("help");
+  const supportOn = resourceActive("support");
+  const notificationsOn = resourceActive("notifications");
   const support = useQuery({
     queryKey: ["support-tickets"],
     queryFn: supportApi.list,
@@ -266,8 +269,8 @@ export function PrivateLayout() {
           </div>
           <div className="panel-topbar-end">
             <ActiveAccountSwitcher />
-            {resourceEnabled("notifications") ? (
-              <NotificationCenter />
+            {notificationsOn ? (
+              <NotificationCenter enabled={notificationsOn} />
             ) : null}
           </div>
         </header>

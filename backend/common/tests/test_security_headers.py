@@ -23,6 +23,7 @@ def test_responses_include_content_security_policy():
     assert "frame-ancestors 'none'" in policy
     assert "https://js.stripe.com" in policy
     assert "https://hcaptcha.com" in policy
+    assert "https://static.cloudflareinsights.com" in policy
     assert "'unsafe-inline'" not in _csp_directive(policy, "script-src")
     assert "'unsafe-inline'" in _csp_directive(policy, "style-src")
 

@@ -11,7 +11,8 @@ _CSP_SCRIPT_HOSTS = (
     "https://www.googletagmanager.com https://*.googletagmanager.com https://tagmanager.google.com "
     "https://www.google-analytics.com https://*.google-analytics.com "
     "https://*.googleadservices.com https://*.google.com https://*.doubleclick.net "
-    "https://connect.facebook.net https://analytics.tiktok.com"
+    "https://connect.facebook.net https://analytics.tiktok.com "
+    "https://static.cloudflareinsights.com"
 )
 _CSP_STYLE = (
     "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net "

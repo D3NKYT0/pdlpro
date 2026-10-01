@@ -2,7 +2,7 @@
 # mutable class attributes as intentional shared configuration (Meta,
 # permission_classes, serializer fields, migration state, etc.).
 target-version = "py314"
-extend-exclude = ["**/migrations"]
+extend-exclude = ["**/migrations", "log"]
 
 [lint]
 ignore = [
@@ -11,3 +11,7 @@ ignore = [
 
 [lint.per-file-ignores]
 "manage.py" = ["EXE001"]
+"scripts/seed_demo_offline_stores.py" = ["E402"]
+"core/settings/*.py" = ["F403", "F405", "E402"]
+"core/asgi.py" = ["E402"]
+"common/tests/test_release_packaging.py" = ["E402"]

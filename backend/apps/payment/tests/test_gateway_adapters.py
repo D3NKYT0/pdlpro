@@ -103,6 +103,26 @@ def test_mercadopago_includes_payer_name(order, mocker):
     payload = create.call_args.args[0]
     assert payload["payer"]["first_name"] == "Daniel"
     assert payload["payer"]["last_name"] == "Amaral"
+    assert payload["payer"]["entity_type"] == "individual"
+
+
+def test_mercadopago_sets_association_entity_type_for_cnpj(order, mocker):
+    sdk = mocker.patch("mercadopago.SDK").return_value
+    create = sdk.payment.return_value.create
+    create.return_value = {"status": 201, "response": {"id": "mp-test", "status": "pending"}}
+    MercadoPagoGateway().process_payment(
+        order,
+        {
+            "payment_method_id": "pix",
+            "payer": {
+                "email": "corp@test.dev",
+                "identification": {"type": "CNPJ", "number": "12.345.678/0001-90"},
+            },
+        },
+    )
+    payload = create.call_args.args[0]
+    assert payload["payer"]["entity_type"] == "association"
+    assert payload["payer"]["identification"] == {"type": "CNPJ", "number": "12345678000190"}
 
 
 @pytest.mark.parametrize("payer", [None, {}, {"identification": {"type": "INVALID", "number": "123"}}])

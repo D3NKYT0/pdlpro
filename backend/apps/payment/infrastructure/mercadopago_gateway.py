@@ -87,6 +87,12 @@ class MercadoPagoGateway(IPaymentGateway):
 
         first_name = str(payer.get("first_name") or "").strip() or "Jogador"
         last_name = str(payer.get("last_name") or "").strip() or first_name
+        entity_type = (
+            str(payer.get("entity_type") or payer.get("entityType") or "").strip().lower()
+            or ("association" if document_type == "CNPJ" else "individual")
+        )
+        if entity_type not in {"individual", "association"}:
+            entity_type = "association" if document_type == "CNPJ" else "individual"
 
         payment_data: dict[str, Any] = {
             "transaction_amount": float(order.amount),
@@ -96,6 +102,7 @@ class MercadoPagoGateway(IPaymentGateway):
                 "email": payer.get("email") or "",
                 "first_name": first_name,
                 "last_name": last_name,
+                "entity_type": entity_type,
                 "identification": {"type": document_type, "number": document_number},
             },
             "external_reference": f"pdl_coins_{order.id}",

@@ -72,6 +72,7 @@ def test_default_csp_allows_payment_sdk_inline_and_mlstatic(nginx_config):
     assert "'unsafe-inline'" in script
     assert "https://sdk.mercadopago.com" in script
     assert "https://*.mlstatic.com" in script
+    assert "https://static.cloudflareinsights.com" in script
 
 
 def test_uploaded_media_is_served_without_permission_to_run_script(nginx_config):

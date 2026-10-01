@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 30 de setembro de 2026
+> **Atualizado:** 1 de outubro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
@@ -10,23 +10,42 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [2.6.8] - 2026-10-01
 
-Lançamento da versão 2.6.8 do PDL PRO com suporte a moedas dinâmicas de cobrança na carteira, preços de pacotes configuráveis por moeda, resolução inteligente da moeda inicial pelo país da conta e gestão de moedas e apresentações no Stripe.
+Lançamento da versão 2.6.8 do PDL PRO com suporte a moedas dinâmicas de cobrança na carteira, preços de pacotes configuráveis por moeda, resolução inteligente da moeda inicial pelo país da conta, gestão completa com tela dedicada em `/panel/admin/charge-currencies` e apresentações no Stripe.
 
 ### Adicionado
 
+- **Tela dedicada de Moedas de Cobrança (`/panel/admin/charge-currencies`)**: interface administrativa completa com foco em alta experiência do usuário (UX) e design Dark Fantasy RPG, conjunto exclusivo de ilustrações esmaltadas (Enamel SVGs no padrão conquistas do PDL PRO), simulador de cotação em tempo real bidirecional com chips de valores rápidos, preenchimento com 1 clique (presets de moedas internacionais e latinas), prévia dinâmica do card de moeda, filtros rápidos por status e busca de moedas.
 - **Moedas de cobrança dinâmicas**: tabela `wallet_charge_currency` e catálogo dinâmico de moedas (`WalletChargeCurrency`), permitindo habilitar e cotar qualquer moeda ISO 4217 com taxa própria de conversão para coins (`coins_per_unit`), mantendo compatibilidade de espelho com BRL e USD legados.
 - **Preços de pacotes por moeda**: suporte a preços independentes por moeda em cada pacote de recarga (`CoinPackagePrice`), com edição dinâmica no painel administrativo (`/panel/admin/coin-packages`) e filtragem inteligente na carteira do jogador para pacotes com preço disponível na moeda ativa.
 - **Gestão de moedas e Stripe Presentment no Admin**: seção "Moedas de Cobrança da Loja" em `/panel/admin/integrations` com listagem, adição, ajuste de taxa (`coins_per_unit`) e ativação/desativação, além da configuração de `STRIPE_PRESENTMENT_CURRENCIES` para limitar moedas ofertadas no Stripe. Proteção contra desativação ou exclusão da moeda de liquidação.
+- **Django Admin (`/admin/`)**: modelos `WalletChargeCurrency` e edição tabular em linha de `CoinPackagePrice` registrados no Django Admin com busca e filtros operacionais.
 - **Resolução inteligente de moeda inicial**: hierarquia na carteira (`localStorage` > país da conta do jogador `user.country` > moeda de liquidação da loja).
 - **Tratamento de recusa Stripe multimoeda**: reabertura automática de pedido com fallback inteligente para a moeda de liquidação em cartões nacionais (BR) e moeda alternativa em cartões estrangeiros quando houver código de recusa `currency_not_supported`.
 - **País na conta do usuário**: campo `country` (ISO 3166-1 alpha-2) integrado à entidade, repositório, perfil e serializadores de usuário.
 - **Internacionalização completa**: strings de interface e mensagens de domínio traduzidas em português, inglês e espanhol (`.po`/`.mo` e JSONs).
+- **Filtragem de rotas por recursos de sistema (`isNavigationItemEnabled`)**: utilitário compartilhado em `frontend/src/lib/navigation.ts` para verificar se destinos públicos (como `/wiki`, `/news`, `/rankings`, `/downloads`, `/roadmap`, `/faq`, `/stores`) estão liberados pelas chaves de `SystemResource`, ocultando links inativos de forma consistente nos shells de temas e layouts públicos.
 
 ### Alterado
 
 - **Cotação de carteira (`CoinPricingService`)**: cotação de pacotes e valores avulsos baseada no repositório de moedas ativas e preços cadastrados, sem dependência estática de settings Django.
+- **Content-Security-Policy (CSP) para Cloudflare Insights / RUM**: inclusão de `https://static.cloudflareinsights.com` na diretiva `script-src` no Nginx (desenvolvimento e produção) e nos cabeçalhos Django em `_CSP_SCRIPT_HOSTS`, liberando a telemetria do Cloudflare Web Analytics sem bloqueios no console.
 - **Catálogo de pagamento**: `/api/v1/customer/payments/catalog/` expõe a interseção entre moedas habilitadas na loja e suportadas pelos gateways ativos (`currencies` e `packages[].prices`).
 - **Modal de checkout**: aviso genérico no Stripe sobre reabertura em moeda alternativa sem fixar termos apenas para real/dólar.
+- **Serializadores de pagamento dinâmicos**: serializadores `CreatePaymentOrderSerializer` e `PreviewBonusSerializer` atualizados para aceitar qualquer código de moeda dinâmico cadastrado no sistema, delegando a validação das moedas suportadas à camada de domínio e ao repositório `WalletChargeCurrency`.
+- **Stripe Elements e carteiras digitais**: configuração padrão `{ wallets: { googlePay: 'never', applePay: 'never' } }` em `confirmStripePayment` para checkout de cartão, impedindo requisições ao manifesto do Google Pay que falhavam no console do navegador.
+- **Consulta da Wiki e notícias na Página Inicial**: consultas da home vinculadas à presença dos dados de `resources`, evitando disparos antecipados ou chamadas quando o recurso estiver desligado na administração, e ocultando visualmente a seção da Wiki desativada.
+- **Política de retentativas HTTP (`queryClient.ts`)**: bloqueio de repetições automáticas para códigos de erro de cliente `401`, `403` e `404`, prevenindo requisições redundantes a rotas protegidas ou desativadas.
+- **Navegação em temas ([ClubTheme.tsx](file:///d:/PROJETOS/PDL/PRO/frontend/src/components/themes/ClubTheme.tsx), [PortalTheme.tsx](file:///d:/PROJETOS/PDL/PRO/frontend/src/components/themes/PortalTheme.tsx), [TemplateShell.tsx](file:///d:/PROJETOS/PDL/PRO/frontend/src/theme/templates/TemplateShell.tsx))**: links de navegação dos temas filtrados dinamicamente de acordo com os recursos ativos do sistema.
+
+### Corrigido
+
+- **Erro 400 ao reabrir pedido em moeda alternativa no Stripe**: correção do erro de validação em `/api/v1/customer/payments/` ao alternar automaticamente para moedas além de BRL/USD (ex.: EUR), e restrição para que a troca automática considere apenas as moedas aceitas pelo gateway Stripe.
+- **Bloqueio de cliques múltiplos no checkout Stripe**: adição de trava de concorrência (`busy`) em `payStripe` para evitar disparos repetidos de confirmação ao clicar no botão durante o processamento.
+- **Erro 403 e retentativas na Wiki pública**: eliminação das chamadas redundantes a `/api/v1/public/wiki/` na home quando o recurso estiver desativado no painel administrativo.
+- **Erro 403 em Notificações e Web Push com recurso desativado**: adiamento da montagem do `NotificationCenter` e das chamadas ativas a `/api/v1/customer/notifications/` e `/api/v1/customer/push/vapid/` no `PrivateLayout` até a resolução completa dos recursos do sistema (`resources`), respeitando a trava de desativação (`ResourceGateMiddleware`) e impedindo requisições prematuras quando o módulo estiver desligado na administração.
+- **Proteção de consultas ativas no Painel e Temas**: inclusão de guardas de presença de recursos (`Boolean(resources.data)`) em chamadas de tickets de suporte, mascote Denkynho, dados do dashboard do jogador e notícias em `PortalTheme` e `ClubTheme`, prevenindo erros 403 e requisições concorrentes durante o carregamento inicial.
+- **Fallback automático para BRL na recusa de moeda estrangeira no Stripe**: aprimoramento de `isStripeCurrencyDecline` e `resolveStripeCardCountry` em `payments.ts` para detectar recusas de emissor por mensagens localizadas ("Seu cartão não aceita essa moeda."), `decline_code` e erros aninhados do PaymentIntent, garantindo que compras com cartão nacional em moeda estrangeira sejam reabertas e convertidas automaticamente em BRL no gateway ativo (Mercado Pago ou Stripe), notificando o jogador sem travar o checkout.
+- **Erros de CORS e aviso `entityType` no checkout Mercado Pago**: ativação de `trackingDisabled: true` no SDK v2 para suprimir requisições de telemetria para `api.mercadolibre.com/tracks` (que resultavam em falha de preflight e `ERR_FAILED 499` no navegador), e definição dinâmica de `entityType: 'individual' | 'association'` para CPF e CNPJ tanto na montagem do Brick quanto no gateway backend, eliminando alertas de validação do pagador.
 
 ## [2.6.7] - 2026-09-30
 

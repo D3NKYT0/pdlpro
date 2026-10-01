@@ -12,7 +12,7 @@ class CreatePaymentOrderSerializer(serializers.Serializer):
 
     amount = serializers.DecimalField(max_digits=12, decimal_places=2, required=False)
     method = serializers.CharField(max_length=20, required=False, allow_blank=True, default="")
-    currency = serializers.ChoiceField(choices=["BRL", "USD"], default="BRL")
+    currency = serializers.CharField(max_length=10, required=False, default="BRL")
     package_id = serializers.CharField(required=False, allow_blank=True, default="")
     source_order_id = serializers.UUIDField(required=False)
 
@@ -27,5 +27,5 @@ class PreviewBonusSerializer(serializers.Serializer):
     """
 
     amount = serializers.DecimalField(max_digits=12, decimal_places=2, required=False, default=0)
-    currency = serializers.ChoiceField(choices=["BRL", "USD"], default="BRL")
+    currency = serializers.CharField(max_length=10, required=False, default="BRL")
     package_id = serializers.CharField(required=False, allow_blank=True, default="")

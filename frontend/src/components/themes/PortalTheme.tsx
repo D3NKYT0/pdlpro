@@ -14,6 +14,7 @@ import { rankingPortrait } from '../rankings/rankingsFormat'
 import { themeAsset, themeImage } from '../../theme/assets'
 import { useTheme } from '../../theme/ThemeProvider'
 import { extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
+import { isNavigationItemEnabled } from '../../lib/navigation'
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { PdlHeroEmblem, PdlSymbol } from '../PdlSymbol'
 import { ButtonLink } from '../ui/Button'
@@ -62,9 +63,9 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
     staleTime: 15000,
   })
   const navigation = [
-    ...presentation.navigation.map((item) =>
-      item.to === '/' ? { ...item, to: landingPath } : item,
-    ),
+    ...presentation.navigation
+      .filter((item) => isNavigationItemEnabled(item.to, resources.data))
+      .map((item) => (item.to === '/' ? { ...item, to: landingPath } : item)),
     ...extensionNavItems('public')
       .filter((item) => isExtensionResourceEnabled(resources.data, item.resource))
       .map((item) => ({
@@ -210,10 +211,12 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
     queryFn: () => serverApi.rankings(selectedTab?.kind ?? 'pvp', 5),
     enabled: Boolean(selectedTab) && sections.includes('ranking'),
   })
+  const resources = useQuery({ queryKey: ['resources'], queryFn: programsApi.resources, staleTime: 15000 })
+  const isNewsEnabled = !resources.data?.some((r) => r.code === 'news' && !r.enabled)
   const news = useQuery({
     queryKey: ['news', language],
     queryFn: () => contentApi.news(language),
-    enabled: sections.includes('news'),
+    enabled: Boolean(resources.data) && isNewsEnabled && sections.includes('news'),
   })
 
   const heroKicker = hero.kicker && hero.kicker !== hero.title

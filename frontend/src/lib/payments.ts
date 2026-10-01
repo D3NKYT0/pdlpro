@@ -74,6 +74,8 @@ export async function mountMercadoPagoBrick(options: {
   firstName?: string
   lastName?: string
   containerId: string
+  entityType?: 'individual' | 'association'
+  trackingDisabled?: boolean
   paymentOptions?: {
     pix?: boolean
     boleto?: boolean
@@ -88,8 +90,12 @@ export async function mountMercadoPagoBrick(options: {
 }) {
   await loadMercadoPagoSdk()
   const MercadoPago = (window as any).MercadoPago
-  const mp = new MercadoPago(options.publicKey, { locale: mercadoPagoLocale() })
+  const mp = new MercadoPago(options.publicKey, {
+    locale: mercadoPagoLocale(),
+    trackingDisabled: options.trackingDisabled ?? true,
+  })
   const docType = inferDocumentType(sanitizeDocument(options.document))
+  const entityType = options.entityType || (docType === 'CNPJ' ? 'association' : 'individual')
 
   const enabledMethods: Record<string, string> = {}
   const opts = options.paymentOptions
@@ -107,6 +113,7 @@ export async function mountMercadoPagoBrick(options: {
       amount: options.amount,
       payer: {
         email: options.email,
+        entityType,
         ...(options.firstName ? { firstName: options.firstName } : {}),
         ...(options.lastName ? { lastName: options.lastName } : {}),
         identification: docType ? { type: docType, number: sanitizeDocument(options.document) } : undefined,
@@ -148,6 +155,7 @@ export async function mountMercadoPagoBrick(options: {
             email: rawPayer.email || options.email,
             first_name: rawPayer.first_name || options.firstName || '',
             last_name: rawPayer.last_name || options.lastName || '',
+            entity_type: rawPayer.entity_type || rawPayer.entityType || entityType,
             identification: {
               type: rawIdent.type || docType || 'CPF',
               number: sanitizeDocument(String(rawIdent.number || options.document)),
@@ -164,31 +172,93 @@ export async function mountMercadoPagoBrick(options: {
   return controller as { unmount: () => Promise<void> | void }
 }
 
+export function isStripeCurrencyDecline(error: any): boolean {
+  if (!error) return false
+
+  const declineCode = (
+    error.decline_code ||
+    error.code ||
+    error.payment_intent?.last_payment_error?.decline_code ||
+    error.payment_intent?.last_payment_error?.code ||
+    ''
+  ).toLowerCase()
+
+  if (declineCode === 'currency_not_supported') return true
+
+  const message = (
+    error.message ||
+    error.payment_intent?.last_payment_error?.message ||
+    ''
+  ).toLowerCase()
+
+  return (
+    message.includes('não aceita essa moeda') ||
+    message.includes('não aceita esta moeda') ||
+    message.includes('não suporta essa moeda') ||
+    message.includes('não suporta esta moeda') ||
+    message.includes('does not support this currency') ||
+    message.includes('does not support the currency') ||
+    message.includes('currency not supported') ||
+    message.includes('currency is not supported') ||
+    message.includes('no admite esta moneda') ||
+    message.includes('no acepta esta moneda') ||
+    message.includes('not accept this currency') ||
+    message.includes('card does not support')
+  )
+}
+
+export function resolveStripeCardCountry(error: any, userCountry?: string | null): string {
+  const cardCountry = (
+    error?.payment_method?.card?.country ||
+    error?.payment_intent?.last_payment_error?.payment_method?.card?.country ||
+    userCountry ||
+    ''
+  ).toUpperCase()
+
+  if (cardCountry) return cardCountry
+
+  const message = (
+    error?.message ||
+    error?.payment_intent?.last_payment_error?.message ||
+    ''
+  ).toLowerCase()
+
+  if (message.includes('moeda') || message.includes('cartão') || message.includes('cartao')) {
+    return 'BR'
+  }
+
+  return ''
+}
+
 export function alternateStripeCurrency(
-  error: { decline_code?: string; payment_method?: { card?: { country?: string } } } | null | undefined,
+  error: any,
   currency: string,
   availableCurrencies: string[] = ['BRL', 'USD'],
   settlementCurrency = 'BRL',
+  userCountry?: string | null,
 ): string | null {
-  if (error?.decline_code !== 'currency_not_supported') return null
-  const currentUpper = currency.toUpperCase()
-  const country = error.payment_method?.card?.country?.toUpperCase()
-  const upperSettlement = settlementCurrency.toUpperCase()
-  const upperAvailable = availableCurrencies.map(c => c.toUpperCase())
+  if (!isStripeCurrencyDecline(error)) return null
+  const currentUpper = (currency || '').toUpperCase()
+  const country = resolveStripeCardCountry(error, userCountry)
+  const upperSettlement = (settlementCurrency || 'BRL').toUpperCase()
+  const upperAvailable = availableCurrencies.map((c) => c.toUpperCase())
 
   if (country === 'BR') {
     if (currentUpper !== upperSettlement && upperAvailable.includes(upperSettlement)) {
       return upperSettlement
     }
+    if (currentUpper !== 'BRL' && upperAvailable.includes('BRL')) {
+      return 'BRL'
+    }
     return null
   }
 
-  const alternatives = upperAvailable.filter(c => c !== currentUpper)
+  const alternatives = upperAvailable.filter((c) => c !== currentUpper)
   if (alternatives.length === 0) return null
 
   const EURO_ZONE_COUNTRIES = [
     'AT', 'BE', 'CY', 'EE', 'FI', 'FR', 'DE', 'GR', 'IE', 'IT',
-    'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'SK', 'SI', 'ES', 'HR'
+    'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'SK', 'SI', 'ES', 'HR',
   ]
   if (country && EURO_ZONE_COUNTRIES.includes(country) && upperAvailable.includes('EUR') && currentUpper !== 'EUR') {
     return 'EUR'
@@ -260,6 +330,7 @@ export async function confirmStripePayment(options: {
   publicKey: string
   clientSecret: string
   containerId: string
+  wallets?: { googlePay?: 'auto' | 'never'; applePay?: 'auto' | 'never' }
 }) {
   await loadStripeSdk()
   const Stripe = (window as any).Stripe
@@ -268,7 +339,11 @@ export async function confirmStripePayment(options: {
     clientSecret: options.clientSecret,
     appearance: { theme: 'night', variables: { colorPrimary: '#d4af37' } },
   })
-  const paymentElement = elements.getElement('payment') || elements.create('payment')
+  const paymentElement =
+    elements.getElement('payment') ||
+    elements.create('payment', {
+      wallets: options.wallets || { googlePay: 'never', applePay: 'never' },
+    })
   paymentElement.mount(`#${options.containerId}`)
   return {
     confirm: async () =>

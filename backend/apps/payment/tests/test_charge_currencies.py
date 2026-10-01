@@ -1,4 +1,5 @@
 from decimal import Decimal
+from types import SimpleNamespace
 
 import pytest
 from django.contrib.auth import get_user_model
@@ -200,6 +201,27 @@ def test_mercadopago_does_not_offer_currency_other_than_brl(customer_api, settin
         format="json",
     )
     assert res_order.status_code == 400
+
+
+def test_create_order_accepts_dynamic_charge_currency(customer_api, settings, mocker):
+    _setup_currencies()
+    mocker.patch(
+        "stripe.PaymentIntent.create",
+        return_value=SimpleNamespace(id="pi-test", client_secret="secret"),
+    )
+    settings.PAYMENT_METHODS = ["stripe"]
+    settings.STRIPE_ACTIVATE_PAYMENTS = True
+    settings.STRIPE_SECRET_KEY = "sk-test"
+    settings.STRIPE_PUBLISHABLE_KEY = "pk-test"
+    settings.STRIPE_PRESENTMENT_CURRENCIES = "BRL,USD,EUR"
+
+    res_order = customer_api.post(
+        "/api/v1/customer/payments/",
+        {"amount": "10.00", "currency": "EUR", "method": "stripe"},
+        format="json",
+    )
+    assert res_order.status_code == 200
+    assert res_order.data["currency"] == "EUR"
 
 
 def test_stripe_offers_only_intersection_of_enabled_currencies_and_presentment(settings):

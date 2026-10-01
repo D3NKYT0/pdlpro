@@ -26,7 +26,11 @@ function notificationPath(link: string) {
   return link
 }
 
-export function NotificationCenter() {
+export interface NotificationCenterProps {
+  enabled?: boolean
+}
+
+export function NotificationCenter({ enabled = true }: NotificationCenterProps = {}) {
   const { t } = useTranslation('panel')
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -41,11 +45,18 @@ export function NotificationCenter() {
     queryKey: ['notifications'],
     queryFn: notificationApi.list,
     refetchInterval: 30_000,
+    enabled,
   })
-  const vapid = useQuery({ queryKey: ['push-vapid'], queryFn: pushApi.vapid })
+  const vapid = useQuery({
+    queryKey: ['push-vapid'],
+    queryFn: pushApi.vapid,
+    enabled,
+  })
   const unread = query.data?.unread ?? 0
   const items = query.data?.results ?? []
   const openLabel = unread ? t('notifications.openUnread', { unread }) : t('notifications.open')
+
+  if (!enabled) return null
 
   function placePanel() {
     const anchor = rootRef.current ?? triggerRef.current

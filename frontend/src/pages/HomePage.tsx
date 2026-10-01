@@ -3,7 +3,7 @@ import { useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { Trans, useTranslation } from 'react-i18next'
 import { resolveHomeIdentity } from '../lib/site-metadata'
-import { contentApi, serverApi } from '../services/api'
+import { contentApi, programsApi, serverApi } from '../services/api'
 import { contentLang } from '../i18n/locale'
 import { themeImage } from '../theme/assets'
 import { useTheme } from '../theme/ThemeProvider'
@@ -25,10 +25,21 @@ function DefaultHomePage() {
   const { t, i18n } = useTranslation('public')
   const theme = useTheme()
   const language = contentLang(i18n.language)
+  const resources = useQuery({ queryKey: ['resources'], queryFn: programsApi.resources, staleTime: 15000 })
+  const isWikiEnabled = !resources.data?.some((r) => r.code === 'wiki' && !r.enabled)
+  const isNewsEnabled = !resources.data?.some((r) => r.code === 'news' && !r.enabled)
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
   const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
-  const news = useQuery({ queryKey: ['news', language], queryFn: () => contentApi.news(language) })
-  const wiki = useQuery({ queryKey: ['wiki', language], queryFn: () => contentApi.wiki(undefined, language) })
+  const news = useQuery({
+    queryKey: ['news', language],
+    queryFn: () => contentApi.news(language),
+    enabled: Boolean(resources.data) && isNewsEnabled,
+  })
+  const wiki = useQuery({
+    queryKey: ['wiki', language],
+    queryFn: () => contentApi.wiki(undefined, language),
+    enabled: Boolean(resources.data) && isWikiEnabled,
+  })
   const clans = useQuery({ queryKey: ['rankings', 'clans'], queryFn: () => serverApi.rankings('clans') })
   const discord = info.data?.discord_url || (import.meta.env.VITE_DISCORD_URL as string | undefined)
   const trailerId = info.data?.trailer_youtube_id || (import.meta.env.VITE_TRAILER_YOUTUBE_ID as string | undefined) || 'Mm19W1PKMFQ'
@@ -157,50 +168,52 @@ function DefaultHomePage() {
         </div>
       </section>
 
-      <section className="w home-wiki" style={sectionArt('home/archive-v2.webp')}>
-        <div className="w-title title container">
-          <span>
-            <img src={themeImage('icons/text.png')} alt="" />
-            {t('home.wikiKicker')}
-          </span>
-          <h1>{t('home.wikiTitle')}</h1>
-        </div>
-        <div className="w-list container">
-          <span className="line">
-            <img src={themeImage('icons/line.png')} alt="" />
-          </span>
-          <div className="wiki">
-            <div>
-              <span>
-                {t('home.wikiGuides')}
-                <Link to="/wiki" aria-label={t('home.wikiOpen')}>
-                  <img src={themeImage('icons/more.png')} alt="" />
-                </Link>
-              </span>
-              <ul>
-                {wikiItems.map((item) => (
-                  <li key={`${item.to}-${item.label}`}>
-                    <Link to={item.to}>
-                      <span />
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+      {isWikiEnabled ? (
+        <section className="w home-wiki" style={sectionArt('home/archive-v2.webp')}>
+          <div className="w-title title container">
+            <span>
+              <img src={themeImage('icons/text.png')} alt="" />
+              {t('home.wikiKicker')}
+            </span>
+            <h1>{t('home.wikiTitle')}</h1>
           </div>
-          {updateCards.map((item) => (
-            <Link key={`${item.to}-${item.title}`} to={item.to} className="update">
-              <div style={{ background: `url(${themeImage(item.image)}) center / cover no-repeat` }}>
-                <div>
-                  <span>{item.kicker}</span>
-                  <p>{item.title}</p>
-                </div>
+          <div className="w-list container">
+            <span className="line">
+              <img src={themeImage('icons/line.png')} alt="" />
+            </span>
+            <div className="wiki">
+              <div>
+                <span>
+                  {t('home.wikiGuides')}
+                  <Link to="/wiki" aria-label={t('home.wikiOpen')}>
+                    <img src={themeImage('icons/more.png')} alt="" />
+                  </Link>
+                </span>
+                <ul>
+                  {wikiItems.map((item) => (
+                    <li key={`${item.to}-${item.label}`}>
+                      <Link to={item.to}>
+                        <span />
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+            </div>
+            {updateCards.map((item) => (
+              <Link key={`${item.to}-${item.title}`} to={item.to} className="update">
+                <div style={{ background: `url(${themeImage(item.image)}) center / cover no-repeat` }}>
+                  <div>
+                    <span>{item.kicker}</span>
+                    <p>{item.title}</p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="home-clans" id="top-clans" style={sectionArt('home/clans-v2.webp')}>
         <div className="title container">

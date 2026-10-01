@@ -36,19 +36,19 @@ export function usePanelDashboard() {
     !code || !resources.data?.some((row) => row.code === code && !row.enabled)
 
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
-  const progressEnabled = Boolean(user) && resourceEnabled('progress')
+  const progressEnabled = Boolean(user) && Boolean(resources.data) && resourceEnabled('progress')
   const progress = useQuery({
     queryKey: ['progress'],
     queryFn: authApi.progress,
     enabled: progressEnabled,
   })
-  const walletEnabled = resourceEnabled('wallet')
+  const walletEnabled = Boolean(resources.data) && resourceEnabled('wallet')
   const wallet = useQuery({
     queryKey: ['wallet'],
     queryFn: walletApi.me,
     enabled: walletEnabled,
   })
-  const accountsEnabled = resourceEnabled('accounts')
+  const accountsEnabled = Boolean(resources.data) && resourceEnabled('accounts')
   const accounts = useQuery({
     queryKey: ['lineage-accounts'],
     queryFn: lineageApi.accounts,
@@ -61,7 +61,7 @@ export function usePanelDashboard() {
     queryFn: () => lineageApi.characters(selectedLogin),
     enabled: accountsEnabled && Boolean(selectedLogin),
   })
-  const gamesEnabled = resourceEnabled('games')
+  const gamesEnabled = Boolean(resources.data) && resourceEnabled('games')
   const bag = useQuery({
     queryKey: ['bag'],
     queryFn: gamesApi.bag,

@@ -11,7 +11,7 @@ import { WalletTransferCard } from '../components/wallet/WalletTransferCard'
 import { formatWalletMoney, orderDetailEntries, transactionDetailEntries } from '../components/wallet/walletHistory'
 import { useAuth } from '../contexts/AuthContext'
 import { apiErrorMessage } from '../lib/errors'
-import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument, alternateStripeCurrency, resolveInitialCurrency } from '../lib/payments'
+import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument, alternateStripeCurrency, resolveInitialCurrency, isStripeCurrencyDecline, resolveStripeCardCountry } from '../lib/payments'
 import { trackInitiateCheckout, trackPurchase } from '../lib/tracking'
 import { paymentApi, walletApi } from '../services/api'
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../services/types'
@@ -192,6 +192,8 @@ export function WalletPage() {
             try {
               const rawPayer = (typeof formData.payer === 'object' && formData.payer ? formData.payer : {}) as Record<string, unknown>
               const rawIdent = (typeof rawPayer.identification === 'object' && rawPayer.identification ? rawPayer.identification : {}) as Record<string, unknown>
+              const docType = inferDocumentType(sanitized)
+              const entityType = docType === 'CNPJ' ? 'association' : 'individual'
               const payload = {
                 ...formData,
                 payer: {
@@ -199,8 +201,9 @@ export function WalletPage() {
                   email: rawPayer.email || user?.email || '',
                   first_name: rawPayer.first_name || firstName,
                   last_name: rawPayer.last_name || lastName,
+                  entity_type: rawPayer.entity_type || rawPayer.entityType || entityType,
                   identification: {
-                    type: rawIdent.type || inferDocumentType(sanitized) || 'CPF',
+                    type: rawIdent.type || docType || 'CPF',
                     number: sanitizeDocument(String(rawIdent.number || sanitized)),
                   },
                 },
@@ -295,6 +298,7 @@ export function WalletPage() {
 
   async function payStripe(event: FormEvent) {
     event.preventDefault()
+    if (busy) return
     const session = brickRef.current as {
       confirm?: () => Promise<{
         error?: { message?: string; decline_code?: string; payment_method?: { card?: { country?: string } } }
@@ -305,27 +309,38 @@ export function WalletPage() {
     setBusy(true)
     try {
       const result = await session.confirm()
-      const nextCurrency = alternateStripeCurrency(
-        result.error,
-        chargeCurrency,
-        availableCurrencies,
-        settlementCurrency,
-      )
+      const isCurrencyDecline = isStripeCurrencyDecline(result.error)
+      const nextCurrency = isCurrencyDecline
+        ? alternateStripeCurrency(
+            result.error,
+            chargeCurrency,
+            availableCurrencies,
+            settlementCurrency,
+            (user as any)?.country,
+          )
+        : null
       if (result.error && nextCurrency && !stripeCurrencyRetry.current) {
         stripeCurrencyRetry.current = true
+        const stripeMethod = stripeConfig?.currencies?.includes(nextCurrency) ? 'stripe' : undefined
+        const targetMethod =
+          stripeMethod ||
+          methods.find((m) => m.id === 'mercadopago' && m.currencies.includes(nextCurrency))?.id ||
+          methods.find((m) => m.currencies.includes(nextCurrency))?.id
         const reopened = await paymentApi.create({
           source_order_id: order.id,
           currency: nextCurrency,
-          method: 'stripe',
+          method: targetMethod,
         })
         setCurrency(nextCurrency)
+        setSelectedMethodId(reopened.method)
         try {
           localStorage.setItem('pdl_currency', nextCurrency)
         } catch {
           // ignore
         }
         setOrder(reopened)
-        const brazilCard = result.error.payment_method?.card?.country?.toUpperCase() === 'BR'
+        const cardCountry = resolveStripeCardCountry(result.error, (user as any)?.country)
+        const brazilCard = cardCountry === 'BR'
         toast(t(brazilCard ? 'wallet.toast.stripeBrazilReopened' : 'wallet.toast.stripeCurrencyReopened', {
           amount: formatWalletMoney(reopened.amount, nextCurrency),
         }))

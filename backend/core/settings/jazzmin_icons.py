@@ -47,6 +47,8 @@ JAZZMIN_ICONS_PDL = {
     "wallet.wallettransaction": "fas fa-exchange-alt",
     "wallet.coinconfig": "fas fa-cog",
     "wallet.coinpackage": "fas fa-coins",
+    "wallet.coinpackageprice": "fas fa-tag",
+    "wallet.walletchargecurrency": "fas fa-money-bill-wave",
     "wallet.coinpurchasebonus": "fas fa-percent",
     "wallet.coinpurchasepromo": "fas fa-bullhorn",
 

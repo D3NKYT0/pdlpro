@@ -57,7 +57,20 @@ def test_catalog_redirects_visitor_to_admin_login(client):
 def test_admin_save_and_continue_keeps_submit_action_and_validation(client):
     user = get_user_model().objects.create_superuser(username="component-editor", email="editor@example.com", password="test-password")
     client.force_login(user)
-    data = {"code": "ui-test", "name": "Pacote", "coins": "100.00", "price_brl": "10,00", "price_usd": "2,00", "sort_order": "0", "active": "on", "_continue": "Salvar e continuar"}
+    data = {
+        "code": "ui-test",
+        "name": "Pacote",
+        "coins": "100.00",
+        "price_brl": "10,00",
+        "price_usd": "2,00",
+        "sort_order": "0",
+        "active": "on",
+        "_continue": "Salvar e continuar",
+        "prices-TOTAL_FORMS": "0",
+        "prices-INITIAL_FORMS": "0",
+        "prices-MIN_NUM_FORMS": "0",
+        "prices-MAX_NUM_FORMS": "1000",
+    }
     invalid = client.post(reverse("admin:wallet_coinpackage_add"), {**data, "name": ""})
     assert invalid.status_code == 200
     assert not CoinPackage.objects.filter(code="ui-test").exists()

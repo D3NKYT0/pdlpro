@@ -1,6 +1,17 @@
 // @vitest-environment jsdom
 import { afterEach, expect, it, vi } from 'vitest'
-import { alternateStripeCurrency, confirmStripePayment, formatDocument, inferDocumentType, loadScript, mountMercadoPagoBrick, resolveInitialCurrency, sanitizeDocument } from './payments'
+import {
+  alternateStripeCurrency,
+  confirmStripePayment,
+  formatDocument,
+  inferDocumentType,
+  isStripeCurrencyDecline,
+  loadScript,
+  mountMercadoPagoBrick,
+  resolveInitialCurrency,
+  resolveStripeCardCountry,
+  sanitizeDocument,
+} from './payments'
 
 it('escolhe a outra moeda quando o cartão recusa a cobrança', () => {
   const declined = { decline_code: 'currency_not_supported' as const }
@@ -21,6 +32,25 @@ it('escolhe a outra moeda quando o cartão recusa a cobrança', () => {
   expect(alternateStripeCurrency(brazil, 'BRL', dynamicAvailable, 'BRL')).toBeNull()
   expect(alternateStripeCurrency(europe, 'USD', dynamicAvailable, 'BRL')).toBe('EUR')
   expect(alternateStripeCurrency(europe, 'EUR', dynamicAvailable, 'BRL')).toBe('USD')
+
+  // Detecção por mensagem de erro do emissor brasileiro (ex.: "Seu cartão não aceita essa moeda.")
+  const ptDecline = { message: 'Seu cartão não aceita essa moeda.' }
+  expect(isStripeCurrencyDecline(ptDecline)).toBe(true)
+  expect(resolveStripeCardCountry(ptDecline)).toBe('BR')
+  expect(alternateStripeCurrency(ptDecline, 'USD', dynamicAvailable, 'BRL')).toBe('BRL')
+
+  // Detecção com payment_intent.last_payment_error aninhado
+  const nestedError = {
+    payment_intent: {
+      last_payment_error: {
+        decline_code: 'currency_not_supported',
+        payment_method: { card: { country: 'BR' } },
+      },
+    },
+  }
+  expect(isStripeCurrencyDecline(nestedError)).toBe(true)
+  expect(resolveStripeCardCountry(nestedError)).toBe('BR')
+  expect(alternateStripeCurrency(nestedError, 'USD', dynamicAvailable, 'BRL')).toBe('BRL')
 })
 
 it('resolve a moeda inicial respeitando a hierarquia: preferência > país > liquidação', () => {
@@ -140,11 +170,19 @@ it('monta Stripe, confirma sem redirecionamento obrigatório e desmonta', async 
 
 it('monta Mercado Pago com documento normalizado e encaminha callbacks', async () => {
   const create = vi.fn().mockResolvedValue({ unmount: vi.fn() })
-  vi.stubGlobal('MercadoPago', class { bricks() { return { create } } })
+  let mpOptions: any = null
+  vi.stubGlobal('MercadoPago', class {
+    constructor(_pk: string, opts: any) {
+      mpOptions = opts
+    }
+    bricks() { return { create } }
+  })
   const tag = document.createElement('script'); tag.src = 'https://sdk.mercadopago.com/js/v2'; document.body.appendChild(tag)
   const onSubmit = vi.fn().mockResolvedValue(undefined), onReady = vi.fn(), onError = vi.fn()
   await mountMercadoPagoBrick({ publicKey: 'pk-test', amount: 25, email: 'a@test.dev', firstName: 'John', lastName: 'Doe', document: '123.456.789-09', containerId: 'checkout', onSubmit, onReady, onError })
+  expect(mpOptions).toEqual({ locale: 'pt-BR', trackingDisabled: true })
   const config = create.mock.calls[0][2]
+  expect(config.initialization.payer.entityType).toBe('individual')
   expect(config.initialization.payer.identification).toEqual({ type: 'CPF', number: '12345678909' })
   await config.callbacks.onSubmit({ formData: { token: 'opaque' } })
   expect(onSubmit).toHaveBeenCalledWith({
@@ -153,6 +191,7 @@ it('monta Mercado Pago com documento normalizado e encaminha callbacks', async (
       email: 'a@test.dev',
       first_name: 'John',
       last_name: 'Doe',
+      entity_type: 'individual',
       identification: { type: 'CPF', number: '12345678909' },
     },
   })
@@ -170,12 +209,12 @@ it('monta Mercado Pago respeitando paymentOptions restritas (ex.: apenas PIX)', 
   document.body.appendChild(tag)
   const onSubmit = vi.fn().mockResolvedValue(undefined), onReady = vi.fn(), onError = vi.fn()
 
-  // Case 1: Only PIX
+  // Case 1: Only PIX com CNPJ
   await mountMercadoPagoBrick({
     publicKey: 'pk-test',
     amount: 50,
     email: 'pix@test.dev',
-    document: '123.456.789-09',
+    document: '12.345.678/0001-90',
     containerId: 'checkout-pix',
     paymentOptions: { pix: true, boleto: false, credit_card: false, debit_card: false },
     onSubmit,
@@ -184,6 +223,7 @@ it('monta Mercado Pago respeitando paymentOptions restritas (ex.: apenas PIX)', 
   })
   const pixConfig = create.mock.calls[0][2]
   expect(pixConfig.customization.paymentMethods).toEqual({ bankTransfer: 'all' })
+  expect(pixConfig.initialization.payer.entityType).toBe('association')
 
   // Case 2: Only Boleto
   await mountMercadoPagoBrick({
@@ -199,5 +239,30 @@ it('monta Mercado Pago respeitando paymentOptions restritas (ex.: apenas PIX)', 
   })
   const boletoConfig = create.mock.calls[1][2]
   expect(boletoConfig.customization.paymentMethods).toEqual({ ticket: 'all' })
+  expect(boletoConfig.initialization.payer.entityType).toBe('individual')
+})
+
+it('monta Stripe desabilitando carteiras digitais por padrão para evitar manifesto do Google Pay', async () => {
+  const mount = vi.fn()
+  const create = vi.fn().mockReturnValue({ mount, unmount: vi.fn() })
+  const elements = vi.fn().mockReturnValue({ getElement: vi.fn().mockReturnValue(null), create })
+  const confirmPayment = vi.fn().mockResolvedValue({ error: undefined })
+  vi.stubGlobal('Stripe', vi.fn().mockReturnValue({ elements, confirmPayment }))
+  const tag = document.createElement('script')
+  tag.src = 'https://js.stripe.com/v3/'
+  document.body.appendChild(tag)
+
+  const session = await confirmStripePayment({
+    publicKey: 'pk-test',
+    clientSecret: 'cs-test',
+    containerId: 'stripe-element',
+  })
+
+  expect(create).toHaveBeenCalledWith('payment', {
+    wallets: { googlePay: 'never', applePay: 'never' },
+  })
+  expect(mount).toHaveBeenCalledWith('#stripe-element')
+  await session.confirm()
+  expect(confirmPayment).toHaveBeenCalledOnce()
 })
 

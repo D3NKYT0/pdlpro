@@ -13,6 +13,7 @@ import { LanguageSwitcher } from '../../components/i18n/LanguageSwitcher'
 import { PdlSymbol } from '../../components/PdlSymbol'
 import { PUBLIC_TEMPLATES } from './catalog'
 import type { ThemeCatalogId } from '../../services/api'
+import { isNavigationItemEnabled } from '../../lib/navigation'
 
 function activeRoute(pathname: string, target: string) {
   if (LANDING_PATHS.includes(target)) return LANDING_PATHS.includes(pathname)
@@ -39,9 +40,9 @@ export function TemplateShell({
     staleTime: 15000,
   })
   const navigation = [
-    ...presentation.navigation.map((item) =>
-      item.to === '/' ? { ...item, to: landingPath } : item,
-    ),
+    ...presentation.navigation
+      .filter((item) => isNavigationItemEnabled(item.to, resources.data))
+      .map((item) => (item.to === '/' ? { ...item, to: landingPath } : item)),
     ...extensionNavItems('public')
       .filter((item) => isExtensionResourceEnabled(resources.data, item.resource))
       .map((item) => ({

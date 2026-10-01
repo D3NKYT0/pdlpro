@@ -226,6 +226,12 @@ it('esconde o sino quando o recurso de avisos está pausado', () => {
   expect(screen.queryByRole('link', { name: 'Avisos' })).not.toBeInTheDocument()
 })
 
+it('não monta o sino de notificações enquanto os recursos não carregaram', () => {
+  resourcesMock.data = undefined as any
+  renderAt('/panel/profile')
+  expect(screen.queryByRole('button', { name: 'Abrir notificações' })).not.toBeInTheDocument()
+})
+
 it('volta para a landing em /home quando o Coming Soon está ligado', () => {
   launchMock.comingSoon = true
   const { container } = renderAt('/panel/profile')

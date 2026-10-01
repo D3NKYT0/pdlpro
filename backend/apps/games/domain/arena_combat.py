@@ -1,10 +1,10 @@
-from __future__ import annotations
-
 """Resolução de combate da arena.
 
 Nas feras comuns, encante acima do requerimento vence sempre; no mesmo nível o
 sorteio decide. O chefe é luta de HP com crítico. Sem Django.
 """
+
+from __future__ import annotations
 
 import random
 from dataclasses import dataclass
