@@ -59,9 +59,13 @@
         "title": "Coins",
         "description": "Active currency, multiplier and rate"
       },
+      "chargeCurrencies": {
+        "title": "Charge currencies",
+        "description": "Conversion rates, settlement and active store currencies"
+      },
       "coinPackages": {
         "title": "Top-up packages",
-        "description": "BRL and USD prices shown in the wallet"
+        "description": "Prices per charge currency displayed in the player wallet"
       },
       "shop": {
         "title": "Shop",
@@ -178,9 +182,71 @@
     "summary": "{{name}} · Item {{item}} · {{fee}}% fee",
     "unnamed": "Unnamed currency",
     "undefinedItem": "undefined",
+    "chargeCurrenciesNotice": "Store charge currencies (BRL, USD, EUR...), conversion rates, and settlement currency are managed centrally in the payments tab.",
+    "chargeCurrenciesLink": "Manage charge currencies",
     "toast": {
       "saved": "Currency updated",
       "error": "Could not save"
+    }
+  },
+  "chargeCurrencies": {
+    "kicker": "Finance",
+    "title": "Charge Currencies",
+    "description": "Configure the currencies accepted in the player wallet, coin conversion rates, ordering and settlement currency.",
+    "stats": {
+      "total": "Registered currencies",
+      "active": "Active store currencies",
+      "settlement": "Settlement currency"
+    },
+    "form": {
+      "createTitle": "Add new currency",
+      "createEyebrow": "New currency",
+      "editTitle": "Edit currency {{code}}",
+      "editEyebrow": "Editing currency",
+      "text": "Register an official ISO 4217 currency and specify how many coins 1 unit of this currency grants to the player.",
+      "code": "ISO 4217 code",
+      "codePlaceholder": "e.g. EUR, ARS, CLP",
+      "codeHint": "Official 3-character uppercase banking code.",
+      "name": "Currency name",
+      "namePlaceholder": "e.g. Euro, Argentine Peso",
+      "nameHint": "Display name shown in panel and wallet.",
+      "symbol": "Symbol",
+      "symbolPlaceholder": "e.g. €, $, R$",
+      "symbolHint": "Monetary symbol or prefix.",
+      "coinsPerUnit": "Coins per monetary unit",
+      "coinsPerUnitHint": "How many coins the player receives for each 1.00 in custom amount purchases.",
+      "sortOrder": "Display order",
+      "sortOrderHint": "Relative order in the wallet currency selector.",
+      "enabled": "Currency active in store",
+      "enabledHint": "When turned off, the currency is hidden from the player wallet.",
+      "settlementNotice": "This is the store settlement currency. It cannot be disabled or deleted.",
+      "cancel": "Cancel edit"
+    },
+    "list": {
+      "eyebrow": "Store Catalog",
+      "title": "Registered Currencies",
+      "text": "List of all currencies available in the system with exchange rates and status.",
+      "empty": "No charge currencies found.",
+      "settlementBadge": "Settlement Currency",
+      "rateLabel": "Base Rate",
+      "inverseRate": "1 coin ≈ {{symbol}} {{amount}}",
+      "active": "Active in store",
+      "inactive": "Disabled",
+      "orderLabel": "Order #{{order}}",
+      "cannotDisableSettlement": "The settlement currency cannot be disabled.",
+      "cannotDeleteSettlement": "The settlement currency cannot be deleted.",
+      "confirmDelete": "Are you sure you want to delete currency {{code}}? This will remove associated package prices."
+    },
+    "calculator": {
+      "eyebrow": "Real-time Simulator",
+      "title": "Quote Simulator",
+      "text": "Test currency conversions and coin delivery before publishing to players.",
+      "currencyAmount": "Amount to simulate"
+    },
+    "toast": {
+      "saved": "Charge currency saved successfully.",
+      "deleted": "Charge currency deleted successfully.",
+      "error": "Error saving charge currency."
     }
   },
   "coinPackages": {

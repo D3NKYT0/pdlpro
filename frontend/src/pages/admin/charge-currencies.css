@@ -1,0 +1,729 @@
+/* ==========================================================================
+   PDL PRO - Admin Charge Currencies Manager Styles
+   Focused on High-End UX, Color, Rich SVGs & Micro-Interactions
+   Dark Fantasy RPG / Enamel Aesthetic
+   ========================================================================== */
+
+.charge-currencies-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  padding-bottom: 4rem;
+}
+
+/* --------------------------------------------------------------------------
+   Top Stats Bar with Enamel Icons
+   -------------------------------------------------------------------------- */
+.charge-currency-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.charge-currency-stat-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--panel-radius, 8px);
+  background: linear-gradient(135deg, rgba(28, 22, 17, 0.95) 0%, rgba(16, 12, 9, 0.98) 100%);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 28%, transparent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1), border-color 220ms ease, box-shadow 220ms ease;
+  overflow: hidden;
+}
+
+.charge-currency-stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--panel-gold, #c5a161) 60%, transparent), transparent);
+  opacity: 0.6;
+}
+
+.charge-currency-stat-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 55%, transparent);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65), 0 0 20px color-mix(in srgb, var(--panel-gold, #c5a161) 15%, transparent);
+}
+
+.charge-currency-stat-card.is-settlement {
+  border-color: rgba(76, 175, 80, 0.45);
+  background: linear-gradient(135deg, rgba(20, 28, 20, 0.95) 0%, rgba(10, 16, 10, 0.98) 100%);
+}
+
+.charge-currency-stat-card.is-settlement::after {
+  background: linear-gradient(90deg, transparent, #4caf50, transparent);
+  opacity: 0.9;
+}
+
+.charge-currency-stat-card.is-settlement:hover {
+  border-color: rgba(76, 175, 80, 0.7);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65), 0 0 22px rgba(76, 175, 80, 0.2);
+}
+
+.charge-currency-enamel-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 12px;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 230, 160, 0.12) 0%, rgba(0, 0, 0, 0.4) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+  transition: transform 220ms ease;
+}
+
+.charge-currency-stat-card:hover .charge-currency-enamel-wrapper {
+  transform: scale(1.06) rotate(2deg);
+}
+
+.charge-currency-stat-card.is-settlement .charge-currency-enamel-wrapper {
+  background: radial-gradient(circle at 35% 35%, rgba(76, 175, 80, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%);
+  border-color: rgba(76, 175, 80, 0.35);
+}
+
+.charge-currency-stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.charge-currency-stat-value {
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.charge-currency-stat-card.is-settlement .charge-currency-stat-value {
+  color: #a5d6a7;
+}
+
+.charge-currency-stat-label {
+  font-size: 0.82rem;
+  color: var(--panel-muted, #a8a29e);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Workspace Layout (Form + Simulator)
+   -------------------------------------------------------------------------- */
+.charge-currencies-workspace {
+  display: grid;
+  grid-template-columns: minmax(360px, 1.25fr) minmax(320px, 0.95fr);
+  gap: 1.75rem;
+  align-items: start;
+}
+
+@media (max-width: 1040px) {
+  .charge-currencies-workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Form Card & Presets
+   -------------------------------------------------------------------------- */
+.charge-currency-form-card {
+  padding: 1.75rem;
+  background: linear-gradient(180deg, rgba(26, 20, 15, 0.92) 0%, rgba(14, 11, 8, 0.98) 100%);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 32%, transparent);
+  border-radius: var(--panel-radius, 8px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.charge-currency-form-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.charge-currency-form-header h2 {
+  font-size: 1.35rem;
+  color: #fff;
+  margin: 0.2rem 0;
+}
+
+/* Presets bar */
+.charge-currency-presets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.15rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold, #c5a161) 25%, transparent);
+  border-radius: 6px;
+}
+
+.charge-currency-presets-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--panel-gold, #c5a161);
+}
+
+.charge-currency-presets-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.charge-currency-preset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e5e5e5;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.charge-currency-preset-btn:hover {
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 20%, transparent);
+  border-color: var(--panel-gold, #c5a161);
+  color: #fff;
+  transform: translateY(-1.5px);
+}
+
+.charge-currency-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.15rem;
+}
+
+@media (max-width: 640px) {
+  .charge-currency-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.charge-currency-form-grid input {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.charge-currency-live-preview {
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.charge-currency-live-preview-title {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--panel-muted, #9f9a91);
+  font-weight: 700;
+}
+
+.charge-currency-live-preview-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 16%, transparent);
+  border: 1px solid var(--panel-gold, #c5a161);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.charge-currency-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   Simulator Widget (Enamel, Live Exchange & Presets)
+   -------------------------------------------------------------------------- */
+.charge-currency-simulator-card {
+  padding: 1.75rem;
+  background: linear-gradient(180deg, rgba(16, 22, 34, 0.95) 0%, rgba(9, 13, 22, 0.98) 100%);
+  border: 1px solid rgba(90, 140, 220, 0.32);
+  border-radius: var(--panel-radius, 8px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.charge-currency-simulator-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #42a5f5, #90caf9, transparent);
+}
+
+.charge-currency-simulator-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.charge-currency-simulator-header h2 {
+  font-size: 1.3rem;
+  color: #fff;
+  margin: 0.2rem 0;
+}
+
+.charge-currency-sim-presets {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.charge-currency-sim-preset-chip {
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  background: rgba(66, 165, 245, 0.12);
+  border: 1px solid rgba(66, 165, 245, 0.28);
+  color: #90caf9;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.charge-currency-sim-preset-chip:hover {
+  background: rgba(66, 165, 245, 0.3);
+  color: #fff;
+  border-color: #64b5f6;
+  transform: translateY(-1px);
+}
+
+.charge-currency-sim-direction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0 0.5rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  font-size: 0.82rem;
+  color: #94a3b8;
+}
+
+.charge-currency-sim-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.charge-currency-sim-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 200ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.charge-currency-sim-row:hover {
+  border-color: rgba(100, 181, 246, 0.5);
+  background: rgba(33, 150, 243, 0.1);
+  transform: translateX(4px);
+}
+
+.charge-currency-sim-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.charge-currency-sim-tag {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.charge-currency-sim-row.is-brl .charge-currency-sim-tag {
+  color: #81c784;
+  background: rgba(76, 175, 80, 0.15);
+}
+
+.charge-currency-sim-row.is-usd .charge-currency-sim-tag {
+  color: #ffd54f;
+  background: rgba(255, 193, 7, 0.15);
+}
+
+.charge-currency-sim-row.is-eur .charge-currency-sim-tag {
+  color: #64b5f6;
+  background: rgba(33, 150, 243, 0.15);
+}
+
+.charge-currency-sim-values {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.charge-currency-sim-output {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ffd54f;
+  letter-spacing: -0.02em;
+}
+
+.charge-currency-sim-sub {
+  font-size: 0.78rem;
+  color: var(--panel-muted, #94a3b8);
+}
+
+/* --------------------------------------------------------------------------
+   Catalog Grid & Colorful Themed Cards
+   -------------------------------------------------------------------------- */
+.charge-currencies-catalog {
+  padding: 1.75rem;
+  background: linear-gradient(180deg, rgba(24, 18, 13, 0.9) 0%, rgba(13, 10, 7, 0.98) 100%);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 25%, transparent);
+  border-radius: var(--panel-radius, 8px);
+}
+
+.charge-currencies-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+}
+
+.charge-currencies-filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.charge-currencies-filter-tab {
+  padding: 0.4rem 0.9rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--panel-muted, #9f9a91);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.charge-currencies-filter-tab.is-active,
+.charge-currencies-filter-tab:hover {
+  background: color-mix(in srgb, var(--panel-gold, #c5a161) 22%, transparent);
+  border-color: var(--panel-gold, #c5a161);
+  color: #fff;
+}
+
+.charge-currencies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Card Base */
+.charge-currency-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(30, 24, 18, 0.85) 0%, rgba(18, 14, 10, 0.98) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  transition: all 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.charge-currency-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--panel-gold, #c5a161) 45%, transparent);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65), 0 0 18px rgba(0, 0, 0, 0.4);
+}
+
+/* Specific Currency Color Theming */
+.charge-currency-card.is-currency-brl {
+  border-color: rgba(76, 175, 80, 0.4);
+  background: linear-gradient(180deg, rgba(22, 32, 22, 0.9) 0%, rgba(12, 18, 12, 0.98) 100%);
+}
+
+.charge-currency-card.is-currency-brl::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #388e3c, #81c784, #388e3c);
+}
+
+.charge-currency-card.is-currency-usd {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: linear-gradient(180deg, rgba(34, 26, 16, 0.9) 0%, rgba(18, 14, 8, 0.98) 100%);
+}
+
+.charge-currency-card.is-currency-usd::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #d97706, #fbbf24, #d97706);
+}
+
+.charge-currency-card.is-currency-eur {
+  border-color: rgba(59, 130, 246, 0.4);
+  background: linear-gradient(180deg, rgba(18, 26, 40, 0.9) 0%, rgba(10, 14, 24, 0.98) 100%);
+}
+
+.charge-currency-card.is-currency-eur::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb, #60a5fa, #2563eb);
+}
+
+.charge-currency-card.is-editing {
+  border-color: var(--panel-gold, #c5a161);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--panel-gold, #c5a161) 50%, transparent);
+}
+
+.charge-currency-card.is-disabled {
+  opacity: 0.6;
+  filter: grayscale(0.3);
+}
+
+.charge-currency-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+.charge-currency-identity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.charge-currency-badge-code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  height: 52px;
+  padding: 0 0.6rem;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(230, 199, 125, 0.2) 0%, rgba(197, 161, 97, 0.06) 100%);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 45%, transparent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.charge-currency-card.is-currency-brl .charge-currency-badge-code {
+  border-color: rgba(76, 175, 80, 0.6);
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.25) 0%, rgba(46, 125, 50, 0.08) 100%);
+  color: #c8e6c9;
+}
+
+.charge-currency-card.is-currency-usd .charge-currency-badge-code {
+  border-color: rgba(245, 158, 11, 0.6);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(180, 83, 9, 0.08) 100%);
+  color: #fef08a;
+}
+
+.charge-currency-card.is-currency-eur .charge-currency-badge-code {
+  border-color: rgba(59, 130, 246, 0.6);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(29, 78, 216, 0.08) 100%);
+  color: #bfdbfe;
+}
+
+.charge-currency-names {
+  display: flex;
+  flex-direction: column;
+}
+
+.charge-currency-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.charge-currency-symbol-tag {
+  font-size: 0.84rem;
+  color: var(--panel-muted, #a8a29e);
+  font-weight: 600;
+}
+
+.charge-currency-settlement-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(76, 175, 80, 0.22);
+  border: 1px solid rgba(76, 175, 80, 0.5);
+  color: #a5d6a7;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+}
+
+.charge-currency-rate-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 1.15rem;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.charge-currency-rate-primary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.charge-currency-rate-primary strong {
+  font-size: 1.25rem;
+  color: #ffd54f;
+  font-weight: 800;
+}
+
+.charge-currency-rate-secondary {
+  font-size: 0.8rem;
+  color: var(--panel-muted, #94a3b8);
+}
+
+.charge-currency-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.charge-currency-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Info Banner Cards
+   -------------------------------------------------------------------------- */
+.charge-currency-info-card {
+  padding: 1.4rem 1.75rem;
+  background: linear-gradient(135deg, rgba(26, 22, 17, 0.85) 0%, rgba(15, 12, 9, 0.95) 100%);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a161) 22%, transparent);
+  border-radius: var(--panel-radius, 8px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .charge-currency-info-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.charge-currency-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.charge-currency-info-text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--panel-muted, #d6d3d1);
+}
+
+.charge-currency-info-text strong {
+  color: #fff;
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+.charge-currency-info-text a {
+  color: var(--panel-gold, #c5a161);
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.charge-currency-info-text a:hover {
+  color: #fff;
+}

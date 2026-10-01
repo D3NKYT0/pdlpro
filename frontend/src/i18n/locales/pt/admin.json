@@ -29,7 +29,8 @@
       "api": { "title": "API", "description": "Documentação OpenAPI (Swagger)" },
       "djangoAdmin": { "title": "Django Admin", "description": "CRUD completo do sistema" },
       "coins": { "title": "Moedas", "description": "Moeda ativa, multiplicador e taxa" },
-      "coinPackages": { "title": "Pacotes de recarga", "description": "Valores em BRL e USD exibidos na carteira" },
+      "chargeCurrencies": { "title": "Moedas de cobrança", "description": "Taxas de conversão, liquidação e moedas ativas da loja" },
+      "coinPackages": { "title": "Pacotes de recarga", "description": "Preços por moeda de cobrança exibidos na carteira" },
       "shop": { "title": "Loja", "description": "Itens, pacotes e catálogo low grade vendidos no painel" },
       "wallet": { "title": "Configuração da carteira", "description": "Banner promocional e bônus mínimo nas recargas" },
       "gameModules": { "title": "Módulos de jogos", "description": "Ligar, desligar e preencher o conteúdo dos minigames" },
@@ -83,9 +84,71 @@
     "summary": "{{name}} · Item {{item}} · taxa de {{fee}}%",
     "unnamed": "Moeda sem nome",
     "undefinedItem": "não definido",
+    "chargeCurrenciesNotice": "As moedas de cobrança da loja (BRL, USD, EUR...), taxas de conversão e liquidação são gerenciadas centralmente na aba de pagamentos.",
+    "chargeCurrenciesLink": "Gerenciar moedas de cobrança",
     "toast": {
       "saved": "Moeda atualizada",
       "error": "Não foi possível salvar"
+    }
+  },
+  "chargeCurrencies": {
+    "kicker": "Financeiro",
+    "title": "Moedas de Cobrança",
+    "description": "Configure as moedas aceitas na carteira do jogador, taxas de conversão de coins, ordenação e moeda de liquidação.",
+    "stats": {
+      "total": "Moedas cadastradas",
+      "active": "Moedas ativas na loja",
+      "settlement": "Moeda de liquidação"
+    },
+    "form": {
+      "createTitle": "Adicionar nova moeda",
+      "createEyebrow": "Nova moeda",
+      "editTitle": "Editar moeda {{code}}",
+      "editEyebrow": "Editando moeda",
+      "text": "Cadastre uma moeda oficial ISO 4217 e informe quantas coins 1 unidade dessa moeda entrega ao jogador.",
+      "code": "Código ISO 4217",
+      "codePlaceholder": "ex: EUR, ARS, CLP",
+      "codeHint": "Sigla bancária oficial em maiúsculas (3 caracteres).",
+      "name": "Nome da moeda",
+      "namePlaceholder": "ex: Euro, Peso Argentino",
+      "nameHint": "Nome amigável exibido no painel e na carteira.",
+      "symbol": "Símbolo",
+      "symbolPlaceholder": "ex: €, $, R$",
+      "symbolHint": "Prefixo ou símbolo monetário.",
+      "coinsPerUnit": "Coins por unidade monetária",
+      "coinsPerUnitHint": "Quantas coins o jogador recebe para cada 1.00 desta moeda em compras avulsas.",
+      "sortOrder": "Ordem de exibição",
+      "sortOrderHint": "Ordem no seletor de moedas da carteira.",
+      "enabled": "Moeda ativa na loja",
+      "enabledHint": "Quando desligada, a moeda é removida da carteira do jogador.",
+      "settlementNotice": "Esta é a moeda de liquidação da loja. Ela não pode ser desativada ou excluída.",
+      "cancel": "Cancelar edição"
+    },
+    "list": {
+      "eyebrow": "Catálogo da Loja",
+      "title": "Moedas Cadastradas",
+      "text": "Listagem de todas as moedas disponíveis no sistema com cotações e status.",
+      "empty": "Nenhuma moeda de cobrança encontrada.",
+      "settlementBadge": "Moeda de Liquidação",
+      "rateLabel": "Cotação de Coins",
+      "inverseRate": "1 coin ≈ {{symbol}} {{amount}}",
+      "active": "Ativa na loja",
+      "inactive": "Desativada",
+      "orderLabel": "Ordem #{{order}}",
+      "cannotDisableSettlement": "A moeda de liquidação não pode ser desativada.",
+      "cannotDeleteSettlement": "A moeda de liquidação não pode ser excluída.",
+      "confirmDelete": "Tem certeza que deseja excluir a moeda {{code}}? Essa ação removerá os preços associados nos pacotes."
+    },
+    "calculator": {
+      "eyebrow": "Simulador em Tempo Real",
+      "title": "Simulador de Cotação",
+      "text": "Teste a conversão de valores entre moedas antes de disponibilizar para os jogadores.",
+      "currencyAmount": "Valor a simular na moeda"
+    },
+    "toast": {
+      "saved": "Moeda de cobrança salva com sucesso.",
+      "deleted": "Moeda de cobrança excluída com sucesso.",
+      "error": "Erro ao salvar moeda de cobrança."
     }
   },
   "coinPackages": {

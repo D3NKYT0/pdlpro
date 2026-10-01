@@ -57,11 +57,15 @@
       },
       "coins": {
         "title": "Monedas",
-        "description": "Moneda activa, multiplicador y tasa"
+        "description": "Moneda activa, multiplicador e tasa"
+      },
+      "chargeCurrencies": {
+        "title": "Monedas de cobro",
+        "description": "Tasas de conversión, liquidación y monedas activas de la tienda"
       },
       "coinPackages": {
         "title": "Paquetes de recarga",
-        "description": "Precios en BRL y USD mostrados en la cartera"
+        "description": "Precios por moneda de cobro mostrados en la billetera"
       },
       "shop": {
         "title": "Tienda",
@@ -178,9 +182,71 @@
     "summary": "{{name}} · Ítem {{item}} · tasa del {{fee}}%",
     "unnamed": "Moneda sin nombre",
     "undefinedItem": "sin definir",
+    "chargeCurrenciesNotice": "Las monedas de cobro de la tienda (BRL, USD, EUR...), tasas de conversión y liquidación se gestionan centralmente en la pestaña de pagos.",
+    "chargeCurrenciesLink": "Gestionar monedas de cobro",
     "toast": {
       "saved": "Moneda actualizada",
       "error": "No se pudo guardar"
+    }
+  },
+  "chargeCurrencies": {
+    "kicker": "Finanzas",
+    "title": "Monedas de Cobro",
+    "description": "Configure las monedas aceptadas en la billetera del jugador, tasas de conversión de coins, ordenación y moneda de liquidación.",
+    "stats": {
+      "total": "Monedas registradas",
+      "active": "Monedas activas en la tienda",
+      "settlement": "Moneda de liquidación"
+    },
+    "form": {
+      "createTitle": "Agregar nueva moneda",
+      "createEyebrow": "Nueva moneda",
+      "editTitle": "Editar moneda {{code}}",
+      "editEyebrow": "Editando moneda",
+      "text": "Registre una moneda oficial ISO 4217 e informe cuántas coins entrega 1 unidad de esta moneda al jugador.",
+      "code": "Código ISO 4217",
+      "codePlaceholder": "ej: EUR, ARS, CLP",
+      "codeHint": "Código bancario oficial de 3 letras en mayúsculas.",
+      "name": "Nombre de la moneda",
+      "namePlaceholder": "ej: Euro, Peso Argentino",
+      "nameHint": "Nombre visible en el panel y en la billetera.",
+      "symbol": "Símbolo",
+      "symbolPlaceholder": "ej: €, $, R$",
+      "symbolHint": "Símbolo o prefijo monetario.",
+      "coinsPerUnit": "Coins por unidad monetaria",
+      "coinsPerUnitHint": "Cuántas coins recibe el jugador por cada 1.00 en compras de monto libre.",
+      "sortOrder": "Orden de visualización",
+      "sortOrderHint": "Orden relativo en el selector de la billetera.",
+      "enabled": "Moneda activa en la tienda",
+      "enabledHint": "Cuando está desactivada, la moneda se oculta de la billetera del jugador.",
+      "settlementNotice": "Esta es la moneda de liquidación de la tienda. No se puede desactivar ni eliminar.",
+      "cancel": "Cancelar edición"
+    },
+    "list": {
+      "eyebrow": "Catálogo de la Tienda",
+      "title": "Monedas Registradas",
+      "text": "Listado de todas las monedas disponibles en el sistema con cotizaciones y estado.",
+      "empty": "No se encontraron monedas de cobro.",
+      "settlementBadge": "Moneda de Liquidación",
+      "rateLabel": "Cotización Base",
+      "inverseRate": "1 coin ≈ {{symbol}} {{amount}}",
+      "active": "Activa en la tienda",
+      "inactive": "Desactivada",
+      "orderLabel": "Orden #{{order}}",
+      "cannotDisableSettlement": "La moneda de liquidación no se puede desactivar.",
+      "cannotDeleteSettlement": "La moneda de liquidación no se puede eliminar.",
+      "confirmDelete": "Está seguro de que desea eliminar la moneda {{code}}? Esta acción eliminará los precios de paquetes asociados."
+    },
+    "calculator": {
+      "eyebrow": "Simulador en Tiempo Real",
+      "title": "Simulador de Cotización",
+      "text": "Pruebe la conversión de valores entre monedas antes de disponibilizar para los jugadores.",
+      "currencyAmount": "Monto a simular"
+    },
+    "toast": {
+      "saved": "Moneda de cobro guardada con éxito.",
+      "deleted": "Moneda de cobro eliminada con éxito.",
+      "error": "Error al guardar la moneda de cobro."
     }
   },
   "coinPackages": {

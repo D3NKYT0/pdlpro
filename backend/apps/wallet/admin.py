@@ -3,12 +3,23 @@ from django.contrib import admin
 from apps.wallet.infrastructure.models import (
     CoinConfig,
     CoinPackage,
+    CoinPackagePrice,
     CoinPurchaseBonus,
     CoinPurchasePromo,
     Wallet,
+    WalletChargeCurrency,
     WalletTransaction,
 )
 from common.admin import PDLModelAdmin
+
+
+class CoinPackagePriceInline(admin.TabularInline):
+    """Edição em linha de preços por moeda de cobrança."""
+
+    model = CoinPackagePrice
+    extra = 1
+    fields = ("currency_code", "amount", "updated_at")
+    readonly_fields = ("updated_at",)
 
 
 @admin.register(Wallet)
@@ -58,6 +69,39 @@ class CoinPackageAdmin(PDLModelAdmin):
     """
 
     list_display = ("code", "name", "coins", "price_brl", "price_usd", "active", "sort_order")
+    inlines = [CoinPackagePriceInline]
+
+
+@admin.register(WalletChargeCurrency)
+class WalletChargeCurrencyAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``WalletChargeCurrency``.
+
+    A listagem exibe ``code``, ``coins_per_unit``, ``sort_order``,
+    ``settlement``, ``enabled``, ``updated_at``.
+    """
+
+    list_display = (
+        "code",
+        "coins_per_unit",
+        "sort_order",
+        "settlement",
+        "enabled",
+        "updated_at",
+    )
+    list_filter = ("enabled", "settlement")
+    search_fields = ("code",)
+
+
+@admin.register(CoinPackagePrice)
+class CoinPackagePriceAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``CoinPackagePrice``.
+
+    A listagem exibe ``package``, ``currency_code``, ``amount``, ``updated_at``.
+    """
+
+    list_display = ("package", "currency_code", "amount", "updated_at")
+    list_filter = ("currency_code",)
+    search_fields = ("package__code", "package__name", "currency_code")
 
 
 @admin.register(CoinPurchaseBonus)

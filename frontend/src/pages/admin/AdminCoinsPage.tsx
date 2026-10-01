@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Card } from '../../components/ui/Card'
 import { useFeedbackAction } from '../../hooks/useFeedbackAction'
 import { Field } from '../../components/ui/Field'
@@ -68,6 +69,17 @@ export function AdminCoinsPage() {
               }}
             />
           </div>
+        </Card>
+
+        <Card className="admin-config-section" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
+          <div>
+            <span className="panel-eyebrow">{t('coins.kicker')}</span>
+            <p className="muted" style={{ margin: 0 }}>{t('coins.chargeCurrenciesNotice')}</p>
+          </div>
+          <Link to="/panel/admin/charge-currencies" className="btn btn-secondary btn-sm">
+            <BadgeDollarSign aria-hidden="true" style={{ width: 16, height: 16, marginRight: 6 }} />
+            {t('coins.chargeCurrenciesLink')}
+          </Link>
         </Card>
 
         <section className="admin-coin-metrics">
