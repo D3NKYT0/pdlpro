@@ -164,8 +164,14 @@ export async function mountMercadoPagoBrick(options: {
   return controller as { unmount: () => Promise<void> | void }
 }
 
-export function stripeCardNeedsBrl(error: { decline_code?: string } | null | undefined) {
-  return error?.decline_code === 'currency_not_supported'
+export function alternateStripeCurrency(
+  error: { decline_code?: string; payment_method?: { card?: { country?: string } } } | null | undefined,
+  currency: 'BRL' | 'USD',
+): 'BRL' | 'USD' | null {
+  if (error?.decline_code !== 'currency_not_supported') return null
+  const country = error.payment_method?.card?.country?.toUpperCase()
+  if (country === 'BR') return currency === 'USD' ? 'BRL' : null
+  return currency === 'USD' ? 'BRL' : 'USD'
 }
 
 export async function confirmStripePayment(options: {

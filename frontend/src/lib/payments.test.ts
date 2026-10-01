@@ -1,11 +1,18 @@
 // @vitest-environment jsdom
 import { afterEach, expect, it, vi } from 'vitest'
-import { confirmStripePayment, formatDocument, inferDocumentType, loadScript, mountMercadoPagoBrick, sanitizeDocument, stripeCardNeedsBrl } from './payments'
+import { alternateStripeCurrency, confirmStripePayment, formatDocument, inferDocumentType, loadScript, mountMercadoPagoBrick, sanitizeDocument } from './payments'
 
-it('identifica recusa de cartão brasileiro em moeda estrangeira', () => {
-  expect(stripeCardNeedsBrl({ decline_code: 'currency_not_supported' })).toBe(true)
-  expect(stripeCardNeedsBrl({ decline_code: 'insufficient_funds' })).toBe(false)
-  expect(stripeCardNeedsBrl(undefined)).toBe(false)
+it('escolhe a outra moeda quando o cartão recusa a cobrança', () => {
+  const declined = { decline_code: 'currency_not_supported' as const }
+  const brazil = { ...declined, payment_method: { card: { country: 'BR' } } }
+  const europe = { ...declined, payment_method: { card: { country: 'DE' } } }
+  expect(alternateStripeCurrency(brazil, 'USD')).toBe('BRL')
+  expect(alternateStripeCurrency(brazil, 'BRL')).toBeNull()
+  expect(alternateStripeCurrency(europe, 'USD')).toBe('BRL')
+  expect(alternateStripeCurrency(europe, 'BRL')).toBe('USD')
+  expect(alternateStripeCurrency(declined, 'USD')).toBe('BRL')
+  expect(alternateStripeCurrency({ decline_code: 'insufficient_funds' }, 'USD')).toBeNull()
+  expect(alternateStripeCurrency(undefined, 'BRL')).toBeNull()
 })
 
 afterEach(() => { document.body.innerHTML = ''; vi.unstubAllGlobals() })

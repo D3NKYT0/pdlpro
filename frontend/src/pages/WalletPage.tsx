@@ -11,7 +11,7 @@ import { WalletTransferCard } from '../components/wallet/WalletTransferCard'
 import { formatWalletMoney, orderDetailEntries, transactionDetailEntries } from '../components/wallet/walletHistory'
 import { useAuth } from '../contexts/AuthContext'
 import { apiErrorMessage } from '../lib/errors'
-import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument, stripeCardNeedsBrl } from '../lib/payments'
+import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument, alternateStripeCurrency } from '../lib/payments'
 import { trackInitiateCheckout, trackPurchase } from '../lib/tracking'
 import { paymentApi, walletApi } from '../services/api'
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../services/types'
@@ -43,6 +43,7 @@ export function WalletPage() {
   const [isBrickReady, setIsBrickReady] = useState(false)
   const [selectedMethodId, setSelectedMethodId] = useState<string>('')
   const brickRef = useRef<{ unmount: () => void } | null>(null)
+  const stripeCurrencyRetry = useRef(false)
 
   const methods = catalog.data?.methods ?? []
   const brlPriority = catalog.data?.brl_method_priority ?? 'user_choice'
@@ -97,6 +98,7 @@ export function WalletPage() {
     void brickRef.current?.unmount()
     brickRef.current = null
     setIsBrickReady(false)
+    stripeCurrencyRetry.current = false
     setOrder(null)
   }, [])
 
@@ -110,6 +112,7 @@ export function WalletPage() {
       await brickRef.current?.unmount()
       brickRef.current = null
       setIsBrickReady(false)
+      stripeCurrencyRetry.current = false
       const created = await paymentApi.create({
         package_id: packageId,
         amount: packageId ? undefined : customAmount,
@@ -265,25 +268,33 @@ export function WalletPage() {
 
   async function payStripe(event: FormEvent) {
     event.preventDefault()
-    const session = brickRef.current as { confirm?: () => Promise<{ error?: { message?: string; decline_code?: string } }> } | null
+    const session = brickRef.current as {
+      confirm?: () => Promise<{
+        error?: { message?: string; decline_code?: string; payment_method?: { card?: { country?: string } } }
+      }>
+    } | null
     if (!order || !session?.confirm) return
+    const chargeCurrency = order.currency === 'USD' ? 'USD' : 'BRL'
     setBusy(true)
     try {
       const result = await session.confirm()
+      const nextCurrency = alternateStripeCurrency(result.error, chargeCurrency)
+      if (result.error && nextCurrency && !stripeCurrencyRetry.current) {
+        stripeCurrencyRetry.current = true
+        const reopened = await paymentApi.create({
+          source_order_id: order.id,
+          currency: nextCurrency,
+          method: 'stripe',
+        })
+        setCurrency(nextCurrency)
+        setOrder(reopened)
+        const brazilCard = result.error.payment_method?.card?.country?.toUpperCase() === 'BR'
+        toast(t(brazilCard ? 'wallet.toast.stripeBrazilReopened' : 'wallet.toast.stripeCurrencyReopened', {
+          amount: formatWalletMoney(reopened.amount, nextCurrency),
+        }))
+        return
+      }
       if (result.error) {
-        if (stripeCardNeedsBrl(result.error) && order.currency === 'USD') {
-          const reopened = await paymentApi.create({
-            source_order_id: order.id,
-            currency: 'BRL',
-            method: 'stripe',
-          })
-          setCurrency('BRL')
-          setOrder(reopened)
-          toast(t('wallet.toast.stripeBrazilReopened', {
-            amount: formatWalletMoney(reopened.amount, 'BRL'),
-          }))
-          return
-        }
         toast.error(result.error.message || t('wallet.toast.paymentDeclined'))
         return
       }

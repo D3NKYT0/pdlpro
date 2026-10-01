@@ -64,7 +64,7 @@
       "checkoutTotal": "Total to pay",
       "checkoutCancel": "Cancel and go back",
       "checkoutSecure": "Secure and encrypted payment environment",
-      "stripeBrazilUsdHint": "A card issued in Brazil cannot be charged in dollars. If that happens, the charge reopens in reais.",
+      "stripeCurrencyHint": "If the issuer rejects this currency, the same order reopens in the other one: reais or dollars.",
       "loadingBrick": "Loading payment options...",
       "mockTitle": "Simulated order created",
       "mockNotice": "Test environment: your order was registered successfully. Server staff will confirm the payment in the admin panel to credit your coins.",
@@ -152,6 +152,7 @@
       "paymentSent": "Payment sent. Wait for the confirmation.",
       "stripeFailed": "Stripe failure",
       "stripeBrazilReopened": "Brazilian cards can only be charged in reais. The payment was reopened at {{amount}}.",
+      "stripeCurrencyReopened": "This card does not accept the selected currency. The payment was reopened at {{amount}}.",
       "transferSent": "Transfer sent",
       "transferFailed": "Transfer failed"
     }
