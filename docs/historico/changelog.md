@@ -8,6 +8,13 @@ Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [Não lançado]
+
+### Corrigido
+
+- **Carteira / Stripe**: a reabertura após recusa de moeda mantém a Stripe ao trocar USD por BRL, inclusive com Mercado Pago fixo para compras novas, quando BRL está configurado na Stripe. A compra original é recotada sem alterar a quantidade de moedas.
+- **Carteira / Mercado Pago**: o contêiner do formulário permanece renderizável após informar CPF/CNPJ, permitindo que o SDK calcule dimensões durante o carregamento.
+
 ## [2.6.8] - 2026-10-01
 
 Lançamento da versão 2.6.8 do PDL PRO com suporte a moedas dinâmicas de cobrança na carteira, preços de pacotes configuráveis por moeda, resolução inteligente da moeda inicial pelo país da conta, gestão completa com tela dedicada em `/panel/admin/charge-currencies` e apresentações no Stripe.

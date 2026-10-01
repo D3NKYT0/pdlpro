@@ -88,7 +88,8 @@ class PaymentGatewayRegistry(IPaymentGatewayRegistry):
     def _apply_brl_priority(self, methods: list[dict]) -> list[dict]:
         """Quando os dois gateways estão ativos, a política do admin restringe o BRL.
 
-        ``user_choice`` mantém os dois. ``mercadopago`` tira BRL do Stripe (USD continua).
+        ``user_choice`` mantém os dois. ``mercadopago`` tira BRL do Stripe (USD continua),
+        mas expõe ``retry_currencies`` para repetir pedidos Stripe existentes em outra moeda.
         ``stripe`` tira o Mercado Pago. Com só um gateway disponível, a política não muda a lista.
         """
 
@@ -107,7 +108,7 @@ class PaymentGatewayRegistry(IPaymentGatewayRegistry):
                 continue
             currencies = [code for code in item.get("currencies", []) if code != "BRL"]
             if currencies:
-                narrowed.append({**item, "currencies": currencies})
+                narrowed.append({**item, "currencies": currencies, "retry_currencies": item.get("currencies", [])})
         return narrowed
 
     def register(self, gateway: IPaymentGateway) -> None:

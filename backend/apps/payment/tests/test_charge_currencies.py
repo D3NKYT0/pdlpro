@@ -182,6 +182,73 @@ def test_reopen_rejects_another_user_and_non_pending_order(owner):
         )
 
 
+def test_stripe_retry_keeps_gateway_with_mercadopago_fixed_for_new_brl_orders(owner, customer_api, settings, mocker):
+    _setup_currencies()
+    settings.PAYMENT_METHODS = ["mercadopago", "stripe"]
+    settings.PAYMENT_BRL_METHOD_PRIORITY = "mercadopago"
+    settings.MERCADO_PAGO_ACTIVATE_PAYMENTS = True
+    settings.MERCADO_PAGO_ACCESS_TOKEN = "mp-test"
+    settings.MERCADO_PAGO_PUBLIC_KEY = "mp-pk"
+    settings.STRIPE_ACTIVATE_PAYMENTS = True
+    settings.STRIPE_SECRET_KEY = "sk-test"
+    settings.STRIPE_PUBLISHABLE_KEY = "pk-test"
+    settings.STRIPE_PRESENTMENT_CURRENCIES = "BRL,USD"
+    create_intent = mocker.patch(
+        "stripe.PaymentIntent.create", return_value=SimpleNamespace(id="pi-retry", client_secret="cs-retry")
+    )
+    source = PedidoPagamento.objects.create(
+        user=owner, amount=Decimal("2.00"), coins=Decimal("10.00"), currency="USD",
+        method="stripe", status="pending",
+    )
+    scope = DependencyInjection.root().create_scope()
+    response = customer_api.get("/api/v1/customer/payments/catalog/")
+    assert response.status_code == 200
+    catalog = response.data
+    stripe = next(method for method in catalog["methods"] if method["id"] == "stripe")
+    assert stripe["currencies"] == ["USD"]
+    assert stripe["retry_currencies"] == ["BRL", "USD"]
+    use_case = scope.resolve(CreatePaymentOrderUseCase)
+    retry = CreatePaymentOrderInput(user_id=owner.id, currency="BRL", method="stripe", source_order_id=source.id)
+    reopened = use_case.execute(retry)
+    assert reopened.method == "stripe"
+    assert reopened.currency == "BRL"
+    assert reopened.amount == Decimal("10.00")
+    assert reopened.coins == source.coins
+    assert reopened.client_secret == "cs-retry"
+    assert use_case.execute(retry).id == reopened.id
+    create_intent.assert_called_once()
+    assert create_intent.call_args.kwargs["currency"] == "brl"
+    assert create_intent.call_args.kwargs["amount"] == 1000
+    with pytest.raises(ValidationDomainError):
+        use_case.execute(CreatePaymentOrderInput(user_id=owner.id, amount=Decimal(10), currency="BRL", method="stripe"))
+    for currency in ("BRL", "brl", " brl "):
+        with pytest.raises(ValidationDomainError):
+            use_case.execute(CreatePaymentOrderInput(user_id=owner.id, currency=currency, method="stripe", source_order_id=reopened.id))
+    source.method = "mercadopago"
+    source.save(update_fields=["method"])
+    with pytest.raises(ValidationDomainError):
+        use_case.execute(retry)
+    create_intent.assert_called_once()
+
+
+def test_stripe_retry_does_not_enable_unconfigured_presentment_currency(owner, settings, mocker):
+    _setup_currencies()
+    settings.PAYMENT_METHODS = ["stripe"]
+    settings.STRIPE_ACTIVATE_PAYMENTS = True
+    settings.STRIPE_SECRET_KEY = "sk-test"
+    settings.STRIPE_PUBLISHABLE_KEY = "pk-test"
+    settings.STRIPE_PRESENTMENT_CURRENCIES = "USD"
+    create_intent = mocker.patch("stripe.PaymentIntent.create")
+    source = PedidoPagamento.objects.create(
+        user=owner, amount=Decimal("2.00"), coins=Decimal("10.00"), currency="USD",
+        method="stripe", status="pending",
+    )
+    use_case = DependencyInjection.root().create_scope().resolve(CreatePaymentOrderUseCase)
+    with pytest.raises(ValidationDomainError):
+        use_case.execute(CreatePaymentOrderInput(user_id=owner.id, currency="BRL", method="stripe", source_order_id=source.id))
+    create_intent.assert_not_called()
+
+
 def test_mercadopago_does_not_offer_currency_other_than_brl(customer_api, settings):
     _setup_currencies()
     settings.PAYMENT_METHODS = ["mercadopago", "stripe"]

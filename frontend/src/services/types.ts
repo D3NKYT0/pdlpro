@@ -190,6 +190,7 @@ export interface ApiPaymentCatalog {
     id: string
     public_key: string
     currencies: string[]
+    retry_currencies?: string[]
     auto_confirm?: boolean
     options?: {
       pix?: boolean

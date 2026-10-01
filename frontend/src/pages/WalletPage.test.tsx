@@ -7,24 +7,85 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import toast from 'react-hot-toast'
 import { WalletPage } from './WalletPage'
 import { ApiError, paymentApi, walletApi } from '../services/api'
+import { confirmStripePayment } from '../lib/payments'
+
+vi.mock('../lib/payments', async (importOriginal) => ({
+  ...await importOriginal<typeof import('../lib/payments')>(),
+  confirmStripePayment: vi.fn(),
+}))
 
 vi.mock('../contexts/AuthContext', () => ({ useAuth: () => ({ user: { email: 'hero@test.dev' } }) }))
-vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
+vi.mock('react-hot-toast', () => ({ default: Object.assign(vi.fn(), { success: vi.fn(), error: vi.fn() }) }))
 vi.mock('../services/domain/payment.service', () => ({ paymentApi: { list: vi.fn(), catalog: vi.fn(), create: vi.fn(), confirm: vi.fn() } }))
 vi.mock('../services/domain/wallet.service', () => ({ walletApi: { me: vi.fn(), transactions: vi.fn(), transfer: vi.fn() } }))
 beforeEach(() => {
-  vi.clearAllMocks()
+  vi.resetAllMocks()
+  localStorage.clear()
   vi.mocked(walletApi.me).mockResolvedValue({ balance: '50.00', bonus_balance: '5.00' } as any)
   vi.mocked(walletApi.transactions).mockResolvedValue({ count: 0, total_pages: 1, next: null, previous: null, results: [] })
   vi.mocked(paymentApi.list).mockResolvedValue({ count: 0, total_pages: 1, next: null, previous: null, results: [] })
   vi.mocked(paymentApi.catalog).mockResolvedValue({ methods: [], packages: [], promo: null } as any)
 })
-afterEach(cleanup)
+afterEach(() => {
+  cleanup()
+  localStorage.clear()
+  vi.restoreAllMocks()
+})
 function mount() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
   render(<QueryClientProvider client={client}><MemoryRouter><WalletPage /></MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
+
+it.each([
+  { priority: 'mercadopago' as const, currencies: ['USD'], retryCurrencies: ['BRL', 'USD'] },
+  { priority: 'user_choice' as const, currencies: ['BRL', 'USD'], retryCurrencies: undefined },
+])('reabre a compra USD recusada em BRL na Stripe com prioridade $priority', async ({ priority, currencies, retryCurrencies }) => {
+  vi.mocked(paymentApi.catalog).mockResolvedValue({
+    currency: 'BRL', brl_method_priority: priority,
+    methods: [
+      { id: 'mercadopago', public_key: 'mp-test', currencies: ['BRL'] },
+      { id: 'stripe', public_key: 'pk-test', currencies, retry_currencies: retryCurrencies },
+    ], packages: [], promo: null, allow_custom_amount: true,
+  })
+  const source = {
+    id: 'usd-order', amount: '2.00', coins: '10.00', currency: 'USD', method: 'stripe',
+    status: 'pending', client_secret: 'usd-secret', checkout_url: '', package_code: '',
+    bonus_applied: '0.00', total_credited: '0.00', created_at: '2026-10-01T12:00:00Z', paid_at: null,
+  } as const
+  const reopened = {
+    ...source, id: 'brl-order', currency: 'BRL', amount: '10.00', client_secret: 'brl-secret',
+  }
+  let finishRetry!: (order: typeof reopened) => void
+  vi.mocked(paymentApi.create).mockResolvedValueOnce(source).mockReturnValueOnce(
+    new Promise(resolve => { finishRetry = resolve }),
+  )
+  const decline = { error: { decline_code: 'currency_not_supported', payment_method: { card: { country: 'BR' } } } }
+  const confirm = vi.fn().mockResolvedValue(decline)
+  const unmount = vi.fn()
+  vi.mocked(confirmStripePayment).mockResolvedValue({ confirm, unmount } as any)
+  const user = mount()
+  await user.click(await screen.findByRole('button', { name: /USD/ }))
+  await user.type(screen.getByLabelText('Valor em USD'), '2')
+  await user.click(screen.getByRole('button', { name: 'Comprar agora' }))
+  await waitFor(() => expect(confirmStripePayment).toHaveBeenCalledTimes(1))
+  await user.click(screen.getByRole('button', { name: 'Pagar com cartão' }))
+  await waitFor(() => expect(paymentApi.create).toHaveBeenLastCalledWith({
+    source_order_id: 'usd-order', currency: 'BRL', method: 'stripe',
+  }))
+  const payButton = screen.getByRole('button', { name: 'Pagar com cartão' }) as HTMLButtonElement
+  expect(payButton.disabled).toBe(true)
+  await user.click(payButton)
+  expect(paymentApi.create).toHaveBeenCalledTimes(2)
+  finishRetry(reopened)
+  await waitFor(() => expect(confirmStripePayment).toHaveBeenLastCalledWith({
+    publicKey: 'pk-test', clientSecret: 'brl-secret', containerId: 'stripe-element',
+  }))
+  expect(unmount).toHaveBeenCalled()
+  await user.click(screen.getByRole('button', { name: 'Pagar com cartão' }))
+  expect(paymentApi.create).toHaveBeenCalledTimes(2)
+  expect(toast.error).toHaveBeenCalled()
+})
 
 it('abre modal de pedido e aponta para histórico completo', async () => {
   vi.mocked(paymentApi.list).mockResolvedValue({

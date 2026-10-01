@@ -78,6 +78,7 @@ const contracts: Contract[] = [
   ['payment.list', () => paymentApi.list(), '/customer/payments/'],
   ['payment.list.page', () => paymentApi.list({ page: 2, page_size: 10 }), '/customer/payments/?page=2&page_size=10'],
   ['payment.create', () => paymentApi.create({ amount: '12.34', method: 'mock', currency: 'BRL' }), '/customer/payments/', 'POST', { amount: '12.34', method: 'mock', currency: 'BRL' }],
+  ['payment.retry.stripe', () => paymentApi.create({ source_order_id: 'usd-order', currency: 'BRL', method: 'stripe' }), '/customer/payments/', 'POST', { source_order_id: 'usd-order', currency: 'BRL', method: 'stripe' }],
   ['payment.preview', () => paymentApi.preview({ amount: '12.34' }), '/customer/payments/preview/', 'POST', { amount: '12.34' }],
   ['payment.confirm', () => paymentApi.confirm('order'), '/customer/payments/order/confirm/', 'POST'],
   ['payment.process', () => paymentApi.process('order', { token: 'opaque' }), '/customer/payments/order/process/', 'POST', { token: 'opaque' }],

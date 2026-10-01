@@ -321,7 +321,7 @@ export function WalletPage() {
         : null
       if (result.error && nextCurrency && !stripeCurrencyRetry.current) {
         stripeCurrencyRetry.current = true
-        const stripeMethod = stripeConfig?.currencies?.includes(nextCurrency) ? 'stripe' : undefined
+        const stripeMethod = (stripeConfig?.retry_currencies ?? stripeConfig?.currencies)?.includes(nextCurrency) ? 'stripe' : undefined
         const targetMethod =
           stripeMethod ||
           methods.find((m) => m.id === 'mercadopago' && m.currencies.includes(nextCurrency))?.id ||

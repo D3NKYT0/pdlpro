@@ -66,7 +66,12 @@ class IPaymentGatewayRegistry(ABC):
 
     @abstractmethod
     def available_methods(self, configured: list[str]) -> list[dict]:
-        """Filtra métodos configurados e retorna metadados públicos."""
+        """Filtra métodos configurados e retorna metadados públicos.
+
+        ``currencies`` limita compras novas. ``retry_currencies`` opcional informa
+        moedas aceitas para reabrir pedidos existentes; a aplicação valida origem,
+        propriedade e estado antes de usar essa permissão.
+        """
 
         raise NotImplementedError
 

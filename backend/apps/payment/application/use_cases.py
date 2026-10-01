@@ -198,7 +198,7 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
         self._unit_of_work = unit_of_work
         self._pricing = pricing
 
-    def _resolve_method(self, currency: str, requested: str) -> str:
+    def _resolve_method(self, currency: str, requested: str, *, stripe_retry: bool = False) -> str:
         methods_by_id = {item["id"]: item for item in self._gateways.available_methods(_configured_methods())}
         if requested:
             method = requested.lower()
@@ -206,6 +206,8 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
             if entry is None:
                 raise PaymentMethodUnavailableError(f"Método '{method}' não está habilitado.")
             currencies = entry.get("currencies", [])
+            if method == "stripe" and stripe_retry:
+                currencies = entry.get("retry_currencies", currencies)
             if currencies and currency not in currencies:
                 raise ValidationDomainError(f"Método '{method}' não aceita {currency}.")
             return method
@@ -231,22 +233,27 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
             return "mock"
         raise PaymentMethodUnavailableError()
 
-    def _quote_input(self, data: CreatePaymentOrderInput) -> tuple[str | None, Decimal | None]:
-        """Usa o pedido de origem para repetir a mesma compra na moeda pedida."""
+    def _quote_input(self, data: CreatePaymentOrderInput) -> tuple[str | None, Decimal | None, bool]:
+        """Recota a compra original e autoriza nova moeda na Stripe só para sua origem Stripe.
+
+        Exige pedido pendente/processando do próprio usuário. A autorização não habilita
+        moedas ausentes da configuração do gateway nem altera o método das compras novas.
+        """
 
         if data.source_order_id is None:
-            return data.package_id or None, data.amount
+            return data.package_id or None, data.amount, False
         source = self._orders.get_by_id(data.source_order_id)
         if source is None or source.user_id != data.user_id:
             raise PaymentOrderNotFoundError()
         if source.status not in {"pending", "processing"}:
             raise PaymentNotPendingError()
+        stripe_retry = source.method == "stripe" and source.currency != data.currency.strip().upper()
         if source.package_code:
-            return source.package_code, None
-        return None, self._pricing.amount_for_coins(source.coins, data.currency)
+            return source.package_code, None, stripe_retry
+        return None, self._pricing.amount_for_coins(source.coins, data.currency), stripe_retry
 
     def execute(self, data: CreatePaymentOrderInput) -> PaymentOrderEntity:
-        package_id, amount = self._quote_input(data)
+        package_id, amount, stripe_retry = self._quote_input(data)
         quote = self._pricing.quote(
             package_id=package_id,
             amount=amount,
@@ -254,7 +261,7 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
         )
         if quote.amount <= 0 or quote.coins <= 0:
             raise InvalidPaymentAmountError()
-        method = self._resolve_method(quote.currency, data.method)
+        method = self._resolve_method(quote.currency, data.method, stripe_retry=stripe_retry)
         if method == "mercadopago" and quote.currency != "BRL":
             raise ValidationDomainError("Mercado Pago aceita apenas BRL.")
         hours = int(getattr(settings, "PAYMENT_REUSE_HOURS", 2))

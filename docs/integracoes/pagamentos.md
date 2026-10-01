@@ -2,11 +2,17 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Configuração](../configuracao/ambiente.md) · [Tutoriais](../tutoriais/README.md) · [Testes](../desenvolvimento/testes.md)
 
-> **Atualizado:** 30 de setembro de 2026
+> **Atualizado:** 1 de outubro de 2026
 
 `apps/payment` coordena compra de moedas; `apps/wallet` mantém saldo e extrato. Os adaptadores disponíveis são mock, Mercado Pago e Stripe. Este guia descreve o fluxo implementado pelo painel; credenciais e homologação devem corresponder ao ambiente do provedor escolhido.
 
 ## Fluxo e responsabilidades
+
+No modal da carteira, completar o CPF/CNPJ monta o Payment Brick do Mercado Pago.
+O contêiner permanece visível durante a inicialização para permitir que o SDK
+calcule suas dimensões; `onReady` remove apenas o indicador de carregamento.
+O teste de interação em `WalletCheckoutModal.test.tsx` cobre a digitação do CPF,
+a visibilidade antes de `onReady` e a preservação do contêiner após carregar.
 
 | Etapa | Componente | Efeito |
 | --- | --- | --- |
@@ -55,7 +61,20 @@ Quando Mercado Pago e Stripe estão ativos ao mesmo tempo, `PAYMENT_BRL_METHOD_P
 (aba Pagamentos) decide o BRL: `user_choice` mostra o seletor e deixa Mercado Pago
 como padrão; `mercadopago` fixa o Mercado Pago e reserva o Stripe para USD;
 `stripe` fixa o cartão e tira o Mercado Pago do catálogo. A mesma regra vale na
-criação do pedido: o cliente não escolhe o método que o admin fixou.
+criação de pedidos novos: o cliente não escolhe o método que o admin fixou.
+
+Quando um cartão recusa a moeda na Stripe, a carteira reabre a mesma compra em uma
+moeda alternativa e mantém a Stripe quando ela aceita essa moeda. Essa repetição
+também pode usar BRL com Mercado Pago fixo para compras novas: o catálogo expõe
+`retry_currencies`, separado das moedas oferecidas na seleção inicial. O backend
+exige `source_order_id` de um pedido Stripe pendente/processando do próprio usuário
+em outra moeda, preserva o pacote/quantidade de moedas e recota o valor. Moedas não
+configuradas na Stripe continuam bloqueadas. A carteira permite uma única troca
+automática por checkout; nova recusa mostra o erro do provedor.
+
+Os testes de `WalletPage.test.tsx` e `test_charge_currencies.py` cobrem o fallback
+USD → BRL na Stripe, a remontagem do formulário, repetição do pedido sem duplicação
+de checkout e rejeição de moeda não aceita ou tentativa de compra nova pela exceção.
 
 `PAYMENT_WEBHOOK_BASE_URL` deve ser o HTTPS público da instalação. Rotas:
 `/api/v1/system/webhooks/mercadopago/` e `/api/v1/system/webhooks/stripe/`.

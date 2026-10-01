@@ -198,7 +198,8 @@ export function WalletCheckoutModal({
                   <span>{t('wallet.purchase.loadingBrick')}</span>
                 </div>
               ) : null}
-              <div id="payment-brick" style={{ display: isBrickReady ? 'block' : 'none' }} />
+              {/* O SDK precisa medir o contêiner durante a renderização, antes de onReady. */}
+              <div id="payment-brick" aria-busy={!isBrickReady} />
             </div>
           ) : null}
         </div>

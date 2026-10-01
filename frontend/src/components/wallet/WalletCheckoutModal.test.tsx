@@ -2,6 +2,7 @@
 import '@testing-library/jest-dom/vitest'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { useState } from 'react'
 import { afterEach, expect, it, vi } from 'vitest'
 import { WalletCheckoutModal } from './WalletCheckoutModal'
 import type { ApiPaymentOrder } from '../../services/types'
@@ -25,6 +26,31 @@ const mockOrder: ApiPaymentOrder = {
   created_at: '2026-09-26T12:00:00Z',
   paid_at: null,
 }
+
+it('mantém o contêiner do Mercado Pago visível ao completar o CPF, antes de onReady', async () => {
+  function Checkout() {
+    const [document, setDocument] = useState('')
+    const [ready, setReady] = useState(false)
+    return <>
+      <WalletCheckoutModal open order={mockOrder} onClose={vi.fn()}
+        document={document} onDocumentChange={setDocument} busy={false}
+        onPayStripe={vi.fn()} simulatedPayment={false} packages={[]}
+        isBrickReady={ready} />
+      <button onClick={() => setReady(true)}>SDK ready</button>
+    </>
+  }
+  const user = userEvent.setup()
+  render(<Checkout />)
+  expect(document.getElementById('payment-brick')).toBeNull()
+  await user.type(screen.getByLabelText('CPF ou CNPJ do pagador'), '10505627477')
+  const container = document.getElementById('payment-brick')!
+  expect(container).toBeVisible()
+  expect(screen.getByText('Carregando opções de pagamento...')).toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: 'SDK ready' }))
+  expect(document.getElementById('payment-brick')).toBe(container)
+  expect(container).toBeVisible()
+  expect(screen.queryByText('Carregando opções de pagamento...')).not.toBeInTheDocument()
+})
 
 it('renderiza resumo do pedido e campo de documento no modal', async () => {
   const onDocumentChange = vi.fn()
