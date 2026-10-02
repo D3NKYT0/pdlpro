@@ -130,3 +130,16 @@ it.each(['/panel/progress', '/painel/progress', '/progress', '/panel/notificatio
   expect(window.location.pathname).toBe('/panel')
   expect(screen.getByRole('heading', { level: 1, name: 'Olá, Tester' })).toBeTruthy()
 })
+
+it('renderiza override de wiki quando fornecido por extensão ativa', async () => {
+  const extensionsModule = await import('../../extensions')
+  const spy = vi.spyOn(extensionsModule, 'extensionWikiOverride').mockReturnValue(
+    <div data-testid="custom-wiki-override">Custom Extension Wiki</div>
+  )
+  window.history.replaceState({}, '', '/wiki/sub-feature')
+  mountRoutes()
+  expect(screen.getByTestId('custom-wiki-override')).toBeTruthy()
+  expect(screen.getByText('Custom Extension Wiki')).toBeTruthy()
+  spy.mockRestore()
+})
+

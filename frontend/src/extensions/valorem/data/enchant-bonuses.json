@@ -1,0 +1,472 @@
+{
+  "d": [
+    {
+      "enchant": "+4",
+      "heavy": "P. Def. +5\nAccuracy +1.",
+      "light": "M. Def. +4\nEvasion +1.",
+      "robe": "P. Def. +3\nM. Def. +2\nWeight Limit +10%."
+    },
+    {
+      "enchant": "+5",
+      "heavy": "P. Def. +10\nAccuracy +1\nBow/ Crossbow Resistance +3.",
+      "light": "M. Def. +8\nEvasion +1\nFire/ Water/ Wind/ Earth Resistance +2.",
+      "robe": "P. Def. +5\nM. Def. +4\nWeight Limit +20%\nMP Consumption of M. Skills -3%."
+    },
+    {
+      "enchant": "+6",
+      "heavy": "P. Def. +15\nAccuracy +2\nBow/ Crossbow Resistance +4\nMP Regeneration +2.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 1",
+      "light": "M. Def. +12\nEvasion +2\nFire/ Water/ Wind/ Earth Resistance +3\nSpeed +1.",
+      "robe": "P. Def. +8\nM. Def. +6\nWeight Limit +30%\nMP Consumption of M. Skills -4%\nMental Resistance +7%."
+    },
+    {
+      "enchant": "+7",
+      "heavy": "P. Def. +25\nAccuracy +2\nBow/ Crossbow Resistance +5\nMP Regeneration +2.5.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 2\nSet Bonus: Reflect Damage\nLv. 1",
+      "light": "M. Def. +20\nEvasion +2\nFire/ Water/ Wind/ Earth Resistance +4\nSpeed +2\nP. Skill Reuse Delay -2%.",
+      "robe": "P. Def. +13\nM. Def. +10\nWeight Limit +40%\nMP Consumption of M. Skills -5%\nMental Resistance +10%\nM. Skill Reuse Delay -2%."
+    },
+    {
+      "enchant": "+8",
+      "heavy": "P. Def. +35\nAccuracy +3\nBow/ Crossbow Resistance +6\nMP Regeneration +3\nAttack of Shock +3\nMagic Damage Resistance +1.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 3\nSet Bonus: Reflect Damage\nLv. 2",
+      "light": "M. Def. +28\nEvasion +3\nFire/ Water/ Wind/ Earth Resistance +5\nSpeed +3\nP. Skill Reuse Delay -3%\nP. Crit. Rate +15\nP. Crit. Power +3%.",
+      "robe": "P. Def. +18\nM. Def. +14\nWeight Limit +50%\nMP Consumption of M. Skills -6%\nMental Resistance +12%\nM. Skill Reuse Delay -3%\nAttack of Sleep/ Hold/ Mental +5%."
+    },
+    {
+      "enchant": "+9",
+      "heavy": "P. Def. +45\nAccuracy +4\nBow/ Crossbow Resistance +8\nMP Regeneration +3.5\nAttack of Shock +5\nMagic Damage Resistance +3.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 4\nSet Bonus: Reflect Damage\nLv. 3",
+      "light": "M. Def. +36\nEvasion +4\nFire/ Water/ Wind/ Earth Resistance +6\nSpeed +4\nP. Skill Reuse Delay -4%\nP. Crit. Rate +20\nP. Crit. Power +4%.",
+      "robe": "P. Def. +23\nM. Def. +18\nWeight Limit +60%\nMP Consumption of M. Skills -8%\nMental Resistance +15%\nM. Skill Reuse Delay -4%\nAttack of Sleep/ Hold/ Mental +7%."
+    },
+    {
+      "enchant": "+10",
+      "heavy": "P. Def. +60\nAccuracy +5\nBow/ Crossbow Resistance +10\nMP Regeneration +4\nAttack of Shock +7\nMagic Damage Resistance +3.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 5\nSet Bonus: Reflect Damage\nLv. 4",
+      "light": "M. Def. +48\nEvasion +5\nFire/ Water/ Wind/ Earth Resistance +7\nSpeed +5\nP. Skill Reuse Delay -5%\nP. Crit. Rate +25\nP. Crit. Power +5%.",
+      "robe": "P. Def. +30\nM. Def. +24\nWeight Limit +80%\nMP Consumption of M. Skills -10%\nMental Resistance +20%\nM. Skill Reuse Delay -5%\nAttack of Sleep/ Hold/ Mental +10%."
+    }
+  ],
+  "c": [
+    {
+      "enchant": "+4",
+      "heavy": "P. Def. +10\nAccuracy +1.",
+      "light": "M. Def. +8\nEvasion +1.",
+      "robe": "P. Def. +5\nM. Def. +4\nWeight Limit +10%."
+    },
+    {
+      "enchant": "+5",
+      "heavy": "P. Def. +15\nAccuracy +1\nBow/ Crossbow Resistance +3.",
+      "light": "M. Def. +12\nEvasion +1\nFire/ Water/ Wind/ Earth Resistance +2.",
+      "robe": "P. Def. +8\nM. Def. +6\nWeight Limit +20%\nMP Consumption of M. Skills -3%."
+    },
+    {
+      "enchant": "+6",
+      "heavy": "P. Def. +25\nAccuracy +2\nBow/ Crossbow Resistance +4\nMP Regeneration +2.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 1",
+      "light": "M. Def. +20\nEvasion +2\nFire/ Water/ Wind/ Earth Resistance +3\nSpeed +1.",
+      "robe": "P. Def. +13\nM. Def. +10\nWeight Limit +30%\nMP Consumption of M. Skills -4%\nMental Resistance +7%."
+    },
+    {
+      "enchant": "+7",
+      "heavy": "P. Def. +35\nAccuracy +2\nBow/ Crossbow Resistance +5\nMP Regeneration +2.5.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 2\nSet Bonus: Reflect Damage\nLv. 1",
+      "light": "M. Def. +28\nEvasion +2\nFire/ Water/ Wind/ Earth Resistance +4\nSpeed +2\nP. Skill Reuse Delay -2%.",
+      "robe": "P. Def. +18\nM. Def. +14\nWeight Limit +40%\nMP Consumption of M. Skills -5%\nMental Resistance +10%\nM. Skill Reuse Delay -2%."
+    },
+    {
+      "enchant": "+8",
+      "heavy": "P. Def. +50\nAccuracy +3\nBow/ Crossbow Resistance +6\nMP Regeneration +3\nAttack of Shock +4\nMagic Damage Resistance +1.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 3\nSet Bonus: Reflect Damage\nLv. 2",
+      "light": "M. Def. +40\nEvasion +3\nFire/ Water/ Wind/ Earth Resistance +5\nSpeed +3\nP. Skill Reuse Delay -3%\nP. Crit. Rate +15\nP. Crit. Power +3%.",
+      "robe": "P. Def. +25\nM. Def. +20\nWeight Limit +50%\nMP Consumption of M. Skills -6%\nMental Resistance +12%\nM. Skill Reuse Delay -3%\nAttack of Sleep/ Hold/ Mental +7%."
+    },
+    {
+      "enchant": "+9",
+      "heavy": "P. Def. +65\nAccuracy +4\nBow/ Crossbow Resistance +8\nMP Regeneration +3.5\nAttack of Shock +6\nMagic Damage Resistance +2.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 4\nSet Bonus: Reflect Damage\nLv. 3",
+      "light": "M. Def. +52\nEvasion +4\nFire/ Water/ Wind/ Earth Resistance +6\nSpeed +4\nP. Skill Reuse Delay -4%\nP. Crit. Rate +20\nP. Crit. Power +4%.",
+      "robe": "P. Def. +33\nM. Def. +26\nWeight Limit +60%\nMP Consumption of M. Skills -8%\nMental Resistance +15%\nM. Skill Reuse Delay -4%\nAttack of Sleep/ Hold/ Mental +9%."
+    },
+    {
+      "enchant": "+10",
+      "heavy": "P. Def. +80\nAccuracy +5\nBow/ Crossbow Resistance +10\nMP Regeneration +4\nAttack of Shock +8\nMagic Damage Resistance +3.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 5\nSet Bonus: Reflect Damage\nLv. 4\nPassive skill:\nSoul Purge\nLv. 1",
+      "light": "M. Def. +64\nEvasion +5\nFire/ Water/ Wind/ Earth Resistance +7\nSpeed +5\nP. Skill Reuse Delay -5%\nP. Crit. Rate +25\nP. Crit. Power +5%.\nPassive skill:\nSoul Purge\nLv. 1",
+      "robe": "P. Def. +40\nM. Def. +32\nWeight Limit +80%\nMP Consumption of M. Skills -10%\nMental Resistance +20%\nM. Skill Reuse Delay -5%\nAttack of Sleep/ Hold/ Mental +12%.\nPassive skill:\nSoul Purge\nLv. 1"
+    }
+  ],
+  "b": [
+    {
+      "enchant": "+4",
+      "heavy": "P. Def. +15\nAccuracy +1.",
+      "light": "M. Def. +12\nEvasion +1.",
+      "robe": "P. Def. +8\nM. Def. +6\nWeight Limit +10%."
+    },
+    {
+      "enchant": "+5",
+      "heavy": "P. Def. +25\nAccuracy +1\nBow/ Crossbow Resistance +3.",
+      "light": "M. Def. +20\nEvasion +1\nFire/ Water/ Wind/ Earth Resistance +2.",
+      "robe": "P. Def. +13\nM. Def. +10\nWeight Limit +20%\nMP Consumption of M. Skills -3%."
+    },
+    {
+      "enchant": "+6",
+      "heavy": "P. Def. +35\nAccuracy +2\nBow/ Crossbow Resistance +4\nMP Regeneration +2.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 1",
+      "light": "M. Def. +28\nEvasion +2\nFire/ Water/ Wind/ Earth Resistance +3\nSpeed +1.",
+      "robe": "P. Def. +18\nM. Def. +14\nWeight Limit +30%\nMP Consumption of M. Skills -4%\nMental Resistance +7%."
+    },
+    {
+      "enchant": "+7",
+      "heavy": "P. Def. +50\nAccuracy +2\nBow/ Crossbow Resistance +5\nMP Regeneration +2.5.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 2\nSet Bonus: Reflect Damage\nLv. 1",
+      "light": "M. Def. +40\nEvasion +2\nFire/ Water/ Wind/ Earth Resistance +4\nSpeed +2\nP. Skill Reuse Delay -2%.",
+      "robe": "P. Def. +25\nM. Def. +20\nWeight Limit +40%\nMP Consumption of M. Skills -5%\nMental Resistance +10%\nM. Skill Reuse Delay -2%."
+    },
+    {
+      "enchant": "+8",
+      "heavy": "P. Def. +70\nAccuracy +3\nBow/ Crossbow Resistance +6\nMP Regeneration +3\nAttack of Shock +6\nMagic Damage Resistance +1.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 3\nSet Bonus: Reflect Damage\nLv. 2",
+      "light": "M. Def. +56\nEvasion +3\nFire/ Water/ Wind/ Earth Resistance +5\nSpeed +3\nP. Skill Reuse Delay -3%\nP. Crit. Rate +15\nP. Crit. Power +3%.",
+      "robe": "P. Def. +35\nM. Def. +28\nWeight Limit +50%\nMP Consumption of M. Skills -6%\nMental Resistance +12%\nM. Skill Reuse Delay -3%\nAttack of Sleep/ Hold/ Mental +9%."
+    },
+    {
+      "enchant": "+9",
+      "heavy": "P. Def. +90\nAccuracy +4\nBow/ Crossbow Resistance +8\nMP Regeneration +3.5\nAttack of Shock +8\nMagic Damage Resistance +2.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 4\nSet Bonus: Reflect Damage\nLv. 3",
+      "light": "M. Def. +72\nEvasion +4\nFire/ Water/ Wind/ Earth Resistance +6\nSpeed +4\nP. Skill Reuse Delay -4%\nP. Crit. Rate +20\nP. Crit. Power +4%.",
+      "robe": "P. Def. +45\nM. Def. +36\nWeight Limit +60%\nMP Consumption of M. Skills -8%\nMental Resistance +15%\nM. Skill Reuse Delay -4%\nAttack of Sleep/ Hold/ Mental +12%."
+    },
+    {
+      "enchant": "+10",
+      "heavy": "P. Def. +120\nAccuracy +5\nBow/ Crossbow Resistance +10\nMP Regeneration +4\nAttack of Shock +10\nMagic Damage Resistance +3.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 5\nSet Bonus: Reflect Damage\nLv. 4\nPassive skill:\nSoul Purge\nLv. 1",
+      "light": "M. Def. +96\nEvasion +5\nFire/ Water/ Wind/ Earth Resistance +7\nSpeed +5\nP. Skill Reuse Delay -5%\nP. Crit. Rate +25\nP. Crit. Power +5%.\nPassive skill:\nSoul Purge\nLv. 1",
+      "robe": "P. Def. +60\nM. Def. +48\nWeight Limit +80%\nMP Consumption of M. Skills -10%\nMental Resistance +20%\nM. Skill Reuse Delay -5%\nAttack of Sleep/ Hold/ Mental +15%.\nPassive skill:\nSoul Purge\nLv. 1"
+    }
+  ],
+  "a_s": [
+    {
+      "enchant": "+4",
+      "heavy": "P. Def. +25\nAccuracy +1.",
+      "light": "M. Def. +20\nEvasion +1.",
+      "robe": "P. Def. +13\nM. Def. +10\nWeight Limit +10%."
+    },
+    {
+      "enchant": "+5",
+      "heavy": "P. Def. +35\nAccuracy +1\nBow/ Crossbow Resistance +3.",
+      "light": "M. Def. +28\nEvasion +1\nFire/ Water/ Wind/ Earth Resistance +2.",
+      "robe": "P. Def. +18\nM. Def. +14\nWeight Limit +20%\nMP Consumption of M. Skills -3%."
+    },
+    {
+      "enchant": "+6",
+      "heavy": "P. Def. +50\nAccuracy +2\nBow/ Crossbow Resistance +4\nMP Regeneration +2.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 1",
+      "light": "M. Def. +40\nEvasion +2\nFire/ Water/ Wind/ Earth Resistance +3\nSpeed +1.",
+      "robe": "P. Def. +25\nM. Def. +20\nWeight Limit +30%\nMP Consumption of M. Skills -4%\nMental Resistance +7%."
+    },
+    {
+      "enchant": "+7",
+      "heavy": "P. Def. +70\nAccuracy +2\nBow/ Crossbow Resistance +5\nMP Regeneration +2.5.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 2\nSet Bonus: Reflect Damage\nLv. 1\nPassive skill:\nFaith and Steel\nLv. 1",
+      "light": "M. Def. +56\nEvasion +2\nFire/ Water/ Wind/ Earth Resistance +4\nSpeed +2\nP. Skill Reuse Delay -2%.\nPassive skill:\nFaith and Steel\nLv. 1",
+      "robe": "P. Def. +35\nM. Def. +28\nWeight Limit +40%\nMP Consumption of M. Skills -5%\nMental Resistance +10%\nM. Skill Reuse Delay -2%.\nPassive skill:\nFaith and Steel\nLv. 1"
+    },
+    {
+      "enchant": "+8",
+      "heavy": "P. Def. +90\nAccuracy +3\nBow/ Crossbow Resistance +6\nMP Regeneration +3\nAttack of Shock +8\nMagic Damage Resistance +1.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 3\nSet Bonus: Reflect Damage\nLv. 2\nPassive skill:\nFaith and Steel\nLv. 2",
+      "light": "M. Def. +72\nEvasion +3\nFire/ Water/ Wind/ Earth Resistance +5\nSpeed +3\nP. Skill Reuse Delay -3%\nP. Crit. Rate +15\nP. Crit. Power +3%\nM. Skill Evasion Chance +1%.\nPassive skill:\nFaith and Steel\nLv. 2",
+      "robe": "P. Def. +45\nM. Def. +36\nWeight Limit +50%\nMP Consumption of M. Skills -6%\nMental Resistance +12%\nM. Skill Reuse Delay -3%\nAttack of Sleep/ Hold/ Mental +12%\nP. Skill Evasion Chance +1%.\nPassive skill:\nFaith and Steel\nLv. 2"
+    },
+    {
+      "enchant": "+9",
+      "heavy": "P. Def. +120\nAccuracy +4\nBow/ Crossbow Resistance +8\nMP Regeneration +3.5\nAttack of Shock +10\nMagic Damage Resistance +2.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 4\nSet Bonus: Reflect Damage\nLv. 3\nPassive skill:\nFaith and Steel\nLv. 3",
+      "light": "M. Def. +96\nEvasion +4\nFire/ Water/ Wind/ Earth Resistance +6\nSpeed +4\nP. Skill Reuse Delay -4%\nP. Crit. Rate +20\nP. Crit. Power +4%\nM. Skill Evasion Chance +2%.\nPassive skill:\nFaith and Steel\nLv. 3",
+      "robe": "P. Def. +60\nM. Def. +48\nWeight Limit +60%\nMP Consumption of M. Skills -8%\nMental Resistance +15%\nM. Skill Reuse Delay -4%\nAttack of Sleep/ Hold/ Mental +15%\nP. Skill Evasion Chance +2%.\nPassive skill:\nFaith and Steel\nLv. 3"
+    },
+    {
+      "enchant": "+10",
+      "heavy": "P. Def. +150\nAccuracy +5\nBow/ Crossbow Resistance +10\nMP Regeneration +4\nAttack of Shock +12\nMagic Damage Resistance +3.\nActive skill (toggle):\nSet Bonus: Vampiric Rage\nLv. 5\nSet Bonus: Reflect Damage\nLv. 4\nPassive skill:\nFaith and Steel\nLv. 4\nSoul Purge\nLv. 1",
+      "light": "M. Def. +120\nEvasion +5\nFire/ Water/ Wind/ Earth Resistance +7\nSpeed +5\nP. Skill Reuse Delay -5%\nP. Crit. Rate +25\nP. Crit. Power +5%\nM. Skill Evasion Chance +3%.\nPassive skill:\nFaith and Steel\nLv. 4\nSoul Purge\nLv. 1",
+      "robe": "P. Def. +75\nM. Def. +60\nWeight Limit +80%\nMP Consumption of M. Skills -10%\nMental Resistance +20%\nM. Skill Reuse Delay -5%\nAttack of Sleep/ Hold/ Mental +20%\nP. Skill Evasion Chance +3%.\nPassive skill:\nFaith and Steel\nLv. 4\nSoul Purge\nLv. 1"
+    }
+  ],
+  "hpIncrease": {
+    "headers": [
+      "+3",
+      "+4",
+      "+5",
+      "+6",
+      "+7",
+      "+8",
+      "+9",
+      "+10"
+    ],
+    "rows": [
+      {
+        "grade": "D",
+        "type": "one piece",
+        "values": {
+          "+3": "2",
+          "+4": "5",
+          "+5": "10",
+          "+6": "20",
+          "+7": "35",
+          "+8": "50",
+          "+9": "70",
+          "+10": "90"
+        }
+      },
+      {
+        "grade": "D",
+        "type": "fullbody",
+        "values": {
+          "+3": "3",
+          "+4": "7",
+          "+5": "15",
+          "+6": "30",
+          "+7": "52",
+          "+8": "75",
+          "+9": "105",
+          "+10": "135"
+        }
+      },
+      {
+        "grade": "D",
+        "type": "fullbody and three pieces",
+        "values": {
+          "+3": "9",
+          "+4": "22",
+          "+5": "45",
+          "+6": "90",
+          "+7": "157",
+          "+8": "225",
+          "+9": "315",
+          "+10": "405"
+        }
+      },
+      {
+        "grade": "D",
+        "type": "five pieces",
+        "values": {
+          "+3": "10",
+          "+4": "25",
+          "+5": "50",
+          "+6": "100",
+          "+7": "175",
+          "+8": "250",
+          "+9": "350",
+          "+10": "450"
+        }
+      },
+      {
+        "grade": "C",
+        "type": "one piece",
+        "values": {
+          "+3": "5",
+          "+4": "10",
+          "+5": "20",
+          "+6": "35",
+          "+7": "50",
+          "+8": "70",
+          "+9": "90",
+          "+10": "120"
+        }
+      },
+      {
+        "grade": "C",
+        "type": "fullbody",
+        "values": {
+          "+3": "7",
+          "+4": "15",
+          "+5": "30",
+          "+6": "52",
+          "+7": "75",
+          "+8": "105",
+          "+9": "135",
+          "+10": "180"
+        }
+      },
+      {
+        "grade": "C",
+        "type": "fullbody and three pieces",
+        "values": {
+          "+3": "22",
+          "+4": "45",
+          "+5": "90",
+          "+6": "157",
+          "+7": "225",
+          "+8": "315",
+          "+9": "405",
+          "+10": "540"
+        }
+      },
+      {
+        "grade": "C",
+        "type": "five pieces",
+        "values": {
+          "+3": "25",
+          "+4": "50",
+          "+5": "100",
+          "+6": "175",
+          "+7": "250",
+          "+8": "350",
+          "+9": "450",
+          "+10": "600"
+        }
+      },
+      {
+        "grade": "B",
+        "type": "one piece",
+        "values": {
+          "+3": "10",
+          "+4": "20",
+          "+5": "35",
+          "+6": "50",
+          "+7": "70",
+          "+8": "95",
+          "+9": "125",
+          "+10": "160"
+        }
+      },
+      {
+        "grade": "B",
+        "type": "fullbody",
+        "values": {
+          "+3": "15",
+          "+4": "30",
+          "+5": "52",
+          "+6": "75",
+          "+7": "105",
+          "+8": "142",
+          "+9": "187",
+          "+10": "240"
+        }
+      },
+      {
+        "grade": "B",
+        "type": "fullbody and three pieces",
+        "values": {
+          "+3": "45",
+          "+4": "90",
+          "+5": "157",
+          "+6": "225",
+          "+7": "315",
+          "+8": "427",
+          "+9": "562",
+          "+10": "720"
+        }
+      },
+      {
+        "grade": "B",
+        "type": "five pieces",
+        "values": {
+          "+3": "50",
+          "+4": "100",
+          "+5": "175",
+          "+6": "250",
+          "+7": "350",
+          "+8": "475",
+          "+9": "625",
+          "+10": "800"
+        }
+      },
+      {
+        "grade": "A",
+        "type": "one piece",
+        "values": {
+          "+3": "15",
+          "+4": "30",
+          "+5": "50",
+          "+6": "70",
+          "+7": "95",
+          "+8": "125",
+          "+9": "160",
+          "+10": "200"
+        }
+      },
+      {
+        "grade": "A",
+        "type": "fullbody",
+        "values": {
+          "+3": "22",
+          "+4": "45",
+          "+5": "75",
+          "+6": "105",
+          "+7": "142",
+          "+8": "187",
+          "+9": "240",
+          "+10": "300"
+        }
+      },
+      {
+        "grade": "A",
+        "type": "fullbody and three pieces",
+        "values": {
+          "+3": "67",
+          "+4": "135",
+          "+5": "225",
+          "+6": "315",
+          "+7": "427",
+          "+8": "562",
+          "+9": "720",
+          "+10": "900"
+        }
+      },
+      {
+        "grade": "A",
+        "type": "five pieces",
+        "values": {
+          "+3": "75",
+          "+4": "150",
+          "+5": "250",
+          "+6": "350",
+          "+7": "475",
+          "+8": "625",
+          "+9": "800",
+          "+10": "1&nbsp;000"
+        }
+      },
+      {
+        "grade": "S+",
+        "type": "one piece",
+        "values": {
+          "+3": "20",
+          "+4": "40",
+          "+5": "70",
+          "+6": "100",
+          "+7": "140",
+          "+8": "190",
+          "+9": "250",
+          "+10": "320"
+        }
+      },
+      {
+        "grade": "S+",
+        "type": "fullbody",
+        "values": {
+          "+3": "30",
+          "+4": "60",
+          "+5": "105",
+          "+6": "150",
+          "+7": "213",
+          "+8": "285",
+          "+9": "375",
+          "+10": "480"
+        }
+      },
+      {
+        "grade": "S+",
+        "type": "fullbody and three pieces",
+        "values": {
+          "+3": "90",
+          "+4": "180",
+          "+5": "315",
+          "+6": "450",
+          "+7": "633",
+          "+8": "885",
+          "+9": "1&nbsp;125",
+          "+10": "1&nbsp;440"
+        }
+      },
+      {
+        "grade": "S+",
+        "type": "five pieces",
+        "values": {
+          "+3": "100",
+          "+4": "200",
+          "+5": "350",
+          "+6": "500",
+          "+7": "700",
+          "+8": "950",
+          "+9": "1&nbsp;250",
+          "+10": "1&nbsp;600"
+        }
+      }
+    ]
+  }
+}

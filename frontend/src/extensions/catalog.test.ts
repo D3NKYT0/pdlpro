@@ -8,4 +8,9 @@ describe('EXTENSION_CATALOG', () => {
     expect(EXTENSION_CATALOG.example?.routes[0]?.resource).toBe('ext.example.ping')
     expect(EXTENSION_CATALOG.example?.slots?.some((item) => item.slot === 'panel.dashboard')).toBe(true)
   })
+
+  it('descobre a extensão valorem com override de wiki', () => {
+    expect(EXTENSION_CATALOG.valorem?.id).toBe('valorem')
+    expect(EXTENSION_CATALOG.valorem?.overrides?.wiki).toBeDefined()
+  })
 })

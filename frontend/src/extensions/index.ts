@@ -3,6 +3,7 @@
 export type {
   ExtensionModule,
   ExtensionNavItem,
+  ExtensionOverrides,
   ExtensionRoute,
   ExtensionRouteScope,
   ExtensionSlot,
@@ -18,6 +19,7 @@ export {
   extensionAbsolutePath,
   extensionNavItems,
   extensionSlotItems,
+  extensionWikiOverride,
   navItemsForScope,
   parseExtensionIds,
   resolveEnabledExtensions,

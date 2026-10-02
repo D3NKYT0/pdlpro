@@ -33,6 +33,14 @@ export type ExtensionSlotItem = {
   resource?: string
 }
 
+export type ExtensionOverrides = {
+  /**
+   * Substitui as rotas do CMS de wiki (`/wiki` e `/wiki/:slug`)
+   * montando o componente (ou sub-roteador) fornecido em `/wiki/*`.
+   */
+  wiki?: ReactNode
+}
+
 export type ExtensionModule = {
   /** Identificador estável; deve coincidir com a pasta (sem `_` inicial) e `VITE_PDL_EXTENSIONS`. */
   id: string
@@ -41,6 +49,8 @@ export type ExtensionModule = {
   nav?: ExtensionNavItem[]
   /** Blocos injetados em páginas do core. */
   slots?: ExtensionSlotItem[]
+  /** Sobreposições opcionais de módulos e páginas completas do core. */
+  overrides?: ExtensionOverrides
 }
 
 export type ResolvedExtensionNavItem = {

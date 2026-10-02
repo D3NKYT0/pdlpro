@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type {
   ExtensionModule,
   ExtensionRouteScope,
@@ -116,3 +117,20 @@ export function extensionSlotItems(
 ): ResolvedExtensionSlot[] {
   return slotsForName(resolveEnabledExtensions(raw, catalog), slot)
 }
+
+/**
+ * Retorna o primeiro override de wiki fornecido por um módulo ativo, se houver.
+ */
+export function extensionWikiOverride(
+  raw: string | undefined | null = import.meta.env.VITE_PDL_EXTENSIONS,
+  catalog: Record<string, ExtensionModule> = EXTENSION_CATALOG,
+): ReactNode | undefined {
+  const modules = resolveEnabledExtensions(raw, catalog)
+  for (const mod of modules) {
+    if (mod.overrides?.wiki) {
+      return mod.overrides.wiki
+    }
+  }
+  return undefined
+}
+

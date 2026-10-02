@@ -1,0 +1,530 @@
+{
+  "wiki": {
+    "meta_title": "Wiki | Valorem",
+    "meta_description": "Explora la base de datos de Lineage 2 - objetos, armas, armaduras y más.",
+    "title": "Wiki",
+    "description": "Explora la base de datos de Lineage 2 Interlude",
+    "categories": {
+      "items": "Objetos",
+      "itemsDesc": "Armas, Armaduras, Accesorios y más",
+      "quests": "Misiones",
+      "questsDesc": "Guías de misiones y recompensas",
+      "npcs": "NPCs",
+      "npcsDesc": "Ubicaciones e información de NPCs",
+      "stamina": "Stamina",
+      "staminaDesc": "Guía del sistema y calculadora",
+      "commands": "Comandos",
+      "commandsDesc": "Lista de comandos del servidor",
+      "sevenSigns": "Seven Signs",
+      "sevenSignsDesc": "Estado en vivo y Ciclo de Mammon",
+      "calculator": "Calculadora de Craft",
+      "calculatorDesc": "Calcula costos y materiales",
+      "quest_guide": {
+        "title": "Guía de Misiones 3-en-1",
+        "subtitle": "Completa la Evolución de tu Clase",
+        "description": "Sigue nuestras guías unificadas para completar tus cambios de 1.ª, 2.ª y 3.ª clase de manera eficiente.",
+        "selectClass": "Selecciona tu Clase final de 3.ª Job",
+        "searchPlaceholder": "Buscar clase...",
+        "allRaces": "Todas las Razas",
+        "stages": {
+          "job1": "1.er Cambio de Clase",
+          "job2": "2.º Cambio de Clase",
+          "job3": "3.er Cambio de Clase",
+          "levelPrefix": "Lv."
+        },
+        "navigation": {
+          "prev": "Anterior",
+          "next": "Siguiente",
+          "backToList": "Volver a la Lista de Clases"
+        },
+        "walkthrough": {
+          "startNpc": "NPC Inicial",
+          "location": "Ubicación",
+          "requirements": "Requisitos",
+          "rewards": "Recompensas",
+          "steps": "Pasos de la Guía"
+        },
+        "classes": {
+          "88": {
+            "name": "Duelist",
+            "job1": {
+              "title": "Path to a Warrior",
+              "steps": [
+                "Habla con el Master Auron en el Gremio de Guerreros de la Aldea de Gludin.",
+                "Mata Tracker Skeletons y Skeleton Archers en el Abandoned Camp hasta recolectar 20 Warrior's Medals.",
+                "Regresa con el Master Auron para recibir tu Medallion of Warrior.",
+                "Al llegar al Nivel 20, habla con el Grand Master Ramos para cambiar tu profesión a Warrior."
+              ]
+            },
+            "job2": {
+              "title": "Camino del Gladiador",
+              "marks": [
+                {
+                  "name": "Mark of the Challenger",
+                  "steps": [
+                    "Habla con Kash en la Aldea de Dion.",
+                    "Ve con Shyslassys en la Waterfall Cave y mata al jefe para obtener el pergamino.",
+                    "Habla con Martien en Giran.",
+                    "Mata a Gorr en la cueva cerca de la Aldea de Floran."
+                  ]
+                },
+                {
+                  "name": "Mark of Trust",
+                  "steps": [
+                    "Habla con el High Priest Hollint en Oren.",
+                    "Visite a los líderes de los Humanos y Elfos para ganar su confianza.",
+                    "Derrota a los monstruos solicitados para demostrar tu valía."
+                  ]
+                },
+                {
+                  "name": "Mark of the Duelist",
+                  "steps": [
+                    "Habla con Kaien en Oren.",
+                    "Caza 10 de cada monstruo: Punchers, Noble Ants, Marsh Stakatos, Dead Seekers y Breka Orcs.",
+                    "Regresa con Kaien para recibir la Mark of the Duelist."
+                  ]
+                }
+              ]
+            },
+            "job3": {
+              "title": "Saga of the Duelist",
+              "steps": [
+                "Habla con el Grand Master Sedrick en Giran.",
+                "Obtén la flor de hielo de Chef Jeremy en Hot Springs.",
+                "Comulga con las 6 Tablets of Vision repartidas por Elmoreaden.",
+                "Derrota al Archon of Halisha en los Four Sepulchers o Shrine of Loyalty."
+              ]
+            }
+          },
+          "90": {
+            "name": "Phoenix Knight",
+            "job1": {
+              "title": "Path to a Human Knight",
+              "steps": [
+                "Habla con el Grand Master Sir Klaus Vasper en Gludin.",
+                "Recolecta 20 monedas de varios NPCs por el mundo.",
+                "Al llegar al Nivel 20, habla con un Grand Master para convertirte en Human Knight."
+              ]
+            },
+            "job2": {
+              "title": "Camino del Paladín",
+              "marks": [
+                {
+                  "name": "Mark of Duty",
+                  "steps": [
+                    "Habla con Hannum en Giran.",
+                    "Mata 20 Turek Orcs en Turek Orc Barracks.",
+                    "Regresa con Hannum."
+                  ]
+                },
+                {
+                  "name": "Mark of Trust",
+                  "steps": [
+                    "Habla con el High Priest Hollint en Oren.",
+                    "Visita a los líderes de las diferentes razas para obtener las Marcas de Confianza."
+                  ]
+                },
+                {
+                  "name": "Mark of the Healer",
+                  "steps": [
+                    "Habla con Bandellos en Giran.",
+                    "Mata varios monstruos para recolectar ingredientes de medicinas.",
+                    "Regresa con Bandellos."
+                  ]
+                }
+              ]
+            },
+            "job3": {
+              "title": "Saga of the Phoenix Knight",
+              "steps": [
+                "Habla con el Grand Master Sir Klaus Vasper en Giran.",
+                "Comulga con las Tablets of Vision.",
+                "Derrota a los monstruos que custodian las tablets."
+              ]
+            }
+          },
+          "95": {
+            "name": "Soultaker",
+            "job1": {
+              "title": "Path to a Human Wizard",
+              "steps": [
+                "Habla con Parina en la Aldea de Gludin.",
+                "Visite a los cuatro espíritus de los elementos.",
+                "Al llegar al Nivel 20, habla con un Grand Master para convertirte en Human Wizard."
+              ]
+            },
+            "job2": {
+              "title": "Camino del Necromante",
+              "marks": [
+                {
+                  "name": "Mark of the Scholar",
+                  "steps": [
+                    "Habla con Magister Mirien en Dion.",
+                    "Reúne información de los diferentes pergaminhos y maestros."
+                  ]
+                },
+                {
+                  "name": "Mark of Trust",
+                  "steps": [
+                    "Habla con el High Priest Hollint en Oren.",
+                    "Gana la confianza de tus compañeros humanos y vecinos."
+                  ]
+                },
+                {
+                  "name": "Mark of Witchcraft",
+                  "steps": [
+                    "Habla con Shadow Orim en Death Pass.",
+                    "Mata a varios monstruos no-muertos y recolecta sus corazones."
+                  ]
+                }
+              ]
+            },
+            "job3": {
+              "title": "Saga of the Soultaker",
+              "steps": [
+                "Habla con Grand Magister Joan en Ivory Tower.",
+                "Comulga con las Tablets of Vision.",
+                "Domina el poder de las almas para convertirte en Soultaker."
+              ]
+            }
+          },
+          "113": {
+            "name": "Titan",
+            "job1": {
+              "title": "Path to an Orc Raider",
+              "steps": [
+                "Habla con Karukia en la Aldea Orca.",
+                "Mata Kasha Bears y Kasha Blade Spiders.",
+                "Al llegar al Nivel 20, habla con un High Prefect para convertirte en Orc Raider."
+              ]
+            },
+            "job2": {
+              "title": "Camino del Destroyer",
+              "marks": [
+                {
+                  "name": "Mark of the Challenger",
+                  "steps": [
+                    "Habla con Kash en Dion.",
+                    "Sigue las pruebas del desafiante por el mundo."
+                  ]
+                },
+                {
+                  "name": "Mark of Glory",
+                  "steps": [
+                    "Habla con el Prefect Vokian en Giran.",
+                    "Reúne los materiales necesarios para demostrar tu gloria como Orc."
+                  ]
+                },
+                {
+                  "name": "Mark of the Champion",
+                  "steps": [
+                    "Habla con Ascalon en Giran.",
+                    "Derrota a varios monstruos para recolectar fichas de campeones."
+                  ]
+                }
+              ]
+            },
+            "job3": {
+              "title": "Saga of the Titan",
+              "steps": [
+                "Habla con el Prefect Vokian en Giran.",
+                "Comulga con las 6 Tablets of Vision.",
+                "Demuestra tu fuerza contra los Titanes de la antigüedad."
+              ]
+            }
+          }
+        }
+      }
+    },
+    "commands_page": {
+      "title": "Comandos del Servidor",
+      "subtitle": "Facilita tu viaje con comandos rápidos",
+      "command": "Comando",
+      "description": "Descripción",
+      "menu_desc": "Abre el panel principal del personaje.",
+      "lock_desc": "Protege objetos contra intercambio/drop/borrado.",
+      "repair_desc": "Recupera un personaje atascado de la misma cuenta.",
+      "autoloot_desc": "Activa el loot automático (Se desactiva en party).",
+      "expoff_desc": "Pausa la ganancia de experiencia.",
+      "expon_desc": "Activa la ganancia de experiencia.",
+      "whoami_desc": "Muestra estadísticas detalladas y bonos activos."
+    },
+    "items": {
+      "title": "Objetos",
+      "description": "Explora todos los objetos del juego",
+      "weapon": "Armas",
+      "weaponDesc": "Espadas, Arcos, Dagas y más",
+      "armor": "Armaduras",
+      "armorDesc": "Cascos, Pechos, Guantes, Botas",
+      "accessory": "Accesorios",
+      "accessoryDesc": "Anillos, Pendientes, Collares",
+      "etc": "Misceláneo",
+      "etcDesc": "Consumibles y materiales",
+      "searchPlaceholder": "Busca objetos por nombre..."
+    },
+    "seven_signs": {
+      "title": "Seven Signs & Ciclo",
+      "live_status": "Estado en Tiempo Real",
+      "current_cycle": "Ciclo Actual",
+      "period": "Período",
+      "winner": "Vencedor Anterior",
+      "scores": "Puntuaciones Actuales",
+      "dawn": "Lords of Dawn",
+      "dusk": "Revolutionaries of Dusk",
+      "mammon_status": "Estado de Mammon",
+      "mammon_spawned": "🟢 Mammons Activos",
+      "mammon_not_spawned": "🔴 Mammons Ausentes",
+      "competition": "Período de Competición",
+      "validation": "Período de Validación",
+      "no_winner": "Empate / Sin Vencedor",
+      "description": "Seven Signs es una competición global entre dos facciones por la posesión de los Sellos. El ciclo dura 2 semanas (1 semana de competición y 1 semana de validación)."
+    },
+    "weapon": {
+      "title": "Armas",
+      "description": "Explora todas las armas en el juego"
+    },
+    "grades": {
+      "none": "Sin Grado",
+      "d": "Grado D",
+      "c": "Grado C",
+      "b": "Grado B",
+      "a": "Grado A",
+      "s": "Grado S",
+      "s80": "Grado S80",
+      "s84": "Grado S84"
+    },
+    "weaponTypes": {
+      "sword": "Espada",
+      "blunt": "Maza",
+      "dagger": "Daga",
+      "bow": "Arco",
+      "pole": "Lanza",
+      "fist": "Puños",
+      "dual": "Espadas Duales",
+      "dualfist": "Puños Duales",
+      "etc": "Otro"
+    },
+    "slotTypes": {
+      "head": "Casco",
+      "chest": "Pecho",
+      "legs": "Piernas",
+      "feet": "Botas",
+      "gloves": "Guantes",
+      "onepiece": "Cuerpo Entero",
+      "fullbody": "Cuerpo Entero",
+      "underwear": "Ropa Interior"
+    },
+    "armor": {
+      "title": "Armaduras",
+      "description": "Explora todas las armaduras en el juego"
+    },
+    "shield": {
+      "title": "Escudos",
+      "description": "Explora todos los escudos en el juego"
+    },
+    "jewelry": {
+      "title": "Joyería",
+      "description": "Explora toda la joyería en el juego"
+    },
+    "jewelrySlotTypes": {
+      "ear": "Pendiente",
+      "neck": "Collar",
+      "rfinger": "Anillo Derecho",
+      "lfinger": "Anillo Izquierdo"
+    },
+    "filters": {
+      "grade": "Grado",
+      "gradeAll": "Todos los Grados",
+      "type": "Tipo",
+      "typeAll": "Todos los Tipos",
+      "allTypes": "Todos los Tipos",
+      "slot": "Ranura",
+      "slotAll": "Todas las Ranuras",
+      "search": "Buscar por nombre...",
+      "searchPlaceholder": "Buscar por nombre...",
+      "apply": "Aplicar",
+      "clear": "Limpiar"
+    },
+    "stats": {
+      "pAtk": "Ataque Fís.",
+      "mAtk": "Ataque Mág.",
+      "pDef": "Def. Fís.",
+      "mDef": "Def. Mág.",
+      "shieldDef": "Def. Escudo",
+      "atkSpd": "Vel. Ataque",
+      "weight": "Peso",
+      "crystals": "Cristales",
+      "soulshots": "Soulshots",
+      "spiritshots": "Spiritshots",
+      "price": "Precio"
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "page": "Página",
+      "of": "de",
+      "showing": "Mostrando",
+      "items": "objetos"
+    },
+    "itemDetail": {
+      "stats": "Estadísticas",
+      "dropList": "Lista de Drop",
+      "spoilList": "Lista de Spoil",
+      "recipe": "Receta de Crafteo",
+      "soldBy": "Vendido por",
+      "materials": "Materiales",
+      "successRate": "Tasa de Éxito"
+    },
+    "craft": {
+      "totalCost": "Costo Total Adena",
+      "materialsRequired": "Materiales Necesarios",
+      "owned": "Poseído",
+      "marketPrice": "Precio de Mercado",
+      "craftAction": "Craft",
+      "selfCraft": "Auto Craft",
+      "noRecipeFound": "Objeto no encontrado o no posee receta de crafteo.",
+      "priceUpdateSuccess": "¡Precio actualizado!",
+      "ownedUpdateSuccess": "¡Existencias actualizadas!",
+      "totalSavings": "Ahorro estimado",
+      "grandTotal": "Total Final",
+      "recipe": "Receta y Árbol de Materiales",
+      "configDesc": "Configura los precios de mercado e explora los submateriales recursivos para estimar el costo total de producción.",
+      "adenaFee": "Tasa de Adena",
+      "selectedItems": "Objetos Seleccionados",
+      "addItem": "Añadir objeto",
+      "combinedTotal": "Costo Total Combinado",
+      "emptyTitle": "Ningún objeto seleccionado",
+      "emptyDesc": "Busca un objeto arriba para empezar a calcular.",
+      "perItemTotal": "Total del objeto"
+    },
+    "npcs": {
+      "title": "NPCs",
+      "description": "Explora todos los NPCs en Lineage 2 Interlude",
+      "searchPlaceholder": "Buscar nombre o ubicación..."
+    },
+    "npcTypes": {
+      "warrior": "Monstruo",
+      "merchant": "Comerciante",
+      "pet": "Mascota",
+      "guard": "Guardia",
+      "boss": "Raid Boss",
+      "summon": "Invocación",
+      "teleporter": "Teletransportador",
+      "citizen": "Ciudadano",
+      "treasure": "Tesoro",
+      "holything": "Objeto Sagrado",
+      "xmastree": "Evento"
+    },
+    "npcStats": {
+      "race": "Raza",
+      "location": "Ubicación"
+    },
+    "npcDetail": {
+      "locations": "Ubicaciones",
+      "skills": "Habilidades"
+    },
+    "locations": {
+      "title": "Ubicaciones",
+      "description": "Explora todas las ubicaciones en Lineage 2 Interlude",
+      "territory": "Territorio",
+      "allTerritories": "Todos los Territorios",
+      "type": "Tipo",
+      "allTypes": "Todos los Tipos",
+      "locationsFound": "ubicaciones encontradas",
+      "levelRange": "Rango de Nivel",
+      "npcsHere": "NPCs en esta ubicación",
+      "viewDetails": "Ver Detalles"
+    },
+    "locationTypes": {
+      "town": "Pueblo",
+      "village": "Villa",
+      "harbor": "Puerto",
+      "castle": "Castillo",
+      "fortress": "Fortaleza",
+      "dungeon": "Mazmorra",
+      "hunting_zone": "Zona de Caza",
+      "special": "Área Especial"
+    },
+    "quests": {
+      "title": "Misiones",
+      "description": "Explora todas las misiones en Lineage 2 Interlude",
+      "questsFound": "misiones encontradas",
+      "minLevel": "Nivel Mín",
+      "maxLevel": "Nivel Máx",
+      "race": "Raza",
+      "allRaces": "Todas las Razas",
+      "startNpc": "NPC Inicial",
+      "rewards": "Recompensas",
+      "requirements": "Requisitos",
+      "class": "Clase",
+      "walkthrough": "Guía Paso a Paso"
+    },
+    "races": {
+      "human": "Humano",
+      "elf": "Elfo",
+      "darkelf": "Elfo Oscuro",
+      "orc": "Orco",
+      "dwarf": "Enano"
+    },
+    "error": {
+      "loadFailed": "Error al cargar los datos. Por favor, inténtalo de nuevo más tarde.",
+      "noResults": "No se encontraron objetos que coincidan con tus criterios."
+    },
+    "classes": {
+      "title": "Clases",
+      "description": "Explora todas las clases y profesiones en Lineage 2 Interlude",
+      "filterByRace": "Filtrar por Raza",
+      "allRaces": "Todas",
+      "tier0": "Clases Iniciales",
+      "tier1": "1ª Clase",
+      "tier2": "2ª Clase",
+      "tier3": "3ª Clase",
+      "evolution": "Evolución de Clases",
+      "fullLineage": "Linaje Completo de Clases",
+      "nextClasses": "Siguientes Clases",
+      "baseStats": "Estadísticas Base",
+      "combatPotential": "Potencial de Combate",
+      "progression": "Progresión (HP/MP/CP)",
+      "skillTree": "Árbol de Habilidades",
+      "level": "Nivel",
+      "requiredSp": "SP Requerido"
+    },
+    "skills": {
+      "title": "Habilidades",
+      "description": "Explora todas las habilidades y destrezas del juego",
+      "active": "Activa",
+      "passive": "Pasiva",
+      "toggle": "Alternable",
+      "mpConsume": "Costo de MP",
+      "hpConsume": "Costo de HP",
+      "castRange": "Rango de Casteo",
+      "reuseDelay": "Tiempo de Recarga",
+      "hitTime": "Tiempo de Casteo",
+      "power": "Poder",
+      "target": "Objetivo",
+      "effects": "Efectos",
+      "levels": "Niveles",
+      "skillInfo": "Información de la Habilidad",
+      "skillDescription": "Descripción",
+      "seconds": "segundos",
+      "searchPlaceholder": "Buscar habilidades..."
+    },
+    "raidBosses": {
+      "title": "Raid Bosses",
+      "description": "Explora todos los Raid Bosses en Lineage 2 Interlude",
+      "searchPlaceholder": "Busca por boss o ubicación...",
+      "bossesFound": "raid bosses encontrados",
+      "minLevel": "Nivel Mín",
+      "maxLevel": "Nivel Máx",
+      "spawnLocations": "Lugares de Aparición",
+      "respawnTime": "Tiempo de Reaparición",
+      "viewMap": "Ver en el Mapa",
+      "viewInteractiveMap": "Ver Mapa Interactivo",
+      "backToList": "Volver a la Lista",
+      "levelRange": "Rango de Nivel",
+      "showingXofY": "Mostrando {count} de {total} bosses",
+      "levelColors": "Colores de Nivel",
+      "viewDetails": "Ver Detalles"
+    }
+  }
+}

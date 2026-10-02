@@ -1,0 +1,8556 @@
+[
+  {
+    "id": "raid-25372",
+    "name": "Discarded Guardian",
+    "npcName": "discard_guardian",
+    "level": 20,
+    "spawns": [
+      {
+        "x": 47839,
+        "y": 243224,
+        "z": -6762
+      },
+      {
+        "x": 48165,
+        "y": 243231,
+        "z": -6762
+      },
+      {
+        "x": 48168,
+        "y": 243561,
+        "z": -6762
+      },
+      {
+        "x": 47841,
+        "y": 243564,
+        "z": -6762
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "discard-guardian-25372",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25375",
+    "name": "Zombie Lord Farakelsus",
+    "npcName": "zombie_lord_farakelsus",
+    "level": 20,
+    "spawns": [
+      {
+        "x": 22132,
+        "y": 80160,
+        "z": -3272
+      },
+      {
+        "x": 22724,
+        "y": 80152,
+        "z": -3272
+      },
+      {
+        "x": 22892,
+        "y": 80704,
+        "z": -3272
+      },
+      {
+        "x": 22344,
+        "y": 80708,
+        "z": -3272
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "zombie-lord-farakelsus-25375",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25378",
+    "name": "Madness Beast",
+    "npcName": "madness_beast",
+    "level": 20,
+    "spawns": [
+      {
+        "x": -54840,
+        "y": 83820,
+        "z": -3648
+      },
+      {
+        "x": -53596,
+        "y": 83232,
+        "z": -3648
+      },
+      {
+        "x": -53176,
+        "y": 84348,
+        "z": -3648
+      },
+      {
+        "x": -53532,
+        "y": 85180,
+        "z": -3648
+      },
+      {
+        "x": -54708,
+        "y": 85092,
+        "z": -3648
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "madness-beast-25378",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25146",
+    "name": "Serpent Demon Bifrons",
+    "npcName": "serpent_demon_bifrons",
+    "level": 21,
+    "spawns": [
+      {
+        "x": -13904,
+        "y": 214320,
+        "z": -3800
+      },
+      {
+        "x": -13280,
+        "y": 213720,
+        "z": -3800
+      },
+      {
+        "x": -13464,
+        "y": 213228,
+        "z": -3800
+      },
+      {
+        "x": -14144,
+        "y": 213916,
+        "z": -3800
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "serpent-demon-bifrons-25146",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25357",
+    "name": "Sukar Wererat Chief",
+    "npcName": "sukar_wererat_chief",
+    "level": 21,
+    "spawns": [
+      {
+        "x": -4076,
+        "y": 112252,
+        "z": -3632
+      },
+      {
+        "x": -2836,
+        "y": 112216,
+        "z": -3632
+      },
+      {
+        "x": -2840,
+        "y": 113392,
+        "z": -3632
+      },
+      {
+        "x": -4052,
+        "y": 113416,
+        "z": -3632
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "sukar-wererat-chief-25357",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25373",
+    "name": "Malex Herald of Dagoniel ",
+    "npcName": "malex_herald_of_dagoniel",
+    "level": 21,
+    "spawns": [
+      {
+        "x": 9396,
+        "y": 76692,
+        "z": -3852
+      },
+      {
+        "x": 9920,
+        "y": 76692,
+        "z": -3852
+      },
+      {
+        "x": 9948,
+        "y": 77260,
+        "z": -3852
+      },
+      {
+        "x": 9380,
+        "y": 77260,
+        "z": -3852
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "malex-herald-of-dagoniel-25373",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25380",
+    "name": "Kaysha Herald of Icarus",
+    "npcName": "kaysha_herald_of_ikaros",
+    "level": 21,
+    "spawns": [
+      {
+        "x": -47968,
+        "y": 51045,
+        "z": -5959
+      },
+      {
+        "x": -46855,
+        "y": 51042,
+        "z": -5959
+      },
+      {
+        "x": -46853,
+        "y": 52250,
+        "z": -5959
+      },
+      {
+        "x": -47970,
+        "y": 52250,
+        "z": -5959
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "kaysha-herald-of-ikaros-25380",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25001",
+    "name": "Greyclaw Kutus",
+    "npcName": "greyclaw_kutus",
+    "level": 23,
+    "spawns": [
+      {
+        "x": -54440,
+        "y": 145764,
+        "z": -3000
+      },
+      {
+        "x": -53532,
+        "y": 146480,
+        "z": -3000
+      },
+      {
+        "x": -54220,
+        "y": 147364,
+        "z": -3000
+      },
+      {
+        "x": -54988,
+        "y": 147000,
+        "z": -3000
+      },
+      {
+        "x": -55140,
+        "y": 146252,
+        "z": -3000
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "greyclaw-kutus-25001",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25362",
+    "name": "Tracker Leader Sharuk",
+    "npcName": "tracker_sharuk",
+    "level": 23,
+    "spawns": [
+      {
+        "x": -56468,
+        "y": 186276,
+        "z": -3456
+      },
+      {
+        "x": -55296,
+        "y": 186236,
+        "z": -3456
+      },
+      {
+        "x": -55100,
+        "y": 187512,
+        "z": -3456
+      },
+      {
+        "x": -56300,
+        "y": 187588,
+        "z": -3456
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "tracker-sharuk-25362",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25366",
+    "name": "Kuroboros' Priest",
+    "npcName": "priest_of_kuroboros",
+    "level": 23,
+    "spawns": [
+      {
+        "x": -63184,
+        "y": 179476,
+        "z": -3688
+      },
+      {
+        "x": -62604,
+        "y": 178760,
+        "z": -3688
+      },
+      {
+        "x": -61540,
+        "y": 179180,
+        "z": -3688
+      },
+      {
+        "x": -61796,
+        "y": 180076,
+        "z": -3688
+      },
+      {
+        "x": -62584,
+        "y": 180368,
+        "z": -3688
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "priest-of-kuroboros-25366",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25060",
+    "name": "Unrequited Kael",
+    "npcName": "love_reverser_kael",
+    "level": 24,
+    "spawns": [
+      {
+        "x": -60648,
+        "y": 188052,
+        "z": -4552
+      },
+      {
+        "x": -60204,
+        "y": 188044,
+        "z": -4552
+      },
+      {
+        "x": -60204,
+        "y": 188488,
+        "z": -4552
+      },
+      {
+        "x": -60652,
+        "y": 188480,
+        "z": -4552
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "love-reverser-kael-25060",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25127",
+    "name": "Langk Matriarch Rashkos",
+    "npcName": "langk_matriarch_rashkos",
+    "level": 24,
+    "spawns": [
+      {
+        "x": -48400,
+        "y": 219344,
+        "z": -2536
+      },
+      {
+        "x": -47528,
+        "y": 218612,
+        "z": -2536
+      },
+      {
+        "x": -46876,
+        "y": 219392,
+        "z": -2536
+      },
+      {
+        "x": -47732,
+        "y": 219748,
+        "z": -2536
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "langk-matriarch-rashkos-25127",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25019",
+    "name": "Pan Dryad",
+    "npcName": "pan_draid",
+    "level": 25,
+    "spawns": [
+      {
+        "x": 6736,
+        "y": 168972,
+        "z": -3772
+      },
+      {
+        "x": 7996,
+        "y": 168876,
+        "z": -3772
+      },
+      {
+        "x": 8016,
+        "y": 169912,
+        "z": -3772
+      },
+      {
+        "x": 6660,
+        "y": 169972,
+        "z": -3772
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "pan-draid-25019",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25076",
+    "name": "Princess Molrang",
+    "npcName": "princess_molrang",
+    "level": 25,
+    "spawns": [
+      {
+        "x": -61520,
+        "y": 126320,
+        "z": -3112
+      },
+      {
+        "x": -60148,
+        "y": 126440,
+        "z": -3112
+      },
+      {
+        "x": -60548,
+        "y": 128388,
+        "z": -3112
+      },
+      {
+        "x": -61948,
+        "y": 128240,
+        "z": -3112
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "princess-molrang-25076",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25149",
+    "name": "Zombie Lord Crowl",
+    "npcName": "zombie_lord_crowl",
+    "level": 25,
+    "spawns": [
+      {
+        "x": -13166,
+        "y": 138211,
+        "z": -3720
+      },
+      {
+        "x": -12594,
+        "y": 137645,
+        "z": -3720
+      },
+      {
+        "x": -12128,
+        "y": 138291,
+        "z": -3720
+      },
+      {
+        "x": -12722,
+        "y": 138652,
+        "z": -3720
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "zombie-lord-crowl-25149",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25166",
+    "name": "Ikuntai",
+    "npcName": "ikuntai",
+    "level": 25,
+    "spawns": [
+      {
+        "x": -22036,
+        "y": 152044,
+        "z": -3136
+      },
+      {
+        "x": -21642,
+        "y": 151796,
+        "z": -3136
+      },
+      {
+        "x": -21536,
+        "y": 152076,
+        "z": -3136
+      },
+      {
+        "x": -21896,
+        "y": 152344,
+        "z": -3136
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "ikuntai-25166",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25369",
+    "name": "Soul Scavenger",
+    "npcName": "soul_scavenger",
+    "level": 25,
+    "spawns": [
+      {
+        "x": -45896,
+        "y": 110708,
+        "z": -3880
+      },
+      {
+        "x": -44836,
+        "y": 110992,
+        "z": -3880
+      },
+      {
+        "x": -45296,
+        "y": 111588,
+        "z": -3880
+      },
+      {
+        "x": -46060,
+        "y": 111556,
+        "z": -3880
+      },
+      {
+        "x": -46476,
+        "y": 111088,
+        "z": -3880
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "soul-scavenger-25369",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25426",
+    "name": "Betrayer of Urutu Freki",
+    "npcName": "betrayer_of_urutu_freki",
+    "level": 25,
+    "spawns": [
+      {
+        "x": -18956,
+        "y": -101456,
+        "z": -2180
+      },
+      {
+        "x": -18396,
+        "y": -102168,
+        "z": -2180
+      },
+      {
+        "x": -16700,
+        "y": -101804,
+        "z": -2180
+      },
+      {
+        "x": -17236,
+        "y": -100672,
+        "z": -2180
+      },
+      {
+        "x": -18976,
+        "y": -100268,
+        "z": -2180
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "betrayer-of-urutu-freki-25426",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25429",
+    "name": "Mammon Collector Talos",
+    "npcName": "mammons_collector_talos",
+    "level": 25,
+    "spawns": [
+      {
+        "x": 171376,
+        "y": -214776,
+        "z": -3664
+      },
+      {
+        "x": 171752,
+        "y": -215672,
+        "z": -3664
+      },
+      {
+        "x": 172492,
+        "y": -215540,
+        "z": -3664
+      },
+      {
+        "x": 173204,
+        "y": -214296,
+        "z": -3664
+      },
+      {
+        "x": 171784,
+        "y": -213596,
+        "z": -3664
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "mammons-collector-talos-25429",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25360",
+    "name": "Tiger Hornet",
+    "npcName": "tiger_hornet",
+    "level": 26,
+    "spawns": [
+      {
+        "x": 28860,
+        "y": 178924,
+        "z": -3728
+      },
+      {
+        "x": 29684,
+        "y": 178936,
+        "z": -3728
+      },
+      {
+        "x": 29028,
+        "y": 180052,
+        "z": -3728
+      },
+      {
+        "x": 28684,
+        "y": 179536,
+        "z": -3728
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "tiger-hornet-25360",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25365",
+    "name": "Patriarch Kuroboros",
+    "npcName": "patriarch_kuroboros",
+    "level": 26,
+    "spawns": [
+      {
+        "x": -62936,
+        "y": 190480,
+        "z": -3760
+      },
+      {
+        "x": -62544,
+        "y": 189304,
+        "z": -3760
+      },
+      {
+        "x": -60880,
+        "y": 190788,
+        "z": -3760
+      },
+      {
+        "x": -62324,
+        "y": 191384,
+        "z": -3760
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "patriarch-kuroboros-25365",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25038",
+    "name": "Tirak",
+    "npcName": "tirak",
+    "level": 28,
+    "spawns": [
+      {
+        "x": -57466,
+        "y": 186017,
+        "z": -5004
+      },
+      {
+        "x": -57266,
+        "y": 186017,
+        "z": -5004
+      },
+      {
+        "x": -57266,
+        "y": 186535,
+        "z": -5004
+      },
+      {
+        "x": -57466,
+        "y": 186535,
+        "z": -5004
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "tirak-25038",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25272",
+    "name": "Partisan Leader Talakin",
+    "npcName": "partisan_leader_talakin",
+    "level": 28,
+    "spawns": [
+      {
+        "x": 48485,
+        "y": 127590,
+        "z": -3761
+      },
+      {
+        "x": 49668,
+        "y": 127446,
+        "z": -3761
+      },
+      {
+        "x": 49883,
+        "y": 128352,
+        "z": -3761
+      },
+      {
+        "x": 48738,
+        "y": 128608,
+        "z": -3761
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "partisan-leader-talakin-25272",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25333",
+    "name": "Anakazel",
+    "npcName": "r08_leader_anakazel",
+    "level": 28,
+    "spawns": [
+      {
+        "x": -110687,
+        "y": -181946,
+        "z": -6786
+      },
+      {
+        "x": -109121,
+        "y": -181940,
+        "z": -6786
+      },
+      {
+        "x": -109121,
+        "y": -181066,
+        "z": -6786
+      },
+      {
+        "x": -110687,
+        "y": -181072,
+        "z": -6786
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "r08-leader-anakazel-25333",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25095",
+    "name": "Elf Renoa",
+    "npcName": "elf_renoa",
+    "level": 29,
+    "spawns": [
+      {
+        "x": -38088,
+        "y": 197708,
+        "z": -2800
+      },
+      {
+        "x": -37548,
+        "y": 197936,
+        "z": -2800
+      },
+      {
+        "x": -37436,
+        "y": 198252,
+        "z": -2800
+      },
+      {
+        "x": -37600,
+        "y": 198512,
+        "z": -2800
+      },
+      {
+        "x": -37924,
+        "y": 198312,
+        "z": -2800
+      },
+      {
+        "x": -38196,
+        "y": 198000,
+        "z": -2800
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "elf-renoa-25095",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25004",
+    "name": "Turek Mercenary Captain",
+    "npcName": "turek_mercenary_boss",
+    "level": 30,
+    "spawns": [
+      {
+        "x": -94752,
+        "y": 100044,
+        "z": -3612
+      },
+      {
+        "x": -94228,
+        "y": 99620,
+        "z": -3612
+      },
+      {
+        "x": -93304,
+        "y": 100356,
+        "z": -3612
+      },
+      {
+        "x": -94120,
+        "y": 100932,
+        "z": -3612
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "turek-mercenary-boss-25004",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25079",
+    "name": "Cat's Eye Bandit",
+    "npcName": "catseye",
+    "level": 30,
+    "spawns": [
+      {
+        "x": 53245,
+        "y": 102524,
+        "z": -1129
+      },
+      {
+        "x": 53868,
+        "y": 102087,
+        "z": -1129
+      },
+      {
+        "x": 54393,
+        "y": 102832,
+        "z": -1129
+      },
+      {
+        "x": 53669,
+        "y": 103198,
+        "z": -1129
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "catseye-25079",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25112",
+    "name": "Agent of Beres, Meana",
+    "npcName": "meana_agent_of_beres",
+    "level": 30,
+    "spawns": [
+      {
+        "x": 115456,
+        "y": 139440,
+        "z": -3724
+      },
+      {
+        "x": 116372,
+        "y": 138980,
+        "z": -3724
+      },
+      {
+        "x": 117104,
+        "y": 139444,
+        "z": -3724
+      },
+      {
+        "x": 115944,
+        "y": 139968,
+        "z": -3724
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "meana-agent-of-beres-25112",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25169",
+    "name": "Ragraman",
+    "npcName": "ragraman",
+    "level": 30,
+    "spawns": [
+      {
+        "x": -54788,
+        "y": 169384,
+        "z": -3300
+      },
+      {
+        "x": -53992,
+        "y": 170104,
+        "z": -3300
+      },
+      {
+        "x": -54024,
+        "y": 170920,
+        "z": -3300
+      },
+      {
+        "x": -55264,
+        "y": 170876,
+        "z": -3300
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "ragraman-25169",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25188",
+    "name": "Apepi",
+    "npcName": "apepi",
+    "level": 30,
+    "spawns": [
+      {
+        "x": 87780,
+        "y": 175876,
+        "z": -3612
+      },
+      {
+        "x": 88848,
+        "y": 175804,
+        "z": -3612
+      },
+      {
+        "x": 88224,
+        "y": 176832,
+        "z": -3612
+      },
+      {
+        "x": 87556,
+        "y": 176536,
+        "z": -3612
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "apepi-25188",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25352",
+    "name": "Giant Wasteland Basilisk",
+    "npcName": "giant_wasteland_basil",
+    "level": 30,
+    "spawns": [
+      {
+        "x": -17460,
+        "y": 174700,
+        "z": -3584
+      },
+      {
+        "x": -16872,
+        "y": 174032,
+        "z": -3584
+      },
+      {
+        "x": -16212,
+        "y": 174712,
+        "z": -3584
+      },
+      {
+        "x": -16368,
+        "y": 175456,
+        "z": -3584
+      },
+      {
+        "x": -17304,
+        "y": 175548,
+        "z": -3584
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "giant-wasteland-basil-25352",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25501",
+    "name": "Boss Akata",
+    "npcName": "grave_robber_akata",
+    "level": 30,
+    "spawns": [
+      {
+        "x": 48575,
+        "y": -106191,
+        "z": -1568
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "grave-robber-akata-25501",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25392",
+    "name": "Captain of Queen's Royal Guards",
+    "npcName": "queens_nobel_leader",
+    "level": 32,
+    "spawns": [
+      {
+        "x": 29592,
+        "y": 106484,
+        "z": -3772
+      },
+      {
+        "x": 30604,
+        "y": 107032,
+        "z": -3772
+      },
+      {
+        "x": 30184,
+        "y": 107824,
+        "z": -3772
+      },
+      {
+        "x": 29184,
+        "y": 107464,
+        "z": -3772
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "queens-nobel-leader-25392",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25401",
+    "name": "Skyla",
+    "npcName": "antaras_adherent_skyla",
+    "level": 32,
+    "spawns": [
+      {
+        "x": 116704,
+        "y": 103332,
+        "z": -3740
+      },
+      {
+        "x": 117488,
+        "y": 101996,
+        "z": -3740
+      },
+      {
+        "x": 119064,
+        "y": 102712,
+        "z": -3740
+      },
+      {
+        "x": 117992,
+        "y": 103752,
+        "z": -3740
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "antaras-adherent-skyla-25401",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25128",
+    "name": "Vuku Grand Seer Gharmash",
+    "npcName": "vuku_witchdr_gharmash",
+    "level": 33,
+    "spawns": [
+      {
+        "x": 17320,
+        "y": 178620,
+        "z": -3616
+      },
+      {
+        "x": 18228,
+        "y": 178816,
+        "z": -3616
+      },
+      {
+        "x": 18404,
+        "y": 179684,
+        "z": -3616
+      },
+      {
+        "x": 17392,
+        "y": 179488,
+        "z": -3616
+      },
+      {
+        "x": 17012,
+        "y": 179064,
+        "z": -3616
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "vuku-witchdr-gharmash-25128",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25391",
+    "name": "Nurka's Messenger",
+    "npcName": "nurkas_messenger",
+    "level": 33,
+    "spawns": [
+      {
+        "x": 44694,
+        "y": 120364,
+        "z": -2758
+      },
+      {
+        "x": 46120,
+        "y": 119953,
+        "z": -2758
+      },
+      {
+        "x": 46184,
+        "y": 121097,
+        "z": -2758
+      },
+      {
+        "x": 45482,
+        "y": 121425,
+        "z": -2758
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "nurkas-messenger-25391",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25404",
+    "name": "Corsair Captain Kylon",
+    "npcName": "corsair_captain_kylon",
+    "level": 33,
+    "spawns": [
+      {
+        "x": 35720,
+        "y": 191012,
+        "z": -3124
+      },
+      {
+        "x": 36216,
+        "y": 190808,
+        "z": -3124
+      },
+      {
+        "x": 36404,
+        "y": 191752,
+        "z": -3124
+      },
+      {
+        "x": 35852,
+        "y": 191836,
+        "z": -3124
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "corsair-captain-kylon-25404",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25020",
+    "name": "Breka Warlock Pastu",
+    "npcName": "breka_warlock_pastu",
+    "level": 34,
+    "spawns": [
+      {
+        "x": 89924,
+        "y": 125024,
+        "z": -2232
+      },
+      {
+        "x": 91064,
+        "y": 125548,
+        "z": -2232
+      },
+      {
+        "x": 90512,
+        "y": 126312,
+        "z": -2232
+      },
+      {
+        "x": 89960,
+        "y": 125980,
+        "z": -2232
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "breka-warlock-pastu-25020",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25023",
+    "name": "Stakato Queen Zyrnna",
+    "npcName": "jeruna_queen",
+    "level": 34,
+    "spawns": [
+      {
+        "x": 25800,
+        "y": 101804,
+        "z": -3792
+      },
+      {
+        "x": 25904,
+        "y": 100388,
+        "z": -3792
+      },
+      {
+        "x": 27972,
+        "y": 100540,
+        "z": -3792
+      },
+      {
+        "x": 29112,
+        "y": 103004,
+        "z": -3792
+      },
+      {
+        "x": 27116,
+        "y": 103412,
+        "z": -3792
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "jeruna-queen-25023",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25189",
+    "name": "Cronos's Servitor Mumu",
+    "npcName": "cronoss_summons_mumu",
+    "level": 34,
+    "spawns": [
+      {
+        "x": 67972,
+        "y": 202836,
+        "z": -3792
+      },
+      {
+        "x": 68996,
+        "y": 202376,
+        "z": -3792
+      },
+      {
+        "x": 69560,
+        "y": 203120,
+        "z": -3792
+      },
+      {
+        "x": 68912,
+        "y": 203956,
+        "z": -3792
+      },
+      {
+        "x": 67944,
+        "y": 203456,
+        "z": -3792
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "cronoss-summons-mumu-25189",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25383",
+    "name": "Revenant of Sir Calibus",
+    "npcName": "revenant_of_sir_calibus",
+    "level": 34,
+    "spawns": [
+      {
+        "x": 50882,
+        "y": 153506,
+        "z": -3608
+      },
+      {
+        "x": 51369,
+        "y": 153158,
+        "z": -3608
+      },
+      {
+        "x": 52226,
+        "y": 154135,
+        "z": -3608
+      },
+      {
+        "x": 51144,
+        "y": 155137,
+        "z": -3608
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "revenant-of-sir-calibus-25383",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25041",
+    "name": "Remmel",
+    "npcName": "remmel",
+    "level": 35,
+    "spawns": [
+      {
+        "x": 9600,
+        "y": 126452,
+        "z": -3732
+      },
+      {
+        "x": 11212,
+        "y": 126132,
+        "z": -3732
+      },
+      {
+        "x": 11336,
+        "y": 127624,
+        "z": -3732
+      },
+      {
+        "x": 9952,
+        "y": 127352,
+        "z": -3732
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "remmel-25041",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25063",
+    "name": "Chertuba of Great Soul",
+    "npcName": "grandeur_soul_chertuba",
+    "level": 35,
+    "spawns": [
+      {
+        "x": -91272,
+        "y": 116168,
+        "z": -3508
+      },
+      {
+        "x": -90752,
+        "y": 116164,
+        "z": -3508
+      },
+      {
+        "x": -90752,
+        "y": 116508,
+        "z": -3508
+      },
+      {
+        "x": -91260,
+        "y": 116516,
+        "z": -3508
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "grandeur-soul-chertuba-25063",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25098",
+    "name": "Sejarr's Servitor",
+    "npcName": "sejarr_s_summoner",
+    "level": 35,
+    "spawns": [
+      {
+        "x": 122904,
+        "y": 133668,
+        "z": -3756
+      },
+      {
+        "x": 123764,
+        "y": 132856,
+        "z": -3756
+      },
+      {
+        "x": 124344,
+        "y": 133232,
+        "z": -3756
+      },
+      {
+        "x": 123268,
+        "y": 134268,
+        "z": -3756
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "sejarr-s-summoner-25098",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25118",
+    "name": "Guilotine, Warden of the Execution Grounds",
+    "npcName": "warden_guillotine",
+    "level": 35,
+    "spawns": [
+      {
+        "x": 50325,
+        "y": 146283,
+        "z": -3677
+      },
+      {
+        "x": 50978,
+        "y": 145946,
+        "z": -3677
+      },
+      {
+        "x": 51400,
+        "y": 146676,
+        "z": -3677
+      },
+      {
+        "x": 51137,
+        "y": 147486,
+        "z": -3677
+      },
+      {
+        "x": 50574,
+        "y": 147430,
+        "z": -3677
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "warden-guillotine-25118",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25152",
+    "name": "Flame Lord Shadar",
+    "npcName": "flamelord_shadar",
+    "level": 35,
+    "spawns": [
+      {
+        "x": 42772,
+        "y": 123908,
+        "z": -3312
+      },
+      {
+        "x": 44524,
+        "y": 123164,
+        "z": -3312
+      },
+      {
+        "x": 44488,
+        "y": 124732,
+        "z": -3312
+      },
+      {
+        "x": 43364,
+        "y": 124464,
+        "z": -3312
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "flamelord-shadar-25152",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25185",
+    "name": "Tasaba Patriarch Hellena",
+    "npcName": "tasaba_patriarch_hellena",
+    "level": 35,
+    "spawns": [
+      {
+        "x": 87672,
+        "y": 165868,
+        "z": -3788
+      },
+      {
+        "x": 88524,
+        "y": 166120,
+        "z": -3788
+      },
+      {
+        "x": 88608,
+        "y": 166728,
+        "z": -3788
+      },
+      {
+        "x": 87768,
+        "y": 166744,
+        "z": -3788
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "tasaba-patriarch-hellena-25185",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25223",
+    "name": "Soul Collector Acheron",
+    "npcName": "soul_collector_acheron",
+    "level": 35,
+    "spawns": [
+      {
+        "x": 42227,
+        "y": 152067,
+        "z": -2894
+      },
+      {
+        "x": 43611,
+        "y": 152017,
+        "z": -2894
+      },
+      {
+        "x": 43446,
+        "y": 152927,
+        "z": -2894
+      },
+      {
+        "x": 42965,
+        "y": 152958,
+        "z": -2894
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "soul-collector-acheron-25223",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25354",
+    "name": "Gargoyle Lord Sirocco",
+    "npcName": "gargoyle_lord_sirocco",
+    "level": 35,
+    "spawns": [
+      {
+        "x": -16072,
+        "y": 184361,
+        "z": -3807
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "gargoyle-lord-sirocco-25354",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25388",
+    "name": "Red Eye Captain Trakia",
+    "npcName": "redeye_leader_trakia",
+    "level": 35,
+    "spawns": [
+      {
+        "x": 40129,
+        "y": 102048,
+        "z": -1248
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "redeye-leader-trakia-25388",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25398",
+    "name": "Eye of Beleth",
+    "npcName": "eyes_of_bereth",
+    "level": 35,
+    "spawns": [
+      {
+        "x": 3776,
+        "y": 188380,
+        "z": -3792
+      },
+      {
+        "x": 6428,
+        "y": 188400,
+        "z": -3792
+      },
+      {
+        "x": 5804,
+        "y": 189932,
+        "z": -3792
+      },
+      {
+        "x": 3600,
+        "y": 189728,
+        "z": -3792
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "eyes-of-bereth-25398",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25211",
+    "name": "Sebek",
+    "npcName": "sebek",
+    "level": 36,
+    "spawns": [
+      {
+        "x": 75732,
+        "y": 193456,
+        "z": -3808
+      },
+      {
+        "x": 76704,
+        "y": 192484,
+        "z": -3808
+      },
+      {
+        "x": 77236,
+        "y": 193168,
+        "z": -3808
+      },
+      {
+        "x": 76172,
+        "y": 193804,
+        "z": -3808
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "sebek-25211",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25385",
+    "name": "Evil Spirit Tempest",
+    "npcName": "demon_tempest",
+    "level": 36,
+    "spawns": [
+      {
+        "x": 53151,
+        "y": 142897,
+        "z": -3932
+      },
+      {
+        "x": 53548,
+        "y": 142749,
+        "z": -3932
+      },
+      {
+        "x": 54119,
+        "y": 142852,
+        "z": -3932
+      },
+      {
+        "x": 53643,
+        "y": 144591,
+        "z": -3932
+      },
+      {
+        "x": 53200,
+        "y": 144369,
+        "z": -3932
+      },
+      {
+        "x": 52850,
+        "y": 143748,
+        "z": -3932
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "demon-tempest-25385",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25506",
+    "name": "Rayito the Looter",
+    "npcName": "rayito_the_looter",
+    "level": 37,
+    "spawns": [
+      {
+        "x": 127724,
+        "y": -160762,
+        "z": -1280
+      },
+      {
+        "x": 127987,
+        "y": -160746,
+        "z": -1280
+      },
+      {
+        "x": 127956,
+        "y": -160524,
+        "z": -1280
+      },
+      {
+        "x": 127756,
+        "y": -160524,
+        "z": -1280
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "rayito-the-looter-25506",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25170",
+    "name": "Lizardmen Leader Hellion",
+    "npcName": "lizardman_leader_hellion",
+    "level": 38,
+    "spawns": [
+      {
+        "x": 25544,
+        "y": 121216,
+        "z": -3788
+      },
+      {
+        "x": 27136,
+        "y": 121432,
+        "z": -3788
+      },
+      {
+        "x": 26463,
+        "y": 123951,
+        "z": -3788
+      },
+      {
+        "x": 25290,
+        "y": 122425,
+        "z": -3788
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "lizardman-leader-hellion-25170",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25334",
+    "name": "Anakazel",
+    "npcName": "r18_leader_anakazel",
+    "level": 38,
+    "spawns": [
+      {
+        "x": -110674,
+        "y": -179131,
+        "z": -6786
+      },
+      {
+        "x": -109123,
+        "y": -179134,
+        "z": -6786
+      },
+      {
+        "x": -109127,
+        "y": -178253,
+        "z": -6786
+      },
+      {
+        "x": -110679,
+        "y": -178250,
+        "z": -6786
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "r18-leader-anakazel-25334",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25394",
+    "name": "Premo Prime",
+    "npcName": "premo_prime_the_creature",
+    "level": 38,
+    "spawns": [
+      {
+        "x": 100816,
+        "y": 199980,
+        "z": -3780
+      },
+      {
+        "x": 102868,
+        "y": 199276,
+        "z": -3780
+      },
+      {
+        "x": 102256,
+        "y": 201032,
+        "z": -3780
+      },
+      {
+        "x": 101284,
+        "y": 201288,
+        "z": -3780
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "premo-prime-the-creature-25394",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25082",
+    "name": "Leader of Cat Gang",
+    "npcName": "lost_cat_the_cat_a",
+    "level": 39,
+    "spawns": [
+      {
+        "x": 87716,
+        "y": 140240,
+        "z": -3560
+      },
+      {
+        "x": 88636,
+        "y": 139892,
+        "z": -3560
+      },
+      {
+        "x": 89640,
+        "y": 140844,
+        "z": -3560
+      },
+      {
+        "x": 88840,
+        "y": 141224,
+        "z": -3560
+      },
+      {
+        "x": 87936,
+        "y": 141032,
+        "z": -3560
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "lost-cat-the-cat-a-25082",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25504",
+    "name": "Nellis' Vengeful Spirit",
+    "npcName": "spirits_of_nellis",
+    "level": 39,
+    "spawns": [
+      {
+        "x": 122566,
+        "y": -141209,
+        "z": -1716
+      },
+      {
+        "x": 123042,
+        "y": -141155,
+        "z": -1716
+      },
+      {
+        "x": 122943,
+        "y": -140863,
+        "z": -1716
+      },
+      {
+        "x": 122534,
+        "y": -140863,
+        "z": -1716
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "spirits-of-nellis-25504",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25064",
+    "name": "Wizard of Storm Teruk",
+    "npcName": "wizard_of_storm_teruk",
+    "level": 40,
+    "spawns": [
+      {
+        "x": 91844,
+        "y": 84556,
+        "z": -3876
+      },
+      {
+        "x": 93132,
+        "y": 84420,
+        "z": -3876
+      },
+      {
+        "x": 93144,
+        "y": 85208,
+        "z": -3876
+      },
+      {
+        "x": 91924,
+        "y": 85288,
+        "z": -3876
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "wizard-of-storm-teruk-25064",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25115",
+    "name": "Icarus Sample 1",
+    "npcName": "icarus_sample_21",
+    "level": 40,
+    "spawns": [
+      {
+        "x": 93708,
+        "y": 197368,
+        "z": -3772
+      },
+      {
+        "x": 94104,
+        "y": 197448,
+        "z": -3772
+      },
+      {
+        "x": 94108,
+        "y": 197936,
+        "z": -3772
+      },
+      {
+        "x": 93708,
+        "y": 197808,
+        "z": -3772
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "icarus-sample-21-25115",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25134",
+    "name": "Leto Chief Talkin",
+    "npcName": "leto_chief_talkin",
+    "level": 40,
+    "spawns": [
+      {
+        "x": 87532,
+        "y": 75560,
+        "z": -3688
+      },
+      {
+        "x": 88268,
+        "y": 76044,
+        "z": -3688
+      },
+      {
+        "x": 87412,
+        "y": 76652,
+        "z": -3688
+      },
+      {
+        "x": 86616,
+        "y": 75964,
+        "z": -3688
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "leto-chief-talkin-25134",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25155",
+    "name": "Shaman King Selu",
+    "npcName": "shaman_king_selu",
+    "level": 40,
+    "spawns": [
+      {
+        "x": 72756,
+        "y": 66616,
+        "z": -3836
+      },
+      {
+        "x": 73440,
+        "y": 66332,
+        "z": -3836
+      },
+      {
+        "x": 74076,
+        "y": 66520,
+        "z": -3836
+      },
+      {
+        "x": 74200,
+        "y": 67716,
+        "z": -3836
+      },
+      {
+        "x": 73060,
+        "y": 67468,
+        "z": -3836
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "shaman-king-selu-25155",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25208",
+    "name": "Water Couatle Ateka",
+    "npcName": "water_couatl_ateka",
+    "level": 40,
+    "spawns": [
+      {
+        "x": 73644,
+        "y": 201124,
+        "z": -3924
+      },
+      {
+        "x": 74140,
+        "y": 201640,
+        "z": -3924
+      },
+      {
+        "x": 74076,
+        "y": 201996,
+        "z": -3924
+      },
+      {
+        "x": 73296,
+        "y": 201500,
+        "z": -3924
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "water-couatl-ateka-25208",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25214",
+    "name": "Fafurion's Page Sika",
+    "npcName": "fafurions_pagehood_sika",
+    "level": 40,
+    "spawns": [
+      {
+        "x": 111582,
+        "y": 209341,
+        "z": -3687
+      },
+      {
+        "x": 112538,
+        "y": 209177,
+        "z": -3687
+      },
+      {
+        "x": 112840,
+        "y": 210036,
+        "z": -3687
+      },
+      {
+        "x": 112103,
+        "y": 210972,
+        "z": -3687
+      },
+      {
+        "x": 111263,
+        "y": 210522,
+        "z": -3687
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "fafurions-pagehood-sika-25214",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25410",
+    "name": "Road Scavenger Leader",
+    "npcName": "road_scavenger_leader",
+    "level": 40,
+    "spawns": [
+      {
+        "x": 72088,
+        "y": 124692,
+        "z": -3720
+      },
+      {
+        "x": 72960,
+        "y": 125448,
+        "z": -3720
+      },
+      {
+        "x": 71828,
+        "y": 126420,
+        "z": -3720
+      },
+      {
+        "x": 71296,
+        "y": 125344,
+        "z": -3720
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "road-scavenger-leader-25410",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25415",
+    "name": "Nakondas",
+    "npcName": "nakondas",
+    "level": 40,
+    "spawns": [
+      {
+        "x": 127908,
+        "y": 138360,
+        "z": -3564
+      },
+      {
+        "x": 128532,
+        "y": 137880,
+        "z": -3564
+      },
+      {
+        "x": 128824,
+        "y": 138548,
+        "z": -3564
+      },
+      {
+        "x": 128312,
+        "y": 139188,
+        "z": -3564
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "nakondas-25415",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25487",
+    "name": "Water Spirit Lian",
+    "npcName": "water_spirit_lian",
+    "level": 40,
+    "spawns": [
+      {
+        "x": 81824,
+        "y": 183268,
+        "z": -3740
+      },
+      {
+        "x": 82868,
+        "y": 182768,
+        "z": -3740
+      },
+      {
+        "x": 83964,
+        "y": 183136,
+        "z": -3740
+      },
+      {
+        "x": 82856,
+        "y": 183880,
+        "z": -3740
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "water-spirit-lian-25487",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25490",
+    "name": "Gwindorr",
+    "npcName": "gwindorr",
+    "level": 40,
+    "spawns": [
+      {
+        "x": 85644,
+        "y": 217084,
+        "z": -3776
+      },
+      {
+        "x": 86544,
+        "y": 216048,
+        "z": -3776
+      },
+      {
+        "x": 87576,
+        "y": 216344,
+        "z": -3776
+      },
+      {
+        "x": 86372,
+        "y": 218076,
+        "z": -3776
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "gwindorr-25490",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29001",
+    "name": "Queen Ant",
+    "npcName": "queen_ant",
+    "level": 40,
+    "spawns": [
+      {
+        "x": -21610,
+        "y": 181594,
+        "z": -5734
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "queen-ant-29001",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25007",
+    "name": "Retreat Spider Cletu",
+    "npcName": "retreat_spider_cletu",
+    "level": 42,
+    "spawns": [
+      {
+        "x": 123576,
+        "y": 74948,
+        "z": -2912
+      },
+      {
+        "x": 124692,
+        "y": 74788,
+        "z": -2912
+      },
+      {
+        "x": 124672,
+        "y": 76028,
+        "z": -2912
+      },
+      {
+        "x": 123936,
+        "y": 76048,
+        "z": -2912
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "retreat-spider-cletu-25007",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25088",
+    "name": "Crazy Mechanic Golem",
+    "npcName": "crazy_mechanic_golem",
+    "level": 43,
+    "spawns": [
+      {
+        "x": 90392,
+        "y": 15708,
+        "z": -5400
+      },
+      {
+        "x": 91236,
+        "y": 15764,
+        "z": -5400
+      },
+      {
+        "x": 91420,
+        "y": 16676,
+        "z": -5400
+      },
+      {
+        "x": 90816,
+        "y": 17216,
+        "z": -5400
+      },
+      {
+        "x": 90128,
+        "y": 16772,
+        "z": -5400
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "crazy-mechanic-golem-25088",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25192",
+    "name": "Earth Protector Panathen",
+    "npcName": "earth_protecter_panathen",
+    "level": 43,
+    "spawns": [
+      {
+        "x": 125168,
+        "y": 189556,
+        "z": -3344
+      },
+      {
+        "x": 126180,
+        "y": 189112,
+        "z": -3344
+      },
+      {
+        "x": 127072,
+        "y": 190596,
+        "z": -3344
+      },
+      {
+        "x": 126164,
+        "y": 191364,
+        "z": -3344
+      },
+      {
+        "x": 124876,
+        "y": 190832,
+        "z": -3344
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "earth-protecter-panathen-25192",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25085",
+    "name": "Timak Orc Chief Ranger",
+    "npcName": "timak_orc_hunter_a",
+    "level": 44,
+    "spawns": [
+      {
+        "x": 66628,
+        "y": 66688,
+        "z": -3808
+      },
+      {
+        "x": 67584,
+        "y": 66832,
+        "z": -3808
+      },
+      {
+        "x": 67448,
+        "y": 68072,
+        "z": -3808
+      },
+      {
+        "x": 66180,
+        "y": 67864,
+        "z": -3808
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "timak-orc-hunter-a-25085",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25099",
+    "name": "Rotten Tree Repiro",
+    "npcName": "repiro_rot_tree",
+    "level": 44,
+    "spawns": [
+      {
+        "x": 63916,
+        "y": 15568,
+        "z": -3660
+      },
+      {
+        "x": 64500,
+        "y": 15720,
+        "z": -3660
+      },
+      {
+        "x": 64600,
+        "y": 16308,
+        "z": -3660
+      },
+      {
+        "x": 64336,
+        "y": 16756,
+        "z": -3660
+      },
+      {
+        "x": 63244,
+        "y": 16104,
+        "z": -3660
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "repiro-rot-tree-25099",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25418",
+    "name": "Dread Avenger Kraven",
+    "npcName": "dread_avenger_kraven",
+    "level": 44,
+    "spawns": [
+      {
+        "x": 62504,
+        "y": 7440,
+        "z": -3584
+      },
+      {
+        "x": 63176,
+        "y": 7684,
+        "z": -3584
+      },
+      {
+        "x": 62992,
+        "y": 8824,
+        "z": -3584
+      },
+      {
+        "x": 62172,
+        "y": 8884,
+        "z": -3584
+      },
+      {
+        "x": 61560,
+        "y": 7992,
+        "z": -3584
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "dread-avenger-kraven-25418",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25431",
+    "name": "Flamestone Golem",
+    "npcName": "flamestone_golem",
+    "level": 44,
+    "spawns": [
+      {
+        "x": 79224,
+        "y": 17696,
+        "z": -5524
+      },
+      {
+        "x": 80240,
+        "y": 17764,
+        "z": -5524
+      },
+      {
+        "x": 80504,
+        "y": 18972,
+        "z": -5524
+      },
+      {
+        "x": 79804,
+        "y": 19384,
+        "z": -5524
+      },
+      {
+        "x": 78896,
+        "y": 18604,
+        "z": -5524
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "flamestone-golem-25431",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25438",
+    "name": "Thief Kelbar",
+    "npcName": "kelbar",
+    "level": 44,
+    "spawns": [
+      {
+        "x": 106472,
+        "y": 91332,
+        "z": -2400
+      },
+      {
+        "x": 107643,
+        "y": 92132,
+        "z": -2400
+      },
+      {
+        "x": 107497,
+        "y": 92672,
+        "z": -2400
+      },
+      {
+        "x": 106519,
+        "y": 92260,
+        "z": -2400
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "kelbar-25438",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25057",
+    "name": "Biconne of Blue Sky",
+    "npcName": "biconne_of_blue_sky",
+    "level": 45,
+    "spawns": [
+      {
+        "x": 106444,
+        "y": 167828,
+        "z": -3508
+      },
+      {
+        "x": 107516,
+        "y": 167576,
+        "z": -3508
+      },
+      {
+        "x": 107708,
+        "y": 168688,
+        "z": -3508
+      },
+      {
+        "x": 106972,
+        "y": 169012,
+        "z": -3508
+      },
+      {
+        "x": 106268,
+        "y": 168516,
+        "z": -3508
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "biconne-of-blue-sky-25057",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25102",
+    "name": "Shacram",
+    "npcName": "shacram",
+    "level": 45,
+    "spawns": [
+      {
+        "x": 113676,
+        "y": 83900,
+        "z": -2832
+      },
+      {
+        "x": 114192,
+        "y": 84064,
+        "z": -2832
+      },
+      {
+        "x": 114324,
+        "y": 84776,
+        "z": -2832
+      },
+      {
+        "x": 112768,
+        "y": 84320,
+        "z": -2832
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "shacram-25102",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25173",
+    "name": "Tiger King Karuta",
+    "npcName": "king_tiger_karuta",
+    "level": 45,
+    "spawns": [
+      {
+        "x": 75688,
+        "y": 109632,
+        "z": -2672
+      },
+      {
+        "x": 77516,
+        "y": 110208,
+        "z": -2672
+      },
+      {
+        "x": 76252,
+        "y": 111772,
+        "z": -2672
+      },
+      {
+        "x": 75268,
+        "y": 112120,
+        "z": -2672
+      },
+      {
+        "x": 74484,
+        "y": 110812,
+        "z": -2672
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "king-tiger-karuta-25173",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25260",
+    "name": "Iron Giant Totem",
+    "npcName": "iron_giant_totem",
+    "level": 45,
+    "spawns": [
+      {
+        "x": 92548,
+        "y": 18716,
+        "z": -3696
+      },
+      {
+        "x": 94332,
+        "y": 19420,
+        "z": -3696
+      },
+      {
+        "x": 93336,
+        "y": 20496,
+        "z": -3696
+      },
+      {
+        "x": 92192,
+        "y": 19424,
+        "z": -3696
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "iron-giant-totem-25260",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25395",
+    "name": "Archon Suscepter",
+    "npcName": "archon_susceptor",
+    "level": 45,
+    "spawns": [
+      {
+        "x": 14751,
+        "y": 118718,
+        "z": -12152
+      },
+      {
+        "x": 15141,
+        "y": 118733,
+        "z": -12152
+      },
+      {
+        "x": 15124,
+        "y": 119076,
+        "z": -12152
+      },
+      {
+        "x": 14782,
+        "y": 119076,
+        "z": -12152
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "archon-susceptor-25395",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25437",
+    "name": "Timak Orc Gosmos",
+    "npcName": "timak_orc_gosmos",
+    "level": 45,
+    "spawns": [
+      {
+        "x": 66384,
+        "y": 64036,
+        "z": -3844
+      },
+      {
+        "x": 67800,
+        "y": 63212,
+        "z": -3844
+      },
+      {
+        "x": 68244,
+        "y": 64340,
+        "z": -3844
+      },
+      {
+        "x": 67464,
+        "y": 64848,
+        "z": -3844
+      },
+      {
+        "x": 66500,
+        "y": 64744,
+        "z": -3844
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "timak-orc-gosmos-25437",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25441",
+    "name": "Evil Spirit Cyrion",
+    "npcName": "monster_cyrion",
+    "level": 45,
+    "spawns": [
+      {
+        "x": 110940,
+        "y": 82288,
+        "z": -2952
+      },
+      {
+        "x": 111784,
+        "y": 82428,
+        "z": -2952
+      },
+      {
+        "x": 112020,
+        "y": 83900,
+        "z": -2952
+      },
+      {
+        "x": 111088,
+        "y": 83212,
+        "z": -2952
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "monster-cyrion-25441",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25498",
+    "name": "Fafurion's Henchman Istary",
+    "npcName": "istary_papurrion",
+    "level": 45,
+    "spawns": [
+      {
+        "x": 126076,
+        "y": 173788,
+        "z": -3188
+      },
+      {
+        "x": 126688,
+        "y": 173368,
+        "z": -3188
+      },
+      {
+        "x": 127436,
+        "y": 173972,
+        "z": -3188
+      },
+      {
+        "x": 127356,
+        "y": 175192,
+        "z": -3188
+      },
+      {
+        "x": 126672,
+        "y": 175488,
+        "z": -3188
+      },
+      {
+        "x": 125808,
+        "y": 174960,
+        "z": -3188
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "istary-papurrion-25498",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25044",
+    "name": "Barion",
+    "npcName": "barion",
+    "level": 47,
+    "spawns": [
+      {
+        "x": 106908,
+        "y": 27048,
+        "z": -3572
+      },
+      {
+        "x": 108588,
+        "y": 27060,
+        "z": -3572
+      },
+      {
+        "x": 108956,
+        "y": 28076,
+        "z": -3572
+      },
+      {
+        "x": 106920,
+        "y": 28600,
+        "z": -3572
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "barion-25044",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25412",
+    "name": "Necrosentinel Royal Guard",
+    "npcName": "necrosentinel_guard",
+    "level": 47,
+    "spawns": [
+      {
+        "x": 81948,
+        "y": 112572,
+        "z": -3224
+      },
+      {
+        "x": 82456,
+        "y": 112860,
+        "z": -3224
+      },
+      {
+        "x": 82000,
+        "y": 113660,
+        "z": -3224
+      },
+      {
+        "x": 81556,
+        "y": 113792,
+        "z": -3224
+      },
+      {
+        "x": 81364,
+        "y": 113296,
+        "z": -3224
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "necrosentinel-guard-25412",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25158",
+    "name": "King Tarlk",
+    "npcName": "king_tarlk",
+    "level": 48,
+    "spawns": [
+      {
+        "x": 76668,
+        "y": 5056,
+        "z": -3192
+      },
+      {
+        "x": 77620,
+        "y": 4960,
+        "z": -3192
+      },
+      {
+        "x": 77644,
+        "y": 5892,
+        "z": -3192
+      },
+      {
+        "x": 76748,
+        "y": 5952,
+        "z": -3192
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "king-tarlk-25158",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25335",
+    "name": "Anakazel",
+    "npcName": "r28_leader_anakazel",
+    "level": 48,
+    "spawns": [
+      {
+        "x": -115249,
+        "y": -174537,
+        "z": -6786
+      },
+      {
+        "x": -114349,
+        "y": -174544,
+        "z": -6786
+      },
+      {
+        "x": -114353,
+        "y": -172987,
+        "z": -6786
+      },
+      {
+        "x": -115247,
+        "y": -172981,
+        "z": -6786
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "r28-leader-anakazel-25335",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25420",
+    "name": "Orfen's Handmaiden",
+    "npcName": "handmaiden_of_orfen",
+    "level": 48,
+    "spawns": [
+      {
+        "x": 41120,
+        "y": 24152,
+        "z": -5008
+      },
+      {
+        "x": 42192,
+        "y": 22716,
+        "z": -5008
+      },
+      {
+        "x": 43380,
+        "y": 24572,
+        "z": -5008
+      },
+      {
+        "x": 41300,
+        "y": 25032,
+        "z": -5008
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "handmaiden-of-orfen-25420",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25026",
+    "name": "Katu Van Leader Atui",
+    "npcName": "katu_van_atui",
+    "level": 49,
+    "spawns": [
+      {
+        "x": 92612,
+        "y": 7436,
+        "z": -4048
+      },
+      {
+        "x": 93264,
+        "y": 7400,
+        "z": -4048
+      },
+      {
+        "x": 93356,
+        "y": 8520,
+        "z": -4048
+      },
+      {
+        "x": 92312,
+        "y": 8704,
+        "z": -4048
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "katu-van-atui-25026",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25047",
+    "name": "Karte",
+    "npcName": "karte",
+    "level": 49,
+    "spawns": [
+      {
+        "x": 115668,
+        "y": 27272,
+        "z": -3376
+      },
+      {
+        "x": 116488,
+        "y": 26964,
+        "z": -3376
+      },
+      {
+        "x": 117144,
+        "y": 27608,
+        "z": -3376
+      },
+      {
+        "x": 116736,
+        "y": 28316,
+        "z": -3376
+      },
+      {
+        "x": 115828,
+        "y": 28072,
+        "z": -3376
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "karte-25047",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25456",
+    "name": "Mirror of Oblivion",
+    "npcName": "oblivion_s_mirror",
+    "level": 49,
+    "spawns": [
+      {
+        "x": 133280,
+        "y": 86816,
+        "z": -3696
+      },
+      {
+        "x": 133928,
+        "y": 86544,
+        "z": -3696
+      },
+      {
+        "x": 134068,
+        "y": 87340,
+        "z": -3696
+      },
+      {
+        "x": 133236,
+        "y": 87608,
+        "z": -3696
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "oblivion-s-mirror-25456",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25013",
+    "name": "Ghost of Peasant Leader",
+    "npcName": "ghost_of_peasant_leader",
+    "level": 50,
+    "spawns": [
+      {
+        "x": 169260,
+        "y": 11676,
+        "z": -2780
+      },
+      {
+        "x": 170284,
+        "y": 11652,
+        "z": -2780
+      },
+      {
+        "x": 170264,
+        "y": 12328,
+        "z": -2780
+      },
+      {
+        "x": 169244,
+        "y": 12352,
+        "z": -2780
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "ghost-of-peasant-leader-25013",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25119",
+    "name": "Messenger of Fairy Queen Berun",
+    "npcName": "obern_mgr_of_fairyqueen",
+    "level": 50,
+    "spawns": [
+      {
+        "x": 121140,
+        "y": 64192,
+        "z": -3792
+      },
+      {
+        "x": 121956,
+        "y": 63216,
+        "z": -3792
+      },
+      {
+        "x": 122584,
+        "y": 64068,
+        "z": -3792
+      },
+      {
+        "x": 121624,
+        "y": 64840,
+        "z": -3792
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "obern-mgr-of-fairyqueen-25119",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25131",
+    "name": "Carnage Lord Gato",
+    "npcName": "carnage_lord_gato",
+    "level": 50,
+    "spawns": [
+      {
+        "x": 74424,
+        "y": -9228,
+        "z": -2904
+      },
+      {
+        "x": 75212,
+        "y": -10092,
+        "z": -2904
+      },
+      {
+        "x": 76132,
+        "y": -9688,
+        "z": -2904
+      },
+      {
+        "x": 75932,
+        "y": -8232,
+        "z": -2904
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "carnage-lord-gato-25131",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25217",
+    "name": "Cursed Clara",
+    "npcName": "cursed_clala",
+    "level": 50,
+    "spawns": [
+      {
+        "x": 89404,
+        "y": 105028,
+        "z": -3340
+      },
+      {
+        "x": 90584,
+        "y": 105684,
+        "z": -3340
+      },
+      {
+        "x": 90376,
+        "y": 106400,
+        "z": -3340
+      },
+      {
+        "x": 89152,
+        "y": 105948,
+        "z": -3340
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "cursed-clala-25217",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25273",
+    "name": "Carnamakos",
+    "npcName": "carnamakos",
+    "level": 50,
+    "spawns": [
+      {
+        "x": 23634,
+        "y": 119346,
+        "z": -9017
+      },
+      {
+        "x": 23937,
+        "y": 119340,
+        "z": -9017
+      },
+      {
+        "x": 23939,
+        "y": 119637,
+        "z": -9017
+      },
+      {
+        "x": 23632,
+        "y": 119637,
+        "z": -9017
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "carnamakos-25273",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25277",
+    "name": "Lilith's Witch Marilion",
+    "npcName": "liliths_oracle_marilion",
+    "level": 50,
+    "spawns": [
+      {
+        "x": 53840,
+        "y": 179973,
+        "z": -5013
+      },
+      {
+        "x": 55181,
+        "y": 179974,
+        "z": -5013
+      },
+      {
+        "x": 55183,
+        "y": 180598,
+        "z": -5013
+      },
+      {
+        "x": 53843,
+        "y": 180595,
+        "z": -5013
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "liliths-oracle-marilion-25277",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25484",
+    "name": "Zaken's Chief Mate Tillion",
+    "npcName": "chief_mate_tilion",
+    "level": 50,
+    "spawns": [
+      {
+        "x": 42744,
+        "y": 219880,
+        "z": -3808
+      },
+      {
+        "x": 43440,
+        "y": 219668,
+        "z": -3808
+      },
+      {
+        "x": 43520,
+        "y": 220648,
+        "z": -3808
+      },
+      {
+        "x": 42624,
+        "y": 221340,
+        "z": -3808
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "chief-mate-tilion-25484",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29006",
+    "name": "Core",
+    "npcName": "core",
+    "level": 50,
+    "spawns": [
+      {
+        "x": 17726,
+        "y": 108915,
+        "z": -6480
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "core-29006",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29014",
+    "name": "Orfen",
+    "npcName": "orfen",
+    "level": 50,
+    "spawns": [
+      {
+        "x": 55024,
+        "y": 17368,
+        "z": -5412
+      },
+      {
+        "x": 53504,
+        "y": 21248,
+        "z": -5496
+      },
+      {
+        "x": 53248,
+        "y": 24576,
+        "z": -5272
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "orfen-29014",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25050",
+    "name": "Verfa",
+    "npcName": "verfa",
+    "level": 51,
+    "spawns": [
+      {
+        "x": 124924,
+        "y": 26480,
+        "z": -3740
+      },
+      {
+        "x": 125900,
+        "y": 26388,
+        "z": -3740
+      },
+      {
+        "x": 126252,
+        "y": 27560,
+        "z": -3740
+      },
+      {
+        "x": 125632,
+        "y": 28080,
+        "z": -3740
+      },
+      {
+        "x": 124516,
+        "y": 27556,
+        "z": -3740
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "verfa-25050",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25460",
+    "name": "Deadman Ereve",
+    "npcName": "ereve_deathman",
+    "level": 51,
+    "spawns": [
+      {
+        "x": 149520,
+        "y": 67564,
+        "z": -3804
+      },
+      {
+        "x": 150256,
+        "y": 67156,
+        "z": -3804
+      },
+      {
+        "x": 151688,
+        "y": 67364,
+        "z": -3804
+      },
+      {
+        "x": 150284,
+        "y": 68580,
+        "z": -3804
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "ereve-deathman-25460",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25067",
+    "name": "Captain of Red Flag Shaka",
+    "npcName": "master_of_ledflag_shaka",
+    "level": 52,
+    "spawns": [
+      {
+        "x": 93628,
+        "y": -23452,
+        "z": -2352
+      },
+      {
+        "x": 95260,
+        "y": -24156,
+        "z": -2352
+      },
+      {
+        "x": 95932,
+        "y": -23160,
+        "z": -2352
+      },
+      {
+        "x": 95304,
+        "y": -21636,
+        "z": -2352
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "master-of-ledflag-shaka-25067",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25473",
+    "name": "Grave Robber Kim",
+    "npcName": "grave_rabber_khim",
+    "level": 52,
+    "spawns": [
+      {
+        "x": 174456,
+        "y": 29536,
+        "z": -3872
+      },
+      {
+        "x": 176620,
+        "y": 29532,
+        "z": -3872
+      },
+      {
+        "x": 176484,
+        "y": 30296,
+        "z": -3872
+      },
+      {
+        "x": 174972,
+        "y": 30252,
+        "z": -3872
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "grave-rabber-khim-25473",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25496",
+    "name": "Fafurion's Envoy Pingolpin",
+    "npcName": "papurrion_pingolpin",
+    "level": 52,
+    "spawns": [
+      {
+        "x": 87672,
+        "y": 257447,
+        "z": -10423
+      },
+      {
+        "x": 89135,
+        "y": 257458,
+        "z": -10423
+      },
+      {
+        "x": 89146,
+        "y": 259003,
+        "z": -10423
+      },
+      {
+        "x": 87669,
+        "y": 258997,
+        "z": -10423
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "papurrion-pingolpin-25496",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25029",
+    "name": "Atraiban",
+    "npcName": "atraiban",
+    "level": 53,
+    "spawns": [
+      {
+        "x": 55260,
+        "y": 206028,
+        "z": -3800
+      },
+      {
+        "x": 55876,
+        "y": 205540,
+        "z": -3800
+      },
+      {
+        "x": 56852,
+        "y": 205712,
+        "z": -3800
+      },
+      {
+        "x": 55936,
+        "y": 206732,
+        "z": -3800
+      },
+      {
+        "x": 55392,
+        "y": 206912,
+        "z": -3800
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "atraiban-25029",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25481",
+    "name": "Magus Kenishee",
+    "npcName": "magician_kenishee",
+    "level": 53,
+    "spawns": [
+      {
+        "x": 52976,
+        "y": 205080,
+        "z": -3788
+      },
+      {
+        "x": 54060,
+        "y": 205136,
+        "z": -3788
+      },
+      {
+        "x": 54244,
+        "y": 205656,
+        "z": -3788
+      },
+      {
+        "x": 53820,
+        "y": 205740,
+        "z": -3788
+      },
+      {
+        "x": 52992,
+        "y": 205728,
+        "z": -3788
+      },
+      {
+        "x": 52768,
+        "y": 205648,
+        "z": -3788
+      },
+      {
+        "x": 52760,
+        "y": 205172,
+        "z": -3788
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "magician-kenishee-25481",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25509",
+    "name": "Dark Shaman Varangka ",
+    "npcName": "darkness_shaman_baranka",
+    "level": 53,
+    "spawns": [
+      {
+        "x": 73732,
+        "y": -102572,
+        "z": -1064
+      },
+      {
+        "x": 74948,
+        "y": -102576,
+        "z": -1064
+      },
+      {
+        "x": 74920,
+        "y": -101276,
+        "z": -1064
+      },
+      {
+        "x": 73692,
+        "y": -101280,
+        "z": -1064
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "darkness-shaman-baranka-25509",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25159",
+    "name": "Paniel the Unicorn",
+    "npcName": "unicorn_paniel",
+    "level": 54,
+    "spawns": [
+      {
+        "x": 124592,
+        "y": 43312,
+        "z": -3880
+      },
+      {
+        "x": 125052,
+        "y": 42796,
+        "z": -3880
+      },
+      {
+        "x": 125584,
+        "y": 43164,
+        "z": -3880
+      },
+      {
+        "x": 125012,
+        "y": 43732,
+        "z": -3880
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "unicorn-paniel-25159",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25010",
+    "name": "Furious Thieles",
+    "npcName": "furious_thieles",
+    "level": 55,
+    "spawns": [
+      {
+        "x": 113048,
+        "y": 52844,
+        "z": -3904
+      },
+      {
+        "x": 113840,
+        "y": 52164,
+        "z": -3904
+      },
+      {
+        "x": 114636,
+        "y": 52640,
+        "z": -3904
+      },
+      {
+        "x": 114888,
+        "y": 53264,
+        "z": -3904
+      },
+      {
+        "x": 113956,
+        "y": 53980,
+        "z": -3904
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "furious-thieles-25010",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25070",
+    "name": "Enchanted Forest Watcher Ruell",
+    "npcName": "fairys_watcher_ruell",
+    "level": 55,
+    "spawns": [
+      {
+        "x": 125517,
+        "y": 50068,
+        "z": -3848
+      },
+      {
+        "x": 125733,
+        "y": 50068,
+        "z": -3848
+      },
+      {
+        "x": 125741,
+        "y": 50268,
+        "z": -3848
+      },
+      {
+        "x": 125529,
+        "y": 50268,
+        "z": -3848
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "fairys-watcher-ruell-25070",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25103",
+    "name": "Sorcerer Isirr",
+    "npcName": "sorcery_isirr",
+    "level": 55,
+    "spawns": [
+      {
+        "x": 135008,
+        "y": 94460,
+        "z": -3844
+      },
+      {
+        "x": 136044,
+        "y": 93892,
+        "z": -3844
+      },
+      {
+        "x": 136700,
+        "y": 94548,
+        "z": -3844
+      },
+      {
+        "x": 135628,
+        "y": 95296,
+        "z": -3844
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "sorcery-isirr-25103",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25137",
+    "name": "Beleth's Seer Sephia",
+    "npcName": "bereths_seer_sephia",
+    "level": 55,
+    "spawns": [
+      {
+        "x": 124420,
+        "y": 103200,
+        "z": -3480
+      },
+      {
+        "x": 124992,
+        "y": 101612,
+        "z": -3480
+      },
+      {
+        "x": 125676,
+        "y": 102144,
+        "z": -3480
+      },
+      {
+        "x": 125824,
+        "y": 103588,
+        "z": -3480
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "bereths-seer-sephia-25137",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25176",
+    "name": "Black Lily",
+    "npcName": "witch_wimere",
+    "level": 55,
+    "spawns": [
+      {
+        "x": 92564,
+        "y": 114556,
+        "z": -3348
+      },
+      {
+        "x": 93556,
+        "y": 115204,
+        "z": -3348
+      },
+      {
+        "x": 92464,
+        "y": 116140,
+        "z": -3348
+      },
+      {
+        "x": 91360,
+        "y": 114956,
+        "z": -3348
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "witch-wimere-25176",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25241",
+    "name": "Harit Hero Tamash",
+    "npcName": "harit_hero_tamash",
+    "level": 55,
+    "spawns": [
+      {
+        "x": 165504,
+        "y": 87576,
+        "z": -2464
+      },
+      {
+        "x": 166328,
+        "y": 87704,
+        "z": -2464
+      },
+      {
+        "x": 166384,
+        "y": 88744,
+        "z": -2464
+      },
+      {
+        "x": 165604,
+        "y": 88784,
+        "z": -2464
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "harit-hero-tamash-25241",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25259",
+    "name": "Zaken's Butcher Krantz",
+    "npcName": "zakens_butcher_krantz",
+    "level": 55,
+    "spawns": [
+      {
+        "x": 42058,
+        "y": 208097,
+        "z": -3760
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "zakens-butcher-krantz-25259",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25280",
+    "name": "Pagan Watcher Cerberon",
+    "npcName": "pagan_warder_cerberon",
+    "level": 55,
+    "spawns": [
+      {
+        "x": -13398,
+        "y": -240762,
+        "z": -8225
+      },
+      {
+        "x": -12033,
+        "y": -240756,
+        "z": -8225
+      },
+      {
+        "x": -12030,
+        "y": -240140,
+        "z": -8225
+      },
+      {
+        "x": -13401,
+        "y": -240139,
+        "z": -8225
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "pagan-warder-cerberon-25280",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25434",
+    "name": "Bandit Leader Barda",
+    "npcName": "bandit_leader_barda",
+    "level": 55,
+    "spawns": [
+      {
+        "x": 103168,
+        "y": -17004,
+        "z": -2036
+      },
+      {
+        "x": 104412,
+        "y": -17984,
+        "z": -2036
+      },
+      {
+        "x": 104900,
+        "y": -16224,
+        "z": -2036
+      },
+      {
+        "x": 103728,
+        "y": -15996,
+        "z": -2036
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "bandit-leader-barda-25434",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25475",
+    "name": "Ghost Knight Kabed",
+    "npcName": "ghost_kabed",
+    "level": 55,
+    "spawns": [
+      {
+        "x": 182992,
+        "y": 24408,
+        "z": -3204
+      },
+      {
+        "x": 183924,
+        "y": 24232,
+        "z": -3204
+      },
+      {
+        "x": 183928,
+        "y": 24824,
+        "z": -3204
+      },
+      {
+        "x": 183236,
+        "y": 25260,
+        "z": -3204
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "ghost-kabed-25475",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25493",
+    "name": "Eva's Spirit Niniel",
+    "npcName": "niniel_spirit_eva",
+    "level": 55,
+    "spawns": [
+      {
+        "x": 82061,
+        "y": 251621,
+        "z": -10634
+      },
+      {
+        "x": 82622,
+        "y": 251452,
+        "z": -10634
+      },
+      {
+        "x": 82700,
+        "y": 251730,
+        "z": -10634
+      },
+      {
+        "x": 82409,
+        "y": 251722,
+        "z": -10634
+      },
+      {
+        "x": 82145,
+        "y": 251975,
+        "z": -10634
+      },
+      {
+        "x": 82249,
+        "y": 252297,
+        "z": -10634
+      },
+      {
+        "x": 81938,
+        "y": 252349,
+        "z": -10634
+      },
+      {
+        "x": 81855,
+        "y": 251980,
+        "z": -10634
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "niniel-spirit-eva-25493",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25122",
+    "name": "Refugee Hopeful Leo",
+    "npcName": "refuge_hoper_leo",
+    "level": 56,
+    "spawns": [
+      {
+        "x": 86220,
+        "y": -8372,
+        "z": -3184
+      },
+      {
+        "x": 86420,
+        "y": -8372,
+        "z": -3184
+      },
+      {
+        "x": 86420,
+        "y": -8172,
+        "z": -3184
+      },
+      {
+        "x": 86220,
+        "y": -8172,
+        "z": -3184
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "refuge-hoper-leo-25122",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25463",
+    "name": "Harit Guardian Garangky",
+    "npcName": "harit_tutelar_garangky",
+    "level": 56,
+    "spawns": [
+      {
+        "x": 165596,
+        "y": 68480,
+        "z": -3348
+      },
+      {
+        "x": 166052,
+        "y": 67440,
+        "z": -3348
+      },
+      {
+        "x": 166928,
+        "y": 68124,
+        "z": -3348
+      },
+      {
+        "x": 166244,
+        "y": 69028,
+        "z": -3348
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "harit-tutelar-garangky-25463",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25230",
+    "name": "Timak Seer Ragoth",
+    "npcName": "timak_seer_ragoth",
+    "level": 57,
+    "spawns": [
+      {
+        "x": 66280,
+        "y": 46420,
+        "z": -3948
+      },
+      {
+        "x": 66756,
+        "y": 46216,
+        "z": -3948
+      },
+      {
+        "x": 67088,
+        "y": 46772,
+        "z": -3948
+      },
+      {
+        "x": 66792,
+        "y": 47256,
+        "z": -3948
+      },
+      {
+        "x": 66184,
+        "y": 47032,
+        "z": -3948
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "timak-seer-ragoth-25230",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25032",
+    "name": "Eva's Guardian Millenu",
+    "npcName": "eva_guardian_millenu",
+    "level": 58,
+    "spawns": [
+      {
+        "x": 87610,
+        "y": 244590,
+        "z": -10426
+      },
+      {
+        "x": 89940,
+        "y": 244595,
+        "z": -10426
+      },
+      {
+        "x": 89940,
+        "y": 247017,
+        "z": -10426
+      },
+      {
+        "x": 87621,
+        "y": 247017,
+        "z": -10426
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "eva-guardian-millenu-25032",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25336",
+    "name": "Anakazel",
+    "npcName": "r38_leader_anakazel",
+    "level": 58,
+    "spawns": [
+      {
+        "x": -120458,
+        "y": -179128,
+        "z": -6786
+      },
+      {
+        "x": -118904,
+        "y": -179128,
+        "z": -6786
+      },
+      {
+        "x": -118914,
+        "y": -178239,
+        "z": -6786
+      },
+      {
+        "x": -120469,
+        "y": -178239,
+        "z": -6786
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "r38-leader-anakazel-25336",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25089",
+    "name": "Soulless Wild Boar",
+    "npcName": "soulless_wild_boar",
+    "level": 59,
+    "spawns": [
+      {
+        "x": 164740,
+        "y": 93772,
+        "z": -3260
+      },
+      {
+        "x": 165392,
+        "y": 93248,
+        "z": -3260
+      },
+      {
+        "x": 166108,
+        "y": 93876,
+        "z": -3260
+      },
+      {
+        "x": 165392,
+        "y": 94488,
+        "z": -3260
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "soulless-wild-boar-25089",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25182",
+    "name": "Demon Kurikups",
+    "npcName": "kurikups",
+    "level": 59,
+    "spawns": [
+      {
+        "x": 41512,
+        "y": 215512,
+        "z": -3816
+      },
+      {
+        "x": 42484,
+        "y": 215548,
+        "z": -3816
+      },
+      {
+        "x": 42108,
+        "y": 216588,
+        "z": -3816
+      },
+      {
+        "x": 41480,
+        "y": 217020,
+        "z": -3816
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "kurikups-25182",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25238",
+    "name": "Abyss Brukunt",
+    "npcName": "nightmare_drake",
+    "level": 59,
+    "spawns": [
+      {
+        "x": 154796,
+        "y": 85208,
+        "z": -3580
+      },
+      {
+        "x": 155044,
+        "y": 85324,
+        "z": -3580
+      },
+      {
+        "x": 155152,
+        "y": 85680,
+        "z": -3580
+      },
+      {
+        "x": 154844,
+        "y": 85600,
+        "z": -3580
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "nightmare-drake-25238",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29060",
+    "name": "Captain of the Ice Queen's Royal Guard",
+    "npcName": "freya_royalguard",
+    "level": 59,
+    "spawns": [
+      {
+        "x": 105236,
+        "y": -127996,
+        "z": -3264
+      },
+      {
+        "x": 106490,
+        "y": -128116,
+        "z": -3264
+      },
+      {
+        "x": 106270,
+        "y": -127182,
+        "z": -3264
+      },
+      {
+        "x": 105410,
+        "y": -126982,
+        "z": -3264
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "freya-royalguard-29060",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25016",
+    "name": "The 3rd Underwater Guardian",
+    "npcName": "guardian_3_of_garden",
+    "level": 60,
+    "spawns": [
+      {
+        "x": 75503,
+        "y": 244552,
+        "z": -10426
+      },
+      {
+        "x": 77833,
+        "y": 244557,
+        "z": -10426
+      },
+      {
+        "x": 77833,
+        "y": 246980,
+        "z": -10426
+      },
+      {
+        "x": 75514,
+        "y": 246980,
+        "z": -10426
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "guardian-3-of-garden-25016",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25106",
+    "name": "Ghost of the Well Lidia",
+    "npcName": "manes_lidia",
+    "level": 60,
+    "spawns": [
+      {
+        "x": 173880,
+        "y": -11412,
+        "z": -2956
+      },
+      {
+        "x": 174124,
+        "y": -11412,
+        "z": -2956
+      },
+      {
+        "x": 174096,
+        "y": -11184,
+        "z": -2956
+      },
+      {
+        "x": 173892,
+        "y": -11212,
+        "z": -2956
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "manes-lidia-25106",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25162",
+    "name": "Giant Marpanak",
+    "npcName": "giant_marpanak",
+    "level": 60,
+    "spawns": [
+      {
+        "x": 193292,
+        "y": 53603,
+        "z": -4384
+      },
+      {
+        "x": 194510,
+        "y": 53598,
+        "z": -4384
+      },
+      {
+        "x": 194510,
+        "y": 54667,
+        "z": -4384
+      },
+      {
+        "x": 193297,
+        "y": 54672,
+        "z": -4384
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "giant-marpanak-25162",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25234",
+    "name": "Ancient Weird Drake",
+    "npcName": "ancient_weird_drake",
+    "level": 60,
+    "spawns": [
+      {
+        "x": 119324,
+        "y": 111152,
+        "z": -3196
+      },
+      {
+        "x": 120408,
+        "y": 110944,
+        "z": -3196
+      },
+      {
+        "x": 120556,
+        "y": 111752,
+        "z": -3196
+      },
+      {
+        "x": 119684,
+        "y": 111564,
+        "z": -3196
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "ancient-weird-drake-25234",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25256",
+    "name": "Taik High Prefect Arak",
+    "npcName": "taik_prefect_arak",
+    "level": 60,
+    "spawns": [
+      {
+        "x": 169848,
+        "y": 42484,
+        "z": -4912
+      },
+      {
+        "x": 170128,
+        "y": 42248,
+        "z": -4912
+      },
+      {
+        "x": 170476,
+        "y": 42260,
+        "z": -4912
+      },
+      {
+        "x": 170728,
+        "y": 42500,
+        "z": -4912
+      },
+      {
+        "x": 170740,
+        "y": 42840,
+        "z": -4912
+      },
+      {
+        "x": 170460,
+        "y": 43080,
+        "z": -4912
+      },
+      {
+        "x": 170104,
+        "y": 43088,
+        "z": -4912
+      },
+      {
+        "x": 169864,
+        "y": 42832,
+        "z": -4912
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "taik-prefect-arak-25256",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25407",
+    "name": "Lord Ishka ",
+    "npcName": "lord_ishka",
+    "level": 60,
+    "spawns": [
+      {
+        "x": 115032,
+        "y": 111768,
+        "z": -3080
+      },
+      {
+        "x": 115368,
+        "y": 112048,
+        "z": -3080
+      },
+      {
+        "x": 115292,
+        "y": 112456,
+        "z": -3080
+      },
+      {
+        "x": 114912,
+        "y": 112676,
+        "z": -3080
+      },
+      {
+        "x": 114732,
+        "y": 112224,
+        "z": -3080
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "lord-ishka-25407",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29022",
+    "name": "Zaken",
+    "npcName": "zaken",
+    "level": 60,
+    "spawns": [
+      {
+        "x": 55312,
+        "y": 219168,
+        "z": -3223
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "zaken-29022",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29056",
+    "name": "Ice Fairy Sirra",
+    "npcName": "ice_fairy_sirr",
+    "level": 60,
+    "spawns": [
+      {
+        "x": 102526,
+        "y": -126288,
+        "z": -3160
+      },
+      {
+        "x": 102960,
+        "y": -126201,
+        "z": -3160
+      },
+      {
+        "x": 102966,
+        "y": -125828,
+        "z": -3160
+      },
+      {
+        "x": 102373,
+        "y": -125854,
+        "z": -3160
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "ice-fairy-sirr-29056",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25423",
+    "name": "Fairy Queen Timiniel",
+    "npcName": "fairy_queen_timiniel",
+    "level": 61,
+    "spawns": [
+      {
+        "x": 112376,
+        "y": 46584,
+        "z": -4696
+      },
+      {
+        "x": 112524,
+        "y": 45992,
+        "z": -4696
+      },
+      {
+        "x": 113028,
+        "y": 45688,
+        "z": -4696
+      },
+      {
+        "x": 114420,
+        "y": 45888,
+        "z": -4696
+      },
+      {
+        "x": 115296,
+        "y": 48036,
+        "z": -4696
+      },
+      {
+        "x": 114080,
+        "y": 49052,
+        "z": -4696
+      },
+      {
+        "x": 112672,
+        "y": 48160,
+        "z": -4696
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "fairy-queen-timiniel-25423",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25226",
+    "name": "Roaring Lord Kastor",
+    "npcName": "roaring_seer_kastor",
+    "level": 62,
+    "spawns": [
+      {
+        "x": 103236,
+        "y": -3448,
+        "z": -3536
+      },
+      {
+        "x": 103888,
+        "y": -4392,
+        "z": -3536
+      },
+      {
+        "x": 104936,
+        "y": -4316,
+        "z": -3536
+      },
+      {
+        "x": 104944,
+        "y": -3120,
+        "z": -3536
+      },
+      {
+        "x": 103744,
+        "y": -2792,
+        "z": -3536
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "roaring-seer-kastor-25226",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25467",
+    "name": "Gorgolos",
+    "npcName": "gorgolos",
+    "level": 64,
+    "spawns": [
+      {
+        "x": 185888,
+        "y": 61112,
+        "z": -4200
+      },
+      {
+        "x": 186528,
+        "y": 61084,
+        "z": -4200
+      },
+      {
+        "x": 186528,
+        "y": 61852,
+        "z": -4200
+      },
+      {
+        "x": 185896,
+        "y": 61868,
+        "z": -4200
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "gorgolos-25467",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25051",
+    "name": "Rahha",
+    "npcName": "rahha",
+    "level": 65,
+    "spawns": [
+      {
+        "x": 116972,
+        "y": -9320,
+        "z": -3320
+      },
+      {
+        "x": 117828,
+        "y": -9476,
+        "z": -3320
+      },
+      {
+        "x": 118604,
+        "y": -9052,
+        "z": -3320
+      },
+      {
+        "x": 118240,
+        "y": -8740,
+        "z": -3320
+      },
+      {
+        "x": 117712,
+        "y": -8660,
+        "z": -3320
+      },
+      {
+        "x": 117072,
+        "y": -8876,
+        "z": -3320
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "rahha-25051",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25125",
+    "name": "Fierce Tiger King Angel",
+    "npcName": "fiercetiger_king_angel",
+    "level": 65,
+    "spawns": [
+      {
+        "x": 170212,
+        "y": 84744,
+        "z": -2052
+      },
+      {
+        "x": 171056,
+        "y": 85260,
+        "z": -2052
+      },
+      {
+        "x": 171016,
+        "y": 85976,
+        "z": -2052
+      },
+      {
+        "x": 170232,
+        "y": 85392,
+        "z": -2052
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "fiercetiger-king-angel-25125",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25140",
+    "name": "Hekaton Prime",
+    "npcName": "hekaton_prime",
+    "level": 65,
+    "spawns": [
+      {
+        "x": 192028,
+        "y": 54902,
+        "z": -7658
+      },
+      {
+        "x": 193405,
+        "y": 56221,
+        "z": -7658
+      },
+      {
+        "x": 193399,
+        "y": 56557,
+        "z": -7658
+      },
+      {
+        "x": 192418,
+        "y": 57403,
+        "z": -7658
+      },
+      {
+        "x": 191588,
+        "y": 57428,
+        "z": -7658
+      },
+      {
+        "x": 190899,
+        "y": 56789,
+        "z": -7658
+      },
+      {
+        "x": 191010,
+        "y": 56001,
+        "z": -7658
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "hekaton-prime-25140",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25255",
+    "name": "Gargoyle Lord Tiphon",
+    "npcName": "gargoyle_lord_tiphon",
+    "level": 65,
+    "spawns": [
+      {
+        "x": 169228,
+        "y": -25628,
+        "z": -3824
+      },
+      {
+        "x": 170036,
+        "y": -26236,
+        "z": -3824
+      },
+      {
+        "x": 171044,
+        "y": -24688,
+        "z": -3824
+      },
+      {
+        "x": 170040,
+        "y": -23788,
+        "z": -3824
+      },
+      {
+        "x": 169128,
+        "y": -24392,
+        "z": -3824
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "gargoyle-lord-tiphon-25255",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25444",
+    "name": "Enmity Ghost Ramdal",
+    "npcName": "enmity_ghost_ramdal",
+    "level": 65,
+    "spawns": [
+      {
+        "x": 112660,
+        "y": 17484,
+        "z": -4420
+      },
+      {
+        "x": 113172,
+        "y": 17056,
+        "z": -4420
+      },
+      {
+        "x": 113648,
+        "y": 17528,
+        "z": -4420
+      },
+      {
+        "x": 113244,
+        "y": 18068,
+        "z": -4420
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "enmity-ghost-ramdal-25444",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25478",
+    "name": "Shilen's Priest Hisilrome",
+    "npcName": "priest_hisilrome",
+    "level": 65,
+    "spawns": [
+      {
+        "x": 167332,
+        "y": 28008,
+        "z": -3756
+      },
+      {
+        "x": 168852,
+        "y": 27868,
+        "z": -3756
+      },
+      {
+        "x": 169108,
+        "y": 28896,
+        "z": -3756
+      },
+      {
+        "x": 167760,
+        "y": 28840,
+        "z": -3756
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "priest-hisilrome-25478",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25322",
+    "name": "Demon's Agent Falston",
+    "npcName": "demonic_agent_falston",
+    "level": 66,
+    "spawns": [
+      {
+        "x": 93276,
+        "y": -75632,
+        "z": -1984
+      },
+      {
+        "x": 93936,
+        "y": -75024,
+        "z": -1984
+      },
+      {
+        "x": 93312,
+        "y": -74616,
+        "z": -1984
+      },
+      {
+        "x": 92820,
+        "y": -75188,
+        "z": -1984
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "demonic-agent-falston-25322",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25470",
+    "name": "Last Titan Utenus",
+    "npcName": "last_lesser_utenus",
+    "level": 66,
+    "spawns": [
+      {
+        "x": 186676,
+        "y": 56036,
+        "z": -4680
+      },
+      {
+        "x": 187172,
+        "y": 56016,
+        "z": -4680
+      },
+      {
+        "x": 187180,
+        "y": 56572,
+        "z": -4680
+      },
+      {
+        "x": 186648,
+        "y": 56564,
+        "z": -4680
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "last-lesser-utenus-25470",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25263",
+    "name": "Kernon's Faithful Servant Kelone",
+    "npcName": "malruks_oracle_sekina",
+    "level": 67,
+    "spawns": [
+      {
+        "x": 143712,
+        "y": -28084,
+        "z": -2072
+      },
+      {
+        "x": 144588,
+        "y": -28588,
+        "z": -2072
+      },
+      {
+        "x": 145112,
+        "y": -27852,
+        "z": -2072
+      },
+      {
+        "x": 144672,
+        "y": -27612,
+        "z": -2072
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "malruks-oracle-sekina-25263",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25337",
+    "name": "Anakazel",
+    "npcName": "r48_leader_anakazel",
+    "level": 68,
+    "spawns": [
+      {
+        "x": -120458,
+        "y": -181940,
+        "z": -6786
+      },
+      {
+        "x": -118899,
+        "y": -181940,
+        "z": -6786
+      },
+      {
+        "x": -118899,
+        "y": -181063,
+        "z": -6786
+      },
+      {
+        "x": -120448,
+        "y": -181058,
+        "z": -6786
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "r48-leader-anakazel-25337",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25073",
+    "name": "Bloody Priest Rudelto",
+    "npcName": "bloody_priest_rudelto",
+    "level": 69,
+    "spawns": [
+      {
+        "x": 143955,
+        "y": 110360,
+        "z": -3955
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "bloody-priest-rudelto-25073",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25233",
+    "name": "Spirit of Andras, the Betrayer",
+    "npcName": "spirit_andras_betrayer",
+    "level": 69,
+    "spawns": [
+      {
+        "x": 185713,
+        "y": -26686,
+        "z": -2208
+      },
+      {
+        "x": 185953,
+        "y": -26679,
+        "z": -2208
+      },
+      {
+        "x": 185959,
+        "y": -26426,
+        "z": -2208
+      },
+      {
+        "x": 185680,
+        "y": -26460,
+        "z": -2208
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "spirit-andras-betrayer-25233",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25035",
+    "name": "Shilen's Messenger Cabrio",
+    "npcName": "domb_death_cabrio",
+    "level": 70,
+    "spawns": [
+      {
+        "x": 181110,
+        "y": 11907,
+        "z": -2720
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "domb-death-cabrio-25035",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25092",
+    "name": "Korim",
+    "npcName": "korim",
+    "level": 70,
+    "spawns": [
+      {
+        "x": 115480,
+        "y": 15568,
+        "z": 1904
+      },
+      {
+        "x": 116432,
+        "y": 15564,
+        "z": 1904
+      },
+      {
+        "x": 116419,
+        "y": 16615,
+        "z": 1904
+      },
+      {
+        "x": 115464,
+        "y": 16608,
+        "z": 1904
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "korim-25092",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25163",
+    "name": "Roaring Skylancer",
+    "npcName": "roar_skylancer",
+    "level": 70,
+    "spawns": [
+      {
+        "x": 130076,
+        "y": 58960,
+        "z": 3496
+      },
+      {
+        "x": 130432,
+        "y": 58772,
+        "z": 3496
+      },
+      {
+        "x": 130844,
+        "y": 58888,
+        "z": 3496
+      },
+      {
+        "x": 130812,
+        "y": 59528,
+        "z": 3496
+      },
+      {
+        "x": 130176,
+        "y": 59476,
+        "z": 3496
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "roar-skylancer-25163",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25198",
+    "name": "Fafurion's Herald Lokness",
+    "npcName": "faf_herald_lokness",
+    "level": 70,
+    "spawns": [
+      {
+        "x": 102656,
+        "y": 157424,
+        "z": -3735
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "faf-herald-lokness-25198",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25252",
+    "name": "Palibati Queen Themis",
+    "npcName": "palibati_queen_themis",
+    "level": 70,
+    "spawns": [
+      {
+        "x": 192336,
+        "y": 21528,
+        "z": -3648
+      },
+      {
+        "x": 193764,
+        "y": 22140,
+        "z": -3648
+      },
+      {
+        "x": 193272,
+        "y": 23296,
+        "z": -3648
+      },
+      {
+        "x": 191856,
+        "y": 22692,
+        "z": -3648
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "palibati-queen-themis-25252",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25269",
+    "name": "Beast Lord Behemoth",
+    "npcName": "beastlord_behemoth",
+    "level": 70,
+    "spawns": [
+      {
+        "x": 123396,
+        "y": -24700,
+        "z": -3604
+      },
+      {
+        "x": 124404,
+        "y": -23812,
+        "z": -3604
+      },
+      {
+        "x": 123700,
+        "y": -22728,
+        "z": -3604
+      },
+      {
+        "x": 122440,
+        "y": -23292,
+        "z": -3604
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "beastlord-behemoth-25269",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25281",
+    "name": "Anakim's Nemesis Zakaron",
+    "npcName": "anakims_nemesis_zakaron",
+    "level": 70,
+    "spawns": [
+      {
+        "x": 150763,
+        "y": 87529,
+        "z": -5476
+      },
+      {
+        "x": 151403,
+        "y": 87529,
+        "z": -5476
+      },
+      {
+        "x": 151403,
+        "y": 88988,
+        "z": -5476
+      },
+      {
+        "x": 150763,
+        "y": 88988,
+        "z": -5476
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "anakims-nemesis-zakaron-25281",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25325",
+    "name": "Flame of Splendor Barakiel",
+    "npcName": "blinding_fire_barakiel",
+    "level": 70,
+    "spawns": [
+      {
+        "x": 89920,
+        "y": -86548,
+        "z": -2800
+      },
+      {
+        "x": 91532,
+        "y": -86872,
+        "z": -2800
+      },
+      {
+        "x": 92124,
+        "y": -85512,
+        "z": -2800
+      },
+      {
+        "x": 90516,
+        "y": -84784,
+        "z": -2800
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "blinding-fire-barakiel-25325",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25453",
+    "name": "Meanas Anor",
+    "npcName": "meanas_anor",
+    "level": 70,
+    "spawns": [
+      {
+        "x": 156666,
+        "y": -6009,
+        "z": -4144
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "meanas-anor-25453",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25328",
+    "name": "Eilhalder von Hellmann",
+    "npcName": "raid_boss_von_helman",
+    "level": 71,
+    "spawns": [
+      {
+        "x": 59331,
+        "y": -42403,
+        "z": -3003
+      },
+      {
+        "x": 59709,
+        "y": -42310,
+        "z": -3003
+      },
+      {
+        "x": 59717,
+        "y": -41974,
+        "z": -3003
+      },
+      {
+        "x": 59333,
+        "y": -41858,
+        "z": -3003
+      },
+      {
+        "x": 59047,
+        "y": -42165,
+        "z": -3003
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "raid-boss-von-helman-25328",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25447",
+    "name": "Immortal Savior Mardil",
+    "npcName": "hope_immortality_mardil",
+    "level": 71,
+    "spawns": [
+      {
+        "x": 112688,
+        "y": 17480,
+        "z": -1448
+      },
+      {
+        "x": 113216,
+        "y": 17052,
+        "z": -1448
+      },
+      {
+        "x": 113684,
+        "y": 17528,
+        "z": -1448
+      },
+      {
+        "x": 113256,
+        "y": 18072,
+        "z": -1448
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "hope-immortality-mardil-25447",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25199",
+    "name": "Water Dragon Seer Sheshark",
+    "npcName": "wdragon_priest_sheshark",
+    "level": 72,
+    "spawns": [
+      {
+        "x": 108096,
+        "y": 157408,
+        "z": -3688
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "wdragon-priest-sheshark-25199",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25235",
+    "name": "Vanor Chief Kandra",
+    "npcName": "vanor_chief_kandra",
+    "level": 72,
+    "spawns": [
+      {
+        "x": 115280,
+        "y": -63048,
+        "z": -3372
+      },
+      {
+        "x": 117496,
+        "y": -62932,
+        "z": -3372
+      },
+      {
+        "x": 116704,
+        "y": -61860,
+        "z": -3372
+      },
+      {
+        "x": 115880,
+        "y": -61920,
+        "z": -3372
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "vanor-chief-kandra-25235",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25248",
+    "name": "Doom Blade Tanatos",
+    "npcName": "doom_blade_tanatos",
+    "level": 72,
+    "spawns": [
+      {
+        "x": 127576,
+        "y": -13452,
+        "z": -3836
+      },
+      {
+        "x": 127980,
+        "y": -13600,
+        "z": -3836
+      },
+      {
+        "x": 128320,
+        "y": -13340,
+        "z": -3836
+      },
+      {
+        "x": 127868,
+        "y": -13072,
+        "z": -3836
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "doom-blade-tanatos-25248",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25220",
+    "name": "Death Lord Hallate",
+    "npcName": "hallate_the_death_lord",
+    "level": 73,
+    "spawns": [
+      {
+        "x": 113128,
+        "y": 16504,
+        "z": -2172
+      },
+      {
+        "x": 114208,
+        "y": 17644,
+        "z": -2172
+      },
+      {
+        "x": 113964,
+        "y": 18824,
+        "z": -2172
+      },
+      {
+        "x": 112552,
+        "y": 17888,
+        "z": -2172
+      },
+      {
+        "x": 111924,
+        "y": 16716,
+        "z": -2172
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "hallate-the-death-lord-25220",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25523",
+    "name": "Plague Golem",
+    "npcName": "degeneration_golem",
+    "level": 73,
+    "spawns": [
+      {
+        "x": 169812,
+        "y": -61256,
+        "z": -3945
+      },
+      {
+        "x": 170072,
+        "y": -60083,
+        "z": -3945
+      },
+      {
+        "x": 169253,
+        "y": -57476,
+        "z": -3945
+      },
+      {
+        "x": 167419,
+        "y": -57725,
+        "z": -3945
+      },
+      {
+        "x": 167526,
+        "y": -61022,
+        "z": -3945
+      },
+      {
+        "x": 168793,
+        "y": -62162,
+        "z": -3945
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "degeneration-golem-25523",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25109",
+    "name": "Antharas Priest Cloe",
+    "npcName": "antaras_cloe",
+    "level": 74,
+    "spawns": [
+      {
+        "x": 152260,
+        "y": 110394,
+        "z": -5552
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "antaras-cloe-25109",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25202",
+    "name": "Krokian Padisha Sobekk",
+    "npcName": "krokian_padisha_sobekk",
+    "level": 74,
+    "spawns": [
+      {
+        "x": 119760,
+        "y": 157392,
+        "z": -3744
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "krokian-padisha-sobekk-25202",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25054",
+    "name": "Kernon",
+    "npcName": "kernon",
+    "level": 75,
+    "spawns": [
+      {
+        "x": 112820,
+        "y": 16496,
+        "z": 3924
+      },
+      {
+        "x": 113860,
+        "y": 16100,
+        "z": 3924
+      },
+      {
+        "x": 114128,
+        "y": 16840,
+        "z": 3924
+      },
+      {
+        "x": 113196,
+        "y": 17244,
+        "z": 3924
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "kernon-25054",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25229",
+    "name": "Storm Winged Naga",
+    "npcName": "storm_winged_naga",
+    "level": 75,
+    "spawns": [
+      {
+        "x": 136992,
+        "y": -19752,
+        "z": -3740
+      },
+      {
+        "x": 137784,
+        "y": -20120,
+        "z": -3740
+      },
+      {
+        "x": 138332,
+        "y": -19160,
+        "z": -3740
+      },
+      {
+        "x": 137408,
+        "y": -18784,
+        "z": -3740
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "storm-winged-naga-25229",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25244",
+    "name": "Last Lesser Giant Olkuth",
+    "npcName": "last_lesser_olkuth",
+    "level": 75,
+    "spawns": [
+      {
+        "x": 171880,
+        "y": 54868,
+        "z": -5992
+      },
+      {
+        "x": 172232,
+        "y": 55372,
+        "z": -5992
+      },
+      {
+        "x": 171800,
+        "y": 55960,
+        "z": -5992
+      },
+      {
+        "x": 171352,
+        "y": 55452,
+        "z": -5992
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "last-lesser-olkuth-25244",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25249",
+    "name": "Palatanos of Horrific Power",
+    "npcName": "bloody_tree_vermilion",
+    "level": 75,
+    "spawns": [
+      {
+        "x": 147248,
+        "y": -21592,
+        "z": -3560
+      },
+      {
+        "x": 148484,
+        "y": -21180,
+        "z": -3560
+      },
+      {
+        "x": 148224,
+        "y": -20308,
+        "z": -3560
+      },
+      {
+        "x": 146668,
+        "y": -19884,
+        "z": -3560
+      },
+      {
+        "x": 145852,
+        "y": -20592,
+        "z": -3560
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "bloody-tree-vermilion-25249",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25266",
+    "name": "Bloody Empress Decarbia",
+    "npcName": "bloody_empress_decarbia",
+    "level": 75,
+    "spawns": [
+      {
+        "x": 189184,
+        "y": 12836,
+        "z": -2796
+      },
+      {
+        "x": 189720,
+        "y": 13240,
+        "z": -2796
+      },
+      {
+        "x": 189548,
+        "y": 14144,
+        "z": -2796
+      },
+      {
+        "x": 188132,
+        "y": 14172,
+        "z": -2796
+      },
+      {
+        "x": 188332,
+        "y": 13068,
+        "z": -2796
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "bloody-empress-decarbia-25266",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25276",
+    "name": "Death Lord Ipos",
+    "npcName": "ipos_the_death_lord",
+    "level": 75,
+    "spawns": [
+      {
+        "x": 153344,
+        "y": -14540,
+        "z": -3940
+      },
+      {
+        "x": 154196,
+        "y": -15004,
+        "z": -3940
+      },
+      {
+        "x": 154712,
+        "y": -13912,
+        "z": -3940
+      },
+      {
+        "x": 154152,
+        "y": -13300,
+        "z": -3940
+      },
+      {
+        "x": 153540,
+        "y": -13492,
+        "z": -3940
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "ipos-the-death-lord-25276",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25282",
+    "name": "Death Lord Shax",
+    "npcName": "shax_the_death_lord",
+    "level": 75,
+    "spawns": [
+      {
+        "x": 178958,
+        "y": -8417,
+        "z": -4932
+      },
+      {
+        "x": 179610,
+        "y": -8417,
+        "z": -4932
+      },
+      {
+        "x": 179610,
+        "y": -6951,
+        "z": -4932
+      },
+      {
+        "x": 178958,
+        "y": -6951,
+        "z": -4932
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "shax-the-death-lord-25282",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29020",
+    "name": "Baium",
+    "npcName": "baium",
+    "level": 75,
+    "spawns": [
+      {
+        "x": -105200,
+        "y": -253104,
+        "z": -15264
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "baium-29020",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29054",
+    "name": "Benom",
+    "npcName": "benom",
+    "level": 75,
+    "spawns": [
+      {
+        "x": 11882,
+        "y": -49216,
+        "z": -3008
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "benom-29054",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25205",
+    "name": "Ocean Flame Ashakiel",
+    "npcName": "ocean_flame_ashakiel",
+    "level": 76,
+    "spawns": [
+      {
+        "x": 123808,
+        "y": 153408,
+        "z": -3671
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "ocean-flame-ashakiel-25205",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25524",
+    "name": "Flamestone Giant",
+    "npcName": "flame_stone_golem",
+    "level": 76,
+    "spawns": [
+      {
+        "x": 144540,
+        "y": -5668,
+        "z": -4787
+      },
+      {
+        "x": 144740,
+        "y": -5668,
+        "z": -4787
+      },
+      {
+        "x": 144740,
+        "y": -5468,
+        "z": -4787
+      },
+      {
+        "x": 144540,
+        "y": -5468,
+        "z": -4787
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "flame-stone-golem-25524",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25143",
+    "name": "Fire of Wrath Shuriel",
+    "npcName": "shuriel_fire_of_wrath",
+    "level": 78,
+    "spawns": [
+      {
+        "x": 112716,
+        "y": 15764,
+        "z": 6964
+      },
+      {
+        "x": 113376,
+        "y": 16456,
+        "z": 6964
+      },
+      {
+        "x": 112620,
+        "y": 17232,
+        "z": 6964
+      },
+      {
+        "x": 112388,
+        "y": 16676,
+        "z": 6964
+      },
+      {
+        "x": 112344,
+        "y": 16100,
+        "z": 6964
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "shuriel-fire-of-wrath-25143",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25245",
+    "name": "Last Lesser Giant Glaki",
+    "npcName": "last_lesser_glaki",
+    "level": 78,
+    "spawns": [
+      {
+        "x": 188809,
+        "y": 47780,
+        "z": -5968
+      },
+      {
+        "x": 189021,
+        "y": 48385,
+        "z": -5968
+      },
+      {
+        "x": 188818,
+        "y": 48683,
+        "z": -5968
+      },
+      {
+        "x": 188329,
+        "y": 48292,
+        "z": -5968
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "last-lesser-glaki-25245",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25293",
+    "name": "Hestia, Guardian Deity of the Hot Springs",
+    "npcName": "geyser_guardian_hestia",
+    "level": 78,
+    "spawns": [
+      {
+        "x": 133852,
+        "y": -115496,
+        "z": -1300
+      },
+      {
+        "x": 134876,
+        "y": -116328,
+        "z": -1300
+      },
+      {
+        "x": 135404,
+        "y": -115664,
+        "z": -1300
+      },
+      {
+        "x": 134716,
+        "y": -114640,
+        "z": -1300
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "geyser-guardian-hestia-25293",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25338",
+    "name": "Anakazel",
+    "npcName": "r58_leader_anakazel",
+    "level": 78,
+    "spawns": [
+      {
+        "x": -114480,
+        "y": -186368,
+        "z": -6832
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "r58-leader-anakazel-25338",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25126",
+    "name": "Longhorn Golkonda",
+    "npcName": "golkonda_longhorn",
+    "level": 79,
+    "spawns": [
+      {
+        "x": 116676,
+        "y": 14864,
+        "z": 6956
+      },
+      {
+        "x": 116932,
+        "y": 15456,
+        "z": 6956
+      },
+      {
+        "x": 117000,
+        "y": 15960,
+        "z": 6956
+      },
+      {
+        "x": 116412,
+        "y": 16500,
+        "z": 6956
+      },
+      {
+        "x": 115744,
+        "y": 15812,
+        "z": 6956
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "golkonda-longhorn-25126",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25450",
+    "name": "Cherub Galaxia",
+    "npcName": "cherub_garacsia",
+    "level": 79,
+    "spawns": [
+      {
+        "x": 113400,
+        "y": 14544,
+        "z": 9528
+      },
+      {
+        "x": 113812,
+        "y": 14556,
+        "z": 9528
+      },
+      {
+        "x": 114072,
+        "y": 14812,
+        "z": 9528
+      },
+      {
+        "x": 114052,
+        "y": 15224,
+        "z": 9528
+      },
+      {
+        "x": 113752,
+        "y": 15504,
+        "z": 9528
+      },
+      {
+        "x": 113356,
+        "y": 15504,
+        "z": 9528
+      },
+      {
+        "x": 113116,
+        "y": 15244,
+        "z": 9528
+      },
+      {
+        "x": 113116,
+        "y": 14832,
+        "z": 9528
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "cherub-garacsia-25450",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29066",
+    "name": "Antharas",
+    "npcName": "antaras_min",
+    "level": 79,
+    "spawns": [
+      {
+        "x": 185708,
+        "y": 114298,
+        "z": -8221
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "antaras-min-29066",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29067",
+    "name": "Antharas",
+    "npcName": "antaras_normal",
+    "level": 79,
+    "spawns": [
+      {
+        "x": 185708,
+        "y": 114298,
+        "z": -8221
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "antaras-normal-29067",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29068",
+    "name": "Antharas",
+    "npcName": "antaras_max",
+    "level": 79,
+    "spawns": [
+      {
+        "x": 185708,
+        "y": 114298,
+        "z": -8221
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "antaras-max-29068",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25283",
+    "name": "Lilith",
+    "npcName": "lilith",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 184084,
+        "y": -10597,
+        "z": -5504
+      },
+      {
+        "x": 186035,
+        "y": -10597,
+        "z": -5504
+      },
+      {
+        "x": 186035,
+        "y": -8646,
+        "z": -5504
+      },
+      {
+        "x": 184084,
+        "y": -8646,
+        "z": -5504
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "lilith-25283",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25286",
+    "name": "Anakim",
+    "npcName": "anakim",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 184090,
+        "y": -13588,
+        "z": -5504
+      },
+      {
+        "x": 186040,
+        "y": -13588,
+        "z": -5504
+      },
+      {
+        "x": 186040,
+        "y": -11637,
+        "z": -5504
+      },
+      {
+        "x": 184090,
+        "y": -11637,
+        "z": -5504
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "anakim-25286",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25299",
+    "name": "Ketra's Hero Hekaton",
+    "npcName": "ketra_hero_hekaton",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 147356,
+        "y": -74756,
+        "z": -4964
+      },
+      {
+        "x": 148620,
+        "y": -74912,
+        "z": -4964
+      },
+      {
+        "x": 148868,
+        "y": -73452,
+        "z": -4964
+      },
+      {
+        "x": 148336,
+        "y": -72748,
+        "z": -4964
+      },
+      {
+        "x": 147592,
+        "y": -73040,
+        "z": -4964
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "ketra-hero-hekaton-25299",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25302",
+    "name": "Ketra's Commander Tayr",
+    "npcName": "ketra_commander_tayr",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 145192,
+        "y": -82424,
+        "z": -6064
+      },
+      {
+        "x": 146160,
+        "y": -81856,
+        "z": -6064
+      },
+      {
+        "x": 146116,
+        "y": -80956,
+        "z": -6064
+      },
+      {
+        "x": 145444,
+        "y": -81152,
+        "z": -6064
+      },
+      {
+        "x": 144852,
+        "y": -81868,
+        "z": -6064
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "ketra-commander-tayr-25302",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25305",
+    "name": "Ketra's Chief Brakki",
+    "npcName": "ketra_chief_brakki",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 144376,
+        "y": -85316,
+        "z": -6312
+      },
+      {
+        "x": 145500,
+        "y": -85488,
+        "z": -6312
+      },
+      {
+        "x": 145524,
+        "y": -84380,
+        "z": -6312
+      },
+      {
+        "x": 144588,
+        "y": -84608,
+        "z": -6312
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "ketra-chief-brakki-25305",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25309",
+    "name": "Varka's Hero Shadith",
+    "npcName": "varka_hero_shadith",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 114108,
+        "y": -39340,
+        "z": -2540
+      },
+      {
+        "x": 115848,
+        "y": -40008,
+        "z": -2540
+      },
+      {
+        "x": 116724,
+        "y": -38904,
+        "z": -2540
+      },
+      {
+        "x": 115468,
+        "y": -37932,
+        "z": -2540
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "varka-hero-shadith-25309",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25312",
+    "name": "Varka's Commander Mos",
+    "npcName": "varka_commnder_mos",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 108608,
+        "y": -36768,
+        "z": -1248
+      },
+      {
+        "x": 110272,
+        "y": -36964,
+        "z": -1248
+      },
+      {
+        "x": 109992,
+        "y": -36032,
+        "z": -1248
+      },
+      {
+        "x": 109336,
+        "y": -35284,
+        "z": -1248
+      },
+      {
+        "x": 108272,
+        "y": -35468,
+        "z": -1248
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "varka-commnder-mos-25312",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25315",
+    "name": "Varka's Chief Horus",
+    "npcName": "varka_chief_horuth",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 104936,
+        "y": -43276,
+        "z": -1840
+      },
+      {
+        "x": 105696,
+        "y": -43808,
+        "z": -1840
+      },
+      {
+        "x": 106428,
+        "y": -42924,
+        "z": -1840
+      },
+      {
+        "x": 106132,
+        "y": -42488,
+        "z": -1840
+      },
+      {
+        "x": 105076,
+        "y": -42480,
+        "z": -1840
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "varka-chief-horuth-25315",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25319",
+    "name": "Ember",
+    "npcName": "amber",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 184536,
+        "y": -106084,
+        "z": -6384
+      },
+      {
+        "x": 185372,
+        "y": -106872,
+        "z": -6384
+      },
+      {
+        "x": 186752,
+        "y": -106580,
+        "z": -6384
+      },
+      {
+        "x": 186768,
+        "y": -105652,
+        "z": -6384
+      },
+      {
+        "x": 185072,
+        "y": -105144,
+        "z": -6384
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "amber-25319",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25339",
+    "name": "Shadow of Halisha",
+    "npcName": "halisha_alectia",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 191544,
+        "y": -85575,
+        "z": -7184
+      },
+      {
+        "x": 189801,
+        "y": -88965,
+        "z": -7184
+      },
+      {
+        "x": 173193,
+        "y": -76299,
+        "z": -7184
+      },
+      {
+        "x": 175610,
+        "y": -72453,
+        "z": -7184
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "halisha-alectia-25339",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25342",
+    "name": "Shadow of Halisha",
+    "npcName": "halisha_tishas",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 191544,
+        "y": -85575,
+        "z": -7184
+      },
+      {
+        "x": 189801,
+        "y": -88965,
+        "z": -7184
+      },
+      {
+        "x": 173193,
+        "y": -76299,
+        "z": -7184
+      },
+      {
+        "x": 175610,
+        "y": -72453,
+        "z": -7184
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "halisha-tishas-25342",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25346",
+    "name": "Shadow of Halisha",
+    "npcName": "halisha_mekara",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 191544,
+        "y": -85575,
+        "z": -7184
+      },
+      {
+        "x": 189801,
+        "y": -88965,
+        "z": -7184
+      },
+      {
+        "x": 173193,
+        "y": -76299,
+        "z": -7184
+      },
+      {
+        "x": 175610,
+        "y": -72453,
+        "z": -7184
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "halisha-mekara-25346",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25349",
+    "name": "Shadow of Halisha",
+    "npcName": "halisha_morigul",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 191544,
+        "y": -85575,
+        "z": -7184
+      },
+      {
+        "x": 189801,
+        "y": -88965,
+        "z": -7184
+      },
+      {
+        "x": 173193,
+        "y": -76299,
+        "z": -7184
+      },
+      {
+        "x": 175610,
+        "y": -72453,
+        "z": -7184
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "halisha-morigul-25349",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25514",
+    "name": "Queen Shyeed",
+    "npcName": "spike_stakato_qn_shyid",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 79444,
+        "y": -56776,
+        "z": -6180
+      },
+      {
+        "x": 80744,
+        "y": -56596,
+        "z": -6180
+      },
+      {
+        "x": 80996,
+        "y": -54912,
+        "z": -6180
+      },
+      {
+        "x": 78596,
+        "y": -54004,
+        "z": -6180
+      },
+      {
+        "x": 78396,
+        "y": -55772,
+        "z": -6180
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "spike-stakato-qn-shyid-25514",
+    "type": "raid"
+  },
+  {
+    "id": "raid-25527",
+    "name": "Uruka",
+    "npcName": "uruka",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 3075,
+        "y": -10966,
+        "z": -3650
+      },
+      {
+        "x": 5202,
+        "y": -11331,
+        "z": -3650
+      },
+      {
+        "x": 5225,
+        "y": -8439,
+        "z": -3550
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "uruka-25527",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29062",
+    "name": "High Priestess van Halter",
+    "npcName": "triolls_priest_andreas",
+    "level": 80,
+    "spawns": [
+      {
+        "x": -16385,
+        "y": -53268,
+        "z": -10439
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "triolls-priest-andreas-29062",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29065",
+    "name": "Sailren",
+    "npcName": "sailren",
+    "level": 80,
+    "spawns": [
+      {
+        "x": -113091,
+        "y": -243942,
+        "z": -15536
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "sailren-29065",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29095",
+    "name": "Gordon",
+    "npcName": "gordon",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 147408,
+        "y": -43552,
+        "z": -2328
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "gordon-29095",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29096",
+    "name": "Lord of Splendor Anays",
+    "npcName": "anais_brilliance_master",
+    "level": 80,
+    "spawns": [
+      {
+        "x": 112800,
+        "y": -76160,
+        "z": 10
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "anais-brilliance-master-29096",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29030",
+    "name": "Fenril Hound Kerinne",
+    "npcName": "fenril_hound_kerinne",
+    "level": 84,
+    "spawns": [
+      {
+        "x": 189964,
+        "y": -116820,
+        "z": -1624
+      },
+      {
+        "x": 190164,
+        "y": -116820,
+        "z": -1624
+      },
+      {
+        "x": 190164,
+        "y": -116620,
+        "z": -1624
+      },
+      {
+        "x": 189964,
+        "y": -116620,
+        "z": -1624
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "fenril-hound-kerinne-29030",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29033",
+    "name": "Fenril Hound Freki",
+    "npcName": "fenril_hound_freki",
+    "level": 84,
+    "spawns": [
+      {
+        "x": 193260,
+        "y": -116820,
+        "z": -1444
+      },
+      {
+        "x": 193460,
+        "y": -116820,
+        "z": -1444
+      },
+      {
+        "x": 193460,
+        "y": -113052,
+        "z": -1444
+      },
+      {
+        "x": 193260,
+        "y": -113052,
+        "z": -1444
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "fenril-hound-freki-29033",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29036",
+    "name": "Fenril Hound Uruz",
+    "npcName": "fenril_hound_uruz",
+    "level": 84,
+    "spawns": [
+      {
+        "x": 189388,
+        "y": -109476,
+        "z": -1064
+      },
+      {
+        "x": 189588,
+        "y": -109476,
+        "z": -1064
+      },
+      {
+        "x": 189588,
+        "y": -109276,
+        "z": -1064
+      },
+      {
+        "x": 189388,
+        "y": -109276,
+        "z": -1064
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "fenril-hound-uruz-29036",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29037",
+    "name": "Fenril Hound Kinaz",
+    "npcName": "fenril_hound_kinaz",
+    "level": 84,
+    "spawns": [
+      {
+        "x": 192156,
+        "y": -108980,
+        "z": -1060
+      },
+      {
+        "x": 192356,
+        "y": -108980,
+        "z": -1060
+      },
+      {
+        "x": 192356,
+        "y": -108780,
+        "z": -1060
+      },
+      {
+        "x": 192156,
+        "y": -108780,
+        "z": -1060
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "fenril-hound-kinaz-29037",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29040",
+    "name": "Wings of Flame, Ixion",
+    "npcName": "valakas_sentinel_ixion",
+    "level": 84,
+    "spawns": [
+      {
+        "x": 189404,
+        "y": -106296,
+        "z": -844
+      },
+      {
+        "x": 190372,
+        "y": -106276,
+        "z": -844
+      },
+      {
+        "x": 190408,
+        "y": -105516,
+        "z": -844
+      },
+      {
+        "x": 189428,
+        "y": -105516,
+        "z": -844
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "valakas-sentinel-ixion-29040",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29028",
+    "name": "Valakas",
+    "npcName": "valakas",
+    "level": 85,
+    "spawns": [
+      {
+        "x": -105200,
+        "y": -253104,
+        "z": -15264
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "valakas-29028",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29045",
+    "name": "Frintezza",
+    "npcName": "frintessa",
+    "level": 85,
+    "spawns": [
+      {
+        "x": -105200,
+        "y": -253104,
+        "z": -15264
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "frintessa-29045",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29046",
+    "name": "Scarlet van Halisha",
+    "npcName": "follower_of_frintessa",
+    "level": 85,
+    "spawns": [
+      {
+        "x": -105200,
+        "y": -253104,
+        "z": -15264
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "follower-of-frintessa-29046",
+    "type": "raid"
+  },
+  {
+    "id": "raid-29047",
+    "name": "Scarlet van Halisha",
+    "npcName": "follower_of_frintessa_tr",
+    "level": 85,
+    "spawns": [
+      {
+        "x": -105200,
+        "y": -253104,
+        "z": -15264
+      }
+    ],
+    "hp": null,
+    "pAtk": null,
+    "pDef": null,
+    "mAtk": null,
+    "mDef": null,
+    "exp": null,
+    "sp": null,
+    "race": null,
+    "drops": null,
+    "npcSlug": "follower-of-frintessa-tr-29047",
+    "type": "raid"
+  }
+]

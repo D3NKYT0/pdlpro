@@ -83,10 +83,12 @@ import { AdminThemesPage } from '../../pages/admin/AdminThemesPage'
 import { AdminWalletPage } from '../../pages/admin/AdminWalletPage'
 import { AdminAuditLogPage } from '../../pages/admin/AdminAuditLogPage'
 import { AdminMetricsPage } from '../../pages/admin/AdminMetricsPage'
-import { extensionRouteElements } from '../../extensions'
+import { extensionRouteElements, extensionWikiOverride } from '../../extensions'
 import { TrackingRouteListener } from '../../components/analytics/TrackingRouteListener'
 
 export function AppRoutes() {
+  const wikiOverride = extensionWikiOverride()
+
   return (
     <BrowserRouter>
       <TrackingRouteListener />
@@ -111,8 +113,14 @@ export function AppRoutes() {
             <Route path="/news" element={<ResourceGate code="news"><NewsPage /></ResourceGate>} />
             <Route path="/news/:slug" element={<ResourceGate code="news"><NewsDetailPage /></ResourceGate>} />
             <Route path="/info" element={<InfoPage />} />
-            <Route path="/wiki" element={<ResourceGate code="wiki"><WikiPage /></ResourceGate>} />
-            <Route path="/wiki/:slug" element={<ResourceGate code="wiki"><WikiDetailPage /></ResourceGate>} />
+            {wikiOverride ? (
+              <Route path="/wiki/*" element={<ResourceGate code="wiki">{wikiOverride}</ResourceGate>} />
+            ) : (
+              <>
+                <Route path="/wiki" element={<ResourceGate code="wiki"><WikiPage /></ResourceGate>} />
+                <Route path="/wiki/:slug" element={<ResourceGate code="wiki"><WikiDetailPage /></ResourceGate>} />
+              </>
+            )}
             <Route path="/calendar" element={<ResourceGate code="calendar"><CalendarPage /></ResourceGate>} />
             <Route path="/faq" element={<ResourceGate code="faq"><FaqPage /></ResourceGate>} />
             <Route path="/downloads" element={<ResourceGate code="downloads"><DownloadsPage /></ResourceGate>} />

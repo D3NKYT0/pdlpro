@@ -1,0 +1,582 @@
+{
+  "wiki": {
+    "meta_title": "Wiki | Valorem",
+    "meta_description": "Browse the Lineage 2 database - items, weapons, armor, and more.",
+    "title": "Wiki",
+    "description": "Browse the Lineage 2 Interlude database",
+    "categories": {
+      "items": "Items",
+      "itemsDesc": "Weapons, Armor, Accessories, and more",
+      "quests": "Quests",
+      "questsDesc": "Quest guides and rewards",
+      "npcs": "NPCs",
+      "npcsDesc": "NPC locations and info",
+      "stamina": "Stamina",
+      "staminaDesc": "System guide and calculator",
+      "commands": "Commands",
+      "commandsDesc": "Server commands list",
+      "sevenSigns": "Seven Signs",
+      "sevenSignsDesc": "Live status and Mammon Cycle",
+      "calculator": "Craft Calculator",
+      "calculatorDesc": "Calculate costs and materials",
+      "quest_guide": {
+        "title": "3-in-1 Quest Guide",
+        "subtitle": "Complete your Class Evolution",
+        "description": "Follow our unified guides to complete your 1st, 2nd, and 3rd job changes efficiently.",
+        "selectClass": "Select your final 3rd Job Class",
+        "searchPlaceholder": "Search class...",
+        "allRaces": "All Races",
+        "stages": {
+          "job1": "1st Job change",
+          "job2": "2nd Job change",
+          "job3": "3rd Job change",
+          "levelPrefix": "Lv."
+        },
+        "navigation": {
+          "prev": "Previous",
+          "next": "Next",
+          "backToList": "Back to Class List"
+        },
+        "walkthrough": {
+          "startNpc": "Starting NPC",
+          "location": "Location",
+          "requirements": "Requirements",
+          "rewards": "Rewards",
+          "steps": "Walkthrough Steps"
+        },
+        "classes": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "name": "Duelist",
+            "job1": {
+              "title": "Path to a Warrior",
+              "steps": "Speak with Master Auron in Gludin Village.,Kill Tracker Skeletons and Skeleton Archers in the Abandoned Camp until you collect 20 Warrior's Medals.,Return to Master Auron to receive your Medallion of Warrior.,When you reach Level 20, speak with Grand Master Ramos to change your profession to Warrior."
+            },
+            "job2": {
+              "title": "Gladiator's Path",
+              "marks": "[object Object],[object Object],[object Object]"
+            },
+            "job3": {
+              "title": "Saga of the Duelist",
+              "steps": "Speak with Grand Master Sedrick in Giran.,Obtain the ice flower from Chef Jeremy in Hot Springs.,Commune with the 6 Tablets of Vision across Elmoreaden.,Defeat the Archon of Halisha in the Four Sepulchers or Shrine of Loyalty."
+            }
+          },
+          null,
+          {
+            "name": "Phoenix Knight",
+            "job1": {
+              "title": "Path to a Human Knight",
+              "steps": "Speak with Grand Master Sir Klaus Vasper in Gludin.,Collect 20 coins from various NPCs across the land.,When you reach Level 20, speak with a Grand Master to become a Human Knight."
+            },
+            "job2": {
+              "title": "Paladin's Path",
+              "marks": "[object Object],[object Object],[object Object]"
+            },
+            "job3": {
+              "title": "Saga of the Phoenix Knight",
+              "steps": "Speak with Grand Master Sir Klaus Vasper in Giran.,Commune with the Tablets of Vision.,Defeat the monsters guarding the tablets."
+            }
+          },
+          null,
+          {
+            "name": "Sagittarius",
+            "job1": {
+              "name": "Path to a Rogue",
+              "steps": "Speak with Captain Bezique in Gludin.,Follow the Rogue's quest.,Become a Rogue at Level 20."
+            },
+            "job2": {
+              "name": "Hawkeye's Path",
+              "marks": "[object Object],[object Object],[object Object]"
+            },
+            "job3": {
+              "name": "Saga of the Sagittarius",
+              "steps": "Speak with Bernard in Hunters Village.,Commune with the Tablets of Vision."
+            }
+          },
+          {
+            "name": "Adventurer",
+            "job1": {
+              "name": "Path to a Rogue",
+              "steps": "Speak with Captain Bezique in Gludin Village.,Visit Neti in the center of Gludin.,Kill Tracker Skeletons and Skeleton Archers in Abandoned Camp.,When you reach Level 20, speak with a Grand Master to become a Rogue."
+            },
+            "job2": {
+              "name": "Treasure Hunter's Path",
+              "marks": "[object Object],[object Object],[object Object]"
+            },
+            "job3": {
+              "name": "Saga of the Adventurer",
+              "steps": "Speak with Hunter Guild Member in Giran.,Commune with the Tablets of Vision.,Defeat Halisha."
+            }
+          },
+          null,
+          {
+            "name": "Soultaker",
+            "job1": {
+              "title": "Path to a Human Wizard",
+              "steps": "Speak with Parina in Gludin Village.,Visit the four spirits of the elements.,When you reach Level 20, speak with a Grand Master to become a Human Wizard."
+            },
+            "job2": {
+              "title": "Necromancer's Path",
+              "marks": "[object Object],[object Object],[object Object]"
+            },
+            "job3": {
+              "title": "Saga of the Soultaker",
+              "steps": "Speak with Grand Magister Joan in Ivory Tower.,Commune with the Tablets of Vision.,Harness the power of souls to become a Soultaker."
+            }
+          },
+          {
+            "name": "Arcana Lord",
+            "job1": {
+              "name": "Path to a Human Wizard",
+              "steps": "Speak with Parina in Gludin.,Visit the elemental spirits.,Become a Wizard at level 20."
+            },
+            "job2": {
+              "name": "Warlock's Path",
+              "marks": "[object Object],[object Object],[object Object]"
+            },
+            "job3": {
+              "name": "Saga of the Arcana Lord",
+              "steps": "Speak with Master Kaira in Giran.,Commune with the Tablets of Vision."
+            }
+          },
+          {
+            "name": "Cardinal",
+            "job1": {
+              "name": "Path to a Cleric",
+              "steps": "Speak with High Priest Zigaunt in Gludin.,Become a Cleric at level 20."
+            },
+            "job2": {
+              "name": "Bishop's Path",
+              "marks": "[object Object],[object Object],[object Object]"
+            },
+            "job3": {
+              "name": "Saga of the Cardinal",
+              "steps": "Speak with High Priest Hollint in Oren.,Commune with the Tablets of Vision."
+            }
+          },
+          {
+            "name": "Hierophant",
+            "job1": {
+              "name": "Path to a Cleric",
+              "steps": "Speak with High Priest Zigaunt in Gludin.,Become a Cleric at level 20."
+            },
+            "job2": {
+              "name": "Prophet's Path",
+              "marks": "[object Object],[object Object],[object Object]"
+            },
+            "job3": {
+              "name": "Saga of the Hierophant",
+              "steps": "Speak with High Priest Maximilian in Giran.,Commune with the Tablets of Vision."
+            }
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "name": "Titan",
+            "job1": {
+              "title": "Path to an Orc Raider",
+              "steps": "Speak with Karukia in the Orc Village.,Kill Kasha Bears and Kasha Blade Spiders.,When you reach Level 20, speak with a High Prefect to become an Orc Raider."
+            },
+            "job2": {
+              "title": "Destroyer's Path",
+              "marks": "[object Object],[object Object],[object Object]"
+            },
+            "job3": {
+              "title": "Saga of the Titan",
+              "steps": "Speak with Prefect Vokian in Giran.,Commune with the 6 Tablets of Vision.,Prove your strength against the Titans of old."
+            }
+          }
+        ]
+      }
+    },
+    "commands_page": {
+      "title": "Server Commands",
+      "subtitle": "Ease your journey with quick commands",
+      "command": "Command",
+      "description": "Description",
+      "menu_desc": "Opens the main character panel.",
+      "lock_desc": "Protects items against trade/drop/deletion.",
+      "repair_desc": "Recovers a stuck character from the same account.",
+      "autoloot_desc": "Activates auto-loot (Deactivated in party).",
+      "expoff_desc": "Pauses experience gain.",
+      "expon_desc": "Enables experience gain.",
+      "whoami_desc": "Displays detailed stats and active bonuses."
+    },
+    "items": {
+      "title": "Items",
+      "description": "Browse all game items",
+      "weapon": "Weapons",
+      "weaponDesc": "Swords, Bows, Daggers, and more",
+      "armor": "Armor",
+      "armorDesc": "Helmets, Armors, Gloves, Boots",
+      "accessory": "Accessories",
+      "accessoryDesc": "Rings, Earrings, Necklaces",
+      "etc": "Misc",
+      "etcDesc": "Consumables and materials",
+      "searchPlaceholder": "Search items by name..."
+    },
+    "seven_signs": {
+      "title": "Seven Signs & Cycle",
+      "live_status": "Real-Time Status",
+      "current_cycle": "Current Cycle",
+      "period": "Period",
+      "winner": "Previous Winner",
+      "scores": "Current Scores",
+      "dawn": "Lords of Dawn",
+      "dusk": "Revolutionaries of Dusk",
+      "mammon_status": "Mammon Status",
+      "mammon_spawned": "🟢 Mammons Active",
+      "mammon_not_spawned": "🔴 Mammons Absent",
+      "competition": "Competition Period",
+      "validation": "Validation Period",
+      "no_winner": "Draw / No Winner",
+      "description": "Seven Signs is a global competition between two factions for the possession of the Seals. The cycle lasts 2 weeks (1 week of competition and 1 week of validation)."
+    },
+    "weapon": {
+      "title": "Weapons",
+      "description": "Browse all weapons in the game"
+    },
+    "grades": {
+      "none": "No Grade",
+      "d": "D Grade",
+      "c": "C Grade",
+      "b": "B Grade",
+      "a": "A Grade",
+      "s": "S Grade",
+      "s80": "S80 Grade",
+      "s84": "S84 Grade"
+    },
+    "weaponTypes": {
+      "sword": "Sword",
+      "blunt": "Blunt",
+      "dagger": "Dagger",
+      "bow": "Bow",
+      "pole": "Polearm",
+      "fist": "Fist",
+      "dual": "Dual Sword",
+      "dualfist": "Dual Fist",
+      "etc": "Other"
+    },
+    "slotTypes": {
+      "head": "Helmet",
+      "chest": "Chest",
+      "legs": "Legs",
+      "feet": "Boots",
+      "gloves": "Gloves",
+      "onepiece": "Full Body",
+      "fullbody": "Full Body",
+      "underwear": "Underwear"
+    },
+    "armor": {
+      "title": "Armor",
+      "description": "Browse all armor in the game"
+    },
+    "shield": {
+      "title": "Shields",
+      "description": "Browse all shields in the game"
+    },
+    "jewelry": {
+      "title": "Jewelry",
+      "description": "Browse all jewelry in the game"
+    },
+    "jewelrySlotTypes": {
+      "ear": "Earring",
+      "neck": "Necklace",
+      "rfinger": "Right Ring",
+      "lfinger": "Left Ring"
+    },
+    "filters": {
+      "grade": "Grade",
+      "gradeAll": "All Grades",
+      "type": "Type",
+      "typeAll": "All Types",
+      "allTypes": "All Types",
+      "slot": "Slot",
+      "slotAll": "All Slots",
+      "search": "Search by name...",
+      "searchPlaceholder": "Search by name...",
+      "apply": "Apply",
+      "clear": "Clear"
+    },
+    "stats": {
+      "pAtk": "P.Atk",
+      "mAtk": "M.Atk",
+      "pDef": "P.Def",
+      "mDef": "M.Def",
+      "shieldDef": "Shield Def",
+      "atkSpd": "Atk.Spd",
+      "weight": "Weight",
+      "crystals": "Crystals",
+      "soulshots": "Soulshots",
+      "spiritshots": "Spiritshots",
+      "price": "Price"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page",
+      "of": "of",
+      "showing": "Showing",
+      "items": "items"
+    },
+    "itemDetail": {
+      "stats": "Statistics",
+      "dropList": "Drop List",
+      "spoilList": "Spoil List",
+      "recipe": "Crafting Recipe",
+      "soldBy": "Sold By",
+      "materials": "Materials",
+      "successRate": "Success Rate"
+    },
+    "craft": {
+      "totalCost": "Total Adena Cost",
+      "materialsRequired": "Materials Required",
+      "owned": "Owned",
+      "marketPrice": "Market Price",
+      "craftAction": "Craft",
+      "selfCraft": "Self Craft",
+      "noRecipeFound": "Item not found or has no crafting recipe.",
+      "priceUpdateSuccess": "Price updated!",
+      "ownedUpdateSuccess": "Stock updated!",
+      "totalSavings": "Estimated savings",
+      "grandTotal": "Grand Total",
+      "recipe": "Recipe & Material Tree",
+      "configDesc": "Configure market prices and explore recursive sub-materials to estimate the total production cost.",
+      "adenaFee": "Adena Fee",
+      "selectedItems": "Selected Items",
+      "addItem": "Add item",
+      "combinedTotal": "Combined Total Cost",
+      "emptyTitle": "No items selected",
+      "emptyDesc": "Search for an item above to start calculating.",
+      "perItemTotal": "Item total"
+    },
+    "npcs": {
+      "title": "NPCs",
+      "description": "Browse all NPCs in Lineage 2 Interlude",
+      "searchPlaceholder": "Search name or location..."
+    },
+    "npcTypes": {
+      "warrior": "Monster",
+      "merchant": "Merchant",
+      "pet": "Pet",
+      "guard": "Guard",
+      "boss": "Raid Boss",
+      "summon": "Summon",
+      "teleporter": "Teleporter",
+      "citizen": "Citizen",
+      "treasure": "Treasure",
+      "holything": "Holy Thing",
+      "xmastree": "Event"
+    },
+    "npcStats": {
+      "race": "Race",
+      "location": "Location"
+    },
+    "npcDetail": {
+      "locations": "Locations",
+      "skills": "Skills"
+    },
+    "locations": {
+      "title": "Locations",
+      "description": "Browse all locations in Lineage 2 Interlude",
+      "territory": "Territory",
+      "allTerritories": "All Territories",
+      "type": "Type",
+      "allTypes": "All Types",
+      "locationsFound": "locations found",
+      "levelRange": "Level Range",
+      "npcsHere": "NPCs at this location",
+      "viewDetails": "View Details"
+    },
+    "locationTypes": {
+      "town": "Town",
+      "village": "Village",
+      "harbor": "Harbor",
+      "castle": "Castle",
+      "fortress": "Fortress",
+      "dungeon": "Dungeon",
+      "hunting_zone": "Hunting Zone",
+      "special": "Special Area"
+    },
+    "quests": {
+      "title": "Quests",
+      "description": "Browse all quests in Lineage 2 Interlude",
+      "questsFound": "quests found",
+      "minLevel": "Min Level",
+      "maxLevel": "Max Level",
+      "race": "Race",
+      "allRaces": "All Races",
+      "startNpc": "Start NPC",
+      "rewards": "Rewards",
+      "requirements": "Requirements",
+      "class": "Class",
+      "walkthrough": "Walkthrough"
+    },
+    "races": {
+      "human": "Human",
+      "elf": "Elf",
+      "darkelf": "Dark Elf",
+      "orc": "Orc",
+      "dwarf": "Dwarf"
+    },
+    "error": {
+      "loadFailed": "Failed to load data. Please try again later.",
+      "noResults": "No items found matching your criteria."
+    },
+    "classes": {
+      "title": "Classes",
+      "description": "Browse all classes and professions in Lineage 2 Interlude",
+      "filterByRace": "Filter by Race",
+      "allRaces": "All",
+      "tier0": "Starting Classes",
+      "tier1": "1st Class",
+      "tier2": "2nd Class",
+      "tier3": "3rd Class",
+      "evolution": "Class Evolution",
+      "fullLineage": "Full Class Lineage",
+      "nextClasses": "Next Classes",
+      "baseStats": "Base Stats",
+      "combatPotential": "Combat Potential",
+      "progression": "Progression (HP/MP/CP)",
+      "skillTree": "Skill Tree",
+      "level": "Level",
+      "requiredSp": "SP Required"
+    },
+    "skills": {
+      "title": "Skills",
+      "description": "Browse all skills and abilities in the game",
+      "active": "Active",
+      "passive": "Passive",
+      "toggle": "Toggle",
+      "mpConsume": "MP Cost",
+      "hpConsume": "HP Cost",
+      "castRange": "Cast Range",
+      "reuseDelay": "Cooldown",
+      "hitTime": "Cast Time",
+      "power": "Power",
+      "target": "Target",
+      "effects": "Effects",
+      "levels": "Levels",
+      "skillInfo": "Skill Information",
+      "skillDescription": "Description",
+      "seconds": "seconds",
+      "searchPlaceholder": "Search skills..."
+    },
+    "raidBosses": {
+      "title": "Raid Bosses",
+      "description": "Browse all Raid Bosses in Lineage 2 Interlude",
+      "searchPlaceholder": "Search for boss or location...",
+      "bossesFound": "raid bosses found",
+      "minLevel": "Min Level",
+      "maxLevel": "Max Level",
+      "spawnLocations": "Spawn Locations",
+      "respawnTime": "Respawn Time",
+      "viewMap": "View on Map",
+      "viewInteractiveMap": "View Interactive Map",
+      "backToList": "Back to List",
+      "levelRange": "Level Range",
+      "showingXofY": "Showing {count} of {total} bosses",
+      "levelColors": "Level Colors",
+      "viewDetails": "View Details"
+    }
+  }
+}

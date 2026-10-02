@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import {
   extensionAbsolutePath,
+  extensionWikiOverride,
   navItemsForScope,
   parseExtensionIds,
   resolveEnabledExtensions,
@@ -98,3 +99,24 @@ describe('slotsForName', () => {
     expect(slotsForName(modules, 'panel.dashboard')).toEqual([])
   })
 })
+
+describe('extensionWikiOverride', () => {
+  it('retorna undefined quando nenhum módulo ativo define override de wiki', () => {
+    expect(extensionWikiOverride('example,acme', catalog)).toBeUndefined()
+  })
+
+  it('retorna o elemento de override quando fornecido por módulo ativo', () => {
+    const customCatalog: Record<string, ExtensionModule> = {
+      ...catalog,
+      valorem: {
+        id: 'valorem',
+        routes: [],
+        overrides: {
+          wiki: 'valorem-wiki-node' as any,
+        },
+      },
+    }
+    expect(extensionWikiOverride('valorem', customCatalog)).toBe('valorem-wiki-node')
+  })
+})
+
