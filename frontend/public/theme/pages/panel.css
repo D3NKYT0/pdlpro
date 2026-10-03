@@ -20774,3 +20774,7 @@ html.pdl-panel .admin-secrets-confirm .field small {
     justify-self: start;
   }
 }
+
+html.pdl-panel .admin-resource-children { grid-column: 1 / -1; min-inline-size: 0; margin: 0; padding: 12px; border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent); }
+html.pdl-panel .admin-resource-children legend { color: var(--panel-gold); padding-inline: 6px; }
+html.pdl-panel .admin-resource-children > div + div { margin-top: 14px; }

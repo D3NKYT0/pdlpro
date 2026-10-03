@@ -1,3 +1,4 @@
+import { useResourceEnabled } from '../hooks/useResourceEnabled'
 import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
 import { Field } from '../components/ui/Field'
@@ -25,6 +26,7 @@ const AVATAR_TYPES = ['image/png', 'image/jpeg', 'image/webp']
 const MAX_BIO_LENGTH = 500
 
 export function ProfilePage() {
+  const showAchievements = useResourceEnabled('progress-achievements', 'progress')
   const { t } = useTranslation('panel')
   const { user, refreshUser } = useAuth()
   const progress = useQuery({ queryKey: ['progress'], queryFn: authApi.progress })
@@ -170,7 +172,7 @@ export function ProfilePage() {
             </div>
             <div className="user-profile-stat-list">
               <div><Trophy aria-hidden="true" /><span><small>{t('profile.level')}</small><strong>{progress.data?.level ?? 1}</strong></span></div>
-              <div><Sparkles aria-hidden="true" /><span><small>{t('profile.achievements')}</small><strong>{unlockedCount}/{totalAchievements || 0}</strong></span></div>
+              {showAchievements && <div><Sparkles aria-hidden="true" /><span><small>{t('profile.achievements')}</small><strong>{unlockedCount}/{totalAchievements || 0}</strong></span></div>}
               <div><Coins aria-hidden="true" /><span><small>{t('profile.chips')}</small><strong>{user?.fichas ?? 0}</strong></span></div>
             </div>
           </Card>
@@ -190,7 +192,7 @@ export function ProfilePage() {
         </aside>
       </div>
 
-      <AchievementGrid achievements={progress.data?.achievements ?? []} />
+      {showAchievements && <AchievementGrid achievements={progress.data?.achievements ?? []} />}
     </div>
   )
 }

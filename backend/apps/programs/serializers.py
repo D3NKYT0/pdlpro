@@ -1,6 +1,7 @@
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 
+from apps.programs.domain.resources import RESOURCE_PARENTS
 from apps.programs.models import (
     CommissionPayout,
     RoadmapEntry,
@@ -157,10 +158,23 @@ class ResourceSerializer(serializers.ModelSerializer):
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
     validated_data. A autorização pertence ao fluxo chamador.
 
-    Campos declarados: ``id``, ``code``, ``name``, ``category``, ``enabled``, ``description``.
+    O campo somente leitura ``parent_code`` identifica o módulo principal dos micro-recursos.
+    O catálogo mantém a preferência de cada filho independente da ativação do pai.
     """
+
+    parent_code = serializers.SerializerMethodField()
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if instance.code in RESOURCE_PARENTS:
+            data["name"] = _(data["name"])
+            data["description"] = _(data["description"])
+        return data
+
+    def get_parent_code(self, obj):
+        return RESOURCE_PARENTS.get(obj.code)
 
     class Meta:
         model = SystemResource
-        fields = ["id", "code", "name", "category", "enabled", "description"]
+        fields = ["id", "code", "name", "category", "enabled", "description", "parent_code"]
         read_only_fields = ["id", "code", "name", "category", "description"]

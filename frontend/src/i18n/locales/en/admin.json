@@ -2055,8 +2055,22 @@
       "game-stores": {
         "name": "In-game shops",
         "description": "Offline private stores published by the server."
+      },
+      "accounts-link": {
+        "name": "Link existing account",
+        "description": "Linking by login and password or email."
+      },
+      "accounts-create-character": {
+        "name": "Create character",
+        "description": "Character creation through the panel."
+      },
+      "progress-achievements": {
+        "name": "Achievements",
+        "description": "Show account achievements in the dashboard and profile."
       }
-    }
+    },
+    "microResources": "Micro-features",
+    "parentDisabled": "The parent module is disabled. These preferences will apply when it is enabled again."
   },
   "roadmap": {
     "kicker": "Content",

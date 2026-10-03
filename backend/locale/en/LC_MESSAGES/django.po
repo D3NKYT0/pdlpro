@@ -5259,3 +5259,21 @@ msgstr "Country (ISO 3166-1 alpha-2)"
 
 #~ msgid "Extensão de exemplo"
 #~ msgstr "Sample extension"
+
+msgid "Vincular conta existente"
+msgstr "Link existing account"
+
+msgid "Vinculação por login e senha ou e-mail."
+msgstr "Linking by login and password or email."
+
+msgid "Criar personagem"
+msgstr "Create character"
+
+msgid "Criação de personagens pelo painel."
+msgstr "Character creation through the panel."
+
+msgid "Conquistas"
+msgstr "Achievements"
+
+msgid "Exibição das conquistas da conta no painel e no perfil."
+msgstr "Show account achievements in the dashboard and profile."

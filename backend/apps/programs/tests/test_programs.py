@@ -787,3 +787,39 @@ def test_exchange_financial_outcomes(player, direction, outcome):
         expected += Decimal("9.50") if direction == "from_game" else Decimal(-10)
     assert wallet.balance == expected
     assert wallet.bonus_balance == 20
+
+
+@pytest.mark.parametrize("code,path,sibling", [
+    ("accounts-link", "accounts/link/", "characters/"),
+    ("accounts-link", "accounts/link-email/", "accounts/"),
+    ("accounts-link", "accounts/link-email/confirm/", "accounts/"),
+    ("accounts-create-character", "characters/create/", "characters/"),
+])
+def test_micro_resource_blocks_only_its_operation(api, staff, code, path, sibling):
+    registered = api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
+    assert registered.status_code in (200, 201)
+    resource = SystemResource.objects.get(code=code)
+    resource.enabled = False
+    resource.save()
+    response = api.post("/api/v1/customer/server/" + path, {}, format="json")
+    assert response.status_code == 403
+    assert response.json()["error_code"] == "RESOURCE_DISABLED"
+    assert api.get("/api/v1/customer/server/" + sibling).status_code == 200
+    assert api.patch(f"/api/v1/staff/resources/{resource.id}/", {"enabled": True}).status_code == 403
+    assert staff.patch(f"/api/v1/staff/resources/{resource.id}/", {"enabled": True}).status_code == 200
+    assert api.post("/api/v1/customer/server/" + path, {}, format="json").status_code != 403
+
+
+def test_micro_catalog_exposes_parent_and_parent_preserves_child_preference(api, staff):
+    rows = {row["code"]: row for row in api.get("/api/v1/public/resources/").data}
+    assert rows["accounts-link"]["parent_code"] == "accounts"
+    assert rows["accounts-create-character"]["parent_code"] == "accounts"
+    assert rows["progress-achievements"]["parent_code"] == "progress"
+    assert rows["accounts"]["parent_code"] is None
+    parent = SystemResource.objects.get(code="accounts")
+    child = SystemResource.objects.get(code="accounts-create-character")
+    staff.patch(f"/api/v1/staff/resources/{parent.id}/", {"enabled": False})
+    assert api.post("/api/v1/customer/server/characters/create/", {}).status_code == 403
+    child.refresh_from_db()
+    assert child.enabled
+    assert staff.patch(f"/api/v1/staff/resources/{parent.id}/", {"enabled": "invalid"}).status_code == 400

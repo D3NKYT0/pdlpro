@@ -103,3 +103,26 @@ it('mostra vazio e erro com nova tentativa', async () => {
   await userEvent.click(screen.getByRole('button', { name: 'Tentar novamente' }))
   expect(await screen.findByText('Nenhum módulo cadastrado')).toBeVisible()
 })
+
+
+it('agrupa micro-recursos no módulo e salva somente a preferência do filho', async () => {
+  const child = { id: 'achievements', code: 'progress-achievements', parent_code: 'progress', name: 'Conquistas', category: 'Conta', enabled: true, description: '' }
+  vi.mocked(programsApi.resources).mockResolvedValue([...catalog, child])
+  const user = mount()
+  const toggle = await screen.findByRole('checkbox', { name: 'Desativar Conquistas' })
+  expect(toggle.closest('article')).toContainElement(screen.getByRole('heading', { name: 'Nível e conquistas' }))
+  await user.click(toggle)
+  expect(programsApi.toggleResource).toHaveBeenCalledWith('achievements', false)
+})
+
+
+it('explica a herança do módulo desligado e permite preparar a preferência do filho', async () => {
+  const child = { id: 'achievements', code: 'progress-achievements', parent_code: 'progress', name: 'Conquistas', category: 'Conta', enabled: true, description: '' }
+  vi.mocked(programsApi.resources).mockResolvedValue([...catalog.map(row => row.code === 'progress' ? { ...row, enabled: false } : row), child])
+  const user = mount()
+  const toggle = await screen.findByRole('checkbox', { name: 'Desativar Conquistas' })
+  expect(screen.getByText(/O módulo principal está desativado/)).toBeVisible()
+  expect(toggle).toBeChecked()
+  await user.click(toggle)
+  expect(programsApi.toggleResource).toHaveBeenCalledWith('achievements', false)
+})

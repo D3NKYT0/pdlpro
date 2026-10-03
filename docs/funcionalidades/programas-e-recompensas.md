@@ -89,3 +89,27 @@ Consulte [Câmbio entre painel e jogo](../integracoes/cambio-painel-jogo.md) par
 - [Ambiente de demonstração](../desenvolvimento/preview.md).
 - [Testes e qualidade](../desenvolvimento/testes.md).
 - [Registro de validação de 02/09/2026](../historico/2026-09-02-validacao.md).
+
+
+## Micro-recursos
+
+Em `/panel/admin/resources`, cada módulo apresenta seus micro-recursos em um grupo
+interno. A conta L2 permite controlar **Vincular conta existente** (login/senha e
+pedido/confirmação por e-mail) e **Criar personagem** separadamente. Em **Nível e
+conquistas**, o controle **Conquistas** oculta a coleção no painel e no perfil,
+sem apagar conquistas, alterar XP ou impedir recompensas.
+
+Os controles começam habilitados na migração `programs.0008`. O catálogo público
+informa `parent_code`; `null` identifica um módulo principal. Desativar o pai
+bloqueia seus filhos sem alterar suas preferências salvas. A administração continua
+acessível para reativação. Alterações atualizam o cache da SPA; outras sessões
+consultam novamente o catálogo a cada 30 segundos.
+
+Os endpoints de vinculação e criação recusam chamadas diretas com HTTP 403 e
+`RESOURCE_DISABLED`. As consultas de contas e personagens continuam disponíveis.
+A consulta de progresso preserva nível, XP e recompensas e omite a coleção e seus
+contadores quando a exibição das conquistas está desativada.
+
+Validação: testes de API cobrem bloqueio/reativação, separação entre operações,
+autorização staff e preservação das preferências. Testes da SPA cobrem agrupamento,
+alteração de um filho e ocultação da vinculação.

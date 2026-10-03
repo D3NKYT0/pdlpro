@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
-import { ApiError, lineageApi, serverApi, walletApi } from '../services/api'
+import { ApiError, lineageApi, programsApi, serverApi, walletApi } from '../services/api'
 import i18n from '../i18n'
 import { AccountsPage } from './AccountsPage'
 
@@ -39,10 +39,13 @@ vi.mock('../services/domain/server.service', () => ({
 }))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 
+vi.mock('../services/domain/programs.service', () => ({ programsApi: { resources: vi.fn(async () => []) } }))
+
 let client: QueryClient
 
 beforeEach(() => {
   vi.resetAllMocks()
+  vi.mocked(programsApi.resources).mockResolvedValue([])
   session.user = { id: 'u1', username: 'denky' }
   vi.mocked(serverApi.info).mockResolvedValue({
     coming_soon: false,
@@ -326,3 +329,28 @@ it('exibe botão Gerenciar para as contas e abre o modal de gerenciamento ao cli
 })
 
 
+
+
+it('oculta vinculação quando o micro-recurso está desativado', async () => {
+  vi.mocked(programsApi.resources).mockResolvedValue([{ id: 'link', code: 'accounts-link', name: '', category: 'Conta', description: '', enabled: false, parent_code: 'accounts' }])
+  vi.mocked(lineageApi.accounts).mockResolvedValue({ accounts: [], primary: { login: 'denky', status: 'available' }, slots: { can_link: true } } as any)
+  vi.mocked(lineageApi.characters).mockResolvedValue([])
+  mount()
+  await screen.findByRole('heading', { name: /Criar conta de jogo/ })
+  expect(screen.queryByRole('heading', { name: 'Vincular conta existente' })).not.toBeInTheDocument()
+  expect(lineageApi.link).not.toHaveBeenCalled()
+})
+
+
+it('desativa a criação em todos os slots sem ocultar a conta vinculada', async () => {
+  vi.mocked(programsApi.resources).mockResolvedValue([{ id: 'create', code: 'accounts-create-character', name: '', category: 'Conta', description: '', enabled: false, parent_code: 'accounts' }])
+  vi.mocked(lineageApi.accounts).mockResolvedValue({ accounts: [{ login: 'denky', is_primary: true, linked: true }], primary: { login: 'denky', status: 'owned' }, slots: { used: 0, total: 3, can_link: true } } as any)
+  vi.mocked(lineageApi.characters).mockResolvedValue([])
+  const user = mount()
+  const create = await screen.findByRole('button', { name: 'Criar personagem' })
+  expect(create).toBeDisabled()
+  for (const button of await screen.findAllByRole('button', { name: /Criar personagem na vaga/ })) expect(button).toBeDisabled()
+  await user.click(create)
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  expect(lineageApi.createCharacter).not.toHaveBeenCalled()
+})

@@ -2055,8 +2055,22 @@
       "game-stores": {
         "name": "Tiendas del juego",
         "description": "Private stores offline publicadas por el servidor."
+      },
+      "accounts-link": {
+        "name": "Vincular cuenta existente",
+        "description": "Vinculación por usuario y contraseña o correo."
+      },
+      "accounts-create-character": {
+        "name": "Crear personaje",
+        "description": "Creación de personajes desde el panel."
+      },
+      "progress-achievements": {
+        "name": "Logros",
+        "description": "Mostrar los logros de la cuenta en el panel y el perfil."
       }
-    }
+    },
+    "microResources": "Microfunciones",
+    "parentDisabled": "El módulo principal está desactivado. Estas preferencias se aplicarán al reactivarlo."
   },
   "roadmap": {
     "kicker": "Contenido",

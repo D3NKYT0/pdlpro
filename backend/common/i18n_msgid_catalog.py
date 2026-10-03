@@ -203,3 +203,11 @@ _("recurso não encontrado")
 _("Não foi possível consultar os itens. Confira a conexão L2 e o módulo SQL.")
 _("O template solicitado não faz parte do catálogo.")
 _("Este pacote não declara presentation; o catálogo de layouts não se aplica.")
+
+# Micro-recursos do catálogo programs (msgids persistidos pela migração).
+_("Vincular conta existente")
+_("Vinculação por login e senha ou e-mail.")
+_("Criar personagem")
+_("Criação de personagens pelo painel.")
+_("Conquistas")
+_("Exibição das conquistas da conta no painel e no perfil.")

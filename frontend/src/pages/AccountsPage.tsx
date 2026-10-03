@@ -18,10 +18,13 @@ import { ManageAccountModal } from '../components/character/ManageAccountModal'
 import { GamepadIcon } from '../components/icons'
 import { getClassName } from '../lib/lineage'
 import { isApiError, lineageApi, serviceAvailable, walletApi, type ApiAccessibleAccount } from '../services/api'
+import { useResourceEnabled } from '../hooks/useResourceEnabled'
 import { useLaunchAccess } from '../hooks/useLaunchAccess'
 
 export function AccountsPage() {
   const { t } = useTranslation('panel')
+  const canLink = useResourceEnabled('accounts-link', 'accounts')
+  const canCreateCharacter = useResourceEnabled('accounts-create-character', 'accounts')
   const { user } = useAuth()
   const { activeLogin, setActiveAccount: selectActiveAccount } = useActiveAccount()
   const navigate = useNavigate()
@@ -110,6 +113,7 @@ export function AccountsPage() {
     hair_color: number
     face: number
   }) {
+    if (!canCreateCharacter) return
     if (isCharacterLimitReached) {
       toast.error(t('accounts.characterLimitReached', { defaultValue: 'Limite de 7 personagens atingido nesta conta' }))
       return
@@ -452,7 +456,7 @@ export function AccountsPage() {
           {/* ========================================================
               CARD 3: VINCULAÇÃO DE CONTA (Já possui conta no servidor?)
               ======================================================== */}
-          <Card className="account-section-card account-card-link">
+          {canLink && <Card className="account-section-card account-card-link">
             <div className="account-section-heading">
               <div>
                 <span className="panel-eyebrow">{t('accounts.linkAccountEyebrow')}</span>
@@ -537,7 +541,7 @@ export function AccountsPage() {
                 </Button>
               </form>
             )}
-          </Card>
+          </Card>}
         </div>
 
         {/* ========================================================
@@ -574,7 +578,7 @@ export function AccountsPage() {
                   size="sm"
                   type="button"
                   className="account-create-character-btn"
-                  disabled={isCharacterLimitReached}
+                  disabled={isCharacterLimitReached || !canCreateCharacter}
                   onClick={() => setCreateCharacterOpen(true)}
                   title={
                     isCharacterLimitReached
@@ -673,12 +677,12 @@ export function AccountsPage() {
                         key={`empty-slot-${slot.slotNumber}`}
                         className="account-character-row is-empty"
                         onClick={() => {
-                          if (!isCharacterLimitReached) {
+                          if (canCreateCharacter && !isCharacterLimitReached) {
                             setCreateCharacterOpen(true)
                           }
                         }}
                         onKeyDown={(event) => {
-                          if ((event.key === 'Enter' || event.key === ' ') && !isCharacterLimitReached) {
+                          if ((event.key === 'Enter' || event.key === ' ') && canCreateCharacter && !isCharacterLimitReached) {
                             event.preventDefault()
                             setCreateCharacterOpen(true)
                           }
@@ -716,7 +720,7 @@ export function AccountsPage() {
                           <button
                             type="button"
                             className="account-slot-create-btn"
-                            disabled={isCharacterLimitReached}
+                            disabled={isCharacterLimitReached || !canCreateCharacter}
                             onClick={(event) => {
                               event.stopPropagation()
                               setCreateCharacterOpen(true)
@@ -760,7 +764,7 @@ export function AccountsPage() {
       />
 
       <CreateCharacterModal
-        open={createCharacterOpen}
+        open={createCharacterOpen && canCreateCharacter}
         accountLogin={selectedLogin ?? ''}
         characterCount={characterCount}
         pending={creatingCharacter}

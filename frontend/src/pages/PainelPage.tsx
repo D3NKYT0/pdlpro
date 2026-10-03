@@ -1,3 +1,4 @@
+import { useResourceEnabled } from '../hooks/useResourceEnabled'
 import { AchievementGrid } from '../components/AchievementGrid'
 import { DashboardHero } from '../components/dashboard/DashboardHero'
 import { DashboardRoster } from '../components/dashboard/DashboardRoster'
@@ -8,6 +9,7 @@ import { AccountProgress } from '../components/progress/AccountProgress'
 import { ExtensionSlotOutlet } from '../extensions'
 
 export function PainelPage() {
+  const showAchievements = useResourceEnabled('progress-achievements', 'progress')
   const dash = usePanelDashboard()
 
   return (
@@ -29,7 +31,7 @@ export function PainelPage() {
         <DashboardRoster login={dash.selectedLogin} characters={dash.roster} pending={dash.accountsPending} />
       ) : null}
       {dash.progressEnabled ? <AccountProgress profile={dash.progress} /> : null}
-      {dash.progressEnabled ? (
+      {dash.progressEnabled && showAchievements ? (
         <AchievementGrid achievements={dash.progress?.achievements ?? []} showRewardsLink={false} />
       ) : null}
       <DashboardShortcuts items={dash.dashboardShortcuts} />

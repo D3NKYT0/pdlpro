@@ -6,6 +6,7 @@ export type Resource = {
   code: string
   name: string
   category: string
+  parent_code?: string | null
   enabled: boolean
   description: string
 }

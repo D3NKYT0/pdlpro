@@ -1824,6 +1824,8 @@
     }
   },
   "resources": {
+    "microResources": "Micro-recursos",
+    "parentDisabled": "O módulo principal está desativado. As preferências abaixo serão aplicadas quando ele for reativado.",
     "kicker": "Sistema",
     "title": "Controle de recursos",
     "description": "Defina quais módulos ficam disponíveis. A desativação bloqueia as telas e a API; o acesso administrativo é preservado.",
@@ -1849,6 +1851,10 @@
       "other": "Outros"
     },
     "items": {
+      "accounts-link": {"name": "Vincular conta existente", "description": "Vinculação por login e senha ou e-mail."},
+      "accounts-create-character": {"name": "Criar personagem", "description": "Criação de personagens pelo painel."},
+      "progress-achievements": {"name": "Conquistas", "description": "Exibição das conquistas da conta no painel e no perfil."},
+
       "supporters": { "name": "Apoiadores", "description": "Programa de apoiadores, cupons e comissões." },
       "roadmap": { "name": "Roadmap", "description": "Atualizações públicas do servidor em PT, EN e ES." },
       "shop": { "name": "Loja", "description": "Itens e pacotes da loja do painel." },

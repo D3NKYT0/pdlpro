@@ -127,6 +127,7 @@ export function AdminResourcesSection() {
   const rows = query.data ?? []
   const buckets = new Map<string, Resource[]>()
   for (const row of rows) {
+    if (row.parent_code) continue
     const key = categoryKey(row)
     const list = buckets.get(key) ?? []
     list.push(row)
@@ -204,11 +205,24 @@ export function AdminResourcesSection() {
                     </div>
                     <Toggle
                       className={`admin-game-switch${busy ? ' is-busy' : ''}`}
+                      disabled={updating !== null}
                       busy={busy}
                       label={busy ? t('resources.updating') : t(row.enabled ? 'resources.disable' : 'resources.enable', { name })}
                       checked={row.enabled}
                       onChange={(event) => void toggle(row, event.target.checked)}
                     />
+                    {rows.filter(child => child.parent_code === row.code).length > 0 && (
+                      <fieldset className="admin-resource-children" data-theme-part="resource-children">
+                        <legend>{t('resources.microResources')}</legend>
+                        {!row.enabled && <p>{t('resources.parentDisabled')}</p>}
+                        {rows.filter(child => child.parent_code === row.code).map(child => (
+                          <div key={child.id}>
+                            <Toggle label={t(child.enabled ? 'resources.disable' : 'resources.enable', { name: labelFor(child) })} checked={child.enabled} busy={updating === child.id} disabled={updating !== null} onChange={event => void toggle(child, event.target.checked)} />
+                            <p>{descriptionFor(child)}</p>
+                          </div>
+                        ))}
+                      </fieldset>
+                    )}
                   </article>
                 )
               })}

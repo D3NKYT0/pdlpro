@@ -53,3 +53,25 @@ def test_progress_unlocks_primeiro_spin(api, user):
     spin = next(row for row in response.data["achievements"] if row["code"] == "primeiro_spin")
     assert spin["unlocked"] is True
     assert "primeiro_spin" in response.data["unlocked_now"]
+
+
+@pytest.mark.django_db
+def test_disabling_achievement_display_preserves_level_and_restores_achievements(api, user):
+    from apps.programs.models import SystemResource
+
+    api.force_authenticate(user=user)
+    before = api.get("/api/v1/shared/me/progress/").data
+    resource = SystemResource.objects.get(code="progress-achievements")
+    resource.enabled = False
+    resource.save()
+    hidden = api.get("/api/v1/shared/me/progress/")
+    assert hidden.status_code == 200
+    assert hidden.data["achievements"] == []
+    assert hidden.data["unlocked_count"] == 0
+    assert hidden.data["total_achievements"] == 0
+    assert hidden.data["level"] == before["level"]
+    assert hidden.data["xp"] == before["xp"]
+    assert hidden.data["rewards"] == before["rewards"]
+    resource.enabled = True
+    resource.save()
+    assert api.get("/api/v1/shared/me/progress/").data["achievements"] == before["achievements"]

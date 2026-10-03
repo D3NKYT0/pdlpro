@@ -7,6 +7,7 @@ from apps.accounts.application.progress import add_xp, unlock_achievements, xp_f
 from apps.accounts.domain.achievement_facts import IAchievementFacts
 from apps.accounts.domain.bag import IRewardBagPort
 from apps.accounts.domain.repositories import IProgressRepository
+from apps.programs.domain.repositories import ISystemResourceRepository
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
@@ -21,9 +22,10 @@ class GetGamerProfileUseCase(UseCase[UUID, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
     """
 
-    def __init__(self, progress: IProgressRepository, facts: IAchievementFacts) -> None:
+    def __init__(self, progress: IProgressRepository, facts: IAchievementFacts, resources: ISystemResourceRepository) -> None:
         self._progress = progress
         self._facts = facts
+        self._resources = resources
 
     def execute(self, data: UUID) -> dict:
         user = self._progress.require_user(data)
@@ -60,6 +62,11 @@ class GetGamerProfileUseCase(UseCase[UUID, dict]):
                     "available": available and reward.pk not in claimed_ids,
                 }
             )
+        if self._resources.any_disabled(["progress", "progress-achievements"]):
+            achievements = []
+            unlocked = []
+            unlocked_codes = []
+
         return {
             "xp": profile.xp,
             "level": profile.level,
