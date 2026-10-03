@@ -10,6 +10,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não lançado]
 
+## [2.7.0] - 2026-10-03
+
+Lançamento com micro-recursos, reorganização do controle de disponibilidade, correções de Analytics, prévias de links e restauração de backups. A API acompanha a versão 2.7.0.
+
 ### Adicionado
 
 - **Micro-recursos**: 78 controles dentro das seis categorias, com subcategorias recursivas para comércio, carteira, inventário, jogos, recompensas, contas e personagens, perfil, apoiadores, notificações, suporte, ajuda e conteúdo público. As telas e APIs respeitam cada ação e seus ancestrais, preservando preferências; o passe suspende resgates automáticos quando desativados. Catálogo e controles disponíveis em português, inglês e espanhol.
@@ -19,6 +23,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - **Controle de recursos**: resumo de disponibilidade efetiva, categorias com cores do tema e barras de atividade, cartões compactos e interruptores com transições. Estados têm indicação textual e animações respeitam movimento reduzido.
 
 ### Corrigido
+
+- **Versão da API publicada**: a imagem do backend recebe a versão durante o build e a expõe nos endpoints de saúde, sistema e documentação OpenAPI.
 
 - **Restauração com chaves antigas**: cada candidata precisa produzir um dump ou pacote de formato válido antes de ser aceita. Isso elimina a falha intermitente em que uma chave errada passava no padding AES-CBC e impedia a tentativa da chave correta de fallback.
 

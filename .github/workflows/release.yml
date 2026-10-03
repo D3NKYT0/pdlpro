@@ -91,6 +91,8 @@ jobs:
         with:
           context: ./backend
           file: ./backend/Dockerfile
+          build-args: |
+            PDL_API_VERSION=${{ steps.meta.outputs.version }}
           push: true
           tags: |
             ${{ steps.meta.outputs.backend }}:${{ steps.meta.outputs.version }}

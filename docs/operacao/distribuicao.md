@@ -288,11 +288,13 @@ isso no anúncio nem na instalação nova.
 
 ## Publicar uma versão (mantenedor)
 
-1. Atualize `version.json` e o [changelog](../historico/changelog.md).
+1. Atualize `version.json` (`version` e `api_version`), os manifestos npm e o [changelog](../historico/changelog.md).
 2. Crie a tag anotada `vX.Y.Z` com o mesmo número, ou dispare o workflow
    **Release publicada**.
 3. O CI roda a suíte, publica as imagens no GHCR e anexa o ZIP e os
    instaladores à GitHub Release.
+   A imagem do backend recebe `PDL_API_VERSION` no build; endpoints e OpenAPI
+   usam esse valor quando o manifesto da raiz não está na imagem.
 4. Deixe os pacotes `backend` e `web` do GHCR **públicos** na primeira
    publicação; sem isso o `docker pull` do operador falha.
 
