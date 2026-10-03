@@ -19,7 +19,7 @@ export function ResourceChildren({ rows, parent, updating, onToggle, ancestorsEn
     <legend>{t('resources.microResources')}</legend>
     {!active && <p>{t('resources.parentDisabled')}</p>}
     {children.sort((a, b) => name(a).localeCompare(name(b), i18n.resolvedLanguage || i18n.language)).map(row => (
-      <div key={row.id}>
+      <div key={row.id} className="admin-resource-option" data-enabled={active && row.enabled}>
         <Toggle label={t(row.enabled ? 'resources.disable' : 'resources.enable', { name: name(row) })}
           checked={row.enabled} busy={updating === row.id} disabled={updating !== null}
           onChange={event => onToggle(row, event.target.checked)} />

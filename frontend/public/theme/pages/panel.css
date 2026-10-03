@@ -15,6 +15,9 @@ html.pdl-panel {
   --panel-surface: rgba(18, 15, 11, 0.93);
   --panel-text: #f7f2e8;
   --panel-muted: rgba(255, 255, 255, 0.58);
+  --panel-success: var(--theme-success, #82d5b0);
+  --panel-danger: var(--theme-danger, #ed939b);
+  --panel-info: var(--theme-info, #86bde9);
   --panel-box-common: var(--panel-muted);
   --panel-box-rare: var(--panel-gold);
   --panel-box-epic: var(--theme-epic, #c4a6e8);
@@ -20779,3 +20782,76 @@ html.pdl-panel .admin-resource-grid { align-items: start; }
 html.pdl-panel .admin-resource-children { grid-column: 1 / -1; min-inline-size: 0; margin: 0; padding: 12px; border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent); }
 html.pdl-panel .admin-resource-children legend { color: var(--panel-gold); padding-inline: 6px; }
 html.pdl-panel .admin-resource-children > div + div { margin-top: 14px; }
+
+/* Resource control: semantic category colors and adaptive module layouts. */
+html.pdl-panel .admin-resources-page { --resource-accent: var(--panel-gold-bright); }
+html.pdl-panel .admin-resource-overview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+html.pdl-panel .admin-resource-stat { display: flex; align-items: center; gap: 16px; padding: 20px; background: linear-gradient(120deg, color-mix(in srgb, var(--resource-accent) 10%, transparent), var(--panel-surface)); }
+html.pdl-panel .admin-resource-stat:nth-child(2) { --resource-accent: var(--panel-info); }
+html.pdl-panel .admin-resource-stat:nth-child(3) { --resource-accent: var(--panel-success); }
+html.pdl-panel .admin-resource-stat > svg { color: var(--resource-accent); width: 28px; height: 28px; }
+html.pdl-panel .admin-resource-stat > div { display: grid; gap: 2px; }
+html.pdl-panel .admin-resource-stat strong { color: var(--resource-accent); font-size: 28px; line-height: 1.2; }
+html.pdl-panel .admin-resource-stat span { color: var(--panel-muted); font-size: 12px; }
+html.pdl-panel .admin-resource-category { --resource-accent: var(--panel-gold-bright); gap: 16px; border-top: 2px solid var(--resource-accent); background: linear-gradient(125deg, color-mix(in srgb, var(--resource-accent) 5%, transparent), transparent 50%), var(--panel-surface); }
+html.pdl-panel .admin-resource-category[data-category="games"], html.pdl-panel .admin-resource-category[data-category="community"] { --resource-accent: var(--panel-box-epic); }
+html.pdl-panel .admin-resource-category[data-category="account"] { --resource-accent: var(--panel-success); }
+html.pdl-panel .admin-resource-category[data-category="communication"], html.pdl-panel .admin-resource-category[data-category="content"] { --resource-accent: var(--panel-info); }
+html.pdl-panel .admin-resource-category .admin-services-heading > span,
+html.pdl-panel .admin-resource-category .admin-game-icon { color: var(--resource-accent); border-color: color-mix(in srgb, var(--resource-accent) 32%, transparent); background: color-mix(in srgb, var(--resource-accent) 10%, transparent); border-radius: 10px; }
+html.pdl-panel .admin-resource-category .admin-services-heading h2,
+html.pdl-panel .admin-resource-category .admin-services-summary strong { color: var(--resource-accent); }
+html.pdl-panel .admin-resource-meter { appearance: none; display: block; width: 100%; height: 4px; border: 0; border-radius: 4px; overflow: hidden; background: color-mix(in srgb, var(--resource-accent) 12%, transparent); color: var(--resource-accent); }
+html.pdl-panel .admin-resource-meter::-webkit-progress-bar { background: color-mix(in srgb, var(--resource-accent) 12%, transparent); }
+html.pdl-panel .admin-resource-meter::-webkit-progress-value { background: var(--resource-accent); border-radius: 4px; transition: width 300ms ease; }
+html.pdl-panel .admin-resource-meter::-moz-progress-bar { background: var(--resource-accent); border-radius: 4px; }
+html.pdl-panel .admin-resource-grid { display: flex; flex-wrap: wrap; gap: 14px; align-items: stretch; }
+html.pdl-panel .admin-resource-card { display: grid; flex: 1 1 calc((100% - 28px) / 3); min-width: 0; width: 100%; box-sizing: border-box; margin-bottom: 0; min-height: 0; padding: 18px; border-radius: 10px; background: linear-gradient(145deg, color-mix(in srgb, var(--resource-accent) 6%, transparent), var(--theme-bg-deep)); animation: resource-arrive 420ms backwards; animation-delay: calc(var(--resource-order, 0) * 45ms); }
+html.pdl-panel .admin-resource-card.is-active { border-color: color-mix(in srgb, var(--resource-accent) 28%, transparent); }
+html.pdl-panel .admin-resource-card.is-inactive { opacity: 1; border-color: color-mix(in srgb, var(--panel-danger) 24%, transparent); }
+html.pdl-panel .admin-resource-card:hover, html.pdl-panel .admin-resource-card:focus-within { border-color: color-mix(in srgb, var(--resource-accent) 65%, transparent); transform: translateY(-3px); box-shadow: 0 8px 24px color-mix(in srgb, var(--resource-accent) 8%, transparent); }
+html.pdl-panel .admin-resource-card h3 { color: var(--panel-text); font-size: 18px; }
+html.pdl-panel .admin-resource-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+html.pdl-panel .admin-resource-meta code { color: var(--panel-muted); }
+html.pdl-panel .admin-resource-status { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; line-height: 1.5; color: var(--panel-success); }
+html.pdl-panel .admin-resource-status[data-enabled="false"] { color: var(--panel-danger); }
+html.pdl-panel .admin-resource-status svg { width: 11px; height: 11px; }
+html.pdl-panel .admin-resource-card .admin-game-switch { margin: 0; padding: 12px; border: 1px solid var(--panel-border); border-radius: 8px; background: color-mix(in srgb, var(--resource-accent) 5%, transparent); }
+html.pdl-panel .admin-resource-card .admin-resource-children { display: grid; gap: 7px; padding: 10px; border-radius: 8px; border-color: color-mix(in srgb, var(--resource-accent) 18%, transparent); background: color-mix(in srgb, var(--panel-surface) 70%, transparent); }
+html.pdl-panel .admin-resource-card .admin-resource-children legend { color: var(--resource-accent); font-size: 11px; font-weight: 700; letter-spacing: .04em; }
+html.pdl-panel .admin-resource-card .admin-resource-children > div + div { margin-top: 0; }
+html.pdl-panel .admin-resource-option { min-width: 0; padding: 9px; border-radius: 6px; border-inline-start: 2px solid var(--panel-success); background: color-mix(in srgb, var(--panel-success) 4%, transparent); transition: background 200ms ease, border-color 200ms ease; }
+html.pdl-panel .admin-resource-option[data-enabled="false"] { border-inline-start-color: var(--panel-danger); background: color-mix(in srgb, var(--panel-danger) 4%, transparent); }
+html.pdl-panel .admin-resource-option:hover { background: color-mix(in srgb, var(--resource-accent) 9%, transparent); }
+html.pdl-panel .admin-resource-option > .ui-toggle { font-size: 12px; line-height: 1.5; }
+html.pdl-panel .admin-resource-option > p { margin: 5px 0 0; font-size: 10px; }
+html.pdl-panel .admin-resource-option > .admin-resource-children { margin-top: 12px; }
+html.pdl-panel .admin-resources-page .ui-toggle input:checked + .admin-toggle-control { background: color-mix(in srgb, var(--panel-success) 18%, transparent); border-color: var(--panel-success); }
+html.pdl-panel .admin-resources-page .ui-toggle input:checked + .admin-toggle-control i { background: var(--panel-success); box-shadow: 0 0 10px color-mix(in srgb, var(--panel-success) 25%, transparent); transform: translateX(17px); }
+html.pdl-panel .admin-resources-page .ui-toggle input[aria-busy="true"] + .admin-toggle-control { animation: resource-saving 900ms ease-in-out infinite; }
+@keyframes resource-arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes resource-saving { 50% { opacity: .45; } }
+@media (max-width: 1200px) { html.pdl-panel .admin-resource-card { flex-basis: calc((100% - 14px) / 2); } }
+@media (max-width: 650px) {
+  html.pdl-panel .admin-resource-card { flex-basis: 100%; }
+  html.pdl-panel .admin-resource-overview { grid-template-columns: 1fr; gap: 8px; }
+  html.pdl-panel .admin-resource-stat { padding: 14px; }
+  html.pdl-panel .admin-resource-stat strong { font-size: 22px; }
+  html.pdl-panel .admin-resource-card { padding: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.pdl-panel .admin-resources-page *, html.pdl-panel .admin-resources-page *::before, html.pdl-panel .admin-resources-page *::after { animation: none !important; transition: none !important; }
+  html.pdl-panel .admin-resource-card:hover, html.pdl-panel .admin-resource-card:focus-within { transform: none; }
+}
+
+html.pdl-panel .admin-resource-card.is-wide { flex-basis: 100%; grid-template-columns: auto minmax(0, 1fr) auto; }
+html.pdl-panel .admin-resource-card.is-wide > .admin-game-switch { grid-column: auto; align-self: start; }
+html.pdl-panel .admin-resource-card.is-wide .admin-resource-children { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+html.pdl-panel .admin-resource-card.is-wide .admin-resource-children > p,
+html.pdl-panel .admin-resource-card.is-wide .admin-resource-option:has(> .admin-resource-children) { grid-column: 1 / -1; }
+@media (max-width: 1200px) { html.pdl-panel .admin-resource-card.is-wide .admin-resource-children { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 650px) {
+  html.pdl-panel .admin-resource-card.is-wide { grid-template-columns: auto minmax(0, 1fr); }
+  html.pdl-panel .admin-resource-card.is-wide > .admin-game-switch { grid-column: 1 / -1; }
+  html.pdl-panel .admin-resource-card.is-wide .admin-resource-children { grid-template-columns: 1fr; }
+}

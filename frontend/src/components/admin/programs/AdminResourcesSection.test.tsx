@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
@@ -68,6 +68,60 @@ it('traduz caça, pescaria e lojas quando o idioma da staff muda', async () => {
   expect(screen.getByRole('heading', { name: 'In-game shops' })).toBeVisible()
   expect(screen.getByRole('heading', { name: 'Level and achievements' })).toBeVisible()
   expect(screen.queryByRole('heading', { name: 'Caça do dia' })).not.toBeInTheDocument()
+})
+
+it('resume os módulos e a disponibilidade efetiva sem contar preferências bloqueadas pelo pai', async () => {
+  vi.mocked(programsApi.resources).mockResolvedValue([...catalog,
+    { id: 'checkout', code: 'shop-checkout', parent_code: 'shop', name: 'Finalizar compras', description: '', category: 'Economia', enabled: true },
+  ])
+  mount()
+  const modules = (await screen.findByText('Módulos principais')).closest('section')!
+  expect(within(modules).getByText('5')).toBeVisible()
+  const micro = screen.getByText('Micro-recursos', { selector: '.admin-resource-stat span' }).closest('section')!
+  expect(within(micro).getByText('1')).toBeVisible()
+  const active = screen.getByText('Recursos disponíveis').closest('section')!
+  expect(within(active).getByText('3')).toBeVisible()
+  expect(screen.getByRole('progressbar', { name: 'Disponibilidade de Economia' })).toHaveAttribute('value', '0')
+  expect(screen.getByRole('checkbox', { name: 'Desativar Finalizar compras' })).toBeChecked()
+  expect(within(screen.getByRole('heading', { name: 'Loja' }).closest('article')!).getByText('Temporariamente desativado')).toBeVisible()
+})
+
+it.each([
+  ['en', 'Main modules', 'Available resources', 'Economy availability'],
+  ['es', 'Módulos principales', 'Recursos disponibles', 'Disponibilidad de Economía'],
+])('traduz o resumo e a barra de disponibilidade em %s', async (lang, modules, active, availability) => {
+  await i18n.changeLanguage(lang)
+  mount()
+  expect(await screen.findByText(modules)).toBeVisible()
+  expect(screen.getByText(active)).toBeVisible()
+  expect(screen.getByRole('progressbar', { name: availability })).toBeVisible()
+})
+
+it('atualiza o resumo, a barra e o estado textual depois de salvar uma alternância', async () => {
+  vi.mocked(programsApi.resources).mockResolvedValueOnce(catalog)
+    .mockResolvedValue(catalog.map(row => row.code === 'hunt' ? { ...row, enabled: false } : row))
+  const user = mount()
+  await user.click(await screen.findByRole('checkbox', { name: 'Desativar Caça do dia' }))
+  expect(await screen.findByRole('checkbox', { name: 'Ativar Caça do dia' })).not.toBeChecked()
+  const card = screen.getByRole('heading', { name: 'Caça do dia' }).closest('article')!
+  expect(within(card).getByText('Temporariamente desativado')).toBeVisible()
+  const summary = screen.getByText('Recursos disponíveis').closest('section')!
+  expect(within(summary).getByText('2')).toBeVisible()
+  expect(screen.getByRole('progressbar', { name: 'Disponibilidade de Jogos' })).toHaveAttribute('value', '1')
+})
+
+it('preserva a edição individual em módulos com listas extensas e grupos aninhados', async () => {
+  const children: Resource[] = Array.from({ length: 6 }, (_, index) => ({
+    id: `option-${index}`, code: `option-${index}`, parent_code: index < 3 ? 'shop' : 'option-0',
+    name: `Opção ${index}`, description: `Descrição ${index}`, category: 'Economia', enabled: true,
+  }))
+  vi.mocked(programsApi.resources).mockResolvedValue([...catalog, ...children])
+  const user = mount()
+  expect(await screen.findByRole('checkbox', { name: 'Desativar Opção 5' })).toBeChecked()
+  expect(screen.getAllByRole('checkbox')).toHaveLength(11)
+  await user.click(screen.getByRole('checkbox', { name: 'Desativar Opção 5' }))
+  expect(programsApi.toggleResource).toHaveBeenCalledWith('option-5', false)
+  expect(programsApi.toggleResource).toHaveBeenCalledTimes(1)
 })
 
 it.each([false, true])('envia o toggle e apresenta o resultado; erro=%s', async (fail) => {

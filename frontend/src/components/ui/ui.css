@@ -239,9 +239,9 @@ html.pdl-panel .btn.ui-button.ui-modal-close:hover {
 .ui-tabs > button[aria-selected="true"] { color: var(--theme-accent, var(--gold)); border-color: var(--theme-accent, var(--gold)); background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 8%, transparent); }
 .ui-tabs > button:focus-visible { outline: 2px solid var(--theme-accent, var(--gold)); outline-offset: 3px; }
 .ui-toggle > input[type="checkbox"] { position: absolute; width: 1px; height: 1px; min-height: 0; margin: 0; padding: 0; border: 0; opacity: 0; clip-path: inset(50%); }
-.ui-toggle .admin-toggle-control { display: inline-flex; align-items: center; flex-shrink: 0; width: 42px; height: 24px; padding: 3px; border: 1px solid var(--border); border-radius: 20px; background: #0f0d0a; }
-.ui-toggle .admin-toggle-control i { width: 16px; height: 16px; border-radius: 50%; background: var(--muted); transition: transform .15s; }
+.ui-toggle .admin-toggle-control { display: inline-flex; align-items: center; flex-shrink: 0; width: 42px; height: 24px; padding: 3px; border: 1px solid var(--border); border-radius: 20px; background: #0f0d0a; transition: background-color .2s ease, border-color .2s ease; }
+.ui-toggle .admin-toggle-control i { width: 16px; height: 16px; border-radius: 50%; background: var(--muted); transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease; }
 .ui-toggle input:checked + .admin-toggle-control { border-color: var(--theme-accent, var(--gold)); }
 .ui-toggle input:checked + .admin-toggle-control i { transform: translateX(17px); background: var(--theme-accent, var(--gold)); }
-@media (prefers-reduced-motion: reduce) { .ui-toggle .admin-toggle-control i { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .ui-toggle .admin-toggle-control, .ui-toggle .admin-toggle-control i { transition: none; } }
 @media (max-width: 640px) { .ui-page-header { align-items: flex-start; flex-wrap: wrap; } }

@@ -172,3 +172,7 @@ exportação e exclusão dos próprios dados preservam suas políticas específi
 - Resgate automático suspenso sem entrega de itens; reativação entrega uma única vez.
 - SPA: carregamento, vazio, erro, contrato HTTP, interação, ocultação, abas e
   herança; interruptores administrativos impedem envios duplicados.
+
+### Apresentação do controle de recursos
+
+O resumo administrativo distingue módulos principais, micro-recursos e recursos efetivamente disponíveis, considerando todos os ancestrais. Cada categoria exibe a proporção de módulos ativos; cartões compactos usam cores da identidade do tema, indicação textual do estado e animações suaves. Listas com seis ou mais descendentes ocupam uma faixa inteira; grupos aninhados também usam linhas completas para evitar colunas excessivamente altas. Preferências dos filhos permanecem editáveis com o pai desligado. Validação: resumo com filho ativo sob pai inativo, traduções PT/EN/ES, alternância e bloqueio de repetição; conferir desktop, celular e movimento reduzido no navegador.

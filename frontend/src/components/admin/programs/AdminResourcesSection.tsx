@@ -1,6 +1,6 @@
 import { ResourceChildren } from './ResourceChildren'
 import { Card } from '../../ui/Card'
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import {
@@ -25,6 +25,8 @@ import {
   Package,
   Puzzle,
   Settings2,
+  ShieldCheck,
+  Power,
   ShoppingBag,
   Store,
   Ticket,
@@ -39,6 +41,7 @@ import { ErrorNotice, LoadingState } from '../../ui/Feedback'
 import { Toggle } from '../../ui/Toggle'
 import { AdminHeader } from '../../../pages/admin/AdminChrome'
 import { apiErrorMessage } from '../../../lib/errors'
+import { resourceEnabled } from '../../../lib/resources'
 
 const CATEGORY_ORDER = ['economy', 'games', 'account', 'community', 'communication', 'content'] as const
 
@@ -112,6 +115,19 @@ function categoryKey(row: Resource) {
   return CATEGORY_BY_CODE[row.code] ?? 'other'
 }
 
+/** Listas extensas ocupam uma faixa completa, incluindo subcategorias aninhadas. */
+function hasLongList(rows: Resource[], parent: Resource) {
+  const descendants = new Set([parent.code])
+  let size = 0
+  do {
+    size = descendants.size
+    for (const row of rows) {
+      if (row.parent_code && descendants.has(row.parent_code)) descendants.add(row.code)
+    }
+  } while (descendants.size !== size)
+  return descendants.size > 6
+}
+
 export function AdminResourcesSection() {
   const { t, i18n } = useTranslation('admin')
   const queryClient = useQueryClient()
@@ -154,7 +170,7 @@ export function AdminResourcesSection() {
   }
 
   return (
-    <div className="account-page">
+    <div className="account-page admin-resources-page" data-theme-part="resource-control">
       <AdminHeader
         kicker={t('resources.kicker')}
         title={t('resources.title')}
@@ -162,6 +178,19 @@ export function AdminResourcesSection() {
       />
       <ErrorNotice error={query.error} onRetry={() => void query.refetch()} />
       {query.isPending && <LoadingState />}
+      {!query.isPending && !query.error && rows.length > 0 && (
+        <div className="admin-resource-overview">
+          {[
+            { key: 'modules', count: rows.filter(row => !row.parent_code).length, Icon: Puzzle },
+            { key: 'microControls', count: rows.filter(row => row.parent_code).length, Icon: Settings2 },
+            { key: 'effectiveActive', count: rows.filter(row => resourceEnabled(rows, row.code)).length, Icon: ShieldCheck },
+          ].map(({ key, count, Icon }) => (
+            <Card key={key} className="admin-resource-stat" data-theme-part="resource-stat">
+              <Icon aria-hidden="true" /><div><strong>{count}</strong><span>{t(`resources.${key}`)}</span></div>
+            </Card>
+          ))}
+        </div>
+      )}
       {!query.isPending && !query.error && !rows.length ? (
         <div className="account-empty-state">
           <strong>{t('resources.emptyTitle')}</strong>
@@ -170,12 +199,13 @@ export function AdminResourcesSection() {
       ) : null}
       {categories.map((category) => {
         const items = [...(buckets.get(category) ?? [])].sort((left, right) =>
+          Number(hasLongList(rows, left)) - Number(hasLongList(rows, right)) ||
           labelFor(left).localeCompare(labelFor(right), i18n.resolvedLanguage || i18n.language),
         )
         const Icon = CATEGORY_ICONS[category] ?? Settings2
         const enabledCount = items.filter((item) => item.enabled).length
         return (
-          <Card className="admin-games-panel" key={category}>
+          <Card className="admin-games-panel admin-resource-category" key={category} data-category={category} data-theme-part="resource-category">
             <header className="admin-services-heading">
               <span>
                 <Icon />
@@ -189,19 +219,24 @@ export function AdminResourcesSection() {
                 <small>{t('resources.activeCount', { total: items.length })}</small>
               </div>
             </header>
+            <progress className="admin-resource-meter" value={enabledCount} max={items.length}
+              aria-label={t('resources.categoryAvailability', { name: t(`resources.categories.${category}`, { defaultValue: category }) })} />
             <div className="admin-game-grid admin-resource-grid">
-              {items.map((row) => {
+              {items.map((row, index) => {
                 const ItemIcon = RESOURCE_ICONS[row.code] ?? Puzzle
                 const name = labelFor(row)
                 const busy = updating === row.id
                 return (
-                  <article className={`admin-game-card${row.enabled ? ' is-active' : ' is-inactive'}`} key={row.id}>
+                  <article className={`admin-game-card admin-resource-card${hasLongList(rows, row) ? ' is-wide' : ''}${row.enabled ? ' is-active' : ' is-inactive'}`} key={row.id}
+                    data-theme-part="resource-card" style={{ '--resource-order': index } as CSSProperties}>
                     <span className="admin-game-icon">
                       <ItemIcon aria-hidden={true} />
                     </span>
                     <div>
                       <h3>{name}</h3>
-                      <code>{row.code}</code>
+                      <div className="admin-resource-meta"><code>{row.code}</code>
+                        <span className="admin-resource-status" data-enabled={row.enabled}><Power aria-hidden="true" />{t(row.enabled ? 'resources.available' : 'resources.unavailable')}</span>
+                      </div>
                       <p>{descriptionFor(row)}</p>
                     </div>
                     <Toggle

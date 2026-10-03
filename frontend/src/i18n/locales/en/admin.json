@@ -1929,6 +1929,10 @@
     }
   },
   "resources": {
+    "modules": "Main modules",
+    "microControls": "Micro-resources",
+    "effectiveActive": "Available resources",
+    "categoryAvailability": "{{name}} availability",
     "kicker": "System",
     "title": "Resource control",
     "description": "Choose which modules stay available. Disabling blocks the screens and the API; administrative access is preserved.",

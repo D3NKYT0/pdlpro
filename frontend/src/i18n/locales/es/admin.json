@@ -1929,6 +1929,10 @@
     }
   },
   "resources": {
+    "modules": "Módulos principales",
+    "microControls": "Micro-recursos",
+    "effectiveActive": "Recursos disponibles",
+    "categoryAvailability": "Disponibilidad de {{name}}",
     "kicker": "Sistema",
     "title": "Control de recursos",
     "description": "Define qué módulos quedan disponibles. La desactivación bloquea las pantallas y la API; el acceso administrativo se preserva.",

@@ -14,6 +14,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 - **Micro-recursos**: 78 controles dentro das seis categorias, com subcategorias recursivas para comércio, carteira, inventário, jogos, recompensas, contas e personagens, perfil, apoiadores, notificações, suporte, ajuda e conteúdo público. As telas e APIs respeitam cada ação e seus ancestrais, preservando preferências; o passe suspende resgates automáticos quando desativados. Catálogo e controles disponíveis em português, inglês e espanhol.
 
+### Alterado
+
+- **Controle de recursos**: resumo de disponibilidade efetiva, categorias com cores do tema e barras de atividade, cartões compactos e interruptores com transições. Estados têm indicação textual e animações respeitam movimento reduzido.
+
 ### Corrigido
 
 - **Prévias de links**: o HTML inicial em produção recebe os metadados SEO e Open Graph da configuração pública (ambiente, tema e admin), permitindo compartilhar a identidade do servidor sem depender da execução do React. A indisponibilidade da API preserva o fallback e o carregamento da SPA.

@@ -458,3 +458,5 @@ npm run test:run -- src/theme/ThemeProvider.test.tsx src/theme/theme.test.tsx sr
 
 Homologue o catálogo de componentes, uma página pública, autenticação e painel em desktop e
 celular. Verifique também a restauração do default depois de ativar um pacote.
+
+O controle de recursos usa os tokens semânticos `--panel-success`, `--panel-danger` e `--panel-info`, derivados de `--theme-success`, `--theme-danger` e `--theme-info`, com fallback embutido. Categorias também usam `--panel-gold-bright` e `--panel-box-epic`. Pacotes podem remapear essas cores e as partes `resource-*` sem alterar o componente. Animações são desligadas quando o usuário prefere movimento reduzido.

@@ -183,3 +183,7 @@ As artes esmaltadas novas do painel (pacote, carrinho, troca, escudo conferido e
 5. Teste interação, teclado e acessibilidade. Confira desktop e celular com o tema carregado.
 
 Referências: [testes da biblioteca](../../frontend/src/components/ui/ui.test.tsx), [ações assíncronas](../../frontend/src/hooks/useAsyncAction.test.tsx) e [privacidade do atendimento](../../frontend/src/components/support/TicketMessages.test.tsx).
+
+### Controle de recursos
+
+`AdminResourcesSection` compõe `Card`, `Toggle` e `ResourceChildren`: resumo dos módulos, micro-recursos e disponibilidade efetiva, medidores nativos por categoria e cartões em grade; módulos com seis ou mais descendentes ocupam a largura inteira e distribuem as opções em colunas responsivas. Estados também têm texto; cor não é a única indicação. Os interruptores mantêm foco por teclado e bloqueio durante o envio. Entrada escalonada, hover e pulso durante salvamento respeitam `prefers-reduced-motion`. Partes tematizáveis: `resource-control`, `resource-stat`, `resource-category`, `resource-card`, `resource-children`.

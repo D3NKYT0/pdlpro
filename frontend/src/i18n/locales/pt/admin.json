@@ -1824,6 +1824,10 @@
     }
   },
   "resources": {
+    "modules": "Módulos principais",
+    "microControls": "Micro-recursos",
+    "effectiveActive": "Recursos disponíveis",
+    "categoryAvailability": "Disponibilidade de {{name}}",
     "microResources": "Micro-recursos",
     "parentDisabled": "O módulo principal está desativado. As preferências abaixo serão aplicadas quando ele for reativado.",
     "kicker": "Sistema",
