@@ -1310,13 +1310,13 @@
     "analytics": {
       "gaEyebrow": "Google",
       "gaTitle": "Google Analytics 4 (GA4)",
-      "gaHint": "Google Analytics measurement ID for tracking traffic and navigation on the site.",
+      "gaHint": "Direct installation, used when GTM is absent. The saved panel value overrides the environment; an empty value disables this ID.",
       "adsEyebrow": "Google Ads",
       "adsTitle": "Google Ads Conversions",
-      "adsHint": "Conversion ID (AW-XXXXXXXXX) and conversion label to track purchases and signups.",
+      "adsHint": "Conversion ID and label for direct installation. With GTM, configure conversions in the container.",
       "gtmEyebrow": "Tag Manager",
       "gtmTitle": "Google Tag Manager (GTM)",
-      "gtmHint": "GTM container ID to manage 3rd-party tags and scripts via Google Tag Manager.",
+      "gtmHint": "When configured, GTM manages Google tags; the site does not load GA4 or Ads directly. Reload the page after changing IDs.",
       "pixelsEyebrow": "Social Networks",
       "pixelsTitle": "Meta & TikTok Pixels",
       "pixelsHint": "Numeric pixel IDs for tracking paid media ad campaigns on Facebook, Instagram, and TikTok."

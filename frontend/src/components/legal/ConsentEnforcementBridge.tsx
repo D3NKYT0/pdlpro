@@ -3,7 +3,7 @@ import { useCookieConsent } from '../../contexts/CookieConsentContext'
 import { hasAnalyticsConsent, hasFunctionalConsent, hasMarketingConsent } from '../../lib/cookieConsent'
 import { LANGUAGE_STORAGE_KEY } from '../../i18n/locale'
 import { initializeMonitoring, shutdownMonitoring } from '../../observability'
-import { initTracking, updateTrackingConsent } from '../../lib/tracking'
+import { updateTrackingConsent } from '../../lib/tracking'
 
 /**
  * Aplica efeitos reais do consentimento:
@@ -14,14 +14,8 @@ import { initTracking, updateTrackingConsent } from '../../lib/tracking'
 export function ConsentEnforcementBridge() {
   const { consent, hasDecided } = useCookieConsent()
   const monitoringStarted = useRef(false)
-  const trackingInitialized = useRef(false)
 
   useEffect(() => {
-    if (!trackingInitialized.current) {
-      initTracking()
-      trackingInitialized.current = true
-    }
-
     if (!hasDecided) return
 
     const allowAnalytics = hasAnalyticsConsent(consent)

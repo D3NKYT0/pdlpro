@@ -109,15 +109,14 @@ export function reconfigureTrackingFromApi(info?: {
 }): TrackingConfig | null {
   if (!info) return activeConfig
   const env: TrackingEnv = {
-    VITE_GTAG_ID: info.gtag_id || activeConfig?.gtagId || import.meta.env.VITE_GTAG_ID,
-    VITE_GOOGLE_ADS_ID: info.google_ads_id || activeConfig?.googleAdsId || import.meta.env.VITE_GOOGLE_ADS_ID,
+    VITE_GTAG_ID: info.gtag_id ?? import.meta.env.VITE_GTAG_ID,
+    VITE_GOOGLE_ADS_ID: info.google_ads_id ?? import.meta.env.VITE_GOOGLE_ADS_ID,
     VITE_GOOGLE_ADS_CONVERSION_LABEL:
-      info.google_ads_conversion_label ||
-      activeConfig?.googleAdsConversionLabel ||
+      info.google_ads_conversion_label ??
       import.meta.env.VITE_GOOGLE_ADS_CONVERSION_LABEL,
-    VITE_GTM_ID: info.gtm_id || activeConfig?.gtmId || import.meta.env.VITE_GTM_ID,
-    VITE_META_PIXEL_ID: info.meta_pixel_id || activeConfig?.metaPixelId || import.meta.env.VITE_META_PIXEL_ID,
-    VITE_TIKTOK_PIXEL_ID: info.tiktok_pixel_id || activeConfig?.tiktokPixelId || import.meta.env.VITE_TIKTOK_PIXEL_ID,
+    VITE_GTM_ID: info.gtm_id ?? import.meta.env.VITE_GTM_ID,
+    VITE_META_PIXEL_ID: info.meta_pixel_id ?? import.meta.env.VITE_META_PIXEL_ID,
+    VITE_TIKTOK_PIXEL_ID: info.tiktok_pixel_id ?? import.meta.env.VITE_TIKTOK_PIXEL_ID,
   }
   return initTracking(env)
 }
@@ -138,6 +137,20 @@ export function initTracking(env: TrackingEnv = import.meta.env): TrackingConfig
     if (isSame) return activeConfig
   }
 
+  const googleChanged = !initialized || activeConfig?.gtmId !== config.gtmId ||
+    (!config.gtmId && (activeConfig?.gtagId !== config.gtagId || activeConfig?.googleAdsId !== config.googleAdsId))
+  if (googleChanged) lastDispatchedPath = null
+  if (typeof window !== 'undefined' && activeConfig?.gtagId && !config.gtmId &&
+      activeConfig.gtagId !== config.gtagId) {
+    (window as unknown as Record<string, unknown>)[`ga-disable-${activeConfig.gtagId}`] = true
+  }
+  if (typeof document !== 'undefined' && activeConfig && googleChanged) {
+    document.getElementById('pdl-gtag-script')?.remove()
+    document.getElementById('pdl-gtm-script')?.remove()
+  }
+  if (typeof window !== 'undefined' && config.gtagId && !config.gtmId) {
+    (window as unknown as Record<string, unknown>)[`ga-disable-${config.gtagId}`] = false
+  }
   activeConfig = config
 
   if (typeof window === 'undefined') return config
@@ -150,8 +163,8 @@ export function initTracking(env: TrackingEnv = import.meta.env): TrackingConfig
   const allowMarketing = hasMarketingConsent()
 
   // 1. Google Tag (gtag.js) / Google Ads
-  const googlePrimaryId = config.gtagId || config.googleAdsId
-  if (googlePrimaryId) {
+  const googlePrimaryId = config.gtmId ? undefined : config.gtagId || config.googleAdsId
+  if (googleChanged && (googlePrimaryId || config.gtmId)) {
     window.dataLayer = window.dataLayer || []
     if (typeof window.gtag !== 'function') {
       window.gtag = function gtag(...args: unknown[]) {
@@ -167,19 +180,21 @@ export function initTracking(env: TrackingEnv = import.meta.env): TrackingConfig
       ad_personalization: allowMarketing ? 'granted' : 'denied',
     })
 
-    injectScript('pdl-gtag-script', `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googlePrimaryId)}`)
+    if (googlePrimaryId) {
+      injectScript('pdl-gtag-script', `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googlePrimaryId)}`)
 
-    window.gtag('js', new Date())
-    if (config.gtagId) {
-      window.gtag('config', config.gtagId, { send_page_view: false })
-    }
-    if (config.googleAdsId && config.googleAdsId !== config.gtagId) {
-      window.gtag('config', config.googleAdsId)
+      window.gtag('js', new Date())
+      if (config.gtagId) {
+        window.gtag('config', config.gtagId, { send_page_view: false })
+      }
+      if (config.googleAdsId && config.googleAdsId !== config.gtagId) {
+        window.gtag('config', config.googleAdsId)
+      }
     }
   }
 
   // 2. Google Tag Manager (GTM)
-  if (config.gtmId) {
+  if (googleChanged && config.gtmId) {
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
     injectScript('pdl-gtm-script', `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(config.gtmId)}`)
@@ -327,31 +342,29 @@ export function updateTrackingConsent(consent: { analytics: boolean; marketing: 
   }
 }
 
+/** Envia cada evento por um único transporte Google; GTM tem precedência. */
+function dispatchGoogleEvent(name: string, params?: Record<string, unknown>) {
+  if (activeConfig?.gtmId) {
+    window.dataLayer?.push({ event: name, ...params })
+  } else if ((activeConfig?.gtagId || activeConfig?.googleAdsId) && typeof window.gtag === 'function') {
+    window.gtag('event', name, params)
+  }
+}
+
 /**
  * Dispara visualização de página na SPA em todos os provedores habilitados e consentidos.
  */
 export function trackPageView(path: string, title?: string) {
   if (typeof window === 'undefined') return
+  if (!activeConfig || !isTrackingConfigured(activeConfig)) return
 
   lastDispatchedPath = path
   const allowMarketing = hasMarketingConsent()
 
-  // Google Analytics (Gtag) - opera com Google Consent Mode v2 (armazenamento gerenciado pela tag)
-  if (typeof window.gtag === 'function' && activeConfig?.gtagId) {
-    window.gtag('event', 'page_view', {
-      page_path: path,
-      page_title: title || (typeof document !== 'undefined' ? document.title : ''),
-    })
-  }
-
-  // Google Tag Manager
-  if (window.dataLayer && activeConfig?.gtmId) {
-    window.dataLayer.push({
-      event: 'page_view',
-      page_path: path,
-      page_title: title || (typeof document !== 'undefined' ? document.title : ''),
-    })
-  }
+  dispatchGoogleEvent('page_view', {
+    page_path: path,
+    page_title: title || (typeof document !== 'undefined' ? document.title : ''),
+  })
 
   // Meta Pixel
   if (allowMarketing && typeof window.fbq === 'function' && activeConfig?.metaPixelId) {
@@ -372,19 +385,13 @@ export function trackPageView(path: string, title?: string) {
 export function trackEvent(name: string, params?: Record<string, unknown>) {
   if (typeof window === 'undefined') return
 
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', name, params)
-  }
+  dispatchGoogleEvent(name, params)
 
-  if (window.dataLayer) {
-    window.dataLayer.push({ event: name, ...params })
-  }
-
-  if (hasMarketingConsent() && typeof window.fbq === 'function') {
+  if (hasMarketingConsent() && activeConfig?.metaPixelId && typeof window.fbq === 'function') {
     window.fbq('trackCustom', name, params)
   }
 
-  if (hasMarketingConsent() && window.ttq && typeof window.ttq.track === 'function') {
+  if (hasMarketingConsent() && activeConfig?.tiktokPixelId && window.ttq && typeof window.ttq.track === 'function') {
     window.ttq.track(name, params)
   }
 }
@@ -395,13 +402,7 @@ export function trackEvent(name: string, params?: Record<string, unknown>) {
 export function trackRegistration(method = 'email') {
   if (typeof window === 'undefined') return
 
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'sign_up', { method })
-  }
-
-  if (window.dataLayer) {
-    window.dataLayer.push({ event: 'sign_up', method })
-  }
+  dispatchGoogleEvent('sign_up', { method })
 
   if (hasMarketingConsent() && typeof window.fbq === 'function' && activeConfig?.metaPixelId) {
     window.fbq('track', 'CompleteRegistration', { content_name: method })
@@ -418,13 +419,7 @@ export function trackRegistration(method = 'email') {
 export function trackLogin(method = 'password') {
   if (typeof window === 'undefined') return
 
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'login', { method })
-  }
-
-  if (window.dataLayer) {
-    window.dataLayer.push({ event: 'login', method })
-  }
+  dispatchGoogleEvent('login', { method })
 }
 
 /**
@@ -433,13 +428,7 @@ export function trackLogin(method = 'password') {
 export function trackInitiateCheckout(amount: number, currency = 'BRL') {
   if (typeof window === 'undefined') return
 
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'begin_checkout', { value: amount, currency })
-  }
-
-  if (window.dataLayer) {
-    window.dataLayer.push({ event: 'begin_checkout', value: amount, currency })
-  }
+  dispatchGoogleEvent('begin_checkout', { value: amount, currency })
 
   if (hasMarketingConsent() && typeof window.fbq === 'function' && activeConfig?.metaPixelId) {
     window.fbq('track', 'InitiateCheckout', { value: amount, currency })
@@ -457,33 +446,18 @@ export function trackPurchase(payload: PurchaseTrackingPayload) {
   if (typeof window === 'undefined') return
   const currency = payload.currency || 'BRL'
 
-  // Google Analytics 4 (Purchase) & Google Ads
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'purchase', {
-      transaction_id: payload.transactionId,
+  dispatchGoogleEvent('purchase', {
+    transaction_id: payload.transactionId,
+    value: payload.amount,
+    currency,
+    items: payload.items,
+  })
+  if (!activeConfig?.gtmId && activeConfig?.googleAdsId && activeConfig.googleAdsConversionLabel && typeof window.gtag === 'function') {
+    window.gtag('event', 'conversion', {
+      send_to: `${activeConfig.googleAdsId}/${activeConfig.googleAdsConversionLabel}`,
       value: payload.amount,
       currency,
-      items: payload.items,
-    })
-
-    // Google Ads Conversion (se label estiver configurado)
-    if (activeConfig?.googleAdsId && activeConfig?.googleAdsConversionLabel) {
-      window.gtag('event', 'conversion', {
-        send_to: `${activeConfig.googleAdsId}/${activeConfig.googleAdsConversionLabel}`,
-        value: payload.amount,
-        currency,
-        transaction_id: payload.transactionId,
-      })
-    }
-  }
-
-  if (window.dataLayer) {
-    window.dataLayer.push({
-      event: 'purchase',
       transaction_id: payload.transactionId,
-      value: payload.amount,
-      currency,
-      items: payload.items,
     })
   }
 

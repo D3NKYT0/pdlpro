@@ -141,6 +141,21 @@ Sem `--path` nem `--from-cloud`, o script usa o `pdl_*` mais recente em `backups
 **obrigatório**: um download corrompido é recusado antes de qualquer alteração. Pacotes
 `.tar(.enc)` e dumps antigos `.dump(.enc)` são aceitos.
 
+Na rotação de chaves, a restauração tenta a chave atual e cada fallback. Uma candidata só
+é aceita depois de conferir o formato do texto decifrado: cabeçalho `PGDMP` para dumps,
+ou TAR legível com `manifest.txt` compatível para pacotes. Isso evita aceitar uma chave
+errada que, por acaso, produza padding CBC válido. A validação completa pelo `pg_restore`
+e dos arquivos continua antes de substituir dados. Tentativas inválidas descartam o
+arquivo temporário; se nenhuma chave produzir conteúdo compatível, a restauração é recusada.
+Essas verificações preservam o formato existente e não transformam AES-CBC em cifra
+autenticada; veja a [limitação do padding no OpenSSL](https://docs.openssl.org/3.0/man1/openssl-enc/).
+
+Regressões automatizadas incluem uma cifra fixa cuja chave errada faz OpenSSL retornar
+sucesso, recuperação pela chave antiga, ausência de chave válida, arquivo com extensão
+incompatível e pacote sem manifesto ou com versão inválida. Não há restauração nem parada
+dos serviços quando a validação falha.
+
+
 Numa restauração comum o `.env` atual **não é alterado**: o do pacote é salvo como
 `backups/db/pdl_<data>.env` (permissão 600) e o comando lista só os **nomes** das variáveis que
 diferem. Se `PDL_DATA_ENCRYPTION_KEY` ou `PDL_DATA_HMAC_KEY` estiverem na lista, o 2FA e os

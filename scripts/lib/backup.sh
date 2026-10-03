@@ -247,7 +247,22 @@ encrypt_backup_file() {
     -pass env:BACKUP_ENCRYPTION_KEY
 }
 
+# Confere o formato esperado antes de aceitar uma chave. Padding CBC válido
+# não prova que a chave está correta; o restore ainda valida o dump completo.
+backup_plaintext_matches_format() {
+  local source_name="${1%.enc}"
+  local plain_path="$2"
+  if [[ "$source_name" == *.tar ]]; then
+    tar -tf "$plain_path" >/dev/null 2>&1 || return 1
+    tar -xOf "$plain_path" manifest.txt 2>/dev/null |
+      grep -Fx "format=${BACKUP_FORMAT}" >/dev/null
+  else
+    LC_ALL=C head -c 5 "$plain_path" 2>/dev/null | LC_ALL=C grep -Fxq 'PGDMP'
+  fi
+}
+
 # Tenta BACKUP_ENCRYPTION_KEY e depois BACKUP_ENCRYPTION_KEY_FALLBACKS.
+# Só aceita uma candidata quando OpenSSL e o formato do conteúdo são válidos.
 decrypt_backup_file() {
   local source="$1"
   local target="$2"
@@ -265,9 +280,11 @@ decrypt_backup_file() {
     [[ -n "$candidate" ]] || continue
     if BACKUP_ENCRYPTION_KEY="$candidate" openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 \
       -in "$source" -out "$target" \
-      -pass env:BACKUP_ENCRYPTION_KEY 2>/dev/null; then
+      -pass env:BACKUP_ENCRYPTION_KEY 2>/dev/null &&
+      backup_plaintext_matches_format "$source" "$target"; then
       return 0
     fi
+    rm -f -- "$target"
   done
   die "não foi possível decifrar o backup com BACKUP_ENCRYPTION_KEY nem fallbacks"
 }

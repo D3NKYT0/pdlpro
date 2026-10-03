@@ -20,6 +20,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- **Restauração com chaves antigas**: cada candidata precisa produzir um dump ou pacote de formato válido antes de ser aceita. Isso elimina a falha intermitente em que uma chave errada passava no padding AES-CBC e impedia a tentativa da chave correta de fallback.
+
+- **Analytics sem instalação duplicada**: o painel prevalece sobre o `.env`, inclusive IDs vazios. A SPA aguarda a configuração pública; GTM assume as tags Google e os eventos seguem um único transporte, evitando instalação direta simultânea de GA4/Ads.
+
 - **Prévias de links**: o HTML inicial em produção recebe os metadados SEO e Open Graph da configuração pública (ambiente, tema e admin), permitindo compartilhar a identidade do servidor sem depender da execução do React. A indisponibilidade da API preserva o fallback e o carregamento da SPA.
 
 ## [2.6.9] - 2026-10-02

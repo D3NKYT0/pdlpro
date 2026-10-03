@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import io
 import os
 import shutil
@@ -421,10 +422,11 @@ def test_restore_from_cloud_rejects_a_corrupted_download_before_touching_data(tm
     assert not [line for line in compose_commands(env.state) if line.startswith("stop ")]
 
 
-def test_restore_accepts_the_previous_dump_enc_format_and_old_keys(tmp_path: Path):
+@pytest.mark.parametrize("db_only", [True, False])
+def test_restore_accepts_the_previous_dump_enc_format_and_old_keys(tmp_path: Path, db_only: bool):
     _require_openssl()
     env = Env(tmp_path, BACKUP_REMOTE="")
-    assert env.run("backup", "--db-only").returncode == 0
+    assert env.run("backup", *(["--db-only"] if db_only else [])).returncode == 0
     [created] = env.local_backups()
     rotated = env.env_file.read_text(encoding="utf-8").replace(
         f"BACKUP_ENCRYPTION_KEY={BACKUP_KEY}",
@@ -436,6 +438,63 @@ def test_restore_accepts_the_previous_dump_enc_format_and_old_keys(tmp_path: Pat
 
     assert result.returncode == 0, result.stdout + result.stderr
     assert (env.state / "restored.dump").read_bytes() == b"PGDMP original-database\n"
+
+
+@pytest.mark.parametrize("has_fallback", [True, False])
+@pytest.mark.parametrize("suffix", ["dump", "tar"])
+def test_restore_does_not_accept_wrong_key_with_valid_cbc_padding(tmp_path: Path, has_fallback: bool, suffix: str):
+    """As duas chaves passam no padding; só a antiga produz um dump PostgreSQL."""
+    _require_openssl()
+    # AES-256-CBC/PBKDF2-SHA256, 200000 iterações, salt PDLTEST1, chave BACKUP_KEY.
+    # A chave incorreta c*64 também faz OpenSSL retornar 0, de modo determinístico.
+    encrypted = bytes.fromhex(
+        "53616c7465645f5f50444c544553543158a56f09e0c90567e9d64990dbc91c8189"
+        "528d923a7b6ddcf5f66caeaa80e0ef"
+    )
+    env = Env(tmp_path, BACKUP_REMOTE="", BACKUP_ENCRYPTION_KEY="c" * 64,
+              BACKUP_ENCRYPTION_KEY_FALLBACKS=BACKUP_KEY if has_fallback else "")
+    env.backup_dir.mkdir()
+    source = env.backup_dir / f"pdl_20261003T000000Z.{suffix}.enc"
+    source.write_bytes(encrypted)
+    source.with_name(source.name + ".sha256").write_text(
+        f"{hashlib.sha256(encrypted).hexdigest()}  {source.name}\n", encoding="utf-8", newline="\n",
+    )
+    result = env.run("restore", "--path", bash_path(source), "--force")
+    if has_fallback and suffix == "dump":
+        assert result.returncode == 0, result.stdout + result.stderr
+        assert (env.state / "restored.dump").read_bytes() == b"PGDMP original-database\n\x00\x00\x03\x25"
+    else:
+        assert result.returncode != 0
+        assert not (env.state / "restored.dump").exists()
+        assert not any(command.startswith("stop ") for command in compose_commands(env.state))
+
+
+@pytest.mark.parametrize("manifest", [None, b"format=pdl-backup/999\n"])
+def test_restore_rejects_decrypted_tar_without_compatible_manifest(tmp_path: Path, manifest: bytes | None):
+    """Uma cifra válida não autoriza a restauração de um pacote incompatível."""
+    _require_openssl()
+    env = Env(tmp_path, BACKUP_REMOTE="")
+    payload = io.BytesIO()
+    with tarfile.open(fileobj=payload, mode="w") as archive:
+        members = [("db.dump", b"PGDMP original-database\n")]
+        if manifest is not None:
+            members.append(("manifest.txt", manifest))
+        for name, content in members:
+            entry = tarfile.TarInfo(name)
+            entry.size = len(content)
+            archive.addfile(entry, io.BytesIO(content))
+    encrypted = subprocess.run(
+        [_bash(), "-c", "openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -salt -pass env:BACKUP_ENCRYPTION_KEY"],
+        input=payload.getvalue(), env={**os.environ, "BACKUP_ENCRYPTION_KEY": BACKUP_KEY},
+        capture_output=True, check=True, timeout=30,
+    ).stdout
+    env.backup_dir.mkdir()
+    source = env.backup_dir / "pdl_20261003T000000Z.tar.enc"
+    source.write_bytes(encrypted)
+    result = env.run("restore", "--path", bash_path(source), "--force")
+    assert result.returncode != 0
+    assert not (env.state / "restored.dump").exists()
+    assert not any(command.startswith("stop ") for command in compose_commands(env.state))
 
 
 def test_restore_keeps_the_current_env_and_saves_the_backup_copy(tmp_path: Path):

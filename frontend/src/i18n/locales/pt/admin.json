@@ -1205,13 +1205,13 @@
     "analytics": {
       "gaEyebrow": "Google",
       "gaTitle": "Google Analytics 4 (GA4)",
-      "gaHint": "ID de métrica do Google Analytics para rastreamento de acessos e navegação no site.",
+      "gaHint": "Instalação direta, usada quando não há GTM. O valor salvo no painel substitui o ambiente; vazio desativa este ID.",
       "adsEyebrow": "Google Ads",
       "adsTitle": "Conversões do Google Ads",
-      "adsHint": "ID de conversão (AW-XXXXXXXXX) e rótulo de conversão para rastrear compras e cadastros.",
+      "adsHint": "ID e rótulo de conversão para instalação direta. Com GTM, configure as conversões no contêiner.",
       "gtmEyebrow": "Tag Manager",
       "gtmTitle": "Google Tag Manager (GTM)",
-      "gtmHint": "Contêiner GTM para gerenciar scripts e tags de terceiros pelo painel do Google.",
+      "gtmHint": "Quando configurado, o GTM gerencia as tags Google; o site não carrega GA4 ou Ads diretamente. Recarregue a página após trocar os IDs.",
       "pixelsEyebrow": "Redes Sociais",
       "pixelsTitle": "Pixel da Meta & TikTok",
       "pixelsHint": "IDs numéricos de pixel para rastreamento de campanhas de tráfego pago no Facebook, Instagram e TikTok."

@@ -392,6 +392,22 @@ def test_analytics_patch_and_probe(api, superuser, hosts, settings):
 
 
 @pytest.mark.django_db
+def test_analytics_panel_overrides_environment_and_keeps_explicit_clear_in_public_info(api, superuser, hosts, settings):
+    settings.VITE_GTAG_ID = "G-ENVIRONMENT"
+    settings.VITE_GTM_ID = "GTM-ENVIRONMENT"
+    api.force_authenticate(superuser)
+    endpoint = reverse("staff-integrations-section", kwargs={"section": "analytics"})
+    response = api.patch(endpoint, {"VITE_GTAG_ID": "", "VITE_GTM_ID": "GTM-PANEL"}, format="json")
+    assert response.status_code == 200
+    public = APIClient().get("/api/v1/public/server/info/")
+    assert public.status_code == 200
+    assert public.data["gtag_id"] == ""
+    assert public.data["gtm_id"] == "GTM-PANEL"
+    # A leitura seguinte não restaura o valor do ambiente nem acumula IDs.
+    assert APIClient().get("/api/v1/public/server/info/").data["gtag_id"] == ""
+
+
+@pytest.mark.django_db
 def test_payments_mercadopago_options_patch_and_probe(api, superuser, hosts, settings):
     api.force_authenticate(superuser)
 

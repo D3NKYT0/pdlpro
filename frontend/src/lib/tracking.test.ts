@@ -25,6 +25,9 @@ describe('Paid Traffic & Analytics tracking', () => {
     delete (window as any).fbq
     delete (window as any)._fbq
     delete (window as any).ttq
+    for (const key of Object.keys(window)) {
+      if (key.startsWith('ga-disable-')) delete (window as unknown as Record<string, unknown>)[key]
+    }
 
     vi.spyOn(cookieConsent, 'hasAnalyticsConsent').mockReturnValue(true)
     vi.spyOn(cookieConsent, 'hasMarketingConsent').mockReturnValue(true)
@@ -32,7 +35,11 @@ describe('Paid Traffic & Analytics tracking', () => {
 
   afterEach(() => {
     vi.restoreAllMocks()
+    vi.unstubAllEnvs()
     resetTrackingForTesting()
+    for (const key of Object.keys(window)) {
+      if (key.startsWith('ga-disable-')) delete (window as unknown as Record<string, unknown>)[key]
+    }
   })
 
   describe('parseTrackingConfig', () => {
@@ -174,6 +181,21 @@ describe('Paid Traffic & Analytics tracking', () => {
   })
 
   describe('reconfigureTrackingFromApi', () => {
+    it('honors an explicit empty API field instead of resurrecting build-time IDs', () => {
+      vi.stubEnv('VITE_GTAG_ID', 'G-BUILD')
+      vi.stubEnv('VITE_GTM_ID', 'GTM-BUILD')
+      const config = reconfigureTrackingFromApi({ gtag_id: '', gtm_id: '' })
+      expect(config?.gtagId).toBeUndefined()
+      expect(config?.gtmId).toBeUndefined()
+      expect(document.querySelectorAll('script')).toHaveLength(0)
+    })
+
+    it('uses only GTM when the API overrides a direct build-time GA4 installation', () => {
+      vi.stubEnv('VITE_GTAG_ID', 'G-BUILD')
+      reconfigureTrackingFromApi({ gtag_id: '', gtm_id: 'GTM-PANEL' })
+      expect(document.getElementById('pdl-gtag-script')).toBeNull()
+      expect(document.getElementById('pdl-gtm-script')).not.toBeNull()
+    })
     it('dynamically reconfigures tracking when IDs arrive via reconfigureTrackingFromApi', () => {
       initTracking({})
       expect(document.getElementById('pdl-gtag-script')).toBeNull()
@@ -207,11 +229,56 @@ describe('Paid Traffic & Analytics tracking', () => {
     })
   })
 
+  it('routes Google events once through GTM even when GA4 and Ads IDs are also present', () => {
+    initTracking({ VITE_GTAG_ID: 'G-DIRECT', VITE_GTM_ID: 'GTM-PANEL', VITE_GOOGLE_ADS_ID: 'AW-DIRECT' })
+    expect(document.getElementById('pdl-gtag-script')).toBeNull()
+    window.gtag = vi.fn()
+    window.dataLayer = []
+    trackPageView('/unique')
+    trackLogin('password')
+    trackRegistration('email')
+    trackInitiateCheckout(10)
+    trackPurchase({ transactionId: 'unique', amount: 10 })
+    trackEvent('custom')
+    expect(window.gtag).not.toHaveBeenCalled()
+    expect(window.dataLayer).toHaveLength(6)
+    expect((window.dataLayer as any[]).map(item => item.event)).toEqual(['page_view', 'login', 'sign_up', 'begin_checkout', 'purchase', 'custom'])
+  })
+
+  it('does not restart GTM when an unrelated pixel setting changes', () => {
+    initTracking({ VITE_GTM_ID: 'GTM-PANEL' })
+    initTracking({ VITE_GTM_ID: 'GTM-PANEL', VITE_META_PIXEL_ID: 'NEW-PIXEL' })
+    expect((window.dataLayer as any[]).filter(item => item.event === 'gtm.js')).toHaveLength(1)
+    expect((window.dataLayer as any[]).filter(item => item.event === 'page_view')).toHaveLength(1)
+  })
+
+  it('does not reload the container when inactive direct Google IDs change', () => {
+    initTracking({ VITE_GTM_ID: 'GTM-PANEL', VITE_GTAG_ID: 'G-OLD' })
+    const loader = document.getElementById('pdl-gtm-script')
+    initTracking({ VITE_GTM_ID: 'GTM-PANEL', VITE_GTAG_ID: 'G-NEW', VITE_GOOGLE_ADS_ID: 'AW-NEW' })
+    expect(document.getElementById('pdl-gtm-script')).toBe(loader)
+    expect((window.dataLayer as any[]).filter(item => item.event === 'gtm.js')).toHaveLength(1)
+    expect(document.getElementById('pdl-gtag-script')).toBeNull()
+  })
+
+  it('replaces the direct loader and stops sending to an explicitly cleared destination', () => {
+    initTracking({ VITE_GTAG_ID: 'G-OLD' })
+    reconfigureTrackingFromApi({ gtag_id: '' })
+    window.gtag = vi.fn()
+    trackLogin()
+    trackPageView('/disabled')
+    expect(window.gtag).not.toHaveBeenCalled()
+    expect(document.getElementById('pdl-gtag-script')).toBeNull()
+    expect((window as unknown as Record<string, unknown>)['ga-disable-G-OLD']).toBe(true)
+    reconfigureTrackingFromApi({ gtag_id: 'G-NEW' })
+    expect((document.getElementById('pdl-gtag-script') as HTMLScriptElement).src).toContain('G-NEW')
+    expect((window as unknown as Record<string, unknown>)['ga-disable-G-NEW']).toBe(false)
+  })
+
   describe('event dispatchers', () => {
     beforeEach(() => {
       initTracking({
         VITE_GTAG_ID: 'G-TEST',
-        VITE_GTM_ID: 'GTM-TEST',
         VITE_GOOGLE_ADS_ID: 'AW-ADS',
         VITE_GOOGLE_ADS_CONVERSION_LABEL: 'conv_label_123',
         VITE_META_PIXEL_ID: 'META-123',
@@ -237,7 +304,7 @@ describe('Paid Traffic & Analytics tracking', () => {
         (window.dataLayer as any[])?.some(
           (item) => item.event === 'page_view' && item.page_path === '/panel/wallet',
         ),
-      ).toBe(true)
+      ).toBe(false)
       expect(window.fbq).toHaveBeenCalledWith('track', 'PageView')
       expect(window.ttq?.page).toHaveBeenCalled()
     })

@@ -1,8 +1,8 @@
 # Tráfego Pago e Analytics (Pixels, Google Ads e Gtag)
 
 O PDL PRO possui suporte nativo e centralizado para ferramentas de tráfego pago,
-remarketing e análise de métricas, configuráveis diretamente via variáveis de ambiente
-(`.env`) sem necessidade de alterar o código-fonte da aplicação.
+remarketing e análise de métricas, configuráveis pelo painel administrativo, com variáveis de ambiente
+(`.env`) como padrão sem necessidade de alterar o código-fonte da aplicação.
 
 ---
 
@@ -40,6 +40,16 @@ VITE_TIKTOK_PIXEL_ID=C1234567890
 
 ---
 
+## Precedência e carregamento único
+
+O backend aplica os valores salvos em **Administração → Integrações → Analytics** sobre o `.env`. A SPA aguarda `/public/server/info/` antes de carregar tags; a resposta é autoritativa, inclusive campos vazios. Um ID limpo no painel não reaparece por estar no bundle antigo. Campos ausentes em APIs antigas conservam o fallback; uma falha da API permite o fallback de build.
+
+Com `VITE_GTM_ID` preenchido, somente `gtm.js` é carregado pelo PDL para Google. GA4 e Ads diretos ficam suspensos, mesmo com IDs preenchidos. Os eventos Google são publicados uma única vez no `dataLayer`; configure as tags e conversões correspondentes no contêiner. Sem GTM, o PDL usa a instalação direta. Meta e TikTok continuam independentes.
+
+Recarregue as páginas abertas ao trocar IDs ou alternar entre instalação direta e GTM: remover um elemento `<script>` não desfaz uma biblioteca já executada. Depois de publicar esta correção, valide uma sessão nova no Tag Assistant. Para `page_view`, escolha um único disparo no contêiner: se consumir o evento da SPA, desative o envio automático da tag Google para não contar a mesma visita duas vezes. Consulte [visualizações de página do GA4](https://developers.google.com/analytics/devguides/collection/ga4/views).
+
+Cenários de regressão: API pendente não carrega IDs de build; campo vazio desativa; painel substitui `.env`; falha da API usa fallback; GA4 + GTM não carregam dois scripts; cadastro, login, checkout, compra, evento personalizado e página seguem um único transporte. A API administrativa mantém autenticação e autorização de superusuário.
+
 ## 2. Ferramentas Suportadas
 
 ### Google Analytics 4 & Google Tag (`VITE_GTAG_ID`)
@@ -75,7 +85,7 @@ Por ser uma aplicação de página única (SPA baseada em React e React Router),
 possui o listener `<TrackingRouteListener />` que monitora as trocas de rota:
 
 - **Mudança de URL:** A cada navegação (ex.: de `/` para `/panel/wallet` ou `/shop`),
-  o evento `page_view` é enviado automaticamente para o Google Tag, GTM e Meta Pixel
+  o evento `page_view` é enviado automaticamente para o Google Tag **ou** GTM, além de Meta Pixel
   (`PageView`), garantindo contagem exata do funil sem necessidade de recarregar a página.
 
 ---
