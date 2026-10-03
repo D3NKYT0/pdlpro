@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 1 de outubro de 2026
+> **Atualizado:** 2 de outubro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
@@ -12,6 +12,7 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- **Autenticação JWT**: atualização do PyJWT para 2.15.0 corrige GHSA-8wjv-2p76-3863 (CVE-2026-102265). Cabeçalhos JSON profundamente aninhados são rejeitados como token inválido nos fluxos HTTP e WebSocket, com testes de regressão.
 - **Carteira / Stripe**: a reabertura após recusa de moeda mantém a Stripe ao trocar USD por BRL, inclusive com Mercado Pago fixo para compras novas, quando BRL está configurado na Stripe. A compra original é recotada sem alterar a quantidade de moedas.
 - **Carteira / Mercado Pago**: o contêiner do formulário permanece renderizável após informar CPF/CNPJ, permitindo que o SDK calcule dimensões durante o carregamento.
 

@@ -2,13 +2,19 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Política de relato](../projeto/seguranca.md) · [Instalar (Release)](distribuicao.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 2 de outubro de 2026
 
 > [!IMPORTANT]
 > Documento canônico de **segurança operacional**. Outros guias devem linkar
 > para cá em vez de repetir checklists.
 
 ## Atualização
+
+O backend fixa PyJWT 2.15.0, que inclui a correção de [GHSA-8wjv-2p76-3863](https://github.com/advisories/GHSA-8wjv-2p76-3863). Reconstrua a imagem ou reinstale `backend/requirements.txt` e reinicie todos os processos que validam JWT, incluindo ASGI. No ambiente distribuído, confirme `python -c "import jwt; print(jwt.__version__)"` e execute a auditoria de dependências. Atualizar apenas o arquivo de requisitos não corrige processos já instalados.
+
+Os testes em `backend/common/tests/test_jwt_malformed_header.py` verificam rejeição sem erro 500 por cookie, Bearer e renovação, além de usuário anônimo no middleware WebSocket. Eles exercitam a aplicação em teste, sem comprovar que esse token ultrapassa os limites de cabeçalho do proxy em produção.
+
+A versão 2.15.0 também corrige [GHSA-42vr-xj54-vc7v](https://github.com/advisories/GHSA-42vr-xj54-vc7v), que ainda afeta a 2.14.0 na leitura de payload sem verificação de assinatura. A auditoria deve confirmar a ausência dos dois alertas no ambiente instalado.
 
 A atualização inclui a migração `server.0005_characterserviceoperation`. Execute as migrações antes de liberar tráfego e reinicie os processos Django/Celery. Publique também o frontend atualizado.
 
