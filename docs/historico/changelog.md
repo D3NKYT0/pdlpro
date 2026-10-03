@@ -10,6 +10,15 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não lançado]
 
+## [2.6.9] - 2026-10-02
+
+Lançamento da versão 2.6.9 do PDL PRO com a Wiki da extensão Valorem, correções no checkout da carteira e atualização de segurança da autenticação JWT.
+
+### Adicionado
+
+- **Wiki Valorem**: extensão opcional com páginas de classes, comandos, itens, skills, NPCs, quests, locais, raid bosses e mapa, Seven Signs, stamina, bônus de enchant e calculadora de craft, com conteúdo em português, inglês e espanhol.
+- **Substituição da Wiki por extensão**: o catálogo de extensões permite que o cliente forneça sua própria Wiki na rota existente, com descoberta automática e endpoint de status da extensão Valorem.
+
 ### Corrigido
 
 - **Autenticação JWT**: atualização do PyJWT para 2.15.0 corrige GHSA-8wjv-2p76-3863 (CVE-2026-102265). Cabeçalhos JSON profundamente aninhados são rejeitados como token inválido nos fluxos HTTP e WebSocket, com testes de regressão.
