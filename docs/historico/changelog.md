@@ -2,13 +2,17 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 2 de outubro de 2026
+> **Atualizado:** 3 de outubro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Não lançado]
+
+### Corrigido
+
+- **Prévias de links**: o HTML inicial em produção recebe os metadados SEO e Open Graph da configuração pública (ambiente, tema e admin), permitindo compartilhar a identidade do servidor sem depender da execução do React. A indisponibilidade da API preserva o fallback e o carregamento da SPA.
 
 ## [2.6.9] - 2026-10-02
 

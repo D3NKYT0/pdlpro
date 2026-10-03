@@ -8,8 +8,10 @@ from apps.server.presentation.views.public import (
     ServerInfoView,
     ServerStatusView,
 )
+from apps.server.presentation.views.site_metadata import SiteMetadataView
 
 urlpatterns = [
+    path("server/metadata/", SiteMetadataView.as_view(), name="public-site-metadata"),
     path("items/catalog/", ItemCatalogView.as_view(), name="public-item-catalog"),
     path("server/info/", ServerInfoView.as_view(), name="public-server-info"),
     path("server/status/", ServerStatusView.as_view(), name="public-server-status"),

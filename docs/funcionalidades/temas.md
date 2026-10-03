@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Componentes](../desenvolvimento/componentes.md) · [Distribuição](../operacao/distribuicao.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 3 de outubro de 2026
 
 O PDL PRO aplica uma única identidade visual às páginas públicas, autenticação, painel do
 jogador e administração React. Além de CSS e assets locais, um pacote pode selecionar um
@@ -12,6 +12,28 @@ O tema `default` é interno, imutável e permanece em `frontend/public/theme/def
 gravado na tabela de pacotes, não pode ser enviado, removido ou sobrescrito e volta a ser usado
 quando nenhum tema instalado está ativo. Assets omitidos por um pacote também usam o arquivo
 correspondente do default.
+
+## Metadados de compartilhamento
+
+Na distribuição de produção, o Nginx inclui os metadados atuais no HTML inicial
+por SSI (`/_site_metadata`, interno), consumindo
+`/api/v1/public/server/metadata/`. O fragmento usa `GetServerInfoUseCase`, com a
+mesma precedência ambiente → pacote ativo → configuração do admin da API pública.
+Título, descrição e imagem Open Graph/Twitter chegam aos crawlers sem JavaScript;
+as URLs das imagens são absolutas e os valores são escapados como HTML.
+
+O HTML exige revalidação e o fragmento não usa cache. Alterações de configuração
+valem na próxima requisição, mas aplicativos de mensagens podem manter suas
+próprias prévias em cache. Se a API estiver indisponível, o SSI usa os metadados
+padrão e mantém a SPA carregável. No Vite local, os comentários SSI não são
+processados e o React continua sincronizando os metadados após carregar a API.
+
+Ao atualizar uma instalação existente, publique o backend e reconstrua a imagem
+web com `frontend/nginx.production.conf` e o novo build juntos. Não basta copiar
+o JavaScript. Valide o HTML recebido com `curl -s https://seu-dominio/` e confira
+`title`, `og:title`, `og:description` e `og:image` sem executar JavaScript.
+Os cenários automatizados ficam em `test_site_metadata_html.py` (backend) e
+`dev/site-metadata-html.test.ts` (frontend), incluindo atualização, escape e fallback.
 
 ## Instalar e ativar
 
