@@ -1,3 +1,5 @@
+import { MicroResource } from '../components/programs/MicroResource'
+import { useResourceControls } from '../contexts/ResourceControlsContext'
 import { Link, Navigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowUpRight, BarChart3, Crown, Gift, Swords, Trophy, type LucideIcon } from 'lucide-react'
@@ -19,10 +21,12 @@ const REWARD_TABS: Array<{ id: RewardTab; icon: LucideIcon }> = [
 ]
 
 export function RewardsPage() {
+  const resourceOn = useResourceControls()
   const { t } = useTranslation('panel')
   const [params, setParams] = useSearchParams()
   const requested = params.get('tab')
-  const tab = REWARD_TABS.find((entry) => entry.id === requested)?.id ?? 'battle'
+  const availableTabs = REWARD_TABS.filter(({ id }) => resourceOn(id === 'battle' ? 'battle-pass' : id === 'daily' ? 'daily-bonus' : id === 'statistics' ? 'games-statistics' : 'hunt'))
+  const tab = availableTabs.find((entry) => entry.id === requested)?.id ?? availableTabs[0]?.id
   if (requested === 'fishing') return <Navigate to="/panel/games?tab=fishing" replace />
   return (
     <div className="rewards-page">
@@ -46,7 +50,7 @@ export function RewardsPage() {
         className="game-tabs rewards-tabs"
         value={tab}
         onChange={(id) => setParams({ tab: id })}
-        items={REWARD_TABS.map(({ id, icon: Icon }) => ({
+        items={availableTabs.map(({ id, icon: Icon }) => ({
           id,
           label: t(`rewards.tabs.${id}`),
           icon: <Icon aria-hidden="true" />,
@@ -72,7 +76,7 @@ export function RewardsPage() {
             <HuntSection />
           </ResourceGate>
         ) : (
-          <StatsSection />
+          <MicroResource code="games-statistics"><StatsSection /></MicroResource>
         )}
       </div>
     </div>

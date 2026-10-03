@@ -1,3 +1,5 @@
+import { useResourceControls } from '../contexts/ResourceControlsContext'
+import { MicroResource } from '../components/programs/MicroResource'
 import { useAsyncAction } from '../hooks/useAsyncAction'
 import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
@@ -47,6 +49,7 @@ function CrestLabel({ crest, label, alt }: { crest?: string | null; label: strin
 }
 
 export function CharacterPage() {
+  const resourceOn = useResourceControls()
   const { t } = useTranslation('panel')
   const { login = '', charId = '' } = useParams()
   const queryClient = useQueryClient()
@@ -70,7 +73,7 @@ export function CharacterPage() {
   const skills = useQuery({
     queryKey: ['character-skills', login, id],
     queryFn: () => lineageApi.characterSkills(id, login),
-    enabled: Boolean(login) && Number.isFinite(id) && id > 0,
+    enabled: resourceOn('accounts-skills') && Boolean(login) && Number.isFinite(id) && id > 0,
   })
   const [nickname, setNickname] = useState('')
   const [sex, setSex] = useState<'M' | 'F' | ''>('')
@@ -269,11 +272,11 @@ export function CharacterPage() {
               error={bagItems.isError}
             />
 
-            <CharacterSkillsPanel
+            <MicroResource code="accounts-skills"><CharacterSkillsPanel
               skills={skills.data ?? []}
               loading={skills.isLoading}
               error={skills.isError}
-            />
+            /></MicroResource>
           </Card>
 
           <div className="character-overview-side">
@@ -373,7 +376,7 @@ export function CharacterPage() {
                   <p>{t('character.services.nickname.hint', { price: formatServicePrice(prices.data?.CHANGE_NICKNAME) })}</p>
                 </div>
               </div>
-              <form className="account-action-form" onSubmit={onChangeNickname}>
+              <MicroResource code="accounts-nickname"><form className="account-action-form" onSubmit={onChangeNickname}>
                 <Field>
                   {t('character.services.nickname.field')}
                   <input
@@ -388,7 +391,7 @@ export function CharacterPage() {
                 <Button type="submit" disabled={!offline || submitting !== null}>
                   {submitting === 'nick' ? t('character.services.nickname.submitting') : t('character.services.nickname.submit')}
                 </Button>
-              </form>
+              </form></MicroResource>
             </Card>
 
             <Card>
@@ -399,7 +402,7 @@ export function CharacterPage() {
                   <p>{t('character.services.sex.hint', { price: formatServicePrice(prices.data?.CHANGE_SEX) })}</p>
                 </div>
               </div>
-              <form className="account-action-form" onSubmit={onChangeSex}>
+              <MicroResource code="accounts-sex"><form className="account-action-form" onSubmit={onChangeSex}>
                 <Field>
                   {t('character.services.sex.field')}
                   <select value={sex} onChange={(event) => setSex(event.target.value as 'M' | 'F' | '')} required disabled={!offline}>
@@ -411,7 +414,7 @@ export function CharacterPage() {
                 <Button type="submit" disabled={!offline || submitting !== null}>
                   {submitting === 'sex' ? t('character.services.sex.submitting') : t('character.services.sex.submit')}
                 </Button>
-              </form>
+              </form></MicroResource>
             </Card>
 
             <Card>
@@ -423,12 +426,12 @@ export function CharacterPage() {
                 </div>
               </div>
               <p className="muted">{t('character.services.unstuck.description')}</p>
-              <Button type="button" onClick={() => void onUnstuck()} disabled={!offline || submitting !== null}>
+              <MicroResource code="accounts-unstuck"><Button type="button" onClick={() => void onUnstuck()} disabled={!offline || submitting !== null}>
                 {submitting === 'unstuck' ? t('character.services.unstuck.submitting') : t('character.services.unstuck.submit')}
-              </Button>
+              </Button></MicroResource>
             </Card>
 
-            {serviceAvailable(prices.data, 'TELEPORT') ? (
+            {resourceOn('accounts-teleport') && serviceAvailable(prices.data, 'TELEPORT') ? (
               <Card>
                 <div className="account-form-title">
                   <MapPin aria-hidden="true" />
@@ -454,7 +457,7 @@ export function CharacterPage() {
               </Card>
             ) : null}
 
-            {serviceAvailable(prices.data, 'APPEARANCE') ? (
+            {resourceOn('accounts-appearance') && serviceAvailable(prices.data, 'APPEARANCE') ? (
               <Card>
                 <div className="account-form-title">
                   <Scissors aria-hidden="true" />
@@ -495,7 +498,7 @@ export function CharacterPage() {
               </Card>
             ) : null}
 
-            {serviceAvailable(prices.data, 'CLEAR_KARMA') ? (
+            {resourceOn('accounts-clear-karma') && serviceAvailable(prices.data, 'CLEAR_KARMA') ? (
               <Card>
                 <div className="account-form-title">
                   <ShieldOff aria-hidden="true" />
@@ -511,7 +514,7 @@ export function CharacterPage() {
               </Card>
             ) : null}
 
-            {serviceAvailable(prices.data, 'CLEAR_PK') ? (
+            {resourceOn('accounts-clear-pk') && serviceAvailable(prices.data, 'CLEAR_PK') ? (
               <Card>
                 <div className="account-form-title">
                   <Skull aria-hidden="true" />

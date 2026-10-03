@@ -1,3 +1,4 @@
+import { useResourceControls } from '../../contexts/ResourceControlsContext'
 import { useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -14,11 +15,12 @@ export type ShopTab = (typeof SHOP_TABS)[number]
 
 /** Agrega catálogo, carrinho e checkout da loja sem espalhar queries na página. */
 export function useShopPage() {
+  const resourceOn = useResourceControls()
   const { t } = useTranslation('panel')
   const catalog = useQuery({ queryKey: ['shop'], queryFn: shopApi.catalog })
-  const packages = useQuery({ queryKey: ['shop-packages'], queryFn: commerceApi.packages })
+  const packages = useQuery({ queryKey: ['shop-packages'], enabled: resourceOn('shop-packages'), queryFn: commerceApi.packages })
   const cart = useQuery({ queryKey: ['shop-quote'], queryFn: commerceApi.quote })
-  const purchases = useQuery({ queryKey: ['shop-purchases'], queryFn: commerceApi.purchases })
+  const purchases = useQuery({ queryKey: ['shop-purchases'], enabled: resourceOn('shop-history'), queryFn: commerceApi.purchases })
   const wallet = useQuery({ queryKey: ['wallet'], queryFn: walletApi.me })
   const [tab, setTab] = useSearchParamTab(SHOP_TABS, 'items')
   const [coupon, setCoupon] = useState('')

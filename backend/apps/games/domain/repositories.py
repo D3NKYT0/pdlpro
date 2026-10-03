@@ -510,6 +510,11 @@ class IBattlePassRepository(ABC):
     """Porta do passe de batalha: temporada, progresso, recompensas, missões e extras."""
 
     @abstractmethod
+    def can_auto_claim_rewards(self) -> bool:
+        """Respeita a disponibilidade global antes de executar resgates automáticos."""
+        raise NotImplementedError
+
+    @abstractmethod
     def require_user(self, user_id: UUID) -> Any:
         raise NotImplementedError
 

@@ -8,6 +8,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import toast from 'react-hot-toast'
 import { programsApi } from '../services/api'
 import i18n from '../i18n'
+import { ResourceControlsProvider } from '../contexts/ResourceControlsContext'
 import { SupportersPage } from './SupportersPage'
 
 vi.mock('../services/domain/programs.service', async original => ({
@@ -96,4 +97,13 @@ it('recusa imagem acima do limite no idioma ativo', async () => {
   expect(screen.getByText('PNG, JPEG or WebP · up to 2 MB · up to 1024 × 1024')).toBeVisible()
   pick(input, 'image/png', 2 * 1024 * 1024 + 1)
   expect(toast.error).toHaveBeenCalledWith('The image must be at most 2 MB.')
+})
+
+it('oculta candidatura desativada preservando a consulta do programa', async () => {
+  client.setQueryData(['resources'], [{ code: 'supporters-apply', enabled: false }])
+  render(<QueryClientProvider client={client}><MemoryRouter><ResourceControlsProvider><SupportersPage /></ResourceControlsProvider></MemoryRouter></QueryClientProvider>)
+  expect(await screen.findByRole('heading', { name: 'Programa de apoiadores', level: 1 })).toBeVisible()
+  expect(screen.queryByRole('button', { name: /Enviar candidatura/ })).not.toBeInTheDocument()
+  expect(programsApi.supporter).toHaveBeenCalled()
+  expect(programsApi.apply).not.toHaveBeenCalled()
 })

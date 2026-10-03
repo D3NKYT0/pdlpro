@@ -126,3 +126,18 @@ it('explica a herança do módulo desligado e permite preparar a preferência do
   await user.click(toggle)
   expect(programsApi.toggleResource).toHaveBeenCalledWith('achievements', false)
 })
+
+it('apresenta e atualiza descendente dentro da subcategoria de três níveis', async () => {
+  vi.mocked(programsApi.resources).mockResolvedValue([
+    { id: 'games', code: 'games', name: 'Jogos', category: 'Jogos', enabled: false, description: '' },
+    { id: 'boxes', code: 'games-boxes', name: 'Caixas', category: 'Jogos', parent_code: 'games', enabled: true, description: '' },
+    { id: 'open', code: 'games-boxes-open', name: 'Abrir caixas', category: 'Jogos', parent_code: 'games-boxes', enabled: true, description: '' },
+  ])
+  const user = mount()
+  const open = await screen.findByRole('checkbox', { name: 'Desativar Abrir baús' })
+  expect(open.closest('fieldset')?.parentElement?.closest('fieldset')).not.toBeNull()
+  expect(open).toBeChecked()
+  expect(screen.getAllByText(/O módulo principal está desativado/)).toHaveLength(2)
+  await user.click(open)
+  expect(programsApi.toggleResource).toHaveBeenCalledWith('open', false)
+})

@@ -1,3 +1,5 @@
+import { MicroResource } from '../programs/MicroResource'
+import { useResourceControls } from '../../contexts/ResourceControlsContext'
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useNavigate } from 'react-router-dom'
@@ -31,6 +33,7 @@ export interface NotificationCenterProps {
 }
 
 export function NotificationCenter({ enabled = true }: NotificationCenterProps = {}) {
+  const resourceOn = useResourceControls()
   const { t } = useTranslation('panel')
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -50,7 +53,7 @@ export function NotificationCenter({ enabled = true }: NotificationCenterProps =
   const vapid = useQuery({
     queryKey: ['push-vapid'],
     queryFn: pushApi.vapid,
-    enabled,
+    enabled: enabled && resourceOn('notifications-push'),
   })
   const unread = query.data?.unread ?? 0
   const items = query.data?.results ?? []
@@ -193,7 +196,7 @@ export function NotificationCenter({ enabled = true }: NotificationCenterProps =
                 </header>
                 {vapid.data?.enabled ? (
                   <p className="notification-center-toolbar">
-                    <Button
+                    <MicroResource code="notifications-push"><Button
                       className="ghost"
                       size="sm"
                       type="button"
@@ -204,7 +207,7 @@ export function NotificationCenter({ enabled = true }: NotificationCenterProps =
                       }
                     >
                       {t('notifications.enablePush')}
-                    </Button>
+                    </Button></MicroResource>
                     <Button
                       className="ghost"
                       size="sm"

@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { Check, Gift, LockKeyhole, Trophy, Zap } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -81,9 +82,9 @@ export function AccountProgress({ profile }: { profile?: ApiGamerProfile }) {
               {row.claimed ? (
                 <b><Check aria-hidden="true" /> {t('progress.rewards.claimed')}</b>
               ) : row.available ? (
-                <Button type="button" disabled={claim.pending} onClick={() => void claimReward(row.id)}>
+                <MicroResource code="progress-claim-rewards"><Button type="button" disabled={claim.pending} onClick={() => void claimReward(row.id)}>
                   {t('progress.rewards.claim')}
-                </Button>
+                </Button></MicroResource>
               ) : (
                 <b><LockKeyhole aria-hidden="true" /> {t('progress.rewards.locked')}</b>
               )}

@@ -1,3 +1,4 @@
+import { MicroResource } from '../components/programs/MicroResource'
 import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
 import { Button } from '../components/ui/Button'
@@ -207,7 +208,7 @@ export function AuctionPage() {
 
       {user ? (
         <aside className="marketplace-side-column auction-side-column">
-          <AuctionCreateForm
+          <MicroResource code="auction-create"><AuctionCreateForm
             kind={kind}
             accounts={availableAccounts}
             account={login}
@@ -243,7 +244,7 @@ export function AuctionPage() {
             onMinBidChange={setMinBid}
             onHoursChange={setHours}
             onSubmit={(event) => void onCreate(event)}
-          />
+          /></MicroResource>
           <AuctionHistory
             auctions={mine.data ?? []}
             loading={mine.isLoading}

@@ -1,3 +1,4 @@
+import { useResourceControls } from '../../contexts/ResourceControlsContext'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { FormEvent, KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -44,6 +45,7 @@ function resolveHelpLanguage(value: string | undefined): HelpLanguage {
 
 /** Orquestra estado, efeitos e handlers da página de ajuda; o JSX fica em HelpPage. */
 export function useHelpPageController() {
+  const resourceOn = useResourceControls()
   const { t, i18n } = useTranslation('help')
   const { user } = useAuth()
   const location = useLocation()
@@ -118,12 +120,13 @@ export function useHelpPageController() {
   const faq = useQuery({
     queryKey: ['help-faq', user?.id, language],
     queryFn: async () => helpArticles(await contentApi.authenticatedFaq(language)),
+    enabled: resourceOn('faq-panel'),
     retry: false,
   })
   const action = useAsyncAction()
   const petAction = useAsyncAction()
   const petQueryKey = ['denkynho-pet', user?.id] as const
-  const pet = useQuery({ queryKey: petQueryKey, queryFn: contentApi.denkynho, enabled: Boolean(user), retry: false })
+  const pet = useQuery({ queryKey: petQueryKey, queryFn: contentApi.denkynho, enabled: Boolean(user) && resourceOn('help-pet'), retry: false })
   const reduced = useReducedMotion()
   const [animations, setAnimations] = useState(true)
   const [draft, setDraft] = useState('')

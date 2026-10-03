@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../ui/Button'
 import { ItemIcon } from '../ItemIcon'
@@ -41,7 +42,7 @@ export function BoxHuntCard({
   resetting?: boolean
   huntRemaining?: boolean
   locked?: boolean
-  onAction: () => void
+  onAction?: () => void
   actionLabel: string
 }) {
   const { t } = useTranslation('panel')
@@ -90,14 +91,14 @@ export function BoxHuntCard({
         <small className="game-box-hint">
           {locked ? t('games.boxes.resetLockedHint') : resetting ? t('games.boxes.resetHint') : t('games.boxes.openHint')}
         </small>
-        <Button
+        <MicroResource code={`games-boxes-${owned ? "open" : "buy"}`}><Button
           variant={owned ? (huntRemaining === false ? 'yellow' : 'success') : resetting ? 'warning' : 'ghost'}
           type="button"
           disabled={locked}
           onClick={onAction}
         >
           {actionLabel}
-        </Button>
+        </Button></MicroResource>
       </footer>
     </article>
   )

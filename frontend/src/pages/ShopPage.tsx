@@ -1,3 +1,4 @@
+import { useResourceControls } from '../contexts/ResourceControlsContext'
 import { Package, ReceiptText, Sparkles } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { ShopCart } from '../components/shop/ShopCart'
@@ -9,8 +10,10 @@ import { ErrorNotice } from '../components/programs/ProgramUI'
 import { Tabs } from '../components/ui/Tabs'
 
 export function ShopPage() {
+  const resourceOn = useResourceControls()
   const { t } = useTranslation('panel')
   const shop = useShopPage()
+  const activeTab = shop.tab === 'items' || resourceOn(`shop-${shop.tab}`) ? shop.tab : 'items'
 
   return (
     <div className="shop-page">
@@ -25,23 +28,23 @@ export function ShopPage() {
         id="shop"
         className="inventory-tabs shop-tabs"
         label={t('shop.tabsLabel')}
-        value={shop.tab}
+        value={activeTab}
         onChange={shop.setTab}
         items={[
-          { id: 'items' satisfies ShopTab, label: t('shop.tabs.items'), icon: <Sparkles aria-hidden="true" /> },
-          { id: 'packages' satisfies ShopTab, label: t('shop.tabs.packages'), icon: <Package aria-hidden="true" /> },
-          { id: 'history' satisfies ShopTab, label: t('shop.tabs.history'), icon: <ReceiptText aria-hidden="true" /> },
-        ]}
+          { id: 'items' as ShopTab, label: t('shop.tabs.items'), icon: <Sparkles aria-hidden="true" /> },
+          { id: 'packages' as ShopTab, label: t('shop.tabs.packages'), icon: <Package aria-hidden="true" /> },
+          { id: 'history' as ShopTab, label: t('shop.tabs.history'), icon: <ReceiptText aria-hidden="true" /> },
+        ].filter(item => item.id === 'items' || resourceOn(`shop-${item.id}`))}
       />
-      {shop.tab === 'history' ? (
+      {activeTab === 'history' ? (
         <ShopHistory purchases={shop.purchases.data} pending={shop.purchases.isPending} money={shop.money} />
       ) : (
         <div className="shop-layout">
           <ShopCatalog
-            tab={shop.tab}
+            tab={activeTab}
             items={shop.catalog.data}
             packages={shop.packages.data}
-            pending={shop.tab === 'items' ? shop.catalog.isPending : shop.packages.isPending}
+            pending={activeTab === 'items' ? shop.catalog.isPending : shop.packages.isPending}
             busy={shop.action.busy}
             money={shop.money}
             onAddItem={(id) => void shop.addItem(id)}

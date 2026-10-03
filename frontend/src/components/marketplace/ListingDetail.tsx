@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../ui/Button'
@@ -125,10 +126,10 @@ export function ListingDetail({ listing, isOwner, pending, onClose, onBuy, onCan
               </Button>
             ) : null}
             {!isOwner && listing.status === 'for_sale' ? (
-              <Button type="button" onClick={() => onBuy(listing.id)} disabled={pending}>
+              <MicroResource code="marketplace-buy"><Button type="button" onClick={() => onBuy(listing.id)} disabled={pending}>
                 <ShoppingCart aria-hidden="true" />
                 {pending ? t('marketplace.detail.processing') : t('marketplace.detail.buy')}
-              </Button>
+              </Button></MicroResource>
             ) : null}
             {isOwner ? <small className="marketplace-owner-note">{t('marketplace.detail.ownerNote')}</small> : null}
           </aside>

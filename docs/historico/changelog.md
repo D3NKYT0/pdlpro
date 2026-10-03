@@ -12,7 +12,7 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
-- **Micro-recursos**: controles dentro dos módulos para vincular contas existentes, criar personagens e exibir conquistas, com bloqueio da API nas operações desativadas e preservação das preferências ao desligar o módulo principal.
+- **Micro-recursos**: 78 controles dentro das seis categorias, com subcategorias recursivas para comércio, carteira, inventário, jogos, recompensas, contas e personagens, perfil, apoiadores, notificações, suporte, ajuda e conteúdo público. As telas e APIs respeitam cada ação e seus ancestrais, preservando preferências; o passe suspende resgates automáticos quando desativados. Catálogo e controles disponíveis em português, inglês e espanhol.
 
 ### Corrigido
 

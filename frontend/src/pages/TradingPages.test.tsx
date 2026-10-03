@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { ResourceControlsProvider } from '../contexts/ResourceControlsContext'
 import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -128,7 +129,11 @@ beforeEach(() => {
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 afterEach(async () => { cleanup(); client.clear(); vi.restoreAllMocks(); await i18n.changeLanguage('pt') })
-function mount(page: ReactElement) {
+function mount(page: ReactElement, disabled: string[] = []) {
+  if (disabled.length) {
+    client.setQueryData(['resources'], disabled.map(code => ({ code, enabled: false })))
+    page = <ResourceControlsProvider>{page}</ResourceControlsProvider>
+  }
   render(<QueryClientProvider client={client}>{page}</QueryClientProvider>)
   return userEvent.setup()
 }
@@ -477,3 +482,13 @@ it('leilão suporta mudança de conta no lance do leilão', async () => {
   expect(auctionApi.bid).toHaveBeenCalledWith('auction', '12.01', 'OrcAlt')
 })
 
+
+it('mantém consulta do personagem com compra e anúncio desativados', async () => {
+  const user = mount(<MarketplacePage />, ['marketplace-buy', 'marketplace-sell'])
+  await user.click(await screen.findByRole('button', { name: /Ver personagem/ }))
+  expect(screen.getByText('Pronto para jogar')).toBeVisible()
+  expect(screen.queryByRole('button', { name: /Comprar personagem/ })).not.toBeInTheDocument()
+  expect(screen.queryByRole('combobox', { name: 'Personagem' })).not.toBeInTheDocument()
+  expect(marketplaceApi.buy).not.toHaveBeenCalled()
+  expect(marketplaceApi.list).not.toHaveBeenCalled()
+})

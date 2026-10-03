@@ -1,13 +1,20 @@
+import json
+
 from django.http import JsonResponse
 from django.utils.translation import gettext as _
 
 from apps.programs.domain.repositories import ISystemResourceRepository
+from apps.programs.domain.resources import resource_ancestors
+from apps.programs.resource_policy import MICRO_RESOURCE_RULES
 from common.di.bootstrap import DependencyInjection
 
 # Staff administration remains reachable even when a customer-facing module is off.
 # profile uses shared/me/ for the whole session — gated only on the frontend.
 RESOURCE_PATHS = {
-    "accounts-link": ("customer/server/accounts/link/", "customer/server/accounts/link-email/"),
+    "accounts-link": (
+        "customer/server/accounts/link/",
+        "customer/server/accounts/link-email/",
+    ),
     "accounts-create-character": ("customer/server/characters/create/",),
     "supporters": ("customer/supporters/",),
     "roadmap": ("public/roadmap/",),
@@ -61,6 +68,25 @@ class ResourceGateMiddleware:
                 for code, paths in RESOURCE_PATHS.items()
                 if any(path.startswith(p) for p in paths)
             ]
+            method = "GET" if request.method == "HEAD" else request.method
+            rules = [
+                rule
+                for rule in MICRO_RESOURCE_RULES
+                if rule.matches(path, method, {"action": rule.action})
+            ]
+            payload = {}
+            if any(rule.action for rule in rules):
+                if request.content_type == "application/json":
+                    try:
+                        value = json.loads(request.body)
+                        payload = value if isinstance(value, dict) else {}
+                    except ValueError, UnicodeDecodeError:
+                        pass  # A apresentação continua responsável por recusar JSON inválido.
+                else:
+                    payload = dict(request.POST.items())
+            for rule in rules:
+                if rule.matches(path, method, payload):
+                    codes.extend(resource_ancestors(rule.code))
             if codes:
                 container = getattr(request, "container", None)
                 if container is None:
@@ -70,7 +96,9 @@ class ResourceGateMiddleware:
                     return JsonResponse(
                         {
                             "error_code": "RESOURCE_DISABLED",
-                            "message": _("Este recurso está temporariamente desativado."),
+                            "message": _(
+                                "Este recurso está temporariamente desativado."
+                            ),
                             "details": {},
                         },
                         status=403,

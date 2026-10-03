@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { CheckCircle2, Minus, Plus, Trash2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { CartIcon } from '../icons'
@@ -162,10 +163,10 @@ export function ShopCart({
           {insufficient ? t('shop.cart.insufficient') : t('shop.cart.availableBalance', { balance: wallet?.balance || '0.00' })}
         </small>
       </div>
-      <Button type="button" disabled={!canCheckout} onClick={onCheckout}>
+      <MicroResource code="shop-checkout"><Button type="button" disabled={!canCheckout} onClick={onCheckout}>
         <CheckCircle2 size={18} aria-hidden="true" />
         {busy ? t('shop.cart.processing') : t('shop.cart.checkout')}
-      </Button>
+      </Button></MicroResource>
     </Card>
   )
 }

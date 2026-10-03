@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { Card } from '../ui/Card'
 import { Button, IconButton } from '../ui/Button'
 import { Field } from '../ui/Field'
@@ -78,7 +79,7 @@ function FishingBaitSlot({
           {t('games.fishing.baitBonus', { bonus: bait.success_bonus })} · {costLabel}
         </small>
       </div>
-      <Button
+      <MicroResource code="fishing-buy-bait"><Button
         type="button"
         size="sm"
         variant="secondary"
@@ -87,7 +88,7 @@ function FishingBaitSlot({
         onClick={onBuy}
       >
         {t('games.fishing.getBait')}
-      </Button>
+      </Button></MicroResource>
     </div>
   )
 }
@@ -277,7 +278,7 @@ export function FishingGame() {
                 ) : (
                   <p className="muted">{t('games.fishing.insufficientBait')}</p>
                 )}
-                <form
+                <MicroResource code="fishing-cast"><form
                   className="fishing-cast"
                   onSubmit={(e) => {
                     e.preventDefault()
@@ -324,7 +325,7 @@ export function FishingGame() {
                   <Button type="submit" className="fishing-cast-button" disabled={action.busy || !canCast}>
                     {castLabel}
                   </Button>
-                </form>
+                </form></MicroResource>
                 <p className="muted fishing-cast-hint">{t('games.fishing.castCost', { count: castCost })}</p>
               </section>
             </div>

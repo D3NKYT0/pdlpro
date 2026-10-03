@@ -1,3 +1,4 @@
+import { MicroResource } from '../components/programs/MicroResource'
 import { Card } from '../components/ui/Card'
 import { RichTextContent } from '../components/ui/RichText'
 import { plainTextFromRichText } from '../lib/rich-text'
@@ -70,9 +71,9 @@ export function RoadmapPage() {
                         ? ` · ${t('roadmap.forecast', { date: formatDate(entry.target_date) })}`
                         : ''}
                     </small>
-                    <Link to={`/roadmap/${entry.id}`} className="character-back">
+                    <MicroResource code="roadmap-detail"><Link to={`/roadmap/${entry.id}`} className="character-back">
                       {t('roadmap.viewUpdate')} <ArrowUpRight size={16} />
-                    </Link>
+                    </Link></MicroResource>
                   </article>
                 ))}
               {query.data && !query.data.some((e) => e.status === status) && (

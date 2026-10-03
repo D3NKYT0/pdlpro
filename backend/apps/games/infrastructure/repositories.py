@@ -63,6 +63,7 @@ from apps.games.infrastructure.models import (
     UserFishingBait,
 )
 from apps.games.infrastructure.staff_content import CONFIG_MODELS, get_config_model
+from apps.programs.domain.repositories import ISystemResourceRepository
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
 User = get_user_model()
@@ -657,6 +658,14 @@ class DjangoDailyBonusRepository(IDailyBonusRepository):
 
 class DjangoBattlePassRepository(IBattlePassRepository):
     """Adaptador Django de ``IBattlePassRepository``."""
+
+    def __init__(self, resources: ISystemResourceRepository) -> None:
+        self._resources = resources
+
+    def can_auto_claim_rewards(self) -> bool:
+        return not self._resources.any_disabled(
+            ["games", "battle-pass", "battle-pass-claim", "battle-pass-auto-claim"]
+        )
 
     def require_user(self, user_id: UUID):
         return User.objects.get(id=user_id)

@@ -5277,3 +5277,195 @@ msgstr "Achievements"
 
 msgid "Exibição das conquistas da conta no painel e no perfil."
 msgstr "Show account achievements in the dashboard and profile."
+
+msgid "Finalizar compras"
+msgstr "Checkout"
+
+msgid "Pacotes da loja"
+msgstr "Shop packages"
+
+msgid "Histórico de compras"
+msgstr "Purchase history"
+
+msgid "Comprar moedas"
+msgstr "Buy coins"
+
+msgid "Transferir saldo"
+msgstr "Transfer balance"
+
+msgid "Câmbio com o jogo"
+msgstr "Game exchange"
+
+msgid "Histórico financeiro"
+msgstr "Financial history"
+
+msgid "Retirar itens do jogo"
+msgstr "Withdraw game items"
+
+msgid "Enviar itens ao jogo"
+msgstr "Send items to the game"
+
+msgid "Transferir itens entre personagens"
+msgstr "Transfer items between characters"
+
+msgid "Mover itens da bag para o baú"
+msgstr "Move bag items to storage"
+
+msgid "Anunciar vendas"
+msgstr "Create sale listings"
+
+msgid "Comprar anúncios"
+msgstr "Buy listings"
+
+msgid "Criar leilões"
+msgstr "Create auctions"
+
+msgid "Dar lances"
+msgstr "Place bids"
+
+msgid "Roda da Fortuna"
+msgstr "Wheel of Fortune"
+
+msgid "Baús"
+msgstr "Boxes"
+
+msgid "Comprar e reiniciar baús"
+msgstr "Buy and reset boxes"
+
+msgid "Abrir baús"
+msgstr "Open boxes"
+
+msgid "Dados"
+msgstr "Dice"
+
+msgid "Slot Machine"
+msgstr "Slot Machine"
+
+msgid "Arena e encantamento"
+msgstr "Arena and enchantment"
+
+msgid "Combater monstros"
+msgstr "Fight monsters"
+
+msgid "Estatísticas dos jogos"
+msgstr "Game statistics"
+
+msgid "Resgatar recompensas de nível"
+msgstr "Claim level rewards"
+
+msgid "Resgatar missões"
+msgstr "Claim quests"
+
+msgid "Resgatar marcos"
+msgstr "Claim milestones"
+
+msgid "Resgate automático"
+msgstr "Automatic claiming"
+
+msgid "Lançar a vara"
+msgstr "Cast the fishing rod"
+
+msgid "Resgatar missões da caça"
+msgstr "Claim hunt quests"
+
+msgid "Criar conta de jogo"
+msgstr "Create game account"
+
+msgid "Vincular por login e senha"
+msgstr "Link by login and password"
+
+msgid "Vincular por e-mail"
+msgstr "Link by email"
+
+msgid "Comprar vagas de contas"
+msgstr "Buy account slots"
+
+msgid "Alterar senha da conta de jogo"
+msgstr "Change game account password"
+
+msgid "Alterar nome do personagem"
+msgstr "Change character name"
+
+msgid "Alterar gênero do personagem"
+msgstr "Change character gender"
+
+msgid "Alterar aparência"
+msgstr "Change appearance"
+
+msgid "Consultar skills do personagem"
+msgstr "View character skills"
+
+msgid "Editar perfil e avatar"
+msgstr "Edit profile and avatar"
+
+msgid "Resgatar prêmios da conta"
+msgstr "Claim account rewards"
+
+msgid "Candidatura e perfil de apoiador"
+msgstr "Supporter application and profile"
+
+msgid "Solicitar saque de comissões"
+msgstr "Request commission payout"
+
+msgid "Notificações push"
+msgstr "Push notifications"
+
+msgid "Abrir chamados"
+msgstr "Open tickets"
+
+msgid "Responder chamados"
+msgstr "Reply to tickets"
+
+msgid "Encerrar e reabrir chamados"
+msgstr "Close and reopen tickets"
+
+msgid "Conversar com o assistente"
+msgstr "Chat with the assistant"
+
+msgid "Armário do Denkynho"
+msgstr "Denkynho wardrobe"
+
+msgid "Ler notícias completas"
+msgstr "Read full news articles"
+
+msgid "Ler páginas da Wiki"
+msgstr "Read Wiki pages"
+
+msgid "FAQ no painel"
+msgstr "Panel FAQ"
+
+msgid "Detalhes do roadmap"
+msgstr "Roadmap details"
+
+msgid "Ranking PvP"
+msgstr "PvP ranking"
+
+msgid "Ranking PK"
+msgstr "PK ranking"
+
+msgid "Ranking Adena"
+msgstr "Adena ranking"
+
+msgid "Ranking de clãs"
+msgstr "Clan ranking"
+
+msgid "Ranking de nível"
+msgstr "Level ranking"
+
+msgid "Ranking de tempo online"
+msgstr "Online time ranking"
+
+msgid "Olimpíadas"
+msgstr "Olympiad"
+
+msgid "Grand Bosses"
+msgstr "Grand Bosses"
+
+msgid "Cerco aos castelos"
+msgstr "Castle sieges"
+
+msgid "Buscar personagens"
+msgstr "Search characters"
+
+msgid "Disponibilidade desta ação dentro do módulo."
+msgstr "Availability of this action within its module."

@@ -236,6 +236,8 @@ def auto_claim_rewards(
     battle_pass: IBattlePassRepository,
     bags: IBagRepository,
 ):
+    if not battle_pass.can_auto_claim_rewards():
+        return
     repo = battle_pass
     bag_repo = bags
     for reward in repo.list_claimable_rewards(user, progress):

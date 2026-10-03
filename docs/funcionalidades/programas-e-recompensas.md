@@ -93,23 +93,82 @@ Consulte [Câmbio entre painel e jogo](../integracoes/cambio-painel-jogo.md) par
 
 ## Micro-recursos
 
-Em `/panel/admin/resources`, cada módulo apresenta seus micro-recursos em um grupo
-interno. A conta L2 permite controlar **Vincular conta existente** (login/senha e
-pedido/confirmação por e-mail) e **Criar personagem** separadamente. Em **Nível e
-conquistas**, o controle **Conquistas** oculta a coleção no painel e no perfil,
-sem apagar conquistas, alterar XP ou impedir recompensas.
+Em `/panel/admin/resources`, as seis categorias contêm módulos e subcategorias
+recursivas. O catálogo possui **78 micro-recursos**, incluindo os três exemplos
+iniciais. Cada interruptor salva a preferência da ação correspondente.
 
-Os controles começam habilitados na migração `programs.0008`. O catálogo público
-informa `parent_code`; `null` identifica um módulo principal. Desativar o pai
-bloqueia seus filhos sem alterar suas preferências salvas. A administração continua
-acessível para reativação. Alterações atualizam o cache da SPA; outras sessões
-consultam novamente o catálogo a cada 30 segundos.
+- `shop`: **Finalizar compras** (`shop-checkout`), **Pacotes da loja** (`shop-packages`), **Histórico de compras** (`shop-history`).
+- `wallet`: **Comprar moedas** (`wallet-purchase`), **Transferir saldo** (`wallet-transfer`), **Câmbio com o jogo** (`wallet-game-exchange`), **Histórico financeiro** (`wallet-history`).
+- `inventory`: **Retirar itens do jogo** (`inventory-withdraw`), **Enviar itens ao jogo** (`inventory-deposit`), **Transferir itens entre personagens** (`inventory-trade`), **Mover itens da bag para o baú** (`inventory-bag-transfer`).
+- `marketplace`: **Anunciar vendas** (`marketplace-sell`), **Comprar anúncios** (`marketplace-buy`).
+- `auction`: **Criar leilões** (`auction-create`), **Dar lances** (`auction-bid`).
+- `games`: **Roda da Fortuna** (`games-roulette`), **Baús** (`games-boxes`), **Dados** (`games-dice`), **Slot Machine** (`games-slots`), **Arena e encantamento** (`games-economy`), **Comprar fichas** (`games-buy-tokens`), **Estatísticas dos jogos** (`games-statistics`).
+- `games-boxes`: **Comprar e reiniciar baús** (`games-boxes-buy`), **Abrir baús** (`games-boxes-open`).
+- `games-economy`: **Combater monstros** (`games-fight`), **Encantar arma** (`games-enchant`).
+- `battle-pass`: **Comprar passe premium** (`battle-pass-premium`), **Resgatar recompensas de nível** (`battle-pass-claim`), **Resgatar missões** (`battle-pass-quests`), **Trocas do passe** (`battle-pass-exchanges`), **Resgatar marcos** (`battle-pass-milestones`), **Resgate automático** (`battle-pass-auto-claim`).
+- `daily-bonus`: **Resgatar bônus diário** (`daily-bonus-claim`).
+- `fishing`: **Lançar a vara** (`fishing-cast`), **Comprar iscas** (`fishing-buy-bait`).
+- `hunt`: **Resgatar missões da caça** (`hunt-claim`).
+- `accounts`: **Criar conta de jogo** (`accounts-register`), **Comprar vagas de contas** (`accounts-buy-slots`), **Alterar senha da conta de jogo** (`accounts-password`), **Desvincular conta de jogo** (`accounts-unlink`), **Alterar nome do personagem** (`accounts-nickname`), **Alterar gênero do personagem** (`accounts-sex`), **Destravar personagem** (`accounts-unstuck`), **Teleportar personagem** (`accounts-teleport`), **Alterar aparência** (`accounts-appearance`), **Limpar karma** (`accounts-clear-karma`), **Limpar PK** (`accounts-clear-pk`), **Consultar skills do personagem** (`accounts-skills`).
+- `accounts-link`: **Vincular por login e senha** (`accounts-link-credentials`), **Vincular por e-mail** (`accounts-link-email`).
+- `profile`: **Editar perfil e avatar** (`profile-edit`).
+- `progress`: **Resgatar prêmios da conta** (`progress-claim-rewards`).
+- `supporters`: **Candidatura e perfil de apoiador** (`supporters-apply`), **Solicitar saque de comissões** (`supporters-payout`).
+- `notifications`: **Notificações push** (`notifications-push`).
+- `support`: **Abrir chamados** (`support-create`), **Responder chamados** (`support-reply`), **Encerrar e reabrir chamados** (`support-status`).
+- `help`: **Conversar com o assistente** (`help-chat`), **Cuidados do Denkynho** (`help-pet`).
+- `help-pet`: **Armário do Denkynho** (`help-wardrobe`).
+- `news`: **Ler notícias completas** (`news-detail`).
+- `wiki`: **Ler páginas da Wiki** (`wiki-detail`).
+- `faq`: **FAQ no painel** (`faq-panel`).
+- `roadmap`: **Detalhes do roadmap** (`roadmap-detail`).
+- `rankings`: **Ranking PvP** (`rankings-pvp`), **Ranking PK** (`rankings-pk`), **Ranking Adena** (`rankings-adena`), **Ranking de clãs** (`rankings-clans`), **Ranking de nível** (`rankings-level`), **Ranking de tempo online** (`rankings-online`), **Olimpíadas** (`rankings-olympiad`), **Grand Bosses** (`rankings-grandboss`), **Cerco aos castelos** (`rankings-siege`), **Buscar personagens** (`rankings-search`).
 
-Os endpoints de vinculação e criação recusam chamadas diretas com HTTP 403 e
-`RESOURCE_DISABLED`. As consultas de contas e personagens continuam disponíveis.
-A consulta de progresso preserva nível, XP e recompensas e omite a coleção e seus
-contadores quando a exibição das conquistas está desativada.
+Também permanecem disponíveis os controles `accounts-link` (vinculação),
+`accounts-create-character` (criação de personagem) e `progress-achievements`
+(exibição das conquistas). A vinculação contém controles separados para
+credenciais e e-mail; caixas e ajuda do mascote também possuem descendentes.
 
-Validação: testes de API cobrem bloqueio/reativação, separação entre operações,
-autorização staff e preservação das preferências. Testes da SPA cobrem agrupamento,
-alteração de um filho e ocultação da vinculação.
+### Herança e atualização
+
+O catálogo público informa `parent_code`; `null` identifica um módulo principal.
+Desativar qualquer ancestral bloqueia toda a sua cadeia de descendentes sem
+alterar as preferências salvas. É possível preparar essas preferências enquanto
+um ancestral está desligado. A administração permanece acessível para reativação.
+Os controles novos começam habilitados nas migrações `programs.0008` e
+`programs.0009`, que preservam registros e escolhas preexistentes.
+
+A SPA compartilha o catálogo, oculta ações indisponíveis e filtra abas. Links
+diretos também respeitam o controle; uma aba desativada usa a primeira disponível.
+As alterações invalidam o cache e outras sessões consultam novamente o catálogo
+a cada 30 segundos. Durante a carga ou falha do catálogo, os controles ficam
+fechados. Os nomes e descrições estão disponíveis em português, inglês e espanhol.
+
+### API e efeitos
+
+A API responde HTTP 403 com `RESOURCE_DISABLED` antes de executar uma operação
+desativada. A política distingue rota, método HTTP e ação do corpo quando várias
+operações compartilham um endpoint, como missões, trocas, marcos e resgate automático
+do passe. O bloqueio de uma operação não altera listagens ou ações irmãs.
+
+Desativar novas compras de saldo preserva a consulta e confirmação de pedidos
+existentes. Cancelamentos de anúncios e exclusão de inscrições push continuam
+possíveis. Desativar detalhes de notícias ou wiki mantém os resumos disponíveis.
+Desativar conquistas preserva nível, XP e recompensas, omitindo a coleção e seus
+contadores. Desativar resgates do passe também suspende entregas automáticas
+acionadas por XP, preservando a preferência do jogador para uma futura reativação.
+
+Módulos exclusivamente de consulta, como downloads, calendário e lojas do jogo,
+continuam usando o interruptor principal. Segurança da conta, consentimento,
+exportação e exclusão dos próprios dados preservam suas políticas específicas.
+
+### Cenários de validação
+
+- Bloqueio direto dos 75 novos controles nas rotas reais, incluindo métodos e
+  seleção da ação em JSON e formulário.
+- Listagens e operações irmãs disponíveis quando somente uma ação está desligada.
+- Hierarquia de três níveis, preservação de preferências e migração idempotente.
+- Administração restrita à staff, reativação e catálogo traduzido.
+- Resgate automático suspenso sem entrega de itens; reativação entrega uma única vez.
+- SPA: carregamento, vazio, erro, contrato HTTP, interação, ocultação, abas e
+  herança; interruptores administrativos impedem envios duplicados.

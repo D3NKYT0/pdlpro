@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { useTranslation } from 'react-i18next'
 import { ArrowRightLeft, Backpack, Send } from 'lucide-react'
 import { Button } from '../ui/Button'
@@ -70,7 +71,7 @@ export function InventoryBagTab({ inventory }: { inventory: InventoryDashboard }
           ) : null}
         </div>
 
-        <form className="inventory-bag-transfer" onSubmit={onTransferBag}>
+        <MicroResource code="inventory-bag-transfer"><form className="inventory-bag-transfer" onSubmit={onTransferBag}>
           <div className="inventory-bag-transfer-heading">
             <Send aria-hidden="true" />
             <div>
@@ -107,7 +108,7 @@ export function InventoryBagTab({ inventory }: { inventory: InventoryDashboard }
             <ArrowRightLeft aria-hidden="true" />
             {bagTransferPending ? t('inventory.bag.moving') : t('inventory.bag.move')}
           </Button>
-        </form>
+        </form></MicroResource>
       </div>
     </Card>
   )

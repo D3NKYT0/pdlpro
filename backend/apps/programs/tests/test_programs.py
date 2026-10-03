@@ -823,3 +823,29 @@ def test_micro_catalog_exposes_parent_and_parent_preserves_child_preference(api,
     child.refresh_from_db()
     assert child.enabled
     assert staff.patch(f"/api/v1/staff/resources/{parent.id}/", {"enabled": "invalid"}).status_code == 400
+
+
+@pytest.mark.parametrize("disabled", ["battle-pass-auto-claim", "battle-pass-claim", "battle-pass"])
+def test_admin_disable_stops_previously_enabled_automatic_rewards(api, player, season, disabled):
+    from apps.games.application.battle_pass_xp import add_battle_pass_xp
+    from apps.games.domain.repositories import IBagRepository, IBattlePassRepository
+    from common.di.bootstrap import DependencyInjection
+
+    level = BattlePassLevel.objects.create(season=season, level=1, required_xp=20)
+    reward = BattlePassReward.objects.create(level_row=level, item_id=57, quantity=5)
+    response = api.post("/api/v1/customer/games/battle-pass/details/",
+                        {"action": "auto-claim", "enabled": True}, format="json")
+    assert response.status_code == 200
+    SystemResource.objects.filter(code=disabled).update(enabled=False)
+    scope = DependencyInjection.root().create_scope()
+    battle_pass, bags = scope.resolve(IBattlePassRepository), scope.resolve(IBagRepository)
+    add_battle_pass_xp(player, 30, battle_pass=battle_pass, bags=bags)
+    assert not UserBattlePassClaim.objects.filter(user=player).exists()
+    assert not BagItem.objects.filter(bag__user=player, item_id=57).exists()
+    progress = UserBattlePassProgress.objects.get(user=player, season=season)
+    assert progress.auto_claim
+    SystemResource.objects.filter(code=disabled).update(enabled=True)
+    add_battle_pass_xp(player, 1, battle_pass=battle_pass, bags=bags)
+    add_battle_pass_xp(player, 1, battle_pass=battle_pass, bags=bags)
+    assert UserBattlePassClaim.objects.filter(user=player, reward=reward).count() == 1
+    assert BagItem.objects.get(bag__user=player, item_id=57).quantity == 5

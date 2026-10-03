@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { programsApi } from '../../services/api'
 import { Empty, ErrorNotice, Loading } from './ProgramUI'
+import { resourceEnabled } from '../../lib/resources'
 
 export function ResourceGate({
   code,
@@ -21,7 +22,7 @@ export function ResourceGate({
   })
   if (query.isPending) return <Loading />
   if (query.error) return <ErrorNotice error={query.error} />
-  if (query.data?.some((r) => r.code === code && !r.enabled))
+  if (!resourceEnabled(query.data ?? [], code))
     return (
       <Card className="program-section program-page">
         <h1>{t('resourceGate.title')}</h1>

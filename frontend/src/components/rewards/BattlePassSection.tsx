@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import {
@@ -104,7 +105,7 @@ export function BattlePassSection() {
                       {t('rewards.battlePass.premiumActive')}
                     </span>
                   ) : (
-                    <Button
+                    <MicroResource code="battle-pass-premium"><Button
                       disabled={action.busy}
                       onClick={() =>
                         void action.run(
@@ -116,7 +117,7 @@ export function BattlePassSection() {
                     >
                       <Crown aria-hidden="true" />
                       {t('rewards.battlePass.premiumBuy', { price: season.premium_price })}
-                    </Button>
+                    </Button></MicroResource>
                   )}
                 </div>
                 <div className="pass-level-seal">
@@ -167,7 +168,7 @@ export function BattlePassSection() {
                 </div>
               </div>
 
-              <Toggle
+              <MicroResource code="battle-pass-auto-claim"><Toggle
                 className="pass-auto-claim"
                 label={t('rewards.battlePass.autoClaim')}
                 checked={data?.auto_claim || false}
@@ -179,7 +180,7 @@ export function BattlePassSection() {
                     BATTLE_PASS_KEYS,
                   )
                 }
-              />
+              /></MicroResource>
             </Card>
 
             <Tabs
@@ -251,7 +252,7 @@ export function BattlePassSection() {
                               {t('rewards.battlePass.questClaimed')}
                             </b>
                           ) : (
-                            <Button
+                            <MicroResource code="battle-pass-quests"><Button
                               size="sm"
                               disabled={action.busy || !complete}
                               onClick={() =>
@@ -263,7 +264,7 @@ export function BattlePassSection() {
                               }
                             >
                               {t('rewards.battlePass.questClaim')}
-                            </Button>
+                            </Button></MicroResource>
                           )}
                         </Card>
                       )
@@ -349,7 +350,7 @@ export function BattlePassSection() {
                                             : t('rewards.battlePass.levelLocked')}
                                         </b>
                                       ) : (
-                                        <Button
+                                        <MicroResource code="battle-pass-claim"><Button
                                           size="sm"
                                           disabled={action.busy}
                                           onClick={() =>
@@ -361,7 +362,7 @@ export function BattlePassSection() {
                                           }
                                         >
                                           {t('rewards.battlePass.claim')}
-                                        </Button>
+                                        </Button></MicroResource>
                                       )}
                                     </div>
                                   )
@@ -436,7 +437,7 @@ export function BattlePassSection() {
                               enchant: exchange.required_enchant,
                             })}
                           </small>
-                          <Button
+                          <MicroResource code="battle-pass-exchanges"><Button
                             size="sm"
                             disabled={action.busy || missing || soldOut}
                             onClick={() =>
@@ -448,7 +449,7 @@ export function BattlePassSection() {
                             }
                           >
                             {t('rewards.battlePass.exchangeAction')}
-                          </Button>
+                          </Button></MicroResource>
                         </Card>
                       )
                     })}
@@ -507,7 +508,7 @@ export function BattlePassSection() {
                               {t('rewards.battlePass.milestoneClaimed')}
                             </b>
                           ) : (
-                            <Button
+                            <MicroResource code="battle-pass-milestones"><Button
                               size="sm"
                               disabled={action.busy || !reached}
                               onClick={() =>
@@ -519,7 +520,7 @@ export function BattlePassSection() {
                               }
                             >
                               {t('rewards.battlePass.milestoneClaim')}
-                            </Button>
+                            </Button></MicroResource>
                           )}
                         </Card>
                       )

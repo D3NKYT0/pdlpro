@@ -1,3 +1,4 @@
+import { MicroResource } from '../components/programs/MicroResource'
 import { BookOpen, Headphones, MessageCircle } from 'lucide-react'
 import { supportTicketPrefill } from '../components/help/contextual'
 import { ButtonLink } from '../components/ui/Button'
@@ -54,7 +55,7 @@ export function HelpPage() {
           }
         >
           {(onActivity) => (
-            <HelpPetCare
+            <MicroResource code="help-pet"><HelpPetCare
               labels={c.labels}
               language={c.language}
               userId={c.user?.id}
@@ -81,10 +82,10 @@ export function HelpPage() {
               onPreferencesPersist={c.onPreferencesPersist}
               onPreferencesApply={c.onPreferencesApply}
               onActivityReady={onActivity}
-            />
+            /></MicroResource>
           )}
         </HelpCompanion>
-        <HelpChat
+        <MicroResource code="help-chat"><HelpChat
           labels={c.labels}
           language={c.language}
           messages={c.messages}
@@ -124,7 +125,7 @@ export function HelpPage() {
           onRevealFinish={c.finish}
           onFaqRetry={c.onFaqRetry}
           onContextSuggest={c.onContextSuggest}
-        />
+        /></MicroResource>
       </div>
     </div>
   )

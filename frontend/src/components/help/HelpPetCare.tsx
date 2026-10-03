@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { useTranslation } from 'react-i18next'
 import type { ApiDenkynhoCareResult, ApiDenkynhoProfile } from '../../services/api'
 import { IconButton } from '../ui/Button'
@@ -176,14 +177,14 @@ export function HelpPetCare({
           ))}
       </div>
       {pet?.unlocks && (
-        <PetProgress
+        <MicroResource code="help-wardrobe"><PetProgress
           key={userId ?? 'guest'}
           profile={pet}
           language={language}
           careResult={careResult}
           disabled={busy || petActionPending}
           onProfileChange={onProfileChange}
-        />
+        /></MicroResource>
       )}
       <Toggle label={labels.animate} checked={animated} disabled={reduced} onChange={(event) => onAnimationsChange(event.target.checked)} />
       {reduced && <small className="muted">{labels.reduced}</small>}

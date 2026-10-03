@@ -1,3 +1,4 @@
+import { MicroResource } from '../components/programs/MicroResource'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -101,7 +102,7 @@ export function SupportersPage() {
                   {t('supporters.reviewNote', { note: profile.review_note })}
                 </p>
               )}
-              <form
+              <MicroResource code="supporters-apply"><form
                 key={profile?.id || 'new'}
                 className="program-form supporters-form"
                 onSubmit={(event) => {
@@ -183,7 +184,7 @@ export function SupportersPage() {
                     <ArrowUpRight aria-hidden="true" />
                   </Button>
                 </div>
-              </form>
+              </form></MicroResource>
             </Card>
 
             <div className="supporters-side">
@@ -221,7 +222,7 @@ export function SupportersPage() {
                 />
                 <p className="muted">{t('supporters.payoutDescription')}</p>
                 <div className="program-actions">
-                  <Button
+                  <MicroResource code="supporters-payout"><Button
                     type="button"
                     disabled={
                       action.busy ||
@@ -238,7 +239,7 @@ export function SupportersPage() {
                   >
                     <Coins aria-hidden="true" />
                     {t('supporters.payoutAction')}
-                  </Button>
+                  </Button></MicroResource>
                 </div>
               </Card>
             </div>

@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { Field } from '../ui/Field'
 import { Button } from '../ui/Button'
 import { useState, type FormEvent } from 'react'
@@ -189,7 +190,7 @@ export function AuctionDetail({
               <small>{t('auctions.detail.minBid', { value: formatCurrency(nextBidFor(auction)) })}</small>
 
               {!isOwner && auction.status === 'open' ? (
-                <form className="auction-bid-form" onSubmit={(event) => onBid(event, auction.id)}>
+                <MicroResource code="auction-bid"><form className="auction-bid-form" onSubmit={(event) => onBid(event, auction.id)}>
                   <p className="muted">{t('auctions.detail.characterBidHint')}</p>
                   <Field>
                     {t('auctions.detail.yourBid')}
@@ -206,7 +207,7 @@ export function AuctionDetail({
                   <Button type="submit" disabled={pending}>
                     <Gavel aria-hidden="true" /> {pending ? t('auctions.detail.sending') : t('auctions.detail.bid')}
                   </Button>
-                </form>
+                </form></MicroResource>
               ) : null}
 
               {isOwner ? <small className="marketplace-owner-note">{t('auctions.detail.ownerNote')}</small> : null}
@@ -249,7 +250,7 @@ export function AuctionDetail({
             <small>{t('auctions.detail.minBid', { value: formatCurrency(nextBidFor(auction)) })}</small>
 
             {!isOwner && auction.status === 'open' ? (
-              <form className="auction-bid-form" onSubmit={(event) => onBid(event, auction.id)}>
+              <MicroResource code="auction-bid"><form className="auction-bid-form" onSubmit={(event) => onBid(event, auction.id)}>
                 {accounts && accounts.length > 0 ? (
                   <Field>
                     {t('auctions.detail.bidAccount')}
@@ -294,7 +295,7 @@ export function AuctionDetail({
                 <Button type="submit" disabled={pending || !bidCharacter}>
                   <Gavel aria-hidden="true" /> {pending ? t('auctions.detail.sending') : t('auctions.detail.bid')}
                 </Button>
-              </form>
+              </form></MicroResource>
             ) : null}
 
             {isOwner ? <small className="marketplace-owner-note">{t('auctions.detail.ownerNote')}</small> : null}

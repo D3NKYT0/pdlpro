@@ -5386,3 +5386,195 @@ msgstr "Logros"
 
 msgid "Exibição das conquistas da conta no painel e no perfil."
 msgstr "Mostrar los logros de la cuenta en el panel y el perfil."
+
+msgid "Finalizar compras"
+msgstr "Finalizar compras"
+
+msgid "Pacotes da loja"
+msgstr "Paquetes de la tienda"
+
+msgid "Histórico de compras"
+msgstr "Historial de compras"
+
+msgid "Comprar moedas"
+msgstr "Comprar monedas"
+
+msgid "Transferir saldo"
+msgstr "Transferir saldo"
+
+msgid "Câmbio com o jogo"
+msgstr "Cambio con el juego"
+
+msgid "Histórico financeiro"
+msgstr "Historial financiero"
+
+msgid "Retirar itens do jogo"
+msgstr "Retirar objetos del juego"
+
+msgid "Enviar itens ao jogo"
+msgstr "Enviar objetos al juego"
+
+msgid "Transferir itens entre personagens"
+msgstr "Transferir objetos entre personajes"
+
+msgid "Mover itens da bag para o baú"
+msgstr "Mover objetos de la bolsa al almacén"
+
+msgid "Anunciar vendas"
+msgstr "Publicar ventas"
+
+msgid "Comprar anúncios"
+msgstr "Comprar anuncios"
+
+msgid "Criar leilões"
+msgstr "Crear subastas"
+
+msgid "Dar lances"
+msgstr "Pujar"
+
+msgid "Roda da Fortuna"
+msgstr "Rueda de la Fortuna"
+
+msgid "Baús"
+msgstr "Cofres"
+
+msgid "Comprar e reiniciar baús"
+msgstr "Comprar y reiniciar cofres"
+
+msgid "Abrir baús"
+msgstr "Abrir cofres"
+
+msgid "Dados"
+msgstr "Dados"
+
+msgid "Slot Machine"
+msgstr "Tragamonedas"
+
+msgid "Arena e encantamento"
+msgstr "Arena y encantamiento"
+
+msgid "Combater monstros"
+msgstr "Combatir monstruos"
+
+msgid "Estatísticas dos jogos"
+msgstr "Estadísticas de los juegos"
+
+msgid "Resgatar recompensas de nível"
+msgstr "Reclamar recompensas de nivel"
+
+msgid "Resgatar missões"
+msgstr "Reclamar misiones"
+
+msgid "Resgatar marcos"
+msgstr "Reclamar hitos"
+
+msgid "Resgate automático"
+msgstr "Reclamación automática"
+
+msgid "Lançar a vara"
+msgstr "Lanzar la caña"
+
+msgid "Resgatar missões da caça"
+msgstr "Reclamar misiones de caza"
+
+msgid "Criar conta de jogo"
+msgstr "Crear cuenta de juego"
+
+msgid "Vincular por login e senha"
+msgstr "Vincular por usuario y contraseña"
+
+msgid "Vincular por e-mail"
+msgstr "Vincular por correo"
+
+msgid "Comprar vagas de contas"
+msgstr "Comprar plazas de cuentas"
+
+msgid "Alterar senha da conta de jogo"
+msgstr "Cambiar contraseña de la cuenta de juego"
+
+msgid "Alterar nome do personagem"
+msgstr "Cambiar nombre del personaje"
+
+msgid "Alterar gênero do personagem"
+msgstr "Cambiar género del personaje"
+
+msgid "Alterar aparência"
+msgstr "Cambiar apariencia"
+
+msgid "Consultar skills do personagem"
+msgstr "Consultar habilidades del personaje"
+
+msgid "Editar perfil e avatar"
+msgstr "Editar perfil y avatar"
+
+msgid "Resgatar prêmios da conta"
+msgstr "Reclamar premios de la cuenta"
+
+msgid "Candidatura e perfil de apoiador"
+msgstr "Solicitud y perfil de colaborador"
+
+msgid "Solicitar saque de comissões"
+msgstr "Solicitar retiro de comisiones"
+
+msgid "Notificações push"
+msgstr "Notificaciones push"
+
+msgid "Abrir chamados"
+msgstr "Abrir solicitudes"
+
+msgid "Responder chamados"
+msgstr "Responder solicitudes"
+
+msgid "Encerrar e reabrir chamados"
+msgstr "Cerrar y reabrir solicitudes"
+
+msgid "Conversar com o assistente"
+msgstr "Conversar con el asistente"
+
+msgid "Armário do Denkynho"
+msgstr "Armario de Denkynho"
+
+msgid "Ler notícias completas"
+msgstr "Leer noticias completas"
+
+msgid "Ler páginas da Wiki"
+msgstr "Leer páginas de la Wiki"
+
+msgid "FAQ no painel"
+msgstr "Preguntas frecuentes en el panel"
+
+msgid "Detalhes do roadmap"
+msgstr "Detalles de la hoja de ruta"
+
+msgid "Ranking PvP"
+msgstr "Clasificación PvP"
+
+msgid "Ranking PK"
+msgstr "Clasificación PK"
+
+msgid "Ranking Adena"
+msgstr "Clasificación Adena"
+
+msgid "Ranking de clãs"
+msgstr "Clasificación de clanes"
+
+msgid "Ranking de nível"
+msgstr "Clasificación de nivel"
+
+msgid "Ranking de tempo online"
+msgstr "Clasificación de tiempo conectado"
+
+msgid "Olimpíadas"
+msgstr "Olimpiadas"
+
+msgid "Grand Bosses"
+msgstr "Grand Bosses"
+
+msgid "Cerco aos castelos"
+msgstr "Asedios a castillos"
+
+msgid "Buscar personagens"
+msgstr "Buscar personajes"
+
+msgid "Disponibilidade desta ação dentro do módulo."
+msgstr "Disponibilidad de esta acción dentro del módulo."

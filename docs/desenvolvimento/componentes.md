@@ -147,6 +147,23 @@ Use apenas um controle por `Field`. Para erro, coloque um ID no conteúdo de `er
 
 `AdminHeader` e `ProgramHeader` compõem `PageHeader`; `AdminSaveBar` compõe `Button`. Os aliases `Empty`, `Loading` e `ErrorNotice` de `ProgramUI` reutilizam os estados comuns. Preserve componentes com contrato próprio, como `ItemIdField`, `ItemIcon`, `SkillIcon`, `RewardsEditor` e `FishingGame`.
 
+`ResourceControlsProvider` compartilha o catálogo de disponibilidade no shell.
+`ResourceGate` protege rotas e apresenta carregamento, erro e indisponibilidade;
+`MicroResource` oculta ações pequenas considerando toda a cadeia de `parent_code`.
+`ResourceLink` mantém o resumo editorial sem link quando abrir detalhes está
+bloqueado. Reutilize esses componentes em vez de consultar o catálogo em cada botão.
+A administração compõe `ResourceChildren` para subcategorias recursivas e preserva
+as preferências dos filhos quando o ancestral está desativado.
+
+```tsx
+<MicroResource code="wallet-transfer">
+  <Button type="submit">{t('wallet.transfer.submit')}</Button>
+</MicroResource>
+```
+
+Os códigos e os cenários de uso estão no [guia de programas e recompensas](../funcionalidades/programas-e-recompensas.md#micro-recursos).
+
+
 [TicketMessages](../../frontend/src/components/support/TicketMessages.tsx) e [TicketStatus](../../frontend/src/components/support/TicketStatus.tsx) compartilham a apresentação do atendimento. `staff` permite exibir notas internas recebidas da API; o modo padrão as filtra. Isso não substitui a autorização e a filtragem no servidor.
 
 [Denkynho](../../frontend/src/components/help/Denkynho.tsx) compõe as camadas PNG do mascote com pose, fala, piscadas e movimento reduzido. Comer, jogar, rir, dormir, dançar, carinho, banho, caminhar, pensar, confuso e comemorar usam `ActivitySprite`, com sequências de quadros pré-carregadas, recortes e ancoragem pelos pés. O atlas de sucesso só entra com `celebration`. `useMascotPose` centraliza as transições, a fila de atividades e o espelhamento por visita, preservando a prioridade da conversa. A camada de orientação envolve corpo e recortes faciais juntos e não sobrescreve a transformação da animação. A página de Ajuda controla os estados; consulte [Ajuda e Denkynho](../funcionalidades/ajuda.md) para o contrato e os cenários de teste.

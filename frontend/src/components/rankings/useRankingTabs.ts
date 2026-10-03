@@ -1,3 +1,4 @@
+import { useResourceControls } from '../../contexts/ResourceControlsContext'
 import { useTranslation } from 'react-i18next'
 import { tabHasValueLabel, tabs, type LocalizedTab, type Tab } from './rankingsMeta'
 
@@ -17,6 +18,7 @@ export function useRankingTab(tab: Tab): LocalizedTab {
 }
 
 export function useRankingTabs(): LocalizedTab[] {
+  const resourceOn = useResourceControls()
   const { t } = useTranslation('public')
-  return tabs.map((tab) => localizeTab(tab, t))
+  return tabs.filter(tab => resourceOn(`rankings-${tab.id}`)).map((tab) => localizeTab(tab, t))
 }

@@ -1,3 +1,4 @@
+import { ResourceLink } from '../components/programs/ResourceLink'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
@@ -35,11 +36,11 @@ export function WikiPage() {
         ) : (pages.data ?? []).length ? (
           <div className="public-rows">
             {(pages.data ?? []).map((page) => (
-              <Link key={page.id} to={`/wiki/${page.slug}`}>
+              <ResourceLink code="wiki-detail" key={page.id} to={`/wiki/${page.slug}`}>
                 {page.category ? <span className="public-kicker">{page.category}</span> : null}
                 <h3>{page.title}</h3>
                 <p>{page.summary}</p>
-              </Link>
+              </ResourceLink>
             ))}
           </div>
         ) : (

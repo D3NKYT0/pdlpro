@@ -1,3 +1,4 @@
+import { ResourceChildren } from './ResourceChildren'
 import { Card } from '../../ui/Card'
 import { useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -188,7 +189,7 @@ export function AdminResourcesSection() {
                 <small>{t('resources.activeCount', { total: items.length })}</small>
               </div>
             </header>
-            <div className="admin-game-grid">
+            <div className="admin-game-grid admin-resource-grid">
               {items.map((row) => {
                 const ItemIcon = RESOURCE_ICONS[row.code] ?? Puzzle
                 const name = labelFor(row)
@@ -211,18 +212,7 @@ export function AdminResourcesSection() {
                       checked={row.enabled}
                       onChange={(event) => void toggle(row, event.target.checked)}
                     />
-                    {rows.filter(child => child.parent_code === row.code).length > 0 && (
-                      <fieldset className="admin-resource-children" data-theme-part="resource-children">
-                        <legend>{t('resources.microResources')}</legend>
-                        {!row.enabled && <p>{t('resources.parentDisabled')}</p>}
-                        {rows.filter(child => child.parent_code === row.code).map(child => (
-                          <div key={child.id}>
-                            <Toggle label={t(child.enabled ? 'resources.disable' : 'resources.enable', { name: labelFor(child) })} checked={child.enabled} busy={updating === child.id} disabled={updating !== null} onChange={event => void toggle(child, event.target.checked)} />
-                            <p>{descriptionFor(child)}</p>
-                          </div>
-                        ))}
-                      </fieldset>
-                    )}
+                    <ResourceChildren rows={rows} parent={row} updating={updating} onToggle={(child, enabled) => void toggle(child, enabled)} />
                   </article>
                 )
               })}

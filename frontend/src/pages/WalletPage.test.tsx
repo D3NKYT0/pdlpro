@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { ResourceControlsProvider } from '../contexts/ResourceControlsContext'
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -31,9 +32,11 @@ afterEach(() => {
   localStorage.clear()
   vi.restoreAllMocks()
 })
-function mount() {
+function mount(disabled: string[] = []) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
-  render(<QueryClientProvider client={client}><MemoryRouter><WalletPage /></MemoryRouter></QueryClientProvider>)
+  if (disabled.length) client.setQueryData(['resources'], disabled.map(code => ({ code, enabled: false })))
+  const page = disabled.length ? <ResourceControlsProvider><WalletPage /></ResourceControlsProvider> : <WalletPage />
+  render(<QueryClientProvider client={client}><MemoryRouter>{page}</MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
 
@@ -436,4 +439,15 @@ it('renderiza seletor de moedas dinâmico e filtra pacotes conforme moeda', asyn
   await user.click(screen.getByRole('button', { name: /EUR/ }))
   expect(await screen.findByText('Pacote Global')).toBeTruthy()
   expect(screen.queryByText('Pacote Brasil')).toBeNull()
+})
+
+it('exibe saldo e oculta compra, transferência e histórico conforme as preferências', async () => {
+  mount(['wallet-purchase', 'wallet-transfer', 'wallet-history', 'wallet-game-exchange'])
+  await waitFor(() => expect(walletApi.me).toHaveBeenCalled())
+  expect(screen.queryByRole('button', { name: /Comprar agora/ })).toBeNull()
+  expect(screen.queryByRole('button', { name: /Transferir/ })).toBeNull()
+  expect(screen.queryByRole('link', { name: /Trocar/ })).toBeNull()
+  expect(paymentApi.catalog).not.toHaveBeenCalled()
+  expect(walletApi.transactions).not.toHaveBeenCalled()
+  expect(paymentApi.list).not.toHaveBeenCalled()
 })

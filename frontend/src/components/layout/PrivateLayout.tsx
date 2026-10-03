@@ -1,3 +1,4 @@
+import { useResourceControls } from '../../contexts/ResourceControlsContext'
 import { Button } from '../ui/Button'
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -78,6 +79,7 @@ function helpNavLink(helpOn: boolean, supportOn: boolean): PanelNavLink | null {
 }
 
 export function PrivateLayout() {
+  const resourceOn = useResourceControls()
   const { t } = useTranslation("panel");
   const { t: tPublic } = useTranslation("public");
   const extensionPanelLinks = extensionNavItems("panel");
@@ -113,7 +115,7 @@ export function PrivateLayout() {
   const pet = useQuery({
     queryKey: ["denkynho-pet", user?.id],
     queryFn: contentApi.denkynho,
-    enabled: Boolean(user) && helpOn,
+    enabled: Boolean(user) && helpOn && resourceOn("help-pet"),
     staleTime: 15000,
   });
   const waitingSupport = support.data?.summary.waiting_user ?? 0;

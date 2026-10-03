@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { ResourceControlsProvider } from '../contexts/ResourceControlsContext'
 import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -28,8 +29,10 @@ beforeEach(() => {
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 afterEach(async () => { cleanup(); client.clear(); await i18n.changeLanguage('pt') })
-function mount(path = '/') {
-  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[path]}><SupportPage /></MemoryRouter></QueryClientProvider>)
+function mount(path = '/', disabled: string[] = []) {
+  if (disabled.length) client.setQueryData(['resources'], disabled.map(code => ({ code, enabled: false })))
+  const page = disabled.length ? <ResourceControlsProvider><SupportPage /></ResourceControlsProvider> : <SupportPage />
+  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[path]}>{page}</MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
 it('seleciona chamado e apresenta mensagem da equipe', async () => {
@@ -110,4 +113,14 @@ it('traduz filtros, categorias e prioridade no idioma ativo', async () => {
   expect(screen.getByRole('radio', { name: /Payment and shop/ })).toBeVisible()
   expect(screen.getByRole('textbox', { name: 'Subject' })).toHaveAttribute('placeholder', 'Summarize the problem in one sentence')
   expect(screen.getByRole('combobox', { name: 'Priority' })).toHaveDisplayValue('Normal — I need help')
+})
+
+it('preserva leitura do chamado quando criar, responder e encerrar estão bloqueados', async () => {
+  mount('/', ['support-create', 'support-reply', 'support-status'])
+  expect(await screen.findByText('Pode enviar o comprovante?')).toBeVisible()
+  expect(screen.queryByRole('button', { name: 'Novo chamado' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: 'Encerrar' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: 'Enviar resposta' })).not.toBeInTheDocument()
+  expect(supportApi.create).not.toHaveBeenCalled()
+  expect(supportApi.reply).not.toHaveBeenCalled()
 })

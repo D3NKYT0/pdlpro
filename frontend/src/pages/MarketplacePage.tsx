@@ -1,3 +1,4 @@
+import { MicroResource } from '../components/programs/MicroResource'
 import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
 import { Button } from '../components/ui/Button'
@@ -165,7 +166,7 @@ export function MarketplacePage() {
 
       {user ? (
         <aside className="marketplace-side-column">
-          <MarketplaceSellForm
+          <MicroResource code="marketplace-sell"><MarketplaceSellForm
             characters={characters.data ?? []}
             accounts={availableAccounts}
             account={login}
@@ -184,7 +185,7 @@ export function MarketplacePage() {
             onPriceChange={setPrice}
             onNotesChange={setNotes}
             onSubmit={(event) => void onList(event)}
-          />
+          /></MicroResource>
           <MarketplaceSalesHistory
             listings={mine.data ?? []}
             loading={mine.isLoading}

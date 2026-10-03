@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { ResourceControlsProvider } from '../contexts/ResourceControlsContext'
 import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -192,8 +193,10 @@ beforeEach(() => {
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 afterEach(() => { cleanup(); client.clear() })
-function mount(tab: string) {
-  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[`/panel/games?tab=${tab}`]}><GamesPage /></MemoryRouter></QueryClientProvider>)
+function mount(tab: string, disabled: string[] = []) {
+  if (disabled.length) client.setQueryData(['resources'], disabled.map(code => ({ code, enabled: false })))
+  const page = disabled.length ? <ResourceControlsProvider><GamesPage /></ResourceControlsProvider> : <GamesPage />
+  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[`/panel/games?tab=${tab}`]}>{page}</MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
 function namedButton(name: string) {
@@ -1101,4 +1104,16 @@ it('mantém o atalho de recompensas dentro do hero', async () => {
   expect(jump).toHaveAttribute('href', '/panel/rewards')
   expect(jump).toHaveClass('games-hero-jump')
   expect(document.querySelector('.program-actions')).toBeNull()
+})
+
+it('filtra aba desativada no link direto e preserva abertura quando compra de caixas está bloqueada', async () => {
+  const user = mount('roulette', ['games-roulette', 'games-boxes-buy', 'games-buy-tokens'])
+  expect(await screen.findByRole('heading', { name: 'Baús Encantados' })).toBeVisible()
+  expect(screen.queryByRole('tab', { name: 'Roda da Fortuna' })).not.toBeInTheDocument()
+  expect(screen.getByRole('tab', { name: 'Baús Encantados' })).toHaveAttribute('aria-selected', 'true')
+  expect(screen.queryByRole('button', { name: 'Comprar' })).not.toBeInTheDocument()
+  expect(gamesApi.roulette).not.toHaveBeenCalled()
+  await user.click(await screen.findByRole('button', { name: /Abrir/ }))
+  expect(gamesApi.openBox).toHaveBeenCalledWith('box')
+  expect(gamesApi.buyBox).not.toHaveBeenCalled()
 })

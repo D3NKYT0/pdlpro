@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import type { ReactElement } from 'react'
+import { ResourceControlsProvider } from '../contexts/ResourceControlsContext'
 import { contentApi } from '../services/api'
 import { FaqPage } from './FaqPage'
 import { DownloadsPage } from './DownloadsPage'
@@ -119,4 +120,18 @@ it('calendário mostra título e descrição do evento', async () => {
   expect(await screen.findByRole('heading', { name: 'Siege' })).toBeTruthy()
   expect(screen.getByText('Prepare seu clã')).toBeTruthy()
   expect(contentApi.calendar).toHaveBeenCalledWith('pt')
+})
+
+it.each(['news', 'wiki'])('mantém resumo de %s sem link para detalhes desativados', async kind => {
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+  client.setQueryData(['resources'], [{ code: `${kind}-detail`, enabled: false }])
+  vi.mocked(contentApi.news).mockResolvedValue([{ id: '1', slug: 'update', title: 'Atualização', excerpt: 'Novo conteúdo', published_at: '2026-09-02T12:00:00Z' }] as any)
+  vi.mocked(contentApi.wiki).mockResolvedValue([{ id: '1', slug: 'siege', title: 'Guia Siege', summary: 'Conquiste castelos', category: 'Guias' }] as any)
+  render(<QueryClientProvider client={client}><MemoryRouter><ResourceControlsProvider>{kind === 'news' ? <NewsPage /> : <WikiPage />}</ResourceControlsProvider></MemoryRouter></QueryClientProvider>)
+  expect(await screen.findByText(kind === 'news' ? 'Novo conteúdo' : 'Conquiste castelos')).toBeTruthy()
+  expect(screen.queryByRole('link', { name: kind === 'news' ? /Atualização/ : /Guia Siege/ })).toBeNull()
+  expect(contentApi.newsDetail).not.toHaveBeenCalled()
+  expect(contentApi.wikiPage).not.toHaveBeenCalled()
+  cleanup()
+  client.clear()
 })

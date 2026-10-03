@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { useTranslation } from 'react-i18next'
 import {
   ArrowDownToLine,
@@ -142,10 +143,10 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
               {t('inventory.characters.quantity')}
               <input inputMode="numeric" value={quantity} onChange={(e) => setQuantity(e.target.value)} required />
             </Field>
-            <Button type="submit">
+            <MicroResource code="inventory-withdraw"><Button type="submit">
               <ArrowDownToLine aria-hidden="true" />
               {t('inventory.characters.withdraw')}
-            </Button>
+            </Button></MicroResource>
           </form>
         ) : null}
 
@@ -203,7 +204,7 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
                   <small>{t('inventory.characters.itemMeta', { enchant: item.enchant, quantity: item.quantity })}</small>
                 </span>
                 <div className="inventory-panel-item-actions">
-                  <Button
+                  <MicroResource code="inventory-trade"><Button
                     className="ghost"
                     type="button"
                     disabled={panelActionPending}
@@ -221,8 +222,8 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
                   >
                     <ArrowRightLeft aria-hidden="true" />
                     {t('inventory.characters.transfer')}
-                  </Button>
-                  <Button
+                  </Button></MicroResource>
+                  <MicroResource code="inventory-deposit"><Button
                     className="ghost"
                     type="button"
                     disabled={panelActionPending}
@@ -240,7 +241,7 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
                   >
                     <Send aria-hidden="true" />
                     {t('inventory.characters.sendToGame')}
-                  </Button>
+                  </Button></MicroResource>
                 </div>
 
                 {panelItemAction?.recordId === item.id ? (

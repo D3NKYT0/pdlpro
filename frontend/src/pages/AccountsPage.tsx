@@ -1,3 +1,5 @@
+import { useResourceControls } from '../contexts/ResourceControlsContext'
+import { MicroResource } from '../components/programs/MicroResource'
 import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
 import { Field } from '../components/ui/Field'
@@ -22,6 +24,7 @@ import { useResourceEnabled } from '../hooks/useResourceEnabled'
 import { useLaunchAccess } from '../hooks/useLaunchAccess'
 
 export function AccountsPage() {
+  const resourceOn = useResourceControls()
   const { t } = useTranslation('panel')
   const canLink = useResourceEnabled('accounts-link', 'accounts')
   const canCreateCharacter = useResourceEnabled('accounts-create-character', 'accounts')
@@ -42,6 +45,7 @@ export function AccountsPage() {
   const [useAlternateLogin, setUseAlternateLogin] = useState(false)
   const [linkEmail, setLinkEmail] = useState('')
   const [linkMode, setLinkMode] = useState<'credentials' | 'email'>('credentials')
+  const effectiveLinkMode = resourceOn(`accounts-link-${linkMode}`) ? linkMode : resourceOn('accounts-link-credentials') ? 'credentials' : 'email'
   const [submitting, setSubmitting] = useState<'register' | 'email' | 'link' | null>(null)
   const [buySlotsOpen, setBuySlotsOpen] = useState(false)
   const [buyingSlots, setBuyingSlots] = useState(false)
@@ -62,7 +66,7 @@ export function AccountsPage() {
   const canLinkMore = Boolean(accounts.data?.slots ? accounts.data.slots.can_link : true)
   const rawSlotPrice = servicePrices.data?.LINK_SLOT
   const unitSlotPrice = rawSlotPrice ? Number(rawSlotPrice) || 10 : 10
-  const isSlotServiceAvailable = servicePrices.data ? serviceAvailable(servicePrices.data, 'LINK_SLOT') : true
+  const isSlotServiceAvailable = resourceOn('accounts-buy-slots') && (servicePrices.data ? serviceAvailable(servicePrices.data, 'LINK_SLOT') : true)
   const walletCoins = wallet.data ? Number(wallet.data.balance) || 0 : 0
 
   async function handlePurchaseSlots(qty: number) {
@@ -343,7 +347,7 @@ export function AccountsPage() {
           {/* ========================================================
               CARD 2: CRIAÇÃO DE CONTA (Criar Nova Conta no Jogo)
               ======================================================== */}
-          <Card className="account-section-card account-card-create">
+          <MicroResource code="accounts-register"><Card className="account-section-card account-card-create">
             <div className="account-section-heading">
               <div>
                 <span className="panel-eyebrow">{t('accounts.createAccountEyebrow')}</span>
@@ -451,12 +455,12 @@ export function AccountsPage() {
                 </Button>
               </form>
             ) : null}
-          </Card>
+          </Card></MicroResource>
 
           {/* ========================================================
               CARD 3: VINCULAÇÃO DE CONTA (Já possui conta no servidor?)
               ======================================================== */}
-          {canLink && <Card className="account-section-card account-card-link">
+          {canLink && (resourceOn('accounts-link-credentials') || resourceOn('accounts-link-email')) && <Card className="account-section-card account-card-link">
             <div className="account-section-heading">
               <div>
                 <span className="panel-eyebrow">{t('accounts.linkAccountEyebrow')}</span>
@@ -473,29 +477,29 @@ export function AccountsPage() {
             </p>
 
             <div className="account-link-tabs" role="tablist">
-              <button
+              <MicroResource code="accounts-link-credentials"><button
                 type="button"
                 role="tab"
-                aria-selected={linkMode === 'credentials'}
-                className={`account-link-tab ${linkMode === 'credentials' ? 'is-active' : ''}`}
+                aria-selected={effectiveLinkMode === 'credentials'}
+                className={`account-link-tab ${effectiveLinkMode === 'credentials' ? 'is-active' : ''}`}
                 onClick={() => setLinkMode('credentials')}
               >
                 <KeyRound aria-hidden="true" />
                 <span>{t('accounts.linkMethodCredentials')}</span>
-              </button>
-              <button
+              </button></MicroResource>
+              <MicroResource code="accounts-link-email"><button
                 type="button"
                 role="tab"
-                aria-selected={linkMode === 'email'}
-                className={`account-link-tab ${linkMode === 'email' ? 'is-active' : ''}`}
+                aria-selected={effectiveLinkMode === 'email'}
+                className={`account-link-tab ${effectiveLinkMode === 'email' ? 'is-active' : ''}`}
                 onClick={() => setLinkMode('email')}
               >
                 <Mail aria-hidden="true" />
                 <span>{t('accounts.linkMethodEmail')}</span>
-              </button>
+              </button></MicroResource>
             </div>
 
-            {linkMode === 'credentials' ? (
+            {effectiveLinkMode === 'credentials' ? (
               <form className="account-form-body" onSubmit={onLink}>
                 <p className="account-tab-hint">{t('accounts.linkCredentialsHint')}</p>
                 <div className="account-form-fields">
@@ -749,7 +753,7 @@ export function AccountsPage() {
         </Card>
       </div>
 
-      <BuySlotsModal
+      <MicroResource code="accounts-buy-slots"><BuySlotsModal
         open={buySlotsOpen}
         unitPrice={unitSlotPrice}
         walletBalance={walletCoins}
@@ -761,7 +765,7 @@ export function AccountsPage() {
         isAvailable={isSlotServiceAvailable}
         onClose={() => setBuySlotsOpen(false)}
         onConfirm={handlePurchaseSlots}
-      />
+      /></MicroResource>
 
       <CreateCharacterModal
         open={createCharacterOpen && canCreateCharacter}

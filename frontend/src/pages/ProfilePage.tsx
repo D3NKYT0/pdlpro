@@ -1,3 +1,4 @@
+import { MicroResource } from '../components/programs/MicroResource'
 import { useResourceEnabled } from '../hooks/useResourceEnabled'
 import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
@@ -125,7 +126,7 @@ export function ProfilePage() {
               <span><UserRound aria-hidden="true" /></span>
               <div><span className="panel-eyebrow">{t('profile.publicInfo')}</span><h2>{t('profile.editTitle')}</h2></div>
             </div>
-            <form onSubmit={saveProfile}>
+            <MicroResource code="profile-edit"><form onSubmit={saveProfile}>
               <input ref={fileInput} type="file" accept="image/png,image/jpeg,image/webp" hidden onChange={chooseAvatar} />
               <div className="grid cols-2" style={{ gap: '1rem' }}>
                 <Field>
@@ -160,7 +161,7 @@ export function ProfilePage() {
               <Button type="submit" disabled={saving}>
                 <Save aria-hidden="true" /> {saving ? t('profile.saving') : t('profile.save')}
               </Button>
-            </form>
+            </form></MicroResource>
           </Card>
         </div>
 

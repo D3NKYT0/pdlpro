@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { ResourceControlsProvider } from '../contexts/ResourceControlsContext'
 import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -62,9 +63,11 @@ beforeEach(() => {
   vi.mocked(lineageApi.characterSkills).mockResolvedValue([])
 })
 afterEach(() => { cleanup(); query?.clear(); vi.restoreAllMocks() })
-function mount() {
+function mount(disabled: string[] = []) {
   query = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
-  render(<MemoryRouter initialEntries={['/character/hero/7']}><QueryClientProvider client={query}><Routes><Route path="/character/:login/:charId" element={<CharacterPage />} /></Routes></QueryClientProvider></MemoryRouter>)
+  if (disabled.length) query.setQueryData(['resources'], disabled.map(code => ({ code, enabled: false })))
+  const page = disabled.length ? <ResourceControlsProvider><CharacterPage /></ResourceControlsProvider> : <CharacterPage />
+  render(<MemoryRouter initialEntries={['/character/hero/7']}><QueryClientProvider client={query}><Routes><Route path="/character/:login/:charId" element={page} /></Routes></QueryClientProvider></MemoryRouter>)
   return userEvent.setup()
 }
 it.each(['nickname', 'sex'] as const)('serializa %s, preserva chave após erro e apresenta sucesso', async service => {
@@ -312,4 +315,12 @@ it.each(['empty', 'error', 'online'] as const)('trata estado %s', async state =>
   if (state === 'empty') expect(await screen.findByText('Personagem não encontrado')).toBeVisible()
   if (state === 'error') expect(await screen.findByText('Sem acesso')).toBeVisible()
   if (state === 'online') expect(await screen.findByRole('button', { name: 'Alterar nickname' })).toBeDisabled()
+})
+
+it('oculta apenas nickname e skills, mantendo alteração de sexo disponível', async () => {
+  mount(['accounts-nickname', 'accounts-skills'])
+  expect(await screen.findByRole('heading', { name: 'Hero', level: 1 })).toBeVisible()
+  expect(screen.queryByRole('button', { name: 'Alterar nickname' })).not.toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'Alterar sexo' })).toBeVisible()
+  expect(lineageApi.characterSkills).not.toHaveBeenCalled()
 })

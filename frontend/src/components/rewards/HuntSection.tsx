@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -336,7 +337,7 @@ export function HuntSection() {
                           {t('rewards.hunt.questClaimed')}
                         </b>
                       ) : (
-                        <Button
+                        <MicroResource code="hunt-claim"><Button
                           size="sm"
                           disabled={action.busy || !complete || !data.character}
                           onClick={() =>
@@ -352,7 +353,7 @@ export function HuntSection() {
                           }
                         >
                           {t('rewards.hunt.claim')}
-                        </Button>
+                        </Button></MicroResource>
                       )}
                     </div>
                   </Card>

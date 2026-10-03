@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
@@ -202,7 +203,7 @@ export function ManageAccountModal({
             </div>
           </div>
 
-          <form className="manage-account-password-form" onSubmit={handlePasswordSubmit}>
+          <MicroResource code="accounts-password"><form className="manage-account-password-form" onSubmit={handlePasswordSubmit}>
             <Field
               label={t('accounts.manageModal.newPassword', { defaultValue: 'Nova senha' })}
               hint={t('accounts.manageModal.passwordHint', { defaultValue: 'A senha precisa ter no mínimo 8 caracteres.' })}
@@ -270,7 +271,7 @@ export function ManageAccountModal({
                 <span>{t('accounts.manageModal.savePassword', { defaultValue: 'Salvar nova senha' })}</span>
               </Button>
             </div>
-          </form>
+          </form></MicroResource>
         </section>
 
         {/* ========================================================
@@ -301,7 +302,7 @@ export function ManageAccountModal({
           ) : (
             <div className="manage-unlink-actions">
               {!confirmUnlink ? (
-                <Button
+                <MicroResource code="accounts-unlink"><Button
                   variant="danger"
                   size="sm"
                   type="button"
@@ -309,7 +310,7 @@ export function ManageAccountModal({
                 >
                   <Trash2 aria-hidden="true" />
                   <span>{t('accounts.manageModal.unlinkBtn', { defaultValue: 'Desvincular do painel' })}</span>
-                </Button>
+                </Button></MicroResource>
               ) : (
                 <div className="manage-unlink-confirm-box">
                   <div className="manage-unlink-confirm-text">

@@ -10,24 +10,27 @@ import { queryClient } from '../../services/infra/queryClient'
 import { AppRoutes } from '../routes/AppRoutes'
 import { SiteMetadataSync } from '../../theme/SiteMetadataSync'
 import { ThemeProvider } from '../../theme/ThemeProvider'
+import { ResourceControlsProvider } from '../../contexts/ResourceControlsContext'
 
 export function AppProviders() {
   return (
     <I18nextProvider i18n={i18n}>
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
-          <SiteMetadataSync />
-          <CookieConsentProvider>
-            <ConsentEnforcementBridge />
-            <AuthProvider>
-              <ActiveAccountProvider>
-                <AppRoutes />
-                <div data-theme-part="toast-host" data-theme-surface="overlay">
-                  <Toaster position="top-right" containerClassName="pdl-toast" toastOptions={{ className: 'pdl-toast' }} />
-                </div>
-              </ActiveAccountProvider>
-            </AuthProvider>
-          </CookieConsentProvider>
+          <ResourceControlsProvider>
+            <SiteMetadataSync />
+            <CookieConsentProvider>
+              <ConsentEnforcementBridge />
+              <AuthProvider>
+                <ActiveAccountProvider>
+                  <AppRoutes />
+                  <div data-theme-part="toast-host" data-theme-surface="overlay">
+                    <Toaster position="top-right" containerClassName="pdl-toast" toastOptions={{ className: 'pdl-toast' }} />
+                  </div>
+                </ActiveAccountProvider>
+              </AuthProvider>
+            </CookieConsentProvider>
+          </ResourceControlsProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </I18nextProvider>

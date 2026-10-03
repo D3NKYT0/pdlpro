@@ -1,3 +1,5 @@
+import { MicroResource } from '../components/programs/MicroResource'
+import { useResourceControls } from '../contexts/ResourceControlsContext'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -7,14 +9,17 @@ import { RankingsNav } from '../components/rankings/RankingsNav'
 import { RankingsSearch } from '../components/rankings/RankingsSearch'
 import { RankingsSection } from '../components/rankings/RankingsSection'
 import { asRankingRows } from '../components/rankings/rankingsFormat'
-import { tabFromParam } from '../components/rankings/rankingsMeta'
+import { tabs, tabFromParam } from '../components/rankings/rankingsMeta'
 import { useRankingTab } from '../components/rankings/useRankingTabs'
 import { serverApi } from '../services/api'
 
 export function RankingsPage() {
+  const resourceOn = useResourceControls()
   const { t } = useTranslation('public')
   const [searchParams] = useSearchParams()
-  const tab = useRankingTab(tabFromParam(searchParams.get('tab')))
+  const requested = tabFromParam(searchParams.get('tab'))
+  const selected = resourceOn(`rankings-${requested.id}`) ? requested : tabs.find(row => resourceOn(`rankings-${row.id}`)) ?? requested
+  const tab = useRankingTab(selected)
   const Icon = tab.icon
   const [search, setSearch] = useState('')
 
@@ -22,17 +27,17 @@ export function RankingsPage() {
   const rankings = useQuery({
     queryKey: ['rankings', tab.type === 'ranking' ? tab.kind : '', 50],
     queryFn: () => serverApi.rankings(tab.type === 'ranking' ? tab.kind : 'pvp', 50),
-    enabled: tab.type === 'ranking',
+    enabled: resourceOn(`rankings-${tab.id}`) && tab.type === 'ranking',
   })
   const world = useQuery({
     queryKey: ['world', tab.type === 'world' ? tab.name : ''],
     queryFn: () => serverApi.world(tab.type === 'world' ? tab.name : 'olympiad_ranking'),
-    enabled: tab.type === 'world',
+    enabled: resourceOn(`rankings-${tab.id}`) && tab.type === 'world',
   })
   const characters = useQuery({
     queryKey: ['world-search', search],
     queryFn: () => serverApi.world('search_characters', { query: search }),
-    enabled: search.trim().length >= 2,
+    enabled: resourceOn('rankings-search') && search.trim().length >= 2,
   })
 
   const worldRows = world.data ?? []
@@ -65,21 +70,21 @@ export function RankingsPage() {
       <RankingsNav activeTab={tab} />
 
       <main className="container rankings-content">
-        <RankingsSection
+        <MicroResource code={`rankings-${tab.id}`}><RankingsSection
           tab={tab}
           Icon={Icon}
           isLoading={isLoading}
           isError={isError}
           rankingRows={rankingRows}
           worldRows={worldRows}
-        />
+        /></MicroResource>
 
-        <RankingsSearch
+        <MicroResource code="rankings-search"><RankingsSearch
           search={search}
           onSearchChange={setSearch}
           isLoading={characters.isLoading}
           results={characters.data ?? []}
-        />
+        /></MicroResource>
       </main>
     </div>
   )

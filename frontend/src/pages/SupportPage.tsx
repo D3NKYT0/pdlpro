@@ -1,3 +1,4 @@
+import { MicroResource } from '../components/programs/MicroResource'
 import { Card } from '../components/ui/Card'
 import { TicketMessages } from '../components/support/TicketMessages'
 import { apiErrorMessage } from '../lib/errors'
@@ -144,9 +145,9 @@ export function SupportPage() {
           <h1>{t('support.title')}</h1>
           <p className="muted">{t('support.subtitle')}</p>
         </div>
-        <Button className="support-new-button" type="button" onClick={() => { setCreating(true); setParams({}) }}>
+        <MicroResource code="support-create"><Button className="support-new-button" type="button" onClick={() => { setCreating(true); setParams({}) }}>
           <Plus aria-hidden="true" /> {t('support.newTicket')}
-        </Button>
+        </Button></MicroResource>
       </Card>
 
       <section className="support-overview" aria-label={t('support.overviewAria')}>
@@ -159,7 +160,7 @@ export function SupportPage() {
         <aside className={`card support-inbox${creating ? ' is-mobile-hidden' : ''}`}>
           <div className="support-inbox-head">
             <div><span className="panel-eyebrow">{t('support.inboxEyebrow')}</span><h2>{t('support.inboxTitle')}</h2></div>
-            <button type="button" aria-label={t('support.newTicket')} onClick={() => { setCreating(true); setParams({}) }}><Plus /></button>
+            <MicroResource code="support-create"><button type="button" aria-label={t('support.newTicket')} onClick={() => { setCreating(true); setParams({}) }}><Plus /></button></MicroResource>
           </div>
           <div className="support-filter-tabs">
             <button className={filter === 'active' ? 'active' : ''} type="button" onClick={() => setFilter('active')}>{t('support.filterActive')}</button>
@@ -187,7 +188,7 @@ export function SupportPage() {
 
         <main className={`card support-main${creating || selectedId ? ' is-open' : ''}`}>
           {creating ? (
-            <form className="support-create" onSubmit={submitTicket}>
+            <MicroResource code="support-create"><form className="support-create" onSubmit={submitTicket}>
               <div className="support-main-head">
                 <div><span className="panel-eyebrow">{t('support.createEyebrow')}</span><h2>{t('support.createTitle')}</h2><p className="muted">{t('support.createHint')}</p></div>
                 <button className="support-icon-button" type="button" onClick={() => setCreating(false)} aria-label={t('support.closeForm')}><X /></button>
@@ -210,22 +211,22 @@ export function SupportPage() {
                 <Button type="submit" disabled={pending || !category}><Send /> {pending ? t('support.opening') : t('support.openTicket')}</Button>
               </div>
               <p className="support-privacy-note"><ShieldCheck /> {t('support.privacyNote')}</p>
-            </form>
+            </form></MicroResource>
           ) : detail.data ? (
             <div className="support-conversation">
               <div className="support-main-head support-conversation-head">
                 <button className="support-mobile-back" type="button" onClick={() => setParams({})}><ArrowLeft /></button>
                 <div><span className="panel-eyebrow">{detail.data.protocol} · {detail.data.category_label}</span><h2>{detail.data.subject}</h2><div className="support-ticket-meta"><TicketStatus ticket={detail.data} /><span><Clock3 /> {t('support.openedAt', { when: formatDateTime(detail.data.created_at, 'short') })}</span><span>{t('support.assignedTo', { name: detail.data.assigned_to })}</span></div></div>
-                <Button className="ghost compact" type="button" disabled={pending} onClick={() => void ticketAction(['closed', 'resolved'].includes(detail.data.status) ? 'reopen' : 'close')}>{['closed', 'resolved'].includes(detail.data.status) ? t('support.reopen') : t('support.closeTicket')}</Button>
+                <MicroResource code="support-status"><Button className="ghost compact" type="button" disabled={pending} onClick={() => void ticketAction(['closed', 'resolved'].includes(detail.data.status) ? 'reopen' : 'close')}>{['closed', 'resolved'].includes(detail.data.status) ? t('support.reopen') : t('support.closeTicket')}</Button></MicroResource>
               </div>
               {detail.data.status === 'waiting_user' ? <div className="support-action-banner"><CircleAlert /><div><strong>{t('support.waitingTitle')}</strong><span>{t('support.waitingText')}</span></div></div> : null}
               <TicketMessages messages={detail.data.messages ?? []} />
               {!['closed', 'resolved'].includes(detail.data.status) ? (
-                <form className="support-reply" onSubmit={submitReply}><label><span>{t('support.replyLabel')}</span><textarea value={reply} onChange={(event) => setReply(event.target.value)} rows={3} placeholder={t('support.replyPlaceholder')} required /></label><Button type="submit" disabled={pending || !reply.trim()}><Send /> {pending ? t('support.sending') : t('support.send')}</Button></form>
+                <MicroResource code="support-reply"><form className="support-reply" onSubmit={submitReply}><label><span>{t('support.replyLabel')}</span><textarea value={reply} onChange={(event) => setReply(event.target.value)} rows={3} placeholder={t('support.replyPlaceholder')} required /></label><Button type="submit" disabled={pending || !reply.trim()}><Send /> {pending ? t('support.sending') : t('support.send')}</Button></form></MicroResource>
               ) : <div className="support-closed-note"><CheckCircle2 /><div><strong>{t('support.closedTitle')}</strong><span>{t('support.closedText')}</span></div></div>}
             </div>
           ) : (
-            <div className="support-empty"><Sparkles /><h2>{t('support.emptyTitle')}</h2><p>{t('support.emptyText')}</p><Button type="button" onClick={() => setCreating(true)}><Plus /> {t('support.openTicket')}</Button></div>
+            <div className="support-empty"><Sparkles /><h2>{t('support.emptyTitle')}</h2><p>{t('support.emptyText')}</p><MicroResource code="support-create"><Button type="button" onClick={() => setCreating(true)}><Plus /> {t('support.openTicket')}</Button></MicroResource></div>
           )}
         </main>
       </div>

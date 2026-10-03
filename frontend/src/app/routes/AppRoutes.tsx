@@ -107,18 +107,18 @@ export function AppRoutes() {
           {extensionRouteElements('public')}
           <Route element={<PublicContent />}>
             <Route path="/roadmap" element={<ResourceGate code="roadmap"><RoadmapPage /></ResourceGate>} />
-            <Route path="/roadmap/:id" element={<ResourceGate code="roadmap"><RoadmapDetailPage /></ResourceGate>} />
+            <Route path="/roadmap/:id" element={<ResourceGate code="roadmap-detail"><RoadmapDetailPage /></ResourceGate>} />
             <Route path="/rankings" element={<ResourceGate code="rankings"><RankingsPage /></ResourceGate>} />
             <Route path="/stores" element={<ResourceGate code="game-stores"><StoresPage /></ResourceGate>} />
             <Route path="/news" element={<ResourceGate code="news"><NewsPage /></ResourceGate>} />
-            <Route path="/news/:slug" element={<ResourceGate code="news"><NewsDetailPage /></ResourceGate>} />
+            <Route path="/news/:slug" element={<ResourceGate code="news-detail"><NewsDetailPage /></ResourceGate>} />
             <Route path="/info" element={<InfoPage />} />
             {wikiOverride ? (
               <Route path="/wiki/*" element={<ResourceGate code="wiki">{wikiOverride}</ResourceGate>} />
             ) : (
               <>
                 <Route path="/wiki" element={<ResourceGate code="wiki"><WikiPage /></ResourceGate>} />
-                <Route path="/wiki/:slug" element={<ResourceGate code="wiki"><WikiDetailPage /></ResourceGate>} />
+                <Route path="/wiki/:slug" element={<ResourceGate code="wiki-detail"><WikiDetailPage /></ResourceGate>} />
               </>
             )}
             <Route path="/calendar" element={<ResourceGate code="calendar"><CalendarPage /></ResourceGate>} />
@@ -138,9 +138,9 @@ export function AppRoutes() {
             {extensionRouteElements('panel')}
             <Route path="/panel/supporters" element={<ResourceGate code="supporters"><SupportersPage /></ResourceGate>} />
             <Route path="/panel/rewards" element={<ResourceGate code="games"><RewardsPage /></ResourceGate>} />
-            <Route path="/panel/wallet/game" element={<ResourceGate code="wallet"><GameExchangePage /></ResourceGate>} />
-            <Route path="/panel/wallet/orders" element={<ResourceGate code="wallet"><WalletOrdersPage /></ResourceGate>} />
-            <Route path="/panel/wallet/statement" element={<ResourceGate code="wallet"><WalletTransactionsPage /></ResourceGate>} />
+            <Route path="/panel/wallet/game" element={<ResourceGate code="wallet-game-exchange"><GameExchangePage /></ResourceGate>} />
+            <Route path="/panel/wallet/orders" element={<ResourceGate code="wallet-history"><WalletOrdersPage /></ResourceGate>} />
+            <Route path="/panel/wallet/statement" element={<ResourceGate code="wallet-history"><WalletTransactionsPage /></ResourceGate>} />
             <Route path="/panel" element={<PainelPage />} />
             <Route path="/panel/profile" element={<ResourceGate code="profile"><ProfilePage /></ResourceGate>} />
             <Route path="/panel/security" element={<AccountSecurityPage />} />

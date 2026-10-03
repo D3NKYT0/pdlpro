@@ -1,3 +1,5 @@
+import { useResourceControls } from '../contexts/ResourceControlsContext'
+import { MicroResource } from '../components/programs/MicroResource'
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -17,19 +19,20 @@ import { paymentApi, walletApi } from '../services/api'
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../services/types'
 
 export function WalletPage() {
+  const enabled = useResourceControls()
   const { t } = useTranslation('panel')
   const { user } = useAuth()
   const queryClient = useQueryClient()
   const wallet = useQuery({ queryKey: ['wallet'], queryFn: walletApi.me })
   const tx = useQuery({
     queryKey: ['wallet-tx', 1, 10],
-    queryFn: () => walletApi.transactions({ page: 1, page_size: 10 }),
+    enabled: enabled('wallet-history'), queryFn: () => walletApi.transactions({ page: 1, page_size: 10 }),
   })
   const orders = useQuery({
     queryKey: ['payments', 1, 10],
-    queryFn: () => paymentApi.list({ page: 1, page_size: 10 }),
+    enabled: enabled('wallet-history'), queryFn: () => paymentApi.list({ page: 1, page_size: 10 }),
   })
-  const catalog = useQuery({ queryKey: ['payment-catalog'], queryFn: paymentApi.catalog })
+  const catalog = useQuery({ queryKey: ['payment-catalog'], enabled: enabled('wallet-purchase'), queryFn: paymentApi.catalog })
   const [recipient, setRecipient] = useState('')
   const [amount, setAmount] = useState('')
   const [currency, setCurrency] = useState<string>('BRL')
@@ -403,7 +406,7 @@ export function WalletPage() {
       <WalletHero balance={wallet.data?.balance} bonusBalance={wallet.data?.bonus_balance} />
 
       <div className="wallet-main-grid">
-        <WalletPurchaseCard
+        <MicroResource code="wallet-purchase"><WalletPurchaseCard
           currency={currency}
           onCurrencyChange={(c) => {
             setCurrency(c)
@@ -430,19 +433,19 @@ export function WalletPage() {
           busy={busy}
           onStartPurchase={startPurchase}
           mpOptions={mpConfig?.options}
-        />
+        /></MicroResource>
 
         <aside className="wallet-side-column">
-          <WalletTransferCard
+          <MicroResource code="wallet-transfer"><WalletTransferCard
             recipient={recipient}
             amount={amount}
             busy={transferBusy}
             onRecipientChange={setRecipient}
             onAmountChange={setAmount}
             onSubmit={onTransfer}
-          />
+          /></MicroResource>
 
-          <WalletActivityCard
+          <MicroResource code="wallet-history"><WalletActivityCard
             ordersCount={ordersCount}
             txCount={txCount}
             ordersLoading={orders.isLoading}
@@ -451,7 +454,7 @@ export function WalletPage() {
             transactions={transactions}
             onSelectOrder={setSelectedOrder}
             onSelectTx={setSelectedTx}
-          />
+          /></MicroResource>
         </aside>
       </div>
 

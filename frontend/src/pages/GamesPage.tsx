@@ -1,3 +1,5 @@
+import { MicroResource } from '../components/programs/MicroResource'
+import { useResourceControls } from '../contexts/ResourceControlsContext'
 import { Card } from '../components/ui/Card'
 import { Tabs } from '../components/ui/Tabs'
 import { useFeedbackAction } from '../hooks/useFeedbackAction'
@@ -115,14 +117,15 @@ const gameTabs: Array<{ id: GameTab; icon: LucideIcon }> = [
 const GAME_TAB_IDS = gameTabs.map(({ id }) => id)
 
 export function GamesPage() {
+  const resourceOn = useResourceControls()
   const { t } = useTranslation('panel')
   const action = useFeedbackAction()
   const queryClient = useQueryClient()
-  const roulette = useQuery({ queryKey: ['roulette'], queryFn: gamesApi.roulette })
+  const roulette = useQuery({ queryKey: ['roulette'], queryFn: gamesApi.roulette, enabled: resourceOn('games-roulette') })
   const bonus = useQuery({ queryKey: ['daily-bonus'], queryFn: gamesApi.dailyBonus })
-  const boxes = useQuery({ queryKey: ['boxes'], queryFn: gamesApi.boxes })
-  const minigames = useQuery({ queryKey: ['minigames'], queryFn: gamesApi.minigames })
-  const economy = useQuery({ queryKey: ['economy'], queryFn: gamesApi.economy })
+  const boxes = useQuery({ queryKey: ['boxes'], queryFn: gamesApi.boxes, enabled: resourceOn('games-boxes') })
+  const minigames = useQuery({ queryKey: ['minigames'], queryFn: gamesApi.minigames, enabled: resourceOn('games-dice') || resourceOn('games-slots') })
+  const economy = useQuery({ queryKey: ['economy'], queryFn: gamesApi.economy, enabled: resourceOn('games-economy') })
   const [amount, setAmount] = useState('5')
   const [diceAmount, setDiceAmount] = useState('1')
   const [diceType, setDiceType] = useState('even')
@@ -133,7 +136,11 @@ export function GamesPage() {
   const [resetTarget, setResetTarget] = useState<{ id: string; name: string } | null>(null)
   const [buyTokensOpen, setBuyTokensOpen] = useState(false)
   const [boxHelpOpen, setBoxHelpOpen] = useState(false)
-  const [activeGame, setActiveGame] = useSearchParamTab(GAME_TAB_IDS, 'roulette')
+  const availableTabs = gameTabs.filter(({ id }) => id === 'chance'
+    ? resourceOn('games-dice') || resourceOn('games-slots')
+    : resourceOn(id === 'fishing' ? 'fishing' : `games-${id}`))
+  const [selectedGame, setActiveGame] = useSearchParamTab(GAME_TAB_IDS, 'roulette')
+  const activeGame = availableTabs.some(({ id }) => id === selectedGame) ? selectedGame : availableTabs[0]?.id
 
   useEffect(() => {
     return () => {
@@ -660,10 +667,10 @@ export function GamesPage() {
         </div>
       </Card>
 
-      <Tabs id="game" label={t('games.tabsLabel')} className="game-tabs" value={activeGame} onChange={setActiveGame} items={gameTabs.map(({ id, icon: Icon }) => ({ id, label: t(`games.tabs.${id}`), icon: <Icon aria-hidden="true" /> }))} />
+      <Tabs id="game" label={t('games.tabsLabel')} className="game-tabs" value={activeGame} onChange={setActiveGame} items={availableTabs.map(({ id, icon: Icon }) => ({ id, label: t(`games.tabs.${id}`), icon: <Icon aria-hidden="true" /> }))} />
 
       <fieldset className="game-tab-panels ui-action-group" disabled={action.pending}>
-        <div
+        <MicroResource code="games-roulette"><div
           className="game-tab-layout roulette-tab"
           id="game-panel-roulette"
           role="tabpanel"
@@ -701,7 +708,7 @@ export function GamesPage() {
             </div>
 
             <div className="roulette-side">
-              <form className="game-inline-form" onSubmit={buy}>
+              <MicroResource code="games-buy-tokens"><form className="game-inline-form" onSubmit={buy}>
                 <Field>
                   {t('games.roulette.buyLabel')} <span>{t('games.roulette.buyHint')}</span>
                   <input value={amount} onChange={(event) => setAmount(event.target.value)} inputMode="numeric" />
@@ -709,7 +716,7 @@ export function GamesPage() {
                 <Button className="ghost" type="submit">
                   <Coins aria-hidden="true" /> {t('games.roulette.buy')}
                 </Button>
-              </form>
+              </form></MicroResource>
 
               <div className="game-subsection">
                 <h3>{t('games.roulette.prizes')}</h3>
@@ -749,9 +756,9 @@ export function GamesPage() {
           {bonus.data?.claimed ? (
             <div className="game-state is-complete"><Sparkles aria-hidden="true" /> {t('games.daily.claimed')}</div>
           ) : (
-            <Button type="button" onClick={() => void claim()}>
+            <MicroResource code="daily-bonus-claim"><Button type="button" onClick={() => void claim()}>
               <Gift aria-hidden="true" /> {t('games.daily.claim')}
-            </Button>
+            </Button></MicroResource>
           )}
           <div className="game-guide">
             <h3>{t('games.daily.guideTitle')}</h3>
@@ -765,9 +772,9 @@ export function GamesPage() {
             </ul>
           </div>
           </Card>
-        </div>
+        </div></MicroResource>
 
-        <Card
+        <MicroResource code="games-boxes"><Card
           className="game-module game-boxes"
           id="game-panel-boxes"
           role="tabpanel"
@@ -807,7 +814,7 @@ export function GamesPage() {
                     total={row.total}
                     huntRemaining={row.hunt_remaining !== false}
                     opening={fx.playing === 'open' && fx.targetId === row.id && !fx.overlay}
-                    onAction={() => void openBox(row.id)}
+                    onAction={resourceOn('games-boxes-open') ? () => void openBox(row.id) : undefined}
                     actionLabel={t('games.boxes.open', { count: 1 })}
                   />
                 ))}
@@ -833,7 +840,7 @@ export function GamesPage() {
                       items={row.items}
                       resetting={resetting}
                       locked={locked}
-                      onAction={() => requestBuy(row.id, row.name, resetting, locked)}
+                      onAction={resourceOn('games-boxes-buy') ? () => requestBuy(row.id, row.name, resetting, locked) : undefined}
                       actionLabel={t(resetting ? 'games.boxes.reset' : 'games.boxes.buy')}
                     />
                   )
@@ -844,7 +851,7 @@ export function GamesPage() {
           {!boxes.data?.types.length && !boxes.data?.boxes.length ? (
             <div className="game-empty"><Box aria-hidden="true" /> {t('games.boxes.empty')}</div>
           ) : null}
-        </Card>
+        </Card></MicroResource>
         <BoxHelpModal open={boxHelpOpen} onClose={() => setBoxHelpOpen(false)} />
         <Modal
           className="game-box-reset-modal"
@@ -862,7 +869,7 @@ export function GamesPage() {
             </Button>
           </div>
         </Modal>
-        <BuyTokensModal
+        <MicroResource code="games-buy-tokens"><BuyTokensModal
           open={buyTokensOpen}
           tokens={tokens}
           amount={amount}
@@ -870,7 +877,7 @@ export function GamesPage() {
           onAmountChange={setAmount}
           onClose={() => setBuyTokensOpen(false)}
           onConfirm={buy}
-        />
+        /></MicroResource>
         <BoxRevealModal
           open={fx.overlay === true}
           name={fx.boxName ?? ''}
@@ -934,7 +941,7 @@ export function GamesPage() {
             symbolLabel={(symbol) => t(`games.chance.symbols.${symbol}`, { defaultValue: symbol })}
           />
           <div className="chance-controls">
-            <form className="chance-dice-form" onSubmit={playDice}>
+            <MicroResource code="games-dice"><form className="chance-dice-form" onSubmit={playDice}>
               <div className="chance-guide is-pairs">
                 <span className="panel-eyebrow">{t('games.chance.diceGuideEyebrow')}</span>
                 <h3>{t('games.chance.diceGuideTitle')}</h3>
@@ -974,8 +981,8 @@ export function GamesPage() {
                 </Field>
                 <Button type="submit"><Dices aria-hidden="true" /> {t('games.chance.playDice')}</Button>
               </div>
-            </form>
-            <div className="chance-slots-play">
+            </form></MicroResource>
+            <MicroResource code="games-slots"><div className="chance-slots-play">
               <div className="chance-guide">
                 <span className="panel-eyebrow">{t('games.chance.slotsGuideEyebrow')}</span>
                 <h3>{t('games.chance.slotsGuideTitle')}</h3>
@@ -1000,7 +1007,7 @@ export function GamesPage() {
                   {t('games.chance.playSlots', { count: minigames.data?.slots.cost ?? 1 })}
                 </Button>
               </div>
-            </div>
+            </div></MicroResource>
           </div>
         </Card>
 
@@ -1017,7 +1024,7 @@ export function GamesPage() {
           )}
         </div>
 
-        <Card
+        <MicroResource code="games-economy"><Card
           className="game-module game-economy"
           id="game-panel-economy"
           role="tabpanel"
@@ -1091,14 +1098,14 @@ export function GamesPage() {
                     </span>
                   </span>
                 </div>
-                <Button
+                <MicroResource code="games-enchant"><Button
                   type="button"
                   variant={fragments >= ENCHANT_COST && weaponLevel < ENCHANT_GOAL ? 'success' : undefined}
                   disabled={fragments < ENCHANT_COST || weaponLevel >= ENCHANT_GOAL}
                   onClick={() => void enchant()}
                 >
                   <Sparkles aria-hidden="true" /> {t('games.economy.enchant', { count: ENCHANT_COST })}
-                </Button>
+                </Button></MicroResource>
               </section>
               <div className="monster-list">
                 {economy.isError ? (
@@ -1135,14 +1142,14 @@ export function GamesPage() {
                             label={t('games.economy.respawnWait', { clock: formatRespawnClock(wait) })}
                           />
                         ) : null}
-                        <Button
+                        <MicroResource code="games-fight"><Button
                           variant={lockedByBoss ? 'muted' : !canFight ? 'danger' : !canAffordFight ? 'yellow' : 'ghost'}
                           type="button"
                           disabled={!canFight || busy}
                           onClick={() => void fight(monster.id)}
                         >
                           {t('games.economy.fight', { count: FIGHT_COST })}
-                        </Button>
+                        </Button></MicroResource>
                       </div>
                     </article>
                   )
@@ -1187,7 +1194,7 @@ export function GamesPage() {
               />
             </div>
           </div>
-        </Card>
+        </Card></MicroResource>
 
       </fieldset>
     </div>

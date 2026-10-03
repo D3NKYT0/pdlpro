@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { CalendarDays, CheckCircle2, Dices, Gift, History, LockKeyhole } from 'lucide-react'
@@ -45,7 +46,7 @@ export function DailySection() {
                 <span>{t('rewards.daily.statusToday')}</span>
                 <strong>{currentDay || '—'}</strong>
               </div>
-              <Button
+              <MicroResource code="daily-bonus-claim"><Button
                 disabled={action.busy || data.claimed || !fallback.data?.active}
                 onClick={() =>
                   void action.run(
@@ -57,7 +58,7 @@ export function DailySection() {
               >
                 <CheckCircle2 aria-hidden="true" />
                 {data.claimed ? t('rewards.daily.claimed') : t('rewards.daily.claim')}
-              </Button>
+              </Button></MicroResource>
             </header>
             {data.season && totalDays > 0 ? (
               <div className="battle-pass-progress">
