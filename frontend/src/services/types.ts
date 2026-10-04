@@ -9,6 +9,8 @@ export interface ApiUser {
   display_name: string
   bio: string
   role: string
+  roles?: string[]
+  capabilities?: string[]
   is_email_verified: boolean
   fichas: number
   avatar_url: string | null

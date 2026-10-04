@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Temas](temas.md) · [Painel e servidor](../desenvolvimento/interface-admin.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 4 de outubro de 2026
 
 O Coming Soon exibe uma **página de lançamento própria** em `/`, sem o chrome público
 (nav/rodapé padrão ou portal). A **landing** (`HomePage`) continua acessível em `/home`
@@ -25,9 +25,9 @@ enquanto o modo estiver ativo — as duas rotas coexistem. A equipe configura o 
 | Data e hora do lançamento | Alvo da contagem regressiva (obrigatória com o modo ativo) |
 | Login apenas para staff | Bloqueia o login de jogadores comuns |
 | Permitir criar conta no site | Liga ou desliga o cadastro público (e-mail e OAuth) |
-| Permitir criar conta L2 | Liga ou desliga a criação de contas do jogo no painel (staff continua liberada) |
+| Permitir criar conta L2 | Liga ou desliga a criação de contas do jogo no painel (prévia exige `settings.view` ou superadministrador) |
 
-A ativação sem data de lançamento é rejeitada pela API.
+A ativação sem data de lançamento é rejeitada pela API. A exceção ao login restrito e ao cadastro L2 fechado exige a capacidade `settings.view` ou superadministrador ativo. `is_staff` e papéis de suporte, divulgação ou parceria não liberam essa exceção. Consulte [Papéis e permissões](../operacao/papeis-e-permissoes.md).
 
 ## Comportamento público
 
@@ -64,7 +64,7 @@ A ativação sem data de lançamento é rejeitada pela API.
 10. Controles de acesso no Coming Soon (independentes entre si):
    - cadastro fechado → `COMING_SOON_REGISTRATION_RESTRICTED` em registro e OAuth de novas contas;
    - login só staff → `COMING_SOON_LOGIN_RESTRICTED` para jogadores comuns (senha/passkey/OAuth/2FA);
-   - criação L2 fechada → `COMING_SOON_L2_REGISTRATION_RESTRICTED` para jogadores (staff continua autorizada).
+   - criação L2 fechada → `COMING_SOON_L2_REGISTRATION_RESTRICTED` para jogadores (prévia exige `settings.view` ou superadministrador).
 11. Quem já está autenticado em `/login` é enviado à landing (`/home`), salvo `?next=`
    local válido. Conta social sem senha utilizável vai para `/complete-account`.
 

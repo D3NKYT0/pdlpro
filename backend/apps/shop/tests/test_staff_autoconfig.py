@@ -28,7 +28,7 @@ def staff(db):
         email="gm@pdl.dev",
         password="Secret123",
         is_staff=True,
-        role=User.Role.STAFF,
+        role=User.Role.ADMIN,
     )
 
 

@@ -3248,7 +3248,7 @@ msgstr "Elimina el enlace de descarga identificado en el payload."
 
 #: .\apps\staff\presentation\views\config.py:40
 msgid "Consultar configurações do painel"
-msgstr "Configuraciones del panel"
+msgstr "Consultar configuración del panel"
 
 #: .\apps\staff\presentation\views\config.py:41
 msgid "Retorna as configurações administrativas atuais do painel."
@@ -5602,3 +5602,117 @@ msgstr "Consultar acceso como usuario"
 #: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
 msgid "Voltar à conta original"
 msgstr "Volver a la cuenta original"
+
+msgid "Divulgador"
+msgstr "Promotor"
+
+msgid "Parceiro"
+msgstr "Socio"
+
+msgid "Suporte"
+msgstr "Soporte"
+
+msgid "Editor"
+msgstr "Editor"
+
+msgid "Permissões do papel"
+msgstr "Permisos del rol"
+
+msgid "Consultar chamados"
+msgstr "Consultar tickets de soporte"
+
+msgid "Gerenciar chamados"
+msgstr "Administrar tickets de soporte"
+
+msgid "Consultar moderação"
+msgstr "Consultar moderación"
+
+msgid "Gerenciar moderação"
+msgstr "Administrar moderación"
+
+msgid "Consultar contas de jogo"
+msgstr "Consultar cuentas de juego"
+
+msgid "Gerenciar contas de jogo"
+msgstr "Administrar cuentas de juego"
+
+msgid "Consultar conteúdo editorial"
+msgstr "Consultar contenido editorial"
+
+msgid "Gerenciar conteúdo editorial"
+msgstr "Administrar contenido editorial"
+
+msgid "Consultar jogos e recompensas"
+msgstr "Consultar juegos y recompensas"
+
+msgid "Gerenciar jogos e recompensas"
+msgstr "Administrar juegos y recompensas"
+
+msgid "Consultar comércio"
+msgstr "Consultar comercio"
+
+msgid "Gerenciar comércio"
+msgstr "Administrar comercio"
+
+msgid "Consultar configuração financeira"
+msgstr "Consultar configuración financiera"
+
+msgid "Gerenciar configuração financeira"
+msgstr "Administrar configuración financiera"
+
+msgid "Consultar apoiadores e repasses"
+msgstr "Consultar colaboradores y pagos"
+
+msgid "Gerenciar apoiadores e repasses"
+msgstr "Administrar colaboradores y pagos"
+
+msgid "Consultar disponibilidade de recursos"
+msgstr "Consultar disponibilidad de recursos"
+
+msgid "Gerenciar disponibilidade de recursos"
+msgstr "Administrar disponibilidad de recursos"
+
+msgid "Gerenciar configurações do painel"
+msgstr "Administrar configuración del panel"
+
+msgid "Consultar avisos"
+msgstr "Consultar avisos"
+
+msgid "Gerenciar avisos"
+msgstr "Administrar avisos"
+
+msgid "Consultar relatórios operacionais"
+msgstr "Consultar informes operativos"
+
+msgid "Gerenciar relatórios operacionais"
+msgstr "Administrar informes operativos"
+
+msgid "Consultar relatórios financeiros"
+msgstr "Consultar informes financieros"
+
+msgid "Gerenciar relatórios financeiros"
+msgstr "Administrar informes financieros"
+
+msgid "Consultar auditoria"
+msgstr "Consultar auditoría"
+
+msgid "Gerenciar auditoria"
+msgstr "Administrar auditoría"
+
+msgid "Consultar métricas"
+msgstr "Consultar métricas"
+
+msgid "Gerenciar métricas"
+msgstr "Administrar métricas"
+
+msgid "Consultar observação e catálogo de itens"
+msgstr "Consultar observación y catálogo de objetos"
+
+msgid "Gerenciar observação e catálogo de itens"
+msgstr "Administrar observación y catálogo de objetos"
+
+msgid "Consultar documentação da API"
+msgstr "Consultar documentación de la API"
+
+msgid "Gerenciar documentação da API"
+msgstr "Administrar documentación de la API"

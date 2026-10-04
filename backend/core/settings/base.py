@@ -78,7 +78,7 @@ LEGAL_LEGAL_EMAIL = env("LEGAL_LEGAL_EMAIL", default="juridico@example.com")
 LEGAL_FORUM = env("LEGAL_FORUM", default="Brasil")
 
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
+    "apps.accounts.infrastructure.authorization.RolePermissionBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 

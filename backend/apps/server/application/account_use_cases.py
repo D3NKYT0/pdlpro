@@ -51,6 +51,7 @@ class AccountActor:
     is_staff: bool = False
     is_superuser: bool = False
     is_staff_member: bool = False
+    capabilities: tuple[str, ...] = ()
 
 
 class ListAccessibleAccountsUseCase(UseCase[AccountActor, list[AccessibleAccount]]):

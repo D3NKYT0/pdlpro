@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from apps.staff.application.metrics import GetMetricsDashboardUseCase
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
@@ -26,10 +26,11 @@ class StaffMetricsDashboardView(InjectedAPIView):
     """Dashboard de métricas em tempo real para o painel staff.
 
     Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated, IsStaffMember].
+    [IsAuthenticated, HasCapability].
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'metrics.view'}
 
     def get(self, request):
         dashboard = self.resolve(GetMetricsDashboardUseCase).execute()

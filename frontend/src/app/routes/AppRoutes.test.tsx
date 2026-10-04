@@ -6,7 +6,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { CookieConsentProvider } from '../../contexts/CookieConsentContext'
 import { AppRoutes } from './AppRoutes'
 
-vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { id: 'user', username: 'Tester', display_name: 'Tester', email: 'tester@test.dev', is_staff: true, is_email_verified: true }, loading: false, logout: vi.fn(), refreshUser: vi.fn() }) }))
+vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { id: 'user', username: 'Tester', display_name: 'Tester', email: 'tester@test.dev', is_staff: true, is_superuser: true, capabilities: ['support', 'moderation', 'accounts', 'content', 'games', 'commerce', 'finance', 'programs', 'resources', 'settings', 'notifications', 'operational_reports', 'financial_reports', 'audit', 'metrics', 'items', 'docs'].flatMap(area => [area + '.view', area + '.manage']), is_email_verified: true }, loading: false, logout: vi.fn(), refreshUser: vi.fn() }) }))
 vi.mock('../../services/infra/http', async original => ({ ...await original<object>(), request: vi.fn(() => new Promise(() => {})) }))
 let client: QueryClient
 beforeEach(() => {

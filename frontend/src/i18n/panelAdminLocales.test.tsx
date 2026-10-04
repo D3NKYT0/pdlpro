@@ -2,7 +2,7 @@ import { type ReactNode } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import i18n from './index'
 import { SUPPORTED_LANGUAGES } from './locale'
 import ptPanel from './locales/pt/panel.json'
@@ -131,3 +131,5 @@ describe('admin hub and reports follow the active language', () => {
     expect(english).not.toContain('Compras da loja')
   })
 })
+
+vi.mock('../contexts/AuthContext', () => ({ useAuth: () => ({ user: { is_staff: true, is_superuser: true, capabilities: ['support', 'moderation', 'accounts', 'content', 'games', 'commerce', 'finance', 'programs', 'resources', 'settings', 'notifications', 'operational_reports', 'financial_reports', 'audit', 'metrics', 'items', 'docs'].flatMap(area => [area + '.view', area + '.manage']) } }) }))

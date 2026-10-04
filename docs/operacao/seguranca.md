@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Política de relato](../projeto/seguranca.md) · [Instalar (Release)](distribuicao.md)
 
-> **Atualizado:** 2 de outubro de 2026
+> **Atualizado:** 4 de outubro de 2026
 
 > [!IMPORTANT]
 > Documento canônico de **segurança operacional**. Outros guias devem linkar
@@ -118,3 +118,11 @@ Na atualização, execute `python manage.py migrate` para criar a tabela de audi
 Os cenários HTTP estão em `backend/apps/accounts/tests/test_impersonation_api.py`;
 as interações e o contrato HTTP da SPA estão em `Impersonation.test.tsx` e
 `services/domain/impersonation.test.ts`.
+
+
+## Papéis e delegação
+
+A política de menor privilégio, os papéis combináveis, as capacidades por operação
+e as restrições de escrita/propriedade no Django Admin estão em
+[Papéis e permissões](../operacao/papeis-e-permissoes.md). `is_staff` permite entrar
+no admin e não concede acesso administrativo às APIs.

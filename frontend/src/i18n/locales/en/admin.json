@@ -6,7 +6,7 @@
     "reports": "Reports",
     "reportsDesc": "Finance, inventory, auctions, shop and marketplace",
     "module": "Module",
-    "note": "Users, payments and operational records stay in Django Admin.",
+    "note": "Available actions depend on your account permissions.",
     "categories": {
       "programs": "Programs and growth",
       "support": "Support",
@@ -53,7 +53,7 @@
       },
       "djangoAdmin": {
         "title": "Django Admin",
-        "description": "Full system CRUD"
+        "description": "Administration within your permissions"
       },
       "coins": {
         "title": "Coins",

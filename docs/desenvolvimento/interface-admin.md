@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Componentes React](componentes.md) · [Common](../arquitetura/common.md) · [Testes](testes.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 4 de outubro de 2026
 
 O Django Admin/Jazzmin, o login administrativo e a documentação HTTP compartilham os botões em [buttons.css](../../backend/static/pdl_admin/css/buttons.css). A biblioteca preserva as texturas PDL e as mesmas tonalidades de sucesso, atenção e perigo usadas no React. Cada renderer mantém sua implementação; o backend não precisa carregar React para apresentar seus formulários.
 
@@ -96,3 +96,11 @@ O item ativo da topbar (`aria-current="page"`) usa o tom verde de sucesso com br
 - [docs-loader.test.ts](../../frontend/src/lib/docs-loader.test.ts): dismiss do overlay de carregamento das docs (Swagger/ReDoc) e timeout de segurança.
 
 Antes de concluir mudanças, execute as verificações completas do [guia de testes](testes.md) e confira catálogo, formulário real e documentação em desktop/celular. Em produção, `collectstatic` roda no entrypoint quando `RUN_COLLECTSTATIC=true` (padrão da Release e do Compose de produção).
+
+
+## Papéis e delegação
+
+A política de menor privilégio, os papéis combináveis, as capacidades por operação
+e as restrições de escrita/propriedade no Django Admin estão em
+[Papéis e permissões](../operacao/papeis-e-permissoes.md). `is_staff` permite entrar
+no admin e não concede acesso administrativo às APIs.

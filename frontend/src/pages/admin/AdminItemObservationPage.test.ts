@@ -7,7 +7,7 @@ import { AdminHubPage } from './AdminHubPage'
 import { AdminItemObservationPage, Categories, Snapshots } from './AdminItemObservationPage'
 import { ITEM_CATALOG_KEY } from '../../services/api'
 
-vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { id: 'observer' } }) }))
+vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { id: 'observer', capabilities: ['items.view', 'items.manage'] } }) }))
 vi.mock('../../services/domain/programs.service', () => ({
   programsApi: { resources: vi.fn(async () => []) },
 }))

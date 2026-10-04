@@ -160,7 +160,7 @@ def test_audit_storage_failure_does_not_replace_business_response(mocker):
 @pytest.mark.django_db
 def test_authenticated_staff_api_write_is_audited_end_to_end():
     user = get_user_model().objects.create_user(
-        username="api-auditor", email="api-auditor@example.com", is_staff=True
+        username="api-auditor", email="api-auditor@example.com", is_staff=True, role="admin"
     )
     client = APIClient()
     client.force_authenticate(user)

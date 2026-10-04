@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { AdminCustomItemsPage } from './AdminCustomItemsPage'
 import { AdminHubPage } from './AdminHubPage'
 
-vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { id: 'staff' } }) }))
+vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { id: 'staff', capabilities: ['items.view', 'items.manage'] } }) }))
 vi.mock('../../services/domain/programs.service', () => ({
   programsApi: { resources: vi.fn(async () => []) },
 }))

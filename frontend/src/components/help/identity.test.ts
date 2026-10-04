@@ -13,7 +13,7 @@ describe('identidade do Denkynho', () => {
   })
 
   it('prioriza superadministrador e reconhece equipe', () => {
-    expect(helpIdentity(user({ role: 'staff', is_staff_member: true })).role).toBe('staff')
+    expect(helpIdentity(user({ role: 'staff', is_staff_member: true, capabilities: ['support.view'] })).role).toBe('staff')
     expect(helpIdentity(user({ role: 'staff', is_superuser: true })).role).toBe('superadmin')
   })
 

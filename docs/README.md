@@ -2,7 +2,7 @@
 
 [Fonte única](projeto/fonte-unica.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 4 de outubro de 2026
 
 > [!IMPORTANT]
 > **Produção = Release.** Instale com
@@ -55,6 +55,7 @@
 | --- | --- |
 | [Distribuição](operacao/distribuicao.md) | Instalar, HTTPS, admin, atualizar |
 | [Tutoriais de integração](tutoriais/README.md) | Passo a passo por provedor |
+| [Papéis e permissões](operacao/papeis-e-permissoes.md) | Menor privilégio, grupos, API/SPA e Django Admin/Jazzmin |
 | [Configurador admin](operacao/integracoes-admin.md) | Hot-apply, abas, API staff |
 | [Backup e restauração](operacao/backup-e-restauracao.md) | Pacote cifrado (banco, mídia, `.env`), nuvem, agendamento e recuperação |
 | [Rotação de segredos](operacao/rotacao-de-segredos.md) | Soft-rotate, Fernet, Beat |

@@ -13,7 +13,7 @@ from apps.server.application.moderation_use_cases import (
 )
 from apps.server.domain.moderation import MODERATION_ACTIONS
 from common.architecture.exceptions import ValidationDomainError
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
@@ -42,7 +42,8 @@ class ModerationActionSerializer(serializers.Serializer):
 class StaffModerationCharactersView(InjectedAPIView):
     """Lista personagens do jogo para a equipe aplicar kick, prisão, banimento e teleporte."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'moderation.view'}
 
     @extend_schema(
         tags=["Staff"],
@@ -69,7 +70,8 @@ class StaffModerationCharactersView(InjectedAPIView):
 class StaffModerationCharacterView(InjectedAPIView):
     """Consulta a ficha administrativa de um personagem e o histórico recente."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'moderation.view'}
 
     @extend_schema(
         tags=["Staff"],
@@ -85,7 +87,8 @@ class StaffModerationCharacterView(InjectedAPIView):
 class StaffModerationActionView(InjectedAPIView):
     """Executa kick, prisão, banimento ou teleporte sobre o personagem informado."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'POST': 'moderation.manage'}
 
     @extend_schema(
         tags=["Staff"],

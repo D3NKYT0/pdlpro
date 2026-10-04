@@ -780,6 +780,17 @@
     "email": "E-mail",
     "role": "Função",
     "rolePlayer": "Jogador",
+    "roles": {
+      "player": "Jogador",
+      "supporter": "Apoiador",
+      "promoter": "Divulgador",
+      "partner": "Parceiro",
+      "support": "Suporte",
+      "editor": "Editor",
+      "moderator": "Moderador",
+      "staff": "Equipe",
+      "admin": "Administrador"
+    },
     "security": "Segurança",
     "twoFactorOn": "2FA ativo",
     "twoFactorOff": "2FA inativo",

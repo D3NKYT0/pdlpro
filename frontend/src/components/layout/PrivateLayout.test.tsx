@@ -52,7 +52,7 @@ vi.mock('@tanstack/react-query', () => ({
 
 vi.mock('../../contexts/AuthContext', () => ({
   useAuth: () => ({
-    user: { username: 'root', display_name: 'Root', is_superuser: true, is_email_verified: true },
+    user: { username: 'root', display_name: 'Root', is_superuser: true, capabilities: ['accounts.view'], is_email_verified: true },
     logout: vi.fn(),
   }),
 }))

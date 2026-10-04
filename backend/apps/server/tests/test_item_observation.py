@@ -134,7 +134,7 @@ def test_anonymous_player_and_staff_without_permission_cannot_observe(client):
 
 def test_view_permission_does_not_grant_snapshot_capture(enabled, client):
     client = APIClient()
-    user = get_user_model().objects.create_user(username="reader", email="reader@example.invalid", password="test", is_staff=True)
+    user = get_user_model().objects.create_user(username="reader", email="reader@example.invalid", password="test", is_staff=True, role="admin")
     user.user_permissions.add(Permission.objects.get(codename="view_itemobservationsnapshot"))
     client.force_authenticate(user)
     assert client.get(BASE).status_code == 200

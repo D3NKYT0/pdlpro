@@ -38,7 +38,7 @@ from apps.games.application.staff_content_use_cases import (
     UpsertGameContentInput,
     UpsertGameContentUseCase,
 )
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
@@ -242,7 +242,8 @@ def config_serializer(kind):
 class StaffGameContentView(InjectedAPIView):
     """Administra os tipos de conteúdo dos jogos previstos no registro de serializers."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'games.view', 'POST': 'games.manage', 'PATCH': 'games.manage'}
 
     @extend_schema(
         tags=["Staff - Conteúdo de jogos"],

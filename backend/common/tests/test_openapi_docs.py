@@ -157,6 +157,7 @@ def test_private_api_docs_allow_authenticated_staff(path, mocker):
         email=f"staff-{path.count('/')}@pdl.dev",
         password="Secret123",
         is_staff=True,
+        role="admin",
     )
     browser = Client()
     assert browser.login(username=user.username, password="Secret123")

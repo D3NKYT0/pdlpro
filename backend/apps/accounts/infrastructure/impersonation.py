@@ -34,6 +34,7 @@ class DjangoImpersonationStore(IImpersonationStore):
                     "email": u.email,
                     "display_name": u.display_name,
                     "can_impersonate": u.is_active
+                    and not u.is_staff
                     and not u.is_staff_member
                     and not u.is_superuser
                     and u.role in ("player", "supporter"),
@@ -82,6 +83,7 @@ class DjangoImpersonationStore(IImpersonationStore):
             row.expires_at <= timezone.now()
             or str(row.target.id) != str(target_id)
             or not row.target.is_active
+            or row.target.is_staff
             or row.target.is_staff_member
             or row.target.is_superuser
             or row.target.role not in ("player", "supporter")

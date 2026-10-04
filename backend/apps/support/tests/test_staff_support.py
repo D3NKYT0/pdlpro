@@ -14,7 +14,7 @@ pytestmark = pytest.mark.django_db
 @pytest.fixture
 def support():
     user = get_user_model().objects.create_user(username="player", email="player@test.dev")
-    staff = get_user_model().objects.create_user(username="staff", email="staff@test.dev", is_staff=True)
+    staff = get_user_model().objects.create_user(username="staff", email="staff@test.dev", is_staff=True, role="support")
     ticket = Ticket.objects.create(user=user, subject="Cobrança", description="Pagamento pendente", category="billing")
     client = APIClient()
     client.force_authenticate(staff)

@@ -9,14 +9,15 @@ from apps.staff.application.notifications import (
     ListStaffNotificationsUseCase,
     SendStaffNotificationUseCase,
 )
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
 class StaffNotificationsView(InjectedAPIView):
     """Entrada HTTP para listar, enviar e excluir avisos da equipe."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'notifications.view', 'POST': 'notifications.manage', 'DELETE': 'notifications.manage'}
 
     @extend_schema(
         tags=["Staff"],

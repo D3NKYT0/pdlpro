@@ -127,7 +127,7 @@ def test_image_validation(client):
 def test_permissions_and_cookie_csrf(client, staff):
     api = APIClient()
     assert api.get(BASE).status_code in (401, 403)
-    reader = get_user_model().objects.create_user(username="custom-reader", email="reader@example.invalid", is_staff=True)
+    reader = get_user_model().objects.create_user(username="custom-reader", email="reader@example.invalid", is_staff=True, role="admin")
     api.force_authenticate(reader)
     assert api.get(BASE).status_code == 403
     reader.user_permissions.add(Permission.objects.get(codename="view_customcatalogitem"))

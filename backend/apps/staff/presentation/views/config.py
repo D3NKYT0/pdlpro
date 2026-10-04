@@ -32,7 +32,7 @@ from apps.staff.application.use_cases import (
     UpsertStaffServicePricesUseCase,
     UpsertStaffShopItemUseCase,
 )
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
@@ -40,11 +40,12 @@ class StaffPanelSettingsView(InjectedAPIView):
     """Entrada HTTP para ``GetPanelSettingsUseCase``, ``UpdatePanelSettingsUseCase``.
 
     Implementa GET, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    declarado: [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição
     antes de montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'settings.view', 'PUT': 'settings.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -67,11 +68,12 @@ class StaffServicePricesView(InjectedAPIView):
     """Entrada HTTP para ``ListStaffServicePricesUseCase``, ``UpsertStaffServicePricesUseCase``.
 
     Implementa GET, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    declarado: [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição
     antes de montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'commerce.view', 'PUT': 'commerce.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -95,11 +97,12 @@ class StaffCoinConfigView(ItemCatalogAPIView):
     """Entrada HTTP para ``GetStaffCoinConfigUseCase``, ``UpdateStaffCoinConfigUseCase``.
 
     Implementa GET, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    declarado: [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição
     antes de montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'finance.view', 'PUT': 'finance.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -122,11 +125,12 @@ class StaffWalletPromoView(InjectedAPIView):
     """Entrada HTTP para ``GetStaffWalletPromoUseCase``, ``UpdateStaffWalletPromoUseCase``.
 
     Implementa GET, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    declarado: [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição
     antes de montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'finance.view', 'PUT': 'finance.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -148,7 +152,8 @@ class StaffWalletPromoView(InjectedAPIView):
 class StaffBonusTiersView(InjectedAPIView):
     """Entrada HTTP para faixas progressivas de bônus de recarga."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'finance.view', 'POST': 'finance.manage', 'PUT': 'finance.manage', 'DELETE': 'finance.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -187,7 +192,8 @@ class StaffBonusTiersView(InjectedAPIView):
 class StaffBonusSimulationView(InjectedAPIView):
     """Entrada HTTP para simulação em tempo real do cálculo de bônus."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'POST': 'finance.view'}
 
     @extend_schema(
         tags=["Staff"],
@@ -203,10 +209,11 @@ class StaffCoinPackagesView(InjectedAPIView):
     ``DeleteStaffCoinPackageUseCase``.
 
     Implementa GET, POST, PUT, DELETE; registre ``as_view()`` nas URLs do módulo. Controle de
-    acesso declarado: [IsAuthenticated, IsStaffMember].
+    acesso declarado: [IsAuthenticated, HasCapability].
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'finance.view', 'POST': 'finance.manage', 'PUT': 'finance.manage', 'DELETE': 'finance.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -246,10 +253,11 @@ class StaffChargeCurrenciesView(InjectedAPIView):
     ``DeleteStaffChargeCurrencyUseCase``.
 
     Implementa GET, POST, PUT, DELETE; registre ``as_view()`` nas URLs do módulo. Controle de
-    acesso declarado: [IsAuthenticated, IsStaffMember].
+    acesso declarado: [IsAuthenticated, HasCapability].
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'finance.view', 'POST': 'finance.manage', 'PUT': 'finance.manage', 'DELETE': 'finance.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -288,11 +296,12 @@ class StaffShopItemsView(ItemCatalogAPIView):
     """Entrada HTTP para ``ListStaffShopItemsUseCase``, ``UpsertStaffShopItemUseCase``.
 
     Implementa GET, POST, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    declarado: [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição
     antes de montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'commerce.view', 'POST': 'commerce.manage', 'PUT': 'commerce.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -323,11 +332,12 @@ class StaffShopAutoconfigView(InjectedAPIView):
     """Entrada HTTP para ``BootstrapStaffShopUseCase``.
 
     Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição antes de
+    [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição antes de
     montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'POST': 'commerce.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -344,11 +354,12 @@ class StaffNewsView(InjectedAPIView):
     """Entrada HTTP para ``ListStaffNewsUseCase``, ``UpsertStaffNewsUseCase``.
 
     Implementa GET, POST, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    declarado: [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição
     antes de montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'content.view', 'POST': 'content.manage', 'PUT': 'content.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -379,11 +390,12 @@ class StaffGamesView(InjectedAPIView):
     """Entrada HTTP para ``ListStaffGamesUseCase``, ``ToggleStaffGameUseCase``.
 
     Implementa GET, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    declarado: [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição
     antes de montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'games.view', 'PUT': 'games.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -406,11 +418,12 @@ class StaffGamesAutoconfigView(InjectedAPIView):
     """Entrada HTTP para ``BootstrapStaffGamesUseCase``.
 
     Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição antes de
+    [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição antes de
     montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'POST': 'games.manage'}
 
     @extend_schema(
         tags=["Staff"],

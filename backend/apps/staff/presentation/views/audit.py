@@ -13,7 +13,7 @@ from apps.staff.presentation.audit_serializers import (
     AuditLogFiltersSerializer,
     AuditLogPageSerializer,
 )
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
@@ -30,10 +30,11 @@ class StaffAuditLogView(InjectedAPIView):
     """Listagem paginada e filtrada do trail de auditoria staff.
 
     Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated, IsStaffMember].
+    [IsAuthenticated, HasCapability].
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'audit.view'}
 
     def get(self, request):
         filters_ser = AuditLogFiltersSerializer(data=request.query_params)

@@ -12,6 +12,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { CheckCircle2, ChevronRight, Crown, KeyRound, Link2, Mail, Plus, ShieldAlert, ShieldCheck, UserPlus, UserRoundPlus, UsersRound } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { hasCapability } from '../lib/staff'
 import { useActiveAccount } from '../contexts/ActiveAccountContext'
 import { CharacterAvatar } from '../components/character/CharacterAvatar'
 import { BuySlotsModal } from '../components/character/BuySlotsModal'
@@ -60,8 +61,8 @@ export function AccountsPage() {
   const primaryStatus = accounts.data?.primary?.status
   const primaryTaken = Boolean(!primaryAccount && (primaryStatus === 'taken' || useAlternateLogin))
   const primaryUnclaimed = Boolean(!primaryAccount && primaryStatus === 'unclaimed' && !useAlternateLogin)
-  const isStaff = Boolean(user?.is_staff || user?.is_superuser || user?.is_staff_member)
-  const l2RegistrationClosed = !launch.l2RegistrationOpen && !isStaff
+  const canPreviewLaunch = hasCapability(user, 'settings.view')
+  const l2RegistrationClosed = !launch.l2RegistrationOpen && !canPreviewLaunch
 
   const canLinkMore = Boolean(accounts.data?.slots ? accounts.data.slots.can_link : true)
   const rawSlotPrice = servicePrices.data?.LINK_SLOT

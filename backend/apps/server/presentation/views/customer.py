@@ -78,6 +78,7 @@ def actor_from(request) -> AccountActor:
         is_staff=bool(getattr(user, "is_staff", False)),
         is_superuser=bool(getattr(user, "is_superuser", False)),
         is_staff_member=bool(getattr(user, "is_staff_member", False)),
+        capabilities=tuple(getattr(user, "capabilities", ())),
     )
 
 

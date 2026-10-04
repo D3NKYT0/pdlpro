@@ -13,14 +13,15 @@ from apps.staff.presentation.operational_serializers import (
     OperationalReportResponseSerializer,
     PurchaseReportFiltersSerializer,
 )
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
 class OperationalReportView(InjectedAPIView):
     """Entrada HTTP para ``GetOperationalReportUseCase``."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'operational_reports.view'}
     report = "inventory"
     filters_class = InventoryReportFiltersSerializer
 

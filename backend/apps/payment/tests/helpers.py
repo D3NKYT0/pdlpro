@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
 from rest_framework.test import APIClient
 
 
@@ -16,6 +17,7 @@ def confirm_mock_payment(order_id):
     elif not staff.is_staff:
         staff.is_staff = True
         staff.save(update_fields=["is_staff"])
+    staff.user_permissions.add(Permission.objects.get(content_type__app_label="accounts", codename="finance_manage"))
     client = APIClient()
     client.force_authenticate(staff)
     return client.post(f"/api/v1/staff/payments/{order_id}/confirm-mock/")

@@ -8,7 +8,7 @@ from apps.payment.application.use_cases import (
     StaffConfirmMockPaymentUseCase,
 )
 from apps.payment.presentation.views.customer import dump_order
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
@@ -16,11 +16,12 @@ class StaffConfirmMockPaymentView(InjectedAPIView):
     """Entrada HTTP para ``StaffConfirmMockPaymentUseCase``.
 
     Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição antes de
+    [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição antes de
     montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'POST': 'finance.manage'}
 
     @extend_schema(
         tags=["Staff / Financeiro"],

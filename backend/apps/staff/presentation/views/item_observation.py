@@ -30,7 +30,7 @@ from apps.server.application.item_observation import (
     UpsertObservationCategoryUseCase,
 )
 from common.architecture.exceptions import DomainError
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 logger = logging.getLogger(__name__)
@@ -162,11 +162,12 @@ class ObservationView(InjectedAPIView):
     indisponibilidade.
 
     Usa os handlers herdados ou associados nesta classe. As opções abaixo especializam o
-    comportamento da view base. Controle de acesso declarado: [IsAuthenticated, IsStaffMember,
+    comportamento da view base. Controle de acesso declarado: [IsAuthenticated, HasCapability,
     CanObserveItems]. Resolve casos de uso do ServerProvider.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember, CanObserveItems]
+    permission_classes = [IsAuthenticated, HasCapability, CanObserveItems]
+    required_capabilities = {'GET': 'items.view', 'POST': 'items.manage', 'PUT': 'items.manage', 'PATCH': 'items.manage', 'DELETE': 'items.manage'}
 
     def require(self, permission):
         if not self.request.user.has_perm(f"server.{permission}"):
@@ -203,7 +204,7 @@ class ObservationAccessView(ObservationView):
     def get(self, request):
         return Response(
             {
-                key: request.user.has_perm(f"server.{permission}")
+                key: request.user.has_perm("accounts.items_manage") and request.user.has_perm(f"server.{permission}")
                 for key, permission in {
                     "capture": "capture_itemobservationsnapshot",
                     "delete_snapshots": "delete_itemobservationsnapshot",

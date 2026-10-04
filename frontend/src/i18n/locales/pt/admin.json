@@ -6,7 +6,7 @@
     "reports": "Relatórios",
     "reportsDesc": "Financeiro, inventário, leilões, loja e marketplace",
     "module": "Módulo",
-    "note": "Usuários, pagamentos e registros operacionais continuam no Django Admin.",
+    "note": "As ações disponíveis dependem das permissões da sua conta.",
     "categories": {
       "programs": "Programas e expansão",
       "support": "Atendimento",
@@ -27,7 +27,7 @@
       "resources": { "title": "Controle de recursos", "description": "Ativar ou pausar módulos por categoria" },
       "themes": { "title": "Temas", "description": "Instalar, ativar e restaurar a aparência do frontend" },
       "api": { "title": "API", "description": "Documentação OpenAPI (Swagger)" },
-      "djangoAdmin": { "title": "Django Admin", "description": "CRUD completo do sistema" },
+      "djangoAdmin": { "title": "Django Admin", "description": "Administração conforme suas permissões" },
       "coins": { "title": "Moedas", "description": "Moeda ativa, multiplicador e taxa" },
       "chargeCurrencies": { "title": "Moedas de cobrança", "description": "Taxas de conversão, liquidação e moedas ativas da loja" },
       "coinPackages": { "title": "Pacotes de recarga", "description": "Preços por moeda de cobrança exibidos na carteira" },

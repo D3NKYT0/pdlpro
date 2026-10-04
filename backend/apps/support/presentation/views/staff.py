@@ -14,7 +14,7 @@ from apps.support.application.use_cases import (
     UpdateStaffTicketInput,
     UpdateStaffTicketUseCase,
 )
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
@@ -22,11 +22,12 @@ class StaffTicketListView(InjectedAPIView):
     """Lista chamados para a equipe com filtros e indicadores de atendimento.
 
     Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição antes de montar a
+    [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição antes de montar a
     resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'support.view'}
 
     @extend_schema(
         tags=["Staff - Atendimento"],
@@ -51,11 +52,12 @@ class StaffTicketDetailView(InjectedAPIView):
     """Permite à equipe responder, atribuir responsáveis e atualizar o estado de um chamado.
 
     Implementa GET, POST, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    declarado: [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição
     antes de montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'support.view', 'POST': 'support.manage', 'PATCH': 'support.manage'}
 
     @extend_schema(
         tags=["Staff - Atendimento"],

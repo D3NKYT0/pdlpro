@@ -37,6 +37,7 @@ class ImpersonationService:
             raise EntityNotFoundError()
         if (
             not target.is_active
+            or target.is_staff
             or target.is_staff_member
             or target.is_superuser
             or target.role not in ("player", "supporter")

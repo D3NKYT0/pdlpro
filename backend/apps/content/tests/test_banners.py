@@ -19,6 +19,7 @@ def staff_client(db):
         username="staff_banner_tester",
         email="staff_banner@test.com",
         is_staff=True,
+        role=User.Role.EDITOR,
     )
     client = APIClient()
     client.force_authenticate(user=user)

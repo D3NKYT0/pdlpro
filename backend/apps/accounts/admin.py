@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.auth.admin import GroupAdmin
+from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
 
 from apps.accounts.forms import PDLUserChangeForm, PDLUserCreationForm
@@ -11,6 +13,48 @@ from apps.accounts.infrastructure.models import (
     UserAchievement,
 )
 from common.admin import PDLModelAdmin
+
+admin.site.unregister(Group)
+
+
+@admin.register(Group)
+class AccessGroupAdmin(GroupAdmin):
+    """Somente superadministradores administram papéis e concessões de acesso.
+
+    Protege GET, POST, exclusão em massa e associações M2M contra escalada por
+    quem recebeu permissões nativas de edição de grupos por engano.
+    """
+
+    readonly_fields = ("role_capabilities",)
+
+    def get_form(self, request, obj=None, change=False, **kwargs):
+        """Localiza os nomes das capacidades no seletor nativo de permissões."""
+        form = super().get_form(request, obj, change=change, **kwargs)
+        if "permissions" in form.base_fields:
+            form.base_fields["permissions"].label_from_instance = lambda permission: f"{permission.content_type.app_label} | {_(permission.name)}"
+        return form
+
+    @admin.display(description=_("Permissões do papel"))
+    def role_capabilities(self, obj):
+        """Expõe os grants do template, que não aparecem no seletor de exceções."""
+        from apps.accounts.domain.access import ROLE_GROUP_PREFIX, role_permissions
+        role = obj.name.removeprefix(ROLE_GROUP_PREFIX) if obj and obj.name.startswith(ROLE_GROUP_PREFIX) else ""
+        return ", ".join(sorted(role_permissions([role]))) or "—"
+
+    def has_module_permission(self, request):
+        return bool(request.user.is_active and request.user.is_superuser)
+
+    def has_view_permission(self, request, obj=None):
+        return self.has_module_permission(request)
+
+    def has_add_permission(self, request):
+        return self.has_module_permission(request)
+
+    def has_change_permission(self, request, obj=None):
+        return self.has_module_permission(request)
+
+    def has_delete_permission(self, request, obj=None):
+        return self.has_module_permission(request)
 
 
 @admin.register(User)
@@ -73,6 +117,18 @@ class UserAdmin(PDLModelAdmin):
             },
         ),
     )
+
+    def has_add_permission(self, request):
+        """Criação de identidades administrativas fica reservada ao superadministrador."""
+        return bool(request.user.is_active and request.user.is_superuser)
+
+    def has_change_permission(self, request, obj=None):
+        """Impede promoção, troca de credenciais e alteração de saldo por editores de usuários."""
+        return bool(request.user.is_active and request.user.is_superuser)
+
+    def has_delete_permission(self, request, obj=None):
+        """Exclusão de identidades exige superadministrador."""
+        return bool(request.user.is_active and request.user.is_superuser)
 
     def get_fieldsets(self, request, obj=None):
         if obj is None:

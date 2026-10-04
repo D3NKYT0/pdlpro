@@ -15,9 +15,9 @@ function Location() {
   return <output role="status">{location.pathname}{location.search}</output>
 }
 function mount(staff = false) {
-  return render(<MemoryRouter initialEntries={['/private?tab=history']}><Routes>
+  return render(<MemoryRouter initialEntries={[staff ? '/panel/admin' : '/private?tab=history']}><Routes>
     <Route element={staff ? <RequireStaff /> : <RequireAuth />}>
-      <Route path="/private" element={<h1>Conteúdo privado</h1>} />
+      <Route path={staff ? "/panel/admin" : "/private"} element={<h1>Conteúdo privado</h1>} />
     </Route>
     <Route path="*" element={<Location />} />
   </Routes></MemoryRouter>)
@@ -45,12 +45,12 @@ describe('proteção de rotas', () => {
     mount()
     expect(screen.getByRole('status').textContent).toBe('/complete-account')
   })
-  it.each([null, { role: 'player' }])('impede acesso administrativo de %j', user => {
+  it.each([null, { role: 'player' }, { is_staff: true }, { is_staff_member: true }, { is_superuser: true }, { role: 'admin' }, { role: 'moderator' }])('impede acesso administrativo de %j', user => {
     Object.assign(session, { user, loading: false })
     mount(true)
     expect(screen.getByRole('status').textContent).toBe('/panel')
   })
-  it.each([{ is_staff: true }, { is_superuser: true }, { is_staff_member: true }, { role: 'staff' }, { role: 'admin' }, { role: 'moderator' }])('libera equipe %j', user => {
+  it.each([{ capabilities: ['moderation.view'] }, { capabilities: ['content.manage'] }, { capabilities: ['support.view'] }])('libera equipe %j', user => {
     Object.assign(session, { user, loading: false })
     mount(true)
     expect(screen.getByRole('heading').textContent).toBe('Conteúdo privado')

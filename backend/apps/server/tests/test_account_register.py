@@ -225,7 +225,7 @@ def test_l2_registration_blocked_during_coming_soon_when_closed(api):
 
 
 @pytest.mark.django_db
-def test_l2_registration_allowed_for_staff_when_closed_to_players(api):
+def test_l2_registration_allowed_with_configuration_permission_when_closed_to_players(api):
     from apps.server.infrastructure.models import IndexConfig
 
     IndexConfig.objects.create(
@@ -239,6 +239,7 @@ def test_l2_registration_allowed_for_staff_when_closed_to_players(api):
         email="gm@pdl.dev",
         password="Secret123",
         is_staff=True,
+        role="admin",
     )
     api.force_authenticate(user=staff)
     created = api.post(

@@ -35,7 +35,7 @@ def order(player):
 @pytest.fixture
 def staff_client():
     client = APIClient()
-    client.force_authenticate(user("gm", is_staff=True))
+    client.force_authenticate(user("gm", is_staff=True, role="admin"))
     return client
 
 

@@ -36,6 +36,8 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import { programsApi } from '../../services/api'
 import { ExtensionSlotOutlet, extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
+import { useAuth } from '../../contexts/AuthContext'
+import { canAccessAdminPath, hasCapability } from '../../lib/staff'
 
 type Entry = { to: string; key: string; icon: LucideIcon; external?: boolean }
 type Category = {
@@ -125,6 +127,12 @@ const categories: Category[] = [
 
 export function AdminHubPage() {
   const { t } = useTranslation('admin')
+  const { user } = useAuth()
+  const allowedCategories = categories.map(category => ({
+    ...category,
+    entries: category.entries.filter(entry => entry.to === '/admin/' ? user?.is_staff
+      : entry.external ? hasCapability(user, 'docs.view') : canAccessAdminPath(user, entry.to)),
+  })).filter(category => category.entries.length > 0)
   const resources = useQuery({
     queryKey: ['resources'],
     queryFn: programsApi.resources,
@@ -147,7 +155,7 @@ export function AdminHubPage() {
         </span>
       </Card>
 
-      {categories.map((category) => (
+      {allowedCategories.map((category) => (
         <Card className="admin-category" data-theme-part="admin-category" data-tone={category.tone} key={category.key}>
           <div className="account-section-heading">
             <div>

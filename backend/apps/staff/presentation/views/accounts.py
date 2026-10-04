@@ -7,7 +7,7 @@ from apps.server.application.account_use_cases import (
     ForceUnlinkGameAccountUseCase,
     InspectGameAccountUseCase,
 )
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
@@ -15,11 +15,12 @@ class StaffInspectGameAccountView(InjectedAPIView):
     """Entrada HTTP para ``InspectGameAccountUseCase``.
 
     Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição antes de
+    [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição antes de
     montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'accounts.view'}
 
     @extend_schema(
         tags=["Staff"],
@@ -34,11 +35,12 @@ class StaffUnlinkGameAccountView(InjectedAPIView):
     """Entrada HTTP para ``ForceUnlinkGameAccountUseCase``.
 
     Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição antes de
+    [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição antes de
     montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'POST': 'accounts.manage'}
 
     @extend_schema(
         tags=["Staff"],

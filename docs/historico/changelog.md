@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 3 de outubro de 2026
+> **Atualizado:** 4 de outubro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
@@ -17,6 +17,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 ## [Não publicado]
 
 ### Adicionado
+
+- **Papéis e menor privilégio**: Divulgador, Parceiro, Suporte e Editor; papéis combináveis por grupos, capacidades por operação nas APIs e navegação da SPA. O Django Admin/Jazzmin separa entrada de permissões, impede autopromoção e edição delegada de grupos, restringe consultas pessoais e reserva escrita direta não editorial ao superadministrador. Guia de concessão, revogação e migração dos acessos anteriores.
 
 - **Acesso como usuário**: listagem e busca de usuários do site no admin do painel; superadministradores podem acessar contas de jogadores com as permissões da conta e voltar à identidade original por um botão fixo. A troca fica registrada, impede acesso a contas de equipe e revoga as sessões de representação ao encerrar.
 

@@ -16,6 +16,8 @@ import {
 import { Card } from '../../components/ui/Card'
 import { Field } from '../../components/ui/Field'
 import { Button } from '../../components/ui/Button'
+import { useAuth } from '../../contexts/AuthContext'
+import { canAccessAdminPath } from '../../lib/staff'
 import { formatDateTime, formatNumber } from '../../lib/formatters'
 import {
   isApiError,
@@ -103,6 +105,7 @@ function Status({ value, t }: { value: string; t: AdminT }) {
 
 function ReportsHub() {
   const { t } = useTranslation('admin')
+  const { user } = useAuth()
   return (
     <div className="account-page financial-reports">
       <AdminHeader
@@ -111,7 +114,7 @@ function ReportsHub() {
         description={t('reports.description')}
       />
       <div className="admin-entry-grid">
-        {categories.map((category) => {
+        {categories.filter(category => canAccessAdminPath(user, category.to)).map((category) => {
           const Icon = category.icon
           return (
             <Link className="admin-entry" to={category.to} key={category.slug}>

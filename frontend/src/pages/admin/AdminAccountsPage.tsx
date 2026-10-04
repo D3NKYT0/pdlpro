@@ -8,9 +8,12 @@ import { CheckCircle2, Link2Off, Search, ShieldAlert, Unlink } from 'lucide-reac
 import toast from 'react-hot-toast'
 import { staffApi, type ApiStaffGameAccount } from '../../services/api'
 import { AdminHeader } from './AdminChrome'
+import { useAuth } from '../../contexts/AuthContext'
+import { hasCapability } from '../../lib/staff'
 
 export function AdminAccountsPage() {
   const { t } = useTranslation('admin')
+  const { user } = useAuth()
   const [login, setLogin] = useState('')
   const [account, setAccount] = useState<ApiStaffGameAccount | null>(null)
   const [looking, setLooking] = useState(false)
@@ -30,7 +33,7 @@ export function AdminAccountsPage() {
   }
 
   async function onUnlink() {
-    if (!account) return
+    if (!account || unlinking || !hasCapability(user, 'accounts.manage')) return
     if (!window.confirm(t('accounts.confirmUnlink', { login: account.login }))) {
       return
     }
@@ -138,7 +141,7 @@ export function AdminAccountsPage() {
                 <strong>{t('accounts.unlinkTitle')}</strong>
                 <span>{t('accounts.unlinkText')}</span>
               </div>
-              <button type="button" className="admin-accounts-danger" onClick={() => void onUnlink()} disabled={unlinking}>
+              <button type="button" className="admin-accounts-danger" onClick={() => void onUnlink()} disabled={unlinking || !hasCapability(user, 'accounts.manage')}>
                 <Link2Off aria-hidden="true" />
                 {unlinking ? t('accounts.unlinking') : t('accounts.unlink')}
               </button>

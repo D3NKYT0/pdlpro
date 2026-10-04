@@ -14,7 +14,7 @@ from apps.staff.presentation.financial_serializers import (
     PaymentFiltersSerializer,
     PaymentReportSerializer,
 )
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
@@ -22,11 +22,12 @@ class FinancialReportView(InjectedAPIView):
     """Entrada HTTP para ``GetFinancialReportUseCase``.
 
     Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição antes de
+    [IsAuthenticated, HasCapability]. Resolve a aplicação no escopo da requisição antes de
     montar a resposta.
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'financial_reports.view'}
     report = "balances"
     filters_class = BalanceFiltersSerializer
 

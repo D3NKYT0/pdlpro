@@ -186,7 +186,7 @@ export function ProfilePage() {
             <dl>
               <div><dt>{t('profile.fullName', { defaultValue: 'Nome completo' })}</dt><dd>{(user?.first_name ? `${user.first_name} ${user.last_name || ''}`.trim() : user?.display_name) || '-'}</dd></div>
               <div><dt>{t('profile.email')}</dt><dd>{user?.email}</dd></div>
-              <div><dt>{t('profile.role')}</dt><dd>{user?.role === 'player' ? t('profile.rolePlayer') : user?.role}</dd></div>
+              <div><dt>{t('profile.role')}</dt><dd>{(user?.roles?.length ? user.roles : [user?.role || 'player']).map(role => t(`profile.roles.${role}`, { defaultValue: t('profile.rolePlayer') })).join(', ')}</dd></div>
               <div><dt>{t('profile.security')}</dt><dd>{user?.is_2fa_enabled ? t('profile.twoFactorOn') : t('profile.twoFactorOff')}</dd></div>
             </dl>
           </Card>

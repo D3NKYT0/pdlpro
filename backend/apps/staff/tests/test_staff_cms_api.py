@@ -2,6 +2,7 @@ from datetime import timedelta
 
 import pytest
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
 from django.utils import timezone
 from rest_framework.test import APIClient
 
@@ -33,7 +34,7 @@ def staff(db):
         email="gm@pdl.dev",
         password="Secret123",
         is_staff=True,
-        role=User.Role.STAFF,
+        role=User.Role.EDITOR,
     )
 
 
@@ -249,6 +250,7 @@ def test_staff_wiki_and_downloads_crud(api, staff):
 
 @pytest.mark.django_db
 def test_staff_notifications_send_to_user_broadcast_and_delete(api, staff, player):
+    staff.user_permissions.add(*Permission.objects.filter(content_type__app_label="accounts", codename__in=["notifications_view", "notifications_manage"]))
     api.force_authenticate(user=staff)
     inactive = User.objects.create_user(
         username="ghost",

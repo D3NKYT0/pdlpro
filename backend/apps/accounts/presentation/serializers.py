@@ -53,6 +53,8 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
     is_staff = serializers.BooleanField(read_only=True)
     is_superuser = serializers.BooleanField(read_only=True)
     is_staff_member = serializers.BooleanField(read_only=True)
+    roles = serializers.ListField(child=serializers.CharField(), read_only=True)
+    capabilities = serializers.ListField(child=serializers.CharField(), read_only=True)
     has_usable_password = serializers.BooleanField(read_only=True)
     avatar = serializers.ImageField(read_only=True, allow_null=True)
     bio = serializers.CharField(required=False, allow_blank=True)
@@ -95,6 +97,8 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
                 "is_staff": instance.is_staff,
                 "is_superuser": instance.is_superuser,
                 "is_staff_member": instance.is_staff_member,
+                "roles": list(instance.roles),
+                "capabilities": list(instance.capabilities),
                 "has_usable_password": instance.has_usable_password,
                 "terms_accepted_at": accepted_at,
                 "terms_and_privacy_version": version,

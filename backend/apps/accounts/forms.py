@@ -65,6 +65,8 @@ class PDLUserLabelsMixin:
             field.widget = FilteredSelectMultiple(verbose_name, is_stacked=False)
             field.widget.choices = field.choices
             field.help_text = help_text
+            if field_name == "user_permissions":
+                field.label_from_instance = lambda permission: f"{permission.content_type.app_label} | {_(permission.name)}"
 
 
 class PDLUserChangeForm(PDLAdminFormMixin, PDLUserLabelsMixin, UserChangeForm):

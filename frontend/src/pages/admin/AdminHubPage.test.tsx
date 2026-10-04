@@ -46,3 +46,5 @@ describe('AdminHubPage', () => {
     expect(html).not.toMatch(/data-tone="system"[\s\S]*Painel e servidor[\s\S]*data-tone="finance"/)
   })
 })
+
+vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { is_staff: true, is_superuser: true, capabilities: ['support', 'moderation', 'accounts', 'content', 'games', 'commerce', 'finance', 'programs', 'resources', 'settings', 'notifications', 'operational_reports', 'financial_reports', 'audit', 'metrics', 'items', 'docs'].flatMap(area => [area + '.view', area + '.manage']) } }) }))

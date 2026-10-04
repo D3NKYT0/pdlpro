@@ -80,7 +80,7 @@ it('gera somente destinos conhecidos, autorizados e disponíveis a partir da res
   expect(getHelpActionsForText('/panel/wallet /panel/wallet /panel/inventory', null, [{ code: 'wallet', enabled: false }])).toEqual([{ to: '/panel/inventory', label: 'Abrir meu inventário' }])
   expect(getHelpActionsForText('/panel/wallet')).toEqual([])
   expect(getHelpActionsForText('/panel/accounts /panel/support /panel/security /panel', null, [], 'en')).toHaveLength(3)
-  expect(getHelpContext('/panel/admin/themes', { role: 'admin' }, [], 'en')?.title).toBe('Administration')
+  expect(getHelpContext('/panel/admin/themes', { role: 'admin', is_superuser: true, capabilities: ['content.view'] }, [], 'en')?.title).toBe('Administration')
 })
 it('mostra o mascote, o aviso de necessidade e o chamado pré-preenchido sem enviar o chat', async () => {
   const user = userEvent.setup()
@@ -109,7 +109,7 @@ it('mostra o mascote, o aviso de necessidade e o chamado pré-preenchido sem env
 it('traduz o cantinho quando o idioma do site muda', async () => {
   const user = userEvent.setup()
   await i18n.changeLanguage('es')
-  mount(<ContextualHelp path="/panel/admin" resources={[]} user={{ role: 'admin', is_staff: true }} />)
+  mount(<ContextualHelp path="/panel/admin" resources={[]} user={{ role: 'admin', is_staff: true, capabilities: ['content.view'] }} />)
   await user.click(screen.getByRole('button', { name: 'Denkynho: ayuda en esta pantalla' }))
   expect(screen.getByText('Rincón de Denkynho')).toBeVisible()
   expect(screen.getByRole('heading', { name: 'Administración' })).toBeVisible()

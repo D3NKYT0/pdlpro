@@ -66,6 +66,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         PLAYER = "player", _("Jogador")
         SUPPORTER = "supporter", _("Apoiador")
+        PROMOTER = "promoter", _("Divulgador")
+        PARTNER = "partner", _("Parceiro")
+        SUPPORT = "support", _("Suporte")
+        EDITOR = "editor", _("Editor")
         MODERATOR = "moderator", _("Moderador")
         STAFF = "staff", _("Equipe")
         ADMIN = "admin", _("Administrador")
@@ -106,6 +110,42 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name=_("Usuário")
         verbose_name_plural=_("Usuários")
         ordering = ["-created_at"]
+        permissions = [
+            ("support_view", _("Consultar chamados")),
+            ("support_manage", _("Gerenciar chamados")),
+            ("moderation_view", _("Consultar moderação")),
+            ("moderation_manage", _("Gerenciar moderação")),
+            ("accounts_view", _("Consultar contas de jogo")),
+            ("accounts_manage", _("Gerenciar contas de jogo")),
+            ("content_view", _("Consultar conteúdo editorial")),
+            ("content_manage", _("Gerenciar conteúdo editorial")),
+            ("games_view", _("Consultar jogos e recompensas")),
+            ("games_manage", _("Gerenciar jogos e recompensas")),
+            ("commerce_view", _("Consultar comércio")),
+            ("commerce_manage", _("Gerenciar comércio")),
+            ("finance_view", _("Consultar configuração financeira")),
+            ("finance_manage", _("Gerenciar configuração financeira")),
+            ("programs_view", _("Consultar apoiadores e repasses")),
+            ("programs_manage", _("Gerenciar apoiadores e repasses")),
+            ("resources_view", _("Consultar disponibilidade de recursos")),
+            ("resources_manage", _("Gerenciar disponibilidade de recursos")),
+            ("settings_view", _("Consultar configurações do painel")),
+            ("settings_manage", _("Gerenciar configurações do painel")),
+            ("notifications_view", _("Consultar avisos")),
+            ("notifications_manage", _("Gerenciar avisos")),
+            ("operational_reports_view", _("Consultar relatórios operacionais")),
+            ("operational_reports_manage", _("Gerenciar relatórios operacionais")),
+            ("financial_reports_view", _("Consultar relatórios financeiros")),
+            ("financial_reports_manage", _("Gerenciar relatórios financeiros")),
+            ("audit_view", _("Consultar auditoria")),
+            ("audit_manage", _("Gerenciar auditoria")),
+            ("metrics_view", _("Consultar métricas")),
+            ("metrics_manage", _("Gerenciar métricas")),
+            ("items_view", _("Consultar observação e catálogo de itens")),
+            ("items_manage", _("Gerenciar observação e catálogo de itens")),
+            ("docs_view", _("Consultar documentação da API")),
+            ("docs_manage", _("Gerenciar documentação da API")),
+        ]
 
     def __str__(self) -> str:
         return self.get_full_name() or self.username
@@ -119,7 +159,20 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def is_staff_member(self) -> bool:
-        return self.role in {self.Role.STAFF, self.Role.ADMIN, self.Role.MODERATOR} or self.is_staff
+        """Compatibilidade da sessão: há capacidade administrativa efetiva na SPA."""
+        return bool(self.capabilities)
+
+    @property
+    def roles(self) -> list[str]:
+        """Papéis combinados do campo legado e dos grupos PDL."""
+        from apps.accounts.infrastructure.authorization import effective_roles
+        return effective_roles(self)
+
+    @property
+    def capabilities(self) -> list[str]:
+        """Capacidades efetivas; is_staff permite somente entrar no admin."""
+        from apps.accounts.infrastructure.authorization import effective_capabilities
+        return effective_capabilities(self)
 
 
 class GamerProfile(BaseModel):

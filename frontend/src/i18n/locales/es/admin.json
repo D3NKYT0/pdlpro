@@ -6,7 +6,7 @@
     "reports": "Informes",
     "reportsDesc": "Finanzas, inventario, subastas, tienda y marketplace",
     "module": "Módulo",
-    "note": "Usuarios, pagos y registros operativos siguen en el Django Admin.",
+    "note": "Las acciones disponibles dependen de los permisos de tu cuenta.",
     "categories": {
       "programs": "Programas y expansión",
       "support": "Atención",
@@ -53,7 +53,7 @@
       },
       "djangoAdmin": {
         "title": "Django Admin",
-        "description": "CRUD completo del sistema"
+        "description": "Administración según tus permisos"
       },
       "coins": {
         "title": "Monedas",

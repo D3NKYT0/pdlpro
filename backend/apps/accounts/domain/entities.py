@@ -29,6 +29,8 @@ class UserEntity:
     is_staff: bool = False
     is_superuser: bool = False
     is_staff_member: bool = False
+    roles: tuple[str, ...] = ()
+    capabilities: tuple[str, ...] = ()
     has_usable_password: bool = True
     terms_accepted_at: str | None = None
     terms_and_privacy_version: str = ""

@@ -36,7 +36,7 @@ from apps.programs.serializers import (
     SupporterReviewSerializer,
     SupporterSerializer,
 )
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
@@ -133,10 +133,11 @@ class StaffSupporterView(InjectedAPIView):
     """Permite à equipe consultar e revisar cadastros de apoiadores.
 
     Implementa GET, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated, IsStaffMember].
+    declarado: [IsAuthenticated, HasCapability].
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'programs.view', 'PATCH': 'programs.manage'}
 
     @extend_schema(
         tags=["Apoiadores"],
@@ -184,10 +185,11 @@ class StaffPayoutView(InjectedAPIView):
     """Permite à equipe revisar pedidos de repasse de comissões.
 
     Implementa PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated, IsStaffMember].
+    [IsAuthenticated, HasCapability].
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'PATCH': 'programs.manage'}
 
     @extend_schema(
         tags=["Apoiadores"],
@@ -244,10 +246,11 @@ class StaffRoadmapView(InjectedAPIView):
     """Permite à equipe criar, atualizar e excluir entradas do roadmap.
 
     Implementa GET, POST, PATCH, DELETE; registre ``as_view()`` nas URLs do módulo. Controle de
-    acesso declarado: [IsAuthenticated, IsStaffMember].
+    acesso declarado: [IsAuthenticated, HasCapability].
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'content.view', 'POST': 'content.manage', 'PATCH': 'content.manage', 'DELETE': 'content.manage'}
 
     @extend_schema(
         tags=["Roadmap"],
@@ -329,10 +332,11 @@ class StaffResourceView(ResourceView):
     """Atualiza a configuração dos recursos do sistema pela interface administrativa.
 
     Implementa PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated, IsStaffMember].
+    [IsAuthenticated, HasCapability].
     """
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'resources.view', 'PATCH': 'resources.manage'}
 
     @extend_schema(
         tags=["Recursos"],

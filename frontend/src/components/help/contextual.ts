@@ -1,4 +1,4 @@
-import { canAccessStaff } from '../../lib/staff'
+import { canAccessAdminPath, canAccessStaff } from '../../lib/staff'
 import type { HelpLanguage } from './personality'
 
 export type HelpIdentity = Parameters<typeof canAccessStaff>[0]
@@ -222,7 +222,7 @@ function resolveTopic(path: string | null | undefined) {
   return topics.find(topic => topic.path === canonical)
 }
 function allowed(topic: Topic, user: HelpIdentity, resources: HelpResources | undefined) {
-  return (!topic.staff || canAccessStaff(user)) && !resources?.some(resource => resource.code === topic.resource && !resource.enabled)
+  return (!topic.staff || canAccessAdminPath(user, topic.path)) && !resources?.some(resource => resource.code === topic.resource && !resource.enabled)
 }
 function actionAvailable(topic: Topic, user: HelpIdentity, resources: HelpResources | undefined) {
   return allowed(topic, user, resources) && (!topic.resource || resources !== undefined)

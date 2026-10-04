@@ -10,9 +10,8 @@ from apps.server.domain.repositories import IIndexConfigRepository
 
 def _is_staff_user(user) -> bool:
     return bool(
-        getattr(user, "is_staff", False)
-        or getattr(user, "is_superuser", False)
-        or getattr(user, "is_staff_member", False)
+        getattr(user, "is_superuser", False)
+        or "settings.view" in getattr(user, "capabilities", ())
     )
 
 
@@ -38,8 +37,9 @@ def assert_login_allowed_during_coming_soon(
 ) -> None:
     """Bloqueia login de visitantes comuns quando Coming Soon restringe o acesso à staff.
 
-    Aceita entidade de domínio ou modelo ORM. Staff, superusuário e membros de staff do painel
-    seguem autorizados. Sem configuração ativa, ou com Coming Soon desligado, não interfere.
+    Aceita entidade de domínio ou modelo ORM. Exige capacidade de consulta da
+    configuração ou superusuário; entrada no Django Admin não concede exceção.
+    Sem configuração ativa, ou com Coming Soon desligado, não interfere.
     """
 
     row = _active_coming_soon(index_config)
@@ -56,7 +56,7 @@ def assert_l2_registration_allowed(
 ) -> None:
     """Bloqueia criação de conta Lineage para jogadores quando Coming Soon fecha o cadastro L2.
 
-    Staff permanece autorizada para testes. Sem Coming Soon ativo, não interfere.
+    A exceção exige settings.view ou superusuário. Sem Coming Soon ativo, não interfere.
     """
 
     row = _active_coming_soon(index_config)

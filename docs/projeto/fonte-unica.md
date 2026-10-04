@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Como manter a documentação](documentacao.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 4 de outubro de 2026
 
 > [!IMPORTANT]
 > **Um assunto → um guia principal.** Os demais só resumem e linkam. Isso
@@ -18,6 +18,7 @@
 | Hot-apply / abas / API staff | [Integrações admin](../operacao/integracoes-admin.md) | Tutoriais (só link) |
 | Lista de variáveis | [Ambiente](../configuracao/ambiente.md) | Tutoriais (só campos usados) |
 | Relato de vulnerabilidade | [Política](seguranca.md) | Issues públicas |
+| Papéis, permissões e delegação no admin | [Papéis e permissões](../operacao/papeis-e-permissoes.md) | Catálogos duplicados em guias de UI |
 | Sessões, proxies, cookies, liquidação | [Segurança operacional](../operacao/seguranca.md) | Distribuição, temas, frontend |
 | Soft-rotate / Fernet | [Rotação de segredos](../operacao/rotacao-de-segredos.md) | Integrações admin (só bootstrap) |
 | Backup / restore | [Backup](../operacao/backup-e-restauracao.md) | Tutorial Google Drive (só setup do provedor) |

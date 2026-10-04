@@ -26,7 +26,7 @@ class PublicOrStaffDocsPermission(BasePermission):
         return bool(
             user
             and user.is_authenticated
-            and (user.is_staff or getattr(user, "is_staff_member", False))
+            and user.has_perm("accounts.docs_view")
         )
 
 

@@ -83,6 +83,8 @@ class DjangoUserRepository(IUserRepository):
             is_staff=bool(user.is_staff),
             is_superuser=bool(user.is_superuser),
             is_staff_member=bool(user.is_staff_member),
+            roles=tuple(user.roles),
+            capabilities=tuple(user.capabilities),
             has_usable_password=user.has_usable_password(),
             terms_accepted_at=accepted_at,
             terms_and_privacy_version=user.terms_and_privacy_version or "",

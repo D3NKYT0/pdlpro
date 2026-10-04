@@ -1,10 +1,10 @@
 from django.contrib import admin
 
 from apps.support.models import Ticket, TicketMessage
-from common.admin import PDLModelAdmin
+from common.admin import PDLModelAdmin, PDLTabularInline
 
 
-class TicketMessageInline(admin.TabularInline):
+class TicketMessageInline(PDLTabularInline):
     """Configura a administração Django de ``TicketMessage``. Ajuste filtros, busca e campos nesta
     classe para mudar a experiência da equipe no admin; regras reutilizáveis ficam na aplicação.
     """

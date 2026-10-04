@@ -21,14 +21,15 @@ from apps.staff.application.cms import (
     UpsertStaffFaqUseCase,
     UpsertStaffWikiUseCase,
 )
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
 class StaffCalendarView(InjectedAPIView):
     """Entrada HTTP do CRUD administrativo do calendário público."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'content.view', 'POST': 'content.manage', 'PUT': 'content.manage', 'DELETE': 'content.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -66,7 +67,8 @@ class StaffCalendarView(InjectedAPIView):
 class StaffFaqView(InjectedAPIView):
     """Entrada HTTP do CRUD administrativo do FAQ e do handbook do Denkynho."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'content.view', 'POST': 'content.manage', 'PUT': 'content.manage', 'DELETE': 'content.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -104,7 +106,8 @@ class StaffFaqView(InjectedAPIView):
 class StaffWikiView(InjectedAPIView):
     """Entrada HTTP do CRUD administrativo da wiki."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'content.view', 'POST': 'content.manage', 'PUT': 'content.manage', 'DELETE': 'content.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -142,7 +145,8 @@ class StaffWikiView(InjectedAPIView):
 class StaffDownloadsView(InjectedAPIView):
     """Entrada HTTP do CRUD administrativo dos downloads."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'content.view', 'POST': 'content.manage', 'PUT': 'content.manage', 'DELETE': 'content.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -180,7 +184,8 @@ class StaffDownloadsView(InjectedAPIView):
 class StaffBannersView(InjectedAPIView):
     """Entrada HTTP do CRUD administrativo de banners e modais pop-up."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, HasCapability]
+    required_capabilities = {'GET': 'content.view', 'POST': 'content.manage', 'PUT': 'content.manage', 'DELETE': 'content.manage'}
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     @extend_schema(

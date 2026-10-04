@@ -24,7 +24,7 @@ def staff_user():
         email="staff@example.com",
         password="pass",
         is_staff=True,
-        role=User.Role.STAFF,
+        role=User.Role.ADMIN,
     )
 
 

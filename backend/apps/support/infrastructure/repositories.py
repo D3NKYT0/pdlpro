@@ -289,14 +289,8 @@ class DjangoTicketRepository(ITicketRepository):
     def resolve_staff_assignee(self, assignee: Any, actor_id: UUID) -> Any | None:
         if assignee == "me":
             return User.objects.filter(id=actor_id).first()
-        return (
-            User.objects.filter(id=assignee)
-            .filter(
-                Q(is_staff=True)
-                | Q(role__in=[User.Role.MODERATOR, User.Role.STAFF, User.Role.ADMIN])
-            )
-            .first()
-        )
+        candidate = User.objects.filter(id=assignee, is_active=True).first()
+        return candidate if candidate and candidate.has_perm("accounts.support_manage") else None
 
     def update_staff_ticket(
         self,

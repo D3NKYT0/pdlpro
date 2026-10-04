@@ -19,7 +19,7 @@ from apps.server.application.custom_items import (
 )
 from apps.server.domain.item_catalog import ITEM_CATEGORIES, ITEM_GRADES
 from common.images import sanitize_uploaded_image
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
 
@@ -74,7 +74,8 @@ class CustomItemQuery(serializers.Serializer):
 class CustomItemsView(InjectedAPIView):
     """Pesquisa e cria metadados de itens customizados no catálogo administrativo."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember, CanViewCustomItems]
+    permission_classes = [IsAuthenticated, HasCapability, CanViewCustomItems]
+    required_capabilities = {'GET': 'items.view', 'POST': 'items.manage', 'PUT': 'items.manage', 'PATCH': 'items.manage', 'DELETE': 'items.manage'}
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def require(self, request, action):
@@ -103,7 +104,7 @@ class CustomItemsView(InjectedAPIView):
                 "page": page.page,
                 "pages": page.pages,
                 "permissions": {
-                    action: request.user.has_perm(f"server.{action}_customcatalogitem")
+                    action: request.user.has_perm("accounts.items_manage") and request.user.has_perm(f"server.{action}_customcatalogitem")
                     for action in ("add", "change")
                 },
                 **catalog_choices(),

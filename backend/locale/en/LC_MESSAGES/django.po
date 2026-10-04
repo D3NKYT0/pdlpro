@@ -3171,7 +3171,7 @@ msgstr "Removes the download link identified in the payload."
 
 #: .\apps\staff\presentation\views\config.py:40
 msgid "Consultar configurações do painel"
-msgstr "Panel settings"
+msgstr "View panel settings"
 
 #: .\apps\staff\presentation\views\config.py:41
 msgid "Retorna as configurações administrativas atuais do painel."
@@ -5493,3 +5493,117 @@ msgstr "Check access as user"
 #: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
 msgid "Voltar à conta original"
 msgstr "Return to original account"
+
+msgid "Divulgador"
+msgstr "Promoter"
+
+msgid "Parceiro"
+msgstr "Partner"
+
+msgid "Suporte"
+msgstr "Support"
+
+msgid "Editor"
+msgstr "Editor"
+
+msgid "Permissões do papel"
+msgstr "Role permissions"
+
+msgid "Consultar chamados"
+msgstr "View support tickets"
+
+msgid "Gerenciar chamados"
+msgstr "Manage support tickets"
+
+msgid "Consultar moderação"
+msgstr "View moderation"
+
+msgid "Gerenciar moderação"
+msgstr "Manage moderation"
+
+msgid "Consultar contas de jogo"
+msgstr "View game accounts"
+
+msgid "Gerenciar contas de jogo"
+msgstr "Manage game accounts"
+
+msgid "Consultar conteúdo editorial"
+msgstr "View editorial content"
+
+msgid "Gerenciar conteúdo editorial"
+msgstr "Manage editorial content"
+
+msgid "Consultar jogos e recompensas"
+msgstr "View games and rewards"
+
+msgid "Gerenciar jogos e recompensas"
+msgstr "Manage games and rewards"
+
+msgid "Consultar comércio"
+msgstr "View commerce"
+
+msgid "Gerenciar comércio"
+msgstr "Manage commerce"
+
+msgid "Consultar configuração financeira"
+msgstr "View financial configuration"
+
+msgid "Gerenciar configuração financeira"
+msgstr "Manage financial configuration"
+
+msgid "Consultar apoiadores e repasses"
+msgstr "View supporters and payouts"
+
+msgid "Gerenciar apoiadores e repasses"
+msgstr "Manage supporters and payouts"
+
+msgid "Consultar disponibilidade de recursos"
+msgstr "View resource availability"
+
+msgid "Gerenciar disponibilidade de recursos"
+msgstr "Manage resource availability"
+
+msgid "Gerenciar configurações do painel"
+msgstr "Manage panel settings"
+
+msgid "Consultar avisos"
+msgstr "View announcements"
+
+msgid "Gerenciar avisos"
+msgstr "Manage announcements"
+
+msgid "Consultar relatórios operacionais"
+msgstr "View operational reports"
+
+msgid "Gerenciar relatórios operacionais"
+msgstr "Manage operational reports"
+
+msgid "Consultar relatórios financeiros"
+msgstr "View financial reports"
+
+msgid "Gerenciar relatórios financeiros"
+msgstr "Manage financial reports"
+
+msgid "Consultar auditoria"
+msgstr "View audit"
+
+msgid "Gerenciar auditoria"
+msgstr "Manage audit"
+
+msgid "Consultar métricas"
+msgstr "View metrics"
+
+msgid "Gerenciar métricas"
+msgstr "Manage metrics"
+
+msgid "Consultar observação e catálogo de itens"
+msgstr "View item observation and catalog"
+
+msgid "Gerenciar observação e catálogo de itens"
+msgstr "Manage item observation and catalog"
+
+msgid "Consultar documentação da API"
+msgstr "View API documentation"
+
+msgid "Gerenciar documentação da API"
+msgstr "Manage API documentation"

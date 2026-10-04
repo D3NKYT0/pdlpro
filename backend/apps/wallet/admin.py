@@ -10,10 +10,10 @@ from apps.wallet.infrastructure.models import (
     WalletChargeCurrency,
     WalletTransaction,
 )
-from common.admin import PDLModelAdmin
+from common.admin import PDLModelAdmin, PDLTabularInline
 
 
-class CoinPackagePriceInline(admin.TabularInline):
+class CoinPackagePriceInline(PDLTabularInline):
     """Edição em linha de preços por moeda de cobrança."""
 
     model = CoinPackagePrice
