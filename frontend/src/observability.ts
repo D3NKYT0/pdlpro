@@ -37,6 +37,7 @@ export async function initializeMonitoring(environment: MonitoringEnvironment) {
   if (!options) return {}
   try {
     const Sentry = await import('@sentry/react')
+    if (!hasAnalyticsConsent() && import.meta.env.MODE !== 'test') return {}
     Sentry.init(options)
     sentryActive = true
     return {

@@ -10,6 +10,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não lançado]
 
+### Corrigido
+
+- **Consentimento de rastreamento**: comandos Google usam o protocolo esperado pelo GTM, com estado inicial definido antes da API. A revogação e a redefinição também valem entre abas; bibliotecas opcionais gerenciadas pelo PDL aguardam autorização e o carregamento tardio não duplica a primeira visualização. Tags Meta externas exigem configuração correspondente no GTM.
+
 ## [2.7.0] - 2026-10-03
 
 Lançamento com micro-recursos, reorganização do controle de disponibilidade, correções de Analytics, prévias de links e restauração de backups. A API acompanha a versão 2.7.0.

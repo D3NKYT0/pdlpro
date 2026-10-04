@@ -75,6 +75,64 @@ describe('Paid Traffic & Analytics tracking', () => {
     })
   })
 
+  it('queues Google consent using the command format understood by GTM', () => {
+    initTracking({ VITE_GTM_ID: 'GTM-TEST' })
+    updateTrackingConsent({ analytics: true, marketing: false })
+    const commands = (window.dataLayer || []).filter((entry: any) => entry[0] === 'consent')
+    expect(commands.length).toBeGreaterThanOrEqual(2)
+    for (const command of commands) {
+      expect(Object.prototype.toString.call(command)).toBe('[object Arguments]')
+    }
+  })
+
+  it('does not load direct marketing libraries before permission', () => {
+    vi.mocked(cookieConsent.hasMarketingConsent).mockReturnValue(false)
+    initTracking({ VITE_META_PIXEL_ID: 'META-TEST', VITE_TIKTOK_PIXEL_ID: 'TT-TEST' })
+    expect(document.getElementById('pdl-meta-pixel-script')).toBeNull()
+    expect(document.getElementById('pdl-tiktok-pixel-script')).toBeNull()
+    updateTrackingConsent({ analytics: false, marketing: true })
+    expect(document.getElementById('pdl-meta-pixel-script')).not.toBeNull()
+    expect(document.getElementById('pdl-tiktok-pixel-script')).not.toBeNull()
+  })
+
+  it('delays Google loading and pageviews until permission is granted', () => {
+    vi.mocked(cookieConsent.hasAnalyticsConsent).mockReturnValue(false)
+    vi.mocked(cookieConsent.hasMarketingConsent).mockReturnValue(false)
+    initTracking({ VITE_GTM_ID: 'GTM-DELAYED' })
+    expect(document.getElementById('pdl-gtm-script')).toBeNull()
+    vi.mocked(cookieConsent.hasAnalyticsConsent).mockReturnValue(true)
+    updateTrackingConsent({ analytics: true, marketing: false })
+    const loader = document.getElementById('pdl-gtm-script')
+    expect(loader).not.toBeNull()
+    expect(window.dataLayer?.filter((x: any) => x.event === 'page_view')).toHaveLength(1)
+    updateTrackingConsent({ analytics: true, marketing: false })
+    expect(document.getElementById('pdl-gtm-script')).toBe(loader)
+    expect(window.dataLayer?.filter((x: any) => x.event === 'page_view')).toHaveLength(1)
+    vi.mocked(cookieConsent.hasAnalyticsConsent).mockReturnValue(false)
+    updateTrackingConsent({ analytics: false, marketing: false })
+    trackEvent('discord_click')
+    expect(window.dataLayer?.filter((x: any) => x.event === 'discord_click')).toHaveLength(0)
+  })
+
+  it('configures Ads after marketing is accepted later, keeping one loader', () => {
+    vi.mocked(cookieConsent.hasMarketingConsent).mockReturnValue(false)
+    initTracking({ VITE_GTAG_ID: 'G-TEST', VITE_GOOGLE_ADS_ID: 'AW-TEST' })
+    const script = document.getElementById('pdl-gtag-script')
+    expect(window.dataLayer?.filter((x: any) => x[0] === 'config' && x[1] === 'AW-TEST')).toHaveLength(0)
+    vi.mocked(cookieConsent.hasMarketingConsent).mockReturnValue(true)
+    updateTrackingConsent({ analytics: true, marketing: true })
+    expect(document.getElementById('pdl-gtag-script')).toBe(script)
+    expect(window.dataLayer?.filter((x: any) => x[0] === 'config' && x[1] === 'AW-TEST')).toHaveLength(1)
+  })
+
+  it('keeps Analytics disabled when only marketing is authorized', () => {
+    vi.mocked(cookieConsent.hasAnalyticsConsent).mockReturnValue(false)
+    initTracking({ VITE_GTAG_ID: 'G-PRIVATE', VITE_GOOGLE_ADS_ID: 'AW-MARKETING' })
+    expect(window.dataLayer?.filter((x: any) => x[0] === 'config' && x[1] === 'G-PRIVATE')).toHaveLength(0)
+    expect(window.dataLayer?.filter((x: any) => x[0] === 'config' && x[1] === 'AW-MARKETING')).toHaveLength(1)
+    expect((window as unknown as Record<string, unknown>)['ga-disable-G-PRIVATE']).toBe(true)
+  })
+
   describe('initTracking', () => {
     it('does not inject scripts when no IDs are configured', () => {
       initTracking({})
@@ -385,15 +443,12 @@ describe('Paid Traffic & Analytics tracking', () => {
       expect(window.ttq?.page).not.toHaveBeenCalled()
     })
 
-    it('dispatches pageview to Google Tag in Consent Mode v2 even before analytics consent is granted', () => {
+    it('does not dispatch pageview before analytics consent is granted', () => {
       vi.spyOn(cookieConsent, 'hasAnalyticsConsent').mockReturnValue(false)
 
       trackPageView('/home')
 
-      expect(window.gtag).toHaveBeenCalledWith('event', 'page_view', {
-        page_path: '/home',
-        page_title: '',
-      })
+      expect(window.gtag).not.toHaveBeenCalled()
     })
   })
 })

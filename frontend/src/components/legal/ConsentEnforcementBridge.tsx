@@ -16,19 +16,22 @@ export function ConsentEnforcementBridge() {
   const monitoringStarted = useRef(false)
 
   useEffect(() => {
-    if (!hasDecided) return
-
-    const allowAnalytics = hasAnalyticsConsent(consent)
-    const allowMarketing = hasMarketingConsent(consent)
+    const allowAnalytics = hasDecided && hasAnalyticsConsent(consent)
+    const allowMarketing = hasDecided && hasMarketingConsent(consent)
 
     updateTrackingConsent({
       analytics: allowAnalytics,
       marketing: allowMarketing,
     })
 
+    let cancelled = false
     if (allowAnalytics && !monitoringStarted.current) {
       void initializeMonitoring(import.meta.env).then(() => {
-        monitoringStarted.current = true
+        if (cancelled && !hasAnalyticsConsent()) {
+          void shutdownMonitoring()
+        } else {
+          monitoringStarted.current = true
+        }
       })
     }
     if (!allowAnalytics && monitoringStarted.current) {
@@ -36,7 +39,7 @@ export function ConsentEnforcementBridge() {
       monitoringStarted.current = false
     }
 
-    if (!hasFunctionalConsent(consent)) {
+    if (!hasDecided || !hasFunctionalConsent(consent)) {
       try {
         localStorage.removeItem(LANGUAGE_STORAGE_KEY)
       } catch {
@@ -46,6 +49,7 @@ export function ConsentEnforcementBridge() {
         document.cookie = 'django_language=; path=/; max-age=0; SameSite=Lax'
       }
     }
+    return () => { cancelled = true }
   }, [consent, hasDecided])
 
   return null

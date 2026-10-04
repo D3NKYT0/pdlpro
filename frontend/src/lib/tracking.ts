@@ -48,11 +48,38 @@ declare global {
   }
 }
 
+let loadedGoogleKey: string | null = null
+let lastGoogleDispatchedPath: string | null = null
+let consentInitialized = false
+const initializedMetaIds = new Set<string>()
 let initialized = false
 let activeConfig: TrackingConfig | null = null
 let lastDispatchedPath: string | null = null
 let lastMetaDispatchedPath: string | null = null
 let lastTiktokDispatchedPath: string | null = null
+
+/** Define o consentimento antes da API e usa o protocolo oficial de comandos Google. */
+export function initializeTrackingConsent() {
+  if (typeof window === 'undefined') return
+  window.dataLayer = window.dataLayer || []
+  if (typeof window.gtag !== 'function') {
+    window.gtag = function gtag() {
+      // GTM diferencia comandos (Arguments) de arrays comuns no dataLayer.
+      window.dataLayer?.push(arguments)
+    }
+  }
+  if (consentInitialized) return
+  consentInitialized = true
+  const analytics = hasAnalyticsConsent()
+  const marketing = hasMarketingConsent()
+  window.gtag?.('consent', 'default', {
+    analytics_storage: analytics ? 'granted' : 'denied',
+    ad_storage: marketing ? 'granted' : 'denied',
+    ad_user_data: marketing ? 'granted' : 'denied',
+    ad_personalization: marketing ? 'granted' : 'denied',
+  })
+  window.dataLayer.push({ pdl_consent: { analytics, marketing } })
+}
 
 /**
  * Normaliza e higieniza variáveis de ambiente de tráfego pago e métricas.
@@ -139,7 +166,11 @@ export function initTracking(env: TrackingEnv = import.meta.env): TrackingConfig
 
   const googleChanged = !initialized || activeConfig?.gtmId !== config.gtmId ||
     (!config.gtmId && (activeConfig?.gtagId !== config.gtagId || activeConfig?.googleAdsId !== config.googleAdsId))
-  if (googleChanged) lastDispatchedPath = null
+  if (googleChanged) {
+    lastDispatchedPath = null
+    lastGoogleDispatchedPath = null
+    loadedGoogleKey = null
+  }
   if (typeof window !== 'undefined' && activeConfig?.gtagId && !config.gtmId &&
       activeConfig.gtagId !== config.gtagId) {
     (window as unknown as Record<string, unknown>)[`ga-disable-${activeConfig.gtagId}`] = true
@@ -149,7 +180,7 @@ export function initTracking(env: TrackingEnv = import.meta.env): TrackingConfig
     document.getElementById('pdl-gtm-script')?.remove()
   }
   if (typeof window !== 'undefined' && config.gtagId && !config.gtmId) {
-    (window as unknown as Record<string, unknown>)[`ga-disable-${config.gtagId}`] = false
+    (window as unknown as Record<string, unknown>)[`ga-disable-${config.gtagId}`] = !hasAnalyticsConsent()
   }
   activeConfig = config
 
@@ -162,44 +193,60 @@ export function initTracking(env: TrackingEnv = import.meta.env): TrackingConfig
   const allowAnalytics = hasAnalyticsConsent()
   const allowMarketing = hasMarketingConsent()
 
-  // 1. Google Tag (gtag.js) / Google Ads
-  const googlePrimaryId = config.gtmId ? undefined : config.gtagId || config.googleAdsId
-  if (googleChanged && (googlePrimaryId || config.gtmId)) {
-    window.dataLayer = window.dataLayer || []
-    if (typeof window.gtag !== 'function') {
-      window.gtag = function gtag(...args: unknown[]) {
-        window.dataLayer?.push(args)
-      }
-    }
+  if (allowAnalytics || allowMarketing) loadGoogleLibraries(config)
 
-    // Google Consent Mode v2 padrão
-    window.gtag('consent', 'default', {
-      analytics_storage: allowAnalytics ? 'granted' : 'denied',
-      ad_storage: allowMarketing ? 'granted' : 'denied',
-      ad_user_data: allowMarketing ? 'granted' : 'denied',
-      ad_personalization: allowMarketing ? 'granted' : 'denied',
-    })
+  if (allowMarketing) loadMarketingPixels(config)
+
+  initialized = true
+
+  // Se o tracking foi configurado e a rota inicial ainda não teve page_view disparado, dispara agora
+  if (typeof window !== 'undefined' && isTrackingConfigured(config)) {
+    const currentPath = (window.location.pathname || '/') + (window.location.search || '')
+    if (lastDispatchedPath !== currentPath) {
+      trackPageView(currentPath, typeof document !== 'undefined' ? document.title : undefined)
+    }
+  }
+
+  return config
+}
+
+/** Carrega Google somente após uma autorização opcional, sem duplicar o contêiner. */
+function loadGoogleLibraries(config: TrackingConfig) {
+  const analyticsId = hasAnalyticsConsent() ? config.gtagId : undefined
+  const adsId = hasMarketingConsent() ? config.googleAdsId : undefined
+  const key = config.gtmId || `${analyticsId || ''}|${adsId || ''}`
+  if (key === '|' || loadedGoogleKey === key) return
+  loadedGoogleKey = key
+  // 1. Google Tag (gtag.js) / Google Ads
+  const googlePrimaryId = config.gtmId ? undefined : analyticsId || adsId
+  if (googlePrimaryId || config.gtmId) {
+    initializeTrackingConsent()
 
     if (googlePrimaryId) {
       injectScript('pdl-gtag-script', `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googlePrimaryId)}`)
 
-      window.gtag('js', new Date())
-      if (config.gtagId) {
-        window.gtag('config', config.gtagId, { send_page_view: false })
+      window.gtag?.('js', new Date())
+      if (analyticsId) {
+        window.gtag?.('config', analyticsId, { send_page_view: false })
       }
-      if (config.googleAdsId && config.googleAdsId !== config.gtagId) {
-        window.gtag('config', config.googleAdsId)
+      if (hasMarketingConsent() && config.googleAdsId && config.googleAdsId !== config.gtagId) {
+        window.gtag?.('config', config.googleAdsId)
       }
     }
   }
 
   // 2. Google Tag Manager (GTM)
-  if (googleChanged && config.gtmId) {
+  if (config.gtmId) {
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
     injectScript('pdl-gtm-script', `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(config.gtmId)}`)
   }
 
+}
+
+/** Carrega pixels diretos somente após autorização de marketing. */
+function loadMarketingPixels(config: TrackingConfig) {
+  const allowMarketing = true
   // 3. Meta Pixel (Facebook Pixel)
   if (config.metaPixelId) {
     if (!window.fbq) {
@@ -225,7 +272,10 @@ export function initTracking(env: TrackingEnv = import.meta.env): TrackingConfig
       } else {
         window.fbq('consent', 'revoke')
       }
-      window.fbq('init', config.metaPixelId)
+      if (!initializedMetaIds.has(config.metaPixelId)) {
+        window.fbq('init', config.metaPixelId)
+        initializedMetaIds.add(config.metaPixelId)
+      }
     }
   }
 
@@ -275,17 +325,6 @@ export function initTracking(env: TrackingEnv = import.meta.env): TrackingConfig
     }
   }
 
-  initialized = true
-
-  // Se o tracking foi configurado e a rota inicial ainda não teve page_view disparado, dispara agora
-  if (typeof window !== 'undefined' && isTrackingConfigured(config)) {
-    const currentPath = (window.location.pathname || '/') + (window.location.search || '')
-    if (lastDispatchedPath !== currentPath) {
-      trackPageView(currentPath, typeof document !== 'undefined' ? document.title : undefined)
-    }
-  }
-
-  return config
 }
 
 /**
@@ -293,19 +332,34 @@ export function initTracking(env: TrackingEnv = import.meta.env): TrackingConfig
  */
 export function updateTrackingConsent(consent: { analytics: boolean; marketing: boolean }) {
   if (typeof window === 'undefined') return
+  initializeTrackingConsent()
+  if (activeConfig?.gtagId) {
+    (window as unknown as Record<string, unknown>)[`ga-disable-${activeConfig.gtagId}`] = !consent.analytics
+  }
+  if (consent.marketing && activeConfig) loadMarketingPixels(activeConfig)
 
   const currentPath =
     lastDispatchedPath || (typeof window !== 'undefined' ? (window.location.pathname || '/') + (window.location.search || '') : null)
 
   // Google Consent Mode v2
   if (typeof window.gtag === 'function') {
-    window.gtag('consent', 'update', {
+    window.gtag?.('consent', 'update', {
       analytics_storage: consent.analytics ? 'granted' : 'denied',
       ad_storage: consent.marketing ? 'granted' : 'denied',
       ad_user_data: consent.marketing ? 'granted' : 'denied',
       ad_personalization: consent.marketing ? 'granted' : 'denied',
     })
   }
+
+  if (activeConfig && (consent.analytics || consent.marketing)) {
+    loadGoogleLibraries(activeConfig)
+  }
+  if (consent.analytics && activeConfig && currentPath && lastGoogleDispatchedPath !== currentPath) {
+    trackPageView(currentPath)
+  }
+
+  // Contrato para tags externas do GTM: estado sempre booleano e atualização explícita.
+  window.dataLayer?.push({ event: 'pdl_consent_update', pdl_consent: { ...consent } })
 
   // Meta Pixel
   if (typeof window.fbq === 'function') {
@@ -344,10 +398,11 @@ export function updateTrackingConsent(consent: { analytics: boolean; marketing: 
 
 /** Envia cada evento por um único transporte Google; GTM tem precedência. */
 function dispatchGoogleEvent(name: string, params?: Record<string, unknown>) {
+  if (!hasAnalyticsConsent()) return
   if (activeConfig?.gtmId) {
     window.dataLayer?.push({ event: name, ...params })
   } else if ((activeConfig?.gtagId || activeConfig?.googleAdsId) && typeof window.gtag === 'function') {
-    window.gtag('event', name, params)
+    window.gtag?.('event', name, params)
   }
 }
 
@@ -361,6 +416,7 @@ export function trackPageView(path: string, title?: string) {
   lastDispatchedPath = path
   const allowMarketing = hasMarketingConsent()
 
+  if (hasAnalyticsConsent()) lastGoogleDispatchedPath = path
   dispatchGoogleEvent('page_view', {
     page_path: path,
     page_title: title || (typeof document !== 'undefined' ? document.title : ''),
@@ -452,8 +508,8 @@ export function trackPurchase(payload: PurchaseTrackingPayload) {
     currency,
     items: payload.items,
   })
-  if (!activeConfig?.gtmId && activeConfig?.googleAdsId && activeConfig.googleAdsConversionLabel && typeof window.gtag === 'function') {
-    window.gtag('event', 'conversion', {
+  if (hasMarketingConsent() && !activeConfig?.gtmId && activeConfig?.googleAdsId && activeConfig.googleAdsConversionLabel && typeof window.gtag === 'function') {
+    window.gtag?.('event', 'conversion', {
       send_to: `${activeConfig.googleAdsId}/${activeConfig.googleAdsConversionLabel}`,
       value: payload.amount,
       currency,
@@ -488,6 +544,10 @@ export function trackPurchase(payload: PurchaseTrackingPayload) {
  * Para uso exclusivo em suítes de testes para resetar estado singleton.
  */
 export function resetTrackingForTesting() {
+  loadedGoogleKey = null
+  lastGoogleDispatchedPath = null
+  consentInitialized = false
+  initializedMetaIds.clear()
   initialized = false
   activeConfig = null
   lastDispatchedPath = null

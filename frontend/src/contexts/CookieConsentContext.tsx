@@ -87,7 +87,7 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const onStorage = (event: StorageEvent) => {
-      if (event.key === COOKIE_STORAGE_KEY) setStored(readStored())
+      if (event.key === COOKIE_STORAGE_KEY || event.key === null) setStored(readStored())
     }
     window.addEventListener('storage', onStorage)
     return () => window.removeEventListener('storage', onStorage)

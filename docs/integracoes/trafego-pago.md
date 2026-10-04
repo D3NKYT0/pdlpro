@@ -50,6 +50,53 @@ Recarregue as páginas abertas ao trocar IDs ou alternar entre instalação dire
 
 Cenários de regressão: API pendente não carrega IDs de build; campo vazio desativa; painel substitui `.env`; falha da API usa fallback; GA4 + GTM não carregam dois scripts; cadastro, login, checkout, compra, evento personalizado e página seguem um único transporte. A API administrativa mantém autenticação e autorização de superusuário.
 
+## Consentimento e diagnóstico
+
+O bootstrap define sincronamente os quatro sinais Google antes da API e das tags.
+Os comandos usam `dataLayer.push(arguments)`, conforme o protocolo de `gtag`,
+e não arrays comuns. A preferência vigente é restaurada; sem escolha, os sinais
+ficam negados. As bibliotecas Google só carregam após uma categoria opcional
+ser autorizada, e os eventos analíticos exigem analytics. Pixels diretos Meta e
+TikTok só carregam após marketing. Recusar, redefinir ou remover a preferência
+em outra aba revoga imediatamente as permissões; `localStorage.clear()` também
+é reconhecido. O monitoramento verifica novamente a permissão após seu import.
+
+O PDL publica `pdl_consent_update` no `dataLayer`, com
+`pdl_consent.analytics` e `pdl_consent.marketing` booleanos. No **GTM externo**,
+configure as tags HTML de Meta para respeitar marketing: bloquear a inicialização
+quando falso, inicializar e enviar a primeira visualização quando ficar verdadeiro,
+e revogar quando voltar a falso. Não inicialize o mesmo pixel pelo PDL e pelo GTM.
+Consent Mode do Google não controla automaticamente tags HTML da Meta. Configure também as tags GA4 para exigir analytics, usando os controles de consentimento do GTM, e evite eventos automáticos após revogação. Se apenas
+analytics foi aceito, marketing continua negado mesmo quando o contêiner carrega.
+A publicação dessas tags exige acesso ao contêiner e não é realizada pelo deploy do PDL.
+
+Passos para o administrador do GTM:
+
+1. Criar variáveis de camada de dados (versão 2) `pdl_consent.analytics` e
+   `pdl_consent.marketing`, com padrão `false`.
+2. Nas tags HTML Meta de PageView, CompleteRegistration e DiscordClick, exigir
+   marketing verdadeiro. Retirar o disparo incondicional em Inicialização.
+3. Usar o evento personalizado `pdl_consent_update` para inicialização tardia:
+   quando marketing for verdadeiro, inicializar o pixel uma única vez e enviar
+   a primeira visualização uma única vez. Não repetir `init`/PageView a cada atualização.
+4. No mesmo evento com marketing falso, executar `fbq('consent', 'revoke')` se
+   `fbq` existir; com verdadeiro, conceder. Isso não substitui o bloqueio dos
+   acionadores dos eventos de cadastro e Discord.
+5. Exigir `analytics_storage` nas tags GA4, verificar aceitação tardia e manter
+   um único produtor de `page_view` (tag automática ou evento da SPA).
+6. Publicar e validar essas alterações junto com o deploy do PDL. O contêiner
+   publicado do cliente permanece fora do controle do repositório.
+
+
+Valide em sessão limpa: nenhuma tag antes da escolha; após aceitar, confira os
+quatro sinais concedidos no Tag Assistant. Repita recusa, categorias independentes,
+restauração, aceitação antes/depois da API, revogação e mudança entre abas.
+Confira primeira visualização sem duplicação e ausência de eventos analíticos
+após revogação. Para atribuição, use links com UTMs e examine Aquisição de tráfego
+após processamento: Brasil e internacional podem ser distinguidos por `utm_content`.
+Não crie `session_start` manualmente nem prometa recuperar atribuição histórica.
+Referência: [Consent Mode do Google](https://developers.google.com/tag-platform/security/guides/consent).
+
 ## 2. Ferramentas Suportadas
 
 ### Google Analytics 4 & Google Tag (`VITE_GTAG_ID`)

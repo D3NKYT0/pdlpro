@@ -8,9 +8,10 @@ import { ConsentEnforcementBridge } from '../components/legal/ConsentEnforcement
 import { resetTrackingForTesting, trackPageView } from '../lib/tracking'
 
 vi.mock('../services/api', () => ({ serverApi: { info: vi.fn() } }))
-vi.mock('../contexts/CookieConsentContext', () => ({ useCookieConsent: () => ({ hasDecided: false }) }))
+import { CookieConsentProvider, COOKIE_POLICY_VERSION, COOKIE_STORAGE_KEY } from '../contexts/CookieConsentContext'
 
 beforeEach(() => {
+  localStorage.setItem(COOKIE_STORAGE_KEY, JSON.stringify({ version: COOKIE_POLICY_VERSION, decidedAt: '2026-10-03T00:00:00Z', preferences: { essential: true, functional: true, analytics: true, marketing: false } }))
   resetTrackingForTesting()
   document.head.innerHTML = ''
   delete window.dataLayer
@@ -19,6 +20,7 @@ beforeEach(() => {
 })
 afterEach(() => {
   cleanup()
+  localStorage.clear()
   vi.restoreAllMocks()
   vi.unstubAllEnvs()
   resetTrackingForTesting()
@@ -26,7 +28,7 @@ afterEach(() => {
 
 function mount() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false, gcTime: 0 } } })
-  render(<QueryClientProvider client={client}><ConsentEnforcementBridge /><SiteMetadataSync /></QueryClientProvider>)
+  render(<QueryClientProvider client={client}><CookieConsentProvider><ConsentEnforcementBridge /><SiteMetadataSync /></CookieConsentProvider></QueryClientProvider>)
 }
 
 it('waits for the authoritative API before loading tags and emits the first view only once', async () => {
@@ -35,7 +37,7 @@ it('waits for the authoritative API before loading tags and emits the first view
   mount()
   trackPageView(window.location.pathname)
   expect(document.getElementById('pdl-gtag-script')).toBeNull()
-  expect(window.dataLayer).toBeUndefined()
+  expect(window.dataLayer?.filter(item => (item as { event?: string }).event === 'gtm.js' || (item as { event?: string }).event === 'page_view')).toHaveLength(0)
   resolve({ name: 'Review', gtag_id: '', gtm_id: 'GTM-PANEL' } as Awaited<ReturnType<typeof serverApi.info>>)
   await waitFor(() => expect(document.getElementById('pdl-gtm-script')).not.toBeNull())
   expect(document.getElementById('pdl-gtag-script')).toBeNull()
@@ -47,7 +49,7 @@ it('keeps all tracking disabled when the API explicitly clears the build-time ID
   mount()
   await waitFor(() => expect(document.title).toContain('Review'))
   expect(document.getElementById('pdl-gtag-script')).toBeNull()
-  expect(window.dataLayer).toBeUndefined()
+  expect(window.dataLayer?.filter(item => (item as { event?: string }).event === 'gtm.js' || (item as { event?: string }).event === 'page_view')).toHaveLength(0)
 })
 
 it('uses environment fallback only after the API fails', async () => {
