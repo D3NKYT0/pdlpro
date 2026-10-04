@@ -136,8 +136,8 @@
         "description": "Prices for nickname, sex, slots and unstuck"
       },
       "lineageAccounts": {
-        "title": "Lineage accounts",
-        "description": "Look up logins and unlink them from the panel"
+        "title": "Website and Lineage accounts",
+        "description": "Find website users, sign in as a player and manage Lineage links"
       },
       "moderation": {
         "title": "Moderation",
@@ -614,8 +614,8 @@
   },
   "accounts": {
     "kicker": "Server",
-    "title": "Lineage accounts",
-    "description": "Look up a game login and remove its link to the panel.",
+    "title": "Website and Lineage accounts",
+    "description": "Look up website users and game accounts.",
     "eyebrow": "Lookup",
     "searchTitle": "Search by login",
     "searchText": "Use the same login the player signs in with on Lineage.",
@@ -2577,5 +2577,18 @@
     "colActor": "Actor",
     "colAction": "Action",
     "colStatus": "Status"
+  },
+  "siteUsers": {
+    "title": "Website users",
+    "description": "Superadministrators can temporarily access player accounts. Actions use the user permissions and the switch is recorded.",
+    "search": "Search by username, name or email",
+    "empty": "No users found.",
+    "enter": "Sign in as {{username}}",
+    "return": "Return to {{username}}",
+    "active": "You are accessing as {{username}}.",
+    "pagination": "User pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{page}} · {{count}} users"
   }
 }

@@ -5469,3 +5469,27 @@ msgstr "Search characters"
 
 msgid "Disponibilidade desta ação dentro do módulo."
 msgstr "Availability of this action within its module."
+
+#: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
+msgid "Acesso como usuário"
+msgstr "Access as user"
+
+#: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
+msgid "Acessos como usuário"
+msgstr "Accesses as user"
+
+#: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
+msgid "Listar usuários do site"
+msgstr "List website users"
+
+#: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
+msgid "Entrar como usuário"
+msgstr "Sign in as user"
+
+#: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
+msgid "Consultar acesso como usuário"
+msgstr "Check access as user"
+
+#: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
+msgid "Voltar à conta original"
+msgstr "Return to original account"

@@ -48,7 +48,7 @@
       "itemWatch": { "title": "Observar itens", "description": "Economia do servidor, favoritos, snapshots e comparação entre datas" },
       "customItems": { "title": "Itens customizados", "description": "Cadastrar nome, ID, imagem e metadados no catálogo único" },
       "services": { "title": "Serviços", "description": "Preços de nick, sexo, slots, destravamento e taverna" },
-      "lineageAccounts": { "title": "Contas Lineage", "description": "Consultar login e remover o vínculo com o painel" },
+      "lineageAccounts": { "title": "Contas do site e Lineage", "description": "Consultar usuários do site, acessar como jogador e gerenciar vínculos Lineage" },
       "moderation": { "title": "Moderação", "description": "Kick, prisão, banimento e teleporte de personagens" },
       "metrics": { "title": "Métricas", "description": "Dashboard de KPIs, registros, logins, receita e auditoria" },
       "auditLog": { "title": "Auditoria", "description": "Trail de operações staff com filtros e paginação" }
@@ -516,8 +516,8 @@
   },
   "accounts": {
     "kicker": "Servidor",
-    "title": "Contas Lineage",
-    "description": "Consulte um login do jogo e remova o vínculo com o painel.",
+    "title": "Contas do site e Lineage",
+    "description": "Consulte usuários do site e contas do jogo.",
     "eyebrow": "Consulta",
     "searchTitle": "Buscar pelo login",
     "searchText": "Use o mesmo login com que o jogador entra no Lineage.",
@@ -2368,6 +2368,18 @@
     "colActor": "Ator",
     "colAction": "Ação",
     "colStatus": "Status"
+  },
+  "siteUsers": {
+    "title": "Usuários do site",
+    "description": "Superadministradores podem entrar temporariamente em contas de jogadores. As ações usam as permissões do usuário e a troca fica registrada.",
+    "search": "Buscar por usuário, nome ou e-mail",
+    "empty": "Nenhum usuário encontrado.",
+    "enter": "Entrar como {{username}}",
+    "return": "Voltar para {{username}}",
+    "active": "Você está acessando como {{username}}.",
+    "pagination": "Paginação de usuários",
+    "previous": "Anterior",
+    "next": "Próxima",
+    "page": "Página {{page}} · {{count}} usuários"
   }
 }
-

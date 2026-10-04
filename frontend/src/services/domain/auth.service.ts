@@ -13,6 +13,10 @@ export function isTwoFactorChallenge(value: unknown): value is TwoFactorChalleng
 }
 
 export const authApi = {
+  siteUsers: (search: string, page: number) => request<{ count: number; results: { id: string; username: string; email: string; display_name: string; can_impersonate: boolean }[] }>(`/auth/site-users/?${new URLSearchParams({ search, page: String(page) })}`),
+  impersonation: async () => (await request<{ impersonation: { username: string; target_username: string } | null }>('/auth/impersonation/')).impersonation,
+  startImpersonation: (id: string) => request<ApiUser>(`/auth/impersonation/${encodeURIComponent(id)}/`, { method: 'POST' }),
+  stopImpersonation: () => request<ApiUser>('/auth/impersonation/stop/', { method: 'POST' }),
   csrf: () => request<{ csrfToken: string }>('/auth/csrf/'),
   capabilities: () => request<ApiAuthCapabilities>('/auth/capabilities/'),
   login: (login: string, password: string, hcaptchaToken = '') =>

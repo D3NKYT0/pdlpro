@@ -136,8 +136,8 @@
         "description": "Precios de apodo, sexo, espacios y desatasco"
       },
       "lineageAccounts": {
-        "title": "Cuentas Lineage",
-        "description": "Consultar el login y quitar el vínculo con el panel"
+        "title": "Cuentas del sitio y Lineage",
+        "description": "Consultar usuarios del sitio, entrar como jugador y gestionar vínculos Lineage"
       },
       "moderation": {
         "title": "Moderación",
@@ -614,8 +614,8 @@
   },
   "accounts": {
     "kicker": "Servidor",
-    "title": "Cuentas Lineage",
-    "description": "Consulta un login del juego y quita el vínculo con el panel.",
+    "title": "Cuentas del sitio y Lineage",
+    "description": "Consulta usuarios del sitio y cuentas del juego.",
     "eyebrow": "Consulta",
     "searchTitle": "Buscar por el login",
     "searchText": "Usa el mismo login con el que el jugador entra en Lineage.",
@@ -2577,5 +2577,18 @@
     "colActor": "Actor",
     "colAction": "Acción",
     "colStatus": "Estado"
+  },
+  "siteUsers": {
+    "title": "Usuarios del sitio",
+    "description": "Los superadministradores pueden acceder temporalmente a cuentas de jugadores. Las acciones usan los permisos del usuario y el cambio queda registrado.",
+    "search": "Buscar por usuario, nombre o correo",
+    "empty": "No se encontraron usuarios.",
+    "enter": "Entrar como {{username}}",
+    "return": "Volver a {{username}}",
+    "active": "Estás accediendo como {{username}}.",
+    "pagination": "Paginación de usuarios",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page": "Página {{page}} · {{count}} usuarios"
   }
 }

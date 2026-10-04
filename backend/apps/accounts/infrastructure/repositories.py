@@ -79,6 +79,7 @@ class DjangoUserRepository(IUserRepository):
             fichas=user.fichas,
             avatar_url=avatar_url,
             is_2fa_enabled=user.is_2fa_enabled,
+            is_active=bool(user.is_active),
             is_staff=bool(user.is_staff),
             is_superuser=bool(user.is_superuser),
             is_staff_member=bool(user.is_staff_member),
@@ -382,8 +383,17 @@ class DjangoSessionStore(ISessionStore):
                 User.objects.select_for_update().get(id=original[api_settings.USER_ID_CLAIM])
                 refresh = RefreshToken(raw)
                 user = JWTAuthentication().get_user(refresh)
+                impersonation = refresh.get("impersonation")
+                if impersonation:
+                    from apps.accounts.infrastructure.impersonation import (
+                        DjangoImpersonationStore,
+                    )
+                    DjangoImpersonationStore().validate(impersonation, user.id)
                 refresh.blacklist()
-                return RefreshToken.for_user(user)
+                successor = RefreshToken.for_user(user)
+                if impersonation:
+                    successor["impersonation"] = impersonation
+                return successor
         except (
             TokenError,
             AuthenticationFailed,

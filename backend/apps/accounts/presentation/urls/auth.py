@@ -19,6 +19,12 @@ from apps.accounts.presentation.views.auth import (
     VerifyEmailView,
     VerifyTwoFactorLoginView,
 )
+from apps.accounts.presentation.views.impersonation import (
+    ImpersonationStartView,
+    ImpersonationStatusView,
+    ImpersonationStopView,
+    SiteUsersView,
+)
 from apps.accounts.presentation.views.passkeys import (
     PasskeyDeleteView,
     PasskeyListView,
@@ -29,6 +35,10 @@ from apps.accounts.presentation.views.passkeys import (
 )
 
 urlpatterns = [
+    path("site-users/", SiteUsersView.as_view(), name="auth-site-users"),
+    path("impersonation/", ImpersonationStatusView.as_view(), name="auth-impersonation-status"),
+    path("impersonation/stop/", ImpersonationStopView.as_view(), name="auth-impersonation-stop"),
+    path("impersonation/<uuid:user_id>/", ImpersonationStartView.as_view(), name="auth-impersonation-start"),
     path("csrf/", CsrfView.as_view(), name="auth-csrf"),
     path("capabilities/", AuthCapabilitiesView.as_view(), name="auth-capabilities"),
     path("register/", RegisterView.as_view(), name="auth-register"),

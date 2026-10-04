@@ -85,7 +85,7 @@ const pages = [
   ['/panel/admin/items/customs', 'Itens customizados'],
   ['/panel/admin/server', 'Painel e servidor'],
   ['/panel/admin/coming-soon', 'Coming Soon'],
-  ['/panel/admin/accounts', 'Contas Lineage'],
+  ['/panel/admin/accounts', 'Contas do site e Lineage'],
   ['/panel/admin/moderation', 'Moderação'],
   ['/panel/admin/services', 'Serviços'],
   ['/panel/admin/coins', 'Moedas'],

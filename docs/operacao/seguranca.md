@@ -89,3 +89,32 @@ python -m pytest apps/payment/tests/concurrency_postgresql.py --ds=SEU_MODULO_DE
 ```
 
 O teste exige PostgreSQL e falha se executado com SQLite. Sua nomenclatura separa a homologação que exige banco específico da suíte local padrão; não há skip nem dependência de serviços reais.
+
+
+## Acesso administrativo como usuário
+
+Em **Painel → Admin → Contas**, superadministradores encontram **Usuários do site**,
+com busca por usuário, nome ou e-mail e páginas de vinte contas. A lista usa linhas
+compactas com identificação e e-mail à esquerda, ação à direita e quebra responsiva
+no celular. **Entrar como usuário**
+abre o painel com as permissões reais daquela conta; contas inativas ou com papel de
+equipe não podem ser representadas. As contas Lineage continuam na seção seguinte.
+
+O botão compacto **Voltar para <administrador>** flutua no canto inferior direito e aparece nas rotas públicas e no painel,
+inclusive após recarregar, e retorna à listagem administrativa. A troca reinicia os
+providers e o cache da SPA para evitar dados da identidade anterior. O retorno usa
+uma prova assinada em cookie HttpOnly e exige CSRF; não aceita um ID de administrador
+fornecido pelo cliente. Mesmo sem cookies de acesso do jogador, o retorno continua
+possível enquanto a sessão original do administrador estiver válida.
+
+Cada troca mantém `ImpersonationSession` com autor, alvo, início, limite de uma hora e
+encerramento. O acesso não recebe privilégios da equipe. Encerrar revoga imediatamente
+os JWTs da representação, incluindo tokens renovados. Revogar a sessão original,
+alterar a senha do administrador, remover seu privilégio ou promover o alvo à equipe
+bloqueia a representação. Após uma hora, o acesso ao jogador termina, mas o botão de
+retorno permanece disponível enquanto a sessão original for válida.
+
+Na atualização, execute `python manage.py migrate` para criar a tabela de auditoria.
+Os cenários HTTP estão em `backend/apps/accounts/tests/test_impersonation_api.py`;
+as interações e o contrato HTTP da SPA estão em `Impersonation.test.tsx` e
+`services/domain/impersonation.test.ts`.

@@ -110,6 +110,20 @@ Os marcadores `unit`, `integration` e `architecture` estão registrados no Pytes
 
 O Vitest usa **Node por padrão** e descobre `src/**/*.test.{ts,tsx}` e `dev/**/*.test.{ts,tsx,mjs}`, conforme [vite.config.ts](../../frontend/vite.config.ts). Os testes de interface selecionam jsdom por arquivo e usam Testing Library, ambos instalados nas dependências de desenvolvimento. A suíte inclui contratos HTTP, renderização estática, interações de formulários e carregamento das rotas em [AppRoutes.test.tsx](../../frontend/src/app/routes/AppRoutes.test.tsx). O carregamento das rotas verifica a montagem das páginas e seus layouts com a API pendente; não substitui os cenários de interação de cada funcionalidade nem uma suíte E2E em navegador real.
 
+## Acesso administrativo como usuário
+
+A suíte `backend/apps/accounts/tests/test_impersonation_api.py` verifica cookies reais,
+busca/paginação, entradas inválidas, limites, autorização do autor e do alvo, bloqueio
+de trocas aninhadas e repetidas, retorno após expiração, CSRF, prova adulterada,
+renovação/revogação e alterações de senha ou papel. `common/tests/test_websocket_auth.py`
+confirma que um token de representação encerrada não abre outra conexão.
+
+No frontend, `components/auth/Impersonation.test.tsx` usa Testing Library para busca,
+paginação, carregamento, vazio, erro, entrada, retorno e proteção contra duplo clique.
+`services/domain/impersonation.test.ts` verifica URLs, cookies, CSRF e o envelope de
+estado; `services/infra/session.test.ts` verifica o reinício da SPA na troca de identidade.
+Consulte o [fluxo operacional](../operacao/seguranca.md#acesso-administrativo-como-usuário).
+
 ## Como escrever novos testes
 
 Nomeie o teste pelo comportamento observado. Prepare apenas os dados necessários, execute a ação e verifique o resultado público e os efeitos persistidos relevantes. Evite testes que apenas repitam a implementação.

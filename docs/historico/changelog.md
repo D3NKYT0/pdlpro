@@ -14,6 +14,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 - **Consentimento de rastreamento**: comandos Google usam o protocolo esperado pelo GTM, com estado inicial definido antes da API. A revogação e a redefinição também valem entre abas; bibliotecas opcionais gerenciadas pelo PDL aguardam autorização e o carregamento tardio não duplica a primeira visualização. Tags Meta externas exigem configuração correspondente no GTM.
 
+## [Não publicado]
+
+### Adicionado
+
+- **Acesso como usuário**: listagem e busca de usuários do site no admin do painel; superadministradores podem acessar contas de jogadores com as permissões da conta e voltar à identidade original por um botão fixo. A troca fica registrada, impede acesso a contas de equipe e revoga as sessões de representação ao encerrar.
+
 ## [2.7.0] - 2026-10-03
 
 Lançamento com micro-recursos, reorganização do controle de disponibilidade, correções de Analytics, prévias de links e restauração de backups. A API acompanha a versão 2.7.0.

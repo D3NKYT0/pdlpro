@@ -30,3 +30,8 @@ export async function restoreSession(
 
   return { user: null, retry: true }
 }
+
+/** Reinicia os providers e caches ao trocar a identidade autenticada. */
+export function reloadForIdentityChange(path: "/panel" | "/panel/admin/accounts") {
+  window.location.assign(path)
+}

@@ -25,6 +25,7 @@ class UserEntity:
     last_name: str = ""
     country: str = ""
     is_2fa_enabled: bool = False
+    is_active: bool = True
     is_staff: bool = False
     is_superuser: bool = False
     is_staff_member: bool = False

@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { ApiError } from './http'
-import { isTransientError, restoreSession } from './session'
+import { isTransientError, restoreSession, reloadForIdentityChange } from './session'
 import type { ApiUser } from '../types'
 
 const user = { id: '1', username: 'hero' } as ApiUser
@@ -63,4 +63,14 @@ describe('restoreSession', () => {
     )
     expect(result).toEqual({ user: null, retry: true })
   })
+})
+
+
+it('reloads providers and caches at the new identity destination', () => {
+  const assign = vi.fn()
+  vi.stubGlobal('window', { location: { assign } })
+  try {
+    reloadForIdentityChange('/panel')
+    expect(assign).toHaveBeenCalledWith('/panel')
+  } finally { vi.unstubAllGlobals() }
 })

@@ -321,3 +321,19 @@ class AccountActionCode(models.Model):
             models.Index(fields=["user", "type", "is_used"], name="pdl_action_code_lookup"),
             models.Index(fields=["expires_at"], name="pdl_action_code_exp"),
         ]
+
+
+class ImpersonationSession(models.Model):
+    """Audita a troca de identidade e permite revogar todos os JWTs emitidos durante ela."""
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="impersonations_started")
+    target = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="impersonations_received")
+    original_jti = models.CharField(max_length=255, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+    ended_at = models.DateTimeField(null=True)
+
+    class Meta:
+        verbose_name = _("Acesso como usuário")
+        verbose_name_plural = _("Acessos como usuário")

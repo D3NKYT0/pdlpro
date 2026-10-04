@@ -1,3 +1,4 @@
+import { ImpersonationBanner } from '../../components/auth/ImpersonationBanner'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'react-hot-toast'
 import { I18nextProvider } from 'react-i18next'
@@ -24,6 +25,7 @@ export function AppProviders() {
               <AuthProvider>
                 <ActiveAccountProvider>
                   <AppRoutes />
+                  <ImpersonationBanner />
                   <div data-theme-part="toast-host" data-theme-surface="overlay">
                     <Toaster position="top-right" containerClassName="pdl-toast" toastOptions={{ className: 'pdl-toast' }} />
                   </div>

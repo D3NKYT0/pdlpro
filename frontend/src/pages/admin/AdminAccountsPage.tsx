@@ -1,3 +1,4 @@
+import { SiteUsersAdmin } from '../../components/auth/SiteUsersAdmin'
 import { Card } from '../../components/ui/Card'
 import { apiErrorMessage } from '../../lib/errors'
 import { Button } from '../../components/ui/Button'
@@ -59,6 +60,8 @@ export function AdminAccountsPage() {
         title={t('accounts.title')}
         description={t('accounts.description')}
       />
+
+      <SiteUsersAdmin />
 
       <Card className="admin-accounts-panel">
         <header className="admin-services-heading">

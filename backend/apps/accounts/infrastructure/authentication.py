@@ -66,8 +66,18 @@ class CookieJWTAuthentication(JWTAuthentication):
             if reason:
                 raise exceptions.PermissionDenied(f"CSRF Failed: {reason}")
 
-        user = self.get_user(validated_token)
-        return user, validated_token
+        return self.get_user(validated_token), validated_token
+
+    def get_user(self, validated_token):
+        """Aplica o vínculo revogável também aos consumidores ASGI de tokens de acesso."""
+        user = super().get_user(validated_token)
+        if validated_token.get("impersonation"):
+            from apps.accounts.infrastructure.impersonation import (
+                DjangoImpersonationStore,
+            )
+
+            DjangoImpersonationStore().validate(validated_token["impersonation"], user.id)
+        return user
 
 
 class AuthSessionService(IAuthSessionService):

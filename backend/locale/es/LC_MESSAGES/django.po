@@ -5578,3 +5578,27 @@ msgstr "Buscar personajes"
 
 msgid "Disponibilidade desta ação dentro do módulo."
 msgstr "Disponibilidad de esta acción dentro del módulo."
+
+#: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
+msgid "Acesso como usuário"
+msgstr "Acceso como usuario"
+
+#: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
+msgid "Acessos como usuário"
+msgstr "Accesos como usuario"
+
+#: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
+msgid "Listar usuários do site"
+msgstr "Listar usuarios del sitio"
+
+#: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
+msgid "Entrar como usuário"
+msgstr "Entrar como usuario"
+
+#: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
+msgid "Consultar acesso como usuário"
+msgstr "Consultar acceso como usuario"
+
+#: apps/accounts/presentation/views/impersonation.py apps/accounts/infrastructure/models.py
+msgid "Voltar à conta original"
+msgstr "Volver a la cuenta original"

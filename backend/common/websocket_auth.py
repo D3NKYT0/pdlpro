@@ -6,7 +6,11 @@ from channels.db import database_sync_to_async
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 
-from apps.accounts.infrastructure.authentication import get_access_cookie_name
+from apps.accounts.infrastructure.authentication import (
+    CookieJWTAuthentication,
+    get_access_cookie_name,
+)
+from common.architecture.exceptions import AuthorizationError
 
 User = get_user_model()
 
@@ -34,7 +38,6 @@ def _extract_cookie_token(scope) -> str | None:
 
 @database_sync_to_async
 def get_user_from_access_token(token_key: str):
-    from rest_framework_simplejwt.authentication import JWTAuthentication
     from rest_framework_simplejwt.exceptions import (
         AuthenticationFailed,
         InvalidToken,
@@ -44,8 +47,8 @@ def get_user_from_access_token(token_key: str):
 
     try:
         access_token = AccessToken(token_key)
-        return JWTAuthentication().get_user(access_token)
-    except (TokenError, InvalidToken, AuthenticationFailed, User.DoesNotExist, TypeError, ValueError, KeyError):
+        return CookieJWTAuthentication().get_user(access_token)
+    except (TokenError, InvalidToken, AuthenticationFailed, AuthorizationError, User.DoesNotExist, TypeError, ValueError, KeyError):
         return AnonymousUser()
 
 

@@ -19,6 +19,8 @@ import { AdminServerPage } from './AdminServerPage'
 import { AdminComingSoonPage } from './AdminComingSoonPage'
 import { AdminAccountsPage } from './AdminAccountsPage'
 
+vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { is_staff: true, is_superuser: false } }) }))
+
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 vi.mock('../../components/ItemIcon', () => ({ ItemIcon: () => null }))
 vi.mock('../../components/ui/RichText', () => ({

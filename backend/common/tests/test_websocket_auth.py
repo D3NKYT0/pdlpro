@@ -39,3 +39,24 @@ def test_websocket_fails_closed(kind):
     if kind == "cookie-precedence":
         headers.append((b"cookie", f"{get_access_cookie_name()}=bad".encode()))
     assert not async_to_sync(authenticate)(headers).is_authenticated
+
+
+@pytest.mark.django_db(transaction=True)
+def test_websocket_impersonation_rejects_ended_session():
+    from datetime import timedelta
+
+    from django.utils import timezone
+    from rest_framework_simplejwt.tokens import RefreshToken
+
+    from apps.accounts.infrastructure.models import ImpersonationSession
+    model = get_user_model()
+    actor = model.objects.create_superuser("actor", "actor@test.dev", "Secret123")
+    player = model.objects.create_user("player", "player@test.dev", "Secret123")
+    original = RefreshToken.for_user(actor)
+    session = ImpersonationSession.objects.create(actor=actor, target=player, original_jti=original["jti"], expires_at=timezone.now()+timedelta(hours=1))
+    access = AccessToken.for_user(player)
+    access["impersonation"] = str(session.id)
+    headers = [(b"authorization", f"Bearer {access}".encode())]
+    assert async_to_sync(authenticate)(headers).id == player.id
+    session.ended_at=timezone.now(); session.save()
+    assert not async_to_sync(authenticate)(headers).is_authenticated
