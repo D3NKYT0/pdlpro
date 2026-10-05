@@ -371,7 +371,7 @@
     "back": "Back to wallet",
     "eyebrow": "Your economy, connected",
     "title": "Wallet ↔ game",
-    "description": "Send coins to the character or convert in-game coins into balance. The character must be offline.",
+    "description": "Send coins to your character or convert game coins into balance. Online delivery depends on the server setting; withdrawals require an offline character.",
     "form": {
       "title": "New transfer",
       "unavailableReason": "The game integration is unavailable.",

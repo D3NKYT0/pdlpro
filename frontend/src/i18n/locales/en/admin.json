@@ -1273,6 +1273,7 @@
       "toastError": "Error updating charge currencies"
     },
     "lineage": {
+      "onlineDeliveryHint": "Uses the server items_delayed queue. Enable only if the game server processes this queue while the character is online. Withdrawals from the game still require an offline character.",
       "dbEyebrow": "MySQL L2",
       "dbTitle": "Game database",
       "gameEyebrow": "Status",
@@ -1374,6 +1375,7 @@
       "PAYMENT_ALLOW_MOCK": "Allow mock method",
       "PAYMENT_REUSE_HOURS": "Order reuse (hours)",
       "LINEAGE_DB_ENABLED": "Enable Lineage MySQL",
+      "LINEAGE_ALLOW_ONLINE_DELIVERY": "Allow sending coins and items to online characters",
       "LINEAGE_DB_HOST": "Host",
       "LINEAGE_DB_PORT": "Port",
       "LINEAGE_DB_NAME": "Database",

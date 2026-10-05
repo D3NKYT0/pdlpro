@@ -114,6 +114,7 @@ export function GameExchangePage() {
                 onChange={(e) => {
                   reset();
                   setDirection(e.target.value);
+                  setCharId("");
                 }}
               >
                 <option value="to_game">{t("exchange.form.toGame")}</option>
@@ -151,7 +152,7 @@ export function GameExchangePage() {
               >
                 <option value="">{t("exchange.form.selectCharacter")}</option>
                 {chars.data?.map((c) => (
-                  <option disabled={c.online} key={c.char_id} value={c.char_id}>
+                  <option disabled={c.online && !(direction === "to_game" && query.data?.allow_online_delivery)} key={c.char_id} value={c.char_id}>
                     {c.name}
                     {c.online ? t("exchange.form.onlineSuffix") : ""}
                   </option>

@@ -73,6 +73,7 @@ export type Exchange = ExchangeRequest & {
 };
 export type ExchangeState = {
   enabled: boolean;
+  allow_online_delivery: boolean;
   unavailable_reason: string;
   coin: {
     name: string;

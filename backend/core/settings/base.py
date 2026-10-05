@@ -282,6 +282,7 @@ VAPID_PRIVATE_KEY = env("VAPID_PRIVATE_KEY", default="")
 VAPID_SUBJECT = env("VAPID_SUBJECT", default="mailto:noreply@localhost")
 
 LINEAGE_DB_ENABLED = env.bool("LINEAGE_DB_ENABLED", default=False)
+LINEAGE_ALLOW_ONLINE_DELIVERY = env.bool("LINEAGE_ALLOW_ONLINE_DELIVERY", default=False)
 LINEAGE_DB_HOST = env("LINEAGE_DB_HOST", default="127.0.0.1")
 LINEAGE_DB_PORT = env.int("LINEAGE_DB_PORT", default=3306)
 LINEAGE_DB_NAME = env("LINEAGE_DB_NAME", default="l2jdb")

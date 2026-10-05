@@ -144,3 +144,68 @@ def test_game_exchange_state_returns_coin_and_empty_history(api, accounts, setti
         "withdraw_fee_percent": "5.00",
     }
     assert response.data["history"] == []
+
+
+@pytest.mark.parametrize("enabled,direction,allowed", [(False, "to_game", False), (True, "to_game", True), (True, "from_game", False)])
+def test_online_coin_api_obeys_policy_and_never_double_debits(api, accounts, settings, monkeypatch, enabled, direction, allowed):
+    from dataclasses import replace
+    from uuid import uuid4
+
+    from apps.server.domain.gateways import ILineageGateway
+    from apps.wallet.infrastructure.exchange_models import GameExchange
+    from apps.wallet.infrastructure.models import CoinConfig
+
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = enabled
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    gateway.register_account("sender", "l2pass", accounts[0].email)
+    gateway.link_account("sender", str(accounts[0].id))
+    char = gateway.seed_character("sender", "Hero")
+    gateway._characters["sender"][0] = replace(char, online=True)
+    CoinConfig.objects.create(name="Coin", coin_id=57, multiplier=1, active=True)
+    monkeypatch.setattr(gateway, "assert_exchange_ready", lambda: None)
+    receipts = set()
+    monkeypatch.setattr(gateway, "exchange_coins", lambda receipt, *args: receipts.add(receipt))
+    payload = {"request_key": str(uuid4()), "direction": direction, "login": "sender", "character_id": char.char_id, "quantity": 10}
+    response = api.post("/api/v1/shared/wallet/game-exchange/", payload, format="json")
+    assert response.status_code == (200 if allowed else 400), response.data
+    if allowed:
+        assert response.data["status"] == "completed"
+        replay = api.post("/api/v1/shared/wallet/game-exchange/", payload, format="json")
+        assert replay.data["id"] == response.data["id"]
+        assert len(receipts) == 1
+        assert GameExchange.objects.count() == 1
+    else:
+        assert not receipts
+        assert not GameExchange.objects.exists()
+    wallet = Wallet.objects.get(user=accounts[0])
+    assert wallet.balance == (40 if allowed else 50)
+    assert wallet.bonus_balance == 100
+    state = api.get("/api/v1/shared/wallet/game-exchange/").data
+    assert state["allow_online_delivery"] is enabled
+
+
+@pytest.mark.parametrize("cause", ["ownership", "balance", "quantity"])
+def test_online_coin_api_rejects_invalid_input_without_reserving_balance(api, accounts, settings, monkeypatch, cause):
+    from dataclasses import replace
+    from uuid import uuid4
+
+    from apps.server.domain.gateways import ILineageGateway
+    from apps.wallet.infrastructure.exchange_models import GameExchange
+    from apps.wallet.infrastructure.models import CoinConfig
+
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = True
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    gateway.register_account("sender", "l2pass", accounts[0].email)
+    gateway.link_account("sender", str(accounts[0].id))
+    char = gateway.seed_character("sender", "Hero")
+    gateway._characters["sender"][0] = replace(char, online=True)
+    CoinConfig.objects.create(name="Coin", coin_id=57, multiplier=1, active=True)
+    monkeypatch.setattr(gateway, "assert_exchange_ready", lambda: None)
+    calls = []
+    monkeypatch.setattr(gateway, "exchange_coins", lambda *args: calls.append(args))
+    payload = {"request_key": str(uuid4()), "direction": "to_game", "login": "other" if cause == "ownership" else "sender", "character_id": char.char_id, "quantity": 0 if cause == "quantity" else 51 if cause == "balance" else 10}
+    response = api.post("/api/v1/shared/wallet/game-exchange/", payload, format="json")
+    assert response.status_code == 400, response.data
+    assert not calls
+    assert not GameExchange.objects.exists()
+    assert Wallet.objects.get(user=accounts[0]).balance == 50

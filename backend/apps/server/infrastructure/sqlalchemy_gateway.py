@@ -139,6 +139,10 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             )
         return self._engine
 
+    def allows_online_delivery(self) -> bool:
+        """Combina a opção administrativa com a capacidade de entrega pela fila do dialeto."""
+        return bool(settings.LINEAGE_ALLOW_ONLINE_DELIVERY) and self._sql.has("online_delivery_ready")
+
     def assert_exchange_ready(self) -> None:
         rows = self._fetch("exchange_table_engines")
         engines = {row["table_name"].lower(): (row["engine"] or "").upper() for row in rows}
@@ -174,9 +178,11 @@ class SqlAlchemyLineageGateway(ILineageGateway):
                     # apply a transfer that the wallet has already refunded.
                     with connection.begin_nested():
                         char = execute("exchange_character").mappings().first()
-                        if not char or char["online"]:
+                        if not char or (char["online"] and not (direction == "to_game" and self.allows_online_delivery())):
                             raise ValidationDomainError("Personagem não pertence à conta ou está online.")
                         if direction == "to_game":
+                            if char["online"]:
+                                execute("online_delivery_ready")
                             params["name"] = char["name"]
                             execute("deposit_item")
                         else:
@@ -493,19 +499,25 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         return GameItem(item_id, item_display_name(item_id), quantity, withdrawn_enchant)
 
     def deposit_item(self, char_name: str, item_id: int, quantity: int, enchant: int) -> None:
-        rows = self._fetch("find_character_id_by_name", {"name": char_name})
-        if not rows:
-            raise GameAccountNotFoundError("Personagem não encontrado.")
-        self._execute(
-            "deposit_item",
-            {
-                "name": char_name,
-                "owner_id": int(rows[0]["char_id"]),
-                "item_id": item_id,
-                "qty": quantity,
-                "enchant": enchant,
-            },
-        )
+        from apps.server.domain.exceptions import CharacterOfflineRequiredError
+        from common.architecture.exceptions import ValidationDomainError
+
+        if quantity < 1:
+            raise ValidationDomainError("Quantidade inválida.")
+        with self._engine_or_create().begin() as connection:
+            rows = connection.execute(
+                text(self._sql["delivery_character"]), {"name": char_name}
+            ).mappings().all()
+            if not rows:
+                raise GameAccountNotFoundError("Personagem não encontrado.")
+            if rows[0]["online"]:
+                if not self.allows_online_delivery():
+                    raise CharacterOfflineRequiredError()
+                connection.execute(text(self._sql["online_delivery_ready"]))
+            connection.execute(text(self._sql["deposit_item"]), {
+                "name": char_name, "owner_id": int(rows[0]["char_id"]),
+                "item_id": item_id, "qty": quantity, "enchant": enchant,
+            })
 
     def nickname_exists(self, name: str) -> bool:
         return bool(self._fetch("nickname_exists", {"name": name}))

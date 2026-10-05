@@ -55,6 +55,7 @@ class GetExchangeStateUseCase(UseCase[UUID, dict]):
                 )
         return {
             "enabled": enabled,
+            "allow_online_delivery": self._lineage.allows_online_delivery(),
             "unavailable_reason": unavailable_reason,
             "coin": self._wallets.get_active_coin_config(),
             "history": self._wallets.list_game_exchanges(data, limit=100),
@@ -66,7 +67,7 @@ class ExchangeCoinsUseCase:
 
     Chame ``execute(user, data)`` com usuário autenticado e dados validados por
     ExchangeSerializer. ``request_key`` identifica a mesma operação e deve ser reutilizada com
-    os mesmos parâmetros em uma retomada. Valida vínculo, personagem offline, configuração e
+    os mesmos parâmetros em uma retomada. Valida vínculo, política de envio online (retirada exige offline), configuração e
     precisão de duas casas do saldo.
 
     Na ida ao jogo, reserva o saldo principal antes da chamada externa. Uma rejeição de domínio
@@ -124,7 +125,7 @@ class ExchangeCoinsUseCase:
                 if not self.access.can_access(user.id, user.username, data["login"]):
                     raise ValidationDomainError("Conta não vinculada ao seu usuário.")
                 char = self.lineage.get_character(data["login"], data["character_id"])
-                if not char or char.online:
+                if not char or (char.online and not (data["direction"] == "to_game" and self.lineage.allows_online_delivery())):
                     raise ValidationDomainError(
                         "Selecione um personagem seu que esteja offline."
                     )

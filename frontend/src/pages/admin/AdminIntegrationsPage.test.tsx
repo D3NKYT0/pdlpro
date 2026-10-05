@@ -64,6 +64,7 @@ const statusFixture = {
     section: 'lineage',
     updated_at: null,
     fields: [
+      { key: 'LINEAGE_ALLOW_ONLINE_DELIVERY', configured: true, fingerprint: '', value: false, masked: '' },
       { key: 'LINEAGE_DB_ENABLED', configured: true, fingerprint: '', value: false, masked: '' },
       { key: 'LINEAGE_DB_HOST', configured: true, fingerprint: '', value: '127.0.0.1', masked: '' },
       { key: 'LINEAGE_DB_PORT', configured: true, fingerprint: '', value: 3306, masked: '' },
@@ -216,6 +217,24 @@ describe('AdminIntegrationsPage', () => {
       { id: 'curr-1', code: 'BRL', symbol: 'R$', name: 'Real', coins_per_unit: '1.00', is_settlement: true, enabled: true, sort_order: 0 },
       { id: 'curr-2', code: 'USD', symbol: '$', name: 'Dólar', coins_per_unit: '0.20', is_settlement: false, enabled: true, sort_order: 1 },
     ] as never)
+  })
+
+  it('salva a política de envio online e bloqueia envios duplicados', async () => {
+    const user = userEvent.setup()
+    let finish!: (value: never) => void
+    vi.mocked(staffApi.saveIntegrationSection).mockReturnValueOnce(new Promise(resolve => { finish = resolve }))
+    renderPage('/panel/admin/integrations?tab=lineage')
+    const toggle = await screen.findByRole('checkbox', { name: /permitir envio de moedas e itens/i })
+    expect(toggle).not.toBeChecked()
+    expect(screen.getByText(/usa a fila items_delayed/i)).toBeInTheDocument()
+    await user.click(toggle)
+    const save = screen.getByRole('button', { name: /salvar/i })
+    await user.dblClick(save)
+    expect(staffApi.saveIntegrationSection).toHaveBeenCalledTimes(1)
+    expect(staffApi.saveIntegrationSection).toHaveBeenCalledWith('lineage', expect.objectContaining({ LINEAGE_ALLOW_ONLINE_DELIVERY: true }))
+    expect(toggle).toBeDisabled()
+    finish(statusFixture as never)
+    await waitFor(() => expect(toggle).not.toBeDisabled())
   })
 
   it('mostra abas e mascara segredos configurados', async () => {

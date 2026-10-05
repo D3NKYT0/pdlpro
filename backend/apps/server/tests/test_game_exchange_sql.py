@@ -18,7 +18,7 @@ from common.architecture.exceptions import ValidationDomainError
 def gateway():
     queries = LineageQueryCatalog.load("dreamv3")
     queries._statements = dict(queries._statements)
-    for name in ("exchange_get_receipt", "exchange_character", "exchange_stacks"):
+    for name in ("exchange_get_receipt", "exchange_character", "exchange_stacks", "delivery_character"):
         queries._statements[name] = re.sub(
             r"\s+FOR UPDATE\s*$", "", queries[name], flags=re.IGNORECASE
         )
@@ -89,3 +89,113 @@ def test_readiness_rejects_nontransactional_or_missing_tables():
     gateway._fetch = lambda *_: [{"table_name": "items", "engine": "MyISAM"}]
     with pytest.raises(RuntimeError):
         gateway.assert_exchange_ready()
+
+
+@pytest.mark.parametrize("enabled,direction,allowed", [(False, "to_game", False), (True, "to_game", True), (True, "from_game", False)])
+def test_online_exchange_obeys_delivery_setting(gateway, settings, enabled, direction, allowed):
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = enabled
+    with gateway._engine.begin() as conn:
+        conn.execute(text("UPDATE characters SET online=1"))
+    if allowed:
+        for _ in range(3):
+            gateway.exchange_coins("online", "player", 1, 57, 10, direction)
+    else:
+        with pytest.raises(ValidationDomainError):
+            gateway.exchange_coins("online", "player", 1, 57, 10, direction)
+    with gateway._engine.connect() as conn:
+        assert conn.execute(text("SELECT COALESCE(SUM(count),0) FROM items_delayed")).scalar() == (10 if allowed else 0)
+        assert conn.execute(text("SELECT SUM(amount) FROM items")).scalar() == 25
+
+
+def test_online_delivery_never_bypasses_ownership(gateway, settings):
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = True
+    with gateway._engine.begin() as conn:
+        conn.execute(text("UPDATE characters SET online=1"))
+    with pytest.raises(ValidationDomainError):
+        gateway.exchange_coins("foreign", "other", 1, 57, 10, "to_game")
+    with gateway._engine.connect() as conn:
+        assert conn.execute(text("SELECT COUNT(*) FROM items_delayed")).scalar() == 0
+
+
+@pytest.mark.parametrize("enabled", [False, True])
+def test_online_item_deposit_uses_queue_or_rejects_without_write(gateway, settings, enabled):
+    from apps.server.domain.exceptions import CharacterOfflineRequiredError
+
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = enabled
+    with gateway._engine.begin() as conn:
+        conn.execute(text("UPDATE characters SET online=1"))
+    if enabled:
+        gateway.deposit_item("Hero", 57, 4, 3)
+    else:
+        with pytest.raises(CharacterOfflineRequiredError):
+            gateway.deposit_item("Hero", 57, 4, 3)
+    with gateway._engine.connect() as conn:
+        assert conn.execute(text("SELECT item_id,count,enchant_level FROM items_delayed")).all() == ([(57, 4, 3)] if enabled else [])
+        assert conn.execute(text("SELECT SUM(amount) FROM items")).scalar() == 25
+
+
+def test_dialect_without_queue_capability_rejects_online(gateway, settings):
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = True
+    gateway._sql._statements.pop("online_delivery_ready")
+    assert gateway.allows_online_delivery() is False
+    with gateway._engine.begin() as conn:
+        conn.execute(text("UPDATE characters SET online=1"))
+    with pytest.raises(ValidationDomainError):
+        gateway.exchange_coins("unsupported", "player", 1, 57, 10, "to_game")
+
+
+def test_queue_failure_rolls_back_receipt_and_allows_retry(gateway, settings):
+    from sqlalchemy.exc import SQLAlchemyError
+
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = True
+    with gateway._engine.begin() as conn:
+        conn.execute(text("UPDATE characters SET online=1"))
+    original = gateway._sql._statements["deposit_item"]
+    gateway._sql._statements["deposit_item"] = "INSERT INTO missing_queue VALUES(1)"
+    with pytest.raises(SQLAlchemyError):
+        gateway.exchange_coins("retry", "player", 1, 57, 10, "to_game")
+    with gateway._engine.connect() as conn:
+        assert conn.execute(text("SELECT COUNT(*) FROM items_delayed")).scalar() == 0
+        # SQLite may keep the receipt inserted outside the savepoint; it must never be completed.
+        assert conn.execute(text("SELECT COUNT(*) FROM pdl_exchange_receipts WHERE completed=1")).scalar() == 0
+    gateway._sql._statements["deposit_item"] = original
+    for _ in range(2):
+        gateway.exchange_coins("retry", "player", 1, 57, 10, "to_game")
+    with gateway._engine.connect() as conn:
+        assert conn.execute(text("SELECT SUM(count) FROM items_delayed")).scalar() == 10
+
+
+@pytest.mark.parametrize("quantity", [0, -1])
+def test_item_deposit_rejects_invalid_quantity_before_writing(gateway, quantity):
+    with pytest.raises(ValidationDomainError):
+        gateway.deposit_item("Hero", 57, quantity, 0)
+    with gateway._engine.connect() as conn:
+        assert conn.execute(text("SELECT COUNT(*) FROM items_delayed")).scalar() == 0
+
+
+def test_item_deposit_rejects_missing_character_without_writing(gateway):
+    from apps.server.domain.exceptions import GameAccountNotFoundError
+
+    with pytest.raises(GameAccountNotFoundError):
+        gateway.deposit_item("Missing", 57, 1, 0)
+    with gateway._engine.connect() as conn:
+        assert conn.execute(text("SELECT COUNT(*) FROM items_delayed")).scalar() == 0
+
+
+@pytest.mark.parametrize("enabled", [False, True])
+def test_offline_item_delivery_remains_available(gateway, settings, enabled):
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = enabled
+    gateway.deposit_item("Hero", 57, 2, 0)
+    with gateway._engine.connect() as conn:
+        assert conn.execute(text("SELECT SUM(count) FROM items_delayed")).scalar() == 2
+
+
+def test_completed_online_receipt_survives_policy_change_without_duplicate(gateway, settings):
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = True
+    with gateway._engine.begin() as conn:
+        conn.execute(text("UPDATE characters SET online=1"))
+    gateway.exchange_coins("completed-online", "player", 1, 57, 10, "to_game")
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = False
+    gateway.exchange_coins("completed-online", "player", 1, 57, 10, "to_game")
+    with gateway._engine.connect() as conn:
+        assert conn.execute(text("SELECT SUM(count) FROM items_delayed")).scalar() == 10

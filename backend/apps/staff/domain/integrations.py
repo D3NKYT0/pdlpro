@@ -84,6 +84,7 @@ SECTION_KEYS: dict[str, tuple[str, ...]] = {
     ),
     SECTION_LINEAGE: (
         "LINEAGE_DB_ENABLED",
+        "LINEAGE_ALLOW_ONLINE_DELIVERY",
         "LINEAGE_DB_HOST",
         "LINEAGE_DB_PORT",
         "LINEAGE_DB_NAME",
@@ -179,6 +180,7 @@ BOOL_KEYS = frozenset(
         "MERCADO_PAGO_ENABLE_CREDIT_CARD",
         "MERCADO_PAGO_ENABLE_DEBIT_CARD",
         "LINEAGE_DB_ENABLED",
+        "LINEAGE_ALLOW_ONLINE_DELIVERY",
         "LINEAGE_DB_SSL",
         "LINEAGE_DB_SSL_VERIFY",
         "EMAIL_USE_TLS",

@@ -223,6 +223,14 @@ class ILineageGateway(ABC):
     escritas feitas por esta porta.
     """
 
+    def allows_online_delivery(self) -> bool:
+        """Indica a política efetiva de envio online; retiradas sempre exigem offline.
+
+        Adaptadores só habilitam esta capacidade quando usam uma fila consumida pelo jogo.
+        O padrão protege adaptadores que gravam diretamente no inventário do personagem.
+        """
+        return False
+
     def assert_exchange_ready(self) -> None:
         """Read-only check of durable receipts and transactional game tables."""
         raise NotImplementedError("Transferência de moedas indisponível neste servidor.")

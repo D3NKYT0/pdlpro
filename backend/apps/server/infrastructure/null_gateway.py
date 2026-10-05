@@ -240,8 +240,16 @@ class NullLineageGateway(ILineageGateway):
 
         raise ValidationDomainError("Quantidade insuficiente no personagem.")
 
+    def allows_online_delivery(self) -> bool:
+        """Simula em memória a opção administrativa de entrega online, sem acesso ao jogo."""
+        return bool(settings.LINEAGE_ALLOW_ONLINE_DELIVERY)
+
     def deposit_item(self, char_name: str, item_id: int, quantity: int, enchant: int) -> None:
         char = self._find_char_by_name(char_name)
+        if char.online and not self.allows_online_delivery():
+            from apps.server.domain.exceptions import CharacterOfflineRequiredError
+
+            raise CharacterOfflineRequiredError()
         items = self._items.setdefault(char.char_id, [])
         for index, item in enumerate(items):
             if item.item_id == item_id and item.enchant == enchant and item.slot is None:

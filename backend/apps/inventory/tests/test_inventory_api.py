@@ -184,3 +184,30 @@ def test_character_items_expose_inventory_and_warehouse_locations(api, player):
         (57, "INVENTORY", 100),
         (6673, "WAREHOUSE", 5),
     ]
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("enabled", [False, True])
+def test_online_deposit_obeys_policy_and_preserves_panel_items_on_rejection(api, player, settings, enabled):
+    from apps.inventory.infrastructure.models import InventoryItem
+    from common.di.bootstrap import DependencyInjection
+
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = enabled
+    api.force_authenticate(player)
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    char = gateway.seed_character("hero", "OnlineHero", items=[GameItem(57, "Adena", 100, 0)])
+    response = api.post("/api/v1/customer/inventory/withdraw/", {"char_id": char.char_id, "item_id": 57, "quantity": 10}, format="json")
+    assert response.status_code == 200, response.data
+    inventory = api.get("/api/v1/customer/inventory/").data[0]
+    from dataclasses import replace
+
+    gateway._characters["hero"][0] = replace(char, online=True)
+    payload = {"inventory_id": inventory["inventory_id"], "item_id": 57, "quantity": 4, "enchant": 0}
+    response = api.post("/api/v1/customer/inventory/deposit/", payload, format="json")
+    assert response.status_code == (200 if enabled else 400), response.data
+    assert InventoryItem.objects.get().quantity == (6 if enabled else 10)
+    assert gateway.list_character_items(char.char_id)[0].quantity == (94 if enabled else 90)
+    response = api.post("/api/v1/customer/inventory/withdraw/", {"char_id": char.char_id, "item_id": 57, "quantity": 1}, format="json")
+    assert response.status_code == 400
+    assert InventoryItem.objects.get().quantity == (6 if enabled else 10)

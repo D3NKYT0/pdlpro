@@ -2,27 +2,27 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 4 de outubro de 2026
+> **Atualizado:** 5 de outubro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
-## [Não lançado]
+## [Não publicado]
+
+### Adicionado
+
+- **Envio de moedas e itens online**: configuração em Admin → Integrações → Lineage permite enviar ao personagem conectado pela fila `items_delayed`, quando o game server a processa online. A retirada continua exigindo personagem offline; recibos preservam a repetição segura do câmbio.
+
+- **Papéis e menor privilégio**: Divulgador, Parceiro, Suporte e Editor; papéis combináveis por grupos, capacidades por operação nas APIs e navegação da SPA. O Django Admin/Jazzmin separa entrada de permissões, impede autopromoção e edição delegada de grupos, restringe consultas pessoais e reserva escrita direta não editorial ao superadministrador. Gerenciamento de papéis na lista de usuários da SPA, com prévia de capacidades, auditoria e proteção contra alterações concorrentes. Cargos identificados por etiquetas coloridas e ícones, opções de delegação em cartões e prévia visual das capacidades, respeitando o tema ativo. A prévia explica cada cargo pessoal selecionado, mesmo quando não concede acesso administrativo. Guia de concessão, revogação e migração dos acessos anteriores.
+
+- **Acesso como usuário**: listagem e busca de usuários do site no admin do painel; superadministradores podem acessar contas de jogadores com as permissões da conta e voltar à identidade original por um botão fixo. A troca fica registrada, impede acesso a contas de equipe e revoga as sessões de representação ao encerrar.
 
 ### Corrigido
 
 - **Rotação dos logs no Windows**: gravação coordenada entre processos evita o `WinError 32` ao renomear `app.log`, mantendo a rotação e os registros com o autoreload e workers.
 
 - **Consentimento de rastreamento**: comandos Google usam o protocolo esperado pelo GTM, com estado inicial definido antes da API. A revogação e a redefinição também valem entre abas; bibliotecas opcionais gerenciadas pelo PDL aguardam autorização e o carregamento tardio não duplica a primeira visualização. Tags Meta externas exigem configuração correspondente no GTM.
-
-## [Não publicado]
-
-### Adicionado
-
-- **Papéis e menor privilégio**: Divulgador, Parceiro, Suporte e Editor; papéis combináveis por grupos, capacidades por operação nas APIs e navegação da SPA. O Django Admin/Jazzmin separa entrada de permissões, impede autopromoção e edição delegada de grupos, restringe consultas pessoais e reserva escrita direta não editorial ao superadministrador. Gerenciamento de papéis na lista de usuários da SPA, com prévia de capacidades, auditoria e proteção contra alterações concorrentes. Cargos identificados por etiquetas coloridas e ícones, opções de delegação em cartões e prévia visual das capacidades, respeitando o tema ativo. A prévia explica cada cargo pessoal selecionado, mesmo quando não concede acesso administrativo. Guia de concessão, revogação e migração dos acessos anteriores.
-
-- **Acesso como usuário**: listagem e busca de usuários do site no admin do painel; superadministradores podem acessar contas de jogadores com as permissões da conta e voltar à identidade original por um botão fixo. A troca fica registrada, impede acesso a contas de equipe e revoga as sessões de representação ao encerrar.
 
 ## [2.7.0] - 2026-10-03
 

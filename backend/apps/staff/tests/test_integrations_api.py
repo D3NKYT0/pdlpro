@@ -449,3 +449,31 @@ def test_payments_mercadopago_options_patch_and_probe(api, superuser, hosts, set
     assert "Mercado Pago não possui nenhuma forma de pagamento habilitada" in test_res.json()["message"]
 
 
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("enabled", [False, True])
+def test_online_delivery_setting_is_persisted_applied_and_reported(api, superuser, hosts, settings, enabled):
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = not enabled
+    api.force_authenticate(superuser)
+    url = reverse("staff-integrations-section", kwargs={"section": "lineage"})
+    response = api.patch(url, {"LINEAGE_ALLOW_ONLINE_DELIVERY": enabled}, format="json")
+    assert response.status_code == 200, response.content
+    assert settings.LINEAGE_ALLOW_ONLINE_DELIVERY is enabled
+    assert DjangoIntegrationConfigStore().load_section("lineage")["LINEAGE_ALLOW_ONLINE_DELIVERY"] is enabled
+    body = api.get(reverse("staff-integrations-status")).json()
+    field = next(field for field in body["lineage"]["fields"] if field["key"] == "LINEAGE_ALLOW_ONLINE_DELIVERY")
+    assert field["value"] is enabled
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("actor", ["anonymous", "staff", "superuser"])
+def test_online_delivery_setting_rejects_unauthorized_or_invalid_value(api, staff_user, superuser, hosts, settings, actor):
+    settings.LINEAGE_ALLOW_ONLINE_DELIVERY = False
+    if actor != "anonymous":
+        api.force_authenticate(superuser if actor == "superuser" else staff_user)
+    url = reverse("staff-integrations-section", kwargs={"section": "lineage"})
+    response = api.patch(url, {"LINEAGE_ALLOW_ONLINE_DELIVERY": "invalid" if actor == "superuser" else True}, format="json")
+    assert response.status_code == (400 if actor == "superuser" else 401 if actor == "anonymous" else 403), response.content
+    assert settings.LINEAGE_ALLOW_ONLINE_DELIVERY is False
+    assert "LINEAGE_ALLOW_ONLINE_DELIVERY" not in DjangoIntegrationConfigStore().load_section("lineage")

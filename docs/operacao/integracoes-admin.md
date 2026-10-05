@@ -14,6 +14,10 @@ OAuth Google/Discord, hCaptcha, WebAuthn, Denkynho LLM, Cloudflare R2 / Amazon S
 Sentry**, com UI em `/panel/admin/integrations` (abas), valores sensíveis cifrados no
 banco (Fernet) e efeito imediato nos workers.
 
+## Envio online no Lineage
+
+A aba **Lineage** inclui **Permitir envio de moedas e itens para personagens online** (`LINEAGE_ALLOW_ONLINE_DELIVERY`, padrão `false`). O save persiste a política e aplica o overlay nos workers. Somente superadministradores podem alterá-la. O game server deve consumir `items_delayed` durante a sessão do personagem; a retirada continua exigindo offline. Veja os [requisitos e cenários de homologação](../integracoes/cambio-painel-jogo.md#envio-para-personagem-online).
+
 ## Bootstrap que permanece no `.env`
 
 Estas chaves precisam existir **antes** do Django subir e **não** entram no

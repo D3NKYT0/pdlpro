@@ -42,3 +42,10 @@ VALUES (
     -1, -1,
     0, 0, 'DONATE WEB'
 )
+
+-- Online delivery capability: this dialect deposits into the game-consumed queue.
+-- name: online_delivery_ready
+SELECT 1 FROM items_delayed WHERE 1=0
+
+-- name: delivery_character
+SELECT obj_Id AS char_id, online FROM characters WHERE char_name=:name FOR UPDATE

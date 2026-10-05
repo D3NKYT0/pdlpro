@@ -88,6 +88,7 @@ const BOOL_KEYS = new Set([
   'MERCADO_PAGO_ENABLE_CREDIT_CARD',
   'MERCADO_PAGO_ENABLE_DEBIT_CARD',
   'LINEAGE_DB_ENABLED',
+  'LINEAGE_ALLOW_ONLINE_DELIVERY',
   'LINEAGE_DB_SSL',
   'LINEAGE_DB_SSL_VERIFY',
   'EMAIL_USE_TLS',
@@ -784,6 +785,8 @@ export function AdminIntegrationsPage() {
               >
                 <div className="admin-integrations-stack">
                   {renderBool('LINEAGE_DB_ENABLED')}
+                  {renderBool('LINEAGE_ALLOW_ONLINE_DELIVERY')}
+                  <p className="program-note">{t('integrations.lineage.onlineDeliveryHint')}</p>
                   <div className="account-form-fields">
                     {renderText('LINEAGE_DB_HOST')}
                     {renderText('LINEAGE_DB_PORT', 'number')}

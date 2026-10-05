@@ -44,10 +44,9 @@ class GameExchangeView(InjectedAPIView):
     @extend_schema(
         tags=["Carteira"],
         summary=gettext_lazy("Consultar câmbio com o jogo"),
-        description=(
-            "Retorna se o câmbio está disponível, o motivo de indisponibilidade quando "
-            "houver, a configuração da moeda ativa e o histórico recente de trocas do "
-            "usuário autenticado."
+        description=gettext_lazy(
+            "Retorna a disponibilidade do câmbio, a política de envio online, a moeda ativa "
+            "e o histórico do usuário. A retirada do jogo exige personagem offline."
         ),
     )
     def get(self, request):

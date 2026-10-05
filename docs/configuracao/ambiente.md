@@ -69,6 +69,7 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | Variável | Descrição |
 |---|---|
 | `LINEAGE_DB_ENABLED` | Ativa o gateway SQLAlchemy para o banco do jogo |
+| `LINEAGE_ALLOW_ONLINE_DELIVERY` | Padrão `false`; permite envio de moedas/itens online pela fila `items_delayed`. Configurável no admin; retirada continua exigindo offline. |
 | `LINEAGE_DB_HOST`, `LINEAGE_DB_PORT` | Endereço do MySQL |
 | `LINEAGE_DB_NAME`, `LINEAGE_DB_USER`, `LINEAGE_DB_PASSWORD` | Credenciais do schema Lineage |
 | `LINEAGE_DB_SSL` | `false` = TCP atual, sem TLS; `true` = TLS até o MySQL. Escolha explícita; o host remoto não liga sozinho. Guia: [TLS no MySQL do Lineage 2](../integracoes/lineage-mysql-ssl.md) |

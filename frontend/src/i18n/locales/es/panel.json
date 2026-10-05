@@ -371,7 +371,7 @@
     "back": "Volver a la cartera",
     "eyebrow": "Tu economía, conectada",
     "title": "Cartera ↔ juego",
-    "description": "Envía monedas al personaje o convierte monedas del juego en saldo. El personaje debe estar desconectado.",
+    "description": "Envía monedas al personaje o convierte monedas del juego en saldo. El envío conectado depende de la configuración del servidor; las retiradas requieren un personaje desconectado.",
     "form": {
       "title": "Nueva transferencia",
       "unavailableReason": "La integración del juego no está disponible.",

@@ -1168,6 +1168,7 @@
       "toastError": "Erro ao atualizar moedas de cobrança"
     },
     "lineage": {
+      "onlineDeliveryHint": "Usa a fila items_delayed do servidor. Ative apenas se o game server processa essa fila com o personagem online. A retirada do jogo continua exigindo personagem offline.",
       "dbEyebrow": "MySQL L2",
       "dbTitle": "Banco do jogo",
       "gameEyebrow": "Status",
@@ -1269,6 +1270,7 @@
       "PAYMENT_ALLOW_MOCK": "Permitir método mock",
       "PAYMENT_REUSE_HOURS": "Reuso de pedido (horas)",
       "LINEAGE_DB_ENABLED": "Habilitar MySQL do Lineage",
+      "LINEAGE_ALLOW_ONLINE_DELIVERY": "Permitir envio de moedas e itens para personagens online",
       "LINEAGE_DB_HOST": "Host",
       "LINEAGE_DB_PORT": "Porta",
       "LINEAGE_DB_NAME": "Database",

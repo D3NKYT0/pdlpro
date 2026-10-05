@@ -371,7 +371,7 @@
     "back": "Voltar à carteira",
     "eyebrow": "Sua economia, conectada",
     "title": "Carteira ↔ jogo",
-    "description": "Envie moedas ao personagem ou converta moedas do jogo em saldo. O personagem precisa estar offline.",
+    "description": "Envie moedas ao personagem ou converta moedas do jogo em saldo. O envio online depende da configuração do servidor; a retirada exige personagem offline.",
     "form": {
       "title": "Nova transferência",
       "unavailableReason": "A integração do jogo está indisponível.",

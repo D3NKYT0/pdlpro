@@ -1273,6 +1273,7 @@
       "toastError": "Error al actualizar monedas de cobro"
     },
     "lineage": {
+      "onlineDeliveryHint": "Usa la cola items_delayed del servidor. Activa solo si el servidor de juego procesa esta cola mientras el personaje está conectado. Las retiradas del juego siguen requiriendo un personaje desconectado.",
       "dbEyebrow": "MySQL L2",
       "dbTitle": "Base del juego",
       "gameEyebrow": "Status",
@@ -1374,6 +1375,7 @@
       "PAYMENT_ALLOW_MOCK": "Permitir método mock",
       "PAYMENT_REUSE_HOURS": "Reuso de pedido (horas)",
       "LINEAGE_DB_ENABLED": "Habilitar MySQL de Lineage",
+      "LINEAGE_ALLOW_ONLINE_DELIVERY": "Permitir el envío de monedas y objetos a personajes conectados",
       "LINEAGE_DB_HOST": "Host",
       "LINEAGE_DB_PORT": "Puerto",
       "LINEAGE_DB_NAME": "Database",
