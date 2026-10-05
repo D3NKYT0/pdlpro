@@ -10,6 +10,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.7.1] - 2026-10-05
+
+Lançamento com envio de moedas e itens para personagens online, novos papéis e gestão de acessos, representação de contas de jogadores e correções de consentimento de rastreamento e logs no Windows. A API acompanha a versão 2.7.1.
+
 ### Adicionado
 
 - **Envio de moedas e itens online**: configuração em Admin → Integrações → Lineage permite enviar ao personagem conectado pela fila `items_delayed`, quando o game server a processa online. A retirada continua exigindo personagem offline; recibos preservam a repetição segura do câmbio.
