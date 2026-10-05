@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Search, LogIn, UserRound, ShieldCheck } from 'lucide-react'
+import { Search, LogIn, UserRound, ShieldCheck, Shield } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { authApi, reloadForIdentityChange } from '../../services/api'
@@ -10,6 +10,8 @@ import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
 import { Field } from '../ui/Field'
 import { EmptyState, ErrorNotice, LoadingState } from '../ui/Feedback'
+import { UserAccessManager } from './UserAccessManager'
+import { RoleBadge } from './RoleBadge'
 import './impersonation.css'
 
 /** Consulta paginada de contas do site e entrada temporária no painel do usuário. */
@@ -19,6 +21,7 @@ export function SiteUsersAdmin() {
   const [input, setInput] = useState('')
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
+  const [editing, setEditing] = useState<{ id: string; username: string } | null>(null)
   const action = useAsyncAction()
   const users = useQuery({ queryKey: ['admin-site-users', search, page], queryFn: () => authApi.siteUsers(search, page), enabled: Boolean(user?.is_superuser) })
   if (!user?.is_superuser) return null
@@ -44,11 +47,15 @@ export function SiteUsersAdmin() {
             <strong>{row.username}</strong>
             {row.display_name && <span className="site-users-name">{row.display_name}</span>}
             <span className="site-users-email">{row.email}</span>
+            <div className="site-users-roles">{row.roles?.map(role => <RoleBadge key={role} role={role} />)}</div>
           </div>
+          <div className="site-users-actions">
+          <Button size="sm" variant="primary" disabled={action.pending || row.is_superuser || row.id === user.id} onClick={() => setEditing(row)}><Shield size={15} aria-hidden="true" />{t('access.manage')}</Button>
           <Button size="sm" variant={row.can_impersonate ? 'secondary' : 'muted'} disabled={!row.can_impersonate || action.pending} onClick={() => void action.run(async () => {
             await authApi.startImpersonation(row.id)
             reloadForIdentityChange('/panel')
           })}><LogIn size={16} aria-hidden="true" />{t('siteUsers.enter', { username: row.username })}</Button>
+          </div>
         </div>)}
       </div>
       <nav className="site-users-pagination" aria-label={t('siteUsers.pagination')}>
@@ -57,5 +64,6 @@ export function SiteUsersAdmin() {
         <Button disabled={page * 20 >= users.data.count || users.isFetching || action.pending} onClick={() => setPage(page + 1)}>{t('siteUsers.next')}</Button>
       </nav>
     </>}
+    {editing && <UserAccessManager id={editing.id} username={editing.username} onClose={() => setEditing(null)} />}
   </Card>
 }

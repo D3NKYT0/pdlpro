@@ -5607,3 +5607,12 @@ msgstr "View API documentation"
 
 msgid "Gerenciar documentação da API"
 msgstr "Manage API documentation"
+
+msgid "Consultar catálogo de papéis"
+msgstr "View role catalog"
+
+msgid "Consultar papéis do usuário"
+msgstr "View user roles"
+
+msgid "Atualizar papéis do usuário"
+msgstr "Update user roles"

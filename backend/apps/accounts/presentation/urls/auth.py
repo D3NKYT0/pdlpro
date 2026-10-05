@@ -1,5 +1,9 @@
 from django.urls import path
 
+from apps.accounts.presentation.views.access_management import (
+    AccessCatalogView,
+    UserAccessView,
+)
 from apps.accounts.presentation.views.auth import (
     AuthCapabilitiesView,
     CompleteCredentialsView,
@@ -35,6 +39,8 @@ from apps.accounts.presentation.views.passkeys import (
 )
 
 urlpatterns = [
+    path("access-roles/", AccessCatalogView.as_view(), name="auth-access-roles"),
+    path("site-users/<uuid:user_id>/access/", UserAccessView.as_view(), name="auth-user-access"),
     path("site-users/", SiteUsersView.as_view(), name="auth-site-users"),
     path("impersonation/", ImpersonationStatusView.as_view(), name="auth-impersonation-status"),
     path("impersonation/stop/", ImpersonationStopView.as_view(), name="auth-impersonation-stop"),

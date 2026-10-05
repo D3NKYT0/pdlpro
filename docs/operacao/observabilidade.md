@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Instalar (Release)](distribuicao.md) · [Solução de problemas](solucao-de-problemas.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 4 de outubro de 2026
 
 O PDL PRO registra eventos operacionais em `stdout`/`stderr`, adequados para coleta pelo Docker,
 Loki, Elastic, CloudWatch ou pelo agente da plataforma. Em produção cada linha da aplicação e do
@@ -13,6 +13,17 @@ Quando a aplicação grava arquivos `.log` em disco, eles ficam **somente** em `
 liga `LOG_TO_FILE` por padrão (`backend/log/app.log` com rotação). O Vite espelha warn/error em
 `frontend/log/vite.log` e avisos de proxy em `frontend/log/proxy.log`. Em produção o padrão continua
 sendo stdout; use `LOG_TO_FILE=true` apenas se montar um volume em uma pasta `log`.
+
+A rotação usa `ConcurrentRotatingFileHandler`, com bloqueio compartilhado entre processos
+(incluindo o autoreload do Django e workers). O arquivo auxiliar de bloqueio permanece na mesma
+pasta `log`; não o remova durante a execução. Processos que compartilham `app.log` precisam usar
+o mesmo handler, tamanho máximo e quantidade de backups.
+
+Após atualizar de uma versão com `RotatingFileHandler`, instale `backend/requirements.txt` e
+encerre e inicie novamente todos os processos que gravam nesse arquivo. No Windows, pare o
+`run-dev.bat` com Ctrl+C e execute-o novamente: apenas o autoreload não libera o arquivo aberto
+pelo processo anterior. Essa troca corrige o `PermissionError: [WinError 32]` na rotação sem
+desativar os logs. A regressão é coberta por um teste com dois processos e preservação dos registros.
 
 ## Correlação e esquema
 

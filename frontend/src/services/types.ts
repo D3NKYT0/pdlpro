@@ -597,3 +597,10 @@ export interface ApiStaffBanner {
   updated_at?: string
 }
 
+/** Estado de delegação restrita, com revisão para evitar sobrescrever alterações concorrentes. */
+export type ApiUserAccess = {
+  id: string; username: string; role: string; additional_roles: string[];
+  is_staff: boolean; is_superuser: boolean; capabilities: string[];
+  extra_capabilities: string[]; explicit_permissions: string[]; other_groups: string[]; revision: string;
+}
+export type ApiAccessUpdate = Pick<ApiUserAccess, 'role' | 'additional_roles' | 'is_staff' | 'revision'>

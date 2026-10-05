@@ -460,3 +460,7 @@ Homologue o catálogo de componentes, uma página pública, autenticação e pai
 celular. Verifique também a restauração do default depois de ativar um pacote.
 
 O controle de recursos usa os tokens semânticos `--panel-success`, `--panel-danger` e `--panel-info`, derivados de `--theme-success`, `--theme-danger` e `--theme-info`, com fallback embutido. Categorias também usam `--panel-gold-bright` e `--panel-box-epic`. Pacotes podem remapear essas cores e as partes `resource-*` sem alterar o componente. Animações são desligadas quando o usuário prefere movimento reduzido.
+
+### Papéis e delegação de acesso
+
+As partes `role-badge` (com `data-role`) e `access-preview` permitem personalizar a lista de usuários e o diálogo de papéis. Os tokens opcionais `--theme-role-player`, `--theme-role-admin`, `--theme-role-editor`, `--theme-role-moderator`, `--theme-role-promoter`, `--theme-role-partner`, `--theme-role-support`, `--theme-role-supporter` e `--theme-role-staff` usam como fallback as cores semânticas existentes (`info`, `success`, `danger`, `warning`, `epic` e destaque dourado). Texto e ícones permanecem presentes: cor não representa autorização. Os botões reutilizam as variantes compartilhadas, e o diálogo mantém rolagem e composição responsiva.

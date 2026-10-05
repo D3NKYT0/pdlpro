@@ -11,7 +11,7 @@ import { authApi, reloadForIdentityChange } from '../../services/api'
 
 const actor = vi.hoisted(() => ({ superuser: true }))
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { is_superuser: actor.superuser } }) }))
-vi.mock('../../services/api', () => ({ authApi: { siteUsers: vi.fn(), impersonation: vi.fn(), startImpersonation: vi.fn(), stopImpersonation: vi.fn() }, reloadForIdentityChange: vi.fn() }))
+vi.mock('../../services/api', () => ({ authApi: { siteUsers: vi.fn(), impersonation: vi.fn(), startImpersonation: vi.fn(), stopImpersonation: vi.fn(), userAccess: vi.fn(), accessRoles: vi.fn() }, reloadForIdentityChange: vi.fn() }))
 const clients: QueryClient[] = []
 function mount(element: React.ReactNode) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
@@ -21,6 +21,17 @@ function mount(element: React.ReactNode) {
 const row = { id: 'player', username: 'hero', display_name: 'Hero', email: 'hero@example.com', can_impersonate: true }
 beforeEach(async () => { vi.resetAllMocks(); actor.superuser = true; await i18n.changeLanguage('pt') })
 afterEach(() => { cleanup(); clients.splice(0).forEach(client => client.clear()) })
+it('opens role management from the site user row and displays current roles', async () => {
+  vi.mocked(authApi.siteUsers).mockResolvedValue({ count: 1, results: [{ ...row, roles: ['partner', 'promoter'] }] })
+  vi.mocked(authApi.userAccess).mockImplementation(() => new Promise(() => {}))
+  vi.mocked(authApi.accessRoles).mockImplementation(() => new Promise(() => {}))
+  mount(<SiteUsersAdmin />)
+  expect(await screen.findByText('Parceiro')).toBeTruthy()
+  expect(screen.getByText('Divulgador')).toBeTruthy()
+  await userEvent.click(screen.getByRole('button', { name: 'Gerenciar papéis' }))
+  expect(screen.getByRole('dialog', { name: 'Papéis de hero' })).toBeTruthy()
+  await waitFor(() => expect(authApi.userAccess).toHaveBeenCalledWith('player'))
+})
 
 it('lists users, searches, paginates and blocks duplicate sign-ins', async () => {
   vi.mocked(authApi.siteUsers).mockResolvedValue({ count: 21, results: [row, { ...row, id: 'admin', username: 'admin', can_impersonate: false }] })

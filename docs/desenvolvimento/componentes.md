@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Frontend](frontend.md) · [Reutilização](../arquitetura/reutilizacao.md) · [Testes](testes.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 4 de outubro de 2026
 
 Novas telas devem compor a biblioteca existente. Os componentes compartilham interação e acessibilidade; o tema do painel define a aparência. O catálogo usa o mesmo `usePanelTheme` de `PrivateLayout`, incluindo as fontes, o fundo e as texturas originais dos botões.
 
@@ -187,3 +187,7 @@ Referências: [testes da biblioteca](../../frontend/src/components/ui/ui.test.ts
 ### Controle de recursos
 
 `AdminResourcesSection` compõe `Card`, `Toggle` e `ResourceChildren`: resumo dos módulos, micro-recursos e disponibilidade efetiva, medidores nativos por categoria e cartões em grade; módulos com seis ou mais descendentes ocupam a largura inteira e distribuem as opções em colunas responsivas. Estados também têm texto; cor não é a única indicação. Os interruptores mantêm foco por teclado e bloqueio durante o envio. Entrada escalonada, hover e pulso durante salvamento respeitam `prefers-reduced-motion`. Partes tematizáveis: `resource-control`, `resource-stat`, `resource-category`, `resource-card`, `resource-children`.
+
+### Identificação de papéis
+
+[RoleBadge](../../frontend/src/components/auth/RoleBadge.tsx) reutiliza os rótulos traduzidos de `panel.profile.roles` e combina texto, ícone decorativo e tokens de cor. É usado na lista de usuários e nos grupos do diálogo de delegação. Sua parte de tema é `role-badge`; o estilo não concede capacidades. Consulte [Papéis e permissões](../operacao/papeis-e-permissoes.md).

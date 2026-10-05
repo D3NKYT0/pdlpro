@@ -5716,3 +5716,12 @@ msgstr "Consultar documentación de la API"
 
 msgid "Gerenciar documentação da API"
 msgstr "Administrar documentación de la API"
+
+msgid "Consultar catálogo de papéis"
+msgstr "Consultar catálogo de roles"
+
+msgid "Consultar papéis do usuário"
+msgstr "Consultar roles del usuario"
+
+msgid "Atualizar papéis do usuário"
+msgstr "Actualizar roles del usuario"

@@ -2371,7 +2371,7 @@
   },
   "siteUsers": {
     "title": "Usuários do site",
-    "description": "Superadministradores podem entrar temporariamente em contas de jogadores. As ações usam as permissões do usuário e a troca fica registrada.",
+    "description": "Consulte usuários, gerencie papéis e conceda apenas os acessos necessários. Superadministradores também podem entrar temporariamente em contas de jogadores; a troca fica registrada.",
     "search": "Buscar por usuário, nome ou e-mail",
     "empty": "Nenhum usuário encontrado.",
     "enter": "Entrar como {{username}}",
@@ -2381,5 +2381,49 @@
     "previous": "Anterior",
     "next": "Próxima",
     "page": "Página {{page}} · {{count}} usuários"
+  },
+  "access": {
+    "manage": "Gerenciar papéis",
+    "title": "Papéis de {{username}}",
+    "description": "Escolha apenas os acessos necessários. As alterações ficam registradas no histórico.",
+    "primary": "Papel principal",
+    "additional": "Grupos de papéis (opcional)",
+    "adminEntry": "Permitir entrada no Django Admin",
+    "adminHint": "Entrar no Jazzmin não concede permissões de edição.",
+    "preview": "Capacidades após salvar",
+    "personalOnly": "Somente funcionalidades pessoais, sem acesso administrativo.",
+    "roleDescriptions": {
+      "player": "Acesso às próprias funcionalidades de jogador, conforme os recursos disponíveis no servidor.",
+      "supporter": "Identifica o apoiador. Benefícios e comissões seguem as regras e aprovações do programa; o cargo não os libera automaticamente.",
+      "promoter": "Identifica a divulgação. Não concede administração nem cria campanhas automaticamente.",
+      "partner": "Identifica a parceria. Não concede acesso a dados de outros parceiros nem aprovações ou comissões automaticamente."
+    },
+    "extraGrants": "Concessões adicionais preservadas",
+    "extraHint": "Estes grupos e permissões também concedem acesso. Sua alteração é feita no Jazzmin.",
+    "save": "Salvar papéis",
+    "close": "Fechar",
+    "saved": "Papéis atualizados.",
+    "protected": "Superadministradores são gerenciados exclusivamente pelo Jazzmin.",
+    "view": "Consultar",
+    "manageAction": "Gerenciar",
+    "areas": {
+      "support": "Atendimento",
+      "moderation": "Moderação",
+      "accounts": "Contas",
+      "content": "Conteúdo",
+      "games": "Jogos",
+      "commerce": "Comércio",
+      "finance": "Finanças",
+      "programs": "Programas",
+      "resources": "Recursos",
+      "settings": "Configurações",
+      "notifications": "Notificações",
+      "operational_reports": "Relatórios operacionais",
+      "financial_reports": "Relatórios financeiros",
+      "audit": "Auditoria",
+      "metrics": "Métricas",
+      "items": "Itens",
+      "docs": "Documentação"
+    }
   }
 }

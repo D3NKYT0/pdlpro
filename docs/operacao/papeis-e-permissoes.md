@@ -73,6 +73,16 @@ usuários continuam exclusivos de superadministradores. O papel Administrador n�
 contorna essa exigência. Observação/catálogo de itens também preservam as
 permissões nativas adicionais já exigidas por cada operação.
 
+## Gerenciar na SPA
+
+Em **Administração → Contas do site e Lineage**, a lista **Usuários do site** mostra os papéis atuais e o botão **Gerenciar papéis**. Somente superadministradores veem essa lista e podem usar a API de delegação.
+
+Os cargos são apresentados em etiquetas com texto e ícone; as cores ajudam na identificação e não indicam autoridade por si só. O diálogo permite escolher o papel principal, combinar papéis adicionais e conceder entrada no Jazzmin. A prévia acompanha imediatamente a seleção, mostra os papéis combinados e as capacidades administrativas resultantes. Jogador, Apoiador, Divulgador e Parceiro exibem explicações específicas mesmo sem capacidades administrativas; o papel não cria benefícios, campanhas ou comissões automaticamente. Grupos comuns e permissões individuais são preservados e listados; para revogá-los, use o Jazzmin. Entrada no admin não implica CRUD.
+
+A própria conta e contas superadministradoras ficam protegidas contra edição pela SPA. A API rejeita campos como `is_superuser`, senha e grants individuais, revalida a autoridade do autor, verifica uma revisão do estado para evitar sobrescritas concorrentes e grava antes/depois em `admin.LogEntry` na mesma transação. Em conflito HTTP 409, feche e reabra o diálogo para revisar o estado atual. Alterações sem mudança de acesso não geram um novo evento.
+
+Endpoints: `GET /api/v1/auth/access-roles/`, `GET /api/v1/auth/site-users/<uuid>/access/` e `PUT` no mesmo endereço do usuário. O PUT aceita exclusivamente `role`, `additional_roles`, `is_staff` e `revision`.
+
 ## Configurar pelo Jazzmin
 
 1. Entre como superadministrador e abra **Contas → Usuários**.

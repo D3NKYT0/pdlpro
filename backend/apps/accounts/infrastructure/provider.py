@@ -1,3 +1,4 @@
+from apps.accounts.application.access_management import AccessManagementService
 from apps.accounts.application.auth_capabilities import (
     GetAuthCapabilitiesUseCase,
 )
@@ -48,6 +49,7 @@ from apps.accounts.application.webauthn_service import (
     DeletePasskeyUseCase,
     ListPasskeysUseCase,
 )
+from apps.accounts.domain.access_management import IAccessManagementStore
 from apps.accounts.domain.achievement_facts import IAchievementFacts
 from apps.accounts.domain.auth_session import IAuthSessionService
 from apps.accounts.domain.bag import IRewardBagPort
@@ -62,6 +64,7 @@ from apps.accounts.domain.repositories import (
     IUserRepository,
     IWebAuthnCredentialRepository,
 )
+from apps.accounts.infrastructure.access_management import DjangoAccessManagementStore
 from apps.accounts.infrastructure.achievement_facts import DjangoAchievementFacts
 from apps.accounts.infrastructure.authentication import AuthSessionService
 from apps.accounts.infrastructure.bag import GamesRewardBagAdapter
@@ -90,6 +93,8 @@ class AccountsProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
+        container.register(IAccessManagementStore, DjangoAccessManagementStore, lifetime=Lifetime.SCOPED)
+        container.register_self(AccessManagementService, lifetime=Lifetime.TRANSIENT)
         container.register(IImpersonationStore, DjangoImpersonationStore, lifetime=Lifetime.SCOPED)
         container.register_self(ImpersonationService, lifetime=Lifetime.TRANSIENT)
         container.register(IUserRepository, DjangoUserRepository, lifetime=Lifetime.SCOPED)

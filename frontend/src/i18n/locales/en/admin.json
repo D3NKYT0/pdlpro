@@ -2580,7 +2580,7 @@
   },
   "siteUsers": {
     "title": "Website users",
-    "description": "Superadministrators can temporarily access player accounts. Actions use the user permissions and the switch is recorded.",
+    "description": "View users, manage roles and grant only the required access. Superadministrators can also temporarily enter player accounts; the switch is recorded.",
     "search": "Search by username, name or email",
     "empty": "No users found.",
     "enter": "Sign in as {{username}}",
@@ -2590,5 +2590,49 @@
     "previous": "Previous",
     "next": "Next",
     "page": "Page {{page}} · {{count}} users"
+  },
+  "access": {
+    "manage": "Manage roles",
+    "title": "Roles for {{username}}",
+    "description": "Grant only the required access. Changes are recorded in the audit history.",
+    "primary": "Primary role",
+    "additional": "Role groups (optional)",
+    "adminEntry": "Allow entry to Django Admin",
+    "adminHint": "Entering Jazzmin does not grant editing permissions.",
+    "preview": "Capabilities after saving",
+    "personalOnly": "Personal features only, without administrative access.",
+    "roleDescriptions": {
+      "player": "Access to personal player features, according to the resources available on the server.",
+      "supporter": "Identifies the supporter. Benefits and commissions follow program rules and approvals; the role does not grant them automatically.",
+      "promoter": "Identifies promotion activity. Does not grant administrative access or create campaigns automatically.",
+      "partner": "Identifies the partnership. Does not grant access to other partners’ data or automatically grant approvals or commissions."
+    },
+    "extraGrants": "Preserved additional grants",
+    "extraHint": "These groups and permissions also grant access. Edit them in Jazzmin.",
+    "save": "Save roles",
+    "close": "Close",
+    "saved": "Roles updated.",
+    "protected": "Superadministrators are managed exclusively in Jazzmin.",
+    "view": "View",
+    "manageAction": "Manage",
+    "areas": {
+      "support": "Support",
+      "moderation": "Moderation",
+      "accounts": "Accounts",
+      "content": "Content",
+      "games": "Games",
+      "commerce": "Commerce",
+      "finance": "Finance",
+      "programs": "Programs",
+      "resources": "Resources",
+      "settings": "Settings",
+      "notifications": "Notifications",
+      "operational_reports": "Operational reports",
+      "financial_reports": "Financial reports",
+      "audit": "Audit",
+      "metrics": "Metrics",
+      "items": "Items",
+      "docs": "Documentation"
+    }
   }
 }

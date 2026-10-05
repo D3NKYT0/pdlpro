@@ -32,6 +32,7 @@ def get_logging_config(
     default_environment="development",
     default_log_to_file=False,
 ):
+    """Build console/file logging, coordinating file rotation across processes."""
     log_level = env("LOG_LEVEL", default="INFO")
     app_log_level = env("APP_LOG_LEVEL", default=default_app_level or log_level)
     log_format = env("LOG_FORMAT", default=default_format)
@@ -50,7 +51,7 @@ def get_logging_config(
     if log_to_file:
         log_dir = resolve_log_dir(env("LOG_DIR", default=str(DEFAULT_LOG_DIR)))
         handlers["file"] = {
-            "class": "logging.handlers.RotatingFileHandler",
+            "class": "concurrent_log_handler.ConcurrentRotatingFileHandler",
             "filename": str(log_dir / "app.log"),
             "maxBytes": env.int("LOG_FILE_MAX_BYTES", default=10 * 1024 * 1024),
             "backupCount": env.int("LOG_FILE_BACKUP_COUNT", default=5),

@@ -1,5 +1,5 @@
 import { request } from '../infra/http'
-import type { ApiAuthCapabilities, ApiAuthSession, ApiGamerProfile, ApiPasskeyBegin, ApiPasskeyCredential, ApiUser } from '../types'
+import type { ApiAuthCapabilities, ApiAuthSession, ApiGamerProfile, ApiPasskeyBegin, ApiPasskeyCredential, ApiUser, ApiUserAccess, ApiAccessUpdate } from '../types'
 
 export type TwoFactorChallenge = { requires_2fa: true; challenge: string }
 
@@ -13,7 +13,10 @@ export function isTwoFactorChallenge(value: unknown): value is TwoFactorChalleng
 }
 
 export const authApi = {
-  siteUsers: (search: string, page: number) => request<{ count: number; results: { id: string; username: string; email: string; display_name: string; can_impersonate: boolean }[] }>(`/auth/site-users/?${new URLSearchParams({ search, page: String(page) })}`),
+  accessRoles: () => request<{ roles: Record<string, string[]>; additional_role_capabilities?: Record<string, string[]> }>('/auth/access-roles/'),
+  userAccess: (id: string) => request<ApiUserAccess>(`/auth/site-users/${encodeURIComponent(id)}/access/`),
+  updateUserAccess: (id: string, data: ApiAccessUpdate) => request<ApiUserAccess>(`/auth/site-users/${encodeURIComponent(id)}/access/`, { method: 'PUT', body: JSON.stringify(data) }),
+  siteUsers: (search: string, page: number) => request<{ count: number; results: { id: string; username: string; email: string; display_name: string; can_impersonate: boolean; roles?: string[]; is_staff?: boolean; is_superuser?: boolean }[] }>(`/auth/site-users/?${new URLSearchParams({ search, page: String(page) })}`),
   impersonation: async () => (await request<{ impersonation: { username: string; target_username: string } | null }>('/auth/impersonation/')).impersonation,
   startImpersonation: (id: string) => request<ApiUser>(`/auth/impersonation/${encodeURIComponent(id)}/`, { method: 'POST' }),
   stopImpersonation: () => request<ApiUser>('/auth/impersonation/stop/', { method: 'POST' }),

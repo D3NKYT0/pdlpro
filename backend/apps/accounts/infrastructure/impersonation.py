@@ -33,6 +33,9 @@ class DjangoImpersonationStore(IImpersonationStore):
                     "username": u.username,
                     "email": u.email,
                     "display_name": u.display_name,
+                    "roles": u.roles,
+                    "is_staff": u.is_staff,
+                    "is_superuser": u.is_superuser,
                     "can_impersonate": u.is_active
                     and not u.is_staff
                     and not u.is_staff_member

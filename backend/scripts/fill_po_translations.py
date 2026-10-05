@@ -14,6 +14,9 @@ LOCALE = ROOT / "locale"
 
 # Portuguese msgid -> (English, Spanish)
 TRANSLATIONS: dict[str, tuple[str, str]] = {
+    "Consultar catálogo de papéis": ("View role catalog", "Consultar catálogo de roles"),
+    "Consultar papéis do usuário": ("View user roles", "Consultar roles del usuario"),
+    "Atualizar papéis do usuário": ("Update user roles", "Actualizar roles del usuario"),
     "Divulgador": ("Promoter", "Promotor"),
     "Parceiro": ("Partner", "Socio"),
     "Suporte": ("Support", "Soporte"),
