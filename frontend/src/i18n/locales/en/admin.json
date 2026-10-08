@@ -1251,6 +1251,7 @@
       "brlPriorityUserChoice": "Player chooses (Mercado Pago by default)",
       "brlPriorityMercadoPago": "Lock Mercado Pago",
       "brlPriorityStripe": "Lock Stripe (card)",
+      "descriptionHint": "Text sent to the provider for new payments. Leave blank to use the default description.",
       "stripePresentmentHint": "Supported charge currencies in Stripe, comma-separated. E.g.: BRL, USD, EUR"
     },
     "currencies": {
@@ -1355,6 +1356,8 @@
       "hint": "DSN and traces rate. The SDK is re-initialized in-process after save."
     },
     "fields": {
+      "STRIPE_PAYMENT_DESCRIPTION": "Payment description — Stripe",
+      "MERCADO_PAGO_PAYMENT_DESCRIPTION": "Payment description — Mercado Pago",
       "STRIPE_SECRET_KEY": "Stripe secret key",
       "STRIPE_PUBLISHABLE_KEY": "Stripe publishable key",
       "STRIPE_WEBHOOK_SECRET": "Stripe webhook secret",

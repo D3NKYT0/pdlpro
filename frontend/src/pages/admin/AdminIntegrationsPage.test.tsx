@@ -39,6 +39,8 @@ const statusFixture = {
     section: 'payments',
     updated_at: null,
     fields: [
+      { key: 'STRIPE_PAYMENT_DESCRIPTION', configured: false, fingerprint: '', value: '', masked: '' },
+      { key: 'MERCADO_PAGO_PAYMENT_DESCRIPTION', configured: false, fingerprint: '', value: '', masked: '' },
       { key: 'STRIPE_SECRET_KEY', configured: true, fingerprint: 'abc123def456', value: null, masked: '' },
       { key: 'STRIPE_PUBLISHABLE_KEY', configured: false, fingerprint: '', value: null, masked: '' },
       { key: 'STRIPE_WEBHOOK_SECRET', configured: false, fingerprint: '', value: null, masked: '' },
@@ -217,6 +219,17 @@ describe('AdminIntegrationsPage', () => {
       { id: 'curr-1', code: 'BRL', symbol: 'R$', name: 'Real', coins_per_unit: '1.00', is_settlement: true, enabled: true, sort_order: 0 },
       { id: 'curr-2', code: 'USD', symbol: '$', name: 'Dólar', coins_per_unit: '0.20', is_settlement: false, enabled: true, sort_order: 1 },
     ] as never)
+  })
+
+  it('edita e salva as descrições dos dois provedores', async () => {
+    const user = userEvent.setup()
+    renderPage('/panel/admin/integrations?tab=payments')
+    await user.type(await screen.findByLabelText(/Descrição da cobrança — Stripe/), 'Créditos Stripe')
+    await user.type(screen.getByLabelText(/Descrição da cobrança — Mercado Pago/), 'Créditos Pix')
+    await user.click(screen.getByRole('button', { name: /salvar/i }))
+    await waitFor(() => expect(staffApi.saveIntegrationSection).toHaveBeenCalledWith('payments', expect.objectContaining({
+      STRIPE_PAYMENT_DESCRIPTION: 'Créditos Stripe', MERCADO_PAGO_PAYMENT_DESCRIPTION: 'Créditos Pix',
+    })))
   })
 
   it('salva a política de envio online e bloqueia envios duplicados', async () => {

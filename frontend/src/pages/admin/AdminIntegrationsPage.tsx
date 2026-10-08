@@ -710,6 +710,7 @@ export function AdminIntegrationsPage() {
                   {renderSecret('STRIPE_PUBLISHABLE_KEY')}
                   {renderSecret('STRIPE_WEBHOOK_SECRET')}
                   {renderBool('STRIPE_ACTIVATE_PAYMENTS')}
+                  {renderText('STRIPE_PAYMENT_DESCRIPTION', 'text', t('integrations.payments.descriptionHint'))}
                   {renderText('STRIPE_PRESENTMENT_CURRENCIES', 'text', t('integrations.payments.stripePresentmentHint', { defaultValue: 'Moedas de cobrança suportadas no Stripe, separadas por vírgula. Ex.: BRL, USD, EUR' }))}
                 </div>
               </SectionCard>
@@ -724,6 +725,7 @@ export function AdminIntegrationsPage() {
                   {renderSecret('MERCADO_PAGO_PUBLIC_KEY')}
                   {renderSecret('MERCADO_PAGO_WEBHOOK_SECRET')}
                   {renderBool('MERCADO_PAGO_ACTIVATE_PAYMENTS')}
+                  {renderText('MERCADO_PAGO_PAYMENT_DESCRIPTION', 'text', t('integrations.payments.descriptionHint'))}
                   <div className="admin-integrations-subsection">
                     <h4>{t('integrations.payments.mpMethodsTitle', { defaultValue: 'Opções de pagamento no checkout' })}</h4>
                     <p className="muted">{t('integrations.payments.mpMethodsHint', { defaultValue: 'Selecione quais opções serão disponibilizadas para os jogadores (ex.: somente PIX, somente boleto ou todas).' })}</p>

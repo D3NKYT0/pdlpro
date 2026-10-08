@@ -477,3 +477,16 @@ def test_online_delivery_setting_rejects_unauthorized_or_invalid_value(api, staf
     assert response.status_code == (400 if actor == "superuser" else 401 if actor == "anonymous" else 403), response.content
     assert settings.LINEAGE_ALLOW_ONLINE_DELIVERY is False
     assert "LINEAGE_ALLOW_ONLINE_DELIVERY" not in DjangoIntegrationConfigStore().load_section("lineage")
+
+
+@pytest.mark.django_db
+def test_payment_descriptions_persist_and_apply(api, superuser, hosts, settings):
+    api.force_authenticate(superuser)
+    values = {"STRIPE_PAYMENT_DESCRIPTION": "Créditos Stripe", "MERCADO_PAGO_PAYMENT_DESCRIPTION": "Créditos Pix"}
+    response = api.patch(reverse("staff-integrations-section", kwargs={"section": "payments"}), values, format="json")
+    assert response.status_code == 200
+    fields = {field["key"]: field["value"] for field in response.json()["payments"]["fields"]}
+    for key, value in values.items():
+        assert fields[key] == value
+        assert getattr(settings, key) == value
+    assert DjangoIntegrationConfigStore().load_section(SECTION_PAYMENTS) == values

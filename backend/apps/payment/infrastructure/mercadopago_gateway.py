@@ -96,7 +96,8 @@ class MercadoPagoGateway(IPaymentGateway):
 
         payment_data: dict[str, Any] = {
             "transaction_amount": float(order.amount),
-            "description": f"Moedas PDL ({order.package_code or 'custom'})",
+            "description": (getattr(settings, "MERCADO_PAGO_PAYMENT_DESCRIPTION", "") or "").strip()
+            or f"Moedas PDL ({order.package_code or 'custom'})",
             "payment_method_id": payload.get("payment_method_id"),
             "payer": {
                 "email": payer.get("email") or "",

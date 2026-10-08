@@ -10,6 +10,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Adicionado
+
+- Descrições das novas cobranças Stripe e Mercado Pago editáveis separadamente no painel de integrações, com fallback para o texto padrão.
+
 ## [2.7.1] - 2026-10-05
 
 Lançamento com envio de moedas e itens para personagens online, novos papéis e gestão de acessos, representação de contas de jogadores e correções de consentimento de rastreamento e logs no Windows. A API acompanha a versão 2.7.1.

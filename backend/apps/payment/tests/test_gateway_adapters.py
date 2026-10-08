@@ -181,3 +181,17 @@ def test_mercadopago_rejects_disabled_payment_options(order, settings, mocker):
 
     sdk.assert_not_called()
 
+
+
+@pytest.mark.parametrize("description", ["Créditos do servidor", "", "   "])
+def test_configurable_payment_descriptions(order, settings, mocker, description):
+    settings.STRIPE_PAYMENT_DESCRIPTION = description
+    settings.MERCADO_PAGO_PAYMENT_DESCRIPTION = description
+    stripe_create = mocker.patch("stripe.PaymentIntent.create", return_value=SimpleNamespace(id="pi", client_secret="secret"))
+    StripeGateway().create_checkout(order)
+    assert stripe_create.call_args.kwargs["description"] == (description.strip() or "PDL PRO — 50.00 moedas")
+    sdk = mocker.patch("mercadopago.SDK").return_value
+    create = sdk.payment.return_value.create
+    create.return_value = {"status": 201, "response": {"id": "mp", "status": "pending"}}
+    MercadoPagoGateway().process_payment(order, {"description": "client override", "payment_method_id": "pix", "payer": {"identification": {"type": "CPF", "number": "12345678909"}}})
+    assert create.call_args.args[0]["description"] == (description.strip() or "Moedas PDL (starter)")

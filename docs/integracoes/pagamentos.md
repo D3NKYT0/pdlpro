@@ -99,3 +99,20 @@ Os testes em [payment/tests](../../backend/apps/payment/tests/) e nos fluxos de 
 ## Segurança e concorrência
 
 A liquidação bloqueia o pedido antes de decidir o crédito. Respostas tardias de status não reabrem pedidos encerrados. Consulte [Segurança de contas e operações](../operacao/seguranca.md) para os testes PostgreSQL e o procedimento de atualização.
+
+
+## Descrição das cobranças
+
+Em **Admin → Integrações → Pagamentos**, o superadministrador pode editar a
+**Descrição da cobrança** separadamente para Stripe e Mercado Pago. Por exemplo,
+`Créditos do servidor` será enviado como `description` ao provedor nas novas
+cobranças. O texto é literal e não substitui variáveis. Deixe vazio para manter os
+padrões com quantidade de moedas (Stripe) ou código do pacote (Mercado Pago).
+Também há defaults opcionais de ambiente: `STRIPE_PAYMENT_DESCRIPTION` e
+`MERCADO_PAGO_PAYMENT_DESCRIPTION`. A configuração salva no painel tem prioridade.
+Cobranças já criadas e textos de identidade do vendedor controlados pelo provedor
+não são alterados. O campo não configura o descritor do extrato do cartão.
+
+Os testes de gateways verificam o payload customizado e o fallback vazio; os testes
+de integrações verificam persistência e aplicação imediata, e a SPA cobre a edição
+e o envio dos dois campos pelo formulário existente.

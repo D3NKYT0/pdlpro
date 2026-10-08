@@ -1251,6 +1251,7 @@
       "brlPriorityUserChoice": "El jugador elige (Mercado Pago por defecto)",
       "brlPriorityMercadoPago": "Fijar Mercado Pago",
       "brlPriorityStripe": "Fijar Stripe (tarjeta)",
+      "descriptionHint": "Texto enviado al proveedor en los nuevos cobros. Deje vacío para usar la descripción predeterminada.",
       "stripePresentmentHint": "Monedas de cobro admitidas en Stripe, separadas por coma. Ej.: BRL, USD, EUR"
     },
     "currencies": {
@@ -1355,6 +1356,8 @@
       "hint": "DSN y tasa de traces. El SDK se reinicializa en el proceso tras guardar."
     },
     "fields": {
+      "STRIPE_PAYMENT_DESCRIPTION": "Descripción del cobro — Stripe",
+      "MERCADO_PAGO_PAYMENT_DESCRIPTION": "Descripción del cobro — Mercado Pago",
       "STRIPE_SECRET_KEY": "Stripe secret key",
       "STRIPE_PUBLISHABLE_KEY": "Stripe publishable key",
       "STRIPE_WEBHOOK_SECRET": "Stripe webhook secret",

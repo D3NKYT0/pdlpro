@@ -61,7 +61,8 @@ class StripeGateway(IPaymentGateway):
                     "coins": str(order.coins),
                 },
                 automatic_payment_methods={"enabled": True},
-                description=f"PDL PRO — {order.coins} moedas",
+                description=(getattr(settings, "STRIPE_PAYMENT_DESCRIPTION", "") or "").strip()
+                or f"PDL PRO — {order.coins} moedas",
             )
         except Exception as exc:
             logger.exception("Stripe falhou ao criar PaymentIntent")
