@@ -8,6 +8,7 @@ from typing import Any
 from django.conf import settings
 from mercadopago.config import RequestOptions
 
+from apps.payment.domain.descriptions import payment_description
 from apps.payment.domain.entities import (
     CheckoutSession,
     PaymentOrderEntity,
@@ -96,8 +97,9 @@ class MercadoPagoGateway(IPaymentGateway):
 
         payment_data: dict[str, Any] = {
             "transaction_amount": float(order.amount),
-            "description": (getattr(settings, "MERCADO_PAGO_PAYMENT_DESCRIPTION", "") or "").strip()
-            or f"Moedas PDL ({order.package_code or 'custom'})",
+            "description": payment_description(
+                getattr(settings, "MERCADO_PAGO_PAYMENT_DESCRIPTION", ""), order, default=f"Moedas PDL ({order.package_code or 'custom'})",
+            ),
             "payment_method_id": payload.get("payment_method_id"),
             "payer": {
                 "email": payer.get("email") or "",

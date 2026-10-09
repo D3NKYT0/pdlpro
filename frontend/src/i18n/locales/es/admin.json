@@ -111,6 +111,7 @@
         "title": "Coming Soon",
         "description": "Página de lanzamiento y control de acceso"
       },
+      "characterCreation": {"title": "Creación de personajes", "description": "Nivel, XP/SP, objetos y equipo iniciales por clase"},
       "server": {
         "title": "Panel y servidor",
         "description": "Nombre, rates, chronicle y SEO"
@@ -1252,6 +1253,10 @@
       "brlPriorityMercadoPago": "Fijar Mercado Pago",
       "brlPriorityStripe": "Fijar Stripe (tarjeta)",
       "descriptionHint": "Texto enviado al proveedor en los nuevos cobros. Deje vacío para usar la descripción predeterminada.",
+      "variablesHelp": "Ayuda sobre variables — {{provider}}",
+      "variablesHint": "Use {cantidad} para la cantidad de monedas compradas y {paquete} para el código del paquete (custom en compras personalizadas). Ejemplo: Créditos {cantidad} — {paquete}. Las variables se sustituyen en los nuevos cobros de ambos proveedores. El texto normal se conserva. Las variables desconocidas permanecen literales. Deje vacío para usar el valor predeterminado.",
+      "stripeDescriptionPlaceholder": "PDL PRO — {cantidad} moedas",
+      "mpDescriptionPlaceholder": "Moedas PDL ({paquete})",
       "stripePresentmentHint": "Monedas de cobro admitidas en Stripe, separadas por coma. Ej.: BRL, USD, EUR"
     },
     "currencies": {
@@ -2638,6 +2643,61 @@
       "metrics": "Métricas",
       "items": "Objetos",
       "docs": "Documentación"
+    }
+  },
+  "characterCreation": {
+    "editorTitle": "Configura el perfil inicial",
+    "overrideCount": "Perfiles propios: {{count}}",
+    "attributes": "Atributos y progresión",
+    "spawn": "Punto de partida",
+    "preview": "Resumen del perfil",
+    "generalStatus": "Perfil base",
+    "customStatus": "Personalizado",
+    "inheritedStatus": "Heredando el predeterminado",
+    "equippedStatus": "Equipados",
+    "inventoryStatus": "En el inventario",
+    "itemLabel": "Objeto #{{id}}",
+    "raceIllustration": "Ilustración de la raza seleccionada",
+    "previewSex": "Sexo en la vista previa",
+    "generalIllustration": "Grupo de las cinco razas: configuración general",
+    "previewHint": "El resumen refleja tus cambios. Usa Guardar para aplicar el perfil a los próximos personajes.",
+
+    "inventory": "Inventario (sin equipar)",
+    "title": "Creación de personajes",
+    "description": "Configure atributos y kits iniciales para los nuevos personajes creados desde el panel. Los perfiles de clase sustituyen completamente el valor general.",
+    "profile": "Perfil inicial",
+    "general": "Valor general",
+    "custom": "Esta clase usa su propia configuración.",
+    "inherited": "Esta clase hereda el valor general. Editar un campo crea su propia configuración.",
+    "reset": "Restaurar valor general",
+    "level": "Nivel inicial",
+    "xp": "XP inicial",
+    "sp": "SP inicial",
+    "characterTitle": "Título inicial",
+    "x": "Posición inicial X",
+    "y": "Posición inicial Y",
+    "z": "Posición inicial Z",
+    "xpHint": "Introduzca XP compatible con el nivel y la tabla de experiencia de su crónica. El panel no recalcula XP.",
+    "items": "Objetos y equipo iniciales",
+    "itemsHint": "Use IDs de objetos válidos para su servidor. Slot vacío entrega al inventario; un slot numérico equipa una unidad. No repita slots.",
+    "empty": "No hay objetos iniciales configurados.",
+    "itemRow": "Objeto inicial {{number}}",
+    "itemId": "ID del objeto",
+    "quantity": "Cantidad",
+    "enchant": "Enchant",
+    "slot": "Slot equipado (opcional)",
+    "remove": "Eliminar objeto",
+    "add": "Añadir objeto",
+    "classes": {
+      "0": "Humano Guerrero",
+      "10": "Humano Mago",
+      "18": "Elfo Guerrero",
+      "25": "Elfo Mago",
+      "31": "Elfo Oscuro Guerrero",
+      "38": "Elfo Oscuro Mago",
+      "44": "Orco Guerrero",
+      "49": "Orco Mago",
+      "53": "Enano Guerrero"
     }
   }
 }

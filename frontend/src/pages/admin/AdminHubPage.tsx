@@ -31,6 +31,7 @@ import {
   SlidersHorizontal,
   Unlink,
   WalletCards,
+  UserRoundPlus,
   type LucideIcon,
 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
@@ -116,6 +117,7 @@ const categories: Category[] = [
     tone: 'server',
     entries: [
       { to: '/panel/admin/server', key: 'server', icon: Server },
+      { to: '/panel/admin/server#character-creation', key: 'characterCreation', icon: UserRoundPlus },
       { to: '/panel/admin/items', key: 'itemWatch', icon: ChartNoAxesCombined },
       { to: '/panel/admin/items/customs', key: 'customItems', icon: PackagePlus },
       { to: '/panel/admin/services', key: 'services', icon: Settings2 },
@@ -131,7 +133,7 @@ export function AdminHubPage() {
   const allowedCategories = categories.map(category => ({
     ...category,
     entries: category.entries.filter(entry => entry.to === '/admin/' ? user?.is_staff
-      : entry.external ? hasCapability(user, 'docs.view') : canAccessAdminPath(user, entry.to)),
+      : entry.external ? hasCapability(user, 'docs.view') : canAccessAdminPath(user, entry.to.split(/[?#]/)[0])),
   })).filter(category => category.entries.length > 0)
   const resources = useQuery({
     queryKey: ['resources'],

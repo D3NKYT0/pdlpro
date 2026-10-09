@@ -9,6 +9,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.exc import SQLAlchemyError
 
 from apps.server.domain.access import same_linked_user
+from apps.server.domain.character_creation import CharacterStart
 from apps.server.domain.character_rules import require_offline_character
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
@@ -390,49 +391,57 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         hair_style: int = 0,
         hair_color: int = 0,
         face: int = 0,
+        start: CharacterStart | None = None,
     ) -> GameCharacter:
-        if self.nickname_exists(name):
-            raise NicknameTakenError()
-        if len(self.list_characters(login)) >= 7:
-            from apps.server.domain.exceptions import CharacterLimitReachedError
-
-            raise CharacterLimitReachedError()
-        res = self._fetch("max_character_id", {}) if self._sql.has("max_character_id") else []
-        max_id = int(res[0]["max_id"]) if res and res[0].get("max_id") else 268435456
-        new_id = max_id + 1
-        x, y, z = UNSTUCK
-        params = {
-            "char_id": new_id,
-            "login": login,
-            "name": name,
-            "level": 1,
-            "sex": sex,
-            "race": race,
-            "class_id": class_id,
-            "hair_style": hair_style,
-            "hair_color": hair_color,
-            "face": face,
-            "x": x,
-            "y": y,
-            "z": z,
-        }
-        if self._sql.has("insert_character"):
-            self._execute("insert_character", params)
-        if self._sql.has("insert_character_subclass"):
-            self._execute("insert_character_subclass", {"char_id": new_id, "class_id": class_id, "level": 1})
-        char = self.get_character(login, new_id)
-        if char:
-            return char
+        start = start or CharacterStart()
+        # Refuse legacy extension queries that would silently ignore configured attributes.
+        required_binds = {"insert_character": {"title", "x", "y", "z"},
+                          "insert_character_subclass": {"level", "xp", "sp"}}
+        for query, binds in required_binds.items():
+            if not binds.issubset(BIND_RE.findall(self._sql[query])):
+                raise CharacterServiceUnavailableError()
+        # Named lock serializes panel allocations; it is scoped to this same connection.
+        with self._engine_or_create().connect() as connection:
+            acquired = connection.execute(text(self._sql["creation_lock"])).scalar()
+            connection.commit()
+            if acquired != 1:
+                raise CharacterServiceUnavailableError()
+            try:
+                with connection.begin():
+                    storage = connection.execute(text(self._sql["creation_storage"])).mappings().all()
+                    if len(storage) != 3 or any(str(row["engine"]).upper() != "INNODB" for row in storage):
+                        raise CharacterServiceUnavailableError()
+                    if connection.execute(text(self._sql["nickname_exists"]), {"name": name}).scalar():
+                        raise NicknameTakenError()
+                    count = connection.execute(text(self._sql["count_characters"]), {"login": login}).scalar()
+                    if int(count or 0) >= 7:
+                        from apps.server.domain.exceptions import (
+                            CharacterLimitReachedError,
+                        )
+                        raise CharacterLimitReachedError()
+                    new_id = int(connection.execute(text(self._sql["creation_next_id"])).scalar())
+                    params = {
+                        "char_id": new_id, "login": login, "name": name, "sex": sex, "race": race,
+                        "class_id": class_id, "hair_style": hair_style, "hair_color": hair_color, "face": face,
+                        "level": start.level, "xp": start.xp, "sp": start.sp, "title": start.title,
+                        "x": start.x, "y": start.y, "z": start.z,
+                    }
+                    connection.execute(text(self._sql["insert_character"]), params)
+                    connection.execute(text(self._sql["insert_character_subclass"]), params)
+                    for index, item in enumerate(start.items, 1):
+                        connection.execute(text(self._sql["insert_initial_item"]), {
+                            "object_id": new_id + index, "owner_id": new_id, "item_id": item.item_id,
+                            "quantity": item.quantity, "enchant": item.enchant,
+                            "location": "PAPERDOLL" if item.slot is not None else "INVENTORY",
+                            "slot": item.slot if item.slot is not None else 0,
+                        })
+            finally:
+                connection.execute(text(self._sql["creation_unlock"]))
+                connection.commit()
         return GameCharacter(
-            char_id=new_id,
-            name=name,
-            level=1,
-            online=False,
-            sex=sex,
-            class_id=class_id,
-            hair_style=hair_style,
-            hair_color=hair_color,
-            face=face,
+            char_id=new_id, name=name, level=start.level, online=False, sex=sex,
+            class_id=class_id, hair_style=hair_style, hair_color=hair_color, face=face, title=start.title,
+            adena=sum(item.quantity for item in start.items if item.item_id == 57 and item.slot is None),
         )
 
     def _game_item(self, row, slot: int | None = None) -> GameItem:

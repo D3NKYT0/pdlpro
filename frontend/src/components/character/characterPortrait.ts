@@ -25,12 +25,23 @@ export function raceFromClass(classId: number | undefined): CharacterRace {
   return 'human'
 }
 
+/** Retrato ilustrativo por raça, sexo e linhagem física/mágica Interlude, incluindo subclasses avançadas. */
 export function characterAvatarSrc(options: {
   race?: string
   sex?: number
   classId?: number
 }): string {
   const race = options.race ? characterRace(options.race) : raceFromClass(options.classId)
+  const cid = options.classId
+  const magical = cid !== undefined && (
+    (cid >= 10 && cid <= 17) || (cid >= 25 && cid <= 30) ||
+    (cid >= 38 && cid <= 43) || (cid >= 49 && cid <= 52) ||
+    (cid >= 94 && cid <= 98) || (cid >= 103 && cid <= 105) ||
+    (cid >= 110 && cid <= 112) || (cid >= 115 && cid <= 116)
+  )
+  if (magical && race !== 'dwarf') {
+    return `/theme/avatars/${race.replace('_', '-')}-mage-${options.sex === 1 ? 'f' : 'm'}.png`
+  }
   const portraits = AVATARS[race]
   return options.sex === 1 ? portraits[1] : portraits[0]
 }

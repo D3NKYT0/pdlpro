@@ -5,6 +5,8 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, expect, it } from 'vitest'
+import userEvent from '@testing-library/user-event'
+import { vi } from 'vitest'
 import { Button } from './Button'
 
 afterEach(cleanup)
@@ -42,3 +44,21 @@ it('aplica a variante laranja com sua classe correspondente', () => {
   expect(button).not.toHaveClass('ghost')
 })
 
+
+it('oferece ajuda contextual por teclado e respeita disabled sem enviar o formulário', async () => {
+  const user = userEvent.setup()
+  const open = vi.fn()
+  const submit = vi.fn(event => event.preventDefault())
+  const view = render(<form onSubmit={submit}><Button variant="help" size="sm" aria-label="Ajuda sobre o campo" onClick={open}>?</Button></form>)
+  const button = screen.getByRole('button', { name: 'Ajuda sobre o campo' })
+  expect(button).toHaveClass('ui-button--help')
+  expect(button).not.toHaveClass('btn')
+  await user.tab()
+  expect(button).toHaveFocus()
+  await user.keyboard('{Enter}')
+  expect(open).toHaveBeenCalledTimes(1)
+  expect(submit).not.toHaveBeenCalled()
+  view.rerender(<Button variant="help" aria-label="Ajuda sobre o campo" disabled onClick={open}>?</Button>)
+  await user.click(screen.getByRole('button', { name: 'Ajuda sobre o campo' }))
+  expect(open).toHaveBeenCalledTimes(1)
+})

@@ -195,3 +195,30 @@ def test_configurable_payment_descriptions(order, settings, mocker, description)
     create.return_value = {"status": 201, "response": {"id": "mp", "status": "pending"}}
     MercadoPagoGateway().process_payment(order, {"description": "client override", "payment_method_id": "pix", "payer": {"identification": {"type": "CPF", "number": "12345678909"}}})
     assert create.call_args.args[0]["description"] == (description.strip() or "Moedas PDL (starter)")
+
+
+@pytest.mark.parametrize("template", [
+    "Créditos {quantidade} - {pacote}", "Créditos {quantity} - {package}",
+    "Créditos {cantidad} - {paquete}",
+])
+@pytest.mark.parametrize("package", ["starter", ""])
+def test_payment_description_variables_reach_both_providers(order, settings, mocker, template, package):
+    order.package_code = package
+    settings.STRIPE_PAYMENT_DESCRIPTION = template
+    settings.MERCADO_PAGO_PAYMENT_DESCRIPTION = template
+    expected = f"Créditos 50.00 - {package or 'custom'}"
+    stripe_create = mocker.patch("stripe.PaymentIntent.create", return_value=SimpleNamespace(id="pi", client_secret="secret"))
+    StripeGateway().create_checkout(order)
+    assert stripe_create.call_args.kwargs["description"] == expected
+    sdk = mocker.patch("mercadopago.SDK").return_value
+    create = sdk.payment.return_value.create
+    create.return_value = {"status": 201, "response": {"id": "mp", "status": "pending"}}
+    MercadoPagoGateway().process_payment(order, {"payment_method_id": "pix", "payer": {"identification": {"type": "CPF", "number": "12345678909"}}})
+    assert create.call_args.args[0]["description"] == expected
+
+
+def test_description_keeps_unknown_tokens_and_never_expands_package_content(order):
+    from apps.payment.domain.descriptions import payment_description
+
+    order.package_code = "{quantidade}"
+    assert payment_description(" {pacote} {unknown} {quantidade} {quantidade.__class__} ", order, default="fallback") == "{quantidade} {unknown} 50.00 {quantidade.__class__}"

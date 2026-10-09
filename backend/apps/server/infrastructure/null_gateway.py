@@ -7,6 +7,7 @@ from dataclasses import replace
 from django.conf import settings
 
 from apps.server.domain.access import same_linked_user
+from apps.server.domain.character_creation import CharacterStart
 from apps.server.domain.character_rules import require_offline_character
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
@@ -27,6 +28,7 @@ from apps.server.domain.gateways import (
     ServerStatus,
 )
 from apps.server.domain.services import SERVICE_CAPABILITIES
+from apps.server.infrastructure.lineage.item_catalog import item_display_name
 from apps.server.infrastructure.passwords import LineagePasswordHasher
 
 
@@ -176,7 +178,9 @@ class NullLineageGateway(ILineageGateway):
         hair_style: int = 0,
         hair_color: int = 0,
         face: int = 0,
+        start: CharacterStart | None = None,
     ) -> GameCharacter:
+        start = start or CharacterStart()
         key = login.lower()
         if self.nickname_exists(name):
             from apps.server.domain.exceptions import NicknameTakenError
@@ -191,17 +195,17 @@ class NullLineageGateway(ILineageGateway):
         new_char = GameCharacter(
             char_id=max_id + 1,
             name=name,
-            level=1,
+            level=start.level,
             online=False,
             sex=sex,
             pvp=0,
             pk=0,
             class_id=class_id,
-            title="",
+            title=start.title,
             clan_name="",
             is_clan_leader=False,
             karma=0,
-            adena=0,
+            adena=sum(item.quantity for item in start.items if item.item_id == 57 and item.slot is None),
             online_time=0,
             last_access=int(time.time()),
             clan_id=0,
@@ -213,6 +217,7 @@ class NullLineageGateway(ILineageGateway):
             hair_color=hair_color,
             face=face,
         )
+        self._items[new_char.char_id] = [GameItem(item.item_id, item_display_name(item.item_id), item.quantity, item.enchant, slot=item.slot, location="PAPERDOLL" if item.slot is not None else "INVENTORY") for item in start.items]
         self._characters.setdefault(key, []).append(new_char)
         return new_char
 

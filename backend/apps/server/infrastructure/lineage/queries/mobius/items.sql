@@ -49,3 +49,7 @@ SELECT 1 FROM items_delayed WHERE 1=0
 
 -- name: delivery_character
 SELECT obj_Id AS char_id, online FROM characters WHERE char_name=:name FOR UPDATE
+
+-- name: insert_initial_item
+INSERT INTO items (object_id, owner_id, item_id, count, enchant_level, loc, loc_data)
+VALUES (:object_id, :owner_id, :item_id, :quantity, :enchant, :location, :slot)

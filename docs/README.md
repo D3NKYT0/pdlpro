@@ -70,6 +70,7 @@
 | --- | --- |
 | [Variáveis de ambiente](configuracao/ambiente.md) | Mapa completo de settings |
 | [Lineage 2](integracoes/lineage.md) | Dialetos SQL e gateways |
+| [Retratos de personagens](integracoes/retratos-personagens.md) | Assets por raça, classe e sexo; prompts e testes |
 | [TLS MySQL L2](integracoes/lineage-mysql-ssl.md) | Certificados e volume Docker |
 | [Pagamentos](integracoes/pagamentos.md) | Fluxo interno MP/Stripe |
 | [Tráfego pago](integracoes/trafego-pago.md) | GA4, Google Ads, GTM, Meta e TikTok Pixel |

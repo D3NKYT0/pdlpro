@@ -5,6 +5,7 @@ from decimal import Decimal
 
 from django.conf import settings
 
+from apps.payment.domain.descriptions import payment_description
 from apps.payment.domain.entities import (
     CheckoutSession,
     PaymentOrderEntity,
@@ -61,8 +62,9 @@ class StripeGateway(IPaymentGateway):
                     "coins": str(order.coins),
                 },
                 automatic_payment_methods={"enabled": True},
-                description=(getattr(settings, "STRIPE_PAYMENT_DESCRIPTION", "") or "").strip()
-                or f"PDL PRO — {order.coins} moedas",
+                description=payment_description(
+                    getattr(settings, "STRIPE_PAYMENT_DESCRIPTION", ""), order, default=f"PDL PRO — {order.coins} moedas",
+                ),
             )
         except Exception as exc:
             logger.exception("Stripe falhou ao criar PaymentIntent")

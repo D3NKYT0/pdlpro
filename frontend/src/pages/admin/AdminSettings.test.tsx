@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
@@ -469,4 +469,91 @@ it('contas Lineage interpolam o login nas mensagens do idioma ativo', async () =
   expect(window.confirm).toHaveBeenCalledWith('¿Desvincular la cuenta hero del panel? Quedará libre para ser reclamada.')
   await waitFor(() => expect(toast.success).toHaveBeenCalledWith('El vínculo de hero fue eliminado'))
   expect(await screen.findByText('Nada que quitar')).toBeVisible()
+})
+
+
+it('salva o kit geral e um perfil independente de mago sem envios duplicados', async () => {
+  let finish!: (value: never) => void
+  vi.mocked(staffApi.savePanel).mockReturnValueOnce(new Promise(resolve => { finish = resolve }))
+  const user = mount(<AdminServerPage />)
+  const level = await screen.findByLabelText('Level inicial')
+  await waitFor(() => expect(screen.getByLabelText('Nome')).toHaveValue('PDL'))
+  expect(screen.getByText('Nenhum item inicial configurado.')).toBeVisible()
+  await user.clear(level)
+  await user.type(level, '20')
+  const preview = screen.getByRole('complementary', { name: 'Resumo do perfil' })
+  expect(within(preview).getByRole('img', { name: 'Grupo das cinco raças: padrão geral' })).toHaveAttribute('src', '/theme/avatars/general-party.png')
+  expect(within(preview).getByText('20')).toBeVisible()
+  await user.clear(screen.getByLabelText('XP inicial'))
+  await user.type(screen.getByLabelText('XP inicial'), '9007199254740993')
+  expect(within(preview).getByText('9007199254740993')).toBeVisible()
+  await user.clear(screen.getByLabelText('SP inicial'))
+  await user.type(screen.getByLabelText('SP inicial'), '900')
+  for (const [axis, value] of [['X', '1'], ['Y', '2'], ['Z', '3']]) {
+    await user.clear(screen.getByLabelText(`Posição inicial ${axis}`))
+    await user.type(screen.getByLabelText(`Posição inicial ${axis}`), value)
+  }
+  await user.click(screen.getByRole('button', { name: 'Adicionar item' }))
+  expect(screen.getByRole('combobox', { name: /Slot equipado/ })).toHaveTextContent('Inventário (sem equipar)')
+  await user.clear(screen.getByLabelText('Quantidade'))
+  await user.type(screen.getByLabelText('Quantidade'), '500')
+  await user.click(screen.getByRole('combobox', { name: 'Perfil inicial' }))
+  await user.click(screen.getByRole('option', { name: 'Humano Mago' }))
+  expect(screen.getByText(/Esta classe herda/)).toBeVisible()
+  expect(within(preview).getByRole('img', { name: 'Ilustração da raça selecionada' })).toBeVisible()
+  const previewImage = within(preview).getByRole('img', { name: 'Ilustração da raça selecionada' })
+  expect(previewImage).toHaveAttribute('src', '/theme/avatars/human-mage-m.png')
+  await user.click(within(preview).getByRole('button', { name: 'Feminino' }))
+  expect(within(preview).getByRole('img', { name: 'Ilustração da raça selecionada' })).toHaveAttribute('src', '/theme/avatars/human-mage-f.png')
+  expect(within(preview).getByText('Herdando o padrão')).toBeVisible()
+  await user.clear(screen.getByLabelText('ID do item'))
+  await user.type(screen.getByLabelText('ID do item'), '100')
+  expect(screen.getByText('Esta classe usa uma configuração própria.')).toBeVisible()
+  expect(within(preview).getByText('Personalizado')).toBeVisible()
+  await user.click(screen.getByRole('combobox', { name: /Slot equipado/ }))
+  await user.click(screen.getByRole('option', { name: /\(7\)/ }))
+  expect(screen.getByLabelText('Quantidade')).toHaveValue(1)
+  expect(within(preview).getByText('Equipados').parentElement).toHaveTextContent('1')
+  expect(within(preview).getByText('No inventário').parentElement).toHaveTextContent('0')
+  await user.clear(screen.getByLabelText('Enchant'))
+  await user.type(screen.getByLabelText('Enchant'), '3')
+  await user.dblClick(screen.getByRole('button', { name: /Salvar/ }))
+  expect(staffApi.savePanel).toHaveBeenCalledTimes(1)
+  expect(staffApi.savePanel).toHaveBeenCalledWith(expect.objectContaining({ character_creation: {
+    default: expect.objectContaining({ level: 20, xp: '9007199254740993', sp: '900', x: 1, y: 2, z: 3, items: [{ item_id: 57, quantity: 500, enchant: 0, slot: null }] }),
+    classes: { '10': expect.objectContaining({ level: 20, sp: '900', x: 1, y: 2, z: 3, items: [{ item_id: 100, quantity: 1, enchant: 3, slot: 7 }] }) },
+  } }))
+  expect(screen.getByLabelText('ID do item')).toBeDisabled()
+  finish({} as never)
+  await waitFor(() => expect(toast.success).toHaveBeenCalled())
+})
+
+it('restaura o padrão e mantém alterações quando o salvamento falha', async () => {
+  vi.mocked(staffApi.savePanel).mockRejectedValueOnce(new Error('offline'))
+  const user = mount(<AdminServerPage />)
+  await waitFor(() => expect(screen.getByLabelText('Nome')).toHaveValue('PDL'))
+  await user.click(screen.getByRole('combobox', { name: 'Perfil inicial' }))
+  await user.click(screen.getByRole('option', { name: 'Humano Mago' }))
+  await user.type(screen.getByLabelText('Título inicial'), 'Mage')
+  await user.click(screen.getByRole('button', { name: 'Voltar ao padrão geral' }))
+  expect(screen.getByLabelText('Título inicial')).toHaveValue('')
+  await user.click(screen.getByRole('button', { name: 'Adicionar item' }))
+  await user.click(screen.getByRole('button', { name: 'Remover item' }))
+  expect(screen.getByText('Nenhum item inicial configurado.')).toBeVisible()
+  await user.type(screen.getByLabelText('Título inicial'), 'Novato')
+  await user.click(screen.getByRole('button', { name: /Salvar/ }))
+  await waitFor(() => expect(toast.error).toHaveBeenCalled())
+  expect(screen.getByLabelText('Título inicial')).toHaveValue('Novato')
+})
+
+
+it('bloqueia a configuração inicial durante carregamento e permite tentar novamente após erro', async () => {
+  vi.mocked(staffApi.panel).mockRejectedValueOnce(new Error('Falha ao carregar configuração'))
+  const user = mount(<AdminServerPage />)
+  expect(screen.getByRole('status')).toBeVisible()
+  expect(screen.getByLabelText('Level inicial')).toBeDisabled()
+  expect(await screen.findByRole('alert')).toHaveTextContent('Falha ao carregar configuração')
+  expect(screen.getByLabelText('Level inicial')).toBeDisabled()
+  await user.click(screen.getByRole('button', { name: /Tentar novamente/i }))
+  await waitFor(() => expect(screen.getByLabelText('Level inicial')).toBeEnabled())
 })

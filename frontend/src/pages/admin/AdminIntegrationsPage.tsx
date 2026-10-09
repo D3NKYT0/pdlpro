@@ -1,3 +1,4 @@
+import { PaymentDescriptionField } from '../../components/admin/PaymentDescriptionField'
 import { Card } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
 import { Field } from '../../components/ui/Field'
@@ -710,7 +711,7 @@ export function AdminIntegrationsPage() {
                   {renderSecret('STRIPE_PUBLISHABLE_KEY')}
                   {renderSecret('STRIPE_WEBHOOK_SECRET')}
                   {renderBool('STRIPE_ACTIVATE_PAYMENTS')}
-                  {renderText('STRIPE_PAYMENT_DESCRIPTION', 'text', t('integrations.payments.descriptionHint'))}
+                  {<PaymentDescriptionField provider="STRIPE" value={String(draft.STRIPE_PAYMENT_DESCRIPTION ?? '')} disabled={save.isPending} onChange={value => setField('STRIPE_PAYMENT_DESCRIPTION', value)} />}
                   {renderText('STRIPE_PRESENTMENT_CURRENCIES', 'text', t('integrations.payments.stripePresentmentHint', { defaultValue: 'Moedas de cobrança suportadas no Stripe, separadas por vírgula. Ex.: BRL, USD, EUR' }))}
                 </div>
               </SectionCard>
@@ -725,7 +726,7 @@ export function AdminIntegrationsPage() {
                   {renderSecret('MERCADO_PAGO_PUBLIC_KEY')}
                   {renderSecret('MERCADO_PAGO_WEBHOOK_SECRET')}
                   {renderBool('MERCADO_PAGO_ACTIVATE_PAYMENTS')}
-                  {renderText('MERCADO_PAGO_PAYMENT_DESCRIPTION', 'text', t('integrations.payments.descriptionHint'))}
+                  {<PaymentDescriptionField provider="MERCADO_PAGO" value={String(draft.MERCADO_PAGO_PAYMENT_DESCRIPTION ?? '')} disabled={save.isPending} onChange={value => setField('MERCADO_PAGO_PAYMENT_DESCRIPTION', value)} />}
                   <div className="admin-integrations-subsection">
                     <h4>{t('integrations.payments.mpMethodsTitle', { defaultValue: 'Opções de pagamento no checkout' })}</h4>
                     <p className="muted">{t('integrations.payments.mpMethodsHint', { defaultValue: 'Selecione quais opções serão disponibilizadas para os jogadores (ex.: somente PIX, somente boleto ou todas).' })}</p>

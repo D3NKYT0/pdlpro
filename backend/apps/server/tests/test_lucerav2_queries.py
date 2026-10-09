@@ -31,6 +31,16 @@ def schema():
     connection = sqlite3.connect(":memory:")
     connection.create_function("CONCAT", -1, lambda *args: "".join(map(str, args)))
     connection.row_factory = sqlite3.Row
+    # MySQL-only boundary: locks and table-engine metadata have no SQLite equivalent.
+    connection.create_function("GET_LOCK", 2, lambda *_: 1)
+    connection.create_function("RELEASE_LOCK", 1, lambda *_: 1)
+    connection.create_function("DATABASE", 0, lambda: "game")
+    connection.executescript("""
+        ATTACH DATABASE ':memory:' AS information_schema;
+        CREATE TABLE information_schema.TABLES (TABLE_NAME TEXT, ENGINE TEXT, TABLE_SCHEMA TEXT);
+        INSERT INTO information_schema.TABLES VALUES
+            ('characters', 'InnoDB', 'game'), ('character_subclasses', 'InnoDB', 'game'), ('items', 'InnoDB', 'game');
+    """)
     connection.executescript("""
         CREATE TABLE accounts (
             login TEXT PRIMARY KEY, password TEXT NOT NULL, accessLevel INTEGER,

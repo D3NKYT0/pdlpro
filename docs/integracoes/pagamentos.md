@@ -6,6 +6,14 @@
 
 `apps/payment` coordena compra de moedas; `apps/wallet` mantém saldo e extrato. Os adaptadores disponíveis são mock, Mercado Pago e Stripe. Este guia descreve o fluxo implementado pelo painel; credenciais e homologação devem corresponder ao ambiente do provedor escolhido.
 
+## Descrição das cobranças
+
+Em **Admin → Integrações → Pagamentos**, cada provedor possui um campo de descrição. Quando vazio, o placeholder mostra o formato padrão: `PDL PRO — {quantidade} moedas` no Stripe e `Moedas PDL ({pacote})` no Mercado Pago. Quantidade e pacote são preenchidos pelo pedido; compras avulsas usam `custom` como pacote. O placeholder não preenche nem salva o campo. Uma descrição personalizada vale para novas cobranças.
+
+O botão **?** junto ao rótulo usa a variante visual `help`: selo em losango com borda dupla e brilho discreto, cores do tema e destaque quando aberto ou focado, sem a textura dos botões de ação. Abre a ajuda por clique, toque ou teclado. Na descrição personalizada, use `{quantidade}` para as moedas compradas e `{pacote}` para o código do pacote. Exemplo: `Créditos {quantidade} — {pacote}`. Ambos os provedores substituem essas variáveis usando dados do pedido; também aceitam os aliases EN `{quantity}` / `{package}` e ES `{cantidad}` / `{paquete}`. Variáveis desconhecidas permanecem literais; valores substituídos não são reinterpretados como templates.
+
+O teste de interação em `AdminIntegrationsPage.test.tsx` verifica campos vazios, placeholders, abertura/fechamento da ajuda por clique e teclado, e salvamento de descrições personalizadas. `test_gateway_adapters.py` confere a substituição nos payloads dos dois SDKs, aliases, compras avulsas e preservação de tokens desconhecidos.
+
 ## Fluxo e responsabilidades
 
 No modal da carteira, completar o CPF/CNPJ monta o Payment Brick do Mercado Pago.

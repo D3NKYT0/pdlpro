@@ -61,6 +61,7 @@ function Showcase() {
             <Button variant="orange" onClick={() => setLastAction('Ação com destaque laranja no exemplo.')}>Gerenciar</Button>
             <Button variant="danger" onClick={() => setLastAction('Item removido apenas neste exemplo.')}><Trash2 aria-hidden="true" /> Remover</Button>
             <Button variant="muted" disabled>Bloqueado</Button>
+            <Button variant="help" size="sm" aria-label="Ajuda sobre o campo" onClick={() => setLastAction('Ajuda contextual aberta no exemplo.')}>?</Button>
           </div>
           <h3>Tamanhos e ícones</h3>
           <div className="ui-showcase-actions">

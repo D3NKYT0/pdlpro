@@ -3,6 +3,8 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 
+from apps.server.domain.character_creation import CharacterStart
+
 
 @dataclass(frozen=True, slots=True)
 class ServerStatus:
@@ -308,7 +310,14 @@ class ILineageGateway(ABC):
         hair_style: int = 0,
         hair_color: int = 0,
         face: int = 0,
-    ) -> GameCharacter: ...
+        start: CharacterStart | None = None,
+    ) -> GameCharacter:
+        """Cria personagem e kit em uma transação do jogo.
+
+        ``start`` é o snapshot validado da política administrativa, nunca um payload
+        do jogador. Falhas devem desfazer atributos e itens; None preserva os padrões.
+        """
+        raise NotImplementedError
 
     @abstractmethod
     def list_character_items(self, char_id: int) -> list[GameItem]: ...

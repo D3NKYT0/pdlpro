@@ -12,7 +12,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
-- Descrições das novas cobranças Stripe e Mercado Pago editáveis separadamente no painel de integrações, com fallback para o texto padrão.
+- **Retratos por classe e sexo**: oito imagens de magos/xamãs complementam os dez retratos existentes, e uma ilustração das cinco raças identifica o Padrão geral. Criação e personagens atuais distinguem as linhagens físicas e mágicas, incluindo terceiras classes. O admin permite alternar masculino/feminino na prévia sem alterar o perfil salvo.
+
+- **Criação de personagens**: atributos iniciais e kits de itens/equipamentos configuráveis no admin, com padrão geral e perfis por classe. Level, XP/SP, título e posição são aplicados com os itens em uma transação no banco do jogo. Atalho próprio no módulo Servidor abre diretamente a configuração, com editor visual, resumo em tempo real e animações que respeitam movimento reduzido.
+
+- Descrições das novas cobranças Stripe e Mercado Pago editáveis separadamente no painel de integrações, com fallback para o texto padrão, exibido como placeholder nos campos vazios. Ajuda pelo botão “?”, com visual próprio e cores do tema, explica as variáveis de quantidade e pacote, substituídas nas cobranças dos dois provedores.
 
 ## [2.7.1] - 2026-10-05
 

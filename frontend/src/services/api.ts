@@ -74,6 +74,9 @@ export type {
 } from './domain/theme.service'
 export type {
   ApiPanelSettings,
+  ApiCharacterStart,
+  ApiCharacterCreation,
+  ApiInitialCharacterItem,
   ApiSecretActionResult,
   ApiSecretsStatus,
   ApiIntegrationField,

@@ -12,6 +12,7 @@ from apps.server.application.site_identity import (
     optional_youtube_id,
 )
 from apps.server.application.use_cases import GetServerInfoUseCase
+from apps.server.domain.character_creation import normalize_creation
 from apps.server.domain.item_catalog import IItemDisplayName
 from apps.server.domain.repositories import (
     IIndexConfigRepository,
@@ -47,6 +48,7 @@ def _panel_defaults(server_info: GetServerInfoUseCase, index_config: IIndexConfi
         "rates": info.rates,
         "enchant": info.enchant,
         "max_level": info.max_level,
+        "character_creation": normalize_creation(getattr(row, "character_creation", {}) or {}, info.max_level),
         "features": info.features,
         "notes": info.notes,
         "coming_soon": bool(row.coming_soon) if row else False,
@@ -236,6 +238,9 @@ class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
         row.rates = data.get("rates") or row.rates or {}
         row.enchant = data.get("enchant") or row.enchant or {}
         row.max_level = int(data.get("max_level") or row.max_level or 80)
+        row.character_creation = normalize_creation(
+            data.get("character_creation", getattr(row, "character_creation", {}) or {}), row.max_level
+        )
         features = data.get("features")
         if isinstance(features, str):
             features = [line.strip() for line in features.splitlines() if line.strip()]

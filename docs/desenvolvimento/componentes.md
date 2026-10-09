@@ -26,7 +26,7 @@ Na ajuda, [HelpCompanion](../../frontend/src/components/help/HelpCompanion.tsx) 
 
 | Peça | Uso e contrato |
 | --- | --- |
-| [Button, ButtonLink e IconButton](../../frontend/src/components/ui/Button.tsx) | Ações, navegação interna e ações somente com ícone |
+| [Button, ButtonLink e IconButton](../../frontend/src/components/ui/Button.tsx) | Ações, navegação interna e ações somente com ícone; variante `help` com selo em losango com borda dupla e brilho discreto e cores do tema para ajuda contextual, sem textura de ação. Exige nome acessível ao usar apenas `?`; exemplo no catálogo |
 | [Field](../../frontend/src/components/ui/Field.tsx) | Label, controle nativo, dica e erro; preserva ref, atributos e validação HTML |
 | [Select](../../frontend/src/components/ui/Select.tsx) | Lista customizada no tema do painel; evita o menu nativo do SO e o hover azul |
 | [Card](../../frontend/src/components/ui/Card.tsx) | Superfície do tema; `as` seleciona `section`, `article`, `aside`, `div` ou `header` |

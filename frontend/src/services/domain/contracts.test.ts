@@ -230,6 +230,7 @@ const contracts: Contract[] = [
   ['staffSupport.internal', () => staffSupportApi.reply('ticket', 'Nota', true), '/staff/support/ticket/', 'POST', { body: 'Nota', is_internal: true }],
   ['staffSupport.update', () => staffSupportApi.update('ticket', { assigned_to: null }), '/staff/support/ticket/', 'PATCH', { assigned_to: null }],
   ['staff.panel', () => staffApi.panel(), '/staff/panel/'],
+  ['staff.saveCharacterCreation', () => staffApi.savePanel({ character_creation: { default: { level: 20, xp: '9007199254740993', sp: '90', title: '', x: 1, y: 2, z: 3, items: [{ item_id: 57, quantity: 100, enchant: 0, slot: null }] }, classes: {} } }), '/staff/panel/', 'PUT', { character_creation: { default: { level: 20, xp: '9007199254740993', sp: '90', title: '', x: 1, y: 2, z: 3, items: [{ item_id: 57, quantity: 100, enchant: 0, slot: null }] }, classes: {} } }],
   ['staff.savePanel', () => staffApi.savePanel({ name: 'Server' }), '/staff/panel/', 'PUT', { name: 'Server' }],
   ['staff.services', () => staffApi.services(), '/staff/services/'],
   ['staff.saveServices', () => staffApi.saveServices([]), '/staff/services/', 'PUT', []],

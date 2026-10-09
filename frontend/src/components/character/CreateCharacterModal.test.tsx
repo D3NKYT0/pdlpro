@@ -9,6 +9,21 @@ afterEach(() => {
   cleanup()
 })
 
+it('atualiza o retrato ao mudar entre combate, magia, sexo e raça', async () => {
+  const user = userEvent.setup()
+  render(<CreateCharacterModal open accountLogin="denky" onClose={vi.fn()} onConfirm={vi.fn()} />)
+  const portrait = screen.getByRole('img')
+  expect(portrait).toHaveAttribute('src', '/theme/avatars/human-m.png')
+  await user.click(screen.getByRole('radio', { name: /Human Mage/ }))
+  expect(portrait).toHaveAttribute('src', '/theme/avatars/human-mage-m.png')
+  await user.click(screen.getByRole('radio', { name: /Feminino/ }))
+  expect(portrait).toHaveAttribute('src', '/theme/avatars/human-mage-f.png')
+  await user.click(screen.getByRole('radio', { name: 'Elfo' }))
+  expect(portrait).toHaveAttribute('src', '/theme/avatars/elf-f.png')
+  await user.click(screen.getByRole('radio', { name: /Elven Mage/ }))
+  expect(portrait).toHaveAttribute('src', '/theme/avatars/elf-mage-f.png')
+})
+
 it('renderiza campos de criação de personagem e preview inicial', () => {
   render(
     <CreateCharacterModal

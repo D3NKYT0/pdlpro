@@ -111,6 +111,7 @@
         "title": "Coming Soon",
         "description": "Launch page and access control"
       },
+      "characterCreation": {"title": "Character creation", "description": "Starting level, XP/SP, items and equipment by class"},
       "server": {
         "title": "Panel and server",
         "description": "Name, rates, chronicle and SEO"
@@ -1252,6 +1253,10 @@
       "brlPriorityMercadoPago": "Lock Mercado Pago",
       "brlPriorityStripe": "Lock Stripe (card)",
       "descriptionHint": "Text sent to the provider for new payments. Leave blank to use the default description.",
+      "variablesHelp": "Variable help — {{provider}}",
+      "variablesHint": "Use {quantity} for the number of coins purchased and {package} for the package code (custom for custom purchases). Example: Credits {quantity} — {package}. Variables are replaced in new payments for both providers. Plain text is kept. Unknown variables remain literal. Leave blank to use the default.",
+      "stripeDescriptionPlaceholder": "PDL PRO — {quantity} moedas",
+      "mpDescriptionPlaceholder": "Moedas PDL ({package})",
       "stripePresentmentHint": "Supported charge currencies in Stripe, comma-separated. E.g.: BRL, USD, EUR"
     },
     "currencies": {
@@ -2638,6 +2643,61 @@
       "metrics": "Metrics",
       "items": "Items",
       "docs": "Documentation"
+    }
+  },
+  "characterCreation": {
+    "editorTitle": "Build the starting profile",
+    "overrideCount": "Custom profiles: {{count}}",
+    "attributes": "Attributes and progression",
+    "spawn": "Starting point",
+    "preview": "Profile summary",
+    "generalStatus": "Base profile",
+    "customStatus": "Customized",
+    "inheritedStatus": "Inheriting defaults",
+    "equippedStatus": "Equipped",
+    "inventoryStatus": "In inventory",
+    "itemLabel": "Item #{{id}}",
+    "raceIllustration": "Illustration of the selected race",
+    "previewSex": "Preview sex",
+    "generalIllustration": "Party of the five races: general default",
+    "previewHint": "The summary follows your edits. Use Save to apply the profile to future characters.",
+
+    "inventory": "Inventory (unequipped)",
+    "title": "Character creation",
+    "description": "Set attributes and starting kits for new characters created through the panel. Class profiles fully replace the general default.",
+    "profile": "Starting profile",
+    "general": "General default",
+    "custom": "This class uses its own configuration.",
+    "inherited": "This class inherits the general default. Editing a field creates its own configuration.",
+    "reset": "Restore general default",
+    "level": "Starting level",
+    "xp": "Starting XP",
+    "sp": "Starting SP",
+    "characterTitle": "Starting title",
+    "x": "Starting position X",
+    "y": "Starting position Y",
+    "z": "Starting position Z",
+    "xpHint": "Enter XP compatible with the level and your chronicle experience table. The panel does not recalculate XP.",
+    "items": "Starting items and equipment",
+    "itemsHint": "Use item IDs valid for your server. An empty slot places the item in inventory; a numeric slot equips one unit. Do not repeat slots.",
+    "empty": "No starting items configured.",
+    "itemRow": "Starting item {{number}}",
+    "itemId": "Item ID",
+    "quantity": "Quantity",
+    "enchant": "Enchant",
+    "slot": "Equipped slot (optional)",
+    "remove": "Remove item",
+    "add": "Add item",
+    "classes": {
+      "0": "Human Fighter",
+      "10": "Human Mage",
+      "18": "Elven Fighter",
+      "25": "Elven Mage",
+      "31": "Dark Elven Fighter",
+      "38": "Dark Elven Mage",
+      "44": "Orc Fighter",
+      "49": "Orc Mage",
+      "53": "Dwarven Fighter"
     }
   }
 }

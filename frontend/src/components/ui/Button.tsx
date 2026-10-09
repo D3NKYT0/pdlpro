@@ -5,7 +5,7 @@ import './ui.css'
 
 export interface ButtonAppearance {
   /** ghost é o nome legado da variante secondary, com textura azul. */
-  variant?: 'primary' | 'secondary' | 'ghost' | 'success' | 'yellow' | 'warning' | 'orange' | 'danger' | 'muted'
+  variant?: 'primary' | 'secondary' | 'ghost' | 'success' | 'yellow' | 'warning' | 'orange' | 'danger' | 'muted' | 'help'
   size?: 'sm' | 'md' | 'lg'
 }
 
@@ -16,6 +16,7 @@ export interface ButtonProps extends ComponentPropsWithRef<'button'>, ButtonAppe
 
 /** Classes únicas para ações e links, preservando as texturas do tema do painel. */
 function buttonClasses({ variant = 'primary', size = 'md' }: ButtonAppearance, className = '') {
+  if (variant === 'help') return ['ui-button', 'ui-button--help', size === 'md' ? '' : `ui-button--${size}`, className].filter(Boolean).join(' ')
   const secondary = variant === 'secondary' || variant === 'ghost'
   return ['btn', 'ui-button', secondary ? 'ghost' : '', `ui-button--${secondary ? 'secondary' : variant}`, size === 'md' ? '' : `ui-button--${size}`, className].filter(Boolean).join(' ')
 }

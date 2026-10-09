@@ -147,15 +147,30 @@ FROM characters
 
 -- name: insert_character
 INSERT INTO characters (
-    obj_Id, account_name, char_name, face, hairStyle, hairColor, sex, x, y, z, createtime
+    obj_Id, account_name, char_name, face, hairStyle, hairColor, sex, x, y, z, title, createtime
 ) VALUES (
-    :char_id, :login, :name, :face, :hair_style, :hair_color, :sex, :x, :y, :z, UNIX_TIMESTAMP()
+    :char_id, :login, :name, :face, :hair_style, :hair_color, :sex, :x, :y, :z, :title, UNIX_TIMESTAMP()
 )
 
 -- name: insert_character_subclass
 INSERT INTO character_subclasses (
     char_obj_id, class_id, level, exp, sp, curHp, curMp, curCp, maxHp, maxMp, maxCp, active, isBase, death_penalty
 ) VALUES (
-    :char_id, :class_id, :level, 0, 0, 100, 100, 100, 100, 100, 100, 1, 1, 0
+    :char_id, :class_id, :level, :xp, :sp, 100, 100, 100, 100, 100, 100, 1, 1, 0
 )
 
+
+-- name: creation_lock
+SELECT GET_LOCK('pdl_character_creation', 10) AS acquired
+
+-- name: creation_unlock
+SELECT RELEASE_LOCK('pdl_character_creation')
+
+-- name: creation_storage
+SELECT TABLE_NAME AS table_name, ENGINE AS engine FROM information_schema.TABLES
+WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME IN ('characters', 'character_subclasses', 'items')
+
+-- name: creation_next_id
+SELECT CASE WHEN COALESCE(MAX(object_id), 0) < 268435456 THEN 268435457 ELSE MAX(object_id) + 1 END AS next_id FROM (
+    SELECT obj_Id AS object_id FROM characters UNION ALL SELECT item_id AS object_id FROM items
+) ids

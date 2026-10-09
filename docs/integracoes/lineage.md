@@ -1,5 +1,7 @@
 # Integração com o Lineage 2
 
+Os retratos ilustrativos do painel e suas variações por classe/sexo estão descritos em [Retratos de personagens](retratos-personagens.md).
+
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Tutorial do operador](../tutoriais/lineage-game.md) · [Configurador admin](../operacao/integracoes-admin.md)
 
 > **Atualizado:** 25 de setembro de 2026
@@ -130,3 +132,51 @@ kick, prisão, banimento e teleporte via SQL do dialeto. Não envia pacotes ao
 gameserver: personagem online só reflete posição e flag offline no próximo
 login; o banimento da conta (`accessLevel` negativo) impede o relogin. Detalhe
 em [Moderação de personagens](../funcionalidades/moderacao.md).
+
+
+## Atributos e kit na criação de personagem
+
+O módulo **Servidor** na central **Administração** possui o atalho **Criação de personagens**, que abre `/panel/admin/server#character-creation` em uma visualização dedicada aos atributos e kits iniciais, com foco na seção após o carregamento. Os demais valores do servidor são preservados ao salvar. O atalho segue a permissão `settings.manage` de **Painel e servidor**. A tela organiza atributos, ponto de partida e kit em blocos, com resumo em tempo real do perfil, retrato ilustrativo da raça e contagem de equipamentos/inventário. A troca de classe e a inclusão de itens têm transições suaves; `prefers-reduced-motion` desativa os efeitos. Em telas menores, o resumo se move para cima do editor. A prévia não salva nem cria personagens.
+
+Em **Admin → Servidor → Criação de personagens**, quem possui `settings.manage`
+configura o padrão geral e perfis para cada classe inicial. Classes sem perfil
+herdam o padrão geral. Ao editar uma classe, o painel cria um snapshot independente
+com todos os atributos e itens; alterações posteriores no padrão não modificam
+esse perfil. **Voltar ao padrão geral** remove a substituição da classe.
+
+Campos disponíveis: level, XP, SP, título, coordenadas X/Y/Z e uma lista de até
+100 itens. Cada item recebe ID, quantidade, enchant e destino: inventário ou slot
+do equipamento. Equipamentos têm quantidade 1 e não podem repetir slot no mesmo
+perfil. Confira os IDs e slots do seu datapack e a compatibilidade dos equipamentos
+com a classe. Adena pode ser incluída como item 57. Exemplo: padrão com 500 Adena;
+perfil Humano Mago com arma no slot 7 e enchant +3. O perfil substitui o kit inteiro,
+portanto adicione também a Adena ao perfil do mago se ele precisar recebê-la.
+
+XP/SP trafegam como strings decimais para preservar precisão. O level não pode
+superar o máximo configurado do servidor. **XP deve ser compatível com o level na
+tabela da crônica**; o painel não calcula a curva de experiência customizada.
+Os padrões preservam level 1, XP/SP zero, título vazio e a posição de unstuck.
+Personagens existentes e personagens criados diretamente pelo cliente de jogo
+não recebem esse kit retroativamente.
+
+O jogador continua enviando somente nome, conta, classe/raça e aparência; o backend
+seleciona o perfil autorizado. Nenhum valor inicial enviado pelo jogador substitui
+a configuração administrativa. A criação do personagem, subclasse base e itens
+ocorre na mesma transação SQL. Falha em qualquer item desfaz todas essas gravações.
+As tabelas `characters`, `character_subclasses` e `items` precisam usar InnoDB.
+
+Os catálogos do core incluem `creation_lock`, `creation_unlock`, `creation_storage`,
+`creation_next_id` e `insert_initial_item`. Overlays devem preservar os parâmetros
+`:title`, `:x`, `:y`, `:z` no insert do personagem e `:level`, `:xp`, `:sp` na subclasse;
+um insert legado sem esses parâmetros é recusado. Lucera usa `items.slot`; schemas
+com `loc_data` precisam sobrescrever `insert_initial_item` na extensão do cliente.
+O lock MySQL serializa criações pelo painel e o alocador consulta IDs de personagens
+e itens. O gameserver não participa desse lock: homologue a alocação externa de IDs,
+o schema e a leitura dos equipamentos em uma instância controlada antes de ativar.
+
+Validação automatizada: `test_character_start.py` cobre perfis, limites, permissões,
+propriedade, persistência e repetição; `test_character_creation_sql.py` executa os
+três catálogos em SQLite, incluindo rollback do segundo item. SQLite substitui lock,
+metadados de engine e relógio MySQL e não comprova concorrência com o gameserver.
+A SPA cobre edição, herança/restauração, kit, precisão de XP, carregamento, erro,
+salvamento, resumo em tempo real sem perda de precisão do XP, ilustração da raça, estado de herança e contagem de equipamentos/inventário, além do bloqueio de envios duplicados. `AdminCharacterCreationNavigation.test.tsx` cobre o atalho na central, permissão, foco da tela dedicada e preservação dos demais dados do servidor ao salvar.

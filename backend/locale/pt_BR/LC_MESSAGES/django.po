@@ -4933,3 +4933,9 @@ msgstr "Preços dos Pacotes por Moeda"
 msgid "País (ISO 3166-1 alpha-2)"
 msgstr "País (ISO 3166-1 alpha-2)"
 
+
+msgid "Configuração inicial de personagem inválida."
+msgstr "Configuração inicial de personagem inválida."
+
+msgid "Configuração inicial de personagens"
+msgstr "Configuração inicial de personagens"

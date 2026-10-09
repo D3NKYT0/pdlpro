@@ -64,7 +64,7 @@ class ServicePrice(BaseModel):
 
 
 class IndexConfig(BaseModel):
-    """Configuração de apresentação do servidor e do painel selecionada pelos serviços de
+    """Configuração visual e política de criação de personagens selecionada pelos serviços de
     configuração. Herda BaseModel: use ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos.
     Use os serviços de aplicação para operações de negócio, mantendo neste modelo as regras de
     persistência e os relacionamentos.
@@ -78,6 +78,7 @@ class IndexConfig(BaseModel):
     chronicle = models.CharField(max_length=80, blank=True)
     rates = models.JSONField(default=dict, blank=True)
     enchant = models.JSONField(default=dict, blank=True)
+    character_creation = models.JSONField(_("Configuração inicial de personagens"), default=dict, blank=True)
     max_level = models.PositiveIntegerField(default=80)
     features = models.JSONField(default=list, blank=True)
     notes = models.JSONField(default=dict, blank=True)

@@ -13,6 +13,7 @@ from apps.server.domain.access import (
     PrimaryLoginState,
     same_linked_user,
 )
+from apps.server.domain.character_creation import resolve_start
 from apps.server.domain.character_rules import MAX_CHARACTERS_PER_ACCOUNT
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
@@ -460,12 +461,14 @@ class CreateCharacterUseCase(UseCase[CreateCharacterInput, GameCharacter]):
     """Cria um novo personagem na conta Lineage autorizada.
 
     Valida propriedade da conta, nickname, limites de personagens, raça, classe inicial
-    e características visuais.
+    e características visuais. Resolve o perfil inicial da classe na configuração ativa
+    e delega ao gateway a gravação atômica do personagem, atributos e kit.
     """
 
-    def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
+    def __init__(self, lineage: ILineageGateway, access: IAccountAccessService, index_config: IIndexConfigRepository) -> None:
         self._lineage = lineage
         self._access = access
+        self._index_config = index_config
 
     def execute(self, data: CreateCharacterInput) -> GameCharacter:
         login = (data.login or data.actor.username).strip().lower()
@@ -507,6 +510,8 @@ class CreateCharacterUseCase(UseCase[CreateCharacterInput, GameCharacter]):
         if not 0 <= data.face <= 2:
             raise ValidationDomainError(_("Rosto inválido."))
 
+        config = self._index_config.get_active()
+        start = resolve_start(getattr(config, "character_creation", {}), data.class_id, getattr(config, "max_level", 80))
         return self._lineage.create_character(
             login=login,
             name=cleaned_name,
@@ -516,6 +521,7 @@ class CreateCharacterUseCase(UseCase[CreateCharacterInput, GameCharacter]):
             hair_style=data.hair_style,
             hair_color=data.hair_color,
             face=data.face,
+            start=start,
         )
 
 

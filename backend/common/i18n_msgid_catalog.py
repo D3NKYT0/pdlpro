@@ -289,3 +289,5 @@ _("Grand Bosses")
 _("Cerco aos castelos")
 _("Buscar personagens")
 _("Disponibilidade desta ação dentro do módulo.")
+
+_("Configuração inicial de personagem inválida.")

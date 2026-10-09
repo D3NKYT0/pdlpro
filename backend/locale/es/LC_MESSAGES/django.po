@@ -5729,3 +5729,9 @@ msgstr "Actualizar roles del usuario"
 #: apps/wallet/presentation/views/exchange.py
 msgid "Retorna a disponibilidade do câmbio, a política de envio online, a moeda ativa e o histórico do usuário. A retirada do jogo exige personagem offline."
 msgstr "Devuelve la disponibilidad del cambio, la política de envío conectado, la moneda activa y el historial del usuario. Las retiradas del juego requieren un personaje desconectado."
+
+msgid "Configuração inicial de personagem inválida."
+msgstr "Configuración inicial del personaje no válida."
+
+msgid "Configuração inicial de personagens"
+msgstr "Configuración inicial de personajes"

@@ -1,7 +1,10 @@
+import { useLocation } from 'react-router-dom'
+import { CharacterCreationSettings, defaultCharacterCreation } from '../../components/character/CharacterCreationSettings'
 import { Card } from '../../components/ui/Card'
 import { apiErrorMessage } from '../../lib/errors'
+import { ErrorNotice, LoadingState } from '../../components/ui/Feedback'
 import { Field } from '../../components/ui/Field'
-import { useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { FileText, Gauge, Globe, ServerCog, Sparkles } from 'lucide-react'
@@ -17,6 +20,9 @@ function panelBase(data: ApiPanelSettings) {
 export function AdminServerPage() {
   const { t } = useTranslation('admin')
   const queryClient = useQueryClient()
+  const { hash } = useLocation()
+  const creationOnly = hash === '#character-creation'
+  const creationSection = useRef<HTMLElement>(null)
   const panel = useQuery({ queryKey: ['staff-panel'], queryFn: staffApi.panel })
   const [name, setName] = useState('')
   const [slogan, setSlogan] = useState('')
@@ -38,10 +44,12 @@ export function AdminServerPage() {
   const [ogImage, setOgImage] = useState('')
   const [trailerYoutubeId, setTrailerYoutubeId] = useState('')
   const [saving, setSaving] = useState(false)
+  const [characterCreation, setCharacterCreation] = useState(defaultCharacterCreation)
 
   useEffect(() => {
     const data = panel.data
     if (!data) return
+    setCharacterCreation(data.character_creation ?? defaultCharacterCreation())
     setName(data.name)
     setSlogan(data.slogan)
     setDescription(data.description)
@@ -63,13 +71,22 @@ export function AdminServerPage() {
     setTrailerYoutubeId(data.trailer_youtube_id || '')
   }, [panel.data])
 
+  useEffect(() => {
+    if (hash !== '#character-creation' || panel.isPending) return
+    const frame = requestAnimationFrame(() => {
+      creationSection.current?.focus({ preventScroll: true })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [hash, panel.isPending])
+
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
-    if (!panel.data) return
+    if (!panel.data || saving) return
     setSaving(true)
     try {
       await staffApi.savePanel({
         ...panelBase(panel.data),
+        character_creation: characterCreation,
         name,
         slogan,
         description,
@@ -96,8 +113,11 @@ export function AdminServerPage() {
 
   return (
     <div className="account-page">
-      <AdminHeader kicker={t('server.kicker')} title={t('server.title')} description={t('server.description')} />
+      <AdminHeader kicker={t('server.kicker')} title={t(creationOnly ? 'characterCreation.title' : 'server.title')} description={t(creationOnly ? 'characterCreation.description' : 'server.description')} />
+      {panel.isPending && <LoadingState />}
+      <ErrorNotice error={panel.error} onRetry={() => { void panel.refetch() }} />
       <form className="admin-server-form" onSubmit={onSubmit}>
+        {!creationOnly && <>
         <Card className="admin-config-section">
           <header><span><ServerCog /></span><div><span className="panel-eyebrow">{t('server.identityEyebrow')}</span><h2>{t('server.identityTitle')}</h2><p>{t('server.identityDescription')}</p></div></header>
           <div className="account-form-fields">
@@ -150,6 +170,11 @@ export function AdminServerPage() {
             <Field>{t('server.startNote')}<textarea value={start} onChange={(e) => setStart(e.target.value)} rows={3} /></Field>
           </div>
         </Card>
+
+        </>}
+        <section id="character-creation" ref={creationSection} aria-label={t('characterCreation.title')} tabIndex={-1} style={{ scrollMarginTop: '100px' }}>
+          <CharacterCreationSettings value={characterCreation} onChange={setCharacterCreation} disabled={saving || panel.isPending || panel.isError} maxLevel={Number(maxLevel) || 80} />
+        </section>
 
         <Card as="div" className="admin-server-actions"><span><strong>{t('server.actionsTitle')}</strong><small>{t('server.actionsHint')}</small></span><AdminSaveBar saving={saving} /></Card>
       </form>

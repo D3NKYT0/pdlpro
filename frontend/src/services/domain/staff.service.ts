@@ -1,7 +1,29 @@
 import { request } from '../infra/http'
 import type { ApiPaymentOrder, ApiStaffBanner } from '../types'
 
+export interface ApiInitialCharacterItem {
+  item_id: number
+  quantity: number
+  enchant: number
+  slot: number | null
+}
+export interface ApiCharacterStart {
+  level: number
+  xp: string
+  sp: string
+  title: string
+  x: number
+  y: number
+  z: number
+  items: ApiInitialCharacterItem[]
+}
+export interface ApiCharacterCreation {
+  default: ApiCharacterStart
+  classes: Record<string, ApiCharacterStart>
+}
+
 export interface ApiPanelSettings {
+  character_creation?: ApiCharacterCreation
   id: string | null
   slogan: string
   name: string
