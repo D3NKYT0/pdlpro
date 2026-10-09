@@ -10,6 +10,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.7.3] - 2026-10-09
+
+Lançamento com checkout integrado ou por redirecionamento na Stripe e no Mercado Pago, nomes configuráveis da moeda virtual e da carteira, nome na fatura do Mercado Pago e destino personalizado de destravamento de personagens, além de correções de exibição de moedas e coordenadas negativas. A API acompanha a versão 2.7.3.
+
 ### Adicionado
 
 - Destino personalizado de destravamento de personagens no admin, com coordenadas X/Y/Z negativas e opção de restaurar o padrão do servidor.
