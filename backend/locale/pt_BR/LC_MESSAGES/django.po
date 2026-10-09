@@ -4939,3 +4939,9 @@ msgstr "Configuração inicial de personagem inválida."
 
 msgid "Configuração inicial de personagens"
 msgstr "Configuração inicial de personagens"
+
+msgid "Destino de destravamento"
+msgstr "Destino de destravamento"
+
+msgid "Destino de destravamento inválido. Informe X, Y e Z como inteiros entre -2147483648 e 2147483647."
+msgstr "Destino de destravamento inválido. Informe X, Y e Z como inteiros entre -2147483648 e 2147483647."

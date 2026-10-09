@@ -23,6 +23,7 @@ export interface ApiCharacterCreation {
 }
 
 export interface ApiPanelSettings {
+  unstuck_location?: { x: number; y: number; z: number } | null
   character_creation?: ApiCharacterCreation
   id: string | null
   slogan: string

@@ -1,4 +1,12 @@
 {
+  "unstuck": {
+    "title": "Unstuck destination",
+    "hint": "Choose a safe location for offline characters. Disable to use the server default destination.",
+    "custom": "Use custom location",
+    "x": "Unstuck X",
+    "y": "Unstuck Y",
+    "z": "Unstuck Z"
+},
   "hub": {
     "eyebrow": "Admin area",
     "title": "Settings hub",
@@ -2659,6 +2667,7 @@
     }
   },
   "characterCreation": {
+    "coordinateRange": "Enter an integer between -2147483648 and 2147483647.",
     "editorTitle": "Build the starting profile",
     "overrideCount": "Custom profiles: {{count}}",
     "attributes": "Attributes and progression",

@@ -1,4 +1,12 @@
 {
+  "unstuck": {
+    "title": "Destino de desatasco",
+    "hint": "Elija un lugar seguro para personajes desconectados. Desactive para usar el destino predeterminado del servidor.",
+    "custom": "Usar ubicación personalizada",
+    "x": "Desatasco X",
+    "y": "Desatasco Y",
+    "z": "Desatasco Z"
+},
   "hub": {
     "eyebrow": "Área administrativa",
     "title": "Central de configuración",
@@ -2659,6 +2667,7 @@
     }
   },
   "characterCreation": {
+    "coordinateRange": "Introduzca un entero entre -2147483648 y 2147483647.",
     "editorTitle": "Configura el perfil inicial",
     "overrideCount": "Perfiles propios: {{count}}",
     "attributes": "Atributos y progresión",

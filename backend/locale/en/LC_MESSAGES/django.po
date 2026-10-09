@@ -5650,3 +5650,9 @@ msgstr "This order must be paid on the provider website."
 
 msgid "Não foi possível iniciar o pagamento externo."
 msgstr "Could not start the external payment."
+
+msgid "Destino de destravamento"
+msgstr "Unstuck destination"
+
+msgid "Destino de destravamento inválido. Informe X, Y e Z como inteiros entre -2147483648 e 2147483647."
+msgstr "Invalid unstuck destination. Enter X, Y and Z as integers between -2147483648 and 2147483647."

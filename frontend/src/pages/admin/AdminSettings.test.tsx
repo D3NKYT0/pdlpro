@@ -491,7 +491,7 @@ it('salva o kit geral e um perfil independente de mago sem envios duplicados', a
   expect(within(preview).getByText('9007199254740993')).toBeVisible()
   await user.clear(screen.getByLabelText('SP inicial'))
   await user.type(screen.getByLabelText('SP inicial'), '900')
-  for (const [axis, value] of [['X', '1'], ['Y', '2'], ['Z', '3']]) {
+  for (const [axis, value] of [['X', '-1'], ['Y', '-2'], ['Z', '-3']]) {
     await user.clear(screen.getByLabelText(`Posição inicial ${axis}`))
     await user.type(screen.getByLabelText(`Posição inicial ${axis}`), value)
   }
@@ -522,8 +522,8 @@ it('salva o kit geral e um perfil independente de mago sem envios duplicados', a
   await user.dblClick(screen.getByRole('button', { name: /Salvar/ }))
   expect(staffApi.savePanel).toHaveBeenCalledTimes(1)
   expect(staffApi.savePanel).toHaveBeenCalledWith(expect.objectContaining({ character_creation: {
-    default: expect.objectContaining({ level: 20, xp: '9007199254740993', sp: '900', x: 1, y: 2, z: 3, items: [{ item_id: 57, quantity: 500, enchant: 0, slot: null }] }),
-    classes: { '10': expect.objectContaining({ level: 20, sp: '900', x: 1, y: 2, z: 3, items: [{ item_id: 100, quantity: 1, enchant: 3, slot: 7 }] }) },
+    default: expect.objectContaining({ level: 20, xp: '9007199254740993', sp: '900', x: -1, y: -2, z: -3, items: [{ item_id: 57, quantity: 500, enchant: 0, slot: null }] }),
+    classes: { '10': expect.objectContaining({ level: 20, sp: '900', x: -1, y: -2, z: -3, items: [{ item_id: 100, quantity: 1, enchant: 3, slot: 7 }] }) },
   } }))
   expect(screen.getByLabelText('ID do item')).toBeDisabled()
   finish({} as never)
@@ -558,4 +558,25 @@ it('bloqueia a configuração inicial durante carregamento e permite tentar nova
   expect(screen.getByLabelText('Level inicial')).toBeDisabled()
   await user.click(screen.getByRole('button', { name: /Tentar novamente/i }))
   await waitFor(() => expect(screen.getByLabelText('Level inicial')).toBeEnabled())
+})
+
+
+it('salva destino de destravamento negativo e permite voltar ao padrão', async () => {
+  const user = mount(<AdminServerPage />)
+  const custom = await screen.findByRole('checkbox', { name: 'Usar local personalizado' })
+  await user.click(custom)
+  for (const [axis, value] of [['X', '-123'], ['Y', '-456'], ['Z', '-789']]) {
+    const input = screen.getByLabelText(`Destravamento ${axis}`)
+    await user.clear(input)
+    await user.type(input, '-')
+    expect(input).toHaveValue('-')
+    expect(input).toBeInvalid()
+    await user.type(input, value.slice(1))
+  }
+  await user.click(screen.getByRole('button', { name: /Salvar/ }))
+  await waitFor(() => expect(staffApi.savePanel).toHaveBeenCalledWith(expect.objectContaining({ unstuck_location: { x: -123, y: -456, z: -789 } })))
+  await waitFor(() => expect(screen.getByRole('button', { name: /Salvar/ })).toBeEnabled())
+  await user.click(custom)
+  await user.click(screen.getByRole('button', { name: /Salvar/ }))
+  await waitFor(() => expect(staffApi.savePanel).toHaveBeenLastCalledWith(expect.objectContaining({ unstuck_location: null })))
 })

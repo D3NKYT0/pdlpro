@@ -344,7 +344,9 @@ class ILineageGateway(ABC):
     def change_sex(self, login: str, char_id: int, sex: int) -> None: ...
 
     @abstractmethod
-    def unstuck(self, login: str, char_id: int) -> None: ...
+    def unstuck(self, login: str, char_id: int, location: dict[str, int] | None = None) -> None:
+        """Reposiciona personagem offline no destino administrativo ou padrão do adaptador."""
+        ...
 
     def supports(self, capability: str) -> bool:
         """Indica se o adaptador executa o serviço ou consulta informados."""

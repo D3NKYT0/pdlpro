@@ -282,7 +282,7 @@ class NullLineageGateway(ILineageGateway):
         char = self._require_offline(login, char_id)
         self._replace_character(login, char_id, replace(char, sex=sex, online=False))
 
-    def unstuck(self, login: str, char_id: int) -> None:
+    def unstuck(self, login: str, char_id: int, location: dict[str, int] | None = None) -> None:
         self._require_offline(login, char_id)
 
     def supports(self, capability: str) -> bool:

@@ -18,6 +18,7 @@ from apps.server.domain.repositories import (
     IIndexConfigRepository,
     IServicePriceRepository,
 )
+from apps.server.domain.unstuck import normalize_unstuck
 from apps.shop.domain.repositories import IShopItemAdminRepository
 from apps.wallet.domain.bonus import IPurchaseBonusPolicy
 from apps.wallet.domain.repositories import ICoinAdminRepository
@@ -49,6 +50,7 @@ def _panel_defaults(server_info: GetServerInfoUseCase, index_config: IIndexConfi
         "enchant": info.enchant,
         "max_level": info.max_level,
         "character_creation": normalize_creation(getattr(row, "character_creation", {}) or {}, info.max_level),
+        "unstuck_location": normalize_unstuck(getattr(row, "unstuck_location", None)),
         "features": info.features,
         "notes": info.notes,
         "coming_soon": bool(row.coming_soon) if row else False,
@@ -241,6 +243,7 @@ class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
         row.character_creation = normalize_creation(
             data.get("character_creation", getattr(row, "character_creation", {}) or {}), row.max_level
         )
+        row.unstuck_location = normalize_unstuck(data.get("unstuck_location", getattr(row, "unstuck_location", None)))
         features = data.get("features")
         if isinstance(features, str):
             features = [line.strip() for line in features.splitlines() if line.strip()]

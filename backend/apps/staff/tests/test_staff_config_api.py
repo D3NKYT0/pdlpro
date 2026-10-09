@@ -407,3 +407,28 @@ def test_bonus_simulation_treats_invalid_amount_as_zero(api, staff):
     assert response.data["amount"] == "0.00"
     assert response.data["bonus"] == "0.00"
 
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("location", [{"x": -123, "y": -2147483648, "z": 2147483647}, None])
+def test_admin_persists_unstuck_destination(api, staff, location):
+    api.force_authenticate(user=staff)
+    response = api.put("/api/v1/staff/panel/", {"unstuck_location": location}, format="json")
+    assert response.status_code == 200, response.data
+    assert api.get("/api/v1/staff/panel/").data["unstuck_location"] == location
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("location", [{"x": "-", "y": 0, "z": 0}, {"x": 2147483648, "y": 0, "z": 0}, {"x": True, "y": 0, "z": 0}, {"x": 1.5, "y": 0, "z": 0}, {"x": 0}, []])
+def test_admin_rejects_invalid_unstuck_destination_without_overwrite(api, staff, location):
+    api.force_authenticate(user=staff)
+    original = {"x": -1, "y": -2, "z": -3}
+    assert api.put("/api/v1/staff/panel/", {"unstuck_location": original}, format="json").status_code == 200
+    assert api.put("/api/v1/staff/panel/", {"unstuck_location": location}, format="json").status_code == 400
+    assert api.get("/api/v1/staff/panel/").data["unstuck_location"] == original
+
+
+@pytest.mark.django_db
+def test_player_cannot_set_unstuck_destination(api, player):
+    api.force_authenticate(user=player)
+    assert api.put("/api/v1/staff/panel/", {"unstuck_location": {"x": -1, "y": -2, "z": -3}}, format="json").status_code == 403

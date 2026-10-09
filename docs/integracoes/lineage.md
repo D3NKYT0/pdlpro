@@ -144,6 +144,8 @@ herdam o padrão geral. Ao editar uma classe, o painel cria um snapshot independ
 com todos os atributos e itens; alterações posteriores no padrão não modificam
 esse perfil. **Voltar ao padrão geral** remove a substituição da classe.
 
+As coordenadas X/Y/Z permitem digitar o sinal `-` antes dos dígitos, inclusive ao apagar e reescrever um valor. O editor mantém a entrada parcial até formar um inteiro válido; campos vazios, apenas o sinal, decimais e valores fora de -2147483648 a 2147483647 bloqueiam o envio. A API continua recebendo números inteiros. Os testes de interação de `CharacterCreationSettings` cobrem digitação negativa nos três eixos, limites e validação.
+
 Campos disponíveis: level, XP, SP, título, coordenadas X/Y/Z e uma lista de até
 100 itens. Cada item recebe ID, quantidade, enchant e destino: inventário ou slot
 do equipamento. Equipamentos têm quantidade 1 e não podem repetir slot no mesmo
@@ -180,3 +182,9 @@ três catálogos em SQLite, incluindo rollback do segundo item. SQLite substitui
 metadados de engine e relógio MySQL e não comprova concorrência com o gameserver.
 A SPA cobre edição, herança/restauração, kit, precisão de XP, carregamento, erro,
 salvamento, resumo em tempo real sem perda de precisão do XP, ilustração da raça, estado de herança e contagem de equipamentos/inventário, além do bloqueio de envios duplicados. `AdminCharacterCreationNavigation.test.tsx` cobre o atalho na central, permissão, foco da tela dedicada e preservação dos demais dados do servidor ao salvar.
+
+### Destino de destravamento
+
+Em Administração → Servidor, ative **Usar local personalizado** no bloco **Destino de destravamento** e informe X/Y/Z. `unstuck_location` aceita três inteiros de -2147483648 a 2147483647; `null` restaura o padrão (83400, 147940, -3404). O destino vem da configuração administrativa, nunca da requisição do jogador. O serviço mantém a verificação de propriedade da conta e exige personagem offline. A repetição reposiciona no mesmo destino, sem cobrança. Digitar `-` diretamente é permitido; valores incompletos impedem salvar.
+
+A migração `0016_indexconfig_unstuck_location` preserva o comportamento anterior para instalações existentes. Testes cobrem persistência, limites, autorização, payload SQL e interação com negativos.

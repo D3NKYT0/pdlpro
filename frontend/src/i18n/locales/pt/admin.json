@@ -1,4 +1,12 @@
 {
+  "unstuck": {
+    "title": "Destino de destravamento",
+    "hint": "Escolha o local seguro para destravar personagens offline. Desative para usar o destino padrão do servidor.",
+    "custom": "Usar local personalizado",
+    "x": "Destravamento X",
+    "y": "Destravamento Y",
+    "z": "Destravamento Z"
+},
   "hub": {
     "eyebrow": "Área administrativa",
     "title": "Central de configurações",
@@ -2449,6 +2457,7 @@
     }
   },
   "characterCreation": {
+    "coordinateRange": "Informe um inteiro entre -2147483648 e 2147483647.",
     "editorTitle": "Monte o perfil inicial",
     "overrideCount": "Perfis próprios: {{count}}",
     "attributes": "Atributos e progressão",

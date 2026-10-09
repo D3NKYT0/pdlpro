@@ -1,5 +1,7 @@
 import { useLocation } from 'react-router-dom'
 import { CharacterCreationSettings, defaultCharacterCreation } from '../../components/character/CharacterCreationSettings'
+import { CoordinateInput } from '../../components/character/CoordinateInput'
+import { Toggle } from '../../components/ui/Toggle'
 import { Card } from '../../components/ui/Card'
 import { apiErrorMessage } from '../../lib/errors'
 import { ErrorNotice, LoadingState } from '../../components/ui/Feedback'
@@ -44,11 +46,13 @@ export function AdminServerPage() {
   const [ogImage, setOgImage] = useState('')
   const [trailerYoutubeId, setTrailerYoutubeId] = useState('')
   const [saving, setSaving] = useState(false)
+  const [unstuckLocation, setUnstuckLocation] = useState<{ x: number; y: number; z: number } | null>(null)
   const [characterCreation, setCharacterCreation] = useState(defaultCharacterCreation)
 
   useEffect(() => {
     const data = panel.data
     if (!data) return
+    setUnstuckLocation(data.unstuck_location ?? null)
     setCharacterCreation(data.character_creation ?? defaultCharacterCreation())
     setName(data.name)
     setSlogan(data.slogan)
@@ -87,6 +91,7 @@ export function AdminServerPage() {
       await staffApi.savePanel({
         ...panelBase(panel.data),
         character_creation: characterCreation,
+        unstuck_location: unstuckLocation,
         name,
         slogan,
         description,
@@ -173,6 +178,14 @@ export function AdminServerPage() {
 
         </>}
         <section id="character-creation" ref={creationSection} aria-label={t('characterCreation.title')} tabIndex={-1} style={{ scrollMarginTop: '100px' }}>
+          <Card>
+            <h2>{t('unstuck.title')}</h2>
+            <p>{t('unstuck.hint')}</p>
+            <Toggle label={t('unstuck.custom')} checked={unstuckLocation !== null} disabled={saving || panel.isPending || panel.isError} onChange={event => setUnstuckLocation(event.target.checked ? { x: 83400, y: 147940, z: -3404 } : null)} />
+            {unstuckLocation && <div className="account-form-fields">
+              {(['x', 'y', 'z'] as const).map(axis => <Field key={axis} label={t(`unstuck.${axis}`)}><CoordinateInput disabled={saving} value={unstuckLocation[axis]} onChange={value => setUnstuckLocation({ ...unstuckLocation, [axis]: value })} /></Field>)}
+            </div>}
+          </Card>
           <CharacterCreationSettings value={characterCreation} onChange={setCharacterCreation} disabled={saving || panel.isPending || panel.isError} maxLevel={Number(maxLevel) || 80} />
         </section>
 

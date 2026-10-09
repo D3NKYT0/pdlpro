@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { CoordinateInput } from './CoordinateInput'
 import { Backpack, MapPin, Plus, RotateCcw, Shield, Sparkles, Swords, Trash2 } from 'lucide-react'
 import { CharacterAvatar } from './CharacterAvatar'
 import { ItemIcon } from '../ItemIcon'
@@ -73,7 +74,7 @@ export function CharacterCreationSettings({ value, onChange, disabled, maxLevel 
           <section className="cc-block" aria-label={t('characterCreation.spawn')}>
             <div className="cc-block-heading"><MapPin aria-hidden="true" /><h3>{t('characterCreation.spawn')}</h3><span>02</span></div>
             <div className="account-form-fields cc-coordinates">
-              {(['x', 'y', 'z'] as const).map(axis => <Field key={axis} label={t(`characterCreation.${axis}`)}><input disabled={disabled} type="number" required min={-2147483648} max={2147483647} value={profile[axis]} onChange={e => update({ [axis]: Number(e.target.value) })} /></Field>)}
+              {(['x', 'y', 'z'] as const).map(axis => <Field key={axis} label={t(`characterCreation.${axis}`)}><CoordinateInput disabled={disabled} value={profile[axis]} onChange={number => update({ [axis]: number })} /></Field>)}
             </div>
           </section>
           <section className="cc-block cc-kit" aria-label={t('characterCreation.items')}>

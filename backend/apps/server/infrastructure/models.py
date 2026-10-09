@@ -79,6 +79,7 @@ class IndexConfig(BaseModel):
     rates = models.JSONField(default=dict, blank=True)
     enchant = models.JSONField(default=dict, blank=True)
     character_creation = models.JSONField(_("Configuração inicial de personagens"), default=dict, blank=True)
+    unstuck_location = models.JSONField(_("Destino de destravamento"), default=None, null=True, blank=True)
     max_level = models.PositiveIntegerField(default=80)
     features = models.JSONField(default=list, blank=True)
     notes = models.JSONField(default=dict, blank=True)

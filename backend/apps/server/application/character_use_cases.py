@@ -14,11 +14,13 @@ from apps.server.domain.exceptions import CharacterServiceUnavailableError
 from apps.server.domain.gateways import ILineageGateway
 from apps.server.domain.repositories import (
     ICharacterServiceOperationRepository,
+    IIndexConfigRepository,
     ILinkSlotRepository,
     IServicePriceRepository,
 )
 from apps.server.domain.services import TAVERN_SERVICES
 from apps.server.domain.towns import get_town, town_catalog
+from apps.server.domain.unstuck import normalize_unstuck
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
@@ -143,17 +145,21 @@ class UnstuckCharacterUseCase(UseCase[CharacterServiceInput, None]):
 
     Chame execute com CharacterServiceInput. Este serviço não debita a carteira;
     ListServicePricesUseCase informa UNSTUCK como gratuito. O gateway verifica as condições do
-    personagem e o retorno é None.
+    personagem e o retorno é None. O destino é lido da configuração ativa do admin;
+    None preserva o padrão do adaptador.
     """
 
-    def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
+    def __init__(self, lineage: ILineageGateway, access: IAccountAccessService, index_config: IIndexConfigRepository) -> None:
         self._lineage = lineage
         self._access = access
+        self._index_config = index_config
 
     def execute(self, data: CharacterServiceInput) -> None:
         if not self._access.can_access(data.user_id, data.username, data.login):
             raise AuthorizationError()
-        self._lineage.unstuck(data.login, data.char_id)
+        config = self._index_config.get_active()
+        location = normalize_unstuck(getattr(config, "unstuck_location", None))
+        self._lineage.unstuck(data.login, data.char_id, location)
 
 
 @dataclass(frozen=True, slots=True)

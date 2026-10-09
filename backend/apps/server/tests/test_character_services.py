@@ -166,3 +166,46 @@ def test_tavern_rejects_online_character(api, player):
     )
     assert response.status_code == 400
     assert response.data["error_code"] == "CHARACTER_MUST_BE_OFFLINE"
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("location", [None, {"x": -123, "y": -456, "z": -789}])
+def test_unstuck_uses_admin_destination_and_preserves_ownership(api, player, mocker, location):
+    from apps.server.infrastructure.models import IndexConfig
+    IndexConfig.objects.create(unstuck_location=location)
+    api.force_authenticate(user=player)
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
+    char = _seed_character(player)
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    unstuck = mocker.spy(gateway, "unstuck")
+    for _ in range(2):
+        result = api.post("/api/v1/customer/server/characters/unstuck/", {"login": "hero", "char_id": char.char_id}, format="json")
+        assert result.status_code == 200, result.data
+    unstuck.assert_called_with("hero", char.char_id, location)
+    result = api.post("/api/v1/customer/server/characters/unstuck/", {"login": "someone_else", "char_id": char.char_id}, format="json")
+    assert result.status_code == 403
+    assert unstuck.call_count == 2
+
+
+@pytest.mark.parametrize("location,expected", [(None, (83400, 147940, -3404)), ({"x": -1, "y": -2, "z": -3}, (-1, -2, -3))])
+def test_sql_unstuck_sends_exact_destination(mocker, location, expected):
+    from types import SimpleNamespace
+
+    from apps.server.infrastructure.sqlalchemy_gateway import SqlAlchemyLineageGateway
+    gateway = object.__new__(SqlAlchemyLineageGateway)
+    mocker.patch.object(gateway, "_require_offline", return_value=SimpleNamespace(char_id=7))
+    execute = mocker.patch.object(gateway, "_execute")
+    gateway.unstuck("hero", 7, location)
+    execute.assert_called_once_with("unstuck", dict(zip(("x", "y", "z"), expected)) | {"cid": 7, "login": "hero"})
+
+
+@pytest.mark.django_db
+def test_unstuck_custom_destination_requires_offline_character(api, player):
+    from apps.server.infrastructure.models import IndexConfig
+    IndexConfig.objects.create(unstuck_location={"x": -1, "y": -2, "z": -3})
+    api.force_authenticate(user=player)
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    char = gateway.seed_character("hero", "OnlineHero", online=True)
+    result = api.post("/api/v1/customer/server/characters/unstuck/", {"login": "hero", "char_id": char.char_id}, format="json")
+    assert result.status_code == 400

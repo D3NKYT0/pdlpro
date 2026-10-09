@@ -541,9 +541,9 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         char = self._require_offline(login, char_id)
         self._execute("change_sex", {"sex": sex, "cid": char.char_id, "login": login})
 
-    def unstuck(self, login: str, char_id: int) -> None:
+    def unstuck(self, login: str, char_id: int, location: dict[str, int] | None = None) -> None:
         char = self._require_offline(login, char_id)
-        x, y, z = UNSTUCK
+        x, y, z = (location["x"], location["y"], location["z"]) if location else UNSTUCK
         self._execute("unstuck", {"x": x, "y": y, "z": z, "cid": char.char_id, "login": login})
 
     def supports(self, capability: str) -> bool:

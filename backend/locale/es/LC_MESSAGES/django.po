@@ -5759,3 +5759,9 @@ msgstr "Este pedido debe pagarse en el sitio del proveedor."
 
 msgid "Não foi possível iniciar o pagamento externo."
 msgstr "No se pudo iniciar el pago externo."
+
+msgid "Destino de destravamento"
+msgstr "Destino de desatasco"
+
+msgid "Destino de destravamento inválido. Informe X, Y e Z como inteiros entre -2147483648 e 2147483647."
+msgstr "Destino de desatasco inválido. Introduzca X, Y y Z como enteros entre -2147483648 y 2147483647."
