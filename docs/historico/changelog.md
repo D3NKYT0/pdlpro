@@ -2,13 +2,17 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 5 de outubro de 2026
+> **Atualizado:** 9 de outubro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Não publicado]
+
+## [2.7.2] - 2026-10-09
+
+Lançamento com criação de personagens configurável (atributos iniciais e kits de itens por classe), novos retratos por classe e sexo e descrições personalizáveis das cobranças Stripe e Mercado Pago. A API acompanha a versão 2.7.2.
 
 ### Adicionado
 
