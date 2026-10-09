@@ -3,7 +3,7 @@ import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
 import { Eye, History } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
-import { formatCurrency, formatDateTime as formatDate, formatNumber } from '../../lib/formatters'
+import { formatCoins, formatDateTime as formatDate, formatNumber } from '../../lib/formatters'
 import { CharacterAvatar } from '../character/CharacterAvatar'
 import type { ApiAuction } from '../../services/api'
 import { auctionDisplayName, auctionStatusFor, isCharacterAuction } from './auctionHelpers'
@@ -52,7 +52,7 @@ export function AuctionHistory({ auctions, loading, onView }: AuctionHistoryProp
               </div>
               <div className="marketplace-sale-meta">
                 <span className={`marketplace-status ${status.className}`}>{status.label}</span>
-                <strong>{formatCurrency(auction.current_bid ?? auction.min_bid)}</strong>
+                <strong>{formatCoins(auction.current_bid ?? auction.min_bid)}</strong>
                 <small>{formatDate(auction.created_at)}</small>
               </div>
               <div className="marketplace-sale-actions">

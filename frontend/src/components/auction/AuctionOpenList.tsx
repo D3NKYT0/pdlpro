@@ -7,7 +7,7 @@ import {
   Sparkles,
 } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
-import { formatCurrency, formatNumber } from '../../lib/formatters'
+import { formatCoins, formatNumber } from '../../lib/formatters'
 import { CharacterAvatar } from '../character/CharacterAvatar'
 import { getClassName } from '../../lib/lineage'
 import type { ApiAuction } from '../../services/api'
@@ -82,7 +82,7 @@ export function AuctionOpenList({ auctions, username, loading, onSelect }: Aucti
               <div className="auction-listing-card-footer">
                 <span>
                   <small>{auction.current_bid ? t('auctions.list.currentBid') : t('auctions.list.startingValue')}</small>
-                  <strong>{formatCurrency(auction.current_bid ?? auction.min_bid)}</strong>
+                  <strong>{formatCoins(auction.current_bid ?? auction.min_bid)}</strong>
                 </span>
                 <span className="marketplace-open-listing">{t('auctions.list.view')} <ChevronRight aria-hidden="true" /></span>
               </div>

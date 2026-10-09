@@ -1,4 +1,5 @@
 import i18n from 'i18next'
+import { syncCoinName } from './currency'
 import { initReactI18next } from 'react-i18next'
 import {
   detectBrowserLanguage,
@@ -66,10 +67,14 @@ void i18n.use(initReactI18next).init({
   defaultNS: 'common',
   ns: ['common', 'public', 'auth', 'panel', 'admin', 'help', 'personality', ...extNamespaces],
   interpolation: { escapeValue: false },
+  react: { bindI18n: 'languageChanged coinNameChanged' },
   returnNull: false,
 })
 
+syncCoinName(i18n)
+
 i18n.on('languageChanged', (language) => {
+  syncCoinName(i18n)
   if (language === 'pt' || language === 'en' || language === 'es') {
     if (import.meta.env.MODE === 'test' || !readCookieConsent() || hasFunctionalConsent()) {
       persistLanguage(language)

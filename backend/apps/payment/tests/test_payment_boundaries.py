@@ -434,3 +434,43 @@ def test_reopen_rejects_another_users_order(owner):
             CreatePaymentOrderInput(user_id=owner.id, currency="BRL", method="stripe", source_order_id=source.id)
         )
 
+
+
+
+def test_hosted_checkout_reuses_order_and_credits_once(owner, api, settings, mocker):
+    from types import SimpleNamespace
+
+    from apps.payment.application.use_cases import (
+        CreatePaymentOrderInput,
+        CreatePaymentOrderUseCase,
+    )
+    _enable_both_gateways(settings)
+    settings.STRIPE_CHECKOUT_MODE = "redirect"
+    create = mocker.patch("stripe.checkout.Session.create", return_value=SimpleNamespace(id="cs_hosted", url="https://checkout.stripe.com/pay/cs_hosted"))
+    use_case = DependencyInjection.root().create_scope().resolve(CreatePaymentOrderUseCase)
+    data = CreatePaymentOrderInput(user_id=owner.id, amount=Decimal("10.00"), currency="USD", method="stripe")
+    first = use_case.execute(data)
+    assert use_case.execute(data).id == first.id
+    create.assert_called_once()
+    mocker.patch("stripe.checkout.Session.retrieve", return_value=SimpleNamespace(id="cs_hosted", payment_status="paid", status="complete"))
+    for _ in range(2):
+        response = api.get(f"/api/v1/customer/payments/{first.id}/status/")
+        assert response.status_code == 200, response.data
+        assert response.data["status"] == "confirmed"
+    assert Wallet.objects.get(user=owner).balance == first.coins
+    assert WalletTransaction.objects.filter(wallet__user=owner, kind="ENTRADA").count() == 1
+
+
+def test_hosted_order_process_is_blocked_and_status_checks_owner(owner, api, settings, mocker):
+    _enable_both_gateways(settings)
+    other = get_user_model().objects.create_user(username="otherhosted", email="other@test.dev")
+    order = PedidoPagamento.objects.create(user=owner, amount=10, coins=10, currency="USD", method="stripe", status="pending", external_id="cs_hosted", checkout_url="https://checkout.stripe.com/pay/cs_hosted")
+    call = mocker.patch("stripe.checkout.Session.retrieve")
+    response = api.post(f"/api/v1/customer/payments/{order.id}/process/", {}, format="json")
+    assert response.status_code == 400, response.data
+    api.force_authenticate(other)
+    assert api.get(f"/api/v1/customer/payments/{order.id}/status/").status_code == 403
+    api.force_authenticate(None)
+    assert api.get(f"/api/v1/customer/payments/{order.id}/status/").status_code == 401
+    call.assert_not_called()
+    assert not WalletTransaction.objects.exists()

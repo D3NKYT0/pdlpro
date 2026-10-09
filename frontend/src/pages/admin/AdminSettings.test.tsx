@@ -176,6 +176,8 @@ it.each([false, true])('serviços salva preço e disponibilidade; erro=%s', asyn
   if (fail) vi.mocked(staffApi.saveServices).mockRejectedValue(new ApiError('Não autorizado', 403, 'DENIED'))
   const user = mount(<AdminServicesPage />)
   const price = await screen.findByRole('spinbutton', { name: /Preço/ })
+  expect(screen.getByText('moedas')).toBeVisible()
+  expect(screen.queryByText('R$')).not.toBeInTheDocument()
   await user.clear(price)
   await user.type(price, '12.34')
   await user.click(screen.getByRole('checkbox', { name: 'Disponível' }))

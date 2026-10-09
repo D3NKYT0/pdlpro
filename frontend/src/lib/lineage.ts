@@ -1,4 +1,5 @@
-import { formatCurrency } from './formatters'
+import i18n from '../i18n'
+import { formatCoins } from './formatters'
 
 const classNames: Record<number, string> = {
   0: 'Human Fighter',
@@ -112,6 +113,6 @@ export function getClassName(classId: number | undefined) {
 
 export function formatServicePrice(value: string | undefined) {
   const amount = Number(value)
-  if (!Number.isFinite(amount) || amount <= 0) return 'Grátis'
-  return formatCurrency(amount)
+  if (!Number.isFinite(amount) || amount <= 0) return i18n.t('free', { ns: 'common' })
+  return formatCoins(amount)
 }

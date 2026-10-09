@@ -5735,3 +5735,27 @@ msgstr "Configuración inicial del personaje no válida."
 
 msgid "Configuração inicial de personagens"
 msgstr "Configuración inicial de personajes"
+
+msgid "O descritor da fatura deve ter no máximo 13 caracteres."
+msgstr "El descriptor del extracto debe tener como máximo 13 caracteres."
+
+msgid "O nome do banco/carteira deve ter no máximo 80 caracteres."
+msgstr "El nombre del banco/cartera debe tener como máximo 80 caracteres."
+
+msgid "Compra fichas para os jogos do painel usando moedas da carteira: uma moeda por ficha."
+msgstr "Compra fichas para los juegos del panel usando monedas de la cartera: una moneda por ficha."
+
+msgid "Lista os preços dos serviços de personagem em moedas da carteira."
+msgstr "Lista los precios de los servicios de personaje en monedas de la cartera."
+
+msgid "O nome da moeda deve ter até 40 caracteres, sem marcação ou caracteres de controle."
+msgstr "El nombre de la moneda debe tener hasta 40 caracteres, sin marcado ni caracteres de control."
+
+msgid "moedas"
+msgstr "monedas"
+
+msgid "Este pedido deve ser pago no site do provedor."
+msgstr "Este pedido debe pagarse en el sitio del proveedor."
+
+msgid "Não foi possível iniciar o pagamento externo."
+msgstr "No se pudo iniciar el pago externo."

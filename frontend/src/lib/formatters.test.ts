@@ -1,6 +1,6 @@
-import { expect, it } from 'vitest'
-import '../i18n'
-import { formatCompactQuantity, formatCurrency, formatDateTime, formatQuantityLabel, formatTime } from './formatters'
+import { afterEach, expect, it } from 'vitest'
+import i18n from '../i18n'
+import { formatCoins, formatCompactQuantity, formatCurrency, formatDateTime, formatQuantityLabel, formatTime } from './formatters'
 import { apiErrorMessage, isInsufficientTokens } from './errors'
 import { ApiError } from '../services/api'
 
@@ -45,4 +45,14 @@ it.each([
 it('rótulo de quantidade mantém valor completo quando abreviado', () => {
   expect(formatQuantityLabel(100)).toBe('100')
   expect(formatQuantityLabel(1_500_000)).toBe('1,5KK (1.500.000)')
+})
+
+afterEach(async () => { await i18n.changeLanguage('pt') })
+it.each([['pt', '12,34 moedas'], ['en', '12.34 coins'], ['es', '12,34 monedas']])('preços internos usam moedas e locale %s', async (language, expected) => {
+  await i18n.changeLanguage(language)
+  expect(formatCoins('12.34')).toBe(expected)
+  expect(formatCurrency('12.34')).not.toBe(expected)
+})
+it.each([null, undefined, 'invalid', 0])('preço de moedas vazio ou zero: %s', value => {
+  expect(formatCoins(value)).toBe('0,00 moedas')
 })

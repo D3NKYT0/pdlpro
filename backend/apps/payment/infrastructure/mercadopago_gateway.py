@@ -19,6 +19,11 @@ from apps.payment.domain.exceptions import (
     PaymentMethodUnavailableError,
 )
 from apps.payment.domain.gateways import IPaymentGateway
+from apps.payment.infrastructure.checkout import (
+    checkout_return_url,
+    provider_checkout_url,
+)
+from common.currency_identity import coin_display_name
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +43,7 @@ class MercadoPagoGateway(IPaymentGateway):
         return bool(
             getattr(settings, "MERCADO_PAGO_ACTIVATE_PAYMENTS", False)
             and getattr(settings, "MERCADO_PAGO_ACCESS_TOKEN", "")
-            and getattr(settings, "MERCADO_PAGO_PUBLIC_KEY", "")
+            and (getattr(settings, "MERCADO_PAGO_CHECKOUT_MODE", "embedded") == "redirect" or getattr(settings, "MERCADO_PAGO_PUBLIC_KEY", ""))
         )
 
     def public_key(self) -> str:
@@ -47,11 +52,46 @@ class MercadoPagoGateway(IPaymentGateway):
     def create_checkout(self, order: PaymentOrderEntity) -> CheckoutSession:
         if not self.is_available():
             raise PaymentMethodUnavailableError("Mercado Pago não está habilitado.")
+        if getattr(settings, "MERCADO_PAGO_CHECKOUT_MODE", "embedded") == "redirect":
+            return self._create_redirect_checkout(order)
         return CheckoutSession(
             external_id="",
             checkout_url="",
             public_key=self.public_key(),
         )
+
+    def _create_redirect_checkout(self, order: PaymentOrderEntity) -> CheckoutSession:
+        """Cria preferência Checkout Pro; cartão é preenchido no ambiente do provedor."""
+        import mercadopago
+
+        try:
+            return_url = checkout_return_url(order.id)
+            excluded = [{"id": kind} for option, kind in (("PIX", "bank_transfer"), ("BOLETO", "ticket"), ("CREDIT_CARD", "credit_card"), ("DEBIT_CARD", "debit_card")) if not getattr(settings, f"MERCADO_PAGO_ENABLE_{option}", True)]
+            data = {
+                "items": [{"id": str(order.id), "title": payment_description(getattr(settings, "MERCADO_PAGO_PAYMENT_DESCRIPTION", ""), order, default=f"{coin_display_name(title=True)} PDL ({order.package_code or 'custom'})", coin_name=coin_display_name()), "quantity": 1, "currency_id": order.currency, "unit_price": float(order.amount)}],
+                "external_reference": f"pdl_coins_{order.id}",
+                "metadata": {"order_id": str(order.id), "user_id": str(order.user_id), "coins": str(order.coins)},
+                "back_urls": {key: return_url for key in ("success", "pending", "failure")},
+                "payment_methods": {"excluded_payment_types": excluded},
+            }
+            if return_url.startswith("https://"):
+                data["auto_return"] = "approved"
+            descriptor = (getattr(settings, "MERCADO_PAGO_STATEMENT_DESCRIPTOR", "") or "").strip()
+            if descriptor:
+                data["statement_descriptor"] = descriptor
+            notify = getattr(settings, "PAYMENT_WEBHOOK_BASE_URL", "") or settings.PROJECT_URL
+            data["notification_url"] = f"{str(notify).rstrip('/')}/api/v1/system/webhooks/mercadopago/"
+            response = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN).preference().create(data, RequestOptions(connection_timeout=15.0, max_retries=0))
+            result = response.get("response") or {}
+            if response.get("status", 500) >= 400 or not result.get("id"):
+                raise PaymentGatewayError("Não foi possível iniciar o pagamento externo.")
+            # Uma preferência não é um pagamento: o webhook associa o pagamento por metadata.
+            return CheckoutSession(external_id="", checkout_url=provider_checkout_url(result.get("init_point"), "mercadopago"))
+        except PaymentGatewayError:
+            raise
+        except Exception as exc:
+            logger.exception("Mercado Pago falhou ao criar preferência")
+            raise PaymentGatewayError("Não foi possível iniciar o pagamento externo.") from exc
 
     def process_payment(self, order: PaymentOrderEntity, payload: dict) -> ProcessResult:
         if not self.is_available():
@@ -98,7 +138,7 @@ class MercadoPagoGateway(IPaymentGateway):
         payment_data: dict[str, Any] = {
             "transaction_amount": float(order.amount),
             "description": payment_description(
-                getattr(settings, "MERCADO_PAGO_PAYMENT_DESCRIPTION", ""), order, default=f"Moedas PDL ({order.package_code or 'custom'})",
+                getattr(settings, "MERCADO_PAGO_PAYMENT_DESCRIPTION", ""), order, default=f"{coin_display_name(title=True)} PDL ({order.package_code or 'custom'})", coin_name=coin_display_name(),
             ),
             "payment_method_id": payload.get("payment_method_id"),
             "payer": {
@@ -111,6 +151,9 @@ class MercadoPagoGateway(IPaymentGateway):
             "external_reference": f"pdl_coins_{order.id}",
             "metadata": {"order_id": str(order.id), "user_id": str(order.user_id), "coins": str(order.coins)},
         }
+        descriptor = (getattr(settings, "MERCADO_PAGO_STATEMENT_DESCRIPTOR", "") or "").strip()
+        if descriptor:
+            payment_data["statement_descriptor"] = descriptor
         if payload.get("token"):
             payment_data["token"] = payload["token"]
             payment_data["installments"] = int(payload.get("installments") or 1)

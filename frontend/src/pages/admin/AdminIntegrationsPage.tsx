@@ -538,6 +538,7 @@ export function AdminIntegrationsPage() {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['staff-integrations'] }),
         queryClient.invalidateQueries({ queryKey: ['server-info'] }),
+        queryClient.invalidateQueries({ queryKey: ['wallet'] }),
       ])
     },
     onError: (error) => toast.error(apiErrorMessage(error, t('integrations.toastSaveFail'))),
@@ -604,6 +605,15 @@ export function AdminIntegrationsPage() {
     save.mutate({ section: tab, payload })
   }
 
+  const renderCheckoutMode = (provider: 'STRIPE' | 'MERCADO_PAGO') => (
+    <Field label={t(`integrations.fields.${provider}_CHECKOUT_MODE`)} hint={t('integrations.payments.checkoutModeHint')}>
+      <Select aria-label={t(`integrations.fields.${provider}_CHECKOUT_MODE`)} value={String(draft[`${provider}_CHECKOUT_MODE`] || 'embedded')} disabled={save.isPending}
+        options={[{ value: 'embedded', label: t('integrations.payments.checkoutEmbedded') }, { value: 'redirect', label: t('integrations.payments.checkoutRedirect') }]}
+        onChange={value => setField(`${provider}_CHECKOUT_MODE`, value)} />
+      <p role="note">{t('integrations.payments.checkoutLegal')}</p>
+    </Field>
+  )
+
   const renderSecret = (key: string) => {
     const meta = fields[key]
     const configured = Boolean(meta?.configured)
@@ -648,6 +658,7 @@ export function AdminIntegrationsPage() {
     <Field key={key} label={t(`integrations.fields.${key}`)} hint={hint}>
       <input
         type={inputType}
+        maxLength={key === 'MERCADO_PAGO_STATEMENT_DESCRIPTOR' ? 13 : key === 'WALLET_DISPLAY_NAME' ? 80 : key === 'WALLET_COIN_NAME' ? 40 : undefined}
         value={String(draft[key] ?? '')}
         onChange={(event) => setField(key, event.target.value)}
         disabled={save.isPending}
@@ -711,6 +722,7 @@ export function AdminIntegrationsPage() {
                   {renderSecret('STRIPE_PUBLISHABLE_KEY')}
                   {renderSecret('STRIPE_WEBHOOK_SECRET')}
                   {renderBool('STRIPE_ACTIVATE_PAYMENTS')}
+                  {renderCheckoutMode('STRIPE')}
                   {<PaymentDescriptionField provider="STRIPE" value={String(draft.STRIPE_PAYMENT_DESCRIPTION ?? '')} disabled={save.isPending} onChange={value => setField('STRIPE_PAYMENT_DESCRIPTION', value)} />}
                   {renderText('STRIPE_PRESENTMENT_CURRENCIES', 'text', t('integrations.payments.stripePresentmentHint', { defaultValue: 'Moedas de cobrança suportadas no Stripe, separadas por vírgula. Ex.: BRL, USD, EUR' }))}
                 </div>
@@ -726,7 +738,9 @@ export function AdminIntegrationsPage() {
                   {renderSecret('MERCADO_PAGO_PUBLIC_KEY')}
                   {renderSecret('MERCADO_PAGO_WEBHOOK_SECRET')}
                   {renderBool('MERCADO_PAGO_ACTIVATE_PAYMENTS')}
+                  {renderCheckoutMode('MERCADO_PAGO')}
                   {<PaymentDescriptionField provider="MERCADO_PAGO" value={String(draft.MERCADO_PAGO_PAYMENT_DESCRIPTION ?? '')} disabled={save.isPending} onChange={value => setField('MERCADO_PAGO_PAYMENT_DESCRIPTION', value)} />}
+                  {renderText('MERCADO_PAGO_STATEMENT_DESCRIPTOR', 'text', t('integrations.payments.statementDescriptorHint'))}
                   <div className="admin-integrations-subsection">
                     <h4>{t('integrations.payments.mpMethodsTitle', { defaultValue: 'Opções de pagamento no checkout' })}</h4>
                     <p className="muted">{t('integrations.payments.mpMethodsHint', { defaultValue: 'Selecione quais opções serão disponibilizadas para os jogadores (ex.: somente PIX, somente boleto ou todas).' })}</p>
@@ -747,6 +761,8 @@ export function AdminIntegrationsPage() {
                 description={t('integrations.payments.policyHint')}
               >
                 <div className="admin-integrations-stack">
+                  {renderText('WALLET_DISPLAY_NAME', 'text', t('integrations.payments.walletNameHint'))}
+                  {renderText('WALLET_COIN_NAME', 'text', t('integrations.payments.coinNameHint'))}
                   {renderText('PAYMENT_METHODS', 'text', t('integrations.payments.methodsHint'))}
                   {draft.MERCADO_PAGO_ACTIVATE_PAYMENTS === true && draft.STRIPE_ACTIVATE_PAYMENTS === true ? (
                     <Field

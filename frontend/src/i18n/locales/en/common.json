@@ -1,4 +1,9 @@
 {
+  "coinName": "coins",
+  "coinNameSingular": "coin",
+  "coinNameTitle": "Coins",
+  "coinAmount": "{{value}} {{coinName}}",
+  "free": "Free",
   "brand": "PDL PRO",
   "lineage": "Lineage",
   "loading": "Loading…",

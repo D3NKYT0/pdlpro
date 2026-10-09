@@ -3,7 +3,7 @@ import {
   ChevronRight,
   Store,
 } from 'lucide-react'
-import { formatCurrency, formatNumber } from '../../lib/formatters'
+import { formatCoins, formatNumber } from '../../lib/formatters'
 import { CharacterAvatar } from '../character/CharacterAvatar'
 import { getClassName } from '../../lib/lineage'
 import type { ApiCharacterListing } from '../../services/api'
@@ -44,7 +44,7 @@ export function MarketplaceCatalog({ listings, username, loading, onSelect }: Ma
                 <span><b>{listing.equipment.length}</b> {t('marketplace.catalog.equips')}</span>
               </div>
               <div className="marketplace-listing-card-footer">
-                <strong>{formatCurrency(listing.price)}</strong>
+                <strong>{formatCoins(listing.price)}</strong>
                 <span className="marketplace-open-listing">
                   {t('marketplace.catalog.view')} <ChevronRight aria-hidden="true" />
                 </span>

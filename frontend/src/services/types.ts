@@ -26,6 +26,7 @@ export interface ApiUser {
 }
 
 export interface ApiServerInfo {
+  coin_name?: string
   name: string
   slogan: string
   description: string
@@ -79,6 +80,8 @@ export interface ApiRankingEntry {
 }
 
 export interface ApiWallet {
+  coin_name?: string
+  display_name?: string
   id: string
   balance: string
   bonus_balance: string
@@ -193,6 +196,7 @@ export interface ApiPaymentCatalog {
     public_key: string
     currencies: string[]
     retry_currencies?: string[]
+    checkout_mode?: 'embedded' | 'redirect'
     auto_confirm?: boolean
     options?: {
       pix?: boolean

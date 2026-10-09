@@ -80,6 +80,12 @@ def _coerce_value(key: str, raw: Any) -> Any:
             )
         return text
     text = "" if raw is None else str(raw).strip()
+    if key == "WALLET_COIN_NAME" and (len(text) > 40 or any(ord(char) < 32 or char in "<>{}" for char in text)):
+        raise ValidationDomainError(_("O nome da moeda deve ter até 40 caracteres, sem marcação ou caracteres de controle."))
+    if key == "WALLET_DISPLAY_NAME" and len(text) > 80:
+        raise ValidationDomainError(_("O nome do banco/carteira deve ter no máximo 80 caracteres."))
+    if key == "MERCADO_PAGO_STATEMENT_DESCRIPTOR" and len(text) > 13:
+        raise ValidationDomainError(_("O descritor da fatura deve ter no máximo 13 caracteres."))
     return text
 
 
@@ -139,6 +145,9 @@ def _merge_patch(current: dict[str, Any], patch: dict[str, Any], allowed: tuple[
         if key not in allowed:
             continue
         if raw is None:
+            continue
+        if key in {"STRIPE_CHECKOUT_MODE", "MERCADO_PAGO_CHECKOUT_MODE"}:
+            next_data[key] = _coerce_value(key, raw)
             continue
         if isinstance(raw, str) and raw.strip() == "":
             if key in SECRET_KEYS or key in MASKED_PUBLIC_KEYS:

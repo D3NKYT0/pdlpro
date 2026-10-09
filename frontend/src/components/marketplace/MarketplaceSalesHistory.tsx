@@ -5,7 +5,7 @@ import {
   Eye,
   PackageOpen,
 } from 'lucide-react'
-import { formatCurrency, formatDateTime as formatDate } from '../../lib/formatters'
+import { formatCoins, formatDateTime as formatDate } from '../../lib/formatters'
 import { CharacterAvatar } from '../character/CharacterAvatar'
 import { getClassName } from '../../lib/lineage'
 import type { ApiCharacterListing } from '../../services/api'
@@ -52,7 +52,7 @@ export function MarketplaceSalesHistory({
               </div>
               <div className="marketplace-sale-meta">
                 <span className={`marketplace-status ${status.className}`}>{status.label}</span>
-                <strong>{formatCurrency(listing.price)}</strong>
+                <strong>{formatCoins(listing.price)}</strong>
                 <small>{formatDate(listing.sold_at || listing.created_at)}</small>
               </div>
               <div className="marketplace-sale-actions">

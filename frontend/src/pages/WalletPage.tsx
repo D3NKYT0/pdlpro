@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom'
 import { useResourceControls } from '../contexts/ResourceControlsContext'
 import { MicroResource } from '../components/programs/MicroResource'
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
@@ -19,6 +20,8 @@ import { paymentApi, walletApi } from '../services/api'
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../services/types'
 
 export function WalletPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const returnHandled = useRef(false)
   const enabled = useResourceControls()
   const { t } = useTranslation('panel')
   const { user } = useAuth()
@@ -124,6 +127,25 @@ export function WalletPage() {
     await queryClient.invalidateQueries({ queryKey: ['payments'] })
   }
 
+  useEffect(() => {
+    const id = searchParams.get('payment_return')
+    if (!id || returnHandled.current) return
+    returnHandled.current = true
+    void paymentApi.status(id).then(async current => {
+      if (current.status === 'confirmed') {
+        toast.success(t('wallet.toast.coinsCredited', { coins: current.coins }))
+        await refreshWallet()
+      } else {
+        setOrder(current)
+      }
+    }).catch(error => toast.error(apiErrorMessage(error, t('wallet.toast.paymentStartFailed'))))
+      .finally(() => {
+        const next = new URLSearchParams(searchParams)
+        next.delete('payment_return')
+        setSearchParams(next, { replace: true })
+      })
+  }, [searchParams, setSearchParams])
+
   const handleCloseCheckout = useCallback(() => {
     void brickRef.current?.unmount()
     brickRef.current = null
@@ -137,6 +159,7 @@ export function WalletPage() {
       toast.error(t('wallet.toast.rechargeUnavailable'))
       return
     }
+    if (busy) return
     setBusy(true)
     try {
       await brickRef.current?.unmount()
@@ -163,7 +186,7 @@ export function WalletPage() {
 
   useEffect(() => {
     setIsBrickReady(false)
-    if (!order || order.method !== 'mercadopago' || !mpConfig?.public_key || order.pix_qr_code) return
+    if (!order || order.checkout_url || order.method !== 'mercadopago' || !mpConfig?.public_key || order.pix_qr_code) return
     const sanitized = sanitizeDocument(document)
     if (!inferDocumentType(sanitized)) {
       void brickRef.current?.unmount()
@@ -256,7 +279,7 @@ export function WalletPage() {
   }, [order?.id, order?.method, order?.pix_qr_code, sanitizeDocument(document), mpConfig?.public_key])
 
   useEffect(() => {
-    if (!order || order.method !== 'stripe' || !stripeConfig?.public_key || !order.client_secret) return
+    if (!order || order.checkout_url || order.method !== 'stripe' || !stripeConfig?.public_key || !order.client_secret) return
     let unmount: (() => void) | undefined
     void (async () => {
       try {
@@ -275,29 +298,38 @@ export function WalletPage() {
   }, [order?.id, order?.client_secret, stripeConfig?.public_key])
 
   useEffect(() => {
-    if (!order || order.status === 'confirmed' || !order.pix_qr_code) return
+    if (!order || order.status === 'confirmed' || (!order.pix_qr_code && !(order.checkout_url && ['stripe', 'mercadopago'].includes(order.method)))) return
+    let polling = false
     const timer = window.setInterval(async () => {
-      const current = await paymentApi.status(order.id)
-      setOrder(current)
-      if (current.status === 'confirmed') {
-        trackPurchase({
-          transactionId: current.id,
-          amount: Number(current.amount),
-          currency: current.currency,
-          items: current.package_code ? [{
-            id: current.package_code,
-            name: current.package_code,
-            price: Number(current.amount),
-            quantity: 1,
-          }] : undefined,
-        })
-        toast.success(t('wallet.toast.coinsCredited', { coins: current.coins }))
-        setOrder(null)
-        await refreshWallet()
+      if (polling) return
+      polling = true
+      try {
+        const current = await paymentApi.status(order.id)
+        setOrder(current)
+        if (current.status === 'confirmed') {
+          trackPurchase({
+            transactionId: current.id,
+            amount: Number(current.amount),
+            currency: current.currency,
+            items: current.package_code ? [{
+              id: current.package_code,
+              name: current.package_code,
+              price: Number(current.amount),
+              quantity: 1,
+            }] : undefined,
+          })
+          toast.success(t('wallet.toast.coinsCredited', { coins: current.coins }))
+          setOrder(null)
+          await refreshWallet()
+        }
+      } catch (error) {
+        toast.error(apiErrorMessage(error, t('wallet.toast.paymentStartFailed')))
+      } finally {
+        polling = false
       }
     }, 4000)
     return () => window.clearInterval(timer)
-  }, [order?.id, order?.pix_qr_code, order?.status])
+  }, [order?.id, order?.pix_qr_code, order?.checkout_url, order?.status])
 
   async function payStripe(event: FormEvent) {
     event.preventDefault()
@@ -403,7 +435,7 @@ export function WalletPage() {
 
   return (
     <div className="wallet-page">
-      <WalletHero balance={wallet.data?.balance} bonusBalance={wallet.data?.bonus_balance} />
+      <WalletHero displayName={wallet.data?.display_name} balance={wallet.data?.balance} bonusBalance={wallet.data?.bonus_balance} />
 
       <div className="wallet-main-grid">
         <MicroResource code="wallet-purchase"><WalletPurchaseCard

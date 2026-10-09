@@ -28,7 +28,7 @@ import {
 import toast from 'react-hot-toast'
 import { gamesApi } from '../services/api'
 import { isInsufficientTokens } from '../lib/errors'
-import { formatCompactQuantity } from '../lib/formatters'
+import { formatCoins, formatCompactQuantity, formatNumber } from '../lib/formatters'
 import { ItemIcon } from '../components/ItemIcon'
 import { FishingGame } from '../components/games/FishingGame'
 import { BoxHuntCard } from '../components/games/BoxCatalog'
@@ -246,7 +246,7 @@ export function GamesPage() {
   async function claim() {
     await action.run(async () => {
       const result = await gamesApi.claimDailyBonus()
-      toast.success(t('games.toast.bonusCredited', { amount: result.amount }))
+      toast.success(t('games.toast.bonusCredited', { amount: formatNumber(result.amount, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }))
       await refresh()
     }, t('games.toast.claimError'))
   }
@@ -751,7 +751,7 @@ export function GamesPage() {
           </div>
           <div className="daily-value">
             <span>{t('games.daily.todayValue')}</span>
-            <strong>R$ {bonus.data?.amount ?? '10.00'}</strong>
+            <strong>{formatCoins(bonus.data?.amount ?? '10.00')}</strong>
           </div>
           {bonus.data?.claimed ? (
             <div className="game-state is-complete"><Sparkles aria-hidden="true" /> {t('games.daily.claimed')}</div>

@@ -2,7 +2,7 @@ import { MicroResource } from '../programs/MicroResource'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../ui/Button'
 import { ItemIcon } from '../ItemIcon'
-import { formatCompactQuantity } from '../../lib/formatters'
+import { formatCompactQuantity, formatNumber } from '../../lib/formatters'
 import { inferBoxRarity } from './gameArt'
 import { BoxChest } from './GameVisuals'
 
@@ -86,7 +86,7 @@ export function BoxHuntCard({
           </ul>
         </div>
       ) : null}
-      {owned ? null : <b className="game-box-price">{t('games.boxes.price', { price })}</b>}
+      {owned ? null : <b className="game-box-price">{t('games.boxes.price', { price: formatNumber(price ?? 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) })}</b>}
       <footer className="game-box-actions">
         <small className="game-box-hint">
           {locked ? t('games.boxes.resetLockedHint') : resetting ? t('games.boxes.resetHint') : t('games.boxes.openHint')}

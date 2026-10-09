@@ -144,3 +144,17 @@ it('exibe aviso de simulação quando método for mock', () => {
 
   expect(screen.getByText('Pedido simulado criado')).toBeInTheDocument()
 })
+
+
+it.each(['stripe', 'mercadopago'])('oferece checkout externo %s sem formulário de cartão', async method => {
+  const onClose = vi.fn()
+  render(<WalletCheckoutModal open order={{ ...mockOrder, method, checkout_url: 'https://checkout.stripe.com/pay/cs_test' }} onClose={onClose} document="10505627477" onDocumentChange={vi.fn()} busy={false} onPayStripe={vi.fn()} simulatedPayment={false} packages={[]} />)
+  const link = screen.getByRole('link', { name: 'Continuar no provedor' })
+  expect(link).toHaveAttribute('href', 'https://checkout.stripe.com/pay/cs_test')
+  expect(link).toHaveAttribute('target', '_self')
+  expect(document.getElementById('payment-brick')).toBeNull()
+  expect(document.getElementById('stripe-element')).toBeNull()
+  expect(screen.queryByLabelText('CPF ou CNPJ do pagador')).not.toBeInTheDocument()
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Cancelar e voltar' }))
+  expect(onClose).toHaveBeenCalledOnce()
+})

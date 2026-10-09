@@ -5,11 +5,12 @@ import { ArrowUpRight, Coins, Clock3, Landmark, ShieldCheck, Sparkles } from 'lu
 import { Card } from '../ui/Card'
 
 type WalletHeroProps = {
+  displayName?: string
   balance?: string
   bonusBalance?: string
 }
 
-export function WalletHero({ balance, bonusBalance }: WalletHeroProps) {
+export function WalletHero({ balance, bonusBalance, displayName }: WalletHeroProps) {
   const { t } = useTranslation('panel')
 
   return (
@@ -19,7 +20,7 @@ export function WalletHero({ balance, bonusBalance }: WalletHeroProps) {
         <span className="wallet-title-icon" aria-hidden="true">
           <Landmark />
         </span>
-        <h1>{t('wallet.hero.title')}</h1>
+        <h1>{displayName?.trim() || t('wallet.hero.title')}</h1>
         <p>{t('wallet.hero.subtitle')}</p>
         <div className="wallet-trust-row">
           <span><ShieldCheck aria-hidden="true" /> {t('wallet.hero.trustPayment')}</span>

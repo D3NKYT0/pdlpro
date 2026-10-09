@@ -61,3 +61,14 @@ def test_stripe_webhook_use_case_stores_sanitized_payload(mocker):
     assert logs.rows[0]["kind"] == "payment_intent.succeeded"
     assert "keep-out" not in str(logs.rows[0]["payload"])
     apply.execute.assert_called_once()
+
+
+
+def test_unpaid_checkout_completion_does_not_settle(mocker):
+    apply = mocker.Mock()
+    event = {"id": "evt", "type": "checkout.session.completed", "data": {"object": {"id": "cs_test", "payment_status": "unpaid", "payment_intent": "pi_test", "metadata": {"order_id": str(uuid4())}}}}
+    HandleStripeWebhookUseCase(_Logs(), apply).execute(HandleStripeWebhookInput(event=event))
+    apply.execute.assert_not_called()
+    event["type"] = "checkout.session.async_payment_succeeded"
+    HandleStripeWebhookUseCase(_Logs(), apply).execute(HandleStripeWebhookInput(event=event))
+    apply.execute.assert_called_once()

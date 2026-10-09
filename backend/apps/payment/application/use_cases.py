@@ -548,6 +548,8 @@ class ProcessPaymentUseCase(UseCase[ProcessPaymentInput, dict]):
             )
         if order.status == "confirmed":
             return {"order": order, "result": ProcessResult(status="approved", external_id=order.external_id)}
+        if order.checkout_url and order.method in {"mercadopago", "stripe"}:
+            raise PaymentMethodUnavailableError("Este pedido deve ser pago no site do provedor.")
         if order.status not in {"pending", "processing", "failed"}:
             raise PaymentNotPendingError()
         payload = dict(data.payload)

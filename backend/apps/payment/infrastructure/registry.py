@@ -75,6 +75,9 @@ class PaymentGatewayRegistry(IPaymentGatewayRegistry):
                 "currencies": currencies,
                 "auto_confirm": name == "mock" and getattr(settings, "PAYMENT_MOCK_AUTO_CONFIRM", False),
             }
+            if name in {"mercadopago", "stripe"}:
+                prefix = "MERCADO_PAGO" if name == "mercadopago" else "STRIPE"
+                entry["checkout_mode"] = getattr(settings, f"{prefix}_CHECKOUT_MODE", "embedded")
             if name == "mercadopago":
                 entry["options"] = {
                     "pix": getattr(settings, "MERCADO_PAGO_ENABLE_PIX", True),

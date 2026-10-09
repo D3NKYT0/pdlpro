@@ -144,3 +144,10 @@ def test_public_server_info_exposes_tracking_fields(settings):
     assert response.data["meta_pixel_id"] == "1122334455"
     assert response.data["tiktok_pixel_id"] == "C112233"
 
+
+@pytest.mark.django_db
+def test_public_info_exposes_wallet_coin_name(settings):
+    settings.WALLET_COIN_NAME = "Blablabla Coin"
+    response = APIClient().get("/api/v1/public/server/info/")
+    assert response.status_code == 200
+    assert response.data["coin_name"] == "Blablabla Coin"

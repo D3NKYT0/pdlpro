@@ -22,6 +22,11 @@ export function formatCurrency(value: string | number | null | undefined, curren
   return moneyFormatter(currency).format(Number(value) || 0)
 }
 
+/** Preços internos pagos com moedas da carteira, no idioma ativo. */
+export function formatCoins(value: string | number | null | undefined) {
+  return i18n.t('coinAmount', { ns: 'common', value: formatNumber(Number(value) || 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) })
+}
+
 export function formatDateTime(value: string | null | undefined, style: 'short' | 'medium' = 'medium') {
   if (!value) return i18n.t('unavailableDate', { ns: 'common' })
   const date = new Date(value)

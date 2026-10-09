@@ -1,6 +1,8 @@
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 
+from common.currency_identity import configured_coin_name
+
 
 class ServerInfoSerializer(serializers.Serializer):
     """Representa a configuração pública do servidor, incluindo crônica, rates e características.
@@ -14,6 +16,12 @@ class ServerInfoSerializer(serializers.Serializer):
     ``seo_title``, ``seo_description``, ``og_title``, ``og_description``,
     ``og_image``, ``discord_url``, ``trailer_youtube_id``.
     """
+
+    coin_name = serializers.SerializerMethodField()
+
+    def get_coin_name(self, obj) -> str:
+        """Nome público da moeda da carteira; vazio pede o fallback do idioma na SPA."""
+        return configured_coin_name()
 
     name = serializers.CharField()
     slogan = serializers.CharField(allow_blank=True)

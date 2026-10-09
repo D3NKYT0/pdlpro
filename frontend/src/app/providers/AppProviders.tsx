@@ -1,3 +1,4 @@
+import { CoinNameSync } from '../../components/wallet/CoinNameSync'
 import { ImpersonationBanner } from '../../components/auth/ImpersonationBanner'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'react-hot-toast'
@@ -20,6 +21,7 @@ export function AppProviders() {
         <QueryClientProvider client={queryClient}>
           <ResourceControlsProvider>
             <SiteMetadataSync />
+            <CoinNameSync />
             <CookieConsentProvider>
               <ConsentEnforcementBridge />
               <AuthProvider>

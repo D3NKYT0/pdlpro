@@ -648,7 +648,7 @@ class ServicePricesView(InjectedAPIView):
     @extend_schema(
         tags=["Conta Lineage"],
         summary=gettext_lazy("Preços dos serviços"),
-        description=gettext_lazy("Lista os preços dos serviços de personagem disponíveis no painel."),
+        description=gettext_lazy("Lista os preços dos serviços de personagem em moedas da carteira."),
     )
     def get(self, request):
         return Response(self.resolve(ListServicePricesUseCase).execute())

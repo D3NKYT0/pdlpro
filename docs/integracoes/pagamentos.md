@@ -119,8 +119,38 @@ padrões com quantidade de moedas (Stripe) ou código do pacote (Mercado Pago).
 Também há defaults opcionais de ambiente: `STRIPE_PAYMENT_DESCRIPTION` e
 `MERCADO_PAGO_PAYMENT_DESCRIPTION`. A configuração salva no painel tem prioridade.
 Cobranças já criadas e textos de identidade do vendedor controlados pelo provedor
-não são alterados. O campo não configura o descritor do extrato do cartão.
+não são alterados. O campo não configura o descritor do extrato do cartão. Para isso, use o campo separado
+**Nome na fatura do cartão — Mercado Pago** (até 13 caracteres), ou o default de
+ambiente `MERCADO_PAGO_STATEMENT_DESCRIPTOR`. Vazio omite o descritor no payload.
+Cada instalação configura sua própria identidade; nenhuma marca de cliente é fixa
+no core. O adaptador usa Checkout API (`payment().create`), enviando
+`description` e `statement_descriptor` no servidor; valores do navegador não os sobrescrevem.
 
 Os testes de gateways verificam o payload customizado e o fallback vazio; os testes
 de integrações verificam persistência e aplicação imediata, e a SPA cobre a edição
 e o envio dos dois campos pelo formulário existente.
+
+O nome da moeda virtual é configurado em `WALLET_COIN_NAME` (ou no painel de
+integrações), separado da descrição da cobrança. As descrições padrão o usam;
+textos personalizados podem usar `{moeda}`, `{coin_name}` ou `{moneda}`.
+Consulte [Economia do jogador](../funcionalidades/economia-jogador.md#nome-da-moeda-virtual).
+
+
+## Local do checkout e responsabilidade
+
+Em **Admin → Integrações → Pagamentos**, escolha separadamente o checkout de Stripe e Mercado Pago:
+
+- **No próprio site** (`embedded`, padrão): mantém Stripe Elements ou Mercado Pago Bricks. Os componentes do provedor coletam e tokenizam o cartão; o backend não deve receber PAN/CVV.
+- **No site do provedor** (`redirect`): cria Stripe Checkout ou preferência Checkout Pro do Mercado Pago. O painel mostra o resumo e um botão para continuar no provedor, sem montar o formulário integrado. Chaves públicas são necessárias somente no modo integrado.
+
+Configuração inicial: `STRIPE_CHECKOUT_MODE=embedded` e `MERCADO_PAGO_CHECKOUT_MODE=embedded`. Somente superadmin altera os modos. O catálogo expõe `checkout_mode`; o pedido externo expõe `checkout_url` HTTPS validado no domínio do provedor. `PROJECT_URL` define o retorno à carteira; `PAYMENT_WEBHOOK_BASE_URL` define a base de notificações. Em produção use HTTPS e configure os segredos dos webhooks. As credenciais devem pertencer à mesma instalação e conta do provedor.
+
+O modo vale para checkouts novos. Pedidos pendentes reutilizados preservam seu checkout original. O preço, a moeda real, o pacote e as moedas creditadas continuam calculados no servidor. No Mercado Pago as opções de cartão, Pix e boleto são enviadas como exclusões de tipos de pagamento; outros métodos oferecidos pelo Checkout Pro dependem da conta e do provedor.
+
+Voltar ao painel não confirma pagamento. No retorno, o painel consulta o status autenticado do pedido e acompanha pedidos externos pendentes a cada quatro segundos, sem sobrepor requisições; eventos assinados e consultas ao provedor liberam o saldo com a idempotência existente. Stripe Checkout concluído com pagamento ainda pendente não credita saldo: aguarda confirmação posterior (`checkout.session.async_payment_succeeded`). Habilite esse evento além de `checkout.session.completed` e `payment_intent.succeeded`. O Mercado Pago associa os pagamentos da preferência pelo `order_id` nos metadados; a preferência não é tratada como ID de pagamento.
+
+**Aviso legal exibido junto aos seletores:** os componentes integrados e a tokenização reduzem exposição a dados de cartão, mas o estabelecimento continua responsável pela segurança do site, proteção de dados, conformidade PCI DSS aplicável e obrigações legais e contratuais. O redirecionamento reduz a exposição ao transferir o preenchimento ao provedor, mas não elimina essas obrigações. O aviso não substitui avaliação jurídica e de conformidade.
+
+Referências: [segurança e responsabilidade compartilhada Stripe](https://docs.stripe.com/security/guide), [Stripe Checkout](https://docs.stripe.com/api/checkout/sessions/create), [preferências Checkout Pro](https://www.mercadopago.com.br/developers/pt/reference/online-payments/checkout-pro-preferences/overview), [tipos de integração e PCI Mercado Pago](https://www.mercadopago.com.br/developers/pt/docs/checkout-api-payments/types-of-integration?scope=prod).
+
+Testes simulam os SDKs, sem cobrança real: configuração e permissões, payload/preço e exclusões, URLs e respostas inválidas, timeout, status pendente, retorno sem confiança em parâmetros, repetição e crédito único, formulário ausente no modo externo e bloqueio de processamento integrado de pedidos externos.

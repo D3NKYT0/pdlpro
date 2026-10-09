@@ -8,7 +8,7 @@ import {
   ShoppingCart,
   X,
 } from 'lucide-react'
-import { formatCurrency, formatNumber } from '../../lib/formatters'
+import { formatCoins, formatNumber } from '../../lib/formatters'
 import { CharacterAvatar } from '../character/CharacterAvatar'
 import { getClassName } from '../../lib/lineage'
 import type { ApiCharacterListing, ApiGameItem } from '../../services/api'
@@ -112,13 +112,13 @@ export function ListingDetail({ listing, isOwner, pending, onClose, onBuy, onCan
             </div>
             <div>
               <dt>{t('marketplace.detail.price')}</dt>
-              <dd>{formatCurrency(listing.price)}</dd>
+              <dd>{formatCoins(listing.price)}</dd>
             </div>
           </dl>
 
           <aside className="marketplace-purchase-summary">
             <span>{t('marketplace.detail.price')}</span>
-            <strong>{formatCurrency(listing.price)}</strong>
+            <strong>{formatCoins(listing.price)}</strong>
             <small>{t('marketplace.detail.seller', { name: listing.seller_username })}</small>
             {isOwner && listing.status === 'for_sale' ? (
               <Button className="ghost" type="button" onClick={() => onCancel(listing.id)} disabled={pending}>

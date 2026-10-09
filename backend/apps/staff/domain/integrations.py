@@ -62,17 +62,22 @@ MASKED_PUBLIC_KEYS: frozenset[str] = frozenset(
 
 SECTION_KEYS: dict[str, tuple[str, ...]] = {
     SECTION_PAYMENTS: (
+        "WALLET_DISPLAY_NAME",
+        "WALLET_COIN_NAME",
         "STRIPE_SECRET_KEY",
         "STRIPE_PUBLISHABLE_KEY",
         "STRIPE_WEBHOOK_SECRET",
         "STRIPE_ACTIVATE_PAYMENTS",
+        "STRIPE_CHECKOUT_MODE",
         "STRIPE_PAYMENT_DESCRIPTION",
         "STRIPE_PRESENTMENT_CURRENCIES",
         "MERCADO_PAGO_ACCESS_TOKEN",
         "MERCADO_PAGO_PUBLIC_KEY",
         "MERCADO_PAGO_WEBHOOK_SECRET",
         "MERCADO_PAGO_ACTIVATE_PAYMENTS",
+        "MERCADO_PAGO_CHECKOUT_MODE",
         "MERCADO_PAGO_PAYMENT_DESCRIPTION",
+        "MERCADO_PAGO_STATEMENT_DESCRIPTOR",
         "MERCADO_PAGO_ENABLE_PIX",
         "MERCADO_PAGO_ENABLE_BOLETO",
         "MERCADO_PAGO_ENABLE_CREDIT_CARD",
@@ -229,6 +234,8 @@ LIST_KEYS = frozenset(
 
 # Valores fechados aceitos pelo configurador.
 CHOICE_KEYS: dict[str, frozenset[str]] = {
+    "STRIPE_CHECKOUT_MODE": frozenset({"embedded", "redirect"}),
+    "MERCADO_PAGO_CHECKOUT_MODE": frozenset({"embedded", "redirect"}),
     "PAYMENT_BRL_METHOD_PRIORITY": frozenset({"user_choice", "mercadopago", "stripe"}),
 }
 

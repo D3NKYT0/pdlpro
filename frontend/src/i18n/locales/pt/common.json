@@ -1,4 +1,9 @@
 {
+  "coinName": "moedas",
+  "coinNameSingular": "moeda",
+  "coinNameTitle": "Moedas",
+  "coinAmount": "{{value}} {{coinName}}",
+  "free": "Grátis",
   "brand": "PDL PRO",
   "lineage": "Lineage",
   "loading": "Carregando…",

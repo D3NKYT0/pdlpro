@@ -204,7 +204,7 @@ function namedButton(name: string) {
 }
 const actions = [
   { method: 'buyTokens', tab: 'roulette', button: 'Comprar', args: [5], result: { fichas: 15 }, message: 'Fichas creditadas' },
-  { method: 'claimDailyBonus', tab: 'roulette', button: 'Resgatar bônus', args: [], result: { amount: '5.00', claimed: true }, message: 'Bônus de R$ 5.00 creditado' },
+  { method: 'claimDailyBonus', tab: 'roulette', button: 'Resgatar bônus', args: [], result: { amount: '5.00', claimed: true }, message: 'Bônus de 5,00 moedas creditado' },
   { method: 'buyBox', tab: 'boxes', button: 'Comprar', args: ['type'], result: { id: 'new-box', remaining: 2 }, message: 'Caixa comprada' },
   { method: 'openBox', tab: 'boxes', button: 'Abrir · 1 ficha', args: ['box'], result: { item: { name: 'Espada', enchant: 3 }, remaining: 0 }, message: 'Espada (+3)' },
   { method: 'dice', tab: 'chance', button: 'Lançar os dados', args: [{ bet_type: 'even', amount: 1 }], result: { won: true, roll: 4, payout: 2 }, message: 'Dado 4 · +2' },
@@ -550,7 +550,9 @@ it('abre o modal de compra quando não há fichas para abrir o baú', async () =
   expect(dialog.querySelector('.game-tokens-buy-stage')).toBeTruthy()
   expect(dialog.querySelector('.game-tokens-buy-medallion')).toBeTruthy()
   expect(within(dialog).getByRole('button', { name: '5 fichas' })).toHaveAttribute('aria-pressed', 'true')
+  expect(within(dialog).getByText('5,00 moedas')).toBeVisible()
   await user.click(within(dialog).getByRole('button', { name: '25 fichas' }))
+  expect(within(dialog).getByText('25,00 moedas')).toBeVisible()
   await user.click(within(dialog).getByRole('button', { name: /Comprar/ }))
   expect(gamesApi.buyTokens).toHaveBeenCalledWith(25)
   expect(toast.success).toHaveBeenCalledWith('Fichas creditadas')
@@ -1116,4 +1118,13 @@ it('filtra aba desativada no link direto e preserva abertura quando compra de ca
   await user.click(await screen.findByRole('button', { name: /Abrir/ }))
   expect(gamesApi.openBox).toHaveBeenCalledWith('box')
   expect(gamesApi.buyBox).not.toHaveBeenCalled()
+})
+
+it('preços de baús e bônus diário são moedas da carteira', async () => {
+  mount('boxes')
+  expect(await screen.findByText('10,00 moedas', { selector: 'b.game-box-price' })).toBeVisible()
+})
+it('bônus diário mostra crédito em moedas da carteira', async () => {
+  mount('roulette')
+  expect(await screen.findByText('5,00 moedas')).toBeVisible()
 })

@@ -380,3 +380,20 @@ it('serviços pagos enviam a chave de repetição no contrato HTTP', async () =>
     method: 'POST', body: JSON.stringify({ login: 'hero', char_id: 7, request_key: '66666666-6666-4666-8666-666666666666' }),
   })
 })
+
+
+it('wallet.me devolve o nome visual configurado junto aos saldos', async () => {
+  const wallet = { id: 'wallet', display_name: 'Banco Cliente A', balance: '50.00', bonus_balance: '5.00' }
+  send.mockResolvedValueOnce(wallet)
+  expect(await walletApi.me()).toEqual(wallet)
+  expect(send).toHaveBeenCalledWith('/shared/wallet/')
+})
+
+it('nome público da moeda chega intacto às telas e à carteira', async () => {
+  send.mockResolvedValueOnce({ coin_name: 'Blablabla Coin' })
+  expect((await serverApi.info()).coin_name).toBe('Blablabla Coin')
+  expect(send).toHaveBeenLastCalledWith('/public/server/info/')
+  send.mockResolvedValueOnce({ balance: '100.00', coin_name: 'Blablabla Coin' })
+  expect((await walletApi.me()).coin_name).toBe('Blablabla Coin')
+  expect(send).toHaveBeenLastCalledWith('/shared/wallet/')
+})

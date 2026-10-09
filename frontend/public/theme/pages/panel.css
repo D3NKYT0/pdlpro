@@ -7,6 +7,7 @@ html.pdl-panel:not([data-pdl-theme]) {
 }
 
 html.pdl-panel {
+  overflow-wrap: anywhere;
   --panel-gold: var(--theme-accent, #c5a161);
   --panel-gold-bright: var(--theme-accent-bright, #e6c77d);
   --panel-gold-soft: color-mix(in srgb, var(--panel-gold) 14%, transparent);
@@ -7953,7 +7954,8 @@ html.pdl-panel .wallet-balance-card strong {
   font-size: clamp(27px, 2.4vw, 38px);
   font-weight: 400;
   line-height: 1;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 html.pdl-panel .wallet-balance-card strong span {
@@ -12256,6 +12258,29 @@ html.pdl-panel .game-tokens-buy-total strong {
   }
 
   html.pdl-panel .game-tokens-buy-packs {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 560px) {
+  html.pdl-panel .ui-modal.game-tokens-buy-modal {
+    max-height: calc(100dvh - 32px);
+  }
+
+  html.pdl-panel .ui-modal.game-tokens-buy-modal .ui-modal-body {
+    overflow-y: auto;
+  }
+
+  html.pdl-panel .game-tokens-buy-stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html.pdl-panel .game-tokens-buy-hero {
+    padding: 8px;
+    border-right: 0;
+  }
+
+  html.pdl-panel .game-tokens-buy-checkout {
     flex-wrap: wrap;
   }
 }

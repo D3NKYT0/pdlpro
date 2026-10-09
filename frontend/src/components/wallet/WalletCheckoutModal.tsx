@@ -13,7 +13,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from 'lucide-react'
-import { Button } from '../ui/Button'
+import { Button, ExternalButtonLink } from '../ui/Button'
 import { Field } from '../ui/Field'
 import { Modal } from '../ui/Modal'
 import { formatDocument, inferDocumentType, sanitizeDocument } from '../../lib/payments'
@@ -62,6 +62,7 @@ export function WalletCheckoutModal({
   const bonus = Number(order.bonus_applied || pack?.bonus || 0)
   const totalCoins = order.coins || pack?.total_coins || '—'
 
+  const isRedirect = Boolean(order.checkout_url) && ['stripe', 'mercadopago'].includes(order.method)
   const isPix = Boolean(order.pix_qr_code)
   const title = isPix
     ? t('wallet.purchase.pixTitle')
@@ -111,7 +112,16 @@ export function WalletCheckoutModal({
         </div>
       </div>
 
-      {isPix ? (
+      {isRedirect ? (
+        <div className="wallet-mock-card">
+          <Info aria-hidden="true" />
+          <div>
+            <p>{t('wallet.purchase.redirectNotice')}</p>
+            <ExternalButtonLink href={order.checkout_url} target="_self">{t('wallet.purchase.continueProvider')}</ExternalButtonLink>
+          </div>
+        </div>
+      ) : null}
+      {!isRedirect && isPix ? (
         <div className="wallet-pix-card">
           <span className="wallet-pix-badge">
             <span className="wallet-pix-pulse" />
@@ -151,7 +161,7 @@ export function WalletCheckoutModal({
         </div>
       ) : null}
 
-      {!isPix && order.method === 'mercadopago' ? (
+      {!isRedirect && !isPix && order.method === 'mercadopago' ? (
         <div className="wallet-mp-container">
           <div className="wallet-document-section">
             <div className="wallet-document-header">
@@ -205,7 +215,7 @@ export function WalletCheckoutModal({
         </div>
       ) : null}
 
-      {!isPix && order.method === 'stripe' ? (
+      {!isRedirect && !isPix && order.method === 'stripe' ? (
         <form className="wallet-stripe-form" onSubmit={(event) => void onPayStripe(event)}>
           {order.method === 'stripe' ? (
             <p className="wallet-document-prompt">{t('wallet.purchase.stripeCurrencyHint')}</p>

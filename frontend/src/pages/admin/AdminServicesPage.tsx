@@ -65,7 +65,7 @@ export function AdminServicesPage() {
                   <div className="admin-service-controls">
                     <Field className="admin-service-price">
                       {t('services.price')}
-                      <span><b>R$</b><input type="number" min="0" step="0.01" value={row.price} onChange={(event) => {
+                      <span><b>{t('services.unit')}</b><input type="number" min="0" step="0.01" value={row.price} onChange={(event) => {
                         const next = [...rows]
                         next[index] = { ...row, price: event.target.value }
                         setRows(next)

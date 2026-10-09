@@ -482,7 +482,7 @@ def test_online_delivery_setting_rejects_unauthorized_or_invalid_value(api, staf
 @pytest.mark.django_db
 def test_payment_descriptions_persist_and_apply(api, superuser, hosts, settings):
     api.force_authenticate(superuser)
-    values = {"STRIPE_PAYMENT_DESCRIPTION": "Créditos Stripe", "MERCADO_PAGO_PAYMENT_DESCRIPTION": "Créditos Pix"}
+    values = {"WALLET_DISPLAY_NAME": "Banco Cliente A", "STRIPE_PAYMENT_DESCRIPTION": "Créditos Stripe", "MERCADO_PAGO_PAYMENT_DESCRIPTION": "Créditos Pix", "MERCADO_PAGO_STATEMENT_DESCRIPTOR": "CLIENTE UM"}
     response = api.patch(reverse("staff-integrations-section", kwargs={"section": "payments"}), values, format="json")
     assert response.status_code == 200
     fields = {field["key"]: field["value"] for field in response.json()["payments"]["fields"]}
@@ -490,3 +490,94 @@ def test_payment_descriptions_persist_and_apply(api, superuser, hosts, settings)
         assert fields[key] == value
         assert getattr(settings, key) == value
     assert DjangoIntegrationConfigStore().load_section(SECTION_PAYMENTS) == values
+    wallet = api.get("/api/v1/shared/wallet/")
+    assert wallet.status_code == 200
+    assert wallet.data["display_name"] == "Banco Cliente A"
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("actor, descriptor, expected", [("superuser", "A" * 14, 400), ("superuser", "A" * 13, 200), ("superuser", "", 200), ("staff", "CLIENTE UM", 403), ("anonymous", "CLIENTE UM", 401)])
+def test_statement_descriptor_validation_and_access(api, superuser, staff_user, hosts, actor, descriptor, expected):
+    if actor != "anonymous":
+        api.force_authenticate(superuser if actor == "superuser" else staff_user)
+    response = api.patch(reverse("staff-integrations-section", kwargs={"section": "payments"}), {"MERCADO_PAGO_STATEMENT_DESCRIPTOR": descriptor}, format="json")
+    assert response.status_code == expected
+    saved = DjangoIntegrationConfigStore().load_section(SECTION_PAYMENTS)
+    if expected == 200:
+        assert saved["MERCADO_PAGO_STATEMENT_DESCRIPTOR"] == descriptor
+    else:
+        assert "MERCADO_PAGO_STATEMENT_DESCRIPTOR" not in saved
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("actor, name, expected", [("superuser", "A" * 81, 400), ("superuser", "A" * 80, 200), ("superuser", "  Meu Banco  ", 200), ("superuser", "", 200), ("staff", "Banco Cliente A", 403), ("anonymous", "Banco Cliente A", 401)])
+def test_wallet_display_name_validation_and_access(api, superuser, staff_user, hosts, actor, name, expected):
+    if actor != "anonymous":
+        api.force_authenticate(superuser if actor == "superuser" else staff_user)
+    response = api.patch(reverse("staff-integrations-section", kwargs={"section": "payments"}), {"WALLET_DISPLAY_NAME": name}, format="json")
+    assert response.status_code == expected
+    saved = DjangoIntegrationConfigStore().load_section(SECTION_PAYMENTS)
+    if expected == 200:
+        assert saved["WALLET_DISPLAY_NAME"] == name.strip()
+    else:
+        assert "WALLET_DISPLAY_NAME" not in saved
+
+
+@pytest.mark.django_db
+def test_clear_wallet_display_name_restores_theme_fallback(api, superuser, hosts):
+    api.force_authenticate(superuser)
+    url = reverse("staff-integrations-section", kwargs={"section": "payments"})
+    assert api.patch(url, {"WALLET_DISPLAY_NAME": "Banco Cliente A"}, format="json").status_code == 200
+    assert api.patch(url, {"WALLET_DISPLAY_NAME": ""}, format="json").status_code == 200
+    assert api.get("/api/v1/shared/wallet/").data["display_name"] == ""
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("actor,name,expected", [
+    ("superuser", "Blablabla Coin", 200), ("superuser", "A" * 40, 200),
+    ("superuser", "A" * 41, 400), ("superuser", "  Saga Coin  ", 200),
+    ("superuser", "<script>", 400), ("superuser", "{{name}}", 400),
+    ("superuser", "Bad\nCoin", 400), ("staff", "Coin", 403), ("anonymous", "Coin", 401),
+])
+def test_coin_name_validation_and_access(api, superuser, staff_user, hosts, actor, name, expected):
+    if actor != "anonymous":
+        api.force_authenticate(superuser if actor == "superuser" else staff_user)
+    url = reverse("staff-integrations-section", kwargs={"section": "payments"})
+    response = api.patch(url, {"WALLET_COIN_NAME": name}, format="json")
+    assert response.status_code == expected
+    stored = DjangoIntegrationConfigStore().load_section(SECTION_PAYMENTS)
+    if expected == 200:
+        assert stored["WALLET_COIN_NAME"] == name.strip()
+        assert api.get("/api/v1/public/server/info/").data["coin_name"] == name.strip()
+        assert api.get("/api/v1/shared/wallet/").data["coin_name"] == name.strip()
+    else:
+        assert "WALLET_COIN_NAME" not in stored
+
+
+@pytest.mark.django_db
+def test_coin_name_clear_does_not_change_wallet_balances(api, superuser, hosts):
+    api.force_authenticate(superuser)
+    url = reverse("staff-integrations-section", kwargs={"section": "payments"})
+    before = api.get("/api/v1/shared/wallet/").data
+    assert api.patch(url, {"WALLET_COIN_NAME": "Blablabla Coin"}, format="json").status_code == 200
+    assert api.patch(url, {"WALLET_COIN_NAME": ""}, format="json").status_code == 200
+    after = api.get("/api/v1/shared/wallet/").data
+    assert after["coin_name"] == ""
+    assert after["balance"] == before["balance"]
+    assert after["bonus_balance"] == before["bonus_balance"]
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("key", ["STRIPE_CHECKOUT_MODE", "MERCADO_PAGO_CHECKOUT_MODE"])
+@pytest.mark.parametrize("actor,mode,expected", [("superuser", "redirect", 200), ("superuser", "embedded", 200), ("superuser", "invalid", 400), ("superuser", "", 400), ("staff", "redirect", 403), ("anonymous", "redirect", 401)])
+def test_checkout_mode_configuration(api, superuser, staff_user, hosts, settings, key, actor, mode, expected):
+    if actor != "anonymous":
+        api.force_authenticate(superuser if actor == "superuser" else staff_user)
+    response = api.patch(reverse("staff-integrations-section", kwargs={"section": "payments"}), {key: mode}, format="json")
+    assert response.status_code == expected
+    stored = DjangoIntegrationConfigStore().load_section(SECTION_PAYMENTS)
+    if expected == 200:
+        assert stored[key] == mode
+        assert getattr(settings, key) == mode
+    else:
+        assert key not in stored

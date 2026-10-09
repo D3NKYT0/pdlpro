@@ -76,6 +76,7 @@ it.each(['nickname', 'sex'] as const)('serializa %s, preserva chave após erro e
   send.mockImplementationOnce(() => new Promise((_resolve, fail) => { reject = fail }))
   const user = mount()
   expect(await screen.findByRole('heading', { name: 'Hero', level: 1 })).toBeVisible()
+  expect(screen.getAllByText(/10,00 moedas/).length).toBeGreaterThan(0)
   if (service === 'nickname') await user.type(screen.getByLabelText('Novo nickname'), 'NewHero')
   else await user.selectOptions(screen.getByLabelText('Novo sexo'), 'F')
   await user.dblClick(screen.getByRole('button', { name: service === 'nickname' ? 'Alterar nickname' : 'Alterar sexo' }))

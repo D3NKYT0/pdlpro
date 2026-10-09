@@ -1,7 +1,7 @@
 import type { FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Coins, Sparkles } from 'lucide-react'
-import { formatCurrency } from '../../lib/formatters'
+import { formatCoins } from '../../lib/formatters'
 import { Button } from '../ui/Button'
 import { Field } from '../ui/Field'
 import { Modal } from '../ui/Modal'
@@ -28,7 +28,7 @@ export function BuyTokensModal({
   const { t } = useTranslation('panel')
   const quantity = Math.max(0, Number(amount) || 0)
   const selected = TOKEN_PACKS.find((pack) => pack === quantity)
-  const price = formatCurrency(quantity)
+  const price = formatCoins(quantity)
   return (
     <Modal className="game-tokens-buy-modal" open={open} title={t('games.tokensBuy.title')} onClose={onClose}>
       <div className="game-tokens-buy-field" aria-hidden="true">

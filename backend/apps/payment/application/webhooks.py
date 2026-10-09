@@ -178,11 +178,11 @@ class HandleStripeWebhookUseCase(UseCase[HandleStripeWebhookInput, None]):
     def execute(self, data: HandleStripeWebhookInput) -> None:
         event = data.event
         self._logs.create(kind=event["type"], data_id=event["id"], payload=sanitize_webhook_payload(event))
-        if event["type"] in {"payment_intent.succeeded", "checkout.session.completed"}:
+        if event["type"] in {"payment_intent.succeeded", "checkout.session.completed", "checkout.session.async_payment_succeeded"}:
             obj = event["data"]["object"]
-            external_id = (
-                obj.get("id") if event["type"] == "payment_intent.succeeded" else obj.get("payment_intent")
-            )
+            if event["type"] == "checkout.session.completed" and obj.get("payment_status") != "paid":
+                return
+            external_id = obj.get("id")
             metadata = obj.get("metadata") or {}
             order_id = None
             if metadata.get("order_id"):

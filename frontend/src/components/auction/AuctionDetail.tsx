@@ -11,7 +11,7 @@ import {
   X,
 } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
-import { formatCurrency, formatDateTime as formatDate, formatNumber } from '../../lib/formatters'
+import { formatCoins, formatDateTime as formatDate, formatNumber } from '../../lib/formatters'
 import { CharacterAvatar } from '../character/CharacterAvatar'
 import { getClassName } from '../../lib/lineage'
 import type { ApiAuction, ApiGameItem } from '../../services/api'
@@ -186,8 +186,8 @@ export function AuctionDetail({
 
             <aside className="marketplace-purchase-summary auction-bid-summary">
               <span>{auction.current_bid ? t('auctions.detail.currentBid') : t('auctions.detail.startingValue')}</span>
-              <strong>{formatCurrency(activeValue)}</strong>
-              <small>{t('auctions.detail.minBid', { value: formatCurrency(nextBidFor(auction)) })}</small>
+              <strong>{formatCoins(activeValue)}</strong>
+              <small>{t('auctions.detail.minBid', { value: formatCoins(nextBidFor(auction)) })}</small>
 
               {!isOwner && auction.status === 'open' ? (
                 <MicroResource code="auction-bid"><form className="auction-bid-form" onSubmit={(event) => onBid(event, auction.id)}>
@@ -246,8 +246,8 @@ export function AuctionDetail({
 
           <aside className="marketplace-purchase-summary auction-bid-summary">
             <span>{auction.current_bid ? t('auctions.detail.currentBid') : t('auctions.detail.startingValue')}</span>
-            <strong>{formatCurrency(activeValue)}</strong>
-            <small>{t('auctions.detail.minBid', { value: formatCurrency(nextBidFor(auction)) })}</small>
+            <strong>{formatCoins(activeValue)}</strong>
+            <small>{t('auctions.detail.minBid', { value: formatCoins(nextBidFor(auction)) })}</small>
 
             {!isOwner && auction.status === 'open' ? (
               <MicroResource code="auction-bid"><form className="auction-bid-form" onSubmit={(event) => onBid(event, auction.id)}>

@@ -209,3 +209,14 @@ def test_online_coin_api_rejects_invalid_input_without_reserving_balance(api, ac
     assert not calls
     assert not GameExchange.objects.exists()
     assert Wallet.objects.get(user=accounts[0]).balance == 50
+
+
+@pytest.mark.parametrize("name, expected", [("Banco Cliente A", "Banco Cliente A"), ("Carteira Cliente B", "Carteira Cliente B"), ("  Meu Banco  ", "Meu Banco"), ("", ""), ("   ", "")])
+def test_wallet_exposes_installation_display_name_without_changing_balances(api, accounts, settings, name, expected):
+    settings.WALLET_DISPLAY_NAME = name
+    response = api.get("/api/v1/shared/wallet/")
+    assert response.status_code == 200
+    assert response.data["display_name"] == expected
+    assert response.data["balance"] == "50.00"
+    assert response.data["bonus_balance"] == "100.00"
+    assert response.data["id"] == str(Wallet.objects.get(user=accounts[0]).id)

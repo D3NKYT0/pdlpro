@@ -10,6 +10,19 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Adicionado
+
+- Checkout configurável por provedor: formulário integrado ou redirecionamento para Stripe/Mercado Pago, com aviso de responsabilidade, retorno à carteira e confirmação segura do saldo.
+
+- Nome da moeda virtual configurável por instalação, compartilhado em saldos, preços, recargas, compras internas e relatórios, com fallback de idioma e suporte nas descrições de novas cobranças.
+
+- Nome visual do banco/carteira editável por instalação, com fallback para o título do tema e limite de 80 caracteres.
+- Nome na fatura do cartão do Mercado Pago editável por instalação no painel de integrações, separado da descrição da cobrança, com limite de 13 caracteres e traduções PT/EN/ES.
+
+### Corrigido
+
+- Preços de marketplace, leilões, serviços, baús e fichas exibem moedas da carteira; bônus diário e ajuda dos jogos deixam de indicar reais. Recargas mantêm a moeda real da cobrança. Traduções PT/EN/ES e valores de débito preservados; modal de fichas mantém pacotes e confirmação acessíveis no celular.
+
 ## [2.7.2] - 2026-10-09
 
 Lançamento com criação de personagens configurável (atributos iniciais e kits de itens por classe), novos retratos por classe e sexo e descrições personalizáveis das cobranças Stripe e Mercado Pago. A API acompanha a versão 2.7.2.

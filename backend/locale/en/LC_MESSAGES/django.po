@@ -5626,3 +5626,27 @@ msgstr "Invalid character starting configuration."
 
 msgid "Configuração inicial de personagens"
 msgstr "Character starting configuration"
+
+msgid "O descritor da fatura deve ter no máximo 13 caracteres."
+msgstr "The card statement descriptor must have at most 13 characters."
+
+msgid "O nome do banco/carteira deve ter no máximo 80 caracteres."
+msgstr "The bank/wallet name must have at most 80 characters."
+
+msgid "Compra fichas para os jogos do painel usando moedas da carteira: uma moeda por ficha."
+msgstr "Buys tokens for panel games using wallet coins: one coin per token."
+
+msgid "Lista os preços dos serviços de personagem em moedas da carteira."
+msgstr "Lists character service prices in wallet coins."
+
+msgid "O nome da moeda deve ter até 40 caracteres, sem marcação ou caracteres de controle."
+msgstr "The currency name must have up to 40 characters, without markup or control characters."
+
+msgid "moedas"
+msgstr "coins"
+
+msgid "Este pedido deve ser pago no site do provedor."
+msgstr "This order must be paid on the provider website."
+
+msgid "Não foi possível iniciar o pagamento externo."
+msgstr "Could not start the external payment."

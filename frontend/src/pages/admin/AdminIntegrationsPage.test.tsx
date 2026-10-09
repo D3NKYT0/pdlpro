@@ -39,8 +39,13 @@ const statusFixture = {
     section: 'payments',
     updated_at: null,
     fields: [
+      { key: 'STRIPE_CHECKOUT_MODE', configured: true, fingerprint: '', value: 'embedded', masked: '' },
+      { key: 'MERCADO_PAGO_CHECKOUT_MODE', configured: true, fingerprint: '', value: 'embedded', masked: '' },
+      { key: 'WALLET_COIN_NAME', configured: false, fingerprint: '', value: '', masked: '' },
+      { key: 'WALLET_DISPLAY_NAME', configured: false, fingerprint: '', value: '', masked: '' },
       { key: 'STRIPE_PAYMENT_DESCRIPTION', configured: false, fingerprint: '', value: '', masked: '' },
       { key: 'MERCADO_PAGO_PAYMENT_DESCRIPTION', configured: false, fingerprint: '', value: '', masked: '' },
+      { key: 'MERCADO_PAGO_STATEMENT_DESCRIPTOR', configured: false, fingerprint: '', value: '', masked: '' },
       { key: 'STRIPE_SECRET_KEY', configured: true, fingerprint: 'abc123def456', value: null, masked: '' },
       { key: 'STRIPE_PUBLISHABLE_KEY', configured: false, fingerprint: '', value: null, masked: '' },
       { key: 'STRIPE_WEBHOOK_SECRET', configured: false, fingerprint: '', value: null, masked: '' },
@@ -237,10 +242,22 @@ describe('AdminIntegrationsPage', () => {
     expect(mpHelp).toHaveAttribute('aria-expanded', 'true')
     expect(await screen.findByPlaceholderText('PDL PRO — {quantidade} moedas')).toHaveValue('')
     expect(screen.getByPlaceholderText('Moedas PDL ({pacote})')).toHaveValue('')
+    await user.click(screen.getByRole('combobox', { name: 'Checkout Stripe' }))
+    await user.click(screen.getByRole('option', { name: 'No site do provedor (redirecionamento)' }))
+    expect(screen.getAllByText(/Aviso legal: no modo integrado/)).toHaveLength(2)
     await user.type(await screen.findByLabelText(/Descrição da cobrança — Stripe/), 'Créditos Stripe')
     await user.type(screen.getByLabelText(/Descrição da cobrança — Mercado Pago/), 'Créditos Pix')
+    expect(screen.getByLabelText(/Nome do banco\/carteira/)).toHaveAttribute('maxlength', '80')
+    await user.type(screen.getByLabelText(/Nome do banco\/carteira/), 'Banco Cliente A')
+    expect(screen.getByLabelText(/Nome da moeda virtual/)).toHaveAttribute('maxlength', '40')
+    await user.type(screen.getByLabelText(/Nome da moeda virtual/), 'Blablabla Coin')
+    expect(screen.getByLabelText(/Nome na fatura do cartão/)).toHaveAttribute('maxlength', '13')
+    await user.type(screen.getByLabelText(/Nome na fatura do cartão/), 'CLIENTE UM')
     await user.click(screen.getByRole('button', { name: /salvar/i }))
     await waitFor(() => expect(staffApi.saveIntegrationSection).toHaveBeenCalledWith('payments', expect.objectContaining({
+      STRIPE_CHECKOUT_MODE: 'redirect', MERCADO_PAGO_CHECKOUT_MODE: 'embedded',
+      WALLET_DISPLAY_NAME: 'Banco Cliente A', WALLET_COIN_NAME: 'Blablabla Coin',
+      MERCADO_PAGO_STATEMENT_DESCRIPTOR: 'CLIENTE UM',
       STRIPE_PAYMENT_DESCRIPTION: 'Créditos Stripe', MERCADO_PAGO_PAYMENT_DESCRIPTION: 'Créditos Pix',
     })))
   })

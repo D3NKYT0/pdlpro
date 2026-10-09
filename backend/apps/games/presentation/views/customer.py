@@ -98,7 +98,7 @@ class BuyTokensView(ItemCatalogAPIView):
     @extend_schema(
         tags=["Jogos"],
         summary=gettext_lazy("Comprar fichas"),
-        description=gettext_lazy("Compra a quantidade informada de fichas para uso nos jogos do painel."),
+        description=gettext_lazy("Compra fichas para os jogos do painel usando moedas da carteira: uma moeda por ficha."),
         request=BuyTokensSerializer,
     )
     def post(self, request):

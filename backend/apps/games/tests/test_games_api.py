@@ -83,6 +83,7 @@ def test_buy_tokens_and_spin_roulette(api, player):
     bought = api.post("/api/v1/customer/games/tokens/", {"amount": 5}, format="json")
     assert bought.status_code == 200, bought.data
     assert bought.data["fichas"] == 5
+    assert api.get("/api/v1/shared/wallet/").data["balance"] == "15.00"
     listed = api.get("/api/v1/customer/games/roulette/")
     assert listed.status_code == 200
     assert listed.data["prizes"][0]["quantity"] == 50_000

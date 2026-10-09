@@ -7,6 +7,6 @@ it.each([[0, 'Human Fighter'], [88, 'Duelist'], [136, 'Judicator'], [-1, 'Descon
 it.each([undefined, 'invalid', '0', '-1', 'Infinity'])('preço sem cobrança: %s', price => {
   expect(formatServicePrice(price)).toBe('Grátis')
 })
-it('formata preço pago em reais', () => {
-  expect(formatServicePrice('12.34').replace(/\s/g, ' ')).toBe('R$ 12,34')
+it('formata preço pago em moedas da carteira', () => {
+  expect(formatServicePrice('12.34').replace(/\s/g, ' ')).toBe('12,34 moedas')
 })

@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { ResourceControlsProvider } from '../contexts/ResourceControlsContext'
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
@@ -17,7 +17,7 @@ vi.mock('../lib/payments', async (importOriginal) => ({
 
 vi.mock('../contexts/AuthContext', () => ({ useAuth: () => ({ user: { email: 'hero@test.dev' } }) }))
 vi.mock('react-hot-toast', () => ({ default: Object.assign(vi.fn(), { success: vi.fn(), error: vi.fn() }) }))
-vi.mock('../services/domain/payment.service', () => ({ paymentApi: { list: vi.fn(), catalog: vi.fn(), create: vi.fn(), confirm: vi.fn() } }))
+vi.mock('../services/domain/payment.service', () => ({ paymentApi: { list: vi.fn(), catalog: vi.fn(), create: vi.fn(), confirm: vi.fn(), status: vi.fn() } }))
 vi.mock('../services/domain/wallet.service', () => ({ walletApi: { me: vi.fn(), transactions: vi.fn(), transfer: vi.fn() } }))
 beforeEach(() => {
   vi.resetAllMocks()
@@ -32,11 +32,11 @@ afterEach(() => {
   localStorage.clear()
   vi.restoreAllMocks()
 })
-function mount(disabled: string[] = []) {
+function mount(disabled: string[] = [], route = '/panel/wallet') {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
   if (disabled.length) client.setQueryData(['resources'], disabled.map(code => ({ code, enabled: false })))
   const page = disabled.length ? <ResourceControlsProvider><WalletPage /></ResourceControlsProvider> : <WalletPage />
-  render(<QueryClientProvider client={client}><MemoryRouter>{page}</MemoryRouter></QueryClientProvider>)
+  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[route]}>{page}</MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
 
@@ -450,4 +450,87 @@ it('exibe saldo e oculta compra, transferência e histórico conforme as prefer�
   expect(paymentApi.catalog).not.toHaveBeenCalled()
   expect(walletApi.transactions).not.toHaveBeenCalled()
   expect(paymentApi.list).not.toHaveBeenCalled()
+})
+
+
+it.each(['Banco Cliente A', 'Carteira Cliente B'])('exibe o nome da carteira configurado na instalação: %s', async display_name => {
+  vi.mocked(walletApi.me).mockResolvedValue({ id: 'wallet', display_name, balance: '50.00', bonus_balance: '5.00' })
+  mount()
+  expect(await screen.findByRole('heading', { level: 1, name: display_name })).toBeTruthy()
+  expect(screen.queryByRole('heading', { name: 'Banco PDL' })).toBeNull()
+})
+
+it.each(['', '   ', undefined])('mantém o título do tema quando o nome configurado é %s', async display_name => {
+  vi.mocked(walletApi.me).mockResolvedValue({ id: 'wallet', display_name, balance: '50.00', bonus_balance: '5.00' })
+  mount()
+  expect(await screen.findByRole('heading', { level: 1, name: 'Banco PDL' })).toBeTruthy()
+})
+
+it('mantém o título do tema durante carregamento e atualiza quando a carteira chega', async () => {
+  let finish!: (wallet: Awaited<ReturnType<typeof walletApi.me>>) => void
+  vi.mocked(walletApi.me).mockReturnValueOnce(new Promise(resolve => { finish = resolve }))
+  mount()
+  expect(screen.getByRole('heading', { level: 1, name: 'Banco PDL' })).toBeTruthy()
+  finish({ id: 'wallet', display_name: 'Meu Banco', balance: '50.00', bonus_balance: '5.00' })
+  expect(await screen.findByRole('heading', { level: 1, name: 'Meu Banco' })).toBeTruthy()
+})
+
+it('preserva o título do tema se a consulta da carteira falhar', async () => {
+  vi.mocked(walletApi.me).mockRejectedValueOnce(new Error('offline'))
+  mount()
+  await waitFor(() => expect(walletApi.me).toHaveBeenCalledTimes(1))
+  expect(screen.getByRole('heading', { level: 1, name: 'Banco PDL' })).toBeTruthy()
+})
+
+
+it('retoma retorno externo sem confiar no sucesso da URL', async () => {
+  vi.mocked(paymentApi.status).mockResolvedValue({ id: 'hosted', method: 'stripe', status: 'pending', amount: '10.00', coins: '10', currency: 'BRL', checkout_url: 'https://checkout.stripe.com/pay/cs_test', package_code: '' } as any)
+  mount([], '/panel/wallet?payment_return=hosted&status=approved')
+  await screen.findByRole('link', { name: 'Continuar no provedor' })
+  expect(paymentApi.status).toHaveBeenCalledOnce()
+  expect(paymentApi.status).toHaveBeenCalledWith('hosted')
+  expect(confirmStripePayment).not.toHaveBeenCalled()
+  expect(toast.success).not.toHaveBeenCalled()
+})
+
+
+it('atualiza checkout externo pendente quando o provedor confirma', async () => {
+  const pending = { id: 'hosted', method: 'stripe', status: 'pending', amount: '10.00', coins: '10', currency: 'BRL', checkout_url: 'https://checkout.stripe.com/pay/cs_test', package_code: '' }
+  vi.mocked(paymentApi.status).mockResolvedValueOnce(pending as any).mockResolvedValueOnce({ ...pending, status: 'confirmed' } as any)
+  let poll!: () => Promise<void>
+  vi.spyOn(window, 'setInterval').mockImplementation((callback, delay) => { if (delay === 4000) poll = callback as () => Promise<void>; return 42 as unknown as ReturnType<typeof window.setInterval> })
+  mount([], '/panel/wallet?payment_return=hosted')
+  await screen.findByRole('link', { name: 'Continuar no provedor' })
+  await waitFor(() => expect(window.setInterval).toHaveBeenCalledWith(expect.any(Function), 4000))
+  await act(async () => { await poll() })
+  expect(toast.success).toHaveBeenCalled()
+  expect(screen.queryByRole('link', { name: 'Continuar no provedor' })).toBeNull()
+  expect(walletApi.me).toHaveBeenCalledTimes(2)
+})
+
+it('mostra erro ao retornar a pedido inacessível', async () => {
+  vi.mocked(paymentApi.status).mockRejectedValue(new Error('Denied'))
+  mount([], '/panel/wallet?payment_return=other')
+  await waitFor(() => expect(toast.error).toHaveBeenCalled())
+  expect(screen.queryByRole('link', { name: 'Continuar no provedor' })).toBeNull()
+  expect(toast.success).not.toHaveBeenCalled()
+})
+
+
+it('não sobrepõe consultas de checkout e mantém o pedido em uma falha', async () => {
+  const pending = { id: 'hosted', method: 'stripe', status: 'pending', amount: '10.00', coins: '10', currency: 'BRL', checkout_url: 'https://checkout.stripe.com/pay/cs_test', package_code: '' }
+  let fail!: (error: Error) => void
+  vi.mocked(paymentApi.status).mockResolvedValueOnce(pending as any).mockReturnValueOnce(new Promise((_resolve, reject) => { fail = reject }))
+  let poll!: () => Promise<void>
+  vi.spyOn(window, 'setInterval').mockImplementation((callback, delay) => { if (delay === 4000) poll = callback as () => Promise<void>; return 42 as unknown as ReturnType<typeof window.setInterval> })
+  mount([], '/panel/wallet?payment_return=hosted')
+  await screen.findByRole('link', { name: 'Continuar no provedor' })
+  await waitFor(() => expect(window.setInterval).toHaveBeenCalledWith(expect.any(Function), 4000))
+  const first = poll()
+  await act(async () => { await poll() })
+  expect(paymentApi.status).toHaveBeenCalledTimes(2)
+  await act(async () => { fail(new Error('Provider unavailable')); await first })
+  expect(toast.error).toHaveBeenCalled()
+  expect(screen.getByRole('link', { name: 'Continuar no provedor' })).not.toBeNull()
+  expect(toast.success).not.toHaveBeenCalled()
 })
