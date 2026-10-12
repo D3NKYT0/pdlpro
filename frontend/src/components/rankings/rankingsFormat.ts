@@ -167,8 +167,10 @@ export function splitParticipants(rows: WorldRow[], ownerName: string) {
 }
 
 export function formatRespawn(value: unknown) {
+  if (value == null || value === '') return { live: false, label: tPublic('rankings.format.unknownRespawn') }
+  if (Number(value) === 0) return { live: true, label: tPublic('rankings.format.alive') }
   const date = parseDate(value)
-  if (!date) return { live: true, label: tPublic('rankings.format.alive') }
+  if (!date) return { live: false, label: tPublic('rankings.format.unknownRespawn') }
   if (date.getTime() <= Date.now()) return { live: true, label: tPublic('rankings.format.alive') }
   return { live: false, label: date.toLocaleString(intlLocale()) }
 }

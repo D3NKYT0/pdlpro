@@ -1,3 +1,4 @@
+from apps.server.infrastructure.boss_catalog import RankingBoss
 from apps.server.infrastructure.custom_item_models import CustomCatalogItem
 from apps.server.infrastructure.item_observation_models import (
     ItemObservationCategory,
@@ -29,5 +30,6 @@ __all__ = [
     "ItemObservationSnapshot",
     "ManagedLineageAccount",
     "ModerationActionLog",
+    "RankingBoss",
     "ServicePrice",
 ]

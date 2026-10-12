@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
+from apps.server.infrastructure.boss_catalog import RankingBoss
 from apps.server.infrastructure.models import (
     IndexConfig,
     ManagedLineageAccount,
@@ -12,6 +13,15 @@ from apps.server.infrastructure.moderation_models import (
 )
 from apps.server.infrastructure.service_models import CharacterServiceOperation
 from common.admin import PDLModelAdmin
+
+
+@admin.register(RankingBoss)
+class RankingBossAdmin(PDLModelAdmin):
+    """Cadastro de bosses padrão/customizados com permissões Django por operação."""
+
+    list_display = ("npc_id", "name", "category", "source", "active")
+    list_filter = ("category", "source", "active")
+    search_fields = ("name", "=npc_id")
 
 
 @admin.register(CharacterServiceOperation)

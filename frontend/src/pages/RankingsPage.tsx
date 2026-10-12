@@ -30,6 +30,7 @@ export function RankingsPage() {
     enabled: resourceOn(`rankings-${tab.id}`) && tab.type === 'ranking',
   })
   const world = useQuery({
+    refetchInterval: 30000,
     queryKey: ['world', tab.type === 'world' ? tab.name : ''],
     queryFn: () => serverApi.world(tab.type === 'world' ? tab.name : 'olympiad_ranking'),
     enabled: resourceOn(`rankings-${tab.id}`) && tab.type === 'world',

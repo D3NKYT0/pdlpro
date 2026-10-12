@@ -151,6 +151,7 @@ OPERATIONS = [
     ("rankings-online", "public/server/rankings/online/", "GET", ""),
     ("rankings-olympiad", "public/server/world/olympiad_ranking/", "GET", ""),
     ("rankings-grandboss", "public/server/world/grandboss_status/", "GET", ""),
+    ("rankings-raidboss", "public/server/world/raidboss_status/", "GET", ""),
     ("rankings-siege", "public/server/world/siege/", "GET", ""),
     ("rankings-search", "public/server/world/search_characters/", "GET", ""),
 ]

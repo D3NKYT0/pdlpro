@@ -64,6 +64,7 @@ from apps.server.application.use_cases import (
     RunPublicLineageQueryUseCase,
 )
 from apps.server.domain.access import IAccountAccessService
+from apps.server.domain.bosses import IBossCatalog, INpcCatalog
 from apps.server.domain.gateways import ILineageGateway
 from apps.server.domain.item_catalog import IItemCatalog, IItemDisplayName
 from apps.server.domain.repositories import (
@@ -79,9 +80,11 @@ from apps.server.domain.repositories import (
 from apps.server.domain.site_metadata import IPackagedSiteMetadata
 from apps.server.domain.skill_catalog import ISkillCatalog
 from apps.server.infrastructure.access import DjangoAccountAccessService
+from apps.server.infrastructure.boss_catalog import DjangoBossCatalog
 from apps.server.infrastructure.empty_site_metadata import EmptyPackagedSiteMetadata
 from apps.server.infrastructure.item_catalog_adapter import LineageItemCatalogAdapter
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
+from apps.server.infrastructure.lineage.npc_catalog import XmlNpcCatalog
 from apps.server.infrastructure.moderation_repository import (
     DjangoModerationStateRepository,
 )
@@ -112,6 +115,8 @@ class ServerProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
+        container.register(IBossCatalog, DjangoBossCatalog, lifetime=Lifetime.SCOPED)
+        container.register(INpcCatalog, XmlNpcCatalog, lifetime=Lifetime.SCOPED)
         if settings.LINEAGE_DB_ENABLED:
             # O catálogo é carregado no boot; alterações nos arquivos .sql exigem recarregar o processo.
             catalog = LineageQueryCatalog.load(

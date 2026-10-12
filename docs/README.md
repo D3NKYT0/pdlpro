@@ -93,6 +93,7 @@
 | [Legais e LGPD](funcionalidades/documentos-legais-e-lgpd.md) | Termos, cookies, portabilidade |
 | [Observação de itens](funcionalidades/observacao-de-itens.md) | Snapshots staff |
 | [Moderação](funcionalidades/moderacao.md) | Kick, ban, teleporte |
+| [Bosses e ranking](funcionalidades/bosses-ranking.md) | Catálogo de épicos, raids e respawn |
 
 ### Desenvolvimento
 

@@ -4,7 +4,7 @@ import { EmptyWorld } from './EmptyWorld'
 import { formatRespawn } from './rankingsFormat'
 import { bossNames, type WorldRow } from './rankingsMeta'
 
-export function WorldBossGrid({ rows }: { rows: WorldRow[] }) {
+export function WorldBossGrid({ rows, category = 'epic' }: { rows: WorldRow[], category?: 'epic' | 'raid' }) {
   const { t } = useTranslation('public')
 
   if (!rows.length) return <EmptyWorld />
@@ -19,9 +19,9 @@ export function WorldBossGrid({ rows }: { rows: WorldRow[] }) {
             <div className="rankings-mark sm">
               <Crown aria-hidden="true" />
             </div>
-            <span>{t('rankings.grandBoss')}</span>
+            <span>{t(category === 'epic' ? 'rankings.grandBoss' : 'rankings.raidBoss')}</span>
             <strong>
-              {bossNames[bossId] ?? t('rankings.format.bossFallback', { id: bossId || '—' })}
+              {row.name || bossNames[bossId] || t('rankings.format.bossFallback', { id: bossId || '—' })}
             </strong>
             <em className={respawn.live ? 'is-live' : 'is-down'}>{respawn.label}</em>
           </article>

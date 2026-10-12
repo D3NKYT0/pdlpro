@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from django.conf import settings
 
 from apps.server.application.site_identity import first_text, overlay_list, overlay_map
+from apps.server.domain.bosses import IBossCatalog, INpcCatalog
 from apps.server.domain.gateways import (
     ILineageGateway,
     RankingEntry,
@@ -40,6 +41,7 @@ PUBLIC_LINEAGE_QUERIES = frozenset(
         "olympiad_all_heroes",
         "olympiad_current_heroes",
         "grandboss_status",
+        "raidboss_status",
         "siege",
         "siege_participants",
         "search_characters",
@@ -324,13 +326,17 @@ class RunPublicLineageQueryUseCase(UseCase[RunPublicLineageQueryInput, list[dict
     retorno é ``list[dict]``.
     """
 
-    def __init__(self, lineage: ILineageGateway) -> None:
+    def __init__(self, lineage: ILineageGateway, bosses: IBossCatalog, npcs: INpcCatalog) -> None:
         self._lineage = lineage
+        self._bosses = bosses
+        self._npcs = npcs
 
     def execute(self, data: RunPublicLineageQueryInput) -> list[dict]:
         if data.name not in PUBLIC_LINEAGE_QUERIES:
             raise ValidationDomainError("Consulta pública inválida.")
         params = dict(data.params or {})
+        if data.name in {"grandboss_status", "raidboss_status"}:
+            return self._boss_status(data.name)
         if data.name == "search_characters":
             query = str(params.get("query") or "").strip()
             if len(query) < 2:
@@ -346,3 +352,30 @@ class RunPublicLineageQueryUseCase(UseCase[RunPublicLineageQueryInput, list[dict
                 raise ValidationDomainError("Castelo inválido.")
             params["castle_id"] = castle_id
         return self._lineage.query(data.name, params)
+
+    def _boss_status(self, name: str) -> list[dict]:
+        """Mescla metadados e timestamps; NPC sem registro tem respawn desconhecido."""
+        category = "epic" if name == "grandboss_status" else "raid"
+        catalog = self._bosses.list_all()
+        configured = {row["npc_id"]: row for row in catalog}
+        sources = {category} | {
+            row["source"] for row in catalog if row["active"] and row["category"] == category
+        }
+        live = {}
+        for source in sorted(sources):
+            query = "grandboss_status" if source == "epic" else "raidboss_status"
+            live[source] = {
+                int(row["boss_id"]): row for row in self._lineage.query(query, {})
+            }
+        rows = [dict(row) for npc_id, row in live[category].items() if npc_id not in configured]
+        for boss in catalog:
+            if boss["active"] and boss["category"] == category:
+                row = live[boss["source"]].get(boss["npc_id"], {})
+                rows.append({**row, "boss_id": boss["npc_id"], "name": boss["name"],
+                             "respawn": row.get("respawn")})
+        for row in rows:
+            npc = self._npcs.get(int(row["boss_id"]))
+            if npc:
+                row["name"] = row.get("name") or npc["name"]
+                row["level"] = npc["level"]
+        return rows

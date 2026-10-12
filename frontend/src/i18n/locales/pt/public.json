@@ -224,6 +224,11 @@
         "label": "Siege",
         "kicker": "Castelos",
         "blurb": "Quem governa as fortalezas do reino."
+      },
+      "raidboss": {
+        "label": "Bosses normais",
+        "kicker": "Raids",
+        "blurb": "Status e respawn dos bosses normais."
       }
     },
     "columns": {
@@ -289,7 +294,8 @@
       "no": "Não",
       "castleFallback": "Castelo {{id}}",
       "bossFallback": "Boss #{{id}}",
-      "adenaUnit": "adena"
+      "adenaUnit": "adena",
+      "unknownRespawn": "Respawn indisponível"
     },
     "castles": {
       "gludio": {
@@ -328,7 +334,8 @@
         "territory": "Território de Schuttgart",
         "blurb": "A cidadela das montanhas nevadas."
       }
-    }
+    },
+    "raidBoss": "Raid Boss"
   },
   "info": {
     "eyebrow": "Guia oficial do servidor",
@@ -626,4 +633,3 @@
     "actionDefault": "Saiba mais"
   }
 }
-

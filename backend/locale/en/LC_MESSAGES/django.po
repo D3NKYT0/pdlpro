@@ -5656,3 +5656,39 @@ msgstr "Unstuck destination"
 
 msgid "Destino de destravamento inválido. Informe X, Y e Z como inteiros entre -2147483648 e 2147483647."
 msgstr "Invalid unstuck destination. Enter X, Y and Z as integers between -2147483648 and 2147483647."
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "ID do NPC"
+msgstr "NPC ID"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Épico"
+msgstr "Epic"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Origem do respawn"
+msgstr "Respawn source"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Tabela de épicos"
+msgstr "Epic table"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Tabela de raids"
+msgstr "Raid table"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Boss do ranking"
+msgstr "Ranking boss"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Bosses do ranking"
+msgstr "Ranking bosses"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Deixe vazio para usar o nome do acervo de NPCs."
+msgstr "Leave blank to use the NPC collection name."
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Informe o nome para um NPC que não está no acervo."
+msgstr "Enter a name for an NPC outside the collection."

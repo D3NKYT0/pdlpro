@@ -157,6 +157,7 @@ MICRO_RESOURCE_RULES = (
         "rankings-grandboss", r"public/server/world/grandboss_status/", ("GET",), ""
     ),
     ResourceRule("rankings-siege", r"public/server/world/siege/", ("GET",), ""),
+    ResourceRule("rankings-raidboss", r"public/server/world/raidboss_status/", ("GET",), ""),
     ResourceRule(
         "rankings-search", r"public/server/world/search_characters/", ("GET",), ""
     ),

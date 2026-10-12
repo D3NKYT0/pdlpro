@@ -81,6 +81,7 @@ MICRO_RESOURCE_NAMES = {
     "rankings-online": "Ranking de tempo online",
     "rankings-olympiad": "Olimpíadas",
     "rankings-grandboss": "Grand Bosses",
+    "rankings-raidboss": "Raid Bosses",
     "rankings-siege": "Cerco aos castelos",
     "rankings-search": "Buscar personagens",
 }
@@ -162,6 +163,7 @@ RESOURCE_PARENTS = {
     "rankings-online": "rankings",
     "rankings-olympiad": "rankings",
     "rankings-grandboss": "rankings",
+    "rankings-raidboss": "rankings",
     "rankings-siege": "rankings",
     "rankings-search": "rankings",
 }

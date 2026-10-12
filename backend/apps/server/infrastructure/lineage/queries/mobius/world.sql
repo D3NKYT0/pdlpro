@@ -47,6 +47,11 @@ SELECT bossId AS boss_id, respawnDate AS respawn
 FROM epic_boss_spawn
 ORDER BY respawnDate DESC
 
+-- name: raidboss_status
+SELECT id AS boss_id, respawn_delay AS respawn
+FROM raidboss_status
+ORDER BY respawn_delay DESC
+
 -- name: siege
 SELECT
     W.id AS castle_id,

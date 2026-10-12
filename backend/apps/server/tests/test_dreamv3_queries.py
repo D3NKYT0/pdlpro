@@ -77,6 +77,7 @@ def schema():
         CREATE TABLE oly_nobles (char_id INTEGER, points_current INTEGER);
         CREATE TABLE oly_heroes (char_id INTEGER, count INTEGER, played INTEGER);
         CREATE TABLE epic_boss_spawn (bossId INTEGER, respawnDate INTEGER);
+        CREATE TABLE raidboss_status (id INTEGER, respawn_delay INTEGER);
         CREATE TABLE castle (
             id INTEGER, name TEXT, siege_date INTEGER, treasury INTEGER, tax_percent INTEGER
         );
@@ -114,7 +115,7 @@ def test_complete_feature_catalog():
     assert CATALOG.has("list_character_skills")
     assert CATALOG.has("insert_character")
     assert CATALOG.has("insert_character_subclass")
-    assert len(CATALOG._statements) == 73
+    assert len(CATALOG._statements) == 74
     assert CATALOG.has("change_appearance")
     assert CATALOG.has("list_private_stores")
 

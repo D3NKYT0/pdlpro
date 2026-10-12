@@ -45,6 +45,7 @@ export const tabs: Tab[] = [
   { id: 'online', type: 'ranking', kind: 'online', icon: Clock },
   { id: 'olympiad', type: 'world', name: 'olympiad_ranking', icon: Trophy },
   { id: 'grandboss', type: 'world', name: 'grandboss_status', icon: Crown },
+  { id: 'raidboss', type: 'world', name: 'raidboss_status', icon: Skull },
   { id: 'siege', type: 'world', name: 'siege', icon: Castle },
 ]
 
@@ -80,6 +81,7 @@ export const CASTLE_CATALOG: Array<{
 export function tabFromParam(param: string | null): Tab {
   if (param === 'olympiad_ranking') return tabs.find((item) => item.id === 'olympiad') ?? tabs[0]
   if (param === 'grandboss_status') return tabs.find((item) => item.id === 'grandboss') ?? tabs[0]
+  if (param === 'raidboss_status') return tabs.find((item) => item.id === 'raidboss') ?? tabs[0]
   return tabs.find((item) => item.id === param) ?? tabs[0]
 }
 

@@ -261,11 +261,13 @@
 }
 
 .rankings-nav {
+  height: auto;
   position: sticky;
   top: 73px;
   z-index: 40;
   display: grid;
-  grid-template-columns: repeat(9, minmax(0, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   margin-top: -25px;
   margin-bottom: 56px;
   padding: 6px;
@@ -1082,13 +1084,12 @@
   }
 
   .rankings-nav {
-    grid-template-columns: repeat(9, max-content);
+    grid-auto-columns: max-content;
     justify-content: flex-start;
     overflow-x: auto;
   }
 
   .rankings-nav a {
-    min-width: 88px;
     padding: 8px 14px;
   }
 

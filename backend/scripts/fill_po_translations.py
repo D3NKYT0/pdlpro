@@ -14,6 +14,15 @@ LOCALE = ROOT / "locale"
 
 # Portuguese msgid -> (English, Spanish)
 TRANSLATIONS: dict[str, tuple[str, str]] = {
+    "ID do NPC": ("NPC ID", "ID del NPC"),
+    "Deixe vazio para usar o nome do acervo de NPCs.": ("Leave blank to use the NPC collection name.", "Deje vacío para usar el nombre del acervo de NPCs."),
+    "Informe o nome para um NPC que não está no acervo.": ("Enter a name for an NPC outside the collection.", "Indique el nombre de un NPC que no está en el acervo."),
+    "Épico": ("Epic", "Épico"),
+    "Origem do respawn": ("Respawn source", "Origen de la reaparición"),
+    "Tabela de épicos": ("Epic table", "Tabla de épicos"),
+    "Tabela de raids": ("Raid table", "Tabla de raids"),
+    "Boss do ranking": ("Ranking boss", "Boss del ranking"),
+    "Bosses do ranking": ("Ranking bosses", "Bosses del ranking"),
     "Consultar catálogo de papéis": ("View role catalog", "Consultar catálogo de roles"),
     "Consultar papéis do usuário": ("View user roles", "Consultar roles del usuario"),
     "Atualizar papéis do usuário": ("Update user roles", "Actualizar roles del usuario"),

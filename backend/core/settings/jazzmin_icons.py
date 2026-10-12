@@ -37,6 +37,7 @@ JAZZMIN_ICONS_PDL = {
     "server": "fas fa-server",
     "server.managedlineageaccount": "fas fa-gamepad",
     "server.serviceprice": "fas fa-tags",
+    "server.rankingboss": "fas fa-dragon",
     "server.characterserviceoperation": "fas fa-receipt",
     "server.characterjailstate": "fas fa-lock",
     "server.moderationactionlog": "fas fa-gavel",

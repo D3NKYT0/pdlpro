@@ -297,6 +297,7 @@ LINEAGE_QUERY_MODULE = env("LINEAGE_QUERY_MODULE", default="lucerav2")
 LINEAGE_PASSWORD_ALGO = env("LINEAGE_PASSWORD_ALGO", default="").strip().lower()
 LINEAGE_ITEM_XML_DIR = env("LINEAGE_ITEM_XML_DIR", default=str(BASE_DIR / "data" / "items"))
 LINEAGE_SKILL_XML_DIR = env("LINEAGE_SKILL_XML_DIR", default=str(BASE_DIR / "data" / "skills"))
+LINEAGE_NPC_XML_DIR = env("LINEAGE_NPC_XML_DIR", default=str(BASE_DIR / "data" / "npc"))
 LINEAGE_DB_POOL_SIZE = env.int("LINEAGE_DB_POOL_SIZE", default=2)
 LINEAGE_DB_MAX_OVERFLOW = env.int("LINEAGE_DB_MAX_OVERFLOW", default=4)
 

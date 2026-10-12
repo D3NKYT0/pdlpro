@@ -4945,3 +4945,39 @@ msgstr "Destino de destravamento"
 
 msgid "Destino de destravamento inválido. Informe X, Y e Z como inteiros entre -2147483648 e 2147483647."
 msgstr "Destino de destravamento inválido. Informe X, Y e Z como inteiros entre -2147483648 e 2147483647."
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "ID do NPC"
+msgstr "ID do NPC"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Épico"
+msgstr "Épico"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Origem do respawn"
+msgstr "Origem do respawn"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Tabela de épicos"
+msgstr "Tabela de épicos"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Tabela de raids"
+msgstr "Tabela de raids"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Boss do ranking"
+msgstr "Boss do ranking"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Bosses do ranking"
+msgstr "Bosses do ranking"
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Deixe vazio para usar o nome do acervo de NPCs."
+msgstr "Deixe vazio para usar o nome do acervo de NPCs."
+
+#: apps/server/infrastructure/boss_catalog.py
+msgid "Informe o nome para um NPC que não está no acervo."
+msgstr "Informe o nome para um NPC que não está no acervo."

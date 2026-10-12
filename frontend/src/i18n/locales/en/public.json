@@ -224,6 +224,11 @@
         "label": "Siege",
         "kicker": "Castles",
         "blurb": "Who rules the fortresses of the realm."
+      },
+      "raidboss": {
+        "label": "Normal bosses",
+        "kicker": "Raids",
+        "blurb": "Status and respawn of normal bosses."
       }
     },
     "columns": {
@@ -289,7 +294,8 @@
       "no": "No",
       "castleFallback": "Castle {{id}}",
       "bossFallback": "Boss #{{id}}",
-      "adenaUnit": "adena"
+      "adenaUnit": "adena",
+      "unknownRespawn": "Respawn unavailable"
     },
     "castles": {
       "gludio": {
@@ -328,7 +334,8 @@
         "territory": "Schuttgart Territory",
         "blurb": "Citadel of the snowy mountains."
       }
-    }
+    },
+    "raidBoss": "Raid Boss"
   },
   "info": {
     "eyebrow": "Official server guide",
@@ -626,4 +633,3 @@
     "actionDefault": "Learn more"
   }
 }
-

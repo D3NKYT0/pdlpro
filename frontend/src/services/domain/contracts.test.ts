@@ -124,6 +124,7 @@ const contracts: Contract[] = [
   ['server.rankings', () => serverApi.rankings('pvp'), '/public/server/rankings/pvp/'],
   ['server.limit', () => serverApi.rankings('pvp', 10), '/public/server/rankings/pvp/?limit=10'],
   ['server.world', () => serverApi.world('bosses'), '/public/server/world/bosses/'],
+  ['server.raidboss', () => serverApi.world('raidboss_status'), '/public/server/world/raidboss_status/'],
   ['server.stores', () => serverApi.stores(), '/public/server/stores/'],
   ['server.storesQuery', () => serverApi.stores('sword', 'sell'), '/public/server/stores/?q=sword&type=sell'],
   ['lineage.accounts', () => lineageApi.accounts(), '/customer/server/accounts/'],

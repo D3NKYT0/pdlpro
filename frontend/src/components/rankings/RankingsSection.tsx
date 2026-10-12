@@ -56,8 +56,8 @@ export function RankingsSection({
         </div>
       ) : rankingRows.length ? (
         <RankingPodium tab={tab} rows={rankingRows} />
-      ) : tab.id === 'grandboss' ? (
-        <WorldBossGrid rows={worldRows} />
+      ) : tab.id === 'grandboss' || tab.id === 'raidboss' ? (
+        <WorldBossGrid rows={worldRows} category={tab.id === 'raidboss' ? 'raid' : 'epic'} />
       ) : tab.id === 'siege' ? (
         <SiegeBoard rows={worldRows} />
       ) : worldRows.length ? (
