@@ -10,6 +10,7 @@ from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 
 from apps.server.application.custom_items import (
+    DeleteCustomItemUseCase,
     GetCustomItemUseCase,
     ListCustomItemsInput,
     ListCustomItemsUseCase,
@@ -105,7 +106,7 @@ class CustomItemsView(InjectedAPIView):
                 "pages": page.pages,
                 "permissions": {
                     action: request.user.has_perm("accounts.items_manage") and request.user.has_perm(f"server.{action}_customcatalogitem")
-                    for action in ("add", "change")
+                    for action in ("add", "change", "delete")
                 },
                 **catalog_choices(),
             }
@@ -164,3 +165,9 @@ class CustomItemDetailView(CustomItemsView):
             UpsertCustomItemInput(validated_data=serializer.validated_data, item_id=item_uuid)
         )
         return Response(CustomItemSerializer(row).data)
+
+
+    @extend_schema(tags=["Staff - Itens customizados"], summary=gettext_lazy("Excluir cadastro"))
+    def delete(self, request, item_uuid):
+        self.require(request, "delete")
+        return Response(self.resolve(DeleteCustomItemUseCase).execute(item_uuid))

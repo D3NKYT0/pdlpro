@@ -103,6 +103,8 @@ export const commerceApi = {
       data,
       id ? "PATCH" : "POST",
     ),
+  remove: (section: 'packages' | 'promos', id: string) =>
+    request<{ deleted: boolean }>(`/staff/commerce/${section}/${id}/`, { method: 'DELETE' }),
   exchangeState: () => request<ExchangeState>("/shared/wallet/game-exchange/"),
   exchange: (data: ExchangeRequest) =>
     send<Exchange>("/shared/wallet/game-exchange/", data),

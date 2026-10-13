@@ -132,3 +132,13 @@ class UpsertCustomItemUseCase(UseCase[UpsertCustomItemInput, dict]):
                 details={"item_id": "Este ID já está cadastrado."},
             ) from None
         return serialize_custom_item(saved, catalog=self._catalog)
+
+
+class DeleteCustomItemUseCase(UseCase[UUID, dict]):
+    """Exclui os metadados locais sem enviar operações ao servidor de jogo."""
+
+    def __init__(self, items: ICustomItemRepository) -> None:
+        self._items = items
+
+    def execute(self, data: UUID) -> dict:
+        return {"deleted": self._items.delete(data)}

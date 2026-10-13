@@ -65,6 +65,7 @@ from apps.games.infrastructure.models import (
 from apps.games.infrastructure.staff_content import CONFIG_MODELS, get_config_model
 from apps.programs.domain.repositories import ISystemResourceRepository
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
+from common.persistence.deletion import delete_unreferenced
 
 User = get_user_model()
 
@@ -96,6 +97,9 @@ class DjangoGameConfigAdminRepository(IGameConfigAdminRepository):
     def save(self, row: GameConfig) -> GameConfig:
         row.save()
         return row
+
+    def delete(self, entry_id: UUID) -> bool:
+        return delete_unreferenced(GameConfig, entry_id)
 
 
 class DjangoGameContentAdminRepository(IGameContentAdminRepository):
@@ -158,6 +162,9 @@ class DjangoGameContentAdminRepository(IGameContentAdminRepository):
         if related_model is None:
             return None
         return related_model.objects.filter(id=related_id).first()
+
+    def delete(self, kind: str, entry_id: UUID) -> bool:
+        return delete_unreferenced(self._model(kind), entry_id)
 
 
 class DjangoGameCatalogRepository(IGameCatalogRepository):

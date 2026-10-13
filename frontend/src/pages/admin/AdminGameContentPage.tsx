@@ -19,6 +19,7 @@ import { apiErrorMessage } from '../../lib/errors'
 import { AdminHeader } from './AdminChrome'
 import { GameContentEditor } from '../../components/admin/gameContent/GameContentEditor'
 import { GameContentRecordList } from '../../components/admin/gameContent/GameContentRecordList'
+import { refreshGameCatalog } from '../../components/admin/games/refreshGameCatalog'
 import {
   buildGameContentConfig,
   buildRowLabel,
@@ -155,6 +156,12 @@ export function AdminGameContentPage() {
         rowsFor={rows}
         rowLabel={rowLabel}
         onEdit={open}
+        busy={action.busy}
+        onDelete={async (row) => {
+          await staffGameContentApi.deleteConfig(section, row.id)
+          if (editId === row.id) setDraft(null)
+          await refreshGameCatalog(queryClient)
+        }}
       />
     </div>
   )

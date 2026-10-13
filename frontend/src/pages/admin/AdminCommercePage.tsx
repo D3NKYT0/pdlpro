@@ -1,7 +1,8 @@
+import { DeleteRecordButton } from '../../components/admin/DeleteRecordButton'
 import { Card } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import {
@@ -39,6 +40,7 @@ export function AdminCommercePage() {
     queryFn: programsApi.staffSupporters,
   });
   const action = useProgramAction();
+  const queryClient = useQueryClient();
   const [tab, setTab] = useSearchParamTab(COMMERCE_TABS, "packages");
   const [draft, setDraft] = useState<Partial<ShopPackage & Promo> | null>(null);
   const [contents, setContents] = useState<
@@ -341,6 +343,12 @@ export function AdminCommercePage() {
                     <Pencil size={16} />
                     {t("commerce.editPackage")}
                   </Button>
+                  <DeleteRecordButton name={p.name} disabled={action.busy} onDelete={async () => {
+                    await commerceApi.remove('packages', p.id)
+                    if (draft?.id === p.id) setDraft(null)
+                    await queryClient.invalidateQueries({ queryKey: ['staff-packages'] })
+                    await queryClient.invalidateQueries({ queryKey: ['shop-packages'] })
+                  }} />
                 </div>
               </Card>
             ))
@@ -364,6 +372,12 @@ export function AdminCommercePage() {
                     <Pencil size={16} />
                     {t("commerce.editPromo")}
                   </Button>
+                  <DeleteRecordButton name={p.code} disabled={action.busy} onDelete={async () => {
+                    await commerceApi.remove('promos', p.id)
+                    if (draft?.id === p.id) setDraft(null)
+                    await queryClient.invalidateQueries({ queryKey: ['staff-promos'] })
+                    await queryClient.invalidateQueries({ queryKey: ['shop-packages'] })
+                  }} />
                 </div>
               </Card>
             ))}

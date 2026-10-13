@@ -35,6 +35,11 @@ class IGameConfigAdminRepository(ABC):
     def save(self, row: Any) -> Any:
         raise NotImplementedError
 
+    @abstractmethod
+    def delete(self, entry_id: UUID) -> bool:
+        """Remove o cadastro sem apagar registros vinculados."""
+        raise NotImplementedError
+
 
 class IGameContentAdminRepository(ABC):
     """Porta administrativa do conteúdo configurável dos jogos (passe, diário, iscas).
@@ -77,6 +82,11 @@ class IGameContentAdminRepository(ABC):
     def resolve_related(self, kind: str, field_name: str, related_id: UUID) -> Any | None:
         """Resolve FK configurável (ex.: season, level_row) pelo id."""
 
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, kind: str, entry_id: UUID) -> bool:
+        """Remove conteúdo sem cascata sobre progresso, resgates ou configurações."""
         raise NotImplementedError
 
 

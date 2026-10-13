@@ -1,4 +1,6 @@
+import { DeleteRecordButton } from '../../components/admin/DeleteRecordButton'
 import { Card } from '../../components/ui/Card'
+import { ErrorNotice, LoadingState } from '../../components/ui/Feedback'
 import { useFeedbackAction } from '../../hooks/useFeedbackAction'
 import { Field } from '../../components/ui/Field'
 import { Button } from '../../components/ui/Button'
@@ -174,11 +176,20 @@ export function AdminNewsPage() {
           <div><span className="panel-eyebrow">{t('news.libraryEyebrow')}</span><h2>{t('news.libraryTitle')}</h2><p>{t('news.libraryText')}</p></div>
           <div className="admin-services-summary"><strong>{(news.data ?? []).length}</strong><small>{t('news.total')}</small></div>
         </header>
-        {(news.data ?? []).length ? <div className="admin-news-list">{(news.data ?? []).map((item) => (
+        <ErrorNotice error={news.error} onRetry={() => void news.refetch()} />
+        {news.isPending ? <LoadingState /> : news.isError ? null : (news.data ?? []).length ? <div className="admin-news-list">{(news.data ?? []).map((item) => (
           <article className="admin-news-item" key={item.id}>
             <span><Newspaper /></span>
             <div><div><h3>{item.title}</h3><b className={item.is_published ? 'is-published' : ''}>{item.is_published ? t('news.published') : t('news.draft')}</b></div><p>{item.excerpt || t('news.noExcerpt')}</p></div>
-            <Button className="ghost" type="button" onClick={() => load(item)}><PencilLine /> {t('news.edit')}</Button>
+            <div className="admin-news-actions">
+              <Button className="ghost" type="button" disabled={saving} onClick={() => load(item)}><PencilLine /> {t('news.edit')}</Button>
+              <DeleteRecordButton name={item.title} disabled={saving} onDelete={async () => {
+                await staffApi.deleteNews(item.id)
+                if (editing === item.id) resetEditor()
+                await queryClient.invalidateQueries({ queryKey: ['staff-news'] })
+                await queryClient.invalidateQueries({ queryKey: ['news'] })
+              }} />
+            </div>
           </article>
         ))}</div> : <div className="account-empty-state"><Newspaper /><strong>{t('news.emptyTitle')}</strong><span>{t('news.emptyText')}</span></div>}
       </Card>

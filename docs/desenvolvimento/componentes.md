@@ -143,6 +143,8 @@ Use apenas um controle por `Field`. Para erro, coloque um ID no conteúdo de `er
 
 ## Abas e composição por domínio
 
+`components/admin/DeleteRecordButton` compõe `Button` e `useFeedbackAction` para exclusão de cadastros. Recebe o nome e o callback assíncrono; confirma a ação, bloqueia repetição e preserva erros públicos da API. O callback da tela atualiza as consultas escopadas e encerra o editor afetado. Consulte [Exclusão administrativa](../funcionalidades/exclusao-administrativa.md).
+
 `Tabs` recebe `id`, `label`, `items`, `value` e `onChange`. Para `id="inventory"` e item `bag`, o painel deve ter `id="inventory-panel-bag"`, `role="tabpanel"` e `aria-labelledby="inventory-tab-bag"`. O chamador controla visibilidade e conteúdo. Use o estilo de navegação existente (`game-tabs` ou `inventory-tabs`) para o contexto correspondente.
 
 `AdminHeader` e `ProgramHeader` compõem `PageHeader`; `AdminSaveBar` compõe `Button`. Os aliases `Empty`, `Loading` e `ErrorNotice` de `ProgramUI` reutilizam os estados comuns. Preserve componentes com contrato próprio, como `ItemIdField`, `ItemIcon`, `SkillIcon`, `RewardsEditor` e `FishingGame`.

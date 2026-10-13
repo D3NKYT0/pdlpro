@@ -5805,3 +5805,11 @@ msgstr "Indique el nombre de un NPC que no está en el acervo."
 #: apps/programs/views.py
 msgid "Listar apoiadores públicos"
 msgstr "Listar patrocinadores públicos"
+
+#: common/persistence/deletion.py apps/staff/presentation/views/config.py
+msgid "Excluir cadastro"
+msgstr "Eliminar registro"
+
+#: common/persistence/deletion.py apps/staff/presentation/views/config.py
+msgid "Este registro possui vínculos. Remova os vínculos ou desative o registro."
+msgstr "Este registro tiene vínculos. Elimine los vínculos o desactive el registro."

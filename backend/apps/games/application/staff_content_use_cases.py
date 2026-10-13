@@ -200,3 +200,16 @@ __all__ = [
     "UpsertGameContentUseCase",
     "validate_game_content_fields",
 ]
+
+
+class DeleteGameContentUseCase(UseCase[tuple[str, UUID], dict]):
+    """Exclui conteúdo configurável sem remover dependências ou progresso."""
+
+    def __init__(self, content: IGameContentAdminRepository) -> None:
+        self._content = content
+
+    def execute(self, data: tuple[str, UUID]) -> dict:
+        kind, entry_id = data
+        if not known_content_kind(kind):
+            raise EntityNotFoundError("Configuração desconhecida.")
+        return {"deleted": self._content.delete(kind, entry_id)}

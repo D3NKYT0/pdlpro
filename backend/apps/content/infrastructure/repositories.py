@@ -26,6 +26,7 @@ from apps.content.infrastructure.models import (
     News,
     WikiPage,
 )
+from common.persistence.deletion import delete_unreferenced
 
 User = get_user_model()
 
@@ -51,6 +52,9 @@ class DjangoNewsAdminRepository(INewsAdminRepository):
     def save(self, row: News) -> News:
         row.save()
         return row
+
+    def delete(self, entry_id: UUID) -> bool:
+        return delete_unreferenced(News, entry_id)
 
 
 class DjangoCalendarAdminRepository(ICalendarAdminRepository):

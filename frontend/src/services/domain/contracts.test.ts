@@ -28,6 +28,12 @@ beforeEach(() => { send.mockReset() })
 type Contract = [name: string, call: () => Promise<unknown>, path: string, method?: string, body?: unknown]
 // Os valores esperados são exemplos explícitos do contrato público, não extraídos do código.
 const contracts: Contract[] = [
+  ['staff.deleteNews', () => staffApi.deleteNews('news'), '/staff/news/', 'DELETE', { id: 'news' }],
+  ['staff.deleteShopItem', () => staffApi.deleteShopItem('item'), '/staff/shop/', 'DELETE', { id: 'item' }],
+  ['staff.deleteGame', () => staffApi.deleteGame('game'), '/staff/games/', 'DELETE', { id: 'game' }],
+  ['commerce.deletePackage', () => commerceApi.remove('packages', 'pack'), '/staff/commerce/packages/pack/', 'DELETE'],
+  ['commerce.deletePromo', () => commerceApi.remove('promos', 'promo'), '/staff/commerce/promos/promo/', 'DELETE'],
+  ['staffGame.deleteConfig', () => staffGameContentApi.deleteConfig('baits', 'bait'), '/staff/game-content/baits/bait/', 'DELETE'],
   ['auth.csrf', () => authApi.csrf(), '/auth/csrf/'],
   ['auth.capabilities', () => authApi.capabilities(), '/auth/capabilities/'],
   ['auth.login', () => authApi.login('hero', 'secret'), '/auth/login/', 'POST', { login: 'hero', password: 'secret', hcaptcha_token: '' }],

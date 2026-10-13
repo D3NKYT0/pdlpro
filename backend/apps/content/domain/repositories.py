@@ -37,6 +37,11 @@ class INewsAdminRepository(ABC):
 
         raise NotImplementedError
 
+    @abstractmethod
+    def delete(self, entry_id: UUID) -> bool:
+        """Remove o cadastro sem apagar registros vinculados."""
+        raise NotImplementedError
+
 
 class ICalendarAdminRepository(ABC):
     """Porta administrativa de eventos do calendário público."""

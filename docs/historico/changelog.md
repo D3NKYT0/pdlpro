@@ -2,13 +2,17 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 12 de outubro de 2026
+> **Atualizado:** 13 de outubro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Não publicado]
+
+### Adicionado
+
+- Exclusão com confirmação no painel para notícias, produtos/pacotes da loja, cupons, configurações e conteúdo dos jogos e metadados de itens customizados. Verificação de vínculos preserva carrinhos, composição de pacotes, progresso e históricos; compras mantêm suas fotografias de itens.
 
 ## [2.7.4] - 2026-10-12
 

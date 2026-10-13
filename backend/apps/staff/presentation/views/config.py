@@ -10,6 +10,9 @@ from apps.staff.application.use_cases import (
     DeleteStaffBonusTierUseCase,
     DeleteStaffChargeCurrencyUseCase,
     DeleteStaffCoinPackageUseCase,
+    DeleteStaffGameUseCase,
+    DeleteStaffNewsUseCase,
+    DeleteStaffShopItemUseCase,
     GetPanelSettingsUseCase,
     GetStaffCoinConfigUseCase,
     GetStaffWalletPromoUseCase,
@@ -301,7 +304,7 @@ class StaffShopItemsView(ItemCatalogAPIView):
     """
 
     permission_classes = [IsAuthenticated, HasCapability]
-    required_capabilities = {'GET': 'commerce.view', 'POST': 'commerce.manage', 'PUT': 'commerce.manage'}
+    required_capabilities = {'GET': 'commerce.view', 'POST': 'commerce.manage', 'DELETE': 'commerce.manage', 'PUT': 'commerce.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -326,6 +329,10 @@ class StaffShopItemsView(ItemCatalogAPIView):
     )
     def put(self, request):
         return Response(self.resolve(UpsertStaffShopItemUseCase).execute(request.data or {}))
+
+    @extend_schema(tags=["Staff"], summary=gettext_lazy("Excluir cadastro"))
+    def delete(self, request):
+        return Response(self.resolve(DeleteStaffShopItemUseCase).execute(request.data or {}))
 
 
 class StaffShopAutoconfigView(InjectedAPIView):
@@ -359,7 +366,7 @@ class StaffNewsView(InjectedAPIView):
     """
 
     permission_classes = [IsAuthenticated, HasCapability]
-    required_capabilities = {'GET': 'content.view', 'POST': 'content.manage', 'PUT': 'content.manage'}
+    required_capabilities = {'GET': 'content.view', 'POST': 'content.manage', 'DELETE': 'content.manage', 'PUT': 'content.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -385,6 +392,10 @@ class StaffNewsView(InjectedAPIView):
     def put(self, request):
         return Response(self.resolve(UpsertStaffNewsUseCase).execute(request.data or {}))
 
+    @extend_schema(tags=["Staff"], summary=gettext_lazy("Excluir cadastro"))
+    def delete(self, request):
+        return Response(self.resolve(DeleteStaffNewsUseCase).execute(request.data or {}))
+
 
 class StaffGamesView(InjectedAPIView):
     """Entrada HTTP para ``ListStaffGamesUseCase``, ``ToggleStaffGameUseCase``.
@@ -395,7 +406,7 @@ class StaffGamesView(InjectedAPIView):
     """
 
     permission_classes = [IsAuthenticated, HasCapability]
-    required_capabilities = {'GET': 'games.view', 'PUT': 'games.manage'}
+    required_capabilities = {'GET': 'games.view', 'DELETE': 'games.manage', 'PUT': 'games.manage'}
 
     @extend_schema(
         tags=["Staff"],
@@ -412,6 +423,10 @@ class StaffGamesView(InjectedAPIView):
     )
     def put(self, request):
         return Response(self.resolve(ToggleStaffGameUseCase).execute(request.data or {}))
+
+    @extend_schema(tags=["Staff"], summary=gettext_lazy("Excluir cadastro"))
+    def delete(self, request):
+        return Response(self.resolve(DeleteStaffGameUseCase).execute(request.data or {}))
 
 
 class StaffGamesAutoconfigView(InjectedAPIView):

@@ -931,3 +931,39 @@ class ToggleStaffGameUseCase(UseCase[dict, dict]):
             row.name = str(data["name"])
         self._games.save(row)
         return {"id": str(row.id), "code": row.code, "name": row.name, "active": row.active, "settings": row.settings}
+
+
+class DeleteStaffNewsUseCase(UseCase[dict, dict]):
+    """Exclui o cadastro por UUID, preservando dependências e históricos."""
+
+    def __init__(self, news: INewsAdminRepository) -> None:
+        self._repository = news
+
+    def execute(self, data: dict) -> dict:
+        from apps.staff.application.parsing import parse_required_uuid
+
+        return {"deleted": self._repository.delete(parse_required_uuid(data.get("id") if isinstance(data, dict) else None))}
+
+
+class DeleteStaffShopItemUseCase(UseCase[dict, dict]):
+    """Exclui o cadastro por UUID, preservando dependências e históricos."""
+
+    def __init__(self, shop_items: IShopItemAdminRepository) -> None:
+        self._repository = shop_items
+
+    def execute(self, data: dict) -> dict:
+        from apps.staff.application.parsing import parse_required_uuid
+
+        return {"deleted": self._repository.delete(parse_required_uuid(data.get("id") if isinstance(data, dict) else None))}
+
+
+class DeleteStaffGameUseCase(UseCase[dict, dict]):
+    """Exclui o cadastro por UUID, preservando dependências e históricos."""
+
+    def __init__(self, games: IGameConfigAdminRepository) -> None:
+        self._repository = games
+
+    def execute(self, data: dict) -> dict:
+        from apps.staff.application.parsing import parse_required_uuid
+
+        return {"deleted": self._repository.delete(parse_required_uuid(data.get("id") if isinstance(data, dict) else None))}

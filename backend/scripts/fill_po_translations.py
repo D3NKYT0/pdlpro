@@ -14,6 +14,11 @@ LOCALE = ROOT / "locale"
 
 # Portuguese msgid -> (English, Spanish)
 TRANSLATIONS: dict[str, tuple[str, str]] = {
+    "Excluir cadastro": ("Delete record", "Eliminar registro"),
+    "Este registro possui vínculos. Remova os vínculos ou desative o registro.": (
+        "This record has linked records. Remove the links or deactivate the record.",
+        "Este registro tiene vínculos. Elimine los vínculos o desactive el registro.",
+    ),
     "Listar apoiadores públicos": ("List public supporters", "Listar patrocinadores públicos"),
     "ID do NPC": ("NPC ID", "ID del NPC"),
     "Deixe vazio para usar o nome do acervo de NPCs.": ("Leave blank to use the NPC collection name.", "Deje vacío para usar el nombre del acervo de NPCs."),

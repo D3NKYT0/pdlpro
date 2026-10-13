@@ -379,3 +379,16 @@ class UpdateStaffPromoUseCase(UseCase[UpdateStaffPromoInput, dict]):
             for key, value in fields.items():
                 setattr(promo, key, value)
             return self._shop.dump_promo(self._shop.save_promo(promo))
+
+
+class DeleteStaffCommerceUseCase(UseCase[tuple[str, UUID], dict]):
+    """Exclui pacotes e cupons sem comprometer carrinhos ou histórico de uso."""
+
+    def __init__(self, shop: IShopRepository) -> None:
+        self._shop = shop
+
+    def execute(self, data: tuple[str, UUID]) -> dict:
+        section, entry_id = data
+        if section not in ("packages", "promos"):
+            raise EntityNotFoundError("Configuração desconhecida.")
+        return {"deleted": self._shop.delete_configuration(section, entry_id)}

@@ -18,6 +18,7 @@ import {
 } from '../gameContent/gameContentConfig'
 import { GameContentEditor } from '../gameContent/GameContentEditor'
 import { GameContentRecordList } from '../gameContent/GameContentRecordList'
+import { refreshGameCatalog } from './refreshGameCatalog'
 
 export function GameConfigurator({
   game,
@@ -169,6 +170,12 @@ export function GameConfigurator({
             rowsFor={rowsFor}
             rowLabel={(row) => catalog.getById(String(row.item_id ?? ''))?.name || rowLabel(row)}
             onEdit={openRow}
+            busy={action.pending}
+            onDelete={async (row) => {
+              await staffGameContentApi.deleteConfig(section, row.id)
+              if (editId === row.id) setDraft(null)
+              await refreshGameCatalog(queryClient)
+            }}
           />
         </>
       ) : (

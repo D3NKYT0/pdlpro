@@ -31,6 +31,7 @@ from apps.games.application.staff_content_schema import (
     known_content_kind,
 )
 from apps.games.application.staff_content_use_cases import (
+    DeleteGameContentUseCase,
     GetGameContentInput,
     GetGameContentUseCase,
     ListGameContentInput,
@@ -243,7 +244,7 @@ class StaffGameContentView(InjectedAPIView):
     """Administra os tipos de conteúdo dos jogos previstos no registro de serializers."""
 
     permission_classes = [IsAuthenticated, HasCapability]
-    required_capabilities = {'GET': 'games.view', 'POST': 'games.manage', 'PATCH': 'games.manage'}
+    required_capabilities = {'GET': 'games.view', 'POST': 'games.manage', 'PATCH': 'games.manage', 'DELETE': 'games.manage'}
 
     @extend_schema(
         tags=["Staff - Conteúdo de jogos"],
@@ -288,6 +289,10 @@ class StaffGameContentView(InjectedAPIView):
             )
         )
         return Response(cls(row).data)
+
+    @extend_schema(tags=["Staff - Conteúdo de jogos"], summary=gettext_lazy("Excluir cadastro"))
+    def delete(self, request, kind, entry_id):
+        return Response(self.resolve(DeleteGameContentUseCase).execute((kind, entry_id)))
 
 
 class HuntClaimSerializer(serializers.Serializer):

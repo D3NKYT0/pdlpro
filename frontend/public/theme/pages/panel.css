@@ -4031,7 +4031,7 @@ html.pdl-panel .admin-game-switch > input:checked + .admin-toggle-control i { ba
 html.pdl-panel .admin-game-switch > span:last-child { margin-left: auto; color: var(--panel-text); font-weight: 700; }
 html.pdl-panel .admin-game-switch.is-busy { opacity: .55; cursor: wait; }
 html.pdl-panel .admin-games-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; }
-html.pdl-panel .admin-game-card-actions { display: flex; grid-column: 1 / -1; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 13px; border-top: 1px solid color-mix(in srgb, var(--panel-gold) 10%, transparent); }
+html.pdl-panel .admin-game-card-actions { display: flex; flex-wrap: wrap; grid-column: 1 / -1; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 13px; border-top: 1px solid color-mix(in srgb, var(--panel-gold) 10%, transparent); }
 html.pdl-panel .admin-game-card-actions .admin-game-switch { grid-column: auto; margin-top: 0; padding-top: 0; border-top: 0; flex: 1; min-width: 0; }
 html.pdl-panel .admin-game-configurator { width: min(100%, 760px); max-height: min(90vh, 860px); }
 html.pdl-panel .admin-game-settings { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; margin: 0 0 16px; }
@@ -4071,6 +4071,7 @@ html.pdl-panel .admin-news-item b { padding: 4px 7px; color: var(--panel-gold-br
 html.pdl-panel .admin-news-item b.is-published { color: #8fd19e; border-color: rgba(111,191,115,.3); background: rgba(111,191,115,.08); }
 html.pdl-panel .admin-news-item .btn { height: 36px; }
 html.pdl-panel .admin-news-item .btn svg { width: 14px; }
+html.pdl-panel .admin-news-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 
 html.pdl-panel .admin-banner-thumb { position: relative; display: flex; align-items: center; justify-content: center; width: 76px; height: 48px; border-radius: 4px; overflow: hidden; border: 1px solid color-mix(in srgb, var(--panel-gold) 24%, transparent); background: rgba(0, 0, 0, 0.4); flex-shrink: 0; }
 html.pdl-panel .admin-banner-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -4109,7 +4110,7 @@ html.pdl-panel .admin-banner-preview-info { display: flex; flex-direction: colum
   html.pdl-panel .admin-accounts-facts { grid-template-columns: 1fr; }
   html.pdl-panel .admin-accounts-footer { align-items: stretch; flex-direction: column; }
   html.pdl-panel .admin-news-item { grid-template-columns: auto minmax(0,1fr); }
-  html.pdl-panel .admin-news-item .btn { grid-column: 2; }
+  html.pdl-panel .admin-news-item .btn, html.pdl-panel .admin-news-item > .admin-news-actions { grid-column: 2; }
 }
 
 html.pdl-panel .field textarea {

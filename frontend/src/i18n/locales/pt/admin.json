@@ -1,4 +1,5 @@
 {
+  "deletion": {"confirm": "Excluir “{{name}}” definitivamente? Esta ação não pode ser desfeita.", "label": "Excluir {{name}}", "success": "Registro excluído.", "error": "Não foi possível excluir o registro."},
   "unstuck": {
     "title": "Destino de destravamento",
     "hint": "Escolha o local seguro para destravar personagens offline. Desative para usar o destino padrão do servidor.",

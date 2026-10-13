@@ -11,6 +11,7 @@ from apps.shop.application.commerce_use_cases import (
     CreateStaffPackageUseCase,
     CreateStaffPromoInput,
     CreateStaffPromoUseCase,
+    DeleteStaffCommerceUseCase,
     GetStaffPackageUseCase,
     GetStaffPromoUseCase,
     ListActivePackagesUseCase,
@@ -29,7 +30,7 @@ from apps.shop.application.commerce_use_cases import (
     UserScopedInput,
 )
 from common.architecture.exceptions import EntityNotFoundError
-from common.permissions import IsStaffMember
+from common.permissions import HasCapability, IsStaffMember
 from common.views import InjectedAPIView
 
 
@@ -174,7 +175,8 @@ class CommerceView(InjectedAPIView):
 class StaffCommerceView(InjectedAPIView):
     """Administra pacotes e promoções do comércio via casos de uso."""
 
-    permission_classes = [IsAuthenticated, IsStaffMember]
+    permission_classes = [IsAuthenticated, IsStaffMember, HasCapability]
+    required_capabilities = {'GET': 'commerce.view', 'POST': 'commerce.manage', 'PATCH': 'commerce.manage', 'DELETE': 'commerce.manage'}
 
     @extend_schema(
         tags=["Comércio"],
@@ -288,3 +290,7 @@ class StaffCommerceView(InjectedAPIView):
             )
             return Response(PromoSerializer(promo).data)
         raise NotFound()
+
+    @extend_schema(tags=["Comércio"], summary=gettext_lazy("Excluir cadastro"))
+    def delete(self, request, section, entry_id):
+        return Response(self.resolve(DeleteStaffCommerceUseCase).execute((section, entry_id)))

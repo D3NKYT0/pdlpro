@@ -5,6 +5,8 @@ export type ConfigRow = { id: string; [key: string]: unknown }
 
 /** Staff CRUD for game-content kinds (battle pass, daily, fishing configs, …). */
 export const staffGameContentApi = {
+  deleteConfig: (kind: string, id: string) =>
+    request<{ deleted: boolean }>(`/staff/game-content/${kind}/${id}/`, { method: 'DELETE' }),
   configs: (kind: string) => request<ConfigRow[]>(`/staff/game-content/${kind}/`),
   saveConfig: (kind: string, data: unknown, id?: string) =>
     sendJson<ConfigRow>(

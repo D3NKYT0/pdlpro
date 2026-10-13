@@ -160,6 +160,11 @@ class ICustomItemRepository(ABC):
 
         raise NotImplementedError
 
+    @abstractmethod
+    def delete(self, entry_id: UUID) -> bool:
+        """Remove somente os metadados locais, preservando itens e históricos."""
+        raise NotImplementedError
+
 
 class ICharacterServiceOperationRepository(ABC):
     """Porta das reservas de serviço pago de personagem (CharacterServiceOperation).

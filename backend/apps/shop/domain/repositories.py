@@ -34,6 +34,11 @@ class IShopItemAdminRepository(ABC):
 
         raise NotImplementedError
 
+    @abstractmethod
+    def delete(self, entry_id: UUID) -> bool:
+        """Remove o cadastro sem apagar registros vinculados."""
+        raise NotImplementedError
+
 
 class IShopRepository(ABC):
     """Porta de catálogo, pacotes, cupons e histórico de compras da loja.
@@ -139,6 +144,11 @@ class IShopRepository(ABC):
 
     @abstractmethod
     def create_purchase(self, **fields) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete_configuration(self, section: str, entry_id: UUID) -> bool:
+        """Remove pacote sem carrinhos vinculados ou cupom sem uso."""
         raise NotImplementedError
 
 

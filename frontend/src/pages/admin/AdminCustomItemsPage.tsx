@@ -1,3 +1,4 @@
+import { DeleteRecordButton } from '../../components/admin/DeleteRecordButton'
 import { Card } from '../../components/ui/Card'
 import { Pagination } from '../../components/ui/Pagination'
 import { Button } from '../../components/ui/Button'
@@ -72,7 +73,12 @@ export function AdminCustomItemsPage() {
         <div className="custom-item-cards">{list.data?.results.map(row => <article key={row.id} className={editing?.id === row.id ? 'is-selected' : ''}>
           <div className="custom-card-heading">{row.icon_url && <img src={row.icon_url} alt={row.name} width={48} height={48} />}<div><strong>{row.name}</strong><small>{t('customItems.cardMeta', { id: row.item_id, category: list.data.categories.find(type => type.value === row.category)?.label || row.category, grade: row.grade })}</small></div><span className={`custom-status${row.active ? ' active' : ''}`}>{row.active ? t('customItems.active') : t('customItems.inactive')}</span></div>
           {row.conflicts_with_xml && <p className="custom-error">{t('customItems.conflict')}</p>}
-          <div className="custom-card-footer"><small>{t('customItems.cardFooter', { tradeable: row.tradeable ? t('customItems.tradeable') : t('customItems.notTradeable'), total: Object.keys(row.metadata).length })}</small>{list.data.permissions.change && <div><button type="button" disabled={busy} onClick={() => { save.reset(); edit(row) }}><Pencil size={14} />{t('customItems.edit')}</button><button type="button" disabled={busy} onClick={() => activate.mutate(row)}><Power size={14} />{row.active ? t('customItems.deactivate') : t('customItems.activate')}</button></div>}</div>
+          <div className="custom-card-footer"><small>{t('customItems.cardFooter', { tradeable: row.tradeable ? t('customItems.tradeable') : t('customItems.notTradeable'), total: Object.keys(row.metadata).length })}</small>{list.data.permissions.change && <div><button type="button" disabled={busy} onClick={() => { save.reset(); edit(row) }}><Pencil size={14} />{t('customItems.edit')}</button><button type="button" disabled={busy} onClick={() => activate.mutate(row)}><Power size={14} />{row.active ? t('customItems.deactivate') : t('customItems.activate')}</button></div>}{list.data.permissions.delete && <DeleteRecordButton name={row.name} disabled={busy} onDelete={async () => {
+            await api.remove(row.id)
+            if (editing?.id === row.id) reset()
+            await client.invalidateQueries({ queryKey: ['staff-custom-items'] })
+            await client.invalidateQueries({ queryKey: ITEM_CATALOG_KEY })
+          }} />}</div>
         </article>)}</div>
         {list.data && list.data.pages > 1 && <Pagination className="custom-pagination" page={list.data.page} pages={list.data.pages} onChange={setPage} busy={list.isFetching} />}
       </Card>

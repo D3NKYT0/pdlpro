@@ -1,3 +1,5 @@
+import { DeleteRecordButton } from '../../components/admin/DeleteRecordButton'
+import { refreshGameCatalog } from '../../components/admin/games/refreshGameCatalog'
 import { Card } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
 import { apiErrorMessage } from '../../lib/errors'
@@ -105,6 +107,11 @@ export function AdminGamesPage() {
                       <Settings2 aria-hidden="true" />
                       {t('games.configure')}
                     </Button>
+                    <DeleteRecordButton name={labelFor(game)} disabled={filling || updating !== null} onDelete={async () => {
+                      await staffApi.deleteGame(game.id)
+                      if (editing?.id === game.id) setEditing(null)
+                      await refreshGameCatalog(queryClient)
+                    }} />
                     <Toggle className="admin-game-switch" busy={updating === game.id} label={updating === game.id ? t('games.updating') : game.active ? t('games.active') : t('games.inactive')} checked={game.active} onChange={(event) => void toggle(game.id, event.target.checked)} />
                   </div>
                 </article>

@@ -1,3 +1,4 @@
+import { DeleteRecordButton } from '../../components/admin/DeleteRecordButton'
 import { Card } from '../../components/ui/Card'
 import { useFeedbackAction } from '../../hooks/useFeedbackAction'
 import { useAsyncAction } from '../../hooks/useAsyncAction'
@@ -245,6 +246,12 @@ export function AdminShopPage() {
                         >
                           {t('shop.edit')}
                         </Button>
+                        <DeleteRecordButton name={item.name} disabled={saving} onDelete={async () => {
+                          await staffApi.deleteShopItem(item.id)
+                          if (editing === item.id) resetItem()
+                          await refreshShop()
+                          await queryClient.invalidateQueries({ queryKey: ['cart'] })
+                        }} />
                       </td>
                     </tr>
                   ))}
@@ -382,6 +389,11 @@ export function AdminShopPage() {
                         <Button className="ghost" type="button" onClick={() => openPackage(pack)}>
                           {t('shop.editPackage')}
                         </Button>
+                        <DeleteRecordButton name={pack.name} disabled={saving} onDelete={async () => {
+                          await commerceApi.remove('packages', pack.id)
+                          if (packDraft?.id === pack.id) resetPackage()
+                          await refreshShop()
+                        }} />
                       </td>
                     </tr>
                   ))}

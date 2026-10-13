@@ -23,6 +23,7 @@ from apps.shop.infrastructure.models import (
     ShopPackageItem,
     ShopPurchase,
 )
+from common.persistence.deletion import delete_unreferenced
 
 User = get_user_model()
 
@@ -42,6 +43,9 @@ class DjangoShopItemAdminRepository(IShopItemAdminRepository):
     def save(self, row: ShopItem) -> ShopItem:
         row.save()
         return row
+
+    def delete(self, entry_id: UUID) -> bool:
+        return delete_unreferenced(ShopItem, entry_id)
 
 
 class DjangoShopRepository(IShopRepository):
@@ -172,6 +176,22 @@ class DjangoShopRepository(IShopRepository):
 
     def create_purchase(self, **fields) -> ShopPurchase:
         return ShopPurchase.objects.create(**fields)
+
+    def delete_configuration(self, section: str, entry_id: UUID) -> bool:
+        from django.db import transaction
+
+        from common.architecture.exceptions import ValidationDomainError
+        from common.persistence.deletion import DEPENDENCY_MESSAGE
+
+        if section == "packages":
+            return delete_unreferenced(ShopPackage, entry_id, owned_relations=("package_items",))
+        with transaction.atomic():
+            promo = PromotionCode.objects.select_for_update().filter(id=entry_id).first()
+            if promo is None:
+                return False
+            if promo.uses or ShopPurchase.objects.filter(promo_code=promo.code).exists():
+                raise ValidationDomainError(DEPENDENCY_MESSAGE)
+            return delete_unreferenced(PromotionCode, entry_id)
 
 
 class DjangoCartRepository(ICartRepository):

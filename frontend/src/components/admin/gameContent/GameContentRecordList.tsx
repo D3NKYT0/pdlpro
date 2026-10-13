@@ -1,3 +1,4 @@
+import { DeleteRecordButton } from '../DeleteRecordButton'
 import { Pencil } from 'lucide-react'
 import { Button } from '../../ui/Button'
 import { Card } from '../../ui/Card'
@@ -13,6 +14,8 @@ interface GameContentRecordListProps {
   rowsFor: (source: string) => ConfigRow[]
   rowLabel: (row: ConfigRow) => string
   onEdit: (row: ConfigRow) => void
+  onDelete?: (row: ConfigRow) => Promise<unknown>
+  busy?: boolean
 }
 
 export function GameContentRecordList({
@@ -21,6 +24,8 @@ export function GameContentRecordList({
   rowsFor,
   rowLabel,
   onEdit,
+  onDelete,
+  busy,
 }: GameContentRecordListProps) {
   const { t } = useTranslation('admin')
   return (
@@ -47,10 +52,13 @@ export function GameContentRecordList({
                     </span>
                   ) : null}
                 </div>
-                <Button type="button" size="sm" variant="secondary" onClick={() => onEdit(row)}>
-                  <Pencil size={16} />
-                  {t('gameContent.edit')}
-                </Button>
+                <div className="program-actions">
+                  <Button type="button" size="sm" variant="secondary" disabled={busy} onClick={() => onEdit(row)}>
+                    <Pencil size={16} />
+                    {t('gameContent.edit')}
+                  </Button>
+                  {onDelete && <DeleteRecordButton name={rowLabel(row)} disabled={busy} onDelete={() => onDelete(row)} />}
+                </div>
               </header>
               <dl className="program-record-meta">
                 {metaFields.map((f) => (

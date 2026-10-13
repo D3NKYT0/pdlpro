@@ -38,6 +38,7 @@ from apps.games.application.minigame_use_cases import (
 )
 from apps.games.application.staff_autoconfig import BootstrapStaffGamesUseCase
 from apps.games.application.staff_content_use_cases import (
+    DeleteGameContentUseCase,
     GetGameContentUseCase,
     ListGameContentUseCase,
     UpsertGameContentUseCase,
@@ -153,7 +154,9 @@ class GamesProvider(AppProvider):
             GetGameStatisticsUseCase,
             GetHuntDetailsUseCase,
             ClaimHuntQuestUseCase,
+            DeleteGameContentUseCase,
             ListGameContentUseCase,
+            DeleteGameContentUseCase,
             GetGameContentUseCase,
             UpsertGameContentUseCase,
             BootstrapStaffGamesUseCase,

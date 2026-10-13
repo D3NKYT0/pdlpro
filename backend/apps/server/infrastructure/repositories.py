@@ -183,6 +183,11 @@ class DjangoCustomItemRepository(ICustomItemRepository):
         if row.image and row.image.name != old_name and row.image._committed:
             row.image.delete(save=False)
 
+    def delete(self, entry_id: UUID) -> bool:
+        from common.persistence.deletion import delete_unreferenced
+
+        return delete_unreferenced(CustomCatalogItem, entry_id)
+
 
 class DjangoItemObservationRepository(IItemObservationRepository):
     """Adaptador Django de ``IItemObservationRepository`` para observação de itens L2."""

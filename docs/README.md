@@ -83,6 +83,7 @@
 | Documento | Conteúdo |
 | --- | --- |
 | [Economia do jogador](funcionalidades/economia-jogador.md) | Carteira, loja, marketplace, leilão |
+| [Exclusão administrativa](funcionalidades/exclusao-administrativa.md) | Cadastros, confirmação e preservação de vínculos |
 | [Programas e recompensas](funcionalidades/programas-e-recompensas.md) | Passe, pesca, caixas, apoiadores |
 | [Temas](funcionalidades/temas.md) | ZIP, Valorem, default |
 | [Templates públicos](funcionalidades/templates-publicos.md) | Layouts da landing |

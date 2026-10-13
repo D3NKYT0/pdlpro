@@ -86,9 +86,11 @@ def test_create_upload_merge_and_live_changes(client):
     assert len(APIClient().get(CATALOG).data["items"]) == 1
     assert row.image.storage.exists(row.image.name)
     assert CustomCatalogItem.objects.count() == 1
-    assert client.delete(url).status_code == 405
     assert client.patch(url, {"active": True}, format="json").status_code == 200
     assert len(APIClient().get(CATALOG).data["items"]) == 2
+    assert client.delete(url).status_code == 200
+    assert not CustomCatalogItem.objects.filter(id=row.id).exists()
+    assert len(APIClient().get(CATALOG).data["items"]) == 1
 
 
 def test_duplicate_xml_id_custom_id_and_id_mutation_rejected(client):

@@ -6,6 +6,10 @@ vi.mock('../infra/http', () => ({ request: vi.fn().mockResolvedValue({}) }))
 const item: CustomItemInput = { item_id: '900001', name: 'Medalha', category: 'COMUM', grade: 'S', tradeable: true, active: true, metadata: { raridade: 'raro' }, image: null }
 
 describe('custom item uploads', () => {
+  it('deletes local metadata through the UUID endpoint', async () => {
+    await customItemsApi.remove('custom-uuid')
+    expect(request).toHaveBeenLastCalledWith('/staff/custom-items/custom-uuid/', { method: 'DELETE' })
+  })
   beforeEach(() => vi.clearAllMocks())
   it('encodes metadata and image together in multipart data', () => {
     const image = new File(['image'], 'medalha.png', { type: 'image/png' })

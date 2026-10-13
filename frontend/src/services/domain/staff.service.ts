@@ -462,6 +462,7 @@ export const staffApi = {
       method: 'DELETE',
       body: JSON.stringify({ id }),
     }),
+  deleteShopItem: (id: string) => request<{ deleted: boolean }>('/staff/shop/', { method: 'DELETE', body: JSON.stringify({ id }) }),
   shop: () => request<ApiStaffShopItem[]>('/staff/shop/'),
   saveShopItem: (payload: Partial<ApiStaffShopItem>) =>
     request<ApiStaffShopItem>('/staff/shop/', {
@@ -470,6 +471,7 @@ export const staffApi = {
     }),
   autoconfigShop: () =>
     request<ApiStaffShopAutoconfig>('/staff/shop/autoconfig/', { method: 'POST', body: JSON.stringify({}) }),
+  deleteNews: (id: string) => request<{ deleted: boolean }>('/staff/news/', { method: 'DELETE', body: JSON.stringify({ id }) }),
   news: () => request<ApiStaffNews[]>('/staff/news/'),
   saveNews: (payload: Partial<ApiStaffNews>) =>
     request<ApiStaffNews>('/staff/news/', {
@@ -514,6 +516,7 @@ export const staffApi = {
     request<ApiStaffNotification>('/staff/notifications/', { method: 'POST', body: JSON.stringify(payload) }),
   deleteNotification: (id: string) =>
     request<{ deleted: boolean }>('/staff/notifications/', { method: 'DELETE', body: JSON.stringify({ id }) }),
+  deleteGame: (id: string) => request<{ deleted: boolean }>('/staff/games/', { method: 'DELETE', body: JSON.stringify({ id }) }),
   games: () => request<ApiStaffGame[]>('/staff/games/'),
   saveGame: (payload: Partial<ApiStaffGame>) =>
     request<ApiStaffGame>('/staff/games/', { method: 'PUT', body: JSON.stringify(payload) }),

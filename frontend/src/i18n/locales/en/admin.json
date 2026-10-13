@@ -1,4 +1,5 @@
 {
+  "deletion": {"confirm": "Permanently delete “{{name}}”? This action cannot be undone.", "label": "Delete {{name}}", "success": "Record deleted.", "error": "Could not delete the record."},
   "unstuck": {
     "title": "Unstuck destination",
     "hint": "Choose a safe location for offline characters. Disable to use the server default destination.",

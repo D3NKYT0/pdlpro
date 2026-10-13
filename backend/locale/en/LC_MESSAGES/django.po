@@ -5696,3 +5696,11 @@ msgstr "Enter a name for an NPC outside the collection."
 #: apps/programs/views.py
 msgid "Listar apoiadores públicos"
 msgstr "List public supporters"
+
+#: common/persistence/deletion.py apps/staff/presentation/views/config.py
+msgid "Excluir cadastro"
+msgstr "Delete record"
+
+#: common/persistence/deletion.py apps/staff/presentation/views/config.py
+msgid "Este registro possui vínculos. Remova os vínculos ou desative o registro."
+msgstr "This record has linked records. Remove the links or deactivate the record."

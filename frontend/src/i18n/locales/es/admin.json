@@ -1,4 +1,5 @@
 {
+  "deletion": {"confirm": "¿Eliminar “{{name}}” definitivamente? Esta acción no se puede deshacer.", "label": "Eliminar {{name}}", "success": "Registro eliminado.", "error": "No se pudo eliminar el registro."},
   "unstuck": {
     "title": "Destino de desatasco",
     "hint": "Elija un lugar seguro para personajes desconectados. Desactive para usar el destino predeterminado del servidor.",

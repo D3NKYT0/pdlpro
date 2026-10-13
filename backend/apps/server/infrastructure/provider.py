@@ -30,6 +30,7 @@ from apps.server.application.character_use_cases import (
     UnstuckCharacterUseCase,
 )
 from apps.server.application.custom_items import (
+    DeleteCustomItemUseCase,
     GetCustomItemUseCase,
     ListCustomItemsUseCase,
     UpsertCustomItemUseCase,
@@ -181,6 +182,7 @@ class ServerProvider(AppProvider):
             RequestLinkByEmailUseCase,
             ConfirmLinkByEmailUseCase,
             ListCustomItemsUseCase,
+            DeleteCustomItemUseCase,
             GetCustomItemUseCase,
             UpsertCustomItemUseCase,
             ListPublicItemCatalogUseCase,

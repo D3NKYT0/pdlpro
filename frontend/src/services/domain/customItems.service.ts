@@ -10,7 +10,7 @@ export type CustomItemInput = {
 }
 export type CustomItemList = {
   results: CustomItem[]; count: number; page: number; pages: number
-  permissions: { add: boolean; change: boolean }
+  permissions: { add: boolean; change: boolean; delete?: boolean }
   categories: { value: string; label: string }[]; grades: { value: string; label: string }[]
 }
 export function customItemFormData(item: CustomItemInput) {
@@ -25,5 +25,6 @@ export const customItemsApi = {
   save: (item: CustomItemInput, id?: string) => request<CustomItem>(id ? `/staff/custom-items/${id}/` : '/staff/custom-items/', {
     method: id ? 'PATCH' : 'POST', body: customItemFormData(item),
   }),
+  remove: (id: string) => request<{ deleted: boolean }>(`/staff/custom-items/${id}/`, { method: 'DELETE' }),
   activate: (id: string, active: boolean) => request<CustomItem>(`/staff/custom-items/${id}/`, { method: 'PATCH', body: JSON.stringify({ active }) }),
 }
