@@ -2,13 +2,17 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 9 de outubro de 2026
+> **Atualizado:** 12 de outubro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Não publicado]
+
+## [2.7.4] - 2026-10-12
+
+Lançamento com bosses épicos e normais configuráveis, integração com o acervo de NPCs e candidaturas de afiliados acessíveis pela landing. O administrador controla a exibição pública dos apoiadores e o recebimento de candidaturas. A API acompanha a versão 2.7.4.
 
 ### Adicionado
 
