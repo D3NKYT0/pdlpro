@@ -1824,7 +1824,8 @@
       "purchasedAt": "Compra realizada el",
       "commission": "Comisión",
       "situation": "Situación"
-    }
+    },
+    "pendingReview": "Candidatura enviada. Espera la revisión del equipo y sigue el estado en esta página."
   },
   "character": {
     "backToAccounts": "Cuentas",

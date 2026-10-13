@@ -45,13 +45,14 @@ beforeEach(() => {
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 afterEach(() => { cleanup(); client.clear() })
-function mount() {
+function mount(path = '/register') {
   render(
     <QueryClientProvider client={client}>
-      <MemoryRouter initialEntries={['/register']}>
+      <MemoryRouter initialEntries={[path]}>
         <Routes>
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/panel" element={<h1>Painel autenticado</h1>} />
+          <Route path="/panel/supporters" element={<h1>Enviar candidatura</h1>} />
           <Route path="/panel/security" element={<h1>Gerenciador de sessões</h1>} />
           <Route path="/complete-account" element={<h1>Completar conta</h1>} />
         </Routes>
@@ -87,6 +88,17 @@ it('CAPTCHA habilita envio e expiração volta a bloquear', async () => {
   await user.click(screen.getByRole('button', { name: 'Expirar' }))
   expect(submit).toBeDisabled()
   expect(session.register).not.toHaveBeenCalled()
+})
+
+it('retorna à candidatura depois de cadastrar uma conta', async () => {
+  const user = mount('/register?next=%2Fpanel%2Fsupporters')
+  await user.type(screen.getByLabelText('Nome'), 'Hero')
+  await user.type(screen.getByLabelText('Sobrenome'), 'Player')
+  await user.type(screen.getByLabelText('E-mail'), 'hero@test.dev')
+  await user.type(screen.getByLabelText('Senha', { selector: 'input' }), 'Secret123!')
+  await user.click(screen.getByRole('checkbox'))
+  await user.click(screen.getByRole('button', { name: 'Crie sua conta mestra' }))
+  expect(await screen.findByRole('heading', { name: 'Enviar candidatura' })).toBeVisible()
 })
 it('provedores sociais desabilitados sem credenciais e iniciam OAuth quando disponíveis', async () => {
   mount()

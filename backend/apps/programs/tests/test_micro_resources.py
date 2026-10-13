@@ -116,6 +116,7 @@ OPERATIONS = [
         "",
     ),
     ("supporters-apply", "customer/supporters/", "POST", ""),
+    ("supporters-public", "public/supporters/", "GET", ""),
     ("supporters-payout", "customer/supporters/payout/", "POST", ""),
     ("notifications-push", "customer/push/vapid/", "GET", ""),
     ("support-create", "customer/support/", "POST", ""),

@@ -2177,7 +2177,8 @@
       "progress-achievements": {
         "name": "Achievements",
         "description": "Show account achievements in the dashboard and profile."
-      }
+      },
+      "supporters-public": {"name": "Supporters on landing page and footer", "description": "Show approved partners and the partnership invitation on the home page and footer."}
     },
     "microResources": "Micro-features",
     "parentDisabled": "The parent module is disabled. These preferences will apply when it is enabled again."
@@ -2249,7 +2250,12 @@
     "credited": "Commission credited.",
     "rejected": "Commission rejected.",
     "processed": "Processed",
-    "emptyPayouts": "No commission requested."
+    "emptyPayouts": "No commission requested.",
+    "visibilityTitle": "Visibility and applications",
+    "visibilityDescription": "Choose whether the program is enabled, visible on the landing page and footer, and accepting applications. Hiding the showcase preserves profiles and commissions.",
+    "programEnabled": "Supporter program enabled",
+    "visibilityLoading": "Loading settings…",
+    "visibilitySaved": "Supporter settings saved"
   },
   "reports": {
     "title": "Reports",

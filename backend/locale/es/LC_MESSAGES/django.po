@@ -5801,3 +5801,7 @@ msgstr "Deje vacío para usar el nombre del acervo de NPCs."
 #: apps/server/infrastructure/boss_catalog.py
 msgid "Informe o nome para um NPC que não está no acervo."
 msgstr "Indique el nombre de un NPC que no está en el acervo."
+
+#: apps/programs/views.py
+msgid "Listar apoiadores públicos"
+msgstr "Listar patrocinadores públicos"

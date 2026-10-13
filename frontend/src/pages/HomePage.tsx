@@ -12,6 +12,7 @@ import { ClubHomePage } from '../components/themes/ClubTheme'
 import { CatalogHomePage, isGemwright, isVesperlyn, resolveTemplateId } from '../theme/templates'
 import { PdlHeroEmblem } from '../components/PdlSymbol'
 import { ThemeHeroVideo } from '../components/ThemeHeroVideo'
+import { PublicSupporters } from '../components/programs/PublicSupporters'
 
 function clanInitial(name: string) {
   return (name.trim()[0] || '?').toUpperCase()
@@ -338,14 +339,6 @@ function DefaultHomePage() {
         </div>
       </section>
 
-      <div className="apoiadores-banner" aria-hidden="true">
-        <div className="banner-track">
-          {Array.from({ length: 16 }, (_, index) => (
-            <span key={index}>{t('home.supporters')}</span>
-          ))}
-        </div>
-      </div>
-
       <section className="trailer-section" style={sectionArt(theme.id === 'saga' ? 'home/cinematic-clean.jpg' : 'home/cinematic-v2.webp')}>
         <div className="title container">
           <span>
@@ -407,7 +400,7 @@ function DefaultHomePage() {
   )
 }
 
-export function HomePage() {
+function HomeContent() {
   const theme = useTheme()
   const templateId = resolveTemplateId(theme.presentation?.renderer)
   if (isVesperlyn(theme.presentation?.renderer) && theme.presentation) {
@@ -420,4 +413,8 @@ export function HomePage() {
     return <CatalogHomePage presentation={theme.presentation} templateId={templateId} />
   }
   return <DefaultHomePage />
+}
+
+export function HomePage() {
+  return <><HomeContent /><PublicSupporters /></>
 }

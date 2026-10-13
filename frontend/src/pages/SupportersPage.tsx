@@ -102,6 +102,7 @@ export function SupportersPage() {
                   {t('supporters.reviewNote', { note: profile.review_note })}
                 </p>
               )}
+              {profile?.status === 'pending' && <p role="status">{t('supporters.pendingReview')}</p>}
               <MicroResource code="supporters-apply"><form
                 key={profile?.id || 'new'}
                 className="program-form supporters-form"

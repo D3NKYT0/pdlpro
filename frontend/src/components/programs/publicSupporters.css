@@ -1,0 +1,15 @@
+.public-supporters {
+  color: var(--theme-text);
+  margin-block: 3rem;
+}
+
+.public-supporters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.public-supporters img {
+  object-fit: cover;
+}

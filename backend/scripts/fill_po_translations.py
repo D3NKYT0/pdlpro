@@ -14,6 +14,7 @@ LOCALE = ROOT / "locale"
 
 # Portuguese msgid -> (English, Spanish)
 TRANSLATIONS: dict[str, tuple[str, str]] = {
+    "Listar apoiadores públicos": ("List public supporters", "Listar patrocinadores públicos"),
     "ID do NPC": ("NPC ID", "ID del NPC"),
     "Deixe vazio para usar o nome do acervo de NPCs.": ("Leave blank to use the NPC collection name.", "Deje vacío para usar el nombre del acervo de NPCs."),
     "Informe o nome para um NPC que não está no acervo.": ("Enter a name for an NPC outside the collection.", "Indique el nombre de un NPC que no está en el acervo."),

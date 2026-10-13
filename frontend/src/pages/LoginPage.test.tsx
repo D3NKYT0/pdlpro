@@ -68,6 +68,11 @@ it('leva quem já está logado para a landing', async () => {
   expect(screen.queryByRole('button', { name: 'Entrar no Reino' })).toBeNull()
 })
 
+it('preserva o destino da candidatura ao abrir o cadastro', async () => {
+  mount('/login?next=%2Fpanel%2Fsupporters')
+  expect(await screen.findByRole('link', { name: 'Crie sua conta mestra' })).toHaveAttribute('href', '/register?next=%2Fpanel%2Fsupporters')
+})
+
 it('respeita next quando o visitante já está logado', async () => {
   session.user = { username: 'hero', has_usable_password: true }
   mount(`/login?next=${encodeURIComponent('/panel/wallet')}`)

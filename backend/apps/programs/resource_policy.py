@@ -128,6 +128,7 @@ MICRO_RESOURCE_RULES = (
         "progress-claim-rewards", r"shared/me/rewards/[^/]+/claim/", ("POST",), ""
     ),
     ResourceRule("supporters-apply", r"customer/supporters/", ("POST",), ""),
+    ResourceRule("supporters-public", r"public/supporters/", ("GET",), ""),
     ResourceRule("supporters-payout", r"customer/supporters/payout/", ("POST",), ""),
     ResourceRule(
         "notifications-push", r"customer/push/(vapid/|subscribe/)", ("GET", "POST"), ""

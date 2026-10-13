@@ -112,6 +112,7 @@ export type {
 export { programsApi } from './domain/programs.service'
 export type {
   Payout,
+  PublicSupporter,
   Resource,
   RoadmapEntry,
   Supporter,

@@ -7,8 +7,10 @@ import { resolveSiteBrand } from '../../lib/site-brand'
 import { programsApi, serverApi } from '../../services/api'
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { PdlSymbol } from '../PdlSymbol'
+import { useResourceControls } from '../../contexts/ResourceControlsContext'
 
 export function SiteFooter() {
+  const enabled = useResourceControls()
   const { t } = useTranslation('public')
   const landingPath = useLandingPath()
   const year = new Date().getFullYear()
@@ -34,6 +36,8 @@ export function SiteFooter() {
   ]
 
   const accountLinks = [
+    ...(enabled('supporters') && enabled('supporters-public') && enabled('supporters-apply')
+      ? [{ to: '/panel/supporters', label: t('supporters.apply') }] : []),
     { to: '/login', label: t('nav.signIn') },
     { to: '/panel', label: t('footer.panel') },
     { to: '/roadmap', label: t('nav.roadmap'), resource: 'roadmap' },

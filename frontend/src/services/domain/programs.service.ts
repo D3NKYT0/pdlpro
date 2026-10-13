@@ -40,6 +40,8 @@ export type Supporter = {
   commission_percent: string
 }
 
+export type PublicSupporter = Pick<Supporter, 'id' | 'name' | 'channel_url' | 'image'>
+
 export type Payout = {
   id: string
   supporter_name: string
@@ -64,6 +66,7 @@ export type SupporterState = {
 
 /** Product programs: resources, roadmap, supporters (not gameplay). */
 export const programsApi = {
+  publicSupporters: () => request<PublicSupporter[]>('/public/supporters/'),
   resources: () => request<Resource[]>('/public/resources/'),
   toggleResource: (id: string, enabled: boolean) =>
     sendJson<Resource>(`/staff/resources/${id}/`, { enabled }, 'PATCH'),

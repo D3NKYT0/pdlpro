@@ -3,6 +3,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+from apps.programs.application.public_supporters import ListPublicSupportersUseCase
 from apps.programs.application.use_cases import (
     CreateRoadmapEntryUseCase,
     CreateRoadmapInput,
@@ -31,6 +32,7 @@ from apps.programs.domain.repositories import ISupporterRepository
 from apps.programs.serializers import (
     PayoutReviewSerializer,
     PayoutSerializer,
+    PublicSupporterSerializer,
     ResourceSerializer,
     RoadmapSerializer,
     SupporterReviewSerializer,
@@ -38,6 +40,18 @@ from apps.programs.serializers import (
 )
 from common.permissions import HasCapability
 from common.views import InjectedAPIView
+
+
+class PublicSupportersView(InjectedAPIView):
+    """Vitrine anônima de aprovados; disponibilidade controlada pelos recursos."""
+
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    @extend_schema(tags=["Apoiadores"], summary=gettext_lazy("Listar apoiadores públicos"), responses=PublicSupporterSerializer(many=True))
+    def get(self, request):
+        rows = self.resolve(ListPublicSupportersUseCase).execute()
+        return Response(PublicSupporterSerializer(rows, many=True).data)
 
 
 class SupporterView(InjectedAPIView):

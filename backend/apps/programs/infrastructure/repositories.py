@@ -30,6 +30,13 @@ class DjangoSupporterRepository(ISupporterRepository):
     def find_by_user_id(self, user_id: UUID) -> Supporter | None:
         return Supporter.objects.filter(user__id=user_id).first()
 
+    def list_public_approved(self) -> list[dict]:
+        return [
+            {"id": row.id, "name": row.name, "channel_url": row.channel_url,
+             "image": row.image.url if row.image else None}
+            for row in Supporter.objects.filter(status="approved").order_by("name", "seq_id")
+        ]
+
     def lock_user(self, user_id: UUID):
         return User.objects.select_for_update().get(id=user_id)
 

@@ -16,6 +16,7 @@ import {
 } from '../../programs/ProgramUI'
 import { useProgramAction } from '../../programs/useProgramAction'
 import { AdminHeader } from '../../../pages/admin/AdminChrome'
+import { SupporterVisibility } from './SupporterVisibility'
 
 export function AdminSupportersSection() {
   const { t } = useTranslation('admin')
@@ -33,6 +34,7 @@ export function AdminSupportersSection() {
         description={t('supporters.description')}
       />
       <ErrorNotice error={query.error || action.error} />
+      <SupporterVisibility />
       {query.isPending && <Loading />}
       {edit && (
         <Card className="program-section">

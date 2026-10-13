@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (
+    PublicSupportersView,
     RequestPayoutView,
     ResourceView,
     RoadmapView,
@@ -12,6 +13,7 @@ from .views import (
 )
 
 urlpatterns = [
+    path("public/supporters/", PublicSupportersView.as_view()),
     path("public/resources/", ResourceView.as_view()),
     path("public/roadmap/", RoadmapView.as_view()),
     path("public/roadmap/<uuid:entry_id>/", RoadmapView.as_view()),

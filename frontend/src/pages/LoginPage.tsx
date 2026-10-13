@@ -17,10 +17,10 @@ import { credentialJSON, requestOptions } from '../lib/webauthn'
 import { beginOAuth } from '../lib/oauth'
 import { hcaptchaLanguage } from '../i18n/locale'
 import { trackLogin } from '../lib/tracking'
+import { authReturnPath } from '../lib/auth-return'
 
 function safeNext(value: string | null) {
-  if (value && value.startsWith('/') && !value.startsWith('//')) return value
-  return '/panel'
+  return authReturnPath(value)
 }
 
 export function LoginPage() {
@@ -182,7 +182,7 @@ export function LoginPage() {
         <div className="h-link">
           <button type="submit">{challenge ? t('login.confirm') : t('login.submit')}</button>
           {launch.registrationOpen ? (
-            <Link to="/register">{t('login.createAccount')}</Link>
+            <Link to={params.get('next') ? `/register?next=${encodeURIComponent(next)}` : '/register'}>{t('login.createAccount')}</Link>
           ) : (
             <Link to={landingPath}>{t('common.backHome')}</Link>
           )}

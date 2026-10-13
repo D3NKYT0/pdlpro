@@ -2,11 +2,40 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Economia](economia-jogador.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 12 de outubro de 2026
 
 Clãs e rede social permanecem fora do escopo. O registro de homologação inicial
 está em [histórico 2026-09-02](../historico/2026-09-02-validacao.md) — não
 substitui o comportamento atual deste guia.
+
+## Candidaturas e vitrine de apoiadores/afiliados
+
+A landing de todos os templates mostra os apoiadores aprovados e o botão
+**Solicitar parceria**. O candidato entra ou cria a conta e continua em
+`/panel/supporters`, onde envia nome público, canal, apresentação e imagem
+opcional. O cadastro começa pendente; repetições mantêm um único perfil por
+conta. A equipe aprova ou rejeita em `/panel/admin/supporters`. Enquanto aguarda,
+o candidato acompanha o estado e o parecer no painel. Sem aprovados, a chamada
+continua disponível para receber as primeiras candidaturas.
+
+Em **Admin → Apoiadores e comissões → Exibição e candidaturas**, o administrador
+controla o programa e seus recursos:
+
+- `supporters`: liga/desliga o programa, suas rotas e entradas públicas.
+- `supporters-public`: mostra/oculta a vitrine e a chamada na landing/rodapé.
+- `supporters-apply`: abre/fecha candidaturas, preservando a vitrine quando ativa.
+
+Os controles também estão na central de recursos. Ocultar a vitrine não apaga
+cadastros, cupons, comissões ou repasses; candidaturas e consulta pública podem
+ser controladas separadamente. A vitrine consulta `GET /api/v1/public/supporters/`
+e publica apenas ID, nome público, canal e imagem de cadastros aprovados. Nunca
+expõe e-mail, usuário, notas de revisão ou condições de comissão. O acesso direto
+à API também respeita os recursos; esconder somente o HTML não é a proteção.
+
+Validação: `test_public_supporters.py` cobre privacidade, estados, desativação,
+autenticação e repetição. `PublicSupporters.test.tsx` cobre a regressão da faixa
+antiga, candidatura, vazio, carregamento, erro e controles administrativos;
+os testes de login/cadastro verificam o retorno ao formulário.
 
 ## Onde gerenciar
 

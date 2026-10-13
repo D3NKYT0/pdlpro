@@ -1,3 +1,4 @@
+from apps.programs.application.public_supporters import ListPublicSupportersUseCase
 from apps.programs.application.use_cases import (
     CreateRoadmapEntryUseCase,
     DeleteRoadmapEntryUseCase,
@@ -48,6 +49,7 @@ class ProgramsProvider(AppProvider):
             IPreviewSeedService, DjangoPreviewSeedService, lifetime=Lifetime.TRANSIENT
         )
         for use_case in (
+            ListPublicSupportersUseCase,
             GetSupporterDashboardUseCase,
             UpsertSupporterUseCase,
             RequestCommissionPayoutUseCase,

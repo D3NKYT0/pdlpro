@@ -11,6 +11,15 @@ from apps.programs.models import (
 from common.images import sanitize_uploaded_image
 
 
+class PublicSupporterSerializer(serializers.Serializer):
+    """Contrato público mínimo da vitrine; omite identidade da conta e condições comerciais."""
+
+    id = serializers.UUIDField(read_only=True)
+    name = serializers.CharField(read_only=True)
+    channel_url = serializers.CharField(read_only=True)
+    image = serializers.CharField(read_only=True, allow_null=True)
+
+
 class SupporterSerializer(serializers.ModelSerializer):
     """Representa e valida o cadastro de apoiador; os campos de revisão seguem as restrições de
     Meta.

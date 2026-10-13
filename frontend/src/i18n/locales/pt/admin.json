@@ -1988,7 +1988,8 @@
       "faq": { "name": "Perguntas frequentes", "description": "FAQ pública do site." },
       "downloads": { "name": "Downloads", "description": "Arquivos, patches e cliente." },
       "calendar": { "name": "Calendário", "description": "Eventos públicos do servidor." },
-      "game-stores": { "name": "Lojas do jogo", "description": "Private stores offline publicadas pelo servidor." }
+      "game-stores": { "name": "Lojas do jogo", "description": "Private stores offline publicadas pelo servidor." },
+      "supporters-public": {"name": "Apoiadores na landing e rodapé", "description": "Exibir parceiros aprovados e a chamada de parceria na página inicial e no rodapé."}
     }
   },
   "roadmap": {
@@ -2054,7 +2055,12 @@
     "credited": "Comissão creditada.",
     "rejected": "Comissão recusada.",
     "processed": "Processado",
-    "emptyPayouts": "Nenhuma comissão solicitada."
+    "emptyPayouts": "Nenhuma comissão solicitada.",
+    "visibilityTitle": "Exibição e candidaturas",
+    "visibilityDescription": "Escolha se o programa fica ativo, se aparece na landing e no rodapé e se recebe candidaturas. Ocultar a vitrine preserva cadastros e comissões.",
+    "programEnabled": "Programa de apoiadores ativo",
+    "visibilityLoading": "Carregando configurações…",
+    "visibilitySaved": "Configuração de apoiadores salva"
   },
   "reports": {
     "title": "Relatórios",

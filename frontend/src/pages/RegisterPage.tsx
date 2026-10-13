@@ -3,7 +3,7 @@ import { useState, type FormEvent } from 'react'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
 import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
@@ -14,6 +14,7 @@ import { beginOAuth } from '../lib/oauth'
 import { authApi } from '../services/api'
 import { hcaptchaLanguage } from '../i18n/locale'
 import { trackRegistration } from '../lib/tracking'
+import { authReturnPath } from '../lib/auth-return'
 
 const SESSION_MANAGER_PATH = '/panel/security'
 
@@ -21,6 +22,10 @@ export function RegisterPage() {
   const { t, i18n } = useTranslation('auth')
   const { user, loading, register } = useAuth()
   const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const nextParam = params.get('next')
+  const next = authReturnPath(nextParam)
+  const loginPath = nextParam ? `/login?next=${encodeURIComponent(next)}` : '/login'
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
   const launch = useLaunchAccess()
   const landingPath = useLandingPath()
@@ -43,7 +48,7 @@ export function RegisterPage() {
     if (user.has_usable_password === false) {
       return <Navigate to="/complete-account" replace />
     }
-    return <Navigate to={SESSION_MANAGER_PATH} replace />
+    return <Navigate to={authReturnPath(nextParam, SESSION_MANAGER_PATH)} replace />
   }
 
   if (!launch.isPending && !launch.registrationOpen) {
@@ -52,7 +57,7 @@ export function RegisterPage() {
         <p className="muted">{t('register.closedHint')}</p>
         <div className="h-link">
           {launch.playerLoginOpen ? (
-            <Link to="/login">{t('common.enterRealm')}</Link>
+            <Link to={loginPath}>{t('common.enterRealm')}</Link>
           ) : (
             <Link to={landingPath}>{t('common.backHome')}</Link>
           )}
@@ -74,7 +79,7 @@ export function RegisterPage() {
       })
       trackRegistration('email')
       toast.success(t('register.success'))
-      navigate('/panel')
+      navigate(next)
     } catch (error) {
       toast.error(apiErrorMessage(error, t('register.error')))
     }
@@ -125,7 +130,7 @@ export function RegisterPage() {
         ) : null}
         <div className="h-link">
           <button type="submit" disabled={Boolean(capabilities.data?.captcha && !captchaToken)}>{t('register.submit')}</button>
-          <Link to="/login">{t('common.enterRealm')}</Link>
+          <Link to={loginPath}>{t('common.enterRealm')}</Link>
         </div>
       </form>
       <div className="auth-divider"><span>{t('common.orContinueWith')}</span></div>

@@ -12,10 +12,14 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- Vitrine de apoiadores e afiliados aprovados na landing, com solicitação de parceria e controles administrativos independentes para exibição pública e candidaturas.
+
 - Catálogo administrativo de bosses épicos e normais, incluindo NPCs customizados, com nome, categoria, origem do respawn e ativação; nova aba de raids no ranking público.
 - Integração com o acervo XML de NPCs para nomes e níveis no ranking e preenchimento de nomes no cadastro administrativo.
 
 ### Corrigido
+
+- Área pública de apoiadores respeita a desativação do programa; novos candidatos preservam o destino do formulário ao passar por login e cadastro.
 
 - Boss sem registro de respawn exibe informação indisponível em vez de ser apresentado como vivo.
 

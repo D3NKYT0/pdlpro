@@ -631,5 +631,15 @@
     "previous": "Previous",
     "counter": "{{current}} of {{total}}",
     "actionDefault": "Learn more"
+  },
+  "supporters": {
+    "title": "Supporters and affiliates",
+    "description": "Meet the creators and partners promoting our server.",
+    "apply": "Apply for a partnership",
+    "process": "Sign in or create an account, submit your application and follow the staff review in your dashboard.",
+    "loading": "Loading supporters…",
+    "error": "Unable to load supporters.",
+    "empty": "Become one of the server's first partners.",
+    "channel": "Visit {{name}}'s channel"
   }
 }

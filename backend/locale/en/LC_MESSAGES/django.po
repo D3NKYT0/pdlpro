@@ -5692,3 +5692,7 @@ msgstr "Leave blank to use the NPC collection name."
 #: apps/server/infrastructure/boss_catalog.py
 msgid "Informe o nome para um NPC que não está no acervo."
 msgstr "Enter a name for an NPC outside the collection."
+
+#: apps/programs/views.py
+msgid "Listar apoiadores públicos"
+msgstr "List public supporters"

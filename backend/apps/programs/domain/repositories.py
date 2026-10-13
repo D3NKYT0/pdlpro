@@ -13,6 +13,10 @@ class ISupporterRepository(ABC):
     """
 
     @abstractmethod
+    def list_public_approved(self) -> list[dict]:
+        """Somente identidade pública dos aprovados; sem dados financeiros ou da conta."""
+
+    @abstractmethod
     def find_by_user_id(self, user_id: UUID) -> Any | None:
         raise NotImplementedError
 

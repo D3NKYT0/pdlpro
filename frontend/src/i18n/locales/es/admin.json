@@ -2177,7 +2177,8 @@
       "progress-achievements": {
         "name": "Logros",
         "description": "Mostrar los logros de la cuenta en el panel y el perfil."
-      }
+      },
+      "supporters-public": {"name": "Patrocinadores en landing y pie de página", "description": "Mostrar socios aprobados y la invitación a colaborar en la página inicial y el pie de página."}
     },
     "microResources": "Microfunciones",
     "parentDisabled": "El módulo principal está desactivado. Estas preferencias se aplicarán al reactivarlo."
@@ -2249,7 +2250,12 @@
     "credited": "Comisión acreditada.",
     "rejected": "Comisión rechazada.",
     "processed": "Procesado",
-    "emptyPayouts": "Ninguna comisión solicitada."
+    "emptyPayouts": "Ninguna comisión solicitada.",
+    "visibilityTitle": "Visibilidad y candidaturas",
+    "visibilityDescription": "Elige si el programa está activo, si aparece en la landing y el pie de página y si recibe candidaturas. Ocultar la vitrina conserva registros y comisiones.",
+    "programEnabled": "Programa de patrocinadores activo",
+    "visibilityLoading": "Cargando configuración…",
+    "visibilitySaved": "Configuración de patrocinadores guardada"
   },
   "reports": {
     "title": "Informes",

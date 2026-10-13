@@ -631,5 +631,15 @@
     "previous": "Anterior",
     "counter": "{{current}} de {{total}}",
     "actionDefault": "Saiba mais"
+  },
+  "supporters": {
+    "title": "Apoiadores e afiliados",
+    "description": "Conheça os criadores e parceiros que divulgam nosso servidor.",
+    "apply": "Solicitar parceria",
+    "process": "Entre ou crie sua conta, envie a candidatura e acompanhe a análise da equipe no painel.",
+    "loading": "Carregando apoiadores…",
+    "error": "Não foi possível carregar os apoiadores.",
+    "empty": "Seja um dos primeiros parceiros do servidor.",
+    "channel": "Visitar canal de {{name}}"
   }
 }

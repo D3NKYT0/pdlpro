@@ -1824,7 +1824,8 @@
       "purchasedAt": "Purchased on",
       "commission": "Commission",
       "situation": "Status"
-    }
+    },
+    "pendingReview": "Application submitted. Wait for staff review and follow your status on this page."
   },
   "character": {
     "backToAccounts": "Accounts",
