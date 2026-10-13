@@ -1,3 +1,4 @@
+import { useResourceControls } from '../contexts/ResourceControlsContext'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { MouseEvent } from 'react'
 import { useQuery } from '@tanstack/react-query'
@@ -8,7 +9,7 @@ import { InfoSections } from '../components/info/InfoSections'
 import { DiscordIcon, FacebookIcon, InstagramIcon, WhatsAppIcon, YouTubeIcon } from '../components/BrandIcons'
 import { Button, ButtonLink } from '../components/ui/Button'
 import { serverApi } from '../services/api'
-import type { ApiServerInfo } from '../services/types'
+import type { ApiServerInfo } from '../services/api'
 import { themeImage, themeLandingHeroImage, themeVideo } from '../theme/assets'
 import { BannerModal } from '../components/public/BannerModal'
 
@@ -299,10 +300,11 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
   const cinematic = useLaunchCinematic()
   const waitingBg = themeLandingHeroImage()
   const openBg = themeImage('bg/coming-soon-open.png')
+  const displayOn = useResourceControls()
   const status = useQuery({
     queryKey: ['server-status'],
     queryFn: serverApi.status,
-    enabled: showInfo,
+    enabled: showInfo && displayOn('server-status'),
   })
   const statusLabel = status.isLoading
     ? t('info.statusChecking')

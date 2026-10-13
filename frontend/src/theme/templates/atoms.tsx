@@ -1,3 +1,5 @@
+import { useResourceControls } from '../../contexts/ResourceControlsContext'
+import { serverStatVisible } from '../../lib/server-display'
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import type { TFunction } from 'i18next'
@@ -71,11 +73,14 @@ export function StatsRow({
   loading?: boolean
   error?: unknown
 }) {
+  const resourceOn = useResourceControls()
+  const visibleItems = items.filter(item => serverStatVisible(item.kind, resourceOn))
+  if (!visibleItems.length) return null
   if (loading) return <LoadingState>{t('club.statsLoading')}</LoadingState>
   if (error) return <ErrorNotice error={error} fallback={t('club.statsError')} />
   return (
     <div className="tpl-stats" aria-label={t('club.statsAria')}>
-      {items.map((item) => (
+      {visibleItems.map((item) => (
         <article className="tpl-stat" key={item.id}>
           <strong>{statLabel(item, status, info, t)}</strong>
           <span>{item.label}</span>

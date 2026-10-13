@@ -1,3 +1,5 @@
+import { useResourceControls } from '../../contexts/ResourceControlsContext'
+import { serverStatVisible } from '../../lib/server-display'
 import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -44,7 +46,9 @@ export function useTemplateHome(presentation: ThemePresentation, templateId: The
   const language = contentLang(i18n.language)
   const template = PUBLIC_TEMPLATES[templateId]
   const { hero, features, ranking, cta, news: newsContent, stats, pillars } = presentation.home
-  const sections = visibleTemplateSections(presentation, templateId)
+  const displayOn = useResourceControls()
+  const visibleStats = stats ? { ...stats, items: stats.items.filter(item => serverStatVisible(item.kind, displayOn)) } : undefined
+  const sections = visibleTemplateSections(presentation, templateId).filter(section => section !== 'stats' || Boolean(visibleStats?.items.length))
   const countdown = useCountdown(hero.countdownAt)
   const [activeTab, setActiveTab] = useState(ranking.tabs[0]?.id ?? '')
   const selectedTab = useMemo(
@@ -58,7 +62,7 @@ export function useTemplateHome(presentation: ThemePresentation, templateId: The
   const status = useQuery({
     queryKey: ['server-status'],
     queryFn: serverApi.status,
-    enabled: needsStats,
+    enabled: needsStats && (visibleStats?.items.some(item => item.kind === 'online' || item.kind === 'status') ?? false),
   })
   const info = useQuery({
     queryKey: ['server-info'],
@@ -85,7 +89,8 @@ export function useTemplateHome(presentation: ThemePresentation, templateId: The
     ranking,
     cta,
     newsContent,
-    stats,
+    stats: visibleStats,
+    needsStatus: needsStats && (visibleStats?.items.some(item => item.kind === 'online' || item.kind === 'status') ?? false),
     pillars,
     countdown,
     selectedTab,

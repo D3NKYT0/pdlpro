@@ -5813,3 +5813,15 @@ msgstr "Eliminar registro"
 #: common/persistence/deletion.py apps/staff/presentation/views/config.py
 msgid "Este registro possui vínculos. Remova os vínculos ou desative o registro."
 msgstr "Este registro tiene vínculos. Elimine los vínculos o desactive el registro."
+
+#: apps/programs/migrations/0012_server_display_resources.py
+msgid "Jogadores online"
+msgstr "Jugadores online"
+
+#: apps/programs/migrations/0012_server_display_resources.py
+msgid "Mostrar o status online ou offline do servidor no site e no painel."
+msgstr "Mostrar el estado online u offline del servidor en el sitio y el panel."
+
+#: apps/programs/migrations/0012_server_display_resources.py
+msgid "Mostrar a quantidade de jogadores online no site e no painel."
+msgstr "Mostrar la cantidad de jugadores online en el sitio y el panel."

@@ -56,8 +56,8 @@ export function CatalogHomePage({
       status={home.status.data}
       info={home.info.data}
       t={t}
-      loading={home.status.isLoading || home.info.isLoading}
-      error={home.status.error ?? home.info.error}
+      loading={(home.needsStatus && home.status.isLoading) || home.info.isLoading}
+      error={home.info.error ?? (home.needsStatus ? home.status.error : undefined)}
     />
   ) : null
 

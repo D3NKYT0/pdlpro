@@ -1,7 +1,7 @@
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 
-from apps.programs.domain.resources import RESOURCE_PARENTS
+from apps.programs.domain.resources import RESOURCE_PARENTS, SERVER_DISPLAY_RESOURCES
 from apps.programs.models import (
     CommissionPayout,
     RoadmapEntry,
@@ -175,9 +175,11 @@ class ResourceSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        if instance.code in RESOURCE_PARENTS:
+        if instance.code in RESOURCE_PARENTS or instance.code in SERVER_DISPLAY_RESOURCES:
             data["name"] = _(data["name"])
             data["description"] = _(data["description"])
+        if instance.code in SERVER_DISPLAY_RESOURCES:
+            data["category"] = _(data["category"])
         return data
 
     def get_parent_code(self, obj):

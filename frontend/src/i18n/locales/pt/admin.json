@@ -1886,6 +1886,8 @@
       "other": "Outros"
     },
     "items": {
+      "server-status": {"name": "Status do servidor", "description": "Mostrar o status online ou offline do servidor no site e no painel."},
+      "players-online": {"name": "Jogadores online", "description": "Mostrar a quantidade de jogadores online no site e no painel."},
       "shop-checkout": {"name": "Finalizar compras", "description": "Disponibilidade desta ação dentro do módulo."},
       "shop-packages": {"name": "Pacotes da loja", "description": "Disponibilidade desta ação dentro do módulo."},
       "shop-history": {"name": "Histórico de compras", "description": "Disponibilidade desta ação dentro do módulo."},

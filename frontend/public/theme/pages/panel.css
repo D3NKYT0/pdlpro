@@ -7035,6 +7035,10 @@ html.pdl-panel .dashboard-hero-identity {
   gap: 20px;
 }
 
+html.pdl-panel .panel-welcome.dashboard-hero--without-status {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 html.pdl-panel .dashboard-hero-avatar {
   width: 96px;
   height: 96px;

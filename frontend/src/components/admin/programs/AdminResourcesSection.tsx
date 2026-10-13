@@ -28,6 +28,8 @@ import {
   ShieldCheck,
   Power,
   ShoppingBag,
+  Server,
+  Users,
   Store,
   Ticket,
   Trophy,
@@ -71,6 +73,8 @@ const CATEGORY_BY_CODE: Record<string, (typeof CATEGORY_ORDER)[number] | 'other'
   calendar: 'content',
   roadmap: 'content',
   'game-stores': 'content',
+  'server-status': 'content',
+  'players-online': 'content',
 }
 
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
@@ -84,6 +88,8 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
 }
 
 const RESOURCE_ICONS: Record<string, LucideIcon> = {
+  'server-status': Server,
+  'players-online': Users,
   supporters: Handshake,
   roadmap: Flag,
   shop: ShoppingBag,

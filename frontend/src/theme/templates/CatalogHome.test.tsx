@@ -12,9 +12,32 @@ import { THEME_CATALOG_IDS, type ThemeCatalogId } from './ids'
 import { PUBLIC_TEMPLATES } from './catalog'
 import { CatalogHomePage } from './CatalogHome'
 import { TemplateShell } from './TemplateShell'
+import { ResourceControlsProvider } from '../../contexts/ResourceControlsContext'
 
 const session = vi.hoisted(() => ({ user: null as { username: string } | null }))
 const themeState = vi.hoisted(() => ({ assets: {} as Record<string, string> }))
+
+it.each(THEME_CATALOG_IDS)('%s respects disabled server and player indicators', async (id) => {
+  const client = queryClient()
+  client.setQueryData(['resources'], [
+    { code: 'server-status', enabled: false },
+    { code: 'players-online', enabled: false },
+  ])
+  vi.mocked(serverApi.status).mockClear()
+  const configured: ThemePresentation = { ...presentation, renderer: id, home: { ...presentation.home, sections: ['hero', 'stats'], stats: { items: [
+    { id: 'players', kind: 'online' as const, label: 'PUBLIC_PLAYER_COUNT' },
+    { id: 'status', kind: 'status' as const, label: 'PUBLIC_SERVER_STATE' },
+    { id: 'chronicle', kind: 'chronicle' as const, label: 'Crônica' },
+  ] } } }
+  render(wrap(<QueryClientProvider client={client}><ResourceControlsProvider><MemoryRouter>
+    <CatalogHomePage presentation={configured} templateId={id} />
+  </MemoryRouter></ResourceControlsProvider></QueryClientProvider>))
+  await waitFor(() => expect(document.querySelector('[data-theme-template]')).not.toBeNull())
+  expect(screen.queryByText('PUBLIC_PLAYER_COUNT')).not.toBeInTheDocument()
+  expect(screen.queryByText('PUBLIC_SERVER_STATE')).not.toBeInTheDocument()
+  expect(serverApi.status).not.toHaveBeenCalled()
+  client.clear()
+})
 
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: session.user }) }))
 vi.mock('../../services/domain/content.service', () => ({ contentApi: { news: vi.fn() } }))

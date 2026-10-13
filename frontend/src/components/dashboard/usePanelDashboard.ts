@@ -1,3 +1,4 @@
+import { useResourceControls } from '../../contexts/ResourceControlsContext'
 import { useQuery } from '@tanstack/react-query'
 import {
   CircleUserRound,
@@ -35,7 +36,8 @@ export function usePanelDashboard() {
   const resourceEnabled = (code?: string) =>
     !code || !resources.data?.some((row) => row.code === code && !row.enabled)
 
-  const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
+  const displayOn = useResourceControls()
+  const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status, enabled: displayOn('server-status') || displayOn('players-online') })
   const progressEnabled = Boolean(user) && Boolean(resources.data) && resourceEnabled('progress')
   const progress = useQuery({
     queryKey: ['progress'],

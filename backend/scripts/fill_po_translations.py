@@ -14,6 +14,10 @@ LOCALE = ROOT / "locale"
 
 # Portuguese msgid -> (English, Spanish)
 TRANSLATIONS: dict[str, tuple[str, str]] = {
+    "Mostrar a quantidade de jogadores online no site e no painel.": ("Show the number of online players on the website and player panel.", "Mostrar la cantidad de jugadores online en el sitio y el panel."),
+    "Mostrar o status online ou offline do servidor no site e no painel.": ("Show the server online or offline status on the website and player panel.", "Mostrar el estado online u offline del servidor en el sitio y el panel."),
+    "Jogadores online": ("Online players", "Jugadores online"),
+    "Status do servidor": ("Server status", "Estado del servidor"),
     "Excluir cadastro": ("Delete record", "Eliminar registro"),
     "Este registro possui vínculos. Remova os vínculos ou desative o registro.": (
         "This record has linked records. Remove the links or deactivate the record.",

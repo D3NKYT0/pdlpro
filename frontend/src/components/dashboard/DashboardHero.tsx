@@ -1,3 +1,5 @@
+import { useResourceControls } from '../../contexts/ResourceControlsContext'
+import { MicroResource } from '../programs/MicroResource'
 import { CircleUserRound, KeyRound, Server, Users } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { ButtonLink } from '../ui/Button'
@@ -14,10 +16,12 @@ export function DashboardHero({
   gamesEnabled: boolean
 }) {
   const { t } = useTranslation('panel')
+  const resourceOn = useResourceControls()
+  const showIndicators = resourceOn('server-status') || resourceOn('players-online')
   const name = user?.display_name || user?.username || ''
 
   return (
-    <Card className="panel-welcome dashboard-hero" data-theme-part="page-header">
+    <Card className={`panel-welcome dashboard-hero${showIndicators ? '' : ' dashboard-hero--without-status'}`} data-theme-part="page-header">
       <div className="dashboard-hero-identity">
         {user?.avatar_url ? (
           <img className="dashboard-hero-avatar" src={user.avatar_url} alt={t('profile.avatarAlt', { username: user.username })} />
@@ -40,8 +44,8 @@ export function DashboardHero({
           </div>
         </div>
       </div>
-      <ul className="dashboard-hero-status" aria-label={t('dashboard.statusAria')}>
-        <li>
+      {showIndicators && <ul className="dashboard-hero-status" aria-label={t('dashboard.statusAria')}>
+        <MicroResource code="server-status"><li>
           <Server aria-hidden="true" />
           <span>{t('dashboard.gameServer')}</span>
           <b className={status?.game_online ? 'is-on' : 'is-off'}>
@@ -54,13 +58,13 @@ export function DashboardHero({
           <b className={status?.login_online ? 'is-on' : 'is-off'}>
             {status?.login_online ? t('dashboard.online') : t('dashboard.offline')}
           </b>
-        </li>
-        <li>
+        </li></MicroResource>
+        <MicroResource code="players-online"><li>
           <Users aria-hidden="true" />
           <span>{t('dashboard.playersOnline')}</span>
           <strong>{status?.players_online ?? 0}</strong>
-        </li>
-      </ul>
+        </li></MicroResource>
+      </ul>}
     </Card>
   )
 }

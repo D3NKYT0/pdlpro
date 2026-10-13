@@ -1,3 +1,5 @@
+import { useResourceControls } from '../contexts/ResourceControlsContext'
+import { MicroResource } from '../components/programs/MicroResource'
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import {
@@ -31,7 +33,8 @@ export function InfoPage() {
   const { t } = useTranslation('public')
   const { hash } = useLocation()
   const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
-  const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
+  const displayOn = useResourceControls()
+  const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status, enabled: displayOn('server-status') })
   const data = info.data
   const [activeSection, setActiveSection] = useState(hash.replace('#', '') || 'geral')
   const statusLabel = status.isLoading
@@ -124,10 +127,10 @@ export function InfoPage() {
               <span>{t('info.mainServer')}</span>
               <strong>{data?.name?.trim() || 'PDL PRO'}</strong>
             </div>
-            <div className={`info-live-status ${statusClass}`}>
+            <MicroResource code="server-status"><div className={`info-live-status ${statusClass}`}>
               <i aria-hidden="true" />
               {statusLabel}
-            </div>
+            </div></MicroResource>
             <dl className="info-hero-metrics">
               <div>
                 <dt>{t('info.chronicle')}</dt>

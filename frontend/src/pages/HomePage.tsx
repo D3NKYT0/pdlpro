@@ -1,3 +1,5 @@
+import { useResourceControls } from '../contexts/ResourceControlsContext'
+import { MicroResource } from '../components/programs/MicroResource'
 import { useQuery } from '@tanstack/react-query'
 import { useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
@@ -29,7 +31,8 @@ function DefaultHomePage() {
   const resources = useQuery({ queryKey: ['resources'], queryFn: programsApi.resources, staleTime: 15000 })
   const isWikiEnabled = !resources.data?.some((r) => r.code === 'wiki' && !r.enabled)
   const isNewsEnabled = !resources.data?.some((r) => r.code === 'news' && !r.enabled)
-  const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
+  const displayOn = useResourceControls()
+  const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status, enabled: displayOn('server-status') || displayOn('players-online') })
   const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
   const news = useQuery({
     queryKey: ['news', language],
@@ -305,10 +308,10 @@ function DefaultHomePage() {
         </div>
 
         <div className="server-plaque container">
-          <div>
+          <MicroResource code="players-online"><div>
             <strong>{status.data?.players_online ?? 0}</strong>
             <span>{t('home.statOnline')}</span>
-          </div>
+          </div></MicroResource>
           <div>
             <strong>{clans.data?.length ?? 0}</strong>
             <span>{t('home.statClans')}</span>
@@ -317,13 +320,13 @@ function DefaultHomePage() {
             <strong>24/7</strong>
             <span>{t('home.statUptime')}</span>
           </div>
-          <div>
+          <MicroResource code="server-status"><div>
             <strong className={status.data?.game_online ? 'is-online' : 'is-offline'}>
               <i className="fas fa-circle" />
               {status.data?.game_online ? t('home.statOnline') : t('home.statOffline')}
             </strong>
             <span>{t('home.statServer')}</span>
-          </div>
+          </div></MicroResource>
         </div>
 
         <div className="home-cta container">

@@ -10,8 +10,29 @@ import i18n from '../../i18n'
 import { contentApi, serverApi } from '../../services/api'
 import type { ThemePresentation } from '../../services/api'
 import { ClubHomePage, ClubPublicLayout } from './ClubTheme'
+import { ResourceControlsProvider } from '../../contexts/ResourceControlsContext'
 
 const session = vi.hoisted(() => ({ user: null as { username: string } | null }))
+
+it.each([[false, true], [true, false], [false, false]])('club hides players=%s and server=%s independently', async (players, server) => {
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+  client.setQueryData(['resources'], [
+    { code: 'server-status', enabled: server },
+    { code: 'players-online', enabled: players },
+  ])
+  const configured: ThemePresentation = { ...presentation, home: { ...presentation.home, sections: ['stats'], stats: { items: [
+    { id: 'players', kind: 'online', label: 'Métrica de jogadores' },
+    { id: 'status', kind: 'status', label: 'Estado da conexão' },
+    { id: 'chronicle', kind: 'chronicle', label: 'Crônica' },
+  ] } } }
+  render(<I18nextProvider i18n={i18n}><QueryClientProvider client={client}><ResourceControlsProvider><MemoryRouter>
+    <ClubHomePage presentation={configured} />
+  </MemoryRouter></ResourceControlsProvider></QueryClientProvider></I18nextProvider>)
+  expect(await screen.findByText('Interlude')).toBeVisible()
+  expect(Boolean(screen.queryByText('Métrica de jogadores'))).toBe(players)
+  expect(Boolean(screen.queryByText('Estado da conexão'))).toBe(server)
+  client.clear()
+})
 
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: session.user }) }))
 vi.mock('../../services/domain/content.service', () => ({ contentApi: { news: vi.fn() } }))

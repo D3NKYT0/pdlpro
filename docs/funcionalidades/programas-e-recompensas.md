@@ -123,7 +123,7 @@ Consulte [Câmbio entre painel e jogo](../integracoes/cambio-painel-jogo.md) par
 ## Micro-recursos
 
 Em `/panel/admin/resources`, as seis categorias contêm módulos e subcategorias
-recursivas. O catálogo possui **78 micro-recursos**, incluindo os três exemplos
+recursivas. O catálogo possui **80 micro-recursos**, incluindo os três exemplos
 iniciais. Cada interruptor salva a preferência da ação correspondente.
 
 - `shop`: **Finalizar compras** (`shop-checkout`), **Pacotes da loja** (`shop-packages`), **Histórico de compras** (`shop-history`).
@@ -142,7 +142,7 @@ iniciais. Cada interruptor salva a preferência da ação correspondente.
 - `accounts-link`: **Vincular por login e senha** (`accounts-link-credentials`), **Vincular por e-mail** (`accounts-link-email`).
 - `profile`: **Editar perfil e avatar** (`profile-edit`).
 - `progress`: **Resgatar prêmios da conta** (`progress-claim-rewards`).
-- `supporters`: **Candidatura e perfil de apoiador** (`supporters-apply`), **Solicitar saque de comissões** (`supporters-payout`).
+- `supporters`: **Candidatura e perfil de apoiador** (`supporters-apply`), **Apoiadores na landing e rodapé** (`supporters-public`), **Solicitar saque de comissões** (`supporters-payout`).
 - `notifications`: **Notificações push** (`notifications-push`).
 - `support`: **Abrir chamados** (`support-create`), **Responder chamados** (`support-reply`), **Encerrar e reabrir chamados** (`support-status`).
 - `help`: **Conversar com o assistente** (`help-chat`), **Cuidados do Denkynho** (`help-pet`).
@@ -151,12 +151,41 @@ iniciais. Cada interruptor salva a preferência da ação correspondente.
 - `wiki`: **Ler páginas da Wiki** (`wiki-detail`).
 - `faq`: **FAQ no painel** (`faq-panel`).
 - `roadmap`: **Detalhes do roadmap** (`roadmap-detail`).
-- `rankings`: **Ranking PvP** (`rankings-pvp`), **Ranking PK** (`rankings-pk`), **Ranking Adena** (`rankings-adena`), **Ranking de clãs** (`rankings-clans`), **Ranking de nível** (`rankings-level`), **Ranking de tempo online** (`rankings-online`), **Olimpíadas** (`rankings-olympiad`), **Grand Bosses** (`rankings-grandboss`), **Cerco aos castelos** (`rankings-siege`), **Buscar personagens** (`rankings-search`).
+- `rankings`: **Ranking PvP** (`rankings-pvp`), **Ranking PK** (`rankings-pk`), **Ranking Adena** (`rankings-adena`), **Ranking de clãs** (`rankings-clans`), **Ranking de nível** (`rankings-level`), **Ranking de tempo online** (`rankings-online`), **Olimpíadas** (`rankings-olympiad`), **Grand Bosses** (`rankings-grandboss`), **Raid Bosses** (`rankings-raidboss`), **Cerco aos castelos** (`rankings-siege`), **Buscar personagens** (`rankings-search`).
 
 Também permanecem disponíveis os controles `accounts-link` (vinculação),
 `accounts-create-character` (criação de personagem) e `progress-achievements`
 (exibição das conquistas). A vinculação contém controles separados para
 credenciais e e-mail; caixas e ajuda do mascote também possuem descendentes.
+
+### Mostrar jogadores online e status do servidor
+
+Em **Administração → Recursos → Conteúdo** (`/panel/admin/resources`), os controles
+**Jogadores online** (`players-online`) e **Status do servidor** (`server-status`)
+salvam preferências independentes. É possível exibir apenas um dos indicadores,
+ambos ou nenhum. O controle de status abrange os indicadores dos servidores de jogo
+e login do painel.
+
+As preferências são aplicadas ao painel do jogador, à landing, aos rankings, às
+Informações e ao conteúdo de Informações da Coming Soon. Os templates do catálogo
+e o Club respeitam as mesmas preferências para estatísticas de tipo `online` e
+`status`; as demais estatísticas do tema permanecem disponíveis. Habilitar um
+indicador permite sua exibição nas seções configuradas pelo tema.
+
+Os dois controles começam habilitados na migração `programs.0012`. A migração
+preserva uma escolha já existente. Alterá-los exige `resources.manage`, usa os
+interruptores compartilhados e atualiza o catálogo observado pela SPA. Enquanto o
+catálogo está carregando ou indisponível, os indicadores ficam ocultos. Uma falha
+ao salvar preserva a preferência anterior e permite tentar novamente.
+
+Essas opções controlam apresentação. A API técnica de status conserva seu contrato;
+as telas deixam de consultá-la quando nenhum indicador visível precisa dela. Quando
+todos os indicadores de uma área estão ocultos, a área vazia também é removida.
+
+Os testes cobrem migração e preservação de preferências, reversão isolada,
+autorização, entradas inválidas, traduções EN/ES, alteração independente dos dois
+controles, bloqueio de envio repetido e falha de gravação. A interação do painel,
+landing e Club e os 20 templates do catálogo verificam a omissão dos indicadores.
 
 ### Herança e atualização
 

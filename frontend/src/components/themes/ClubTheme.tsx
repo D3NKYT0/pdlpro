@@ -1,3 +1,5 @@
+import { useResourceControls } from '../../contexts/ResourceControlsContext'
+import { serverStatVisible } from '../../lib/server-display'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -153,7 +155,10 @@ export function ClubHomePage({ presentation }: { presentation: ThemePresentation
   const { t, i18n } = useTranslation('public')
   const language = contentLang(i18n.language)
   const { hero, features, ranking, cta, news: newsContent, stats, pillars } = presentation.home
-  const sections = visibleSections(presentation)
+  const displayOn = useResourceControls()
+  const visibleStats = stats?.items.filter(item => serverStatVisible(item.kind, displayOn)) ?? []
+  const sections = visibleSections(presentation).filter(section => section !== 'stats' || visibleStats.length > 0)
+  const needsStatus = visibleStats.some(item => item.kind === 'online' || item.kind === 'status')
   const [activeTab, setActiveTab] = useState(ranking.tabs[0]?.id ?? '')
   const selectedTab = useMemo(
     () => ranking.tabs.find((item) => item.id === activeTab) ?? ranking.tabs[0],
@@ -162,7 +167,7 @@ export function ClubHomePage({ presentation }: { presentation: ThemePresentation
   const status = useQuery({
     queryKey: ['server-status'],
     queryFn: serverApi.status,
-    enabled: sections.includes('stats'),
+    enabled: sections.includes('stats') && needsStatus,
   })
   const info = useQuery({
     queryKey: ['server-info'],
@@ -212,12 +217,12 @@ export function ClubHomePage({ presentation }: { presentation: ThemePresentation
     stats: stats ? (
       <section className="club-stats" id="club-stats" key="stats" aria-label={t('club.statsAria')}>
         <div className="club-wrap club-stats__grid">
-          {status.isLoading || info.isLoading ? (
+          {(needsStatus && status.isLoading) || info.isLoading ? (
             <LoadingState>{t('club.statsLoading')}</LoadingState>
-          ) : status.isError || info.isError ? (
-            <ErrorNotice error={status.error ?? info.error} fallback={t('club.statsError')} />
+          ) : (needsStatus && status.isError) || info.isError ? (
+            <ErrorNotice error={info.error ?? (needsStatus ? status.error : undefined)} fallback={t('club.statsError')} />
           ) : (
-            stats.items.map((item) => (
+            visibleStats.map((item) => (
               <article className="club-stat" key={item.id}>
                 <strong>{statValue(item, status.data, info.data, t)}</strong>
                 <span>{item.label}</span>

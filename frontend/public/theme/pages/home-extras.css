@@ -302,7 +302,7 @@
 
 .server-plaque {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   margin-top: 36px;
   background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 78%, transparent);
   border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 46%, transparent);

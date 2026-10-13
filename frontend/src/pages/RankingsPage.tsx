@@ -23,7 +23,7 @@ export function RankingsPage() {
   const Icon = tab.icon
   const [search, setSearch] = useState('')
 
-  const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
+  const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status, enabled: resourceOn('server-status') || resourceOn('players-online') })
   const rankings = useQuery({
     queryKey: ['rankings', tab.type === 'ranking' ? tab.kind : '', 50],
     queryFn: () => serverApi.rankings(tab.type === 'ranking' ? tab.kind : 'pvp', 50),

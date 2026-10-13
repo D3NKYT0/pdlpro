@@ -5704,3 +5704,15 @@ msgstr "Delete record"
 #: common/persistence/deletion.py apps/staff/presentation/views/config.py
 msgid "Este registro possui vínculos. Remova os vínculos ou desative o registro."
 msgstr "This record has linked records. Remove the links or deactivate the record."
+
+#: apps/programs/migrations/0012_server_display_resources.py
+msgid "Jogadores online"
+msgstr "Online players"
+
+#: apps/programs/migrations/0012_server_display_resources.py
+msgid "Mostrar o status online ou offline do servidor no site e no painel."
+msgstr "Show the server online or offline status on the website and player panel."
+
+#: apps/programs/migrations/0012_server_display_resources.py
+msgid "Mostrar a quantidade de jogadores online no site e no painel."
+msgstr "Show the number of online players on the website and player panel."

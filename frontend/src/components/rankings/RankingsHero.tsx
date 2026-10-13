@@ -1,6 +1,7 @@
+import { MicroResource } from '../programs/MicroResource'
 import { Trophy, type LucideIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import type { ApiRankingEntry } from '../../services/types'
+import type { ApiRankingEntry } from '../../services/api'
 import { formatValue } from './rankingsFormat'
 import type { LocalizedTab } from './rankingsMeta'
 
@@ -48,10 +49,10 @@ export function RankingsHero({
           <div className="rankings-mark">
             <Icon aria-hidden="true" />
           </div>
-          <div className={`rankings-live ${statusClass}`}>
+          <MicroResource code="server-status"><div className={`rankings-live ${statusClass}`}>
             <i aria-hidden="true" />
             {statusLabel}
-          </div>
+          </div></MicroResource>
           <span>{tab.kicker}</span>
           <strong>{tab.label}</strong>
           <p>{tab.blurb}</p>
@@ -68,10 +69,10 @@ export function RankingsHero({
             </dl>
           ) : (
             <dl className="rankings-hero-metrics">
-              <div>
+              <MicroResource code="players-online"><div>
                 <dt>{t('rankings.players')}</dt>
                 <dd>{playersOnline ?? '—'}</dd>
-              </div>
+              </div></MicroResource>
               <div>
                 <dt>{t('rankings.list')}</dt>
                 <dd>{isLoading ? '…' : rankingCount || worldCount || '—'}</dd>

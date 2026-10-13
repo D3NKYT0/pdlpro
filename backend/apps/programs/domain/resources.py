@@ -87,6 +87,9 @@ MICRO_RESOURCE_NAMES = {
     "rankings-search": "Buscar personagens",
 }
 
+# Controles de apresentação independentes; não bloqueiam a consulta técnica do status.
+SERVER_DISPLAY_RESOURCES = frozenset({"server-status", "players-online"})
+
 RESOURCE_PARENTS = {
     "accounts-link": "accounts",
     "accounts-create-character": "accounts",

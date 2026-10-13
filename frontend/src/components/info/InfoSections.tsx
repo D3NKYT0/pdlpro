@@ -1,3 +1,4 @@
+import { MicroResource } from '../programs/MicroResource'
 import {
   Activity,
   BookOpen,
@@ -15,7 +16,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import type { ApiServerInfo } from '../../services/types'
+import type { ApiServerInfo } from '../../services/api'
 
 const RATE_IDS = ['xp', 'sp', 'adena', 'drop', 'spoil'] as const
 const RATE_ICONS: Record<(typeof RATE_IDS)[number], LucideIcon> = {
@@ -112,11 +113,11 @@ export function InfoSections({
               <span>{t('info.maxLevel')}</span>
               <strong>{data.max_level ?? '—'}</strong>
             </div>
-            <div>
+            <MicroResource code="server-status"><div>
               <Activity aria-hidden="true" />
               <span>{t('info.status')}</span>
               <strong className={statusClass}>{statusLabel}</strong>
-            </div>
+            </div></MicroResource>
           </div>
         </div>
       </section>

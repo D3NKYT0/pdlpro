@@ -1992,6 +1992,8 @@
       "other": "Other"
     },
     "items": {
+      "server-status": {"name": "Server status", "description": "Show the server online or offline status on the website and player panel."},
+      "players-online": {"name": "Online players", "description": "Show the number of online players on the website and player panel."},
       "shop-checkout": {"name": "Checkout", "description": "Availability of this action within its module."},
       "shop-packages": {"name": "Shop packages", "description": "Availability of this action within its module."},
       "shop-history": {"name": "Purchase history", "description": "Availability of this action within its module."},
