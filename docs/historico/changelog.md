@@ -10,6 +10,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.7.5] - 2026-10-13
+
+Lançamento com exclusão administrativa de cadastros e controles independentes para exibição de jogadores online e status do servidor. A API acompanha a versão 2.7.5.
+
 ### Adicionado
 
 - Exclusão com confirmação no painel para notícias, produtos/pacotes da loja, cupons, configurações e conteúdo dos jogos e metadados de itens customizados. Verificação de vínculos preserva carrinhos, composição de pacotes, progresso e históricos; compras mantêm suas fotografias de itens.
