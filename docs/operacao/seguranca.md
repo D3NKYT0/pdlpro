@@ -34,7 +34,7 @@ Os JWTs anteriores, sem a informação de revogação por senha, deixam de ser a
   `REFRESH_TOKEN_DAYS`. Sem o cookie de acesso, `POST /api/v1/auth/refresh/` emite outro par.
 - O link de recuperação usa token vinculado à senha e validade de uma hora. O consumo e a alteração de senha são serializados: repetir o link, inclusive simultaneamente, é rejeitado.
 - OAuth mantém estado descartável associado à sessão do navegador. Cookies de sessão devem acompanhar início e callback. Vincular um provedor exige o mesmo usuário autenticado e a mesma credencial de sessão.
-- Um login social não assume automaticamente cadastro com e-mail ainda não verificado. O proprietário deve recuperar o acesso, verificar o e-mail e então conectar o provedor. Contas sociais com e-mail diferente não verificam o e-mail local.
+- Um login social com e-mail verificado pelo provedor entra na conta local da mesma caixa postal, mesmo que a confirmação local ainda esteja pendente, e marca esse e-mail como verificado. Não cria outro cadastro. No Gmail, pontos, sufixo `+alias` e `googlemail.com` são a mesma caixa. Se o vínculo social já existe e o e-mail do provedor é outro, o e-mail local não é verificado por esse login.
 
 ## Proxies e limites
 

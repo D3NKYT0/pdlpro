@@ -4,7 +4,12 @@ from dataclasses import dataclass
 
 from django.conf import settings
 
-from apps.server.application.site_identity import first_text, overlay_list, overlay_map
+from apps.server.application.site_identity import (
+    first_text,
+    overlay_list,
+    overlay_map,
+    project_display_name,
+)
 from apps.server.domain.bosses import IBossCatalog, INpcCatalog
 from apps.server.domain.gateways import (
     ILineageGateway,
@@ -88,7 +93,7 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
         env_seo_title = first_text(getattr(settings, "SITE_SEO_TITLE", ""), env_name)
         env_seo_description = first_text(getattr(settings, "SITE_SEO_DESCRIPTION", ""), env_description)
         env_og_image = str(getattr(settings, "SITE_OG_IMAGE", "") or "")
-        name = first_text(theme.get("name"), env_name) or "PDL PRO"
+        name = project_display_name(theme_name=str(theme.get("name") or ""), env_name=env_name)
         slogan = first_text(theme.get("slogan"))
         description = first_text(theme.get("description"), env_description)
         seo_title = first_text(theme.get("seo_title"), env_seo_title, name)
@@ -186,7 +191,11 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
         subtitle = str(row.coming_soon_subtitle or "").strip()
         slogan = first_text(row.slogan, info.slogan)
         description = first_text(row.description, info.description)
-        name = first_text(row.name, info.name)
+        name = project_display_name(
+            admin_name=str(row.name or ""),
+            theme_name=str(theme.get("name") or ""),
+            env_name=env_name,
+        )
         seo_title = first_text(getattr(row, "seo_title", ""), info.seo_title, name)
         seo_description = first_text(getattr(row, "seo_description", ""), info.seo_description, description)
         return ServerInfo(

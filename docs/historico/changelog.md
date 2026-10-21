@@ -2,13 +2,23 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 13 de outubro de 2026
+> **Atualizado:** 20 de outubro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Não publicado]
+
+## [2.7.6] - 2026-10-20
+
+Lançamento com o nome do projeto nos e-mails, entrada pelo login social na conta já existente e ocultação dos cartões de personagem quando a ação está desligada. A API acompanha a versão 2.7.6.
+
+### Corrigido
+
+- Login com Google ou Discord entra na conta já cadastrada com o mesmo e-mail, em vez de tentar criar outro cadastro. A confirmação pendente do e-mail local é concluída pelo provedor.
+- Desativar alteração de nickname, sexo ou destravar no personagem remove o cartão inteiro do painel.
+- E-mails de verificação, redefinição de senha, vínculo de conta e teste SMTP usam o nome público do projeto (Painel e servidor, tema ativo ou `PROJECT_TITLE`) em vez de “PDL PRO” fixo.
 
 ## [2.7.5] - 2026-10-13
 

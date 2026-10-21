@@ -12,6 +12,9 @@ from django.utils.translation import gettext as _
 from apps.accounts.domain.exceptions import UserNotFoundError
 from apps.accounts.domain.mailer import IMailer
 from apps.accounts.domain.repositories import IUserRepository
+from apps.server.application.site_identity import current_project_display_name
+from apps.server.domain.repositories import IIndexConfigRepository
+from apps.server.domain.site_metadata import IPackagedSiteMetadata
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
 from common.i18n import activate_language
@@ -40,9 +43,17 @@ class RequestEmailVerificationUseCase(UseCase[UUID, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
     """
 
-    def __init__(self, users: IUserRepository, mailer: IMailer) -> None:
+    def __init__(
+        self,
+        users: IUserRepository,
+        mailer: IMailer,
+        index_config: IIndexConfigRepository,
+        packaged_metadata: IPackagedSiteMetadata,
+    ) -> None:
         self._users = users
         self._mailer = mailer
+        self._index_config = index_config
+        self._packaged_metadata = packaged_metadata
 
     def execute(self, data: UUID) -> dict:
         user = self._users.get_by_id(data)
@@ -53,9 +64,10 @@ class RequestEmailVerificationUseCase(UseCase[UUID, dict]):
         token = signing.dumps({"uid": str(user.id)}, salt=EMAIL_VERIFY_SALT)
         link = _frontend_url(f"/verify-email?token={token}")
         _activate_user_language(user)
+        project = current_project_display_name(self._index_config, self._packaged_metadata)
         self._mailer.send(
             user.email,
-            _("Confirme seu e-mail no PDL PRO"),
+            _("Confirme seu e-mail no %(project)s") % {"project": project},
             _(
                 "Olá, %(username)s.\n\n"
                 "Confirme seu e-mail neste link (válido por 48h):\n%(link)s\n"
@@ -119,9 +131,17 @@ class RequestPasswordResetUseCase(UseCase[RequestPasswordResetInput, dict]):
     retorno é ``dict``.
     """
 
-    def __init__(self, users: IUserRepository, mailer: IMailer) -> None:
+    def __init__(
+        self,
+        users: IUserRepository,
+        mailer: IMailer,
+        index_config: IIndexConfigRepository,
+        packaged_metadata: IPackagedSiteMetadata,
+    ) -> None:
         self._users = users
         self._mailer = mailer
+        self._index_config = index_config
+        self._packaged_metadata = packaged_metadata
 
     def execute(self, data: RequestPasswordResetInput) -> dict:
         email = data.email.strip().lower()
@@ -137,9 +157,10 @@ class RequestPasswordResetUseCase(UseCase[RequestPasswordResetInput, dict]):
         cache.set(cooldown_key, True, timeout=60)
         link = _frontend_url(f"/reset-password?token={token}")
         _activate_user_language(user)
+        project = current_project_display_name(self._index_config, self._packaged_metadata)
         self._mailer.send(
             user.email,
-            _("Redefinir senha do PDL PRO"),
+            _("Redefinir senha do %(project)s") % {"project": project},
             _(
                 "Olá, %(username)s.\n\n"
                 "Redefina sua senha neste link (válido por 1 hora):\n%(link)s\n"

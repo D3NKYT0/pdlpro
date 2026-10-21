@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
+import { StrictMode } from 'react'
 import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
@@ -107,6 +108,23 @@ it('erro do provedor retorna ao login', async () => {
   mount(<OAuthCallbackPage />, '/callback/google?code=c&state=s', '/callback/:provider')
   expect(await screen.findByRole('heading', { name: '/login' })).toBeVisible()
   expect(toast.error).toHaveBeenCalledWith('Expirado')
+})
+
+it('callback em strict mode troca o código google uma única vez', async () => {
+  vi.mocked(authApi.completeOAuth).mockResolvedValue({ username: 'hero', has_usable_password: true } as never)
+  render(
+    <StrictMode>
+      <MemoryRouter initialEntries={['/callback/google?code=code&state=state']}>
+        <Routes>
+          <Route path="/callback/:provider" element={<OAuthCallbackPage />} />
+          <Route path="*" element={<Location />} />
+        </Routes>
+      </MemoryRouter>
+    </StrictMode>,
+  )
+  expect(await screen.findByRole('heading', { name: '/panel' })).toBeVisible()
+  expect(authApi.completeOAuth).toHaveBeenCalledOnce()
+  expect(authApi.completeOAuth).toHaveBeenCalledWith('google', 'code', 'state')
 })
 
 it.each(['OAUTH_STATE_INVALID', 'OAUTH_ACCOUNT_UNVERIFIED'])('callback rejeitado por segurança %s não restaura sessão', async code => {

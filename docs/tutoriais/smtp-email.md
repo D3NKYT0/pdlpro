@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [← Tutoriais](README.md) · [Configurador admin](../operacao/integracoes-admin.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 20 de outubro de 2026
 
 Objetivo: o painel envia e-mail de verificação, recuperação de senha, códigos
 e avisos. Configure na aba **SMTP / Push** em `/panel/admin/integrations`.
@@ -27,7 +27,9 @@ e avisos. Configure na aba **SMTP / Push** em `/panel/admin/integrations`.
 | `EMAIL_BACKEND` | deixe o backend SMTP do Django salvo pelo instalador, salvo se o provedor exigir outro |
 
 Salve e use **Testar** na seção SMTP: o painel envia um e-mail de prova (informe
-o destinatário se a UI pedir).
+o destinatário se a UI pedir). O assunto usa o nome definido em **Painel e
+servidor**. Se esse nome estiver vazio, entra o do tema ativo e, por último,
+`PROJECT_TITLE` (padrão `PDL PRO`).
 
 ## Conferir no produto
 

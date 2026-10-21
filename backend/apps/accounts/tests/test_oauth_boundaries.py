@@ -192,3 +192,70 @@ def test_disabled_account_cannot_login_via_social(mocker):
     mocker.patch("apps.accounts.application.oauth._profile", return_value={"sub": "uid", "email": user.email, "email_verified": True})
     with pytest.raises(OAuthError):
         complete_oauth("google", "code", begin())
+
+
+def test_gmail_variant_reuses_existing_account(mocker):
+    user = get_user_model().objects.create_user(
+        username="dots",
+        email="hero.user+tag@googlemail.com",
+        password="Secret123!",
+        is_email_verified=False,
+    )
+    mocker.patch(
+        "apps.accounts.application.oauth._profile",
+        return_value={"sub": "gid", "email": "herouser@gmail.com", "email_verified": True},
+    )
+    result, linked = complete_oauth("google", "code", begin())
+    assert not linked
+    assert result.pk == user.pk
+    assert get_user_model().objects.count() == 1
+    user.refresh_from_db()
+    assert user.is_email_verified
+    assert user.check_password("Secret123!")
+    assert SocialAccount.objects.get(provider="google", uid="gid").user == user
+
+
+def test_inactive_email_match_does_not_create_another_account(mocker):
+    get_user_model().objects.create_user(
+        username="disabled",
+        email="hero@test.dev",
+        is_active=False,
+        is_email_verified=True,
+    )
+    mocker.patch(
+        "apps.accounts.application.oauth._profile",
+        return_value={"sub": "other", "email": "hero@test.dev", "email_verified": True},
+    )
+    with pytest.raises(OAuthError) as caught:
+        complete_oauth("google", "code", begin())
+    assert caught.value.error_code == "ACCOUNT_DISABLED"
+    assert get_user_model().objects.count() == 1
+    assert not SocialAccount.objects.exists()
+
+
+def test_closed_registration_still_blocks_new_oauth_account(mocker):
+    from apps.accounts.domain.exceptions import ComingSoonRegistrationRestrictedError
+    from apps.server.infrastructure.models import IndexConfig
+
+    IndexConfig.objects.create(name="Imperium", coming_soon=True, allow_registration=False, is_active=True)
+    mocker.patch(
+        "apps.accounts.application.oauth._profile",
+        return_value={"sub": "new", "email": "new@test.dev", "email_verified": True},
+    )
+    with pytest.raises(ComingSoonRegistrationRestrictedError):
+        complete_oauth("google", "code", begin())
+    assert not get_user_model().objects.exists()
+
+
+def test_closed_registration_allows_existing_oauth_login(mocker):
+    from apps.server.infrastructure.models import IndexConfig
+
+    IndexConfig.objects.create(name="Imperium", coming_soon=True, allow_registration=False, is_active=True)
+    user = get_user_model().objects.create_user(username="existing", email="hero@test.dev", is_email_verified=True)
+    mocker.patch(
+        "apps.accounts.application.oauth._profile",
+        return_value={"sub": "uid", "email": "HERO@test.dev", "email_verified": True},
+    )
+    result, _linked = complete_oauth("google", "code", begin())
+    assert result.pk == user.pk
+    assert get_user_model().objects.count() == 1

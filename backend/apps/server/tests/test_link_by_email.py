@@ -17,6 +17,21 @@ def api():
 
 
 @pytest.mark.django_db
+def test_link_email_uses_project_name(api, settings):
+    from apps.server.infrastructure.models import IndexConfig
+
+    settings.PROJECT_TITLE = "Saga Env"
+    IndexConfig.objects.create(name="Imperium", is_active=True)
+    user = User.objects.create_user(username="linker2", email="linker2@pdl.dev", password="Secret123")
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    gateway.register_account("l2name", "GamePass1", "l2name@pdl.dev")
+    api.force_authenticate(user=user)
+    requested = api.post("/api/v1/customer/server/accounts/link-email/", {"email": "l2name@pdl.dev"}, format="json")
+    assert requested.status_code == 200, requested.data
+    assert "conta l2name ao Imperium" in mail.outbox[-1].body
+
+
+@pytest.mark.django_db
 def test_link_lineage_account_by_email(api):
     user = User.objects.create_user(username="linker", email="linker@pdl.dev", password="Secret123")
     gateway = DependencyInjection.root().resolve(ILineageGateway)

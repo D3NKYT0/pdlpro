@@ -368,68 +368,74 @@ export function CharacterPage() {
           </Card>
 
           <div className="grid cols-2 character-services">
-            <Card>
-              <div className="account-form-title">
-                <Pencil aria-hidden="true" />
-                <div>
-                  <h3>{t('character.services.nickname.title')}</h3>
-                  <p>{t('character.services.nickname.hint', { price: formatServicePrice(prices.data?.CHANGE_NICKNAME) })}</p>
+            {resourceOn('accounts-nickname') ? (
+              <Card>
+                <div className="account-form-title">
+                  <Pencil aria-hidden="true" />
+                  <div>
+                    <h3>{t('character.services.nickname.title')}</h3>
+                    <p>{t('character.services.nickname.hint', { price: formatServicePrice(prices.data?.CHANGE_NICKNAME) })}</p>
+                  </div>
                 </div>
-              </div>
-              <MicroResource code="accounts-nickname"><form className="account-action-form" onSubmit={onChangeNickname}>
-                <Field>
-                  {t('character.services.nickname.field')}
-                  <input
-                    value={nickname}
-                    onChange={(event) => setNickname(event.target.value)}
-                    minLength={2}
-                    maxLength={16}
-                    required
-                    disabled={!offline}
-                  />
-                </Field>
-                <Button type="submit" disabled={!offline || submitting !== null}>
-                  {submitting === 'nick' ? t('character.services.nickname.submitting') : t('character.services.nickname.submit')}
-                </Button>
-              </form></MicroResource>
-            </Card>
+                <form className="account-action-form" onSubmit={onChangeNickname}>
+                  <Field>
+                    {t('character.services.nickname.field')}
+                    <input
+                      value={nickname}
+                      onChange={(event) => setNickname(event.target.value)}
+                      minLength={2}
+                      maxLength={16}
+                      required
+                      disabled={!offline}
+                    />
+                  </Field>
+                  <Button type="submit" disabled={!offline || submitting !== null}>
+                    {submitting === 'nick' ? t('character.services.nickname.submitting') : t('character.services.nickname.submit')}
+                  </Button>
+                </form>
+              </Card>
+            ) : null}
 
-            <Card>
-              <div className="account-form-title">
-                <VenusAndMars aria-hidden="true" />
-                <div>
-                  <h3>{t('character.services.sex.title')}</h3>
-                  <p>{t('character.services.sex.hint', { price: formatServicePrice(prices.data?.CHANGE_SEX) })}</p>
+            {resourceOn('accounts-sex') ? (
+              <Card>
+                <div className="account-form-title">
+                  <VenusAndMars aria-hidden="true" />
+                  <div>
+                    <h3>{t('character.services.sex.title')}</h3>
+                    <p>{t('character.services.sex.hint', { price: formatServicePrice(prices.data?.CHANGE_SEX) })}</p>
+                  </div>
                 </div>
-              </div>
-              <MicroResource code="accounts-sex"><form className="account-action-form" onSubmit={onChangeSex}>
-                <Field>
-                  {t('character.services.sex.field')}
-                  <select value={sex} onChange={(event) => setSex(event.target.value as 'M' | 'F' | '')} required disabled={!offline}>
-                    <option value="">{t('character.services.sex.placeholder')}</option>
-                    <option value="M">{t('character.male')}</option>
-                    <option value="F">{t('character.female')}</option>
-                  </select>
-                </Field>
-                <Button type="submit" disabled={!offline || submitting !== null}>
-                  {submitting === 'sex' ? t('character.services.sex.submitting') : t('character.services.sex.submit')}
-                </Button>
-              </form></MicroResource>
-            </Card>
+                <form className="account-action-form" onSubmit={onChangeSex}>
+                  <Field>
+                    {t('character.services.sex.field')}
+                    <select value={sex} onChange={(event) => setSex(event.target.value as 'M' | 'F' | '')} required disabled={!offline}>
+                      <option value="">{t('character.services.sex.placeholder')}</option>
+                      <option value="M">{t('character.male')}</option>
+                      <option value="F">{t('character.female')}</option>
+                    </select>
+                  </Field>
+                  <Button type="submit" disabled={!offline || submitting !== null}>
+                    {submitting === 'sex' ? t('character.services.sex.submitting') : t('character.services.sex.submit')}
+                  </Button>
+                </form>
+              </Card>
+            ) : null}
 
-            <Card>
-              <div className="account-form-title">
-                <Undo2 aria-hidden="true" />
-                <div>
-                  <h3>{t('character.services.unstuck.title')}</h3>
-                  <p>{t('character.services.unstuck.hint', { price: formatServicePrice(prices.data?.UNSTUCK) })}</p>
+            {resourceOn('accounts-unstuck') ? (
+              <Card>
+                <div className="account-form-title">
+                  <Undo2 aria-hidden="true" />
+                  <div>
+                    <h3>{t('character.services.unstuck.title')}</h3>
+                    <p>{t('character.services.unstuck.hint', { price: formatServicePrice(prices.data?.UNSTUCK) })}</p>
+                  </div>
                 </div>
-              </div>
-              <p className="muted">{t('character.services.unstuck.description')}</p>
-              <MicroResource code="accounts-unstuck"><Button type="button" onClick={() => void onUnstuck()} disabled={!offline || submitting !== null}>
-                {submitting === 'unstuck' ? t('character.services.unstuck.submitting') : t('character.services.unstuck.submit')}
-              </Button></MicroResource>
-            </Card>
+                <p className="muted">{t('character.services.unstuck.description')}</p>
+                <Button type="button" onClick={() => void onUnstuck()} disabled={!offline || submitting !== null}>
+                  {submitting === 'unstuck' ? t('character.services.unstuck.submitting') : t('character.services.unstuck.submit')}
+                </Button>
+              </Card>
+            ) : null}
 
             {resourceOn('accounts-teleport') && serviceAvailable(prices.data, 'TELEPORT') ? (
               <Card>

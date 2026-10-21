@@ -57,6 +57,6 @@ enviar). Não é necessário bot de servidor.
 | --- | --- |
 | `redirect_uri_mismatch` | URI no console diferente (http×https, www×apex, barra final) |
 | Botão desabilitado | client id/secret incompletos |
-| Conta social não vincula e-mail local | e-mail ainda não verificado no painel — ver [Segurança](../operacao/seguranca.md) |
+| Google abre outro cadastro | o e-mail do provedor não é o da conta local; variações do Gmail entram na mesma caixa — ver [Segurança](../operacao/seguranca.md) |
 
 Voltar: [Tutoriais](README.md).

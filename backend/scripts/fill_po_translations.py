@@ -83,17 +83,21 @@ TRANSLATIONS: dict[str, tuple[str, str]] = {
     "Termos": ("Terms", "Términos"),
     "Metadados": ("Metadata", "Metadatos"),
     "Nova conta": ("New account", "Nueva cuenta"),
-    "Confirme seu e-mail no PDL PRO": (
-        "Confirm your email on PDL PRO",
-        "Confirma tu correo en PDL PRO",
+    "Confirme seu e-mail no %(project)s": (
+        "Confirm your email on %(project)s",
+        "Confirma tu correo en %(project)s",
     ),
     "Olá, %(username)s.\n\nConfirme seu e-mail neste link (válido por 48h):\n%(link)s\n": (
         "Hello, %(username)s.\n\nConfirm your email with this link (valid for 48h):\n%(link)s\n",
         "Hola, %(username)s.\n\nConfirma tu correo con este enlace (válido por 48h):\n%(link)s\n",
     ),
-    "Redefinir senha do PDL PRO": (
-        "Reset your PDL PRO password",
-        "Restablecer la contraseña de PDL PRO",
+    "Redefinir senha do %(project)s": (
+        "Reset your %(project)s password",
+        "Restablecer la contraseña de %(project)s",
+    ),
+    "%(project)s — teste SMTP": (
+        "%(project)s — SMTP test",
+        "%(project)s — prueba SMTP",
     ),
     "Olá, %(username)s.\n\nRedefina sua senha neste link (válido por 1 hora):\n%(link)s\n": (
         "Hello, %(username)s.\n\nReset your password with this link (valid for 1 hour):\n%(link)s\n",
@@ -304,9 +308,9 @@ TRANSLATIONS: dict[str, tuple[str, str]] = {
         "Lineage account linking",
         "Vinculación de cuenta Lineage",
     ),
-    "Clique no link para vincular a conta %(login)s ao PDL PRO:\n\n%(link)s\n\nO link expira em 1 hora.": (
-        "Click the link to link account %(login)s to PDL PRO:\n\n%(link)s\n\nThe link expires in 1 hour.",
-        "Haz clic en el enlace para vincular la cuenta %(login)s a PDL PRO:\n\n%(link)s\n\nEl enlace caduca en 1 hora.",
+    "Clique no link para vincular a conta %(login)s ao %(project)s:\n\n%(link)s\n\nO link expira em 1 hora.": (
+        "Click the link to link account %(login)s to %(project)s:\n\n%(link)s\n\nThe link expires in 1 hour.",
+        "Haz clic en el enlace para vincular la cuenta %(login)s a %(project)s:\n\n%(link)s\n\nEl enlace caduca en 1 hora.",
     ),
     "Servidor Lineage": ("Lineage server", "Servidor Lineage"),
     "Conta Lineage": ("Lineage account", "Cuenta Lineage"),

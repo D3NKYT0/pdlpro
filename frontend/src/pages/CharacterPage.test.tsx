@@ -318,10 +318,24 @@ it.each(['empty', 'error', 'online'] as const)('trata estado %s', async state =>
   if (state === 'online') expect(await screen.findByRole('button', { name: 'Alterar nickname' })).toBeDisabled()
 })
 
-it('oculta apenas nickname e skills, mantendo alteração de sexo disponível', async () => {
+it('oculta o cartão inteiro de nickname e as skills, mantendo alteração de sexo', async () => {
   mount(['accounts-nickname', 'accounts-skills'])
   expect(await screen.findByRole('heading', { name: 'Hero', level: 1 })).toBeVisible()
+  expect(screen.queryByRole('heading', { name: 'Alterar nickname' })).not.toBeInTheDocument()
   expect(screen.queryByRole('button', { name: 'Alterar nickname' })).not.toBeInTheDocument()
+  expect(screen.queryByText(/2 a 16 letras/)).not.toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: 'Alterar sexo' })).toBeVisible()
   expect(screen.getByRole('button', { name: 'Alterar sexo' })).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Destravar' })).toBeVisible()
   expect(lineageApi.characterSkills).not.toHaveBeenCalled()
+})
+it.each([
+  ['accounts-sex', 'Alterar sexo', 'Troca permanente'],
+  ['accounts-unstuck', 'Destravar', 'lugar inacessível'],
+] as const)('oculta o cartão inteiro ao desativar %s', async (code, title, hint) => {
+  mount([code])
+  expect(await screen.findByRole('heading', { name: 'Hero', level: 1 })).toBeVisible()
+  expect(screen.queryByRole('heading', { name: title })).not.toBeInTheDocument()
+  expect(screen.queryByText(new RegExp(hint))).not.toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: 'Alterar nickname' })).toBeVisible()
 })

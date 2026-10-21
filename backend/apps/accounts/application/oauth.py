@@ -234,6 +234,7 @@ class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
             )
 
         social = self._social.find_by_provider_uid(data.provider, provider_uid)
+        matched_by_mailbox = False
         if stored.get("mode") == "link":
             user = self._users.get_active_orm(stored.get("user_id"))
             if not user:
@@ -252,14 +253,7 @@ class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
             user = social.user
         else:
             user = self._users.get_orm_by_email(email)
-            if user and not user.is_email_verified:
-                raise OAuthError(
-                    "Já existe um cadastro com este e-mail. Recupere o acesso e confirme o e-mail "
-                    "antes de conectar o provedor.",
-                    error_code="OAUTH_ACCOUNT_UNVERIFIED",
-                    status_code=409,
-                )
-            if not user:
+            if user is None:
                 assert_registration_allowed(self._index_config)
                 display_name = str(
                     profile.get("name") or profile.get("global_name") or profile.get("username") or ""
@@ -269,6 +263,7 @@ class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
                     email=email,
                     display_name=display_name,
                 )
+            matched_by_mailbox = True
 
         if not user.is_active:
             raise OAuthError(
@@ -276,7 +271,7 @@ class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
                 error_code="ACCOUNT_DISABLED",
                 status_code=403,
             )
-        if not user.is_email_verified and user.email.lower() == email:
+        if not user.is_email_verified and (matched_by_mailbox or user.email.lower() == email):
             user = self._users.mark_orm_email_verified(user)
         self._social.update_or_create(
             provider=data.provider,

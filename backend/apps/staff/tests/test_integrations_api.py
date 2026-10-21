@@ -138,6 +138,19 @@ def test_patch_keep_clear_replace(api, superuser, hosts, settings):
 
 
 @pytest.mark.django_db
+def test_smtp_test_subject_uses_project_name(api, superuser, hosts, settings):
+    from apps.server.infrastructure.models import IndexConfig
+
+    settings.EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
+    settings.PROJECT_TITLE = "Saga Env"
+    IndexConfig.objects.create(name="Imperium", is_active=True)
+    api.force_authenticate(superuser)
+    response = api.post(reverse("staff-integrations-test", kwargs={"section": "smtp"}), {}, format="json")
+    assert response.status_code == 200, response.content
+    assert mail.outbox[0].subject == "Imperium — teste SMTP"
+
+
+@pytest.mark.django_db
 def test_smtp_test_sends_mail(api, superuser, hosts, settings):
     settings.EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
     api.force_authenticate(superuser)

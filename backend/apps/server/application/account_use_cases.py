@@ -7,6 +7,7 @@ from django.utils.translation import gettext as _
 
 from apps.accounts.domain.mailer import IMailer
 from apps.accounts.domain.repositories import IUserRepository
+from apps.server.application.site_identity import current_project_display_name
 from apps.server.domain.access import (
     AccessibleAccount,
     IAccountAccessService,
@@ -31,6 +32,7 @@ from apps.server.domain.repositories import (
     IIndexConfigRepository,
     IManagedLineageAccountRepository,
 )
+from apps.server.domain.site_metadata import IPackagedSiteMetadata
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
 from common.hooks import HookNames, IHookBus
@@ -608,9 +610,17 @@ class RequestLinkByEmailUseCase(UseCase[RequestLinkByEmailInput, dict]):
     retorno é ``dict``.
     """
 
-    def __init__(self, lineage: ILineageGateway, mailer: IMailer) -> None:
+    def __init__(
+        self,
+        lineage: ILineageGateway,
+        mailer: IMailer,
+        index_config: IIndexConfigRepository,
+        packaged_metadata: IPackagedSiteMetadata,
+    ) -> None:
         self._lineage = lineage
         self._mailer = mailer
+        self._index_config = index_config
+        self._packaged_metadata = packaged_metadata
 
     def execute(self, data: RequestLinkByEmailInput) -> dict:
         from django.conf import settings
@@ -628,14 +638,15 @@ class RequestLinkByEmailUseCase(UseCase[RequestLinkByEmailInput, dict]):
         language = getattr(data.actor, "language", None) or getattr(data.actor, "preferred_language", None)
         if language:
             activate_language(language)
+        project = current_project_display_name(self._index_config, self._packaged_metadata)
         self._mailer.send(
             email,
             _("Vinculação de conta Lineage"),
             _(
-                "Clique no link para vincular a conta %(login)s ao PDL PRO:\n\n"
+                "Clique no link para vincular a conta %(login)s ao %(project)s:\n\n"
                 "%(link)s\n\nO link expira em 1 hora."
             )
-            % {"login": account.login, "link": link},
+            % {"login": account.login, "link": link, "project": project},
         )
         return {"sent": True}
 

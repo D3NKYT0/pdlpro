@@ -90,8 +90,9 @@ msgid "Limite de tentativas de 2FA excedido. Entre novamente."
 msgstr "2FA attempt limit exceeded. Sign in again."
 
 #: .\apps\accounts\application\email_use_cases.py:56
-msgid "Confirme seu e-mail no PDL PRO"
-msgstr "Confirm your email on PDL PRO"
+#, python-format
+msgid "Confirme seu e-mail no %(project)s"
+msgstr "Confirm your email on %(project)s"
 
 #: .\apps\accounts\application\email_use_cases.py:58
 #, python-format
@@ -107,8 +108,14 @@ msgstr ""
 "%(link)s\n"
 
 #: .\apps\accounts\application\email_use_cases.py:135
-msgid "Redefinir senha do PDL PRO"
-msgstr "Reset your PDL PRO password"
+#, python-format
+msgid "Redefinir senha do %(project)s"
+msgstr "Reset your %(project)s password"
+
+#: .\apps\staff\infrastructure\integrations.py:362
+#, python-format
+msgid "%(project)s — teste SMTP"
+msgstr "%(project)s — SMTP test"
 
 #: .\apps\accounts\application\email_use_cases.py:137
 #, python-format
@@ -2339,13 +2346,13 @@ msgstr "Lineage account linking"
 #: .\apps\server\application\account_use_cases.py:509
 #, python-format
 msgid ""
-"Clique no link para vincular a conta %(login)s ao PDL PRO:\n"
+"Clique no link para vincular a conta %(login)s ao %(project)s:\n"
 "\n"
 "%(link)s\n"
 "\n"
 "O link expira em 1 hora."
 msgstr ""
-"Click the link to link account %(login)s to PDL PRO:\n"
+"Click the link to link account %(login)s to %(project)s:\n"
 "\n"
 "%(link)s\n"
 "\n"

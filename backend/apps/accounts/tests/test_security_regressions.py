@@ -150,7 +150,7 @@ def test_admin_login_requires_enabled_totp():
     assert "_auth_user_id" not in browser.session
 
 
-def test_oauth_rejects_precreated_unverified_account(mocker):
+def test_oauth_logs_into_precreated_account_instead_of_registering(mocker):
     attacker = APIClient()
     response = attacker.post(
         "/api/v1/auth/register/",
@@ -173,12 +173,16 @@ def test_oauth_rejects_precreated_unverified_account(mocker):
         {"provider": "google", "code": "mock-code", "state": state},
         format="json",
     )
-    assert victim_login.status_code == 409
+    assert victim_login.status_code == 200
+    assert victim_login.data["username"] == "precreated"
+    assert victim_login.data["has_usable_password"] is True
+    assert get_user_model().objects.count() == 1
     user.refresh_from_db()
-    assert not user.is_email_verified
+    assert user.is_email_verified
+    assert user.check_password("AttackerPassword42")
     from allauth.socialaccount.models import SocialAccount
 
-    assert not SocialAccount.objects.filter(user=user).exists()
+    assert SocialAccount.objects.filter(user=user, provider="google").exists()
 
 
 def test_oauth_callback_rejects_state_from_another_browser(mocker):

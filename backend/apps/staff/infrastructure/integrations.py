@@ -14,6 +14,9 @@ from django.db import connection
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
+from apps.server.application.site_identity import current_project_display_name
+from apps.server.domain.repositories import IIndexConfigRepository
+from apps.server.domain.site_metadata import IPackagedSiteMetadata
 from apps.staff.domain.integrations import (
     BOOL_KEYS,
     FLOAT_KEYS,
@@ -227,6 +230,14 @@ class DjangoRuntimeSettingsApplier(IRuntimeSettingsApplier):
 class DjangoIntegrationProbe(IIntegrationProbe):
     """Testes operacionais sem expor segredos."""
 
+    def __init__(
+        self,
+        index_config: IIndexConfigRepository,
+        packaged_metadata: IPackagedSiteMetadata,
+    ) -> None:
+        self._index_config = index_config
+        self._packaged_metadata = packaged_metadata
+
     def test_payments(self) -> ProbeResult:
         stripe_ok = bool(getattr(settings, "STRIPE_SECRET_KEY", "") or "")
         stripe_on = bool(getattr(settings, "STRIPE_ACTIVATE_PAYMENTS", False))
@@ -358,8 +369,9 @@ class DjangoIntegrationProbe(IIntegrationProbe):
             from_email = str(settings.EMAIL_HOST_USER).strip()
 
         try:
+            project = current_project_display_name(self._index_config, self._packaged_metadata)
             sent = send_mail(
-                subject=_("PDL PRO — teste SMTP"),
+                subject=_("%(project)s — teste SMTP") % {"project": project},
                 message=_("Este é um e-mail de teste do configurador de integrações."),
                 from_email=from_email,
                 recipient_list=[to_email],

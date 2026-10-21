@@ -7,7 +7,8 @@ from uuid import UUID
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
-from django.db import transaction
+from django.db import IntegrityError, transaction
+from django.db.models import Q
 from django.utils import timezone
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import AuthenticationFailed, TokenError
@@ -48,6 +49,23 @@ from common.architecture.exceptions import ValidationDomainError
 from common.crypto import IFieldCipher
 
 User = get_user_model()
+
+
+def _canonical_mailbox(email: str) -> str:
+    """Normaliza Gmail para a mesma caixa postal.
+
+    O Google ignora pontos e o sufixo ``+alias`` no local, e trata
+    ``googlemail.com`` como ``gmail.com``. Outros domínios permanecem como estão.
+    """
+
+    normalized = email.strip().lower()
+    local, sep, domain = normalized.partition("@")
+    if not sep:
+        return normalized
+    if domain in {"gmail.com", "googlemail.com"}:
+        local = local.split("+", 1)[0].replace(".", "")
+        return f"{local}@gmail.com"
+    return normalized
 
 
 class DjangoUserRepository(IUserRepository):
@@ -279,16 +297,36 @@ class DjangoUserRepository(IUserRepository):
         return User.objects.filter(id=user_id, is_active=True).first()
 
     def get_orm_by_email(self, email: str):
-        return User.objects.filter(email__iexact=email).first()
+        normalized = (email or "").strip().lower()
+        if not normalized:
+            return None
+        exact = User.objects.filter(email__iexact=normalized).first()
+        if exact is not None:
+            return exact
+        canonical = _canonical_mailbox(normalized)
+        if not canonical.endswith("@gmail.com"):
+            return None
+        for user in User.objects.filter(
+            Q(email__iendswith="@gmail.com") | Q(email__iendswith="@googlemail.com")
+        ).iterator():
+            if _canonical_mailbox(user.email) == canonical:
+                return user
+        return None
 
     def create_oauth_user(self, *, username: str, email: str, display_name: str = ""):
-        return User.objects.create_user(
-            username=username,
-            email=email,
-            display_name=display_name,
-            password=None,
-            is_email_verified=True,
-        )
+        try:
+            return User.objects.create_user(
+                username=username,
+                email=email,
+                display_name=display_name,
+                password=None,
+                is_email_verified=True,
+            )
+        except IntegrityError:
+            existing = self.get_orm_by_email(email)
+            if existing is not None:
+                return existing
+            raise
 
     def mark_orm_email_verified(self, user):
         user.is_email_verified = True

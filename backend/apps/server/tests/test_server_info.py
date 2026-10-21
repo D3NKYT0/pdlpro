@@ -3,7 +3,17 @@ from datetime import UTC, datetime
 import pytest
 from rest_framework.test import APIClient
 
+from apps.server.application.site_identity import project_display_name
 from apps.server.infrastructure.models import IndexConfig
+
+
+def test_project_display_name_prefers_panel_then_theme_then_env(settings):
+    settings.PROJECT_TITLE = "Saga Env"
+    assert project_display_name(admin_name="Imperium", theme_name="Cruma", env_name="Saga Env") == "Imperium"
+    assert project_display_name(admin_name="  ", theme_name="Cruma", env_name="Saga Env") == "Cruma"
+    assert project_display_name(env_name="Saga Env") == "Saga Env"
+    assert project_display_name(env_name="") == "PDL PRO"
+    assert project_display_name() == "Saga Env"
 
 
 @pytest.mark.django_db

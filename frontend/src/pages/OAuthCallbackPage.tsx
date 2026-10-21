@@ -8,6 +8,18 @@ import { useAuth } from '../contexts/AuthContext'
 import type { OAuthProvider } from '../lib/oauth'
 import { authApi, isTwoFactorChallenge } from '../services/api'
 
+const oauthCompletions = new Map<string, Promise<void>>()
+
+function completeOAuthOnce(key: string, run: () => Promise<void>) {
+  const current = oauthCompletions.get(key)
+  if (current) return current
+  const pending = run().finally(() => {
+    if (oauthCompletions.get(key) === pending) oauthCompletions.delete(key)
+  })
+  oauthCompletions.set(key, pending)
+  return pending
+}
+
 export function OAuthCallbackPage() {
   const { t } = useTranslation('auth')
   const { provider } = useParams()
@@ -27,7 +39,8 @@ export function OAuthCallbackPage() {
       return
     }
 
-    void authApi.completeOAuth(provider as OAuthProvider, code, state).then(async (result) => {
+    const key = `${provider}:${code}:${state}`
+    void completeOAuthOnce(key, () => authApi.completeOAuth(provider as OAuthProvider, code, state).then(async (result) => {
       if ('linked' in result && result.linked) {
         toast.success(t('oauth.linkedSuccess'))
         navigate('/panel/security', { replace: true })
@@ -48,7 +61,7 @@ export function OAuthCallbackPage() {
     }).catch((error) => {
       toast.error(apiErrorMessage(error, t('oauth.error')))
       navigate('/login', { replace: true })
-    })
+    }))
   }, [navigate, params, provider, refreshUser, t])
 
   return (

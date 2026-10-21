@@ -3,12 +3,42 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from django.conf import settings
 from django.utils.translation import gettext as _
 
+from apps.server.domain.repositories import IIndexConfigRepository
+from apps.server.domain.site_metadata import IPackagedSiteMetadata
 from common.architecture.exceptions import ValidationDomainError
 
 HTTPS_URL_RE = re.compile(r"^https://[^\s]+$")
 YOUTUBE_ID_RE = re.compile(r"^[A-Za-z0-9_-]{11}$")
+
+
+def project_display_name(
+    *,
+    admin_name: str = "",
+    theme_name: str = "",
+    env_name: str | None = None,
+) -> str:
+    """Nome público do projeto: painel, tema ativo, ``PROJECT_TITLE`` e, por último, PDL PRO."""
+
+    if env_name is None:
+        env_name = str(getattr(settings, "PROJECT_TITLE", "") or "")
+    return first_text(admin_name, theme_name, env_name) or "PDL PRO"
+
+
+def current_project_display_name(
+    index_config: IIndexConfigRepository,
+    packaged_metadata: IPackagedSiteMetadata,
+) -> str:
+    """Lê a configuração ativa e o tema e devolve o nome público do projeto."""
+
+    theme = packaged_metadata.get_overlay() or {}
+    row = index_config.get_active()
+    return project_display_name(
+        admin_name=str(getattr(row, "name", "") or "") if row is not None else "",
+        theme_name=str(theme.get("name") or ""),
+    )
 
 
 def first_text(*values: Any) -> str:

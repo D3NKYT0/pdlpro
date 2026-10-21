@@ -185,7 +185,11 @@ class IUserRepository(ABC):
 
     @abstractmethod
     def get_orm_by_email(self, email: str) -> Any | None:
-        """Usuário ORM por e-mail (iexact), ou None."""
+        """Usuário ORM pelo e-mail, ou None.
+
+        A busca ignora maiúsculas. Para Gmail, pontos, sufixo ``+alias`` e
+        ``googlemail.com`` representam a mesma caixa postal.
+        """
 
         raise NotImplementedError
 

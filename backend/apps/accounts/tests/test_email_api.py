@@ -21,6 +21,59 @@ def _token_from_outbox() -> str:
 
 
 @pytest.mark.django_db
+def test_verification_email_uses_project_name(api, settings):
+    from apps.server.infrastructure.models import IndexConfig
+
+    settings.PROJECT_TITLE = "Saga Env"
+    IndexConfig.objects.create(name="Imperium", is_active=True)
+    created = api.post(
+        "/api/v1/auth/register/",
+        {"username": "named1", "email": "named1@pdl.dev", "password": "Secret123", "accept_terms": True},
+        format="json",
+    )
+    assert created.status_code == 200, created.data
+    assert mail.outbox[-1].subject == "Confirme seu e-mail no Imperium"
+
+
+@pytest.mark.django_db
+def test_verification_email_falls_back_to_project_title(api, settings):
+    settings.PROJECT_TITLE = "Saga Env"
+    created = api.post(
+        "/api/v1/auth/register/",
+        {"username": "named2", "email": "named2@pdl.dev", "password": "Secret123", "accept_terms": True},
+        format="json",
+    )
+    assert created.status_code == 200, created.data
+    assert mail.outbox[-1].subject == "Confirme seu e-mail no Saga Env"
+
+
+@pytest.mark.django_db
+def test_password_reset_email_uses_project_name(api, settings):
+    settings.PROJECT_TITLE = "PDL PRO"
+    User.objects.create_user(username="resetname", email="resetname@pdl.dev", password="Secret123")
+    requested = api.post("/api/v1/auth/password-reset/", {"email": "resetname@pdl.dev"}, format="json")
+    assert requested.status_code == 200
+    assert mail.outbox[-1].subject == "Redefinir senha do PDL PRO"
+
+
+@pytest.mark.django_db
+def test_password_reset_email_is_translated_with_project_name(api, settings):
+    from apps.server.infrastructure.models import IndexConfig
+
+    settings.PROJECT_TITLE = "PDL PRO"
+    IndexConfig.objects.create(name="Imperium", is_active=True)
+    User.objects.create_user(username="reseten", email="reseten@pdl.dev", password="Secret123")
+    requested = api.post(
+        "/api/v1/auth/password-reset/",
+        {"email": "reseten@pdl.dev"},
+        format="json",
+        HTTP_ACCEPT_LANGUAGE="en",
+    )
+    assert requested.status_code == 200
+    assert mail.outbox[-1].subject == "Reset your Imperium password"
+
+
+@pytest.mark.django_db
 def test_register_sends_verification_and_confirms(api):
     created = api.post(
         "/api/v1/auth/register/",
