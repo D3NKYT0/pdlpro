@@ -47,6 +47,33 @@ export function formatDate(value: string | null | undefined, style: 'short' | 'm
   return new Intl.DateTimeFormat(intlLocale(), { dateStyle: style }).format(date)
 }
 
+export type LaunchDateParts = { date: string; time: string; zone: string }
+
+/**
+ * Data de abertura em destaque (ex.: `06 MAR 2027`, `18:00`, `GMT-3`) no idioma ativo.
+ * `timeZone` (IANA) fixa o fuso anunciado; sem ele usa o fuso do navegador.
+ */
+export function formatLaunchDate(value: string | null | undefined, timeZone?: string | null): LaunchDateParts | null {
+  if (!value) return null
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return null
+  const zoneOption = timeZone ? { timeZone } : {}
+  let parts: Intl.DateTimeFormatPart[]
+  try {
+    parts = new Intl.DateTimeFormat(intlLocale(), { ...zoneOption, day: '2-digit', month: 'short', year: 'numeric' }).formatToParts(date)
+  } catch {
+    return formatLaunchDate(value, null)
+  }
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((item) => item.type === type)?.value ?? ''
+  const month = part('month').replace(/\.$/, '').toLocaleUpperCase(intlLocale())
+  const time = new Intl.DateTimeFormat(intlLocale(), { ...zoneOption, hour: '2-digit', minute: '2-digit' }).format(date)
+  const zone =
+    new Intl.DateTimeFormat('en-US', { ...zoneOption, timeZoneName: 'shortOffset' })
+      .formatToParts(date)
+      .find((item) => item.type === 'timeZoneName')?.value ?? ''
+  return { date: `${part('day')} ${month} ${part('year')}`, time, zone }
+}
+
 /** Números de relatório; a escala decimal vem de quem chama. */
 export function formatNumber(value: string | number, options?: Intl.NumberFormatOptions) {
   return new Intl.NumberFormat(intlLocale(), options).format(Number(value))

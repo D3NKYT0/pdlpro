@@ -1,46 +1,30 @@
 import { useResourceControls } from '../contexts/ResourceControlsContext'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { MouseEvent } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { LanguageSwitcher } from '../components/i18n/LanguageSwitcher'
 import { InfoSections } from '../components/info/InfoSections'
-import { DiscordIcon, FacebookIcon, InstagramIcon, WhatsAppIcon, YouTubeIcon } from '../components/BrandIcons'
 import { Button, ButtonLink } from '../components/ui/Button'
 import { serverApi } from '../services/api'
 import type { ApiServerInfo } from '../services/api'
-import { themeImage, themeLandingHeroImage, themeVideo } from '../theme/assets'
+import { themeAsset, themeImage, themeLandingHeroImage, themeVideo } from '../theme/assets'
 import { BannerModal } from '../components/public/BannerModal'
-
-type CountdownValue = { days: string; hours: string; mins: string; secs: string; finished: boolean }
-
-function countdownValue(target: string | null | undefined): CountdownValue {
-  if (!target) {
-    return { days: '--', hours: '--', mins: '--', secs: '--', finished: false }
-  }
-  const remaining = Math.max(0, Date.parse(target) - Date.now())
-  const total = Math.floor(remaining / 1000)
-  const pad = (value: number) => String(Math.max(0, value)).padStart(2, '0')
-  return {
-    days: pad(Math.floor(total / 86400)),
-    hours: pad(Math.floor((total % 86400) / 3600)),
-    mins: pad(Math.floor((total % 3600) / 60)),
-    secs: pad(total % 60),
-    finished: remaining <= 0,
-  }
-}
-
-function useLaunchCountdown(target: string | null | undefined) {
-  const [value, setValue] = useState(() => countdownValue(target))
-  useEffect(() => {
-    setValue(countdownValue(target))
-    if (!target) return undefined
-    const timer = window.setInterval(() => setValue(countdownValue(target)), 1000)
-    return () => window.clearInterval(timer)
-  }, [target])
-  return value
-}
+import {
+  launchSocialLinks,
+  resolveHeroSlogan,
+  resolveHeroSubtitle,
+  resolveHeroTitle,
+  UNIT_KEYS,
+  useLaunchCountdown,
+} from '../components/comingSoon/launch'
+import { ComingSoonMemories } from '../components/comingSoon/ComingSoonMemories'
+import { LaunchParticles } from '../components/comingSoon/LaunchParticles'
+import { comingSoonMemoriesStyle, comingSoonMusic } from '../lib/pageStyles'
+import { LaunchMusicToggle } from '../components/comingSoon/LaunchMusicToggle'
+import { useLaunchMusic } from '../components/comingSoon/useLaunchMusic'
+import { useTheme } from '../theme/ThemeProvider'
 
 function useSecondTick(secs: string, enabled: boolean) {
   const previous = useRef(secs)
@@ -57,8 +41,6 @@ function useSecondTick(secs: string, enabled: boolean) {
   return ticking
 }
 
-const UNIT_KEYS = ['days', 'hours', 'mins', 'secs'] as const
-
 const LAUNCH_CHAMPIONS = [
   { id: 'phoenix-knight', file: 'coming-soon/phoenix-knight.png', side: 'left-back' },
   { id: 'abyss-walker', file: 'coming-soon/abyss-walker.png', side: 'left-front' },
@@ -73,7 +55,6 @@ const ASSAULT_CHAMPIONS = [
   { id: 'assault-warden', file: 'coming-soon/assault-warden.png', side: 'right-back' },
 ] as const
 
-const GENERIC_TITLES = new Set(['em breve', 'coming soon', 'próximamente', 'proximamente'])
 const RATE_FACT_KEYS = ['xp', 'sp', 'adena', 'drop', 'spoil'] as const
 const ENTER_PATH = '/login'
 const CHAMPION_ART_VERSION = '4'
@@ -158,74 +139,6 @@ function useLaunchCinematic() {
   return { playing, videoRef, begin, finish }
 }
 
-function sameText(left: string, right: string) {
-  return left.trim().toLocaleLowerCase() === right.trim().toLocaleLowerCase()
-}
-
-function LaunchParticles({ count = 68 }: { count?: number }) {
-  const particles = useMemo(
-    () =>
-      Array.from({ length: count }, (_, index) => {
-        const band = index % 3
-        const left =
-          band === 0
-            ? 38 + ((index * 13) % 24)
-            : band === 1
-              ? 28 + ((index * 17) % 44)
-              : (index * 37) % 100
-        return {
-          id: index,
-          left: `${left}%`,
-          delay: `${(index % 14) * 0.4}s`,
-          duration: `${6 + (index % 8)}s`,
-          size: `${3 + (index % 5)}px`,
-          drift: `${((index % 7) - 3) * 22}px`,
-          bright: band === 0,
-        }
-      }),
-    [count],
-  )
-
-  return (
-    <div className="launch-gate__particles" aria-hidden="true">
-      {particles.map((particle) => (
-        <span
-          key={particle.id}
-          className={`launch-gate__spark${particle.bright ? ' is-bright' : ''}`}
-          style={{
-            left: particle.left,
-            width: particle.size,
-            height: particle.size,
-            animationDelay: particle.delay,
-            animationDuration: particle.duration,
-            ['--spark-drift' as string]: particle.drift,
-          }}
-        />
-      ))}
-    </div>
-  )
-}
-
-function resolveHeroTitle(info: ApiServerInfo, waitingKicker: string) {
-  const configured = info.coming_soon_title?.trim() || ''
-  const brand = info.name?.trim() || 'PDL PRO'
-  if (!configured) return brand
-  const normalized = configured.toLocaleLowerCase()
-  if (GENERIC_TITLES.has(normalized) || normalized === waitingKicker.toLocaleLowerCase()) return brand
-  return configured
-}
-
-function resolveHeroSlogan(info: ApiServerInfo, title: string) {
-  const slogan = info.slogan?.trim() || ''
-  if (!slogan || sameText(slogan, title)) return ''
-  return slogan
-}
-
-function resolveHeroSubtitle(info: ApiServerInfo, title: string, slogan: string, fallback: string) {
-  const candidates = [info.coming_soon_subtitle?.trim() || '', info.description?.trim() || '', fallback]
-  return candidates.find((text) => text && !sameText(text, title) && !sameText(text, slogan)) || ''
-}
-
 type LaunchFact = { key: string; label: string; value: string }
 type LaunchFactGroup = { id: string; title: string; facts: LaunchFact[] }
 
@@ -277,8 +190,17 @@ function LaunchPanelChrome() {
   )
 }
 
+/** Abertura no estilo declarado pelo tema; sem `pages.comingSoon.style` usa a clássica. */
 export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
+  const theme = useTheme()
+  const memories = comingSoonMemoriesStyle(theme)
+  return memories ? <ComingSoonMemories info={info} style={memories} /> : <ClassicComingSoonPage info={info} />
+}
+
+function ClassicComingSoonPage({ info }: { info: ApiServerInfo }) {
   const { t } = useTranslation('public')
+  const musicAsset = comingSoonMusic(useTheme())
+  const music = useLaunchMusic(musicAsset ? themeAsset(musicAsset) : null)
   const title = resolveHeroTitle(info, t('comingSoon.kickerWaiting'))
   const slogan = resolveHeroSlogan(info, title)
   const subtitle = resolveHeroSubtitle(info, title, slogan, t('comingSoon.subtitleFallback'))
@@ -288,13 +210,7 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
   const showInfo = Boolean(info.coming_soon_show_info) && !finished
   const showChampions = info.coming_soon_show_champions !== false
   const splitLayout = factGroups.length > 0 && !showInfo
-  const socialLinks = [
-    { id: 'whatsapp', href: info.whatsapp_url?.trim(), label: t('comingSoon.socialWhatsapp'), Icon: WhatsAppIcon },
-    { id: 'facebook', href: info.facebook_url?.trim(), label: t('comingSoon.socialFacebook'), Icon: FacebookIcon },
-    { id: 'instagram', href: info.instagram_url?.trim(), label: t('comingSoon.socialInstagram'), Icon: InstagramIcon },
-    { id: 'youtube', href: info.youtube_url?.trim(), label: t('comingSoon.socialYoutube'), Icon: YouTubeIcon },
-    { id: 'discord', href: info.discord_url?.trim(), label: t('comingSoon.socialDiscord'), Icon: DiscordIcon },
-  ].filter((item): item is typeof item & { href: string } => Boolean(item.href))
+  const socialLinks = launchSocialLinks(info, t)
   const roster = finished ? ASSAULT_CHAMPIONS : LAUNCH_CHAMPIONS
   const ticking = useSecondTick(countdown.secs, !finished)
   const cinematic = useLaunchCinematic()
@@ -397,6 +313,7 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
         </div>
 
         <div className="launch-gate__locale" hidden={cinematic.playing} aria-hidden={cinematic.playing || undefined}>
+          {music.enabled ? <LaunchMusicToggle playing={music.playing} onToggle={music.toggle} /> : null}
           <LanguageSwitcher className="language-switcher launch-gate__language" id="coming-soon-language" />
         </div>
 
@@ -516,7 +433,7 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
           </div>
         </section>
       ) : null}
-      <BannerModal location="coming_soon" />
+      <BannerModal location="coming_soon" onInteract={music.enabled ? music.start : undefined} />
     </div>
   )
 }

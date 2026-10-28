@@ -15,7 +15,8 @@ _SEO_KEYS = {"title", "description", "ogTitle", "ogDescription", "ogImage"}
 _SOCIAL_KEYS = {"discordUrl", "trailerYoutubeId"}
 _SERVER_KEYS = {"chronicle", "maxLevel", "rates", "enchant", "features", "notes"}
 _RATE_KEYS = {"xp", "sp", "adena", "drop", "spoil"}
-_ENCHANT_KEYS = {"safe", "max"}
+# weapon/armor/jewel: limites por tipo de equipamento, opcionais (estilo `guide` da /info).
+_ENCHANT_KEYS = {"safe", "max", "weapon", "armor", "jewel"}
 _NOTE_KEYS = {"pvp", "start"}
 _ROOT_KEYS = {"schemaVersion", "site", "seo", "social", "server"}
 

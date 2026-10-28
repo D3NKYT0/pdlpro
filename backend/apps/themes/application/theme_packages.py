@@ -43,7 +43,7 @@ MAX_EXPANDED_BYTES = 64 * 1024 * 1024
 MAX_FILES = 256
 MAX_FILE_BYTES = 16 * 1024 * 1024
 ALLOWED_SUFFIXES = {
-    ".css", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif", ".mp4",
+    ".css", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif", ".mp4", ".mp3",
     ".woff", ".woff2", ".ttf", ".otf", ".ico", ".json",
 }
 SLUG_RE = re.compile(r"^[a-z][a-z0-9-]{1,63}$")
@@ -111,7 +111,7 @@ def _read_manifest(files: dict[str, bytes]) -> dict:
     allowed = {
         "schemaVersion", "pdlVersion", "id", "name", "version", "author",
         "description", "entrypoint", "assets", "presentation", "layout",
-        "metadata", "locales",
+        "metadata", "locales", "pages",
     }
     unknown = sorted(set(manifest) - allowed)
     if unknown:
@@ -144,6 +144,8 @@ def _read_manifest(files: dict[str, bytes]) -> dict:
         _validate_presentation(manifest["presentation"], manifest["assets"])
     if "layout" in manifest:
         _validate_layout(manifest["layout"], manifest["assets"])
+    if "pages" in manifest:
+        _validate_pages(manifest["pages"], manifest["assets"])
     if "metadata" in manifest:
         pointer = manifest["metadata"]
         if not isinstance(pointer, str) or _safe_member_name(pointer) != METADATA_FILENAME:
@@ -355,6 +357,109 @@ def _validate_presentation(value, assets: dict) -> None:
             )
             _text(shell["kicker"], f"presentation.shells.{shell_name}.kicker", limit=80)
             _text(shell["brand"], f"presentation.shells.{shell_name}.brand", limit=80)
+
+
+INFO_STYLES = ("classic", "guide")
+INFO_GUIDE_ICONS = ("compass", "sparkles", "swords", "trophy", "coins", "shield", "book", "crown")
+COMING_SOON_STYLES = ("classic", "memories")
+ITEM_ID_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_-]{0,47}$")
+FOCUS_RE = re.compile(r"^\d{1,3}% \d{1,3}%$")
+TIME_ZONE_RE = re.compile(r"^[A-Za-z]+(?:/[A-Za-z0-9_+-]+){0,2}$")
+
+
+def _declared_asset(value, label: str, assets: dict) -> str:
+    asset = _text(value, label, limit=160)
+    if asset not in assets:
+        raise ValidationDomainError(f"{label} precisa declarar o asset em assets.")
+    return asset
+
+
+def _validate_pages(value, assets: dict) -> None:
+    """Estilos opcionais por página, independentes do renderer da home."""
+
+    pages = _object(value, "pages", set(), {"info", "comingSoon"})
+    if "info" in pages:
+        _validate_info_style(pages["info"], assets)
+    if "comingSoon" in pages:
+        _validate_coming_soon_style(pages["comingSoon"], assets)
+
+
+def _validate_info_style(value, assets: dict) -> None:
+    """Estilo opcional da /info; `guide` exige categorias com linhas de ids estáveis."""
+
+    info = _object(value, "pages.info", {"style"}, {"heroImage", "categories"})
+    if info["style"] not in INFO_STYLES:
+        raise ValidationDomainError("pages.info.style precisa ser classic ou guide.")
+    if "heroImage" in info:
+        _declared_asset(info["heroImage"], "pages.info.heroImage", assets)
+    if info["style"] != "guide":
+        return
+    categories = info.get("categories")
+    if not isinstance(categories, list) or not 1 <= len(categories) <= 8:
+        raise ValidationDomainError("pages.info.categories precisa ter entre 1 e 8 categorias.")
+    seen_ids: set[str] = set()
+    seen_aliases: set[str] = set()
+    for index, raw in enumerate(categories):
+        label = f"pages.info.categories[{index}]"
+        category = _object(raw, label, {"id", "icon", "items"}, {"aliases"})
+        if not isinstance(category["id"], str) or not SLUG_RE.fullmatch(category["id"]):
+            raise ValidationDomainError(f"{label}.id é inválido.")
+        if category["id"] in seen_ids:
+            raise ValidationDomainError("pages.info.categories não pode repetir ids.")
+        seen_ids.add(category["id"])
+        if category["icon"] not in INFO_GUIDE_ICONS:
+            raise ValidationDomainError(f"{label}.icon não é um ícone permitido.")
+        items = category["items"]
+        if not isinstance(items, list) or not 1 <= len(items) <= 12:
+            raise ValidationDomainError(f"{label}.items precisa ter entre 1 e 12 linhas.")
+        if any(not isinstance(item, str) or not ITEM_ID_RE.fullmatch(item) for item in items):
+            raise ValidationDomainError(f"{label}.items contém um id inválido.")
+        if len(set(items)) != len(items):
+            raise ValidationDomainError(f"{label}.items não pode repetir ids.")
+        aliases = category.get("aliases", [])
+        if not isinstance(aliases, list) or len(aliases) > 4:
+            raise ValidationDomainError(f"{label}.aliases precisa ser uma lista de até 4 âncoras.")
+        for alias in aliases:
+            if not isinstance(alias, str) or not SLUG_RE.fullmatch(alias) or alias in seen_aliases:
+                raise ValidationDomainError(f"{label}.aliases contém uma âncora inválida ou repetida.")
+            seen_aliases.add(alias)
+    if seen_ids & seen_aliases:
+        raise ValidationDomainError("pages.info.categories mistura ids e aliases iguais.")
+
+
+def _validate_coming_soon_style(value, assets: dict) -> None:
+    """Estilo opcional da Coming Soon; `memories` exige a lista de cenas da galeria."""
+
+    coming_soon = _object(value, "pages.comingSoon", {"style"}, {"scenes", "timeZone", "background", "music"})
+    if coming_soon["style"] not in COMING_SOON_STYLES:
+        raise ValidationDomainError("pages.comingSoon.style precisa ser classic ou memories.")
+    if "timeZone" in coming_soon:
+        zone = _text(coming_soon["timeZone"], "pages.comingSoon.timeZone", limit=64)
+        if not TIME_ZONE_RE.fullmatch(zone):
+            raise ValidationDomainError("pages.comingSoon.timeZone precisa ser um fuso IANA.")
+    if "background" in coming_soon:
+        _declared_asset(coming_soon["background"], "pages.comingSoon.background", assets)
+    if "music" in coming_soon:
+        music = _declared_asset(coming_soon["music"], "pages.comingSoon.music", assets)
+        if not str(assets[music]).lower().endswith(".mp3"):
+            raise ValidationDomainError("pages.comingSoon.music precisa apontar para um arquivo .mp3.")
+    if coming_soon["style"] != "memories":
+        return
+    scenes = coming_soon.get("scenes")
+    if not isinstance(scenes, list) or not 1 <= len(scenes) <= 12:
+        raise ValidationDomainError("pages.comingSoon.scenes precisa ter entre 1 e 12 cenas.")
+    seen: set[str] = set()
+    for index, raw in enumerate(scenes):
+        label = f"pages.comingSoon.scenes[{index}]"
+        scene = _object(raw, label, {"id", "asset"}, {"focus"})
+        if not isinstance(scene["id"], str) or not SLUG_RE.fullmatch(scene["id"]) or scene["id"] in seen:
+            raise ValidationDomainError(f"{label}.id é inválido ou repetido.")
+        seen.add(scene["id"])
+        _declared_asset(scene["asset"], f"{label}.asset", assets)
+        if "focus" in scene:
+            focus = _text(scene["focus"], f"{label}.focus", limit=16)
+            if not FOCUS_RE.fullmatch(focus) or any(int(part[:-1]) > 100 for part in focus.split()):
+                raise ValidationDomainError(f"{label}.focus precisa usar o formato '50% 45%'.")
 
 
 def _validate_home_stats(value) -> None:
@@ -593,6 +698,7 @@ def serialize_theme(theme: Any | None = None, *, default_template: str = "") -> 
             "author": "PDL", "description": DEFAULT_THEME_DESCRIPTION,
             "active": True, "builtin": True, "base_url": "/theme/default/",
             "stylesheet_url": None, "assets": {}, "presentation": presentation, "layout": None,
+            "pages": None,
             "metadata": None, "locales": None, "selected_template": chosen,
         }
     manifest = _live_manifest(theme)
@@ -608,6 +714,7 @@ def serialize_theme(theme: Any | None = None, *, default_template: str = "") -> 
         "stylesheet_url": f"{base_url}{theme.entrypoint}", "assets": assets,
         "presentation": _published_presentation(theme, manifest),
         "layout": manifest.get("layout"),
+        "pages": manifest.get("pages"),
         "metadata": _live_metadata(theme, manifest),
         "locales": _published_locales(theme, manifest, base_url),
         "selected_template": resolve_renderer(chosen) if chosen and is_supported_renderer(chosen) else chosen,

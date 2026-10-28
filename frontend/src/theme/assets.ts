@@ -337,9 +337,11 @@ function publicThemeStyles(): string[] {
     themeStylesheet('css/pages/news-detail.css', '/theme/pages/news-detail.css'),
     themeStylesheet('css/pages/extras.css', '/theme/pages/extras.css'),
     themeStylesheet('css/pages/info-page.css', '/theme/pages/info-page.css'),
+    themeStylesheet('css/pages/info-guide.css', '/theme/pages/info-guide.css'),
     themeStylesheet('css/pages/rankings-page.css', '/theme/pages/rankings-page.css'),
     themeStylesheet('css/pages/auth.css', '/theme/pages/auth.css'),
     themeStylesheet('css/pages/coming-soon.css', '/theme/pages/coming-soon.css'),
+    themeStylesheet('css/pages/coming-soon-memories.css', '/theme/pages/coming-soon-memories.css'),
     themeStylesheet('css/pages/club.css', '/theme/pages/club.css'),
     themeStylesheet('css/pages/templates.css', '/theme/pages/templates.css'),
   ]

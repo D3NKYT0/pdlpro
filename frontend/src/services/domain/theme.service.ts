@@ -44,6 +44,47 @@ export interface ThemePillarItem {
   description: string
 }
 
+/** Ícones permitidos nas categorias do estilo `guide` da /info. */
+export type ThemeInfoGuideIcon = 'compass' | 'sparkles' | 'swords' | 'trophy' | 'coins' | 'shield' | 'book' | 'crown'
+
+export interface ThemeInfoGuideCategory {
+  /** Identificador estável; textos em `public:infoGuide.categories.<id>` do locale do tema. */
+  id: string
+  icon: ThemeInfoGuideIcon
+  /** Linhas da categoria; textos em `…categories.<id>.items.<item>`. */
+  items: string[]
+  /** Hashes antigos (`/info#pvp`) que selecionam esta categoria. */
+  aliases?: string[]
+}
+
+/** Estilo opcional da /info. Omitido ou `classic` mantém a página padrão. */
+export interface ThemeInfoPresentation {
+  style: 'classic' | 'guide'
+  /** Asset de fundo discreto do cabeçalho (`guide`). */
+  heroImage?: string
+  categories?: ThemeInfoGuideCategory[]
+}
+
+export interface ThemeMemoryScene {
+  /** Identificador estável; textos em `public:comingSoonMemories.scenes.<id>`. */
+  id: string
+  asset: string
+  /** `object-position` aplicado à imagem principal e à miniatura. */
+  focus?: string
+}
+
+/** Estilo opcional da Coming Soon. Omitido ou `classic` mantém a abertura padrão. */
+export interface ThemeComingSoonPresentation {
+  style: 'classic' | 'memories'
+  scenes?: ThemeMemoryScene[]
+  /** Fuso IANA usado para exibir data e hora da abertura (ex.: America/Sao_Paulo). */
+  timeZone?: string
+  /** Asset de fundo fixo: a imagem fica parada e o conteúdo rola por cima. */
+  background?: string
+  /** Asset `.mp3` tocado em loop após o clique no banner da Coming Soon (vale para qualquer estilo). */
+  music?: string
+}
+
 export interface ThemePresentation {
   renderer: ThemeRendererId
   navigation: ThemeNavigationItem[]
@@ -87,6 +128,12 @@ export interface ThemePresentation {
     panel: { kicker: string; brand: string }
     admin: { kicker: string; brand: string }
   }
+}
+
+/** Estilos opcionais por página (`pages` no theme.json), independentes do renderer da home. */
+export interface ThemePages {
+  info?: ThemeInfoPresentation
+  comingSoon?: ThemeComingSoonPresentation
 }
 
 export interface ThemeSiteMetadata {
@@ -148,6 +195,7 @@ export interface ApiTheme {
   assets: Record<string, string>
   presentation?: ThemePresentation | null
   layout?: ThemeLayout | null
+  pages?: ThemePages | null
   metadata?: ThemeSiteMetadata | null
   /** URLs dos overlays i18n (`locales/{pt,en,es}.json`) do pacote ativo. */
   locales?: Partial<Record<'pt' | 'en' | 'es', string>> | null

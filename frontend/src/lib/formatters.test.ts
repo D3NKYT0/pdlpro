@@ -1,6 +1,6 @@
 import { afterEach, expect, it } from 'vitest'
 import i18n from '../i18n'
-import { formatCoins, formatCompactQuantity, formatCurrency, formatDateTime, formatQuantityLabel, formatTime } from './formatters'
+import { formatCoins, formatCompactQuantity, formatCurrency, formatDateTime, formatLaunchDate, formatQuantityLabel, formatTime } from './formatters'
 import { apiErrorMessage, isInsufficientTokens } from './errors'
 import { ApiError } from '../services/api'
 
@@ -55,4 +55,23 @@ it.each([['pt', '12,34 moedas'], ['en', '12.34 coins'], ['es', '12,34 monedas']]
 })
 it.each([null, undefined, 'invalid', 0])('preço de moedas vazio ou zero: %s', value => {
   expect(formatCoins(value)).toBe('0,00 moedas')
+})
+
+it.each([
+  ['pt', '06 MAR 2027', '18:00'],
+  ['en', '06 MAR 2027', '06:00 PM'],
+  ['es', '06 MAR 2027', '18:00'],
+])('data de abertura em destaque segue o fuso anunciado e o locale %s', async (language, date, time) => {
+  await i18n.changeLanguage(language)
+  const parts = formatLaunchDate('2027-03-06T21:00:00Z', 'America/Sao_Paulo')
+  expect(parts?.date.replace(/\s+/g, ' ')).toBe(date)
+  expect(parts?.time).toBe(time)
+  expect(parts?.zone).toBe('GMT-3')
+  await i18n.changeLanguage('pt')
+})
+
+it('data de abertura ausente, inválida ou com fuso desconhecido não quebra', () => {
+  expect(formatLaunchDate(null)).toBeNull()
+  expect(formatLaunchDate('amanhã')).toBeNull()
+  expect(formatLaunchDate('2027-03-06T21:00:00Z', 'Mars/Olympus')?.date).toMatch(/2027$/)
 })

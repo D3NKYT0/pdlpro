@@ -48,3 +48,14 @@ def test_flatten_theme_metadata_resolves_og_image_from_assets():
     assert overlay["seo_title"] == "Cruma SEO"
     assert overlay["og_image"] == "/media/themes/cruma/images/favicon.png"
     assert overlay["rates"]["xp"] == "x10"
+
+
+def test_enchant_accepts_optional_limits_per_equipment_type():
+    payload = validate_theme_metadata(
+        {"server": {"enchant": {"safe": "+3", "weapon": "+16", "armor": "+10", "jewel": "+10"}}},
+        {},
+    )
+    assert payload["server"]["enchant"] == {"safe": "+3", "weapon": "+16", "armor": "+10", "jewel": "+10"}
+    assert flatten_theme_metadata(payload, {})["enchant"]["armor"] == "+10"
+    with pytest.raises(ValidationDomainError, match="desconhecidas"):
+        validate_theme_metadata({"server": {"enchant": {"shield": "+10"}}}, {})

@@ -187,6 +187,9 @@
   top: max(16px, env(safe-area-inset-top, 0px));
   right: max(16px, env(safe-area-inset-right, 0px));
   z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .launch-gate__language .ui-select {

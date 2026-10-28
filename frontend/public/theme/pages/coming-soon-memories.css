@@ -1,0 +1,401 @@
+/* Estilo `memories` da Coming Soon (pages.comingSoon.style). Cores pelos tokens do tema ativo. */
+
+.launch-memories {
+  --memories-gold: var(--theme-accent, #c8ac63);
+  --memories-date: var(--theme-accent-bright, #ecd79b);
+  --memories-ink: var(--theme-text, #f1ede4);
+  --memories-muted: var(--theme-muted, #aaa89d);
+  --memories-bg: var(--theme-bg-deep, #0c1010);
+  --memories-line: color-mix(in srgb, var(--memories-gold) 30%, transparent);
+  --memories-fade: 650ms;
+  /* Fonte dos títulos, data e números; o pacote pode trocar sem alterar o restante. */
+  --memories-font-display: var(--pdl-font-display, inherit);
+  position: relative;
+  background: var(--memories-bg);
+  color: var(--memories-ink);
+}
+
+/* Fundo fixo opcional (pages.comingSoon.background): camada fixa, o conteúdo rola por cima.
+   position: fixed em vez de background-attachment, que o Safari móvel ignora. */
+.launch-memories__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: brightness(0.78) saturate(0.92);
+}
+
+.launch-memories__backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--memories-bg) 92%, transparent) 0%, color-mix(in srgb, var(--memories-bg) 70%, transparent) 45%, color-mix(in srgb, var(--memories-bg) 55%, transparent) 100%),
+    linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--memories-bg) 85%, transparent) 100%);
+}
+
+/* Brasas da abertura clássica, fixas sobre o fundo e atrás do conteúdo. */
+.launch-memories__sparks {
+  --launch-ember: var(--memories-gold);
+  --launch-ember-bright: var(--memories-date);
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.launch-memories > :not(.launch-memories__backdrop, .launch-memories__sparks) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Primeira dobra: topo, palco centralizado e seta para as informações no rodapé da tela. */
+.launch-memories__viewport {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.launch-memories__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(100%, var(--public-container-width, 1200px));
+  margin: 0 auto;
+  padding: 14px 32px;
+  border-bottom: 1px solid color-mix(in srgb, var(--memories-gold) 16%, transparent);
+}
+
+.launch-memories__topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.launch-memories__brand {
+  font-family: var(--memories-font-display);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--memories-ink);
+}
+
+.launch-memories__stage {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
+  gap: 30px;
+  align-items: center;
+  width: min(100%, var(--public-container-width, 1200px));
+  margin: 0 auto;
+  padding: 24px 32px;
+}
+
+.launch-memories__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.launch-memories__kicker {
+  margin: 0;
+  padding: 3px 10px;
+  border: 1px solid var(--memories-line);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--memories-gold);
+}
+
+.launch-memories__title {
+  font-family: var(--memories-font-display);
+  margin: 0;
+  font-size: clamp(34px, 4.4vw, 56px);
+  line-height: 1;
+  color: var(--memories-ink);
+}
+
+.launch-memories__chronicle {
+  margin: -6px 0 0;
+  font-size: 14px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--memories-gold);
+}
+
+.launch-memories__tagline {
+  font-family: var(--memories-font-display);
+  margin: 0;
+  max-width: 30ch;
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--memories-muted);
+}
+
+.launch-memories__opening {
+  display: grid;
+  gap: 2px;
+  padding-inline-start: 12px;
+  border-inline-start: 1px solid var(--memories-gold);
+}
+
+.launch-memories__opening-label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--memories-muted);
+}
+
+.launch-memories__opening-date {
+  font-family: var(--memories-font-display);
+  font-size: clamp(26px, 2.6vw, 32px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--memories-date);
+}
+
+.launch-memories__opening-time {
+  font-size: 13px;
+  color: var(--memories-muted);
+}
+
+.launch-memories__countdown {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  width: min(100%, 330px);
+}
+
+.launch-memories__unit {
+  display: grid;
+  justify-items: center;
+  padding: 8px 4px;
+  border: 1px solid var(--memories-line);
+  background: color-mix(in srgb, var(--memories-bg) 70%, #000);
+}
+
+.launch-memories__value {
+  font-family: var(--memories-font-display);
+  font-size: clamp(24px, 2.4vw, 34px);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  color: var(--memories-date);
+}
+
+.launch-memories__label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--memories-muted);
+}
+
+.launch-memories__ready {
+  margin: 0;
+  font-size: 18px;
+  color: var(--memories-date);
+}
+
+.launch-memories__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.launch-memories .launch-memories__socials {
+  position: static;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  transform: none;
+}
+
+.launch-memories .launch-gate__social {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--launch-ember-bright, #f0d78c);
+  text-decoration: none;
+  box-shadow: none;
+  transition: transform 160ms, color 160ms, opacity 160ms;
+}
+
+.launch-memories .launch-gate__social:hover {
+  transform: translateY(-2px);
+  color: #fff4c8;
+}
+
+.launch-memories .launch-gate__social svg {
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.55));
+}
+
+.launch-memories .launch-gate__social svg path {
+  fill: currentColor;
+}
+
+.launch-memories__gallery {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.launch-memories__frame {
+  position: relative;
+  aspect-ratio: 1.88 / 1;
+  padding: 6px;
+  border: 1px solid color-mix(in srgb, var(--memories-gold) 22%, transparent);
+  background: color-mix(in srgb, var(--memories-bg) 60%, #000);
+  overflow: hidden;
+}
+
+.launch-memories__scene {
+  position: absolute;
+  inset: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  object-fit: cover;
+  opacity: 0;
+  filter: brightness(0.78) saturate(0.92);
+  transition: opacity var(--memories-fade) ease-in-out;
+}
+
+.launch-memories__scene.is-active {
+  opacity: 1;
+}
+
+.launch-memories__caption {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 3.6em;
+}
+
+.launch-memories__category {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--memories-gold);
+}
+
+.launch-memories__phrase {
+  font-family: var(--memories-font-display);
+  margin: 4px 0 0;
+  font-size: 16px;
+  color: var(--memories-ink);
+}
+
+.launch-memories__toggle svg {
+  width: 14px;
+  height: 14px;
+}
+
+.launch-memories__thumbs {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.launch-memories__thumb {
+  min-height: 44px;
+  aspect-ratio: 1.6 / 1;
+  padding: 3px;
+  border: 1px solid var(--memories-line);
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.launch-memories__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.55) saturate(0.85);
+  transition: filter 200ms ease;
+}
+
+.launch-memories__thumb.is-active {
+  border-color: var(--memories-gold);
+}
+
+.launch-memories__thumb.is-active img,
+.launch-memories__thumb:hover img {
+  filter: brightness(0.85) saturate(0.92);
+}
+
+.launch-memories__thumb:focus-visible,
+.launch-memories__scroll:focus-visible {
+  outline: 2px solid var(--memories-gold);
+  outline-offset: 2px;
+}
+
+.launch-memories__scroll {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  align-self: center;
+  margin: 8px auto 20px;
+  padding: 8px 12px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--memories-gold);
+  text-decoration: none;
+}
+
+.launch-memories__info {
+  scroll-margin-top: 0;
+}
+
+/* Com fundo fixo, as informações deixam a imagem aparecer por trás. */
+.launch-memories.has-backdrop .launch-memories__info {
+  background: color-mix(in srgb, var(--memories-bg) 84%, transparent);
+  backdrop-filter: blur(2px);
+}
+
+.launch-memories__info [id] {
+  scroll-margin-top: 16px;
+}
+
+@media (max-width: 700px) {
+  .launch-memories__topbar {
+    padding: 12px 20px;
+  }
+
+  .launch-memories__stage {
+    grid-template-columns: 1fr;
+    padding: 16px 20px;
+  }
+
+  .launch-memories__thumbs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .launch-memories {
+    --memories-fade: 0ms;
+  }
+
+  .launch-memories *,
+  .launch-memories *::before,
+  .launch-memories *::after {
+    transition: none !important;
+  }
+}

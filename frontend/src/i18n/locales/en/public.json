@@ -147,7 +147,9 @@
     "unitDays": "Days",
     "unitHours": "Hours",
     "unitMins": "Min",
-    "unitSecs": "Sec"
+    "unitSecs": "Sec",
+    "musicOn": "Turn music on",
+    "musicOff": "Turn music off"
   },
   "rankings": {
     "eyebrow": "Hall of fame",
@@ -641,5 +643,38 @@
     "error": "Unable to load supporters.",
     "empty": "Become one of the server's first partners.",
     "channel": "Visit {{name}}'s channel"
+  },
+  "infoGuide": {
+    "eyebrow": "Server guide",
+    "titleBefore": "Discover the",
+    "titleEm": "realm.",
+    "subtitle": "{{chronicle}} · Max level {{maxLevel}}",
+    "ratesLabel": "Server rates",
+    "rates": {
+      "xpSp": "EXP / SP",
+      "xp": "EXP",
+      "sp": "SP",
+      "adena": "Adena",
+      "drop": "Drop",
+      "spoil": "Spoil"
+    },
+    "menuTitle": "Explore the server",
+    "menuLabel": "Server information categories",
+    "ctaTitle": "Your next story starts here."
+  },
+  "comingSoonMemories": {
+    "kicker": "Coming soon",
+    "openingLabel": "Grand opening",
+    "timeLine": "{{time}} · {{zone}}",
+    "countdownGroup": "Countdown to the opening on {{date}}",
+    "galleryLabel": "Server memories",
+    "thumbsLabel": "Choose a memory",
+    "sceneFallback": "View scene {{index}}",
+    "pause": "Pause",
+    "play": "Play",
+    "pauseLabel": "Pause the automatic image rotation",
+    "playLabel": "Start the automatic image rotation",
+    "scrollToInfo": "Server information",
+    "scrollToInfoLabel": "Scroll down to the server information"
   }
 }

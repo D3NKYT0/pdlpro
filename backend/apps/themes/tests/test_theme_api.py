@@ -56,7 +56,8 @@ def test_default_is_public_and_preserved_when_no_package_is_active(api):
         "author": "PDL", "description": "Visual clássico do PDL PRO — Aden, tipografia e a identidade original.",
         "active": True, "builtin": True, "base_url": "/theme/default/",
         "stylesheet_url": None, "assets": {},
-        "presentation": None, "layout": None, "metadata": None, "locales": None, "selected_template": None,
+        "presentation": None, "layout": None, "pages": None, "metadata": None, "locales": None,
+        "selected_template": None,
     }
     assert "max-age=0" in response["Cache-Control"]
     assert "must-revalidate" in response["Cache-Control"]

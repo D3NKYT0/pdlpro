@@ -71,6 +71,12 @@ export type {
   ThemeCatalogId,
   ThemeRendererId,
   ThemeRendererAlias,
+  ThemeInfoPresentation,
+  ThemeInfoGuideCategory,
+  ThemeInfoGuideIcon,
+  ThemeComingSoonPresentation,
+  ThemeMemoryScene,
+  ThemePages,
 } from './domain/theme.service'
 export type {
   ApiPanelSettings,

@@ -147,7 +147,9 @@
     "unitDays": "Dias",
     "unitHours": "Horas",
     "unitMins": "Min",
-    "unitSecs": "Seg"
+    "unitSecs": "Seg",
+    "musicOn": "Ligar a música",
+    "musicOff": "Desligar a música"
   },
   "rankings": {
     "eyebrow": "Hall da fama",
@@ -641,5 +643,38 @@
     "error": "Não foi possível carregar os apoiadores.",
     "empty": "Seja um dos primeiros parceiros do servidor.",
     "channel": "Visitar canal de {{name}}"
+  },
+  "infoGuide": {
+    "eyebrow": "Guia do servidor",
+    "titleBefore": "Conheça o",
+    "titleEm": "reino.",
+    "subtitle": "{{chronicle}} · Nível máximo {{maxLevel}}",
+    "ratesLabel": "Rates do servidor",
+    "rates": {
+      "xpSp": "EXP / SP",
+      "xp": "EXP",
+      "sp": "SP",
+      "adena": "Adena",
+      "drop": "Drop",
+      "spoil": "Spoil"
+    },
+    "menuTitle": "Explore o servidor",
+    "menuLabel": "Categorias de informações do servidor",
+    "ctaTitle": "Sua próxima história começa aqui."
+  },
+  "comingSoonMemories": {
+    "kicker": "Em breve",
+    "openingLabel": "Grand opening",
+    "timeLine": "{{time}} · {{zone}}",
+    "countdownGroup": "Contagem regressiva para a abertura em {{date}}",
+    "galleryLabel": "Memórias do servidor",
+    "thumbsLabel": "Escolher memória",
+    "sceneFallback": "Ver cena {{index}}",
+    "pause": "Pausar",
+    "play": "Reproduzir",
+    "pauseLabel": "Pausar a troca automática das imagens",
+    "playLabel": "Iniciar a troca automática das imagens",
+    "scrollToInfo": "Informações do servidor",
+    "scrollToInfoLabel": "Descer para as informações do servidor"
   }
 }

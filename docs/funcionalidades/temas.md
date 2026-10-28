@@ -323,6 +323,101 @@ pixelados do default. `frontend/scripts/paint-fishing-rods.py` confere as dez va
 Variantes de chrome do painel (`topnav`) ficam para um bump futuro
 do renderer; nesta versão o shell permanece sidebar.
 
+## Estilos de página (`pages`)
+
+O bloco opcional top-level `pages` troca o estilo de páginas públicas sem depender do
+`presentation`/renderer da home. Sem o bloco (ou com `style: "classic"`), a página clássica
+continua igual. A estrutura (ids, ícones, ordem e imagens) fica no `theme.json`; os textos ficam
+no `locales/{pt,en,es}.json` do pacote; números (rates, enchant, data de abertura) vêm da
+configuração do servidor (admin + `metadados.json`) e entram por interpolação.
+
+| Campo | Valores | Efeito |
+| --- | --- | --- |
+| `pages.info.style` | `classic` \| `guide` | `/info` como guia: faixa de rates, uma categoria por vez e linhas expansíveis |
+| `pages.info.heroImage` | caminho lógico em `assets` | Fundo discreto do cabeçalho do guia |
+| `pages.info.categories[]` | 1–8 itens `{ id, icon, items, aliases? }` | `icon`: `compass`, `sparkles`, `swords`, `trophy`, `coins`, `shield`, `book`, `crown`; `items`: 1–12 ids de linha; `aliases`: hashes antigos (`/info#pvp`) |
+| `pages.comingSoon.style` | `classic` \| `memories` | Coming Soon com conteúdo à esquerda e galeria de cenas à direita |
+| `pages.comingSoon.scenes[]` | 1–12 itens `{ id, asset, focus? }` | Cenas na ordem; `focus` é o `object-position` (`"50% 45%"`) da cena e da miniatura |
+| `pages.comingSoon.timeZone` | fuso IANA (`America/Sao_Paulo`) | Fuso exibido na data de abertura; o prazo do countdown não muda |
+| `pages.comingSoon.background` | caminho lógico em `assets` | Fundo fixo da página: a imagem fica parada e o conteúdo rola por cima, com véu escuro para leitura |
+| `pages.comingSoon.music` | asset `.mp3` em `assets` | Trilha em loop, iniciada pelo clique (ou Esc) no banner da Coming Soon; botão de som no topo liga/desliga. Vale para os estilos `classic` e `memories` |
+
+```json
+{
+  "pages": {
+    "info": {
+      "style": "guide",
+      "heroImage": "images/memories/first-steps.webp",
+      "categories": [
+        { "id": "general", "icon": "compass", "items": ["fairPlay", "farm"], "aliases": ["geral"] },
+        { "id": "enchant", "icon": "shield", "items": ["safe", "weapons"] }
+      ]
+    },
+    "comingSoon": {
+      "style": "memories",
+      "timeZone": "America/Sao_Paulo",
+      "scenes": [
+        { "id": "first-steps", "asset": "images/memories/first-steps.webp" },
+        { "id": "siege", "asset": "images/memories/siege.webp", "focus": "50% 45%" }
+      ]
+    }
+  }
+}
+```
+
+Textos no locale do pacote (namespace `public`); chaves ausentes caem no id da linha ou ficam vazias:
+
+```json
+{
+  "public": {
+    "infoGuide": {
+      "categories": {
+        "general": {
+          "label": "Visão geral",
+          "title": "A experiência Saga",
+          "items": {
+            "fairPlay": { "label": "Fair play", "summary": "Anti-bot · 2 clientes/PC", "detail": "Até dois clientes por computador." }
+          }
+        },
+        "enchant": {
+          "label": "Encantamento",
+          "title": "Conheça os seus limites",
+          "items": { "weapons": { "label": "Armas", "summary": "Máximo {{enchant.weapon}}" } }
+        }
+      }
+    },
+    "comingSoonMemories": {
+      "tagline": "Sua história em Aden ainda não acabou.",
+      "scenes": {
+        "first-steps": { "category": "O COMEÇO", "caption": "Você lembra do seu primeiro login?", "alt": "Vila inicial", "thumb": "Ver a vila inicial" }
+      }
+    }
+  }
+}
+```
+
+- Variáveis disponíveis nos textos do guia: `{{name}}`, `{{chronicle}}`, `{{maxLevel}}`,
+  `{{rates.xp}}`…, `{{enchant.safe}}`, `{{enchant.max}}`, `{{enchant.weapon}}`,
+  `{{enchant.armor}}`, `{{enchant.jewel}}` e `{{notes.*}}`. Os limites por equipamento
+  (`weapon`, `armor`, `jewel`) são opcionais em `server.enchant` do `metadados.json` e
+  no campo `enchant` do admin.
+- Linha sem `detail` aparece sem controle de expansão. Os rótulos genéricos (cabeçalho,
+  rates, menu, ações, pausar/reproduzir, acessibilidade) já vêm do core em pt/en/es e
+  podem ser sobrescritos pelas mesmas chaves `public.infoGuide.*` e `public.comingSoonMemories.*`.
+- Links antigos continuam: `#geral` e `#features` abrem a primeira categoria, `#rates` leva à
+  faixa de rates, `#comecar` às ações finais, e cada categoria aceita o próprio `id` e os `aliases`.
+- A galeria troca de cena a cada 5 s com dissolvência de 650 ms, pausa com ponteiro/foco,
+  com a aba oculta e no botão Pausar, e começa manual com movimento reduzido. Com
+  "mostrar informações" ligado na Coming Soon, o botão de descer leva a `#launch-geral`,
+  que usa o guia quando `pages.info.style` é `guide`.
+- Navegadores só liberam áudio após um gesto do visitante: a música nunca toca sozinha. Depois
+  que o visitante desliga, um novo clique no banner não religa; o botão de som religa. O ZIP aceita
+  `.mp3` (outros formatos de áudio continuam bloqueados) dentro dos limites de 16 MB por arquivo e
+  32 MB por pacote. Confirme a licença da trilha antes de publicar.
+- A Coming Soon `memories` repete as brasas subindo da abertura clássica sobre o fundo.
+- Folhas estruturais remapeáveis: `css/pages/info-guide.css` e
+  `css/pages/coming-soon-memories.css` (cores pelos tokens `--theme-*`).
+
 ## Estrutura e comportamento
 
 O campo opcional `presentation` seleciona um layout confiável do PDL. O catálogo clássico

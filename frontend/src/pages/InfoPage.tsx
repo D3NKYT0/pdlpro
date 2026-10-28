@@ -19,6 +19,9 @@ import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 import { INFO_SECTION_IDS, InfoSections } from '../components/info/InfoSections'
 import { serverApi } from '../services/api'
+import { InfoGuide } from '../components/info/InfoGuide'
+import { infoGuideStyle, type InfoGuideStyle } from '../lib/pageStyles'
+import { useTheme } from '../theme/ThemeProvider'
 
 const SECTION_ICONS: Record<(typeof INFO_SECTION_IDS)[number], LucideIcon> = {
   geral: Server,
@@ -29,7 +32,22 @@ const SECTION_ICONS: Record<(typeof INFO_SECTION_IDS)[number], LucideIcon> = {
   comecar: Rocket,
 }
 
+/** /info no estilo declarado pelo tema; sem `pages.info.style` usa a página clássica. */
 export function InfoPage() {
+  const guide = infoGuideStyle(useTheme())
+  return guide ? <GuideInfoPage style={guide} /> : <ClassicInfoPage />
+}
+
+function GuideInfoPage({ style }: { style: InfoGuideStyle }) {
+  const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
+  return (
+    <div className="info-page info-page--guide">
+      <InfoGuide style={style} data={info.data} loading={info.isLoading} error={info.isError} />
+    </div>
+  )
+}
+
+function ClassicInfoPage() {
   const { t } = useTranslation('public')
   const { hash } = useLocation()
   const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })

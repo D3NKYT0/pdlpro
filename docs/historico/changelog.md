@@ -10,6 +10,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Adicionado
+
+- Estilos de página opcionais nos pacotes de tema (`pages` no `theme.json`): a `/info` pode usar o guia por categorias, com faixa de rates, uma categoria por vez e detalhes expansíveis, e a Coming Soon pode usar a galeria de memórias, com data em destaque, countdown e troca automática de cenas. Estrutura e imagens vêm do tema, textos do locale do pacote em pt/en/es e números da configuração do servidor. Temas sem o bloco mantêm as páginas clássicas, e links antigos da `/info` com `#hash` continuam funcionando.
+- Coming Soon com fundo fixo opcional e trilha `.mp3` do tema, iniciada pelo clique no banner da página, com botão para ligar e desligar o som.
+- Limites de encantamento opcionais por tipo de equipamento (`weapon`, `armor`, `jewel`) no `metadados.json` do tema.
+
 ## [2.7.6] - 2026-10-20
 
 Lançamento com o nome do projeto nos e-mails, entrada pelo login social na conta já existente e ocultação dos cartões de personagem quando a ação está desligada. A API acompanha a versão 2.7.6.

@@ -117,6 +117,27 @@ describe('BannerModal', () => {
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
   })
 
+  it('avisa a interação do visitante ao clicar em qualquer parte do banner ou fechar', async () => {
+    vi.mocked(contentApi.banners).mockResolvedValueOnce([sampleFlyerBanner])
+    const onInteract = vi.fn()
+    renderBannerModal({ location: 'coming_soon', onInteract })
+
+    fireEvent.click(await screen.findByRole('img'))
+    expect(onInteract).toHaveBeenCalledTimes(1)
+    fireEvent.click(screen.getByTitle('Fechar'))
+    expect(onInteract).toHaveBeenCalledTimes(2)
+  })
+
+  it('Escape também conta como interação antes de fechar', async () => {
+    vi.mocked(contentApi.banners).mockResolvedValueOnce([sampleFlyerBanner])
+    const onInteract = vi.fn()
+    renderBannerModal({ location: 'coming_soon', onInteract })
+    await screen.findByRole('img')
+    fireEvent.keyDown(window, { key: 'Escape' })
+    expect(onInteract).toHaveBeenCalledTimes(1)
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+  })
+
   it('dismisses forever in localStorage if "dont show again" checkbox is checked', async () => {
     vi.mocked(contentApi.banners).mockResolvedValueOnce([sampleRichBanner])
 

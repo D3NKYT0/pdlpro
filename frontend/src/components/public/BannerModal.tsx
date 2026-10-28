@@ -10,6 +10,8 @@ export interface BannerModalProps {
   location?: 'landing' | 'coming_soon' | 'panel' | 'all'
   previewBanner?: ApiBanner
   onClosePreview?: () => void
+  /** Qualquer clique/tecla do visitante no banner aberto (gesto que libera áudio, por exemplo). */
+  onInteract?: () => void
 }
 
 function isBannerDismissed(banner: ApiBanner): boolean {
@@ -41,6 +43,7 @@ export function BannerModal({
   location = 'all',
   previewBanner,
   onClosePreview,
+  onInteract,
 }: BannerModalProps) {
   const { t, i18n } = useTranslation('public')
   const [inMemoryDismissed, setInMemoryDismissed] = useState<Set<string>>(() => new Set())
@@ -123,12 +126,13 @@ export function BannerModal({
     if (!currentBanner) return undefined
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') {
+        onInteract?.()
         if (currentBanner) dismissBanner(currentBanner)
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [currentBanner, dismissBanner])
+  }, [currentBanner, dismissBanner, onInteract])
 
   if (!currentBanner) return null
 
@@ -149,6 +153,7 @@ export function BannerModal({
   const modalContent = (
     <div
       className="pdl-banner-backdrop"
+      onClickCapture={onInteract}
       onClick={(e) => {
         if (e.target === e.currentTarget && currentBanner.show_close_button !== false) {
           dismissBanner(currentBanner)
