@@ -81,6 +81,8 @@ export interface ThemeComingSoonPresentation {
   timeZone?: string
   /** Asset de fundo fixo: a imagem fica parada e o conteúdo rola por cima. */
   background?: string
+  /** `always`: troca as cenas a cada 5 s mesmo com movimento reduzido e sem pausar no ponteiro. */
+  autoplay?: 'respect-motion' | 'always'
   /** Asset `.mp3` tocado em loop após o clique no banner da Coming Soon (vale para qualquer estilo). */
   music?: string
 }

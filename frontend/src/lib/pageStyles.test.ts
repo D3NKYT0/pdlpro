@@ -37,7 +37,7 @@ describe('comingSoonMemoriesStyle', () => {
     expect(comingSoonMemoriesStyle(theme({ comingSoon: { style: 'memories', scenes: [] } }))).toBeNull()
     expect(
       comingSoonMemoriesStyle(theme({ comingSoon: { style: 'memories', timeZone: 'America/Sao_Paulo', scenes: [{ id: 'a', asset: 'images/a.webp' }, { id: 'b', asset: '' }] } })),
-    ).toEqual({ scenes: [{ id: 'a', asset: 'images/a.webp' }], timeZone: 'America/Sao_Paulo', background: null })
+    ).toEqual({ scenes: [{ id: 'a', asset: 'images/a.webp' }], timeZone: 'America/Sao_Paulo', background: null, autoplay: 'respect-motion' })
   })
 })
 

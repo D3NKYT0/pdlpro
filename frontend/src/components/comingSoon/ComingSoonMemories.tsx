@@ -52,7 +52,7 @@ export function ComingSoonMemories({ info, style }: { info: ApiServerInfo; style
   const finished = countdown.finished && Boolean(info.coming_soon_at)
   const showInfo = Boolean(info.coming_soon_show_info)
   const socialLinks = launchSocialLinks(info, t)
-  const carousel = useSceneCarousel(scenes.length)
+  const carousel = useSceneCarousel(scenes.length, undefined, style.autoplay)
   const active = scenes[carousel.index]
   const launch = formatLaunchDate(info.coming_soon_at, style.timeZone)
   const displayOn = useResourceControls()

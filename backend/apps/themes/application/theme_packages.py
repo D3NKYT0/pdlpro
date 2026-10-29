@@ -430,13 +430,15 @@ def _validate_info_style(value, assets: dict) -> None:
 def _validate_coming_soon_style(value, assets: dict) -> None:
     """Estilo opcional da Coming Soon; `memories` exige a lista de cenas da galeria."""
 
-    coming_soon = _object(value, "pages.comingSoon", {"style"}, {"scenes", "timeZone", "background", "music"})
+    coming_soon = _object(value, "pages.comingSoon", {"style"}, {"scenes", "timeZone", "background", "music", "autoplay"})
     if coming_soon["style"] not in COMING_SOON_STYLES:
         raise ValidationDomainError("pages.comingSoon.style precisa ser classic ou memories.")
     if "timeZone" in coming_soon:
         zone = _text(coming_soon["timeZone"], "pages.comingSoon.timeZone", limit=64)
         if not TIME_ZONE_RE.fullmatch(zone):
             raise ValidationDomainError("pages.comingSoon.timeZone precisa ser um fuso IANA.")
+    if "autoplay" in coming_soon and coming_soon["autoplay"] not in ("respect-motion", "always"):
+        raise ValidationDomainError("pages.comingSoon.autoplay precisa ser respect-motion ou always.")
     if "background" in coming_soon:
         _declared_asset(coming_soon["background"], "pages.comingSoon.background", assets)
     if "music" in coming_soon:

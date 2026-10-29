@@ -33,6 +33,7 @@ MEMORIES = {
     "style": "memories",
     "timeZone": "America/Sao_Paulo",
     "background": "images/logo.png",
+    "autoplay": "always",
     "scenes": [
         {"id": "first-steps", "asset": "images/logo.png"},
         {"id": "siege", "asset": "images/logo.png", "focus": "50% 45%"},
@@ -168,6 +169,7 @@ def _memories(**changes):
         ])},
         {"comingSoon": _memories(timeZone="GMT-3; drop")},
         {"comingSoon": _memories(background="images/missing.jpg")},
+        {"comingSoon": _memories(autoplay="sometimes")},
         {"unknown": {"style": "guide"}},
     ],
 )

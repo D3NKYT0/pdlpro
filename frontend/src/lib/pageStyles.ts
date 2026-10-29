@@ -11,6 +11,7 @@ export type ComingSoonMemoriesStyle = {
   scenes: ThemeMemoryScene[]
   timeZone: string | null
   background: string | null
+  autoplay: 'respect-motion' | 'always'
 }
 
 export function infoGuideStyle(theme: Pick<ApiTheme, 'pages'> | null | undefined): InfoGuideStyle | null {
@@ -28,7 +29,12 @@ export function comingSoonMemoriesStyle(
   if (comingSoon?.style !== 'memories') return null
   const scenes = (comingSoon.scenes ?? []).filter((scene) => scene.id && scene.asset)
   if (!scenes.length) return null
-  return { scenes, timeZone: comingSoon.timeZone || null, background: comingSoon.background || null }
+  return {
+    scenes,
+    timeZone: comingSoon.timeZone || null,
+    background: comingSoon.background || null,
+    autoplay: comingSoon.autoplay === 'always' ? 'always' : 'respect-motion',
+  }
 }
 
 /** Trilha da Coming Soon declarada pelo tema, independente do estilo da página. */

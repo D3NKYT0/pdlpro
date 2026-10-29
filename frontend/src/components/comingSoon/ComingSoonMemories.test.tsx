@@ -21,6 +21,7 @@ vi.mock('../public/BannerModal', () => ({
 
 const style: ComingSoonMemoriesStyle = {
   background: null,
+  autoplay: 'respect-motion',
   timeZone: 'America/Sao_Paulo',
   scenes: [
     { id: 'first-steps', asset: 'images/memories/first-steps.webp' },
@@ -368,4 +369,24 @@ describe('trilha do tema', () => {
     mount()
     expect(screen.queryByRole('button', { name: /música/ })).toBeNull()
   })
+})
+
+it('autoplay always do tema troca mesmo com movimento reduzido e ponteiro na galeria', () => {
+  reducedMotion = true
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+  render(
+    <QueryClientProvider client={client}>
+      <I18nextProvider i18n={i18n}>
+        <MemoryRouter>
+          <ComingSoonMemories info={info} style={{ ...style, autoplay: 'always' }} />
+        </MemoryRouter>
+      </I18nextProvider>
+    </QueryClientProvider>,
+  )
+  fireEvent.mouseEnter(screen.getByRole('region', { name: 'Memórias do servidor' }))
+  advance(5000)
+  expect(caption()).toBe('Era só mais um spoil…')
+  fireEvent.click(screen.getByRole('button', { name: 'Pausar a troca automática das imagens' }))
+  advance(10000)
+  expect(caption()).toBe('Era só mais um spoil…')
 })

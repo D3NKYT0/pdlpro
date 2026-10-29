@@ -339,6 +339,7 @@ configuração do servidor (admin + `metadados.json`) e entram por interpolaçã
 | `pages.comingSoon.style` | `classic` \| `memories` | Coming Soon com conteúdo à esquerda e galeria de cenas à direita |
 | `pages.comingSoon.scenes[]` | 1–12 itens `{ id, asset, focus? }` | Cenas na ordem; `focus` é o `object-position` (`"50% 45%"`) da cena e da miniatura |
 | `pages.comingSoon.timeZone` | fuso IANA (`America/Sao_Paulo`) | Fuso exibido na data de abertura; o prazo do countdown não muda |
+| `pages.comingSoon.autoplay` | `respect-motion` (padrão) \| `always` | `always` troca as cenas a cada 5 s mesmo com movimento reduzido e sem pausar no ponteiro/foco; Pausar e aba oculta continuam valendo |
 | `pages.comingSoon.background` | caminho lógico em `assets` | Fundo fixo da página: a imagem fica parada e o conteúdo rola por cima, com véu escuro para leitura |
 | `pages.comingSoon.music` | asset `.mp3` em `assets` | Trilha em loop, iniciada pelo clique (ou Esc) no banner da Coming Soon; botão de som no topo liga/desliga. Vale para os estilos `classic` e `memories` |
 

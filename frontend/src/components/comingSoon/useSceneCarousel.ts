@@ -10,21 +10,26 @@ function pageHidden() {
   return typeof document !== 'undefined' && document.visibilityState === 'hidden'
 }
 
+export type SceneAutoplay = 'respect-motion' | 'always'
+
 /**
  * Troca automática de cenas da galeria `memories`.
  * Pausa com o ponteiro/foco dentro da galeria e com a aba oculta; cada escolha
  * manual ou retomada reinicia o intervalo completo. Movimento reduzido começa pausado.
+ * `always` (opção do tema): troca mesmo com movimento reduzido e sem pausar no
+ * ponteiro/foco; o botão Pausar e a aba oculta continuam valendo.
  */
-export function useSceneCarousel(count: number, intervalMs = SCENE_INTERVAL_MS) {
+export function useSceneCarousel(count: number, intervalMs = SCENE_INTERVAL_MS, autoplay: SceneAutoplay = 'respect-motion') {
+  const always = autoplay === 'always'
   const [index, setIndex] = useState(0)
-  const [userPaused, setUserPaused] = useState(prefersReducedMotion)
+  const [userPaused, setUserPaused] = useState(() => !always && prefersReducedMotion())
   const [hovered, setHovered] = useState(false)
   const [focused, setFocused] = useState(false)
   const [hidden, setHidden] = useState(pageHidden)
   /** Muda a cada escolha manual para reiniciar o prazo mesmo na cena atual. */
   const [cycle, setCycle] = useState(0)
 
-  const running = count > 1 && !userPaused && !hovered && !focused && !hidden
+  const running = count > 1 && !userPaused && (always || (!hovered && !focused)) && !hidden
 
   useEffect(() => {
     const onVisibility = () => setHidden(pageHidden())
