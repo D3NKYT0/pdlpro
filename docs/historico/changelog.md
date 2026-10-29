@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 20 de outubro de 2026
+> **Atualizado:** 28 de outubro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
@@ -10,10 +10,15 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.7.7] - 2026-10-28
+
+Lançamento com estilos opcionais de página nos pacotes de tema: guia por categorias na `/info`, galeria de memórias na Coming Soon e limites de encantamento por tipo de equipamento. A API acompanha a versão 2.7.7.
+
 ### Adicionado
 
 - Estilos de página opcionais nos pacotes de tema (`pages` no `theme.json`): a `/info` pode usar o guia por categorias, com faixa de rates, uma categoria por vez e detalhes expansíveis, e a Coming Soon pode usar a galeria de memórias, com data em destaque, countdown e troca automática de cenas. Estrutura e imagens vêm do tema, textos do locale do pacote em pt/en/es e números da configuração do servidor. Temas sem o bloco mantêm as páginas clássicas, e links antigos da `/info` com `#hash` continuam funcionando.
 - Coming Soon com fundo fixo opcional e trilha `.mp3` do tema, iniciada pelo clique no banner da página, com botão para ligar e desligar o som.
+- A Coming Soon pode trocar as cenas sozinha mesmo com movimento reduzido (`pages.comingSoon.autoplay`: `always`). O padrão `respect-motion` continua respeitando essa preferência e pausando no ponteiro ou no foco.
 - Limites de encantamento opcionais por tipo de equipamento (`weapon`, `armor`, `jewel`) no `metadados.json` do tema.
 
 ## [2.7.6] - 2026-10-20
