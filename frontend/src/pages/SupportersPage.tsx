@@ -19,7 +19,7 @@ import { Button } from '../components/ui/Button'
 import { Field } from '../components/ui/Field'
 import { PageHeader } from '../components/ui/PageHeader'
 import { programsApi } from '../services/api'
-import { formatDate, formatDateTime } from '../lib/formatters'
+import { formatDate, formatDateTime, formatCoinQuantity } from '../lib/formatters'
 import { Empty, ErrorNotice, Loading, Status } from '../components/programs/ProgramUI'
 import { useProgramAction } from '../components/programs/useProgramAction'
 
@@ -60,7 +60,7 @@ export function SupportersPage() {
           <div className="supporters-balance">
             <Coins aria-hidden="true" />
             <span>{t('supporters.available')}</span>
-            <strong>{t('supporters.coins', { amount: Number(data.available).toFixed(2) })}</strong>
+            <strong>{t('supporters.coins', { amount: formatCoinQuantity(data.available) })}</strong>
           </div>
         ) : undefined}
       />
@@ -72,7 +72,7 @@ export function SupportersPage() {
             <Card as="div" className="supporters-stat">
               <Coins aria-hidden="true" />
               <small>{t('supporters.available')}</small>
-              <strong>{t('supporters.coins', { amount: Number(data.available).toFixed(2) })}</strong>
+              <strong>{t('supporters.coins', { amount: formatCoinQuantity(data.available) })}</strong>
             </Card>
             <Card as="div" className="supporters-stat">
               <Percent aria-hidden="true" />
@@ -267,7 +267,7 @@ export function SupportersPage() {
                     {data.payouts.map((payout) => (
                       <tr key={payout.id}>
                         <td>{formatDate(payout.created_at)}</td>
-                        <td>{payout.amount}</td>
+                        <td>{formatCoinQuantity(payout.amount)}</td>
                         <td><Status value={payout.status} /></td>
                         <td>{payout.note || '—'}</td>
                       </tr>
@@ -300,7 +300,7 @@ export function SupportersPage() {
                     {data.commissions.map((commission) => (
                       <tr key={commission.id}>
                         <td>{formatDateTime(commission.created_at, 'short')}</td>
-                        <td>{commission.amount}</td>
+                        <td>{formatCoinQuantity(commission.amount)}</td>
                         <td><Status value={commission.status} /></td>
                       </tr>
                     ))}

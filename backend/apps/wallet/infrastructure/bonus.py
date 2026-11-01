@@ -5,6 +5,7 @@ from decimal import Decimal
 from django.db.models import Q
 
 from apps.wallet.domain.bonus import BonusPreview, IPurchaseBonusPolicy
+from apps.wallet.domain.coins import floor_coins
 from apps.wallet.infrastructure.models import CoinPurchaseBonus, CoinPurchasePromo
 
 
@@ -63,14 +64,14 @@ class DjangoPurchaseBonusPolicy(IPurchaseBonusPolicy):
 
         total_percent = base_percent + pix_percent + first_purchase_percent
 
-        tier_bonus = (amount * tier_percent / Decimal("100.00")).quantize(Decimal("0.01"))
+        tier_bonus = floor_coins(amount * tier_percent / Decimal("100.00"))
         promo_bonus = (
-            (amount * promo_percent / Decimal("100.00")).quantize(Decimal("0.01"))
+            floor_coins(amount * promo_percent / Decimal("100.00"))
             if promo_percent > 0
             else Decimal("0.00")
         )
-        pix_bonus = (amount * pix_percent / Decimal("100.00")).quantize(Decimal("0.01"))
-        fp_bonus = (amount * first_purchase_percent / Decimal("100.00")).quantize(Decimal("0.01"))
+        pix_bonus = floor_coins(amount * pix_percent / Decimal("100.00"))
+        fp_bonus = floor_coins(amount * first_purchase_percent / Decimal("100.00"))
 
         if total_percent <= 0:
             return BonusPreview(
@@ -85,7 +86,7 @@ class DjangoPurchaseBonusPolicy(IPurchaseBonusPolicy):
                 first_purchase_bonus=Decimal("0.00"),
             )
 
-        bonus = (amount * total_percent / Decimal("100.00")).quantize(Decimal("0.01"))
+        bonus = floor_coins(amount * total_percent / Decimal("100.00"))
         parts = []
         promo_leads = promo is not None and promo_percent > 0 and (
             stacking == "sum" or promo_percent >= tier_percent

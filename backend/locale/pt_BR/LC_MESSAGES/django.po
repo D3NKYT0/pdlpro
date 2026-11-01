@@ -4992,3 +4992,21 @@ msgstr "Informe o nome para um NPC que não está no acervo."
 #: apps/programs/views.py
 msgid "Listar apoiadores públicos"
 msgstr "Listar apoiadores públicos"
+
+msgid "Unidades no jogo por moeda"
+msgstr "Unidades no jogo por moeda"
+
+msgid "Quantidade do item entregue no jogo para cada 1 moeda de saldo do site."
+msgstr "Quantidade do item entregue no jogo para cada 1 moeda de saldo do site."
+
+msgid "Informe unidades no jogo por moeda maior que zero, com até duas casas decimais."
+msgstr "Informe unidades no jogo por moeda maior que zero, com até duas casas decimais."
+
+msgid "Informe um número inteiro de moedas."
+msgstr "Informe um número inteiro de moedas."
+
+msgid "O valor informado não compra nenhuma moeda inteira."
+msgstr "O valor informado não compra nenhuma moeda inteira."
+
+msgid "A quantidade deve corresponder a um número inteiro de moedas do saldo."
+msgstr "A quantidade deve corresponder a um número inteiro de moedas do saldo."

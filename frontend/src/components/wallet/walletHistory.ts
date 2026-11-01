@@ -1,5 +1,5 @@
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../../services/types'
-import { formatCurrency, formatDateTime } from '../../lib/formatters'
+import { formatCurrency, formatDateTime, formatCoinQuantity } from '../../lib/formatters'
 
 /** Tradutor do namespace `panel` recebido pelas telas da carteira. */
 export type WalletTranslate = (key: string, options?: Record<string, unknown>) => string
@@ -29,7 +29,7 @@ export function getOrderStatus(status: string, t: WalletTranslate) {
 export function getTransactionPresentation(kind: string, amount: string, t: WalletTranslate) {
   const numericAmount = Number(amount)
   const outgoing = numericAmount < 0 || /(saida|saída|debit|out|withdraw|purchase|spent|send)/i.test(kind)
-  const absoluteAmount = Number.isFinite(numericAmount) ? Math.abs(numericAmount).toFixed(2) : amount
+  const absoluteAmount = Number.isFinite(numericAmount) ? formatCoinQuantity(Math.abs(numericAmount)) : amount
   return {
     outgoing,
     amount: t('wallet.transactionAmount', { sign: outgoing ? '−' : '+', amount: absoluteAmount }),
@@ -40,7 +40,7 @@ export function orderDetailEntries(order: ApiPaymentOrder, t: WalletTranslate) {
   const currency = order.currency || 'BRL'
   return [
     [t('wallet.detail.status'), getOrderStatus(order.status, t).label],
-    [t('wallet.detail.coins'), t('wallet.detail.coinsValue', { coins: order.coins })],
+    [t('wallet.detail.coins'), t('wallet.detail.coinsValue', { coins: formatCoinQuantity(order.coins) })],
     [t('wallet.detail.amount'), formatWalletMoney(order.amount, currency)],
     [t('wallet.detail.method'), order.method || '—'],
     [t('wallet.detail.package'), order.package_code || t('wallet.detail.packageCustom')],

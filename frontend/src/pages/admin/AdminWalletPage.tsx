@@ -53,6 +53,7 @@ import {
 } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
 import './wallet-bonus.css'
+import { formatCoinQuantity } from '../../lib/formatters'
 
 function toDatetimeLocal(iso: string | null | undefined) {
   if (!iso) return ''
@@ -1337,7 +1338,7 @@ export function AdminWalletPage() {
                           <GoldCoinIcon width={18} height={18} />
                           <span>{t('wallet.simulator.baseAmount')}</span>
                         </div>
-                        <div className="wallet-sim-metric-val">{simResult.amount}</div>
+                        <div className="wallet-sim-metric-val">{formatCoinQuantity(simResult.amount)}</div>
                       </div>
 
                       <div className="wallet-sim-metric-box highlight">
@@ -1353,7 +1354,7 @@ export function AdminWalletPage() {
                           <GiftBoxIcon width={18} height={18} />
                           <span>{t('wallet.simulator.bonusCoins')}</span>
                         </div>
-                        <div className="wallet-sim-metric-val">+{bonusCoins}</div>
+                        <div className="wallet-sim-metric-val">+{formatCoinQuantity(bonusCoins)}</div>
                       </div>
 
                       <div className="wallet-sim-metric-box highlight total-highlight">
@@ -1361,7 +1362,7 @@ export function AdminWalletPage() {
                           <CrownIcon width={20} height={20} />
                           <span>{t('wallet.simulator.totalCoins')}</span>
                         </div>
-                        <div className="wallet-sim-metric-val is-highlight">{totalCoins}</div>
+                        <div className="wallet-sim-metric-val is-highlight">{formatCoinQuantity(totalCoins)}</div>
                       </div>
                     </div>
 
@@ -1369,18 +1370,18 @@ export function AdminWalletPage() {
                     <div className="wallet-sim-visual-bar-wrap">
                       <div className="wallet-sim-bar-legend">
                         <span>{t('wallet.simPresets.visualComparison')}</span>
-                        <span>{t('wallet.simulator.basePlusBonus', { base: simResult.amount, bonus: bonusCoins })}</span>
+                        <span>{t('wallet.simulator.basePlusBonus', { base: formatCoinQuantity(simResult.amount), bonus: formatCoinQuantity(bonusCoins) })}</span>
                       </div>
                       <div className="wallet-sim-visual-bar">
                         <div
                           className="wallet-sim-bar-seg seg-base"
                           style={{ width: `${pctBase}%` }}
-                          title={`Base: ${simResult.amount} ${t('wallet.simulator.coinsUnit')}`}
+                          title={`Base: ${formatCoinQuantity(simResult.amount)} ${t('wallet.simulator.coinsUnit')}`}
                         />
                         <div
                           className="wallet-sim-bar-seg seg-tier"
                           style={{ width: `${pctBonus}%` }}
-                          title={`Bônus: +${bonusCoins} ${t('wallet.simulator.coinsUnit')}`}
+                          title={`Bônus: +${formatCoinQuantity(bonusCoins)} ${t('wallet.simulator.coinsUnit')}`}
                         />
                       </div>
                     </div>

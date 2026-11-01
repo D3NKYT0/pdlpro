@@ -9,6 +9,7 @@ import { Card } from '../ui/Card'
 import { Field } from '../ui/Field'
 import { Toggle } from '../ui/Toggle'
 import type { ApiWallet, CartLine, Quote } from '../../services/api'
+import { formatCoinQuantity } from '../../lib/formatters'
 
 export function ShopCart({
   cart,
@@ -136,7 +137,7 @@ export function ShopCart({
           ) : null}
         </div>
         <Toggle
-          label={t('shop.cart.useBonus', { balance: wallet?.bonus_balance || '0.00' })}
+          label={t('shop.cart.useBonus', { balance: formatCoinQuantity(wallet?.bonus_balance) })}
           checked={cart?.use_bonus || false}
           disabled={busy}
           onChange={(event) => onBonus(event.target.checked)}
@@ -160,7 +161,7 @@ export function ShopCart({
           <strong>{money(cart?.balance_due || 0)}</strong>
         </p>
         <small className={insufficient ? 'shop-insufficient' : 'muted'}>
-          {insufficient ? t('shop.cart.insufficient') : t('shop.cart.availableBalance', { balance: wallet?.balance || '0.00' })}
+          {insufficient ? t('shop.cart.insufficient') : t('shop.cart.availableBalance', { balance: formatCoinQuantity(wallet?.balance) })}
         </small>
       </div>
       <MicroResource code="shop-checkout"><Button type="button" disabled={!canCheckout} onClick={onCheckout}>

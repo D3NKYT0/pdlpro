@@ -197,8 +197,8 @@ export function AuctionDetail({
                     <input
                       type="number"
                       min={nextBidFor(auction)}
-                      step="0.01"
-                      inputMode="decimal"
+                      step="1"
+                      inputMode="numeric"
                       value={bidAmount}
                       onChange={(event) => onAmountChange(event.target.value)}
                       required
@@ -285,8 +285,8 @@ export function AuctionDetail({
                   <input
                     type="number"
                     min={nextBidFor(auction)}
-                    step="0.01"
-                    inputMode="decimal"
+                    step="1"
+                    inputMode="numeric"
                     value={bidAmount}
                     onChange={(event) => onAmountChange(event.target.value)}
                     required

@@ -285,9 +285,9 @@ export function AuctionCreateForm({
           {t('auctions.create.minBid')}
           <input
             type="number"
-            min="0.01"
-            step="0.01"
-            inputMode="decimal"
+            min="1"
+            step="1"
+            inputMode="numeric"
             value={minBid}
             onChange={(event) => onMinBidChange(event.target.value)}
             placeholder={t('auctions.create.minBidPlaceholder')}

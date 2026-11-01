@@ -4001,7 +4001,7 @@ html.pdl-panel .admin-moderation-form-actions { display: flex; flex-wrap: wrap; 
 
 html.pdl-panel .admin-coins-form { display: grid; gap: 20px; }
 html.pdl-panel .admin-coin-identity .account-form-fields { align-items: start; }
-html.pdl-panel .admin-coin-metrics { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
+html.pdl-panel .admin-coin-metrics { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
 html.pdl-panel .admin-coin-metric { display: grid; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 13px; margin: 0; padding: 17px; }
 html.pdl-panel .admin-coin-metric-icon { display: grid; place-items: center; width: 42px; height: 42px; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 25%, transparent); background: color-mix(in srgb, var(--panel-gold) 7%, transparent); }
 html.pdl-panel .admin-coin-metric-icon svg { width: 19px; }

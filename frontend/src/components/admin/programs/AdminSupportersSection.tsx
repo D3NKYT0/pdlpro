@@ -17,6 +17,7 @@ import {
 import { useProgramAction } from '../../programs/useProgramAction'
 import { AdminHeader } from '../../../pages/admin/AdminChrome'
 import { SupporterVisibility } from './SupporterVisibility'
+import { formatCoinQuantity } from '../../../lib/formatters'
 
 export function AdminSupportersSection() {
   const { t } = useTranslation('admin')
@@ -147,7 +148,7 @@ export function AdminSupportersSection() {
                 {query.data.payouts.map((p) => (
                   <tr key={p.id}>
                     <td>{p.supporter_name}</td>
-                    <td>{p.amount}</td>
+                    <td>{formatCoinQuantity(p.amount)}</td>
                     <td>
                       <Status value={p.status} />
                     </td>

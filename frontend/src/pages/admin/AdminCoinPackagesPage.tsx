@@ -12,6 +12,7 @@ import { Toggle } from '../../components/ui/Toggle'
 import { useFeedbackAction } from '../../hooks/useFeedbackAction'
 import { staffApi, type ApiStaffCoinPackage } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
+import { formatCoinQuantity } from '../../lib/formatters'
 
 const EMPTY: Omit<ApiStaffCoinPackage, 'id'> = {
   code: '',
@@ -189,8 +190,8 @@ export function AdminCoinPackagesPage() {
                 <b>×</b>
                 <input
                   type="number"
-                  min="0.01"
-                  step="0.01"
+                  min="1"
+                  step="1"
                   value={draft.coins ?? ''}
                   onChange={(event) => setDraft((current) => ({ ...current, coins: event.target.value }))}
                   required
@@ -299,7 +300,7 @@ export function AdminCoinPackagesPage() {
                     <span className="pay-pack-name">{row.name}</span>
                     <code>{row.code}</code>
                     <span className="pay-pack-coins">
-                      <Coins aria-hidden="true" /> {row.coins}
+                      <Coins aria-hidden="true" /> {formatCoinQuantity(row.coins)}
                     </span>
                     <div className="admin-coin-package-prices">
                       {row.prices && Object.keys(row.prices).length > 0 ? (

@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import F
 
 from apps.wallet.application.exchange import exchange_dump
+from apps.wallet.domain.coins import ceil_coins, floor_coins
 from apps.wallet.domain.entities import InsufficientBalanceError, WalletEntity
 from apps.wallet.domain.repositories import (
     ICoinAdminRepository,
@@ -35,7 +36,9 @@ class DjangoWalletRepository(IWalletRepository):
     condicional para impedir saldo principal ou de bônus negativo. Não valida valores
     positivos aqui; essa validação pertence ao caso de uso. Use dentro de UnitOfWork para que
     alteração do saldo e gravação do extrato revertam juntas em caso de erro. ``debit`` não
-    consome saldo de bônus; ``debit_bonus`` não consome saldo principal.
+    consome saldo de bônus; ``debit_bonus`` não consome saldo principal. O saldo só guarda
+    moedas inteiras: crédito arredonda para baixo e débito para cima; um crédito menor que 1
+    moeda não altera a carteira nem gera extrato.
     """
 
     def _to_entity(self, wallet: Wallet) -> WalletEntity:
@@ -56,6 +59,9 @@ class DjangoWalletRepository(IWalletRepository):
         return self._to_entity(wallet)
 
     def credit(self, wallet_id: UUID, amount: Decimal, *, origin: str, description: str) -> WalletEntity:
+        amount = floor_coins(amount)
+        if amount <= 0:
+            return self._to_entity(Wallet.objects.select_related("user").get(id=wallet_id))
         Wallet.objects.filter(id=wallet_id).update(balance=F("balance") + amount)
         wallet = Wallet.objects.select_related("user").get(id=wallet_id)
         WalletTransaction.objects.create(
@@ -68,6 +74,9 @@ class DjangoWalletRepository(IWalletRepository):
         return self._to_entity(wallet)
 
     def credit_bonus(self, wallet_id: UUID, amount: Decimal, *, origin: str, description: str) -> WalletEntity:
+        amount = floor_coins(amount)
+        if amount <= 0:
+            return self._to_entity(Wallet.objects.select_related("user").get(id=wallet_id))
         Wallet.objects.filter(id=wallet_id).update(bonus_balance=F("bonus_balance") + amount)
         wallet = Wallet.objects.select_related("user").get(id=wallet_id)
         WalletTransaction.objects.create(
@@ -80,6 +89,7 @@ class DjangoWalletRepository(IWalletRepository):
         return self._to_entity(wallet)
 
     def debit(self, wallet_id: UUID, amount: Decimal, *, destination: str, description: str) -> WalletEntity:
+        amount = ceil_coins(amount)
         # A condição de saldo e o débito ficam no mesmo UPDATE para evitar uma corrida
         # entre a consulta de saldo feita pelo caso de uso e outra movimentação.
         updated = Wallet.objects.filter(id=wallet_id, balance__gte=amount).update(balance=F("balance") - amount)
@@ -98,6 +108,7 @@ class DjangoWalletRepository(IWalletRepository):
     def debit_bonus(
         self, wallet_id: UUID, amount: Decimal, *, destination: str, description: str
     ) -> WalletEntity:
+        amount = ceil_coins(amount)
         updated = Wallet.objects.filter(id=wallet_id, bonus_balance__gte=amount).update(
             bonus_balance=F("bonus_balance") - amount
         )
@@ -142,6 +153,7 @@ class DjangoWalletRepository(IWalletRepository):
             "item_id": config.coin_id,
             "multiplier": str(config.multiplier),
             "usd_multiplier": str(config.usd_multiplier),
+            "game_units_per_coin": str(config.game_units_per_coin),
             "withdraw_fee_percent": str(config.withdraw_fee_percent),
         }
 

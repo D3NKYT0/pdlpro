@@ -20,7 +20,7 @@ import { Button } from '../ui/Button'
 import { Tabs } from '../ui/Tabs'
 import { Toggle } from '../ui/Toggle'
 import { gamesApi } from '../../services/api'
-import { formatDateTime } from '../../lib/formatters'
+import { formatDateTime, formatCoinQuantity } from '../../lib/formatters'
 import {
   Empty,
   ErrorNotice,
@@ -116,7 +116,7 @@ export function BattlePassSection() {
                       }
                     >
                       <Crown aria-hidden="true" />
-                      {t('rewards.battlePass.premiumBuy', { price: season.premium_price })}
+                      {t('rewards.battlePass.premiumBuy', { price: formatCoinQuantity(season.premium_price) })}
                     </Button></MicroResource>
                   )}
                 </div>

@@ -2,13 +2,22 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 28 de outubro de 2026
+> **Atualizado:** 1 de novembro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Não publicado]
+
+### Alterado
+
+- Moedas do site agora são sempre números inteiros, separadas de dinheiro real: saldo, preços, lances e comissões aparecem como `2.500`, e APIs e formulários recusam frações. A atualização arredonda saldos para baixo com registro no extrato, sobe preços fracionados para o inteiro seguinte e preserva o histórico. Veja [Moedas inteiras](../funcionalidades/economia-jogador.md#moedas-inteiras).
+
+### Corrigido
+
+- Câmbio com o jogo: a taxa de compra (coins por 1 BRL) também definia quantas unidades o personagem recebia, e `1 BRL = 100 moedas` transformava 2.500 de saldo em 250.000 no jogo. A nova **Conversão para o jogo** em Admin → Moedas é independente. A atualização preserva a taxa em uso; revise o valor e leia [o aviso sobre reduzir a taxa](../integracoes/cambio-painel-jogo.md#taxa-de-conversão-com-o-jogo).
+- O campo de quantidade do câmbio não mantém mais um zero à esquerda depois de ser limpo.
 
 ## [2.7.7] - 2026-10-28
 

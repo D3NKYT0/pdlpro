@@ -75,5 +75,5 @@ it('mostra aviso vermelho e só credita depois da confirmação explícita', asy
   await user.click(screen.getByRole('button', { name: 'Confirmar simulação' }))
   await user.click(screen.getByRole('button', { name: 'Entendi o risco. Creditar mesmo assim' }))
   await waitFor(() => expect(staffApi.confirmMockPayment).toHaveBeenCalledWith('pending-mock'))
-  expect(toast.success).toHaveBeenCalledWith('Simulação confirmada: 50.00 moedas creditadas para jogador_teste.')
+  expect(toast.success).toHaveBeenCalledWith('Simulação confirmada: 50 moedas creditadas para jogador_teste.')
 })

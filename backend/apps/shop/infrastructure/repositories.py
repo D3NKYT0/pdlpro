@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from decimal import ROUND_HALF_UP, Decimal
+from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
@@ -23,6 +23,7 @@ from apps.shop.infrastructure.models import (
     ShopPackageItem,
     ShopPurchase,
 )
+from apps.wallet.domain.coins import floor_coins
 from common.persistence.deletion import delete_unreferenced
 
 User = get_user_model()
@@ -316,9 +317,7 @@ class DjangoSupporterCommissionAdapter(ISupporterCommissionPort):
 
     def record(self, *, supporter_id: UUID, purchase: Any, due: Decimal) -> None:
         supporter = Supporter.objects.select_for_update().get(pk=supporter_id)
-        amount = (Decimal(due) * supporter.commission_percent / 100).quantize(
-            Decimal("0.01"), rounding=ROUND_HALF_UP
-        )
+        amount = floor_coins(Decimal(due) * supporter.commission_percent / 100)
         if amount > 0 and supporter.status == "approved":
             Commission.objects.create(
                 supporter=supporter, purchase=purchase, amount=amount

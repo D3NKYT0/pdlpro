@@ -19,7 +19,7 @@ import {
 } from "../components/programs/ProgramUI";
 import { useProgramAction } from "../components/programs/useProgramAction";
 import { CharacterAvatar } from "../components/character/CharacterAvatar";
-import { formatDateTime } from "../lib/formatters";
+import { formatDateTime, formatNumber, formatCoinQuantity } from "../lib/formatters";
 
 export function GameExchangePage() {
   const { t } = useTranslation("panel");
@@ -40,12 +40,13 @@ export function GameExchangePage() {
   const [charId, setCharId] = useState("");
   const selectedChar = chars.data?.find((c) => String(c.char_id) === String(charId));
   const [direction, setDirection] = useState("to_game");
-  const [quantity, setQuantity] = useState(1);
+  const [quantityInput, setQuantityInput] = useState("1");
+  const quantity = Number(quantityInput);
   const [confirmation, setConfirmation] = useState(false);
   const pending = useRef<ExchangeRequest | null>(null);
   const action = useProgramAction();
   const coin = query.data?.coin;
-  const gross = quantity / Number(coin?.multiplier || 1);
+  const gross = quantity / Number(coin?.game_units_per_coin || 1);
   const fee =
     direction === "from_game"
       ? Math.floor(gross * Number(coin?.withdraw_fee_percent || 0)) / 100
@@ -172,17 +173,17 @@ export function GameExchangePage() {
                 required
                 min={1}
                 max={1000000000}
-                value={quantity}
+                value={quantityInput}
                 onChange={(e) => {
                   reset();
-                  setQuantity(Number(e.target.value));
+                  setQuantityInput(e.target.value);
                 }}
               />
             </label>
             {confirmation && (
               <p className="program-note">
                 {t("exchange.form.confirmation", {
-                  quantity,
+                  quantity: formatNumber(quantity),
                   preposition: direction === "to_game"
                     ? t("exchange.form.prepositionTo")
                     : t("exchange.form.prepositionFrom"),
@@ -190,7 +191,7 @@ export function GameExchangePage() {
                   operation: direction === "to_game"
                     ? t("exchange.form.operationDebit")
                     : t("exchange.form.operationCredit"),
-                  amount: (gross - fee).toFixed(2),
+                  amount: formatCoinQuantity(gross - fee),
                 })}
               </p>
             )}
@@ -218,7 +219,7 @@ export function GameExchangePage() {
                 : t("exchange.summary.credit")}
             </small>
             <strong>
-              {Number.isFinite(gross) ? (gross - fee).toFixed(2) : "0.00"}
+              {formatCoinQuantity(Number.isFinite(gross) ? gross - fee : 0)}
             </strong>
           </div>
           <p className="muted">
@@ -228,12 +229,12 @@ export function GameExchangePage() {
             })}
           </p>
           <p className="muted">
-            {t("exchange.summary.rate", { multiplier: coin?.multiplier || "—" })}
+            {t("exchange.summary.rate", { multiplier: coin ? formatNumber(coin.game_units_per_coin) : "—" })}
           </p>
           <p className="muted">
             {t("exchange.summary.fee", {
               percent: coin?.withdraw_fee_percent || "0",
-              fee: fee.toFixed(2),
+              fee: formatCoinQuantity(fee),
             })}
           </p>
           <p className="program-note">{t("exchange.summary.note")}</p>
@@ -265,8 +266,8 @@ export function GameExchangePage() {
                         ? t("exchange.history.toGame")
                         : t("exchange.history.fromGame")}
                     </td>
-                    <td>{r.quantity}</td>
-                    <td>{r.amount}</td>
+                    <td>{formatNumber(r.quantity)}</td>
+                    <td>{formatCoinQuantity(r.amount)}</td>
                     <td>
                       <Status value={r.status} />
                     </td>

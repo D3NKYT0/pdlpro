@@ -135,7 +135,7 @@ describe("program screens", () => {
     ]);
     for (const text of [
       "Kit especial",
-      "26,00",
+      "26",
       "TEST10",
       "Bônus utilizado",
       "Finalizar compra",

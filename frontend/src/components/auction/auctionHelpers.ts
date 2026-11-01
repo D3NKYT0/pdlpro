@@ -30,7 +30,7 @@ export function formatRemaining(value: string, t: AuctionTranslate) {
 }
 
 export function nextBidFor(auction: ApiAuction) {
-  return (Math.max(Number(auction.current_bid ?? 0), Number(auction.min_bid)) + 0.01).toFixed(2)
+  return String(Math.floor(Math.max(Number(auction.current_bid ?? 0), Number(auction.min_bid))) + 1)
 }
 
 export function isCharacterAuction(auction: ApiAuction) {

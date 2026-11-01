@@ -69,6 +69,7 @@ export interface ApiStaffCoin {
   coin_id: number
   multiplier: string
   usd_multiplier: string
+  game_units_per_coin: string
   withdraw_fee_percent: string
   active: boolean
 }

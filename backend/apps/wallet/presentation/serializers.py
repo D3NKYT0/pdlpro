@@ -1,6 +1,7 @@
 from django.conf import settings
 from rest_framework import serializers
 
+from apps.wallet.presentation.fields import WholeCoinsField
 from common.currency_identity import configured_coin_name
 
 
@@ -41,5 +42,5 @@ class TransferSerializer(serializers.Serializer):
     """
 
     recipient_username = serializers.CharField(max_length=16)
-    amount = serializers.DecimalField(max_digits=12, decimal_places=2)
+    amount = WholeCoinsField(max_digits=12, decimal_places=2)
     description = serializers.CharField(required=False, allow_blank=True)

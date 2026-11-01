@@ -132,6 +132,43 @@ def test_coming_soon_requires_launch_datetime(api, staff):
 
 
 @pytest.mark.django_db
+def test_staff_game_rate_is_independent_from_the_purchase_rate(api, staff):
+    api.force_authenticate(user=staff)
+    saved = api.put(
+        "/api/v1/staff/coins/",
+        {"coin_id": 57, "multiplier": "100.00", "game_units_per_coin": "1000.50"},
+        format="json",
+    )
+    assert saved.status_code == 200, saved.data
+    assert saved.data["multiplier"] == "100.00"
+    assert saved.data["game_units_per_coin"] == "1000.50"
+
+    kept = api.put("/api/v1/staff/coins/", {"coin_id": 57, "multiplier": "50.00"}, format="json")
+    assert kept.status_code == 200, kept.data
+    assert kept.data["game_units_per_coin"] == "1000.50"
+    assert api.get("/api/v1/staff/coins/").data["game_units_per_coin"] == "1000.50"
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("rate", ["0", "-1", "abc", "NaN", "Infinity", "1.234", "10000000000", ""])
+def test_staff_game_rate_rejects_invalid_values_without_saving(api, staff, rate):
+    api.force_authenticate(user=staff)
+    api.put("/api/v1/staff/coins/", {"coin_id": 57, "game_units_per_coin": "7.00"}, format="json")
+
+    response = api.put("/api/v1/staff/coins/", {"coin_id": 57, "game_units_per_coin": rate}, format="json")
+
+    assert response.status_code == 400, response.data
+    assert api.get("/api/v1/staff/coins/").data["game_units_per_coin"] == "7.00"
+
+
+@pytest.mark.django_db
+def test_player_cannot_change_game_rate(api, player):
+    api.force_authenticate(user=player)
+    response = api.put("/api/v1/staff/coins/", {"game_units_per_coin": "100.00"}, format="json")
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
 def test_staff_can_update_coins_shop_and_news(api, staff):
     api.force_authenticate(user=staff)
     coins = api.put(
@@ -148,6 +185,7 @@ def test_staff_can_update_coins_shop_and_news(api, staff):
     assert coins.status_code == 200, coins.data
     assert coins.data["name"] == "Gold Bar"
     assert coins.data["coin_id"] == 3470
+    assert coins.data["game_units_per_coin"] == "1.00"
 
     promo = api.put(
         "/api/v1/staff/wallet-promo/",

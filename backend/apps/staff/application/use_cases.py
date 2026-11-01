@@ -21,6 +21,7 @@ from apps.server.domain.repositories import (
 from apps.server.domain.unstuck import normalize_unstuck
 from apps.shop.domain.repositories import IShopItemAdminRepository
 from apps.wallet.domain.bonus import IPurchaseBonusPolicy
+from apps.wallet.domain.coins import require_whole_coins
 from apps.wallet.domain.repositories import ICoinAdminRepository
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
@@ -122,6 +123,7 @@ def _coin_config_payload(row, *, settings_module=settings) -> dict:
             "coin_id": 57,
             "multiplier": "1.00",
             "usd_multiplier": str(getattr(settings_module, "COINS_PER_USD", "5.00")),
+            "game_units_per_coin": "1.00",
             "withdraw_fee_percent": "0.00",
             "active": True,
         }
@@ -131,9 +133,22 @@ def _coin_config_payload(row, *, settings_module=settings) -> dict:
         "coin_id": row.coin_id,
         "multiplier": str(row.multiplier),
         "usd_multiplier": str(row.usd_multiplier),
+        "game_units_per_coin": str(row.game_units_per_coin),
         "withdraw_fee_percent": str(row.withdraw_fee_percent),
         "active": row.active,
     }
+
+
+def _parse_game_rate(value) -> Decimal:
+    """Valida a taxa do câmbio com o jogo: positiva, até duas casas e dentro da coluna."""
+    try:
+        rate = Decimal(str(value))
+        valid = rate.is_finite() and 0 < rate < Decimal(10000000000) and rate == rate.quantize(Decimal("0.01"))
+    except InvalidOperation:
+        valid = False
+    if not valid:
+        raise ValidationDomainError("Informe unidades no jogo por moeda maior que zero, com até duas casas decimais.")
+    return rate
 
 
 def _wallet_promo_payload(row) -> dict:
@@ -325,7 +340,7 @@ class UpsertStaffServicePricesUseCase(UseCase[list[dict], list[dict]]):
             code = str(item.get("code") or "").strip().upper()
             if not code:
                 raise ValidationDomainError("Código do serviço é obrigatório.")
-            price = Decimal(str(item.get("price") or "0"))
+            price = require_whole_coins(Decimal(str(item.get("price") or "0")))
             if price < 0:
                 raise ValidationDomainError("O preço não pode ser negativo.")
             self._prices.upsert(
@@ -371,6 +386,8 @@ class UpdateStaffCoinConfigUseCase(UseCase[dict, dict]):
         row.name = self._item_names.display_name(row.coin_id)
         row.multiplier = Decimal(str(data.get("multiplier") or row.multiplier or "1"))
         row.usd_multiplier = Decimal(str(data.get("usd_multiplier") or row.usd_multiplier or "5"))
+        if "game_units_per_coin" in data:
+            row.game_units_per_coin = _parse_game_rate(data["game_units_per_coin"])
         row.withdraw_fee_percent = Decimal(str(data.get("withdraw_fee_percent") or row.withdraw_fee_percent or "0"))
         row.active = True
         self._coins.save_coin_config(row)
@@ -597,7 +614,7 @@ class UpsertStaffCoinPackageUseCase(UseCase[dict, dict]):
         if len(name) > 80:
             raise ValidationDomainError("O nome do pacote pode ter no máximo 80 caracteres.")
 
-        coins = Decimal(str(data.get("coins") if data.get("coins") is not None else row.coins or "0"))
+        coins = require_whole_coins(Decimal(str(data.get("coins") if data.get("coins") is not None else row.coins or "0")))
         price_brl = Decimal(str(data.get("price_brl") if data.get("price_brl") is not None else row.price_brl or "0"))
         price_usd = Decimal(str(data.get("price_usd") if data.get("price_usd") is not None else row.price_usd or "0"))
         if coins <= 0:
@@ -788,7 +805,7 @@ class UpsertStaffShopItemUseCase(UseCase[dict, dict]):
         if item_id <= 0:
             raise ValidationDomainError("Informe o ID do item no jogo.")
         name = self._item_names.display_name(item_id)
-        price = Decimal(str(data.get("price") or "0"))
+        price = require_whole_coins(Decimal(str(data.get("price") or "0")))
         quantity = int(data.get("quantity") or 1)
         active = bool(data.get("active", True))
         row = self._shop_items.get_by_id(data["id"]) if data.get("id") else None

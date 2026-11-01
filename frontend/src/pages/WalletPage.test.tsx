@@ -114,7 +114,7 @@ it('abre modal de pedido e aponta para histórico completo', async () => {
   const user = mount()
   expect((await screen.findByRole('link', { name: 'Ver todos os pedidos' })).getAttribute('href')).toBe('/panel/wallet/orders')
   expect(screen.getByRole('link', { name: 'Ver todo o extrato' }).getAttribute('href')).toBe('/panel/wallet/statement')
-  await user.click(await screen.findByRole('button', { name: /25.00 moedas/ }))
+  await user.click(await screen.findByRole('button', { name: /25 moedas/ }))
   expect(await screen.findByRole('dialog', { name: 'Detalhe do pedido' })).toBeTruthy()
   expect(screen.getByText('ord-1')).toBeTruthy()
 })
@@ -160,25 +160,25 @@ it('omite banner promocional quando o catálogo não traz promo', async () => {
   expect(screen.queryByLabelText('Recarga em promoção')).toBeNull()
 })
 
-it.each([['SAIDA', '−12.34 moedas'], ['ENTRADA', '+12.34 moedas'], ['debit', '−12.34 moedas']])('mostra sinal correto para movimento %s', async (kind, expected) => {
+it.each([['SAIDA', '−12 moedas'], ['ENTRADA', '+12 moedas'], ['debit', '−12 moedas']])('mostra sinal correto para movimento %s', async (kind, expected) => {
   vi.mocked(walletApi.transactions).mockResolvedValue({
     count: 1,
     total_pages: 1,
     next: null,
     previous: null,
-    results: [{ id: 'tx', kind, amount: '12.34', description: 'Movimento', origin: '', destination: '', created_at: '2026-09-08T12:00:00Z' }],
+    results: [{ id: 'tx', kind, amount: '12.00', description: 'Movimento', origin: '', destination: '', created_at: '2026-09-08T12:00:00Z' }],
   })
   mount()
   expect(await screen.findByText(expected)).toBeTruthy()
 })
 
-it('envia quantidade decimal e atualiza saldo e extrato após transferência', async () => {
-  vi.mocked(walletApi.transfer).mockResolvedValue({ balance: '37.66' } as any)
+it('envia quantidade inteira e atualiza saldo e extrato após transferência', async () => {
+  vi.mocked(walletApi.transfer).mockResolvedValue({ balance: '38.00' } as any)
   const user = mount()
   await user.type(screen.getByLabelText('Destinatário'), 'friend')
-  await user.type(screen.getByLabelText('Quantidade'), '12.34')
+  await user.type(screen.getByLabelText('Quantidade'), '12')
   await user.click(screen.getByRole('button', { name: 'Transferir moedas' }))
-  expect(walletApi.transfer).toHaveBeenCalledWith('friend', '12.34')
+  expect(walletApi.transfer).toHaveBeenCalledWith('friend', '12')
   await waitFor(() => expect((screen.getByLabelText('Destinatário') as HTMLInputElement).value).toBe(''))
   expect(toast.success).toHaveBeenCalledWith('Transferência enviada')
   expect(vi.mocked(walletApi.me).mock.calls.length).toBeGreaterThan(1)

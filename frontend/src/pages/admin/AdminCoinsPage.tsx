@@ -21,6 +21,7 @@ export function AdminCoinsPage() {
   const [coinId, setCoinId] = useState('57')
   const [multiplier, setMultiplier] = useState('1.00')
   const [usd, setUsd] = useState('5.00')
+  const [gameRate, setGameRate] = useState('1.00')
   const [fee, setFee] = useState('0.00')
   const action = useFeedbackAction()
   const saving = action.pending
@@ -31,6 +32,7 @@ export function AdminCoinsPage() {
     setCoinId(String(coins.data.coin_id))
     setMultiplier(coins.data.multiplier)
     setUsd(coins.data.usd_multiplier)
+    setGameRate(coins.data.game_units_per_coin)
     setFee(coins.data.withdraw_fee_percent)
   }, [coins.data])
 
@@ -42,6 +44,7 @@ export function AdminCoinsPage() {
         coin_id: Number(coinId),
         multiplier,
         usd_multiplier: usd,
+        game_units_per_coin: gameRate,
         withdraw_fee_percent: fee,
         active: true,
       })
@@ -92,6 +95,11 @@ export function AdminCoinsPage() {
             <span className="admin-coin-metric-icon"><BadgeDollarSign /></span>
             <span><b>{t('coins.usd')}</b><small>{t('coins.usdHint')}</small></span>
             <span className="admin-coin-input"><b>$</b><input type="number" min="0" step="0.01" value={usd} onChange={(e) => setUsd(e.target.value)} /></span>
+          </Field>
+          <Field className="card admin-coin-metric">
+            <span className="admin-coin-metric-icon"><Coins /></span>
+            <span><b>{t('coins.gameRate')}</b><small>{t('coins.gameRateHint')}</small></span>
+            <span className="admin-coin-input"><b>×</b><input type="number" min="0.01" step="0.01" value={gameRate} onChange={(e) => setGameRate(e.target.value)} /></span>
           </Field>
           <Field className="card admin-coin-metric">
             <span className="admin-coin-metric-icon"><Percent /></span>

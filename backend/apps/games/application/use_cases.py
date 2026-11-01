@@ -19,6 +19,7 @@ from apps.games.domain.repositories import (
     IDailyBonusRepository,
     IGameCatalogRepository,
 )
+from apps.wallet.domain.coins import floor_coins
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError
@@ -224,7 +225,7 @@ class ClaimDailyBonusUseCase(UseCase[ClaimDailyBonusInput, dict]):
 
     def execute(self, data: ClaimDailyBonusInput) -> dict:
         config = require_active_game("daily_bonus", catalog=self._catalog)
-        amount = Decimal(str((config.settings or {}).get("amount", "10.00")))
+        amount = floor_coins((config.settings or {}).get("amount", "10.00"))
         today = timezone.localdate()
         with self._unit_of_work:
             user = self._daily_bonus.require_user_locked(data.user_id)

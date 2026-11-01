@@ -12,7 +12,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import type { ApiGamerProfile, ApiUser, ApiWallet } from '../../services/api'
-import { formatNumber } from '../../lib/formatters'
+import { formatNumber, formatCoinQuantity } from '../../lib/formatters'
 
 type Tile = {
   key: string
@@ -70,8 +70,8 @@ export function DashboardSummary({
       art: 'wallet',
       icon: Landmark,
       label: t('dashboard.statWallet'),
-      value: wallet?.balance ?? '0.00',
-      hint: t('dashboard.statWalletBonus', { bonus: wallet?.bonus_balance ?? '0.00' }),
+      value: formatCoinQuantity(wallet?.balance),
+      hint: t('dashboard.statWalletBonus', { bonus: formatCoinQuantity(wallet?.bonus_balance) }),
     })
   }
   if (gamesEnabled) {

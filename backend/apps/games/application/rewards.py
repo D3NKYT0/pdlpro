@@ -3,11 +3,12 @@ from decimal import Decimal
 from apps.games.application.bag import add_to_bag
 from apps.games.domain.exceptions import InvalidRewardError
 from apps.games.domain.repositories import IBagRepository
+from apps.wallet.domain.coins import floor_coins, is_whole_coins
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork
 
 
-def validate_rewards(rewards):
+def validate_rewards(rewards, *, strict=True):
     if not isinstance(rewards, list) or not 1 <= len(rewards) <= 30:
         raise InvalidRewardError("Informe de 1 a 30 recompensas.")
     cleaned = []
@@ -26,13 +27,16 @@ def validate_rewards(rewards):
             kind = reward["kind"]
             if kind in ("item", "tokens") and amount != int(amount):
                 raise ValueError
-            if kind in ("balance", "bonus") and amount != amount.quantize(
-                Decimal("0.01")
-            ):
-                raise ValueError
+            if kind in ("balance", "bonus") and not is_whole_coins(amount):
+                if strict:
+                    raise ValueError
+                # Configuração antiga com fração: concede só as moedas inteiras.
+                amount = floor_coins(amount)
+                if amount < 1:
+                    continue
             entry = {
                 "kind": kind,
-                "quantity": str(amount.quantize(Decimal("0.01")))
+                "quantity": str(floor_coins(amount))
                 if kind in ("balance", "bonus")
                 else int(amount),
             }
@@ -70,7 +74,7 @@ def grant_rewards(
     Quando ``unit_of_work`` é informado, a concessão fica dentro desse escopo.
     Caso contrário, o chamador deve já estar em uma transação/UoW.
     """
-    rewards = validate_rewards(rewards)
+    rewards = validate_rewards(rewards, strict=False)
 
     def _apply():
         for reward in rewards:

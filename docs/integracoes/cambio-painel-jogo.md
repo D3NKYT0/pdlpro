@@ -2,14 +2,28 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 5 de outubro de 2026
+> **Atualizado:** 1 de novembro de 2026
 
 Não basta habilitar uma tela: os bancos do painel e do jogo precisam manter recibos duráveis para retomar uma operação após falha de rede.
 
-1. Configure a conexão Lineage, o dialeto correto e a moeda ativa (ID, multiplicador e taxa de retirada).
+1. Configure a conexão Lineage, o dialeto correto e a moeda ativa (ID, **Conversão para o jogo** e taxa de retirada).
 2. Com acesso administrativo autorizado ao banco do jogo, execute `python manage.py prepare_game_exchange`. O comando cria apenas `pdl_exchange_receipts`; não converte tabelas existentes nem altera personagens ou itens.
 3. `characters`, `items`, `items_delayed` e `pdl_exchange_receipts` precisam usar InnoDB. A verificação de prontidão é somente leitura e impede novas reservas quando os recibos ou as tabelas não estão preparados.
 4. Homologue com uma conta de teste vinculada e personagem offline, usando a menor quantidade representável: envio, consumo da fila de entrega pelo servidor, retorno de moedas e repetição da mesma requisição. Confirme saldos e itens nos dois bancos.
+
+## Taxa de conversão com o jogo
+
+Em **Admin → Moedas**, **Conversão para o jogo** (`CoinConfig.game_units_per_coin`) define quantas unidades do item o personagem recebe por 1 moeda de saldo do site. É independente da taxa de compra (`coins_per_unit` das moedas de cobrança): `1 BRL = 100 moedas` não altera o câmbio.
+
+| Conversão para o jogo | Saldo debitado | Personagem recebe |
+| --- | --- | --- |
+| `1.00` | 2.500 | 2.500 |
+| `100.00` | 2.500 | 250.000 |
+
+A atualização copia para este campo o valor que `multiplier` tinha, para nenhuma instalação mudar de taxa sem decisão do administrador. Até a versão 2.7.7 os dois valores eram o mesmo campo; revise a taxa depois de atualizar.
+
+> [!WARNING]
+> A taxa vale nos dois sentidos. Antes de reduzi-la, avalie o estoque já entregue: quem recebeu moedas pela taxa antiga pode retirá-las pela nova e multiplicar o saldo. Para corrigir uma taxa errada, reconcilie esses personagens antes de salvar.
 
 ## Envio para personagem online
 
@@ -21,7 +35,7 @@ Exemplo: com a opção ligada, selecione um personagem online no envio de saldo 
 
 Homologue o envio de moedas e itens com o personagem online, a entrega real da fila, a repetição da mesma chave de câmbio e a retirada recusada sem alteração de saldo. Os testes de API também cobrem saldo insuficiente, propriedade da conta, quantidades inválidas, rollback e autorização da configuração administrativa.
 
-O envio usa a fila `items_delayed`. O retorno consome moedas sem encantamento no inventário/armazém. Saldo bônus não é transferível. A taxa se aplica apenas ao retorno. Quantidades devem corresponder a saldo com duas casas decimais.
+O envio usa a fila `items_delayed`. O retorno consome moedas sem encantamento no inventário/armazém. Saldo bônus não é transferível. A taxa se aplica apenas ao retorno. Moedas do site são inteiras: a quantidade enviada precisa corresponder a um número inteiro de moedas do saldo, e a taxa de retirada é arredondada para baixo.
 
 Em erro de conexão, a operação fica **pendente** e deve ser retomada com a mesma chave pelo histórico; não é permitido abrir outra enquanto existir uma pendência. Não altere o status nem faça estorno manual sem conciliar o recibo do jogo: o commit externo pode ter ocorrido. Rejeições de negócio também têm recibo terminal, evitando que uma repetição aplique uma operação já estornada.
 

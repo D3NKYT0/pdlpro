@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Button } from '../ui/Button'
 import { Modal } from '../ui/Modal'
-import { formatCurrency, formatNumber } from '../../lib/formatters'
+import { formatCurrency, formatNumber, formatCoinQuantity } from '../../lib/formatters'
 import type { PaymentReportRow } from '../../services/api'
 
 type MockPaymentConfirmModalProps = {
@@ -14,7 +14,7 @@ type MockPaymentConfirmModalProps = {
 export function MockPaymentConfirmModal({ order, pending, onClose, onConfirm }: MockPaymentConfirmModalProps) {
   const { t } = useTranslation('admin')
   if (!order) return null
-  const coins = formatNumber(order.coins, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  const coins = formatCoinQuantity(order.coins)
   return (
     <Modal
       open

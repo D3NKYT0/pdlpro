@@ -18,6 +18,7 @@ import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitiz
 import { trackInitiateCheckout, trackPurchase } from '../lib/tracking'
 import { paymentApi, walletApi } from '../services/api'
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../services/types'
+import { formatCoinQuantity } from '../lib/formatters'
 
 export function WalletPage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -133,7 +134,7 @@ export function WalletPage() {
     returnHandled.current = true
     void paymentApi.status(id).then(async current => {
       if (current.status === 'confirmed') {
-        toast.success(t('wallet.toast.coinsCredited', { coins: current.coins }))
+        toast.success(t('wallet.toast.coinsCredited', { coins: formatCoinQuantity(current.coins) }))
         await refreshWallet()
       } else {
         setOrder(current)
@@ -248,7 +249,7 @@ export function WalletPage() {
                     quantity: 1,
                   }] : undefined,
                 })
-                toast.success(t('wallet.toast.coinsCredited', { coins: result.coins }))
+                toast.success(t('wallet.toast.coinsCredited', { coins: formatCoinQuantity(result.coins) }))
                 handleCloseCheckout()
                 await refreshWallet()
               } else if (result.pix_qr_code) {
@@ -318,7 +319,7 @@ export function WalletPage() {
               quantity: 1,
             }] : undefined,
           })
-          toast.success(t('wallet.toast.coinsCredited', { coins: current.coins }))
+          toast.success(t('wallet.toast.coinsCredited', { coins: formatCoinQuantity(current.coins) }))
           setOrder(null)
           await refreshWallet()
         }
@@ -399,7 +400,7 @@ export function WalletPage() {
             quantity: 1,
           }] : undefined,
         })
-        toast.success(t('wallet.toast.coinsCredited', { coins: current.coins }))
+        toast.success(t('wallet.toast.coinsCredited', { coins: formatCoinQuantity(current.coins) }))
         await refreshWallet()
       } else {
         toast.success(t('wallet.toast.paymentSent'))

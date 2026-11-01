@@ -61,7 +61,7 @@ beforeEach(() => {
   vi.mocked(programsApi.resources).mockResolvedValue([])
   vi.mocked(serverApi.status).mockResolvedValue({ game_online: true, login_online: false, players_online: 42 })
   vi.mocked(authApi.progress).mockResolvedValue(profile)
-  vi.mocked(walletApi.me).mockResolvedValue({ id: 'w1', balance: '12.50', bonus_balance: '1.00' })
+  vi.mocked(walletApi.me).mockResolvedValue({ id: 'w1', balance: '12.00', bonus_balance: '1.00' })
   vi.mocked(lineageApi.accounts).mockResolvedValue({
     accounts: [{ login: 'denky', is_primary: true, linked: true }],
     slots: { used: 1, total: 3, can_link: true },
@@ -121,7 +121,7 @@ it('mostra o resumo da conta, retrato do personagem e atalho do perfil', async (
   mount()
   expect(await screen.findByRole('region', { name: 'Resumo da conta' })).toBeVisible()
   expect(screen.getByRole('link', { name: /Abrir meu perfil/ })).toHaveAttribute('href', '/panel/profile')
-  expect(await screen.findByText('12.50')).toBeVisible()
+  expect(await screen.findByText('12')).toBeVisible()
   expect(screen.getByRole('heading', { name: 'Seus personagens' })).toBeVisible()
   expect(await screen.findByText('SirDenky')).toBeVisible()
   expect(screen.getByRole('link', { name: /SirDenky/ })).toHaveAttribute('href', '/panel/accounts/denky/7')

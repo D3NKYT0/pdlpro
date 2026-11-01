@@ -12,6 +12,7 @@ from apps.shop.domain.repositories import (
     IShopRepository,
     ISupporterCommissionPort,
 )
+from apps.wallet.domain.coins import floor_coins
 from apps.wallet.domain.entities import InsufficientBalanceError, WalletEntity
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork
@@ -109,10 +110,10 @@ def quote(
     lines = cart_lines(cart, carts=carts)
     subtotal = sum((Decimal(row["line_total"]) for row in lines), Decimal("0.00"))
     promo = get_promo(cart.promo_code, user, shop=shop, lock=lock)
-    discount = money(subtotal * promo.percent / 100) if promo else Decimal("0.00")
+    discount = floor_coins(subtotal * promo.percent / 100) if promo else Decimal("0.00")
     total = subtotal - discount
     bonus = (
-        min(wallet.bonus_balance, total)
+        min(floor_coins(wallet.bonus_balance), total)
         if wallet and cart.use_bonus
         else Decimal("0.00")
     )

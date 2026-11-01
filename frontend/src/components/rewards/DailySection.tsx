@@ -7,6 +7,7 @@ import { Button } from '../ui/Button'
 import { gamesApi } from '../../services/api'
 import { ErrorNotice, Loading, RewardHistoryList, RewardList } from '../programs/ProgramUI'
 import { useProgramAction } from '../programs/useProgramAction'
+import { formatCoinQuantity } from '../../lib/formatters'
 
 const DAILY_KEYS = [['daily-details'], ['daily-bonus']] as const
 
@@ -39,7 +40,7 @@ export function DailySection() {
                 <p>
                   {data.season
                     ? t('rewards.daily.seasonDescription', { day: data.season.current_day })
-                    : t('rewards.daily.simpleDescription', { amount: fallback.data?.amount || '0' })}
+                    : t('rewards.daily.simpleDescription', { amount: formatCoinQuantity(fallback.data?.amount) })}
                 </p>
               </div>
               <div className="daily-day-seal">

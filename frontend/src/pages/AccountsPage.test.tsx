@@ -217,7 +217,7 @@ it('abre modal de compra de slots ao clicar no botão de expandir e conclui comp
   expect(screen.getByText('Comprar slots de conta')).toBeVisible()
   expect(screen.getByText('Saldo na carteira')).toBeVisible()
 
-  await user.click(screen.getByRole('button', { name: /Comprar 1 slot\(s\) por 10\.00 moedas/i }))
+  await user.click(screen.getByRole('button', { name: /Comprar 1 slot\(s\) por 10 moedas/i }))
 
   expect(lineageApi.purchaseSlots).toHaveBeenCalledWith(1)
 })

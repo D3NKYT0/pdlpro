@@ -51,12 +51,13 @@ class WalletTransactionAdmin(PDLModelAdmin):
 class CoinConfigAdmin(PDLModelAdmin):
     """Configura a administração Django de ``CoinConfig``.
 
-    A listagem exibe ``name``, ``coin_id``, ``multiplier``, ``usd_multiplier``, ``active``.
+    A listagem exibe ``name``, ``coin_id``, ``multiplier``, ``usd_multiplier``,
+    ``game_units_per_coin``, ``active``.
     Ajuste filtros, busca e campos nesta classe para mudar a experiência da equipe no admin;
     regras reutilizáveis ficam na aplicação.
     """
 
-    list_display = ("name", "coin_id", "multiplier", "usd_multiplier", "active")
+    list_display = ("name", "coin_id", "multiplier", "usd_multiplier", "game_units_per_coin", "active")
 
 
 @admin.register(CoinPackage)

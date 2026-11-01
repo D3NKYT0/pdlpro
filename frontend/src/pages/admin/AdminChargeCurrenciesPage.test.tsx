@@ -87,8 +87,8 @@ describe('AdminChargeCurrenciesPage', () => {
     expect(screen.getAllByText(/Moeda de Liquidação/i).length).toBeGreaterThan(0)
 
     // Rates displayed
-    expect(screen.getByText('1 BRL = 1.00 Coins')).toBeInTheDocument()
-    expect(screen.getByText('1 USD = 5.00 Coins')).toBeInTheDocument()
+    expect(screen.getByText('1 BRL = 1 Coins')).toBeInTheDocument()
+    expect(screen.getByText('1 USD = 5 Coins')).toBeInTheDocument()
 
     // Simulator displays active currencies
     expect(screen.getByText(/Simulador de Cotação/i)).toBeInTheDocument()

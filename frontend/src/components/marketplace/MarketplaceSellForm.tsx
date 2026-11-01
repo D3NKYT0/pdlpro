@@ -145,7 +145,7 @@ export function MarketplaceSellForm({
 
         <Field>
           {t('marketplace.sell.price')}
-          <input type="number" min="0.01" step="0.01" inputMode="decimal" value={price} onChange={(event) => onPriceChange(event.target.value)} placeholder={t('marketplace.sell.pricePlaceholder')} required />
+          <input type="number" min="1" step="1" inputMode="numeric" value={price} onChange={(event) => onPriceChange(event.target.value)} placeholder={t('marketplace.sell.pricePlaceholder')} required />
         </Field>
         <Field>
           {t('marketplace.sell.notes')}

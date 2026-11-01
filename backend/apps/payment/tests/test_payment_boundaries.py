@@ -235,11 +235,10 @@ def test_inactive_package_is_not_for_sale():
         _pricing().quote(package_id=str(package.id), amount=None, currency="BRL")
 
 
-@pytest.mark.parametrize("currency,expected", [("BRL", "25.02"), ("USD", "60.06")])
-def test_quote_uses_active_exchange_rate_and_decimal_rounding(currency, expected):
+@pytest.mark.parametrize("currency,expected", [("BRL", "25.00"), ("USD", "60.00")])
+def test_quote_uses_active_exchange_rate_and_buys_whole_coins(currency, expected):
     CoinConfig.objects.create(name="Teste", multiplier="2.50", usd_multiplier="6")
     quote = _pricing().quote(package_id=None, amount=Decimal("10.01"), currency=currency)
-    # Decimal usa ROUND_HALF_EVEN: 25.025 arredonda para 25.02.
     assert quote.coins == Decimal(expected)
 
 

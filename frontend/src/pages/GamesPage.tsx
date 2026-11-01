@@ -28,7 +28,7 @@ import {
 import toast from 'react-hot-toast'
 import { gamesApi } from '../services/api'
 import { isInsufficientTokens } from '../lib/errors'
-import { formatCoins, formatCompactQuantity, formatNumber } from '../lib/formatters'
+import { formatCoins, formatCompactQuantity, formatNumber, formatCoinQuantity } from '../lib/formatters'
 import { ItemIcon } from '../components/ItemIcon'
 import { FishingGame } from '../components/games/FishingGame'
 import { BoxHuntCard } from '../components/games/BoxCatalog'
@@ -246,7 +246,7 @@ export function GamesPage() {
   async function claim() {
     await action.run(async () => {
       const result = await gamesApi.claimDailyBonus()
-      toast.success(t('games.toast.bonusCredited', { amount: formatNumber(result.amount, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }))
+      toast.success(t('games.toast.bonusCredited', { amount: formatCoinQuantity(result.amount) }))
       await refresh()
     }, t('games.toast.claimError'))
   }

@@ -10,6 +10,7 @@ import { ArrowLeft, CircleDollarSign, ReceiptText } from 'lucide-react'
 import { paymentApi } from '../services/api'
 import type { ApiPaymentOrder } from '../services/types'
 import { formatWalletMoney, getOrderStatus, orderDetailEntries } from './walletHistory'
+import { formatCoinQuantity } from '../lib/formatters'
 
 export function WalletOrdersPage() {
   const { t } = useTranslation('panel')
@@ -56,7 +57,7 @@ export function WalletOrdersPage() {
                 >
                   <span className="wallet-row-icon" aria-hidden="true"><CircleDollarSign /></span>
                   <span className="wallet-row-copy">
-                    <strong>{t('wallet.activity.coins', { coins: row.coins })}</strong>
+                    <strong>{t('wallet.activity.coins', { coins: formatCoinQuantity(row.coins) })}</strong>
                     <small>{formatWalletMoney(row.amount, currency)} · {row.method}</small>
                   </span>
                   <span className={`wallet-status ${status.modifier}`}>{status.label}</span>

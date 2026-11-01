@@ -1,4 +1,4 @@
-from decimal import ROUND_DOWN, Decimal
+from decimal import Decimal
 from uuid import UUID
 
 from django.conf import settings
@@ -6,6 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.gateways import ILineageGateway
+from apps.wallet.domain.coins import floor_coins, is_whole_coins
 from apps.wallet.domain.entities import InsufficientBalanceError
 from apps.wallet.domain.repositories import IGameExchangeRepository, IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
@@ -68,7 +69,7 @@ class ExchangeCoinsUseCase:
     Chame ``execute(user, data)`` com usuário autenticado e dados validados por
     ExchangeSerializer. ``request_key`` identifica a mesma operação e deve ser reutilizada com
     os mesmos parâmetros em uma retomada. Valida vínculo, política de envio online (retirada exige offline), configuração e
-    precisão de duas casas do saldo.
+    se a quantidade corresponde a um número inteiro de moedas do saldo.
 
     Na ida ao jogo, reserva o saldo principal antes da chamada externa. Uma rejeição de domínio
     estorna a reserva; uma falha de conexão mantém o registro pending para consultar/reaplicar o
@@ -130,25 +131,24 @@ class ExchangeCoinsUseCase:
                         "Selecione um personagem seu que esteja offline."
                     )
                 config = self.wallets.get_active_coin_config()
-                multiplier = Decimal(config["multiplier"]) if config else Decimal(0)
+                game_rate = Decimal(config["game_units_per_coin"]) if config else Decimal(0)
                 fee_percent = (
                     Decimal(config["withdraw_fee_percent"]) if config else Decimal(0)
                 )
                 if (
                     not config
-                    or multiplier <= 0
+                    or game_rate <= 0
                     or not 0 <= fee_percent < 100
                 ):
                     raise ValidationDomainError("Conversão de moedas não configurada.")
-                gross = Decimal(data["quantity"]) / multiplier
-                if gross != gross.quantize(Decimal("0.01")):
+                gross = Decimal(data["quantity"]) / game_rate
+                if not is_whole_coins(gross):
                     raise ValidationDomainError(
-                        "A quantidade deve corresponder a um valor exato de saldo (duas casas decimais)."
+                        "A quantidade deve corresponder a um número inteiro de moedas do saldo."
                     )
+                gross = floor_coins(gross)
                 fee = (
-                    (gross * fee_percent / 100).quantize(
-                        Decimal("0.01"), rounding=ROUND_DOWN
-                    )
+                    floor_coins(gross * fee_percent / 100)
                     if data["direction"] == "from_game"
                     else Decimal(0)
                 )

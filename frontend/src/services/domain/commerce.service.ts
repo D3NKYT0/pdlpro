@@ -78,7 +78,7 @@ export type ExchangeState = {
   coin: {
     name: string;
     item_id: number;
-    multiplier: string;
+    game_units_per_coin: string;
     withdraw_fee_percent: string;
   } | null;
   history: Exchange[];

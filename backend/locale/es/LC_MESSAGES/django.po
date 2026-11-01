@@ -5832,3 +5832,21 @@ msgstr "Mostrar el estado online u offline del servidor en el sitio y el panel."
 #: apps/programs/migrations/0012_server_display_resources.py
 msgid "Mostrar a quantidade de jogadores online no site e no painel."
 msgstr "Mostrar la cantidad de jugadores online en el sitio y el panel."
+
+msgid "Unidades no jogo por moeda"
+msgstr "Unidades en el juego por moneda"
+
+msgid "Quantidade do item entregue no jogo para cada 1 moeda de saldo do site."
+msgstr "Cantidad del ítem entregada en el juego por cada 1 moneda de saldo del sitio."
+
+msgid "Informe unidades no jogo por moeda maior que zero, com até duas casas decimais."
+msgstr "Indica unidades en el juego por moneda mayores que cero, con hasta dos decimales."
+
+msgid "Informe um número inteiro de moedas."
+msgstr "Indica un número entero de monedas."
+
+msgid "O valor informado não compra nenhuma moeda inteira."
+msgstr "El valor indicado no compra ninguna moneda entera."
+
+msgid "A quantidade deve corresponder a um número inteiro de moedas do saldo."
+msgstr "La cantidad debe corresponder a un número entero de monedas del saldo."

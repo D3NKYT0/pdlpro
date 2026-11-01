@@ -19,6 +19,7 @@ import { AdminHeader, AdminSaveBar } from './AdminChrome'
 import { ItemIcon } from '../../components/ItemIcon'
 import { ItemIdField } from '../../components/ItemIdField'
 import { useItemCatalog } from '../../hooks/useItemCatalog'
+import { formatCoinQuantity } from '../../lib/formatters'
 
 const SHOP_TABS = ['items', 'packages'] as const
 
@@ -228,7 +229,7 @@ export function AdminShopPage() {
                         </span>
                       </td>
                       <td>{item.item_id}</td>
-                      <td>{item.price}</td>
+                      <td>{formatCoinQuantity(item.price)}</td>
                       <td>{item.quantity}</td>
                       <td>{item.active ? t('shop.active') : t('shop.inactive')}</td>
                       <td>
@@ -288,7 +289,7 @@ export function AdminShopPage() {
                     required
                     type="number"
                     min={0}
-                    step="0.01"
+                    step="1"
                     value={packDraft.total_price ?? ''}
                     onChange={(event) => setPackDraft({ ...packDraft, total_price: event.target.value })}
                   />
@@ -374,7 +375,7 @@ export function AdminShopPage() {
                   {packages.map((pack) => (
                     <tr key={pack.id}>
                       <td>{pack.name}</td>
-                      <td>{t('shop.packagePriceLabel', { price: pack.total_price })}</td>
+                      <td>{t('shop.packagePriceLabel', { price: formatCoinQuantity(pack.total_price) })}</td>
                       <td>
                         <div className="admin-shop-pack-lines">
                           {pack.contents.map((entry, index) => (

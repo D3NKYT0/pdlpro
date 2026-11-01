@@ -19,7 +19,7 @@ import {
   type PaymentReportRow,
 } from '../../services/api'
 import { useFeedbackAction } from '../../hooks/useFeedbackAction'
-import { formatCurrency, formatDateTime, formatNumber } from '../../lib/formatters'
+import { formatCurrency, formatDateTime, formatNumber, formatCoinQuantity } from '../../lib/formatters'
 import { AdminHeader } from './AdminChrome'
 import './financial-reports.css'
 
@@ -32,7 +32,7 @@ const reports = [
   { slug: 'reconciliation', kind: 'reconciliation', labelKey: 'reconciliation', icon: Scale },
 ] satisfies { slug: string; kind: FinancialReportKind; labelKey: string; icon: typeof Wallet }[]
 
-const quantity = (value: string | number) => formatNumber(value, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+const quantity = (value: string | number) => formatCoinQuantity(value)
 const count = (value: number) => formatNumber(value)
 const money = (value: string, currency: string) => formatCurrency(value, currency)
 const dateTime = (value: string | null) => (value ? formatDateTime(value, 'short') : '—')
@@ -160,7 +160,7 @@ export function AdminFinancialReportsPage() {
     if (!mockOrder) return
     await action.run(async () => {
       const confirmed = await staffApi.confirmMockPayment(mockOrder.id)
-      toast.success(t('reports.finance.mockConfirm.success', { coins: confirmed.coins, username: mockOrder.username }))
+      toast.success(t('reports.finance.mockConfirm.success', { coins: formatCoinQuantity(confirmed.coins), username: mockOrder.username }))
       setMockOrder(null)
       await query.refetch()
     }, t('reports.finance.mockConfirm.error'))

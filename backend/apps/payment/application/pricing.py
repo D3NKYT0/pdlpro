@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from decimal import Decimal
 
+from apps.wallet.domain.coins import floor_coins
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
@@ -54,7 +55,7 @@ class CoinPricingService:
             if price is None or Decimal(str(price)) <= 0:
                 raise ValidationDomainError("Pacote de moedas não possui preço para esta moeda.")
             return CoinQuote(
-                coins=Decimal(str(package["coins"])),
+                coins=floor_coins(package["coins"]),
                 amount=Decimal(str(price)),
                 currency=currency,
                 package_code=package["code"],
@@ -65,7 +66,9 @@ class CoinPricingService:
         rate = Decimal(str(charge_currency["coins_per_unit"]))
         if rate <= 0:
             raise ValidationDomainError("Taxa de conversão inválida para esta moeda.")
-        coins = (amount * rate).quantize(Decimal("0.01"))
+        coins = floor_coins(amount * rate)
+        if coins < 1:
+            raise ValidationDomainError("O valor informado não compra nenhuma moeda inteira.")
         return CoinQuote(coins=coins, amount=amount, currency=currency, package_code="", package_name="")
 
     def amount_for_coins(self, coins: Decimal, currency: str) -> Decimal:

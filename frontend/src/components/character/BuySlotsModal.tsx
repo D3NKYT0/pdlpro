@@ -5,6 +5,7 @@ import { AlertCircle, Coins, Sparkles, UsersRound, Wallet } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { Field } from '../ui/Field'
 import { Modal } from '../ui/Modal'
+import { formatCoinQuantity } from '../../lib/formatters'
 
 export interface BuySlotsModalProps {
   open: boolean
@@ -78,7 +79,7 @@ export function BuySlotsModal({
               {t('accounts.buySlotsModal.walletBalance', { defaultValue: 'Saldo na carteira' })}
             </span>
             <strong className="stat-value">
-              {walletBalance.toFixed(2)} {t('accounts.buySlotsModal.coinsUnit', { defaultValue: 'moedas' })}
+              {formatCoinQuantity(walletBalance)} {t('accounts.buySlotsModal.coinsUnit', { defaultValue: 'moedas' })}
             </strong>
           </div>
         </div>
@@ -134,7 +135,7 @@ export function BuySlotsModal({
               <div className="summary-row">
                 <span>{t('accounts.buySlotsModal.pricePerSlot', { defaultValue: 'Preço por slot' })}:</span>
                 <strong>
-                  {unitPrice.toFixed(2)} {t('accounts.buySlotsModal.coinsUnit', { defaultValue: 'moedas' })}
+                  {formatCoinQuantity(unitPrice)} {t('accounts.buySlotsModal.coinsUnit', { defaultValue: 'moedas' })}
                 </strong>
               </div>
               <div className="summary-row">
@@ -145,7 +146,7 @@ export function BuySlotsModal({
                 <span>{t('accounts.buySlotsModal.totalLabel', { defaultValue: 'Total a pagar' })}:</span>
                 <span className="total-highlight">
                   <Coins aria-hidden="true" />
-                  <strong>{totalPrice.toFixed(2)}</strong> {t('accounts.buySlotsModal.coinsUnit', { defaultValue: 'moedas' })}
+                  <strong>{formatCoinQuantity(totalPrice)}</strong> {t('accounts.buySlotsModal.coinsUnit', { defaultValue: 'moedas' })}
                 </span>
               </div>
             </div>
@@ -177,8 +178,8 @@ export function BuySlotsModal({
                   ? t('common.loading', { defaultValue: 'Processando...' })
                   : t('accounts.buySlotsModal.confirmBtnPrice', {
                       quantity: cleanQuantity,
-                      price: totalPrice.toFixed(2),
-                      defaultValue: `Comprar ${cleanQuantity} slot(s) por ${totalPrice.toFixed(2)} moedas`,
+                      price: formatCoinQuantity(totalPrice),
+                      defaultValue: `Comprar ${cleanQuantity} slot(s) por ${formatCoinQuantity(totalPrice)} moedas`,
                     })}
               </Button>
               <Button variant="ghost" type="button" disabled={pending} onClick={onClose}>

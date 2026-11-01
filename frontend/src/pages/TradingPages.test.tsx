@@ -56,7 +56,7 @@ const listing: ApiCharacterListing = {
       enchantable: true,
     },
   ],
-  price: '150.25',
+  price: '150',
   status: 'for_sale',
   notes: 'Pronto para jogar',
   created_at: '2026-09-02T10:00:00Z',
@@ -140,18 +140,18 @@ function mount(page: ReactElement, disabled: string[] = []) {
 async function prepareListing(user: ReturnType<typeof userEvent.setup>) {
   await screen.findByRole('option', { name: /Elf/ })
   await user.selectOptions(screen.getByRole('combobox', { name: 'Personagem' }), '7')
-  await user.type(screen.getByRole('spinbutton', { name: 'Preço' }), '150.25')
+  await user.type(screen.getByRole('spinbutton', { name: 'Preço' }), '150')
   await user.click(screen.getByRole('textbox', { name: 'Descrição para o comprador' }))
   await user.paste('Pronto para jogar')
 }
 it.each([false, true])('marketplace compra e apresenta resultado; erro=%s', async fail => {
   if (fail) vi.mocked(marketplaceApi.buy).mockRejectedValue(new ApiError('Saldo insuficiente', 400, 'INSUFFICIENT'))
   const user = mount(<MarketplacePage />)
-  expect(await screen.findByText('150,25 moedas')).toBeVisible()
+  expect(await screen.findByText('150 moedas')).toBeVisible()
   expect(await screen.findByRole('img', { name: 'Retrato de Elf' })).toHaveAttribute('src', '/theme/avatars/elf-m.png')
   await user.click(await screen.findByRole('button', { name: /Ver personagem/ }))
   expect(screen.getAllByRole('img', { name: 'Retrato de Elf' }).length).toBeGreaterThan(1)
-  expect(screen.getAllByText('150,25 moedas').length).toBeGreaterThan(1)
+  expect(screen.getAllByText('150 moedas').length).toBeGreaterThan(1)
   expect(screen.getByText('Pronto para jogar')).toBeVisible()
   expect(screen.getByLabelText('Equipamentos atuais do personagem')).toBeVisible()
   expect(screen.getByLabelText('Brinco: Adena')).toBeVisible()
@@ -182,15 +182,15 @@ it.each([false, true])('dono pode cancelar e não comprar seu anúncio; erro=%s'
   if (fail) expect(toast.error).toHaveBeenCalledWith('Venda em andamento')
   else expect(await screen.findByText('Cancelado')).toBeVisible()
 })
-it.each([false, true])('publica personagem com preço decimal; erro=%s', async fail => {
+it.each([false, true])('publica personagem com preço em moedas inteiras; erro=%s', async fail => {
   if (fail) vi.mocked(marketplaceApi.list).mockRejectedValue(new ApiError('Personagem indisponível', 409, 'CONFLICT'))
   const user = mount(<MarketplacePage />)
   await prepareListing(user)
   await user.click(screen.getByRole('button', { name: 'Publicar anúncio' }))
-  expect(marketplaceApi.list).toHaveBeenCalledWith({ char_id: 7, price: '150.25', notes: 'Pronto para jogar' })
+  expect(marketplaceApi.list).toHaveBeenCalledWith({ char_id: 7, price: '150', notes: 'Pronto para jogar' })
   if (fail) {
     expect(toast.error).toHaveBeenCalledWith('Personagem indisponível')
-    expect(screen.getByRole('spinbutton', { name: 'Preço' })).toHaveValue(150.25)
+    expect(screen.getByRole('spinbutton', { name: 'Preço' })).toHaveValue(150)
     expect(screen.getByRole('button', { name: 'Publicar anúncio' })).toBeEnabled()
   } else expect(screen.getByRole('combobox', { name: 'Personagem' })).toHaveValue('')
 })
@@ -225,16 +225,16 @@ it('visitante consulta catálogo sem carregar dados privados', async () => {
   expect(lineageApi.characters).not.toHaveBeenCalled()
   expect(screen.getByText('Entre para vender ou comprar personagens.')).toBeVisible()
 })
-it.each([false, true])('lance envia decimal e personagem selecionado; erro=%s', async fail => {
+it.each([false, true])('lance envia moedas inteiras e personagem selecionado; erro=%s', async fail => {
   if (fail) vi.mocked(auctionApi.bid).mockRejectedValue(new ApiError('Lance ultrapassado', 409, 'CONFLICT'))
   const user = mount(<AuctionPage />)
   await user.click(await screen.findByRole('button', { name: /Ver leilão/ }))
-  expect(screen.getAllByText('12,00 moedas').length).toBeGreaterThan(0)
-  expect(screen.getByText('Lance mínimo aceito: 12,01 moedas')).toBeVisible()
-  expect(screen.getByRole('spinbutton', { name: 'Seu lance' })).toHaveValue(12.01)
+  expect(screen.getAllByText('12 moedas').length).toBeGreaterThan(0)
+  expect(screen.getByText('Lance mínimo aceito: 13 moedas')).toBeVisible()
+  expect(screen.getByRole('spinbutton', { name: 'Seu lance' })).toHaveValue(13)
   expect(screen.getByRole('combobox', { name: 'Personagem que receberá o item' })).toHaveValue('Elf')
   await user.click(screen.getByRole('button', { name: 'Dar lance' }))
-  expect(auctionApi.bid).toHaveBeenCalledWith('auction', '12.01', 'Elf')
+  expect(auctionApi.bid).toHaveBeenCalledWith('auction', '13', 'Elf')
   if (fail) expect(toast.error).toHaveBeenCalledWith('Lance ultrapassado')
   else await waitFor(() => expect(auctionApi.open).toHaveBeenCalledTimes(2))
 })
@@ -263,10 +263,10 @@ it.each([false, true])('cria leilão do item/enchant e quantidade escolhidos; er
   expect(quantity).toHaveAttribute('max', '10')
   await user.clear(quantity)
   await user.type(quantity, '2')
-  await user.type(screen.getByRole('spinbutton', { name: 'Lance inicial' }), '15.50')
+  await user.type(screen.getByRole('spinbutton', { name: 'Lance inicial' }), '15')
   await user.selectOptions(screen.getByRole('combobox', { name: 'Duração' }), '48')
   await user.click(screen.getByRole('button', { name: 'Publicar leilão' }))
-  expect(auctionApi.create).toHaveBeenCalledWith({ kind: 'item', inventory_id: 'bag', item_id: 57, quantity: 2, enchant: 3, min_bid: '15.5', hours: 48 })
+  expect(auctionApi.create).toHaveBeenCalledWith({ kind: 'item', inventory_id: 'bag', item_id: 57, quantity: 2, enchant: 3, min_bid: '15', hours: 48 })
   if (fail) {
     expect(toast.error).toHaveBeenCalledWith('Estoque alterado')
     expect(quantity).toHaveValue(2)
@@ -296,9 +296,9 @@ it('lance em personagem não pede inventário de destino', async () => {
   expect(screen.getByLabelText('Triple Slash · Nv. 37 · +15')).toBeVisible()
   expect(screen.getByText(/transferido para a sua conta/i)).toBeVisible()
   expect(screen.queryByRole('combobox', { name: 'Personagem que receberá o item' })).not.toBeInTheDocument()
-  expect(screen.getByRole('spinbutton', { name: 'Seu lance' })).toHaveValue(10.01)
+  expect(screen.getByRole('spinbutton', { name: 'Seu lance' })).toHaveValue(11)
   await user.click(screen.getByRole('button', { name: 'Dar lance' }))
-  expect(auctionApi.bid).toHaveBeenCalledWith('char-auction', '10.01', '')
+  expect(auctionApi.bid).toHaveBeenCalledWith('char-auction', '11', '')
 })
 it('marketplace segue o idioma ativo no catálogo, no anúncio e na venda', async () => {
   await i18n.changeLanguage('en')
@@ -483,7 +483,7 @@ it('leilão suporta mudança de conta no lance do leilão', async () => {
   await user.selectOptions(recipientSelect, 'OrcAlt')
   await user.click(screen.getByRole('button', { name: 'Dar lance' }))
 
-  expect(auctionApi.bid).toHaveBeenCalledWith('auction', '12.01', 'OrcAlt')
+  expect(auctionApi.bid).toHaveBeenCalledWith('auction', '13', 'OrcAlt')
 })
 
 

@@ -33,7 +33,7 @@ def api(accounts):
     return client
 
 
-@pytest.mark.parametrize("amount,expected", [("0.01", "49.99"), ("50.00", "0.00"), ("12.34", "37.66")])
+@pytest.mark.parametrize("amount,expected", [("1", "49.00"), ("50.00", "0.00"), ("12", "38.00")])
 def test_transfer_conserves_main_balance_and_records_both_sides(api, accounts, amount, expected):
     response = api.post("/api/v1/shared/wallet/transfer/", {
         "recipient_username": "RECIPIENT", "amount": amount, "description": "Presente",
@@ -50,7 +50,7 @@ def test_transfer_conserves_main_balance_and_records_both_sides(api, accounts, a
     assert list(recipient.transactions.values_list("kind", "amount", "description")) == [("ENTRADA", Decimal(amount), "Presente")]
 
 
-@pytest.mark.parametrize("amount", ["0", "-1", "50.01", "100", "abc", "1.001", "NaN", "Infinity"])
+@pytest.mark.parametrize("amount", ["0", "-1", "51", "12.34", "100", "abc", "1.001", "NaN", "Infinity"])
 def test_invalid_transfer_does_not_change_balances_or_ledger(api, accounts, amount):
     response = api.post("/api/v1/shared/wallet/transfer/", {"recipient_username": "recipient", "amount": amount}, format="json")
     assert response.status_code == 400, response.data
@@ -141,6 +141,7 @@ def test_game_exchange_state_returns_coin_and_empty_history(api, accounts, setti
         "item_id": 57,
         "multiplier": "1.00",
         "usd_multiplier": "5.00",
+        "game_units_per_coin": "1.00",
         "withdraw_fee_percent": "5.00",
     }
     assert response.data["history"] == []
@@ -209,6 +210,106 @@ def test_online_coin_api_rejects_invalid_input_without_reserving_balance(api, ac
     assert not calls
     assert not GameExchange.objects.exists()
     assert Wallet.objects.get(user=accounts[0]).balance == 50
+
+
+def _exchange_setup(accounts, monkeypatch, balance):
+    from apps.server.domain.gateways import ILineageGateway
+
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    gateway.register_account("sender", "l2pass", accounts[0].email)
+    gateway.link_account("sender", str(accounts[0].id))
+    char = gateway.seed_character("sender", "Hero")
+    Wallet.objects.filter(user=accounts[0]).update(balance=balance)
+    monkeypatch.setattr(gateway, "assert_exchange_ready", lambda: None)
+    calls = []
+    monkeypatch.setattr(gateway, "exchange_coins", lambda *args: calls.append(args))
+    return char, calls
+
+
+def _exchange_payload(char, quantity, direction="to_game"):
+    from uuid import uuid4
+
+    return {"request_key": str(uuid4()), "direction": direction, "login": "sender", "character_id": char.char_id, "quantity": quantity}
+
+
+def test_purchase_rate_does_not_change_the_game_exchange_rate(api, accounts, monkeypatch):
+    """1 BRL = 100 coins não pode fazer 1 coin de saldo virar 100 unidades no jogo."""
+    from apps.wallet.infrastructure.models import CoinConfig, WalletChargeCurrency
+
+    CoinConfig.objects.create(name="Coin", coin_id=57, active=True)
+    WalletChargeCurrency.objects.update_or_create(code="BRL", defaults={"coins_per_unit": Decimal("100.00"), "settlement": True})
+    char, calls = _exchange_setup(accounts, monkeypatch, 2500)
+
+    response = api.post("/api/v1/shared/wallet/game-exchange/", _exchange_payload(char, 2500), format="json")
+
+    assert response.status_code == 200, response.data
+    assert response.data["status"] == "completed"
+    assert response.data["amount"] == "2500.00"
+    assert calls[0][4] == 2500
+    assert Wallet.objects.get(user=accounts[0]).balance == 0
+    coin = api.get("/api/v1/shared/wallet/game-exchange/").data["coin"]
+    assert coin["multiplier"] == "100.00"
+    assert coin["game_units_per_coin"] == "1.00"
+
+
+@pytest.mark.parametrize(
+    "direction,quantity,expected_balance,expected_amount",
+    [("to_game", 250000, Decimal("0.00"), "2500.00"), ("from_game", 250000, Decimal("4900.00"), "2400.00")],
+)
+def test_configured_game_rate_converts_both_directions(api, accounts, monkeypatch, direction, quantity, expected_balance, expected_amount):
+    from apps.wallet.infrastructure.models import CoinConfig
+
+    CoinConfig.objects.create(name="Coin", coin_id=57, multiplier=1, game_units_per_coin=100, withdraw_fee_percent=4, active=True)
+    char, calls = _exchange_setup(accounts, monkeypatch, 2500)
+
+    response = api.post("/api/v1/shared/wallet/game-exchange/", _exchange_payload(char, quantity, direction), format="json")
+
+    assert response.status_code == 200, response.data
+    assert response.data["amount"] == expected_amount
+    assert calls[0][4] == quantity
+    assert Wallet.objects.get(user=accounts[0]).balance == expected_balance
+
+
+@pytest.mark.parametrize("rate,quantity", [("0.00", 10), ("3.00", 10)])
+def test_exchange_rejects_unconfigured_rate_and_inexact_quantity_without_reserving(api, accounts, monkeypatch, rate, quantity):
+    from apps.wallet.infrastructure.exchange_models import GameExchange
+    from apps.wallet.infrastructure.models import CoinConfig
+
+    CoinConfig.objects.create(name="Coin", coin_id=57, game_units_per_coin=rate, active=True)
+    char, calls = _exchange_setup(accounts, monkeypatch, 2500)
+
+    response = api.post("/api/v1/shared/wallet/game-exchange/", _exchange_payload(char, quantity), format="json")
+
+    assert response.status_code == 400, response.data
+    assert not calls
+    assert not GameExchange.objects.exists()
+    assert Wallet.objects.get(user=accounts[0]).balance == 2500
+
+
+def test_saving_coin_config_keeps_game_rate_out_of_the_charge_currency():
+    from apps.wallet.infrastructure.models import CoinConfig, WalletChargeCurrency
+
+    CoinConfig.objects.create(name="Coin", multiplier=2, game_units_per_coin=1000, active=True)
+
+    assert WalletChargeCurrency.objects.get(code="BRL").coins_per_unit == Decimal("2.00")
+    WalletChargeCurrency.objects.filter(code="BRL").first().save()
+    assert CoinConfig.objects.get(active=True).game_units_per_coin == Decimal("1000.00")
+
+
+def test_migration_preserves_the_rate_each_installation_was_already_using():
+    from importlib import import_module
+
+    from django.apps import apps as django_apps
+
+    from apps.wallet.infrastructure.models import CoinConfig
+
+    row = CoinConfig.objects.create(name="Coin", multiplier=100, active=True)
+    assert row.game_units_per_coin == Decimal("1.00")
+
+    import_module("apps.wallet.migrations.0009_coinconfig_game_units_per_coin").copy_multiplier_to_game_rate(django_apps, None)
+
+    row.refresh_from_db()
+    assert row.game_units_per_coin == Decimal("100.00")
 
 
 @pytest.mark.parametrize("name, expected", [("Banco Cliente A", "Banco Cliente A"), ("Carteira Cliente B", "Carteira Cliente B"), ("  Meu Banco  ", "Meu Banco"), ("", ""), ("   ", "")])

@@ -49,12 +49,12 @@ export function WalletTransferCard({
           <span className="wallet-field-label"><Coins aria-hidden="true" /> {t('wallet.transfer.amount')}</span>
           <input
             type="number"
-            min="0.01"
-            step="0.01"
-            inputMode="decimal"
+            min="1"
+            step="1"
+            inputMode="numeric"
             value={amount}
             onChange={(event) => onAmountChange(event.target.value)}
-            placeholder="0.00"
+            placeholder="0"
             required
           />
         </Field>

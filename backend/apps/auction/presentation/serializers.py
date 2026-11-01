@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from apps.wallet.presentation.fields import WholeCoinsField
+
 
 class CreateAuctionSerializer(serializers.Serializer):
     """Valida criação de leilão de item ou personagem conforme ``kind``.
@@ -15,7 +17,7 @@ class CreateAuctionSerializer(serializers.Serializer):
     enchant = serializers.IntegerField(min_value=0, default=0, required=False)
     login = serializers.CharField(required=False, allow_blank=True, max_length=45)
     char_id = serializers.IntegerField(min_value=1, required=False)
-    min_bid = serializers.DecimalField(max_digits=12, decimal_places=2)
+    min_bid = WholeCoinsField(max_digits=12, decimal_places=2)
     hours = serializers.IntegerField(min_value=1, max_value=168, default=24)
 
     def validate(self, attrs):
@@ -41,5 +43,5 @@ class PlaceBidSerializer(serializers.Serializer):
     Campos declarados: ``amount``, ``character_name``.
     """
 
-    amount = serializers.DecimalField(max_digits=12, decimal_places=2)
+    amount = WholeCoinsField(max_digits=12, decimal_places=2)
     character_name = serializers.CharField(max_length=35, required=False, allow_blank=True, default="")

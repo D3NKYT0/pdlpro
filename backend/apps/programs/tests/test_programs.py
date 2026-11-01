@@ -747,7 +747,7 @@ def test_exchange_financial_outcomes(player, direction, outcome):
             if outcome == "rejected":
                 raise ValidationDomainError("Insufficient game coins")
 
-    CoinConfig.objects.create(name="Coin", multiplier=2, withdraw_fee_percent=5)
+    CoinConfig.objects.create(name="Coin", game_units_per_coin=2, withdraw_fee_percent=5)
     wallet = Wallet.objects.create(user=player, balance=100, bonus_balance=20)
     scope = DependencyInjection.root().create_scope()
     case = ExchangeCoinsUseCase(
@@ -784,7 +784,7 @@ def test_exchange_financial_outcomes(player, direction, outcome):
     wallet.refresh_from_db()
     expected = Decimal(100)
     if outcome == "success":
-        expected += Decimal("9.50") if direction == "from_game" else Decimal(-10)
+        expected += Decimal(10) if direction == "from_game" else Decimal(-10)
     assert wallet.balance == expected
     assert wallet.bonus_balance == 20
 

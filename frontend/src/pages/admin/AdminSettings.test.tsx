@@ -63,7 +63,7 @@ vi.mock('../../services/domain/staffGameContent.service', () => ({ staffGameCont
 beforeEach(() => {
   vi.resetAllMocks()
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
-  vi.mocked(staffApi.coins).mockResolvedValue({ name: 'Adena', coin_id: 57, multiplier: '1.00', usd_multiplier: '5.00', withdraw_fee_percent: '0.00' } as any)
+  vi.mocked(staffApi.coins).mockResolvedValue({ name: 'Adena', coin_id: 57, multiplier: '1.00', usd_multiplier: '5.00', game_units_per_coin: '1.00', withdraw_fee_percent: '0.00' } as any)
   vi.mocked(staffApi.walletPromo).mockResolvedValue({
     id: null,
     percent: '10.00',
@@ -148,7 +148,17 @@ it('moedas mantém precisão decimal na configuração', async () => {
   await user.clear(input)
   await user.type(input, '6.25')
   await user.click(screen.getByRole('button', { name: /Salvar/ }))
-  expect(staffApi.saveCoins).toHaveBeenCalledWith({ name: 'Adena', coin_id: 57, multiplier: '1.00', usd_multiplier: '6.25', withdraw_fee_percent: '0.00', active: true })
+  expect(staffApi.saveCoins).toHaveBeenCalledWith({ name: 'Adena', coin_id: 57, multiplier: '1.00', usd_multiplier: '6.25', game_units_per_coin: '1.00', withdraw_fee_percent: '0.00', active: true })
+})
+
+it('moedas salva a taxa do jogo separada da taxa de compra', async () => {
+  const user = mount(<AdminCoinsPage />)
+  const input = await screen.findByRole('spinbutton', { name: /Conversão para o jogo/ })
+  await waitFor(() => expect(input).toHaveValue(1))
+  await user.clear(input)
+  await user.type(input, '100')
+  await user.click(screen.getByRole('button', { name: /Salvar/ }))
+  expect(staffApi.saveCoins).toHaveBeenCalledWith(expect.objectContaining({ multiplier: '1.00', game_units_per_coin: '100' }))
 })
 
 it('carteira salva promoção de recarga ativa', async () => {
@@ -179,10 +189,10 @@ it.each([false, true])('serviços salva preço e disponibilidade; erro=%s', asyn
   expect(screen.getByText('moedas')).toBeVisible()
   expect(screen.queryByText('R$')).not.toBeInTheDocument()
   await user.clear(price)
-  await user.type(price, '12.34')
+  await user.type(price, '12')
   await user.click(screen.getByRole('checkbox', { name: 'Disponível' }))
   await user.click(screen.getByRole('button', { name: /Salvar/ }))
-  expect(staffApi.saveServices).toHaveBeenCalledWith([{ code: 'UNSTUCK', name: 'Destravar', price: '12.34', active: false }])
+  expect(staffApi.saveServices).toHaveBeenCalledWith([{ code: 'UNSTUCK', name: 'Destravar', price: '12', active: false }])
   if (fail) expect(toast.error).toHaveBeenCalledWith('Não autorizado')
   else expect(toast.success).toHaveBeenCalledWith('Preços atualizados')
 })

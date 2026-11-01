@@ -34,6 +34,7 @@ import {
   CoinForgeEnamelIcon,
 } from './ChargeCurrencyEnamelIcons'
 import './charge-currencies.css'
+import { formatCoinQuantity } from '../../lib/formatters'
 
 const EMPTY_DRAFT = {
   code: '',
@@ -375,7 +376,7 @@ export function AdminChargeCurrenciesPage() {
                 <span>{draft.symbol || '$'} 1,00</span>
                 <span>=</span>
                 <Coins aria-hidden="true" style={{ width: 16, height: 16, color: '#ffca28' }} />
-                <span>{draft.coins_per_unit || '1.00'} Coins</span>
+                <span>{formatCoinQuantity(draft.coins_per_unit || 1)} Coins</span>
               </div>
             </div>
           ) : null}
@@ -472,7 +473,7 @@ export function AdminChargeCurrenciesPage() {
                 const codeClass = `is-${curr.code.toLowerCase()}`
 
                 if (simMode === 'currency_to_coins') {
-                  const totalCoins = (parsedSimAmount * rate).toFixed(2)
+                  const totalCoins = formatCoinQuantity(Math.floor(parsedSimAmount * rate))
                   return (
                     <div key={curr.id} className={`charge-currency-sim-row ${codeClass}`}>
                       <div className="charge-currency-sim-badge">
@@ -636,7 +637,7 @@ export function AdminChargeCurrenciesPage() {
                   <div className="charge-currency-rate-primary">
                     <span>{t('chargeCurrencies.list.rateLabel')}</span>
                     <strong>
-                      1 {item.code} = {item.coins_per_unit} Coins
+                      1 {item.code} = {formatCoinQuantity(item.coins_per_unit)} Coins
                     </strong>
                   </div>
                   <span className="charge-currency-rate-secondary">

@@ -147,7 +147,7 @@ def test_bonus_policy_uses_max_of_tier_and_promo():
     )
     preview = DjangoPurchaseBonusPolicy().preview(Decimal("50.00"))
     assert preview.percent == Decimal("25.00")
-    assert preview.bonus == Decimal("12.50")
+    assert preview.bonus == Decimal("12.00")
     assert preview.description == "Promo 25%"
 
     CoinPurchasePromo.objects.all().update(active=False)

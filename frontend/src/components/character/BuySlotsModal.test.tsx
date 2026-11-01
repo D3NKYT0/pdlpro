@@ -26,7 +26,7 @@ it('renderiza título, slots atuais, saldo da carteira e total calculado', () =>
 
   expect(screen.getByText('Comprar slots de conta')).toBeVisible()
   expect(screen.getByText('3 / 3')).toBeVisible()
-  expect(screen.getByText('50.00 moedas')).toBeVisible()
+  expect(screen.getByText('50 moedas')).toBeVisible()
   expect(screen.getByText('Novo limite total: 4 contas')).toBeVisible()
 })
 
@@ -50,9 +50,9 @@ it('permite selecionar quantidade rápida e confirma a compra', async () => {
   await user.click(screen.getByRole('button', { name: '+3 slots' }))
 
   expect(screen.getByText('Novo limite total: 6 contas')).toBeVisible()
-  expect(screen.getByText('30.00')).toBeVisible()
+  expect(screen.getByText('30')).toBeVisible()
 
-  await user.click(screen.getByRole('button', { name: /Comprar 3 slot\(s\) por 30\.00 moedas/i }))
+  await user.click(screen.getByRole('button', { name: /Comprar 3 slot\(s\) por 30 moedas/i }))
   expect(onConfirm).toHaveBeenCalledWith(3)
 })
 

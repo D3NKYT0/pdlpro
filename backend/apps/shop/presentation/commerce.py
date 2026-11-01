@@ -29,6 +29,7 @@ from apps.shop.application.commerce_use_cases import (
     UpdateStaffPromoUseCase,
     UserScopedInput,
 )
+from apps.wallet.presentation.fields import WholeCoinsField
 from common.architecture.exceptions import EntityNotFoundError
 from common.permissions import HasCapability, IsStaffMember
 from common.views import InjectedAPIView
@@ -46,7 +47,7 @@ class PackageSerializer(serializers.Serializer):
 
     id = serializers.UUIDField(read_only=True)
     name = serializers.CharField(max_length=100)
-    total_price = serializers.DecimalField(max_digits=10, decimal_places=2, min_value=0)
+    total_price = WholeCoinsField(max_digits=10, decimal_places=2, min_value=0)
     active = serializers.BooleanField(default=True)
     items = PackageItemSerializer(many=True, write_only=True, required=False)
     contents = serializers.ListField(child=serializers.DictField(), read_only=True)

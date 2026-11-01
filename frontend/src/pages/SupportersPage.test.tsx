@@ -60,7 +60,7 @@ async function submit(
 it('apresenta o programa com o chrome da carteira e o saldo de comissão', async () => {
   await mount()
   expect(screen.getByRole('heading', { level: 1, name: 'Programa de apoiadores' })).toBeVisible()
-  expect(screen.getAllByText('0.00 moedas').length).toBeGreaterThan(0)
+  expect(screen.getAllByText('0 moedas').length).toBeGreaterThan(0)
   expect(screen.getByText('Ainda não enviado')).toBeVisible()
 })
 

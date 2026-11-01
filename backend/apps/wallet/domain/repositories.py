@@ -85,8 +85,8 @@ class IWalletRepository(ABC):
     def get_active_coin_config(self) -> dict | None:
         """Retorna a configuração ativa da moeda de câmbio, ou None se ausente.
 
-        Inclui ``multiplier``, ``usd_multiplier`` e ``withdraw_fee_percent`` como strings
-        quando houver configuração.
+        Inclui ``multiplier``, ``usd_multiplier``, ``game_units_per_coin`` e
+        ``withdraw_fee_percent`` como strings quando houver configuração.
         """
 
         raise NotImplementedError

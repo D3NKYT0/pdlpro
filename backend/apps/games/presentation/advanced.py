@@ -39,6 +39,7 @@ from apps.games.application.staff_content_use_cases import (
     UpsertGameContentInput,
     UpsertGameContentUseCase,
 )
+from apps.wallet.presentation.fields import WholeCoinsField
 from common.permissions import HasCapability
 from common.views import InjectedAPIView
 
@@ -186,7 +187,7 @@ _FIELD_TYPES = {
     "description_es": serializers.CharField(allow_blank=True, required=False, default=""),
     "metric": serializers.ChoiceField(choices=["pvp", "pk", "online_time", "level"]),
     "active": serializers.BooleanField(required=False, default=True),
-    "premium_price": serializers.DecimalField(max_digits=12, decimal_places=2, min_value=0),
+    "premium_price": WholeCoinsField(max_digits=12, decimal_places=2, min_value=0),
     "starts_at": serializers.DateTimeField(),
     "ends_at": serializers.DateTimeField(),
     "starts_on": serializers.DateField(),

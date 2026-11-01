@@ -14,6 +14,7 @@ import { Button } from '../ui/Button'
 import type { ApiChargeCurrencyCatalogItem, ApiCoinPackage, ApiWalletPromo } from '../../services/types'
 import { formatWalletMoney } from './walletHistory'
 import { WalletPromoBanner } from './WalletPromoBanner'
+import { formatCoinQuantity } from '../../lib/formatters'
 
 type WalletPurchaseCardProps = {
   currency: string
@@ -192,16 +193,16 @@ export function WalletPurchaseCard({
               type="button"
               disabled={busy || !paymentAvailable}
               aria-label={t('wallet.purchase.packAria', {
-                coins: pack.total_coins,
+                coins: formatCoinQuantity(pack.total_coins),
                 price: formatWalletMoney(price, currency),
               })}
               onClick={() => void onStartPurchase(pack.id)}
             >
               {pack.badge ? <span className="pay-pack-badge"><Sparkles aria-hidden="true" /> {pack.badge}</span> : null}
               <span className="pay-pack-name">{pack.name}</span>
-              <span className="pay-pack-coins"><Coins aria-hidden="true" /> {pack.total_coins}</span>
+              <span className="pay-pack-coins"><Coins aria-hidden="true" /> {formatCoinQuantity(pack.total_coins)}</span>
               <small>{t('wallet.purchase.packCoins')}</small>
-              {Number(pack.bonus) > 0 ? <span className="pay-pack-bonus">{t('wallet.purchase.packBonus', { bonus: pack.bonus })}</span> : null}
+              {Number(pack.bonus) > 0 ? <span className="pay-pack-bonus">{t('wallet.purchase.packBonus', { bonus: formatCoinQuantity(pack.bonus) })}</span> : null}
               <strong className="pay-pack-price">{formatWalletMoney(price, currency)}</strong>
               <span className="pay-pack-action">{paymentAvailable ? t('wallet.purchase.packChoose') : t('wallet.purchase.packUnavailable')}</span>
             </button>

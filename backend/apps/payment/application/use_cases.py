@@ -23,6 +23,7 @@ from apps.payment.domain.gateways import (
 )
 from apps.payment.domain.repositories import IPaymentOrderRepository
 from apps.wallet.domain.bonus import IPurchaseBonusPolicy
+from apps.wallet.domain.coins import floor_coins
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
@@ -412,13 +413,14 @@ class SettlePaymentUseCase(UseCase[SettlePaymentInput, PaymentOrderEntity]):
                     raise PaymentAlreadyConfirmedError() if order.status == "confirmed" else PaymentNotPendingError()
                 if data.allow_methods is not None and order.method not in data.allow_methods:
                     raise PaymentMethodUnavailableError("Este pedido não pode ser confirmado manualmente.")
-                preview = self._bonus_policy.preview(order.coins)
+                coins = floor_coins(order.coins)
+                preview = self._bonus_policy.preview(coins)
                 wallet = self._wallets.get_or_create(order.user_id)
                 self._wallets.credit(
                     wallet.id,
-                    order.coins,
+                    coins,
                     origin=order.method,
-                    description=f"Compra de {order.coins} moedas via {order.method} ({order.currency})",
+                    description=f"Compra de {int(coins)} moedas via {order.method} ({order.currency})",
                 )
                 if preview.bonus > 0:
                     self._wallets.credit_bonus(

@@ -153,7 +153,7 @@ export function AdminCommercePage() {
                       name="total_price"
                       type="number"
                       min={0}
-                      step="0.01"
+                      step="1"
                       required
                       defaultValue={draft.total_price}
                     />

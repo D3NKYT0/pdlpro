@@ -267,7 +267,7 @@ it('simulador interativo calcula e apresenta métricas de bônus', async () => {
     )
   })
   expect(await screen.findByText('+20%')).toBeInTheDocument()
-  expect(screen.getByText('1200')).toBeInTheDocument()
+  expect(screen.getByText('1.200')).toBeInTheDocument()
 })
 
 it('simulador não quebra a tela se a resposta vier sem objeto breakdown aninhado', async () => {

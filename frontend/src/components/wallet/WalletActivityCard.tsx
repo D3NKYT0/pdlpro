@@ -3,6 +3,7 @@ import { ArrowDownLeft, ArrowUpRight, CircleDollarSign, Clock3, History, Receipt
 import { Card } from '../ui/Card'
 import { ButtonLink } from '../ui/Button'
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../../services/types'
+import { formatCoinQuantity } from '../../lib/formatters'
 import {
   formatWalletMoney,
   getOrderStatus,
@@ -56,7 +57,7 @@ export function WalletActivityCard({
                 >
                   <span className="wallet-row-icon" aria-hidden="true"><CircleDollarSign /></span>
                   <span className="wallet-row-copy">
-                    <strong>{t('wallet.activity.coins', { coins: row.coins })}</strong>
+                    <strong>{t('wallet.activity.coins', { coins: formatCoinQuantity(row.coins) })}</strong>
                     <small>{formatWalletMoney(row.amount, orderCurrency)} · {row.method}</small>
                   </span>
                   <span className={`wallet-status ${status.modifier}`}>{status.label}</span>

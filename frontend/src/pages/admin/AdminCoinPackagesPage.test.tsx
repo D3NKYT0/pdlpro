@@ -34,7 +34,7 @@ const starter = {
   id: 'pack-1',
   code: 'starter',
   name: 'Iniciante',
-  coins: '27.50',
+  coins: '27',
   price_brl: '25.00',
   price_usd: '4.90',
   badge: '',

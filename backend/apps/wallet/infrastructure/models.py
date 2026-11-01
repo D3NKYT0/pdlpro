@@ -63,12 +63,23 @@ class CoinConfig(BaseModel):
     use ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação
     para operações de negócio, mantendo neste modelo as regras de persistência e os
     relacionamentos.
+
+    ``multiplier`` e ``usd_multiplier`` espelham a taxa de compra (coins por 1 BRL/USD) de
+    ``WalletChargeCurrency``. ``game_units_per_coin`` é a taxa do câmbio com o jogo e não
+    participa desse espelho: mudar o preço em dinheiro não altera o que o personagem recebe.
     """
 
     name = models.CharField(max_length=100)
     coin_id = models.PositiveIntegerField(default=57)
     multiplier = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal("1.00"))
     usd_multiplier = models.DecimalField(max_digits=8, decimal_places=2, default=Decimal("5.00"))
+    game_units_per_coin = models.DecimalField(
+        _("Unidades no jogo por moeda"),
+        max_digits=12,
+        decimal_places=2,
+        default=Decimal("1.00"),
+        help_text=_("Quantidade do item entregue no jogo para cada 1 moeda de saldo do site."),
+    )
     active = models.BooleanField(default=True)
     withdraw_fee_percent = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal("0.00"))
 

@@ -39,6 +39,14 @@ customizado ou do fallback durante carregamento, ausência e erro de consulta.
 - Promoção de banner: `/panel/admin/wallet` (uma campanha ativa).
 - Extrato paginado em `/panel/wallet/transactions`.
 
+## Moedas inteiras
+
+Moeda do site é unidade, não dinheiro: saldo, bônus, preços internos, lances e comissões são números inteiros, exibidos como `2.500`. Valores em dinheiro real (BRL, USD e outras moedas de cobrança) continuam com centavos.
+
+O cálculo nunca cria fração. Crédito, bônus, comissão e taxa de retirada arredondam para baixo; débito arredonda para cima. Uma compra avulsa que não alcança 1 moeda é recusada, e formulários e APIs recusam valores fracionados.
+
+A atualização para esta regra arredonda os saldos para baixo e registra a diferença no extrato (`coin_rounding`), para a conciliação continuar fechando. Preços vigentes sobem para o inteiro seguinte, pacotes de moedas e pedidos pendentes descem, e o histórico permanece como foi gravado. As colunas seguem decimais e a API segue respondendo `2500.00`.
+
 ## Nome da moeda virtual
 
 Em **Admin → Integrações → Pagamentos → Nome da moeda virtual**, o administrador

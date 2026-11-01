@@ -5723,3 +5723,21 @@ msgstr "Show the server online or offline status on the website and player panel
 #: apps/programs/migrations/0012_server_display_resources.py
 msgid "Mostrar a quantidade de jogadores online no site e no painel."
 msgstr "Show the number of online players on the website and player panel."
+
+msgid "Unidades no jogo por moeda"
+msgstr "Game units per coin"
+
+msgid "Quantidade do item entregue no jogo para cada 1 moeda de saldo do site."
+msgstr "Item quantity delivered in the game for each 1 site balance coin."
+
+msgid "Informe unidades no jogo por moeda maior que zero, com até duas casas decimais."
+msgstr "Enter game units per coin greater than zero, with up to two decimal places."
+
+msgid "Informe um número inteiro de moedas."
+msgstr "Enter a whole number of coins."
+
+msgid "O valor informado não compra nenhuma moeda inteira."
+msgstr "The amount entered does not buy a whole coin."
+
+msgid "A quantidade deve corresponder a um número inteiro de moedas do saldo."
+msgstr "The quantity must match a whole number of balance coins."

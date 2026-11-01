@@ -6,6 +6,7 @@ from uuid import UUID
 
 from apps.accounts.domain.repositories import IUserRepository
 from apps.wallet.domain.bonus import BonusPreview, IPurchaseBonusPolicy
+from apps.wallet.domain.coins import is_whole_coins
 from apps.wallet.domain.entities import (
     InsufficientBalanceError,
     InvalidTransferError,
@@ -80,6 +81,8 @@ class TransferToPlayerUseCase(UseCase[TransferToPlayerInput, WalletEntity]):
     def execute(self, data: TransferToPlayerInput) -> WalletEntity:
         if data.amount <= 0:
             raise InvalidTransferError("O valor deve ser maior que zero.")
+        if not is_whole_coins(data.amount):
+            raise InvalidTransferError("Informe um número inteiro de moedas.")
         recipient = self._users.get_by_username(data.recipient_username)
         if recipient is None:
             raise InvalidTransferError("Destinatário não encontrado.")

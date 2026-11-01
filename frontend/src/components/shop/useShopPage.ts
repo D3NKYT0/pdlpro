@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { useProgramAction } from '../programs/useProgramAction'
 import { useSearchParamTab } from '../../hooks/useSearchParamTab'
-import { formatNumber } from '../../lib/formatters'
+import { formatNumber, formatCoinQuantity } from '../../lib/formatters'
 import { commerceApi, shopApi, walletApi, type CartLine } from '../../services/api'
 
 export const SHOP_CART_KEYS = [['shop-quote']] as const
@@ -28,7 +28,7 @@ export function useShopPage() {
   const action = useProgramAction()
 
   function money(value: string | number) {
-    return formatNumber(value, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    return formatCoinQuantity(value)
   }
 
   async function changeLine(row: CartLine, quantity: number) {

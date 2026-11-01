@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowUpRight, Coins, Clock3, Landmark, ShieldCheck, Sparkles } from 'lucide-react'
 import { Card } from '../ui/Card'
+import { formatCoinQuantity } from '../../lib/formatters'
 
 type WalletHeroProps = {
   displayName?: string
@@ -33,7 +34,7 @@ export function WalletHero({ balance, bonusBalance, displayName }: WalletHeroPro
           <span className="wallet-balance-icon" aria-hidden="true"><Coins /></span>
           <div className="wallet-balance-copy">
             <small>{t('wallet.hero.availableBalance')}</small>
-            <strong>{balance ?? '0.00'} <span>{t('wallet.hero.coins')}</span></strong>
+            <strong>{formatCoinQuantity(balance)} <span>{t('wallet.hero.coins')}</span></strong>
           </div>
           <MicroResource code="wallet-game-exchange"><Link className="wallet-game-exchange" to="/panel/wallet/game">
             <ArrowUpRight aria-hidden="true" />
@@ -42,7 +43,7 @@ export function WalletHero({ balance, bonusBalance, displayName }: WalletHeroPro
           <div className="wallet-bonus-chip">
             <Sparkles aria-hidden="true" />
             <span>{t('wallet.hero.bonus')}</span>
-            <b>{bonusBalance ?? '0.00'}</b>
+            <b>{formatCoinQuantity(bonusBalance)}</b>
           </div>
         </div>
       </div>

@@ -53,8 +53,15 @@ it.each([['pt', '12,34 moedas'], ['en', '12.34 coins'], ['es', '12,34 monedas']]
   expect(formatCoins('12.34')).toBe(expected)
   expect(formatCurrency('12.34')).not.toBe(expected)
 })
+it.each([['pt', '2.500 moedas'], ['en', '2,500 coins'], ['es', '2500 monedas']])('moedas inteiras não exibem casas decimais em %s', async (language, expected) => {
+  await i18n.changeLanguage(language)
+  expect(formatCoins('2500.00')).toBe(expected)
+})
+it('valor real em dinheiro continua com centavos', () => {
+  expect(formatCurrency('2500')).toMatch(/2\.500,00/)
+})
 it.each([null, undefined, 'invalid', 0])('preço de moedas vazio ou zero: %s', value => {
-  expect(formatCoins(value)).toBe('0,00 moedas')
+  expect(formatCoins(value)).toBe('0 moedas')
 })
 
 it.each([

@@ -22,9 +22,17 @@ export function formatCurrency(value: string | number | null | undefined, curren
   return moneyFormatter(currency).format(Number(value) || 0)
 }
 
+/**
+ * Moedas da carteira são quantidade, não dinheiro: `2.500`, sem `,00`.
+ * Uma fração só aparece em registro antigo, para o histórico continuar fiel ao que foi gravado.
+ */
+export function formatCoinQuantity(value: string | number | null | undefined) {
+  return formatNumber(Number(value) || 0, { maximumFractionDigits: 2 })
+}
+
 /** Preços internos pagos com moedas da carteira, no idioma ativo. */
 export function formatCoins(value: string | number | null | undefined) {
-  return i18n.t('coinAmount', { ns: 'common', value: formatNumber(Number(value) || 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) })
+  return i18n.t('coinAmount', { ns: 'common', value: formatCoinQuantity(value) })
 }
 
 export function formatDateTime(value: string | null | undefined, style: 'short' | 'medium' = 'medium') {
