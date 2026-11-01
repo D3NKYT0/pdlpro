@@ -10,6 +10,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.8.0] - 2026-11-01
+
+Lançamento que separa moedas do site de dinheiro real e corrige o câmbio com o jogo, que multiplicava o envio pela taxa de compra. A API acompanha a versão 2.8.0.
+
+Antes de atualizar, faça backup: a migração arredonda saldos e não pode ser revertida. Depois, revise **Conversão para o jogo** em Admin → Moedas, que começa com o valor usado até agora.
+
 ### Alterado
 
 - Moedas do site agora são sempre números inteiros, separadas de dinheiro real: saldo, preços, lances e comissões aparecem como `2.500`, e APIs e formulários recusam frações. A atualização arredonda saldos para baixo com registro no extrato, sobe preços fracionados para o inteiro seguinte e preserva o histórico. Veja [Moedas inteiras](../funcionalidades/economia-jogador.md#moedas-inteiras).
