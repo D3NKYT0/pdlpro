@@ -387,6 +387,7 @@
       "selectCharacter": "Select the character",
       "onlineSuffix": " · Online",
       "quantity": "Amount of coins in the game",
+      "notWhole": "At this rate, use multiples of {{rate}} units to move whole coins.",
       "confirmation": "Confirm the transfer of {{quantity}} coins {{preposition}} {{character}}. {{operation}} of {{amount}} on the balance.",
       "prepositionTo": "to",
       "prepositionFrom": "from",

@@ -40,16 +40,21 @@ export function GameExchangePage() {
   const [charId, setCharId] = useState("");
   const selectedChar = chars.data?.find((c) => String(c.char_id) === String(charId));
   const [direction, setDirection] = useState("to_game");
-  const [quantityInput, setQuantityInput] = useState("1");
-  const quantity = Number(quantityInput);
+  const [typedQuantity, setQuantityInput] = useState<string | null>(null);
   const [confirmation, setConfirmation] = useState(false);
   const pending = useRef<ExchangeRequest | null>(null);
   const action = useProgramAction();
   const coin = query.data?.coin;
-  const gross = quantity / Number(coin?.game_units_per_coin || 1);
+  const gameRate = Number(coin?.game_units_per_coin || 1);
+  // Moeda do saldo é inteira: a menor quantidade válida no jogo é uma moeda na taxa ativa.
+  const unitStep = Number.isInteger(gameRate) ? gameRate : 1;
+  const quantityInput = typedQuantity ?? String(unitStep);
+  const quantity = Number(quantityInput);
+  const gross = quantity / gameRate;
+  const isWholeAmount = Number.isFinite(gross) && Math.abs(gross - Math.round(gross)) < 1e-9;
   const fee =
     direction === "from_game"
-      ? Math.floor(gross * Number(coin?.withdraw_fee_percent || 0)) / 100
+      ? Math.floor((gross * Number(coin?.withdraw_fee_percent || 0)) / 100)
       : 0;
   const reset = () => {
     setConfirmation(false);
@@ -171,7 +176,8 @@ export function GameExchangePage() {
               <input
                 type="number"
                 required
-                min={1}
+                min={unitStep}
+                step={unitStep}
                 max={1000000000}
                 value={quantityInput}
                 onChange={(e) => {
@@ -180,6 +186,11 @@ export function GameExchangePage() {
                 }}
               />
             </label>
+            {!isWholeAmount && (
+              <p className="program-note">
+                {t("exchange.form.notWhole", { rate: formatNumber(gameRate) })}
+              </p>
+            )}
             {confirmation && (
               <p className="program-note">
                 {t("exchange.form.confirmation", {
@@ -197,7 +208,7 @@ export function GameExchangePage() {
             )}
             <Button type="submit"
 
-              disabled={action.busy || !query.data?.enabled || !coin}
+              disabled={action.busy || !query.data?.enabled || !coin || !isWholeAmount}
             >
               {action.busy
                 ? t("exchange.form.processing")
@@ -219,7 +230,7 @@ export function GameExchangePage() {
                 : t("exchange.summary.credit")}
             </small>
             <strong>
-              {formatCoinQuantity(Number.isFinite(gross) ? gross - fee : 0)}
+              {isWholeAmount ? formatCoinQuantity(gross - fee) : "—"}
             </strong>
           </div>
           <p className="muted">
@@ -233,7 +244,7 @@ export function GameExchangePage() {
           </p>
           <p className="muted">
             {t("exchange.summary.fee", {
-              percent: coin?.withdraw_fee_percent || "0",
+              percent: formatNumber(coin?.withdraw_fee_percent || 0),
               fee: formatCoinQuantity(fee),
             })}
           </p>

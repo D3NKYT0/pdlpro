@@ -19,7 +19,7 @@ beforeEach(async () => {
 })
 afterEach(() => { cleanup(); vi.restoreAllMocks() })
 
-function renderPage(enabled: boolean, rates: { multiplier?: string; game_units_per_coin?: string } = {}) {
+function renderPage(enabled: boolean, rates: { multiplier?: string; game_units_per_coin?: string; withdraw_fee_percent?: string } = {}) {
   vi.spyOn(commerceApi, 'exchangeState').mockResolvedValue({
     enabled: true, allow_online_delivery: enabled, unavailable_reason: '',
     coin: { name: 'Coin', item_id: 57, game_units_per_coin: '1', withdraw_fee_percent: '0', ...rates }, history: [],
@@ -84,6 +84,56 @@ it('mostra a conversão quando a taxa do jogo é maior que 1', async () => {
   await user.selectOptions(screen.getByLabelText('Personagem'), '1')
   await user.click(screen.getByRole('button', { name: 'Revisar transferência' }))
   expect(screen.getByText(/Confirme a transferência de 250\.000 moedas/)).toHaveTextContent('Débito de 2.500 no saldo')
+})
+
+it('com taxa 100 começa em uma moeda inteira, não em 0,01 de saldo', async () => {
+  renderPage(true, { game_units_per_coin: '100.00' })
+  await screen.findByText(/= 100 unidade/)
+  const input = screen.getByLabelText('Quantidade de moedas no jogo')
+  expect(input).toHaveValue(100)
+  expect(input).toHaveAttribute('step', '100')
+  expect(input).toHaveAttribute('min', '100')
+  expect(screen.getByText('Saldo a debitar').parentElement).toHaveTextContent(/^Saldo a debitar1$/)
+})
+
+it('campo vazio mostra saldo zero sem casas decimais', async () => {
+  const user = userEvent.setup()
+  renderPage(true, { game_units_per_coin: '100.00', withdraw_fee_percent: '0.00' })
+  await screen.findByText(/= 100 unidade/)
+  await user.clear(screen.getByLabelText('Quantidade de moedas no jogo'))
+  expect(screen.getByText('Saldo a debitar').parentElement).toHaveTextContent(/^Saldo a debitar0$/)
+  expect(screen.getByText(/Taxa de retirada/)).toHaveTextContent('Taxa de retirada: 0%. Nesta operação: 0.')
+})
+
+it('quantidade que não dá moeda inteira avisa, não mostra fração e bloqueia a revisão', async () => {
+  const user = userEvent.setup()
+  const exchange = vi.spyOn(commerceApi, 'exchange')
+  renderPage(true, { game_units_per_coin: '100.00' })
+  await screen.findByText(/= 100 unidade/)
+  await screen.findByRole('option', { name: 'hero' })
+  const input = screen.getByLabelText('Quantidade de moedas no jogo')
+  await user.clear(input)
+  await user.type(input, '150')
+  expect(screen.getByText('Saldo a debitar').parentElement).toHaveTextContent(/^Saldo a debitar—$/)
+  expect(screen.getByText('Com esta taxa, use múltiplos de 100 unidades para movimentar moedas inteiras.')).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Revisar transferência' })).toBeDisabled()
+  expect(exchange).not.toHaveBeenCalled()
+  await user.clear(input)
+  await user.type(input, '300')
+  expect(screen.getByText('Saldo a debitar').parentElement).toHaveTextContent(/^Saldo a debitar3$/)
+  expect(screen.getByRole('button', { name: 'Revisar transferência' })).toBeEnabled()
+})
+
+it('taxa de retirada acompanha o servidor e arredonda para baixo em moedas inteiras', async () => {
+  const user = userEvent.setup()
+  renderPage(true, { game_units_per_coin: '1.00', withdraw_fee_percent: '4.50' })
+  await screen.findByText(/= 1 unidade/)
+  await user.selectOptions(screen.getByLabelText('Operação'), 'from_game')
+  const input = screen.getByLabelText('Quantidade de moedas no jogo')
+  await user.clear(input)
+  await user.type(input, '50')
+  expect(screen.getByText('Saldo a receber').parentElement).toHaveTextContent(/^Saldo a receber48$/)
+  expect(screen.getByText(/Taxa de retirada/)).toHaveTextContent('Taxa de retirada: 4,5%. Nesta operação: 2.')
 })
 
 it('preserva a fração real do saldo no histórico em vez de escondê-la', async () => {

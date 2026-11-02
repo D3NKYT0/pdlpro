@@ -35,7 +35,7 @@ Exemplo: com a opção ligada, selecione um personagem online no envio de saldo 
 
 Homologue o envio de moedas e itens com o personagem online, a entrega real da fila, a repetição da mesma chave de câmbio e a retirada recusada sem alteração de saldo. Os testes de API também cobrem saldo insuficiente, propriedade da conta, quantidades inválidas, rollback e autorização da configuração administrativa.
 
-O envio usa a fila `items_delayed`. O retorno consome moedas sem encantamento no inventário/armazém. Saldo bônus não é transferível. A taxa se aplica apenas ao retorno. Moedas do site são inteiras: a quantidade enviada precisa corresponder a um número inteiro de moedas do saldo, e a taxa de retirada é arredondada para baixo.
+O envio usa a fila `items_delayed`. O retorno consome moedas sem encantamento no inventário/armazém. Saldo bônus não é transferível. A taxa se aplica apenas ao retorno. Moedas do site são inteiras: a quantidade enviada precisa corresponder a um número inteiro de moedas do saldo, e a taxa de retirada é arredondada para baixo. A tela começa em uma moeda na taxa ativa e só aceita múltiplos dela: com taxa 100, 100, 200, 300 unidades.
 
 Em erro de conexão, a operação fica **pendente** e deve ser retomada com a mesma chave pelo histórico; não é permitido abrir outra enquanto existir uma pendência. Não altere o status nem faça estorno manual sem conciliar o recibo do jogo: o commit externo pode ter ocorrido. Rejeições de negócio também têm recibo terminal, evitando que uma repetição aplique uma operação já estornada.
 

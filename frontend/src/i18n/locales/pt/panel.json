@@ -387,6 +387,7 @@
       "selectCharacter": "Selecione o personagem",
       "onlineSuffix": " · Online",
       "quantity": "Quantidade de moedas no jogo",
+      "notWhole": "Com esta taxa, use múltiplos de {{rate}} unidades para movimentar moedas inteiras.",
       "confirmation": "Confirme a transferência de {{quantity}} moedas {{preposition}} {{character}}. {{operation}} de {{amount}} no saldo.",
       "prepositionTo": "para",
       "prepositionFrom": "de",
