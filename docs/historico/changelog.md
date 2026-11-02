@@ -10,6 +10,15 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.8.1] - 2026-11-01
+
+Correção da tela de câmbio, que ainda mostrava fração de moeda em **Saldo a debitar**. Sem migração. A API acompanha a versão 2.8.1.
+
+### Corrigido
+
+- A tela de câmbio ainda mostrava fração em **Saldo a debitar** (`0,01` com taxa 100): agora começa em uma moeda inteira, só aceita múltiplos da taxa, avisa quando a quantidade não fecha e mostra a taxa de retirada sem casas sobrando.
+- Os detalhes do pedido mostram bônus aplicado e total creditado sem casas decimais.
+
 ## [2.8.0] - 2026-11-01
 
 Lançamento que separa moedas do site de dinheiro real e corrige o câmbio com o jogo, que multiplicava o envio pela taxa de compra. A API acompanha a versão 2.8.0.
