@@ -2,13 +2,28 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 1 de novembro de 2026
+> **Atualizado:** 3 de novembro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Não publicado]
+
+Correções da auditoria de compras, pagamentos e entrega de itens (LBN-01 a LBN-07). Inclui a migração `payment.0004`, que acrescenta tentativas de cobrança, histórico de estornos e campos de revisão financeira aos pedidos; aplique-a antes de reiniciar os workers.
+
+### Adicionado
+
+- Estornos, reembolsos parciais, chargebacks e disputas do Mercado Pago e do Stripe agora conciliam a carteira automaticamente, uma única vez por evento: moedas e bônus saem na proporção do valor devolvido, o saldo já gasto fica registrado como devedor e o pedido vai para **Revisão manual**; disputa aberta só marca revisão, disputa perdida vira chargeback. O admin do pedido mostra tentativas e estornos. Veja [Estornos e disputas](../integracoes/pagamentos.md#estornos-e-disputas).
+- A retirada de itens do jogo tem campo **Encantamento**; selecionar um item na lista preenche o valor.
+
+### Corrigido
+
+- Duas transferências simultâneas da bolsa para o inventário podiam entregar os mesmos itens duas vezes. A bolsa agora é bloqueada antes da leitura em todos os fluxos que adicionam, consomem ou transferem itens.
+- Retiradas e envios simultâneos entre o painel e o jogo podiam entregar duas vezes a mesma unidade. O consumo agora é condicional nos dois bancos, toda a retirada roda em uma transação do jogo, e a entrega ao jogo é o último passo do envio.
+- A retirada do jogo juntava exemplares com encantamentos diferentes e creditava o lote inteiro com o encantamento do último (um +0 e um +20 viravam dois +20). Cada retirada agora consome só o encantamento escolhido, nos três dialetos.
+- Retomar um câmbio pendente depois de perder o vínculo da conta ainda movimentava moedas. A retomada agora revalida o vínculo: uma operação não aplicada no jogo é encerrada (com estorno do envio) e uma já aplicada continua sendo conciliada.
+- Uma nova tentativa aprovada depois de um pagamento recusado respondia erro e não creditava. Cada tentativa tem agora chave de idempotência própria, reutilizada em reenvios e timeouts; uma cobrança pendente é conferida no provedor antes de criar outra, e aprovações tardias de tentativas anteriores são creditadas uma vez.
 
 ## [2.8.1] - 2026-11-01
 

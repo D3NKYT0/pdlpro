@@ -22,7 +22,11 @@ from apps.inventory.domain.exceptions import InventoryNotFoundError
 from apps.inventory.domain.repositories import IInventoryRepository
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
-from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
+from common.architecture.exceptions import (
+    ConflictError,
+    EntityNotFoundError,
+    ValidationDomainError,
+)
 
 
 def _catalog_for(box_type, boxes: IBoxRepository) -> list:
@@ -312,12 +316,14 @@ class TransferBagToInventoryUseCase(UseCase[TransferBagInput, dict]):
         inventory = self._inventories.get_by_id(data.inventory_id, data.user_id)
         if inventory is None:
             raise InventoryNotFoundError()
-        bag = self._bags.get_by_user_id(data.user_id)
-        items = self._bags.list_items(bag) if bag else []
-        if not items:
-            raise ValidationDomainError("A bag está vazia.")
         moved = 0
         with self._unit_of_work:
+            # Bloqueia a bag antes de ler as pilhas: duas transferências simultâneas não podem
+            # entregar as mesmas cópias, e compras concorrentes esperam pelo fim da limpeza.
+            bag = self._bags.get_locked_by_user_id(data.user_id)
+            items = self._bags.list_items(bag) if bag else []
+            if not items:
+                raise ValidationDomainError("A bag está vazia.")
             for item in items:
                 self._inventories.add_item(
                     inventory.id,
@@ -337,5 +343,6 @@ class TransferBagToInventoryUseCase(UseCase[TransferBagInput, dict]):
                     destination=inventory.character_name,
                 )
                 moved += item.quantity
-            self._bags.clear_items(bag)
+            if self._bags.delete_items(bag, [item.id for item in items]) != len(items):
+                raise ConflictError("A bag foi alterada durante a transferência.")
         return {"moved": moved, "inventory_id": str(inventory.id)}

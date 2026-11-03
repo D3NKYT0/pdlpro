@@ -7,7 +7,7 @@ from uuid import UUID
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import FieldDoesNotExist
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.db.models import Count, F, Q, Sum
 from django.utils import timezone
 
@@ -202,11 +202,24 @@ class DjangoBagRepository(IBagRepository):
     def get_by_user_id(self, user_id: UUID) -> Bag | None:
         return Bag.objects.filter(user__id=user_id).first()
 
+    def get_locked_by_user_id(self, user_id: UUID) -> Bag | None:
+        return Bag.objects.select_for_update().filter(user__id=user_id).first()
+
     def list_items(self, bag) -> list[BagItem]:
         return list(bag.items.all())
 
     def clear_items(self, bag) -> None:
         bag.items.all().delete()
+
+    def delete_items(self, bag, item_ids: list[UUID]) -> int:
+        deleted, _ = BagItem.objects.filter(bag=bag, id__in=item_ids).delete()
+        return deleted
+
+    @staticmethod
+    def _lock_bag(user) -> Bag:
+        """Cria (se preciso) e bloqueia a bag; ordem de bloqueio: usuário → bag → pilhas."""
+        bag, _ = Bag.objects.get_or_create(user=user)
+        return Bag.objects.select_for_update().get(pk=bag.pk)
 
     def add_item(
         self,
@@ -217,16 +230,17 @@ class DjangoBagRepository(IBagRepository):
         enchant: int = 0,
         quantity: int = 1,
     ) -> BagItem:
-        bag, _ = Bag.objects.get_or_create(user=user)
-        item, created = BagItem.objects.get_or_create(
-            bag=bag,
-            item_id=item_id,
-            enchant=enchant,
-            defaults={"item_name": item_name, "quantity": quantity},
-        )
-        if not created:
-            item.quantity += quantity
-            item.save(update_fields=["quantity", "updated_at"])
+        with transaction.atomic():
+            bag = self._lock_bag(user)
+            item, created = BagItem.objects.get_or_create(
+                bag=bag,
+                item_id=item_id,
+                enchant=enchant,
+                defaults={"item_name": item_name, "quantity": quantity},
+            )
+            if not created:
+                item.quantity += quantity
+                item.save(update_fields=["quantity", "updated_at"])
         return item
 
     def owned_quantity(self, user, *, item_id: int, enchant: int) -> int:
@@ -238,9 +252,12 @@ class DjangoBagRepository(IBagRepository):
         )
 
     def get_item_locked(self, user, *, item_id: int, enchant: int) -> BagItem | None:
+        bag = Bag.objects.select_for_update().filter(user=user).first()
+        if bag is None:
+            return None
         return (
             BagItem.objects.select_for_update()
-            .filter(bag__user=user, item_id=item_id, enchant=enchant)
+            .filter(bag=bag, item_id=item_id, enchant=enchant)
             .first()
         )
 

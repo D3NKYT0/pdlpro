@@ -83,7 +83,7 @@ O catálogo `lucerav2` atende distribuições Lucera 2 (Interlude / Classic) em 
 
 - **Contas e personagens:** `characters.obj_Id`, `accounts`, vínculos e histórico.
 - **Equipamentos e inventário:** `list_character_equipment` lê os itens equipados em `location = 'PAPERDOLL'` utilizando a coluna `slot` (padrão Lucera 2) com contingência automática para `loc_data AS slot` (`list_character_equipment_fallback`) em variantes legadas, alimentando inventário, leilões e vitrine de personagens.
-- **Segurança de inventário:** exclusão e decremento de itens (`delete_item_stack`, `update_item_amount`) restritos a `location IN ('INVENTORY', 'WAREHOUSE')`, evitando afetar itens equipados.
+- **Segurança de inventário:** a retirada (`withdraw_stacks`, `withdraw_decrement`, `withdraw_delete_empty`) bloqueia as pilhas exatas do item e do encantamento pedidos, consome cada uma com `UPDATE` condicional por identificador da pilha e roda numa transação única do jogo, sempre restrita a `location IN ('INVENTORY', 'WAREHOUSE')`. Extensões que sobrescrevem `items.sql` precisam fornecer as três consultas.
 - **Lojas offline (Dual Schema):** suporte nativo ao schema oficial Lucera 2:
   - Tabelas: `character_trade_lists` e `character_variables`.
   - Critérios: `characters.online = 0`, variável `offline = '1'`, `storemode` ativo (`1` venda, `3` compra, `4` manufatura/craft) e títulos em `sellstorename`, `buystorename` ou `manufacturename`.

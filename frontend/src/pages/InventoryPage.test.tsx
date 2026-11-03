@@ -55,7 +55,7 @@ it.each([false, true])('retirada informa conta, personagem, item e quantidade; e
   await user.clear(input)
   await user.type(input, '3')
   await user.click(screen.getByRole('button', { name: 'Retirar do jogo' }))
-  expect(inventoryApi.withdraw).toHaveBeenCalledWith({ login: 'main', char_id: 7, item_id: 57, quantity: 3 })
+  expect(inventoryApi.withdraw).toHaveBeenCalledWith({ login: 'main', char_id: 7, item_id: 57, quantity: 3, enchant: 0 })
   if (fail) expect(toast.error).toHaveBeenCalledWith('Personagem online')
   else expect(toast.success).toHaveBeenCalledWith('Item retirado para o painel')
 })
@@ -121,6 +121,20 @@ it('consulta paginada filtra por ID e bloqueia seleção de item não negociáve
   await user.type(screen.getByRole('searchbox', { name: 'Buscar item no personagem' }), '105')
   expect(within(table).getByText('Item 5')).toBeVisible()
   expect(within(table).queryByText('Item 8')).not.toBeInTheDocument()
+})
+it('selecionar um exemplar encantado retira somente aquele encantamento', async () => {
+  vi.mocked(inventoryApi.gameItems).mockResolvedValue([
+    { item_id: 57, name: 'Espada +0', enchant: 0, quantity: 1, tradeable: true },
+    { item_id: 57, name: 'Espada +20', enchant: 20, quantity: 1, tradeable: true },
+  ])
+  const user = mount()
+  await user.selectOptions(await screen.findByRole('combobox', { name: 'Personagem' }), '7')
+  const table = await screen.findByRole('table', { name: 'Itens no personagem' })
+  const row = within(table).getByText('Espada +20').closest('[role="row"]') as HTMLElement
+  await user.click(within(row).getByRole('button', { name: 'Selecionar' }))
+  expect(screen.getByRole('textbox', { name: 'Encantamento' })).toHaveValue('20')
+  await user.click(screen.getByRole('button', { name: 'Retirar do jogo' }))
+  expect(inventoryApi.withdraw).toHaveBeenCalledWith({ login: 'main', char_id: 7, item_id: 57, quantity: 1, enchant: 20 })
 })
 it('troca de conta limpa personagem anterior e não consulta seus itens na nova conta', async () => {
   const user = mount()

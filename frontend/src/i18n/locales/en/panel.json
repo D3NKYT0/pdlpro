@@ -212,6 +212,7 @@
       "select": "Select",
       "characterOption": "{{name}} — level {{level}}",
       "quantity": "Quantity",
+      "enchant": "Enchant",
       "withdraw": "Withdraw from game",
       "chestEyebrow": "Panel chest · account {{account}}",
       "itemMeta": "+{{enchant}} · quantity {{quantity}}",

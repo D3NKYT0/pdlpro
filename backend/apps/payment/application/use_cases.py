@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import inspect
 import logging
 import re
 from dataclasses import dataclass
@@ -9,10 +10,19 @@ from uuid import UUID
 from django.conf import settings
 
 from apps.payment.application.pricing import CoinPricingService
-from apps.payment.domain.entities import PaymentOrderEntity, ProcessResult
+from apps.payment.application.reversals import (
+    ReconcilePaymentReversalInput,
+    ReconcilePaymentReversalUseCase,
+)
+from apps.payment.domain.entities import (
+    REVERSAL_STATUSES,
+    PaymentOrderEntity,
+    ProcessResult,
+)
 from apps.payment.domain.exceptions import (
     InvalidPaymentAmountError,
     PaymentAlreadyConfirmedError,
+    PaymentGatewayError,
     PaymentMethodUnavailableError,
     PaymentNotPendingError,
     PaymentOrderNotFoundError,
@@ -21,7 +31,10 @@ from apps.payment.domain.gateways import (
     IPaymentGatewayRegistry,
     normalize_brl_method_priority,
 )
-from apps.payment.domain.repositories import IPaymentOrderRepository
+from apps.payment.domain.repositories import (
+    IPaymentAttemptRepository,
+    IPaymentOrderRepository,
+)
 from apps.wallet.domain.bonus import IPurchaseBonusPolicy
 from apps.wallet.domain.coins import floor_coins
 from apps.wallet.domain.repositories import IWalletRepository
@@ -371,6 +384,9 @@ class SettlePaymentInput:
     order_id: UUID
     user_id: UUID | None = None
     allow_methods: tuple[str, ...] | None = None
+    # Referência confirmada pelo provedor. Só ela permite liquidar um pedido ``failed``: uma
+    # tentativa anterior aprovada tardiamente precisa ser creditada, nunca descartada.
+    external_id: str = ""
 
 
 class SettlePaymentUseCase(UseCase[SettlePaymentInput, PaymentOrderEntity]):
@@ -390,12 +406,14 @@ class SettlePaymentUseCase(UseCase[SettlePaymentInput, PaymentOrderEntity]):
         bonus_policy: IPurchaseBonusPolicy,
         unit_of_work: UnitOfWork,
         hooks: IHookBus,
+        attempts: IPaymentAttemptRepository,
     ) -> None:
         self._orders = orders
         self._wallets = wallets
         self._bonus_policy = bonus_policy
         self._unit_of_work = unit_of_work
         self._hooks = hooks
+        self._attempts = attempts
 
     def execute(self, data: SettlePaymentInput) -> PaymentOrderEntity:
         already_confirmed = False
@@ -409,7 +427,12 @@ class SettlePaymentUseCase(UseCase[SettlePaymentInput, PaymentOrderEntity]):
                 already_confirmed = True
                 settled = order
             else:
-                if order.status not in {"pending", "processing"}:
+                late_approval = (
+                    order.status == "failed"
+                    and bool(data.external_id)
+                    and self._attempts.owns_external_id(order.id, data.external_id)
+                )
+                if order.status not in {"pending", "processing"} and not late_approval:
                     raise PaymentAlreadyConfirmedError() if order.status == "confirmed" else PaymentNotPendingError()
                 if data.allow_methods is not None and order.method not in data.allow_methods:
                     raise PaymentMethodUnavailableError("Este pedido não pode ser confirmado manualmente.")
@@ -522,6 +545,12 @@ class ProcessPaymentUseCase(UseCase[ProcessPaymentInput, dict]):
     """Envia os dados de pagamento ao gateway do pedido, salva os dados de checkout e liquida o
     saldo se o resultado for aprovado. Verifica o proprietário antes da chamada externa.
 
+    Cada cobrança pertence a uma tentativa com chave de idempotência persistida: reenvios e
+    timeouts reutilizam a mesma chave; uma tentativa com cobrança ainda pendente é conciliada no
+    provedor antes de qualquer nova cobrança; só uma rejeição definitiva abre a tentativa
+    seguinte (``failed`` → ``processing``). As referências antigas continuam associadas ao
+    pedido, então uma aprovação tardia ainda é creditada uma única vez.
+
     Uso: resolva pelo container e chame ``execute(data)`` com ``ProcessPaymentInput``. O retorno
     é ``dict``.
     """
@@ -532,11 +561,13 @@ class ProcessPaymentUseCase(UseCase[ProcessPaymentInput, dict]):
         gateways: IPaymentGatewayRegistry,
         settle: SettlePaymentUseCase,
         unit_of_work: UnitOfWork,
+        attempts: IPaymentAttemptRepository,
     ) -> None:
         self._orders = orders
         self._gateways = gateways
         self._settle = settle
         self._unit_of_work = unit_of_work
+        self._attempts = attempts
 
     def execute(self, data: ProcessPaymentInput) -> dict:
         order = self._orders.get_by_id(data.order_id)
@@ -554,6 +585,86 @@ class ProcessPaymentUseCase(UseCase[ProcessPaymentInput, dict]):
             raise PaymentMethodUnavailableError("Este pedido deve ser pago no site do provedor.")
         if order.status not in {"pending", "processing", "failed"}:
             raise PaymentNotPendingError()
+        payload = self._payload(data)
+        gateway = self._gateways.get(order.method)
+        attempt, reconcile = self._claim_attempt(order.id)
+        if attempt is None:
+            order = self._orders.get_by_id(order.id)
+            return {"order": order, "result": ProcessResult(status="approved", external_id=order.external_id)}
+        if reconcile:
+            previous = gateway.fetch_by_external_id(attempt.external_id)
+            if previous is not None and previous.status == "approved" and previous.refunded_amount <= 0:
+                settled = self._settle.execute(
+                    SettlePaymentInput(order_id=order.id, user_id=data.user_id, external_id=attempt.external_id)
+                )
+                return {"order": settled, "result": previous}
+            if previous is None or previous.status not in {"rejected", *REVERSAL_STATUSES}:
+                # A cobrança anterior ainda pode ser paga: não crie uma segunda.
+                current = self._orders.get_by_id(order.id)
+                return {"order": current, "result": previous or ProcessResult(status="pending", external_id=attempt.external_id)}
+            with self._unit_of_work:
+                self._attempts.record(attempt.id, status="rejected")
+                attempt = self._attempts.open(order.id)
+        try:
+            result = _process_with_key(gateway, order, payload, str(attempt.idempotency_key))
+        except PaymentGatewayError:
+            # Recusa do provedor antes de existir cobrança: a próxima chamada é outra tentativa.
+            with self._unit_of_work:
+                self._attempts.record(attempt.id, status="rejected")
+            raise
+        gateway_data = {
+            "pix_qr_code": result.pix_qr_code,
+            "pix_qr_code_base64": result.pix_qr_code_base64,
+            "pix_ticket_url": result.pix_ticket_url,
+            "boleto_url": result.boleto_url,
+            "boleto_barcode": result.boleto_barcode,
+            "message": result.message,
+        }
+        approved = result.status == "approved" and result.refunded_amount <= 0
+        rejected = result.status == "rejected" or result.status in REVERSAL_STATUSES
+        attempt_status = "approved" if approved else "rejected" if rejected else "pending"
+        with self._unit_of_work:
+            self._attempts.record(attempt.id, status=attempt_status, external_id=result.external_id)
+            order = self._orders.update_checkout(
+                order.id,
+                external_id=result.external_id or order.external_id,
+                checkout_url=order.checkout_url,
+                gateway_data=gateway_data,
+                status="processing" if not approved else None,
+            )
+        if approved:
+            order = self._settle.execute(
+                SettlePaymentInput(order_id=order.id, user_id=data.user_id, external_id=result.external_id)
+            )
+        elif rejected:
+            with self._unit_of_work:
+                order = self._orders.mark_failed(order.id)
+        return {"order": order, "result": result}
+
+    def _claim_attempt(self, order_id: UUID):
+        """Escolhe, com o pedido bloqueado, a tentativa a usar; ``(None, False)`` se já pago."""
+
+        with self._unit_of_work:
+            locked = self._orders.get_for_update(order_id)
+            if locked is None:
+                raise PaymentOrderNotFoundError()
+            if locked.status == "confirmed":
+                return None, False
+            if locked.status not in {"pending", "processing", "failed"}:
+                raise PaymentNotPendingError()
+            attempt = self._attempts.current(order_id)
+            if attempt is None and locked.status == "processing" and locked.external_id:
+                # Pedido anterior às tentativas com cobrança ainda aberta: concilie-a primeiro.
+                attempt = self._attempts.open(order_id)
+                return self._attempts.record(attempt.id, status="pending", external_id=locked.external_id), True
+            if attempt is None or attempt.status != "pending":
+                return self._attempts.open(order_id), False
+            # Pendente com referência: conciliar antes. Sem referência (timeout antes da
+            # resposta): repetir a mesma tentativa, com a mesma chave de idempotência.
+            return attempt, bool(attempt.external_id)
+
+    @staticmethod
+    def _payload(data: ProcessPaymentInput) -> dict:
         payload = dict(data.payload)
         payer = dict(payload.get("payer")) if isinstance(payload.get("payer"), dict) else {}
         if data.payer_email and not payer.get("email"):
@@ -568,30 +679,7 @@ class ProcessPaymentUseCase(UseCase[ProcessPaymentInput, dict]):
                 doc_type = "CNPJ" if len(digits) > 11 else "CPF"
                 payer["identification"] = {"type": doc_type, "number": digits}
         payload["payer"] = payer
-        result = self._gateways.get(order.method).process_payment(order, payload)
-        gateway_data = {
-            "pix_qr_code": result.pix_qr_code,
-            "pix_qr_code_base64": result.pix_qr_code_base64,
-            "pix_ticket_url": result.pix_ticket_url,
-            "boleto_url": result.boleto_url,
-            "boleto_barcode": result.boleto_barcode,
-            "message": result.message,
-        }
-        status = "processing" if result.status == "pending" else "failed" if result.status == "rejected" else "pending"
-        with self._unit_of_work:
-            order = self._orders.update_checkout(
-                order.id,
-                external_id=result.external_id or order.external_id,
-                checkout_url=order.checkout_url,
-                gateway_data=gateway_data,
-                status=status if result.status != "approved" else order.status,
-            )
-        if result.status == "approved":
-            order = self._settle.execute(SettlePaymentInput(order_id=order.id, user_id=data.user_id))
-        elif result.status == "rejected":
-            with self._unit_of_work:
-                order = self._orders.mark_failed(order.id)
-        return {"order": order, "result": result}
+        return payload
 
 
 @dataclass(frozen=True, slots=True)
@@ -608,8 +696,9 @@ class GetPaymentStatusInput:
 
 
 class GetPaymentStatusUseCase(UseCase[GetPaymentStatusInput, PaymentOrderEntity]):
-    """Consulta o gateway e sincroniza o pedido: uma aprovação pode creditar a carteira. Apesar do
-    nome de consulta, pode alterar pedido e saldo.
+    """Consulta o gateway e sincroniza o pedido: uma aprovação pode creditar a carteira e um
+    estorno/chargeback de pedido confirmado é conciliado. Apesar do nome de consulta, pode
+    alterar pedido e saldo.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``GetPaymentStatusInput``. O
     retorno é ``PaymentOrderEntity``.
@@ -621,11 +710,13 @@ class GetPaymentStatusUseCase(UseCase[GetPaymentStatusInput, PaymentOrderEntity]
         gateways: IPaymentGatewayRegistry,
         settle: SettlePaymentUseCase,
         unit_of_work: UnitOfWork,
+        reversals: ReconcilePaymentReversalUseCase,
     ) -> None:
         self._orders = orders
         self._gateways = gateways
         self._settle = settle
         self._unit_of_work = unit_of_work
+        self._reversals = reversals
 
     def execute(self, data: GetPaymentStatusInput) -> PaymentOrderEntity:
         order = self._orders.get_by_id(data.order_id)
@@ -634,13 +725,15 @@ class GetPaymentStatusUseCase(UseCase[GetPaymentStatusInput, PaymentOrderEntity]
         if order.user_id != data.user_id:
             raise AuthorizationError()
         if order.status == "confirmed":
-            return order
+            return self._reconcile_confirmed(order)
         result = self._gateways.get(order.method).fetch_status(order)
         if result is None:
             return order
-        if result.status == "approved":
-            return self._settle.execute(SettlePaymentInput(order_id=order.id, user_id=data.user_id))
-        if result.status == "rejected":
+        if result.status == "approved" and result.refunded_amount <= 0:
+            return self._settle.execute(
+                SettlePaymentInput(order_id=order.id, user_id=data.user_id, external_id=result.external_id)
+            )
+        if result.status in {"rejected", "approved", *REVERSAL_STATUSES}:
             with self._unit_of_work:
                 return self._orders.mark_failed(order.id)
         gateway_data = {**(order.gateway_data or {}), "message": result.message}
@@ -652,6 +745,48 @@ class GetPaymentStatusUseCase(UseCase[GetPaymentStatusInput, PaymentOrderEntity]
                 gateway_data=gateway_data,
                 status="processing",
             )
+
+    def _reconcile_confirmed(self, order: PaymentOrderEntity) -> PaymentOrderEntity:
+        if order.method == "mock" or not order.external_id:
+            return order
+        try:
+            result = self._gateways.get(order.method).fetch_status(order)
+        except Exception:
+            logger.warning("Não foi possível reconsultar o pedido confirmado %s", order.id, exc_info=True)
+            return order
+        reversal = reversal_from_result(order.method, result)
+        if reversal is None:
+            return order
+        kind, refunded_total, key = reversal
+        reconciled = self._reversals.execute(
+            ReconcilePaymentReversalInput(order_id=order.id, event_key=key, kind=kind, refunded_total=refunded_total)
+        )
+        return reconciled or order
+
+
+def _process_with_key(gateway, order: PaymentOrderEntity, payload: dict, key: str) -> ProcessResult:
+    """Repassa a chave da tentativa; gateways de extensões antigos sem o parâmetro seguem aceitos."""
+
+    if "idempotency_key" in inspect.signature(gateway.process_payment).parameters:
+        return gateway.process_payment(order, payload, idempotency_key=key)
+    return gateway.process_payment(order, payload)
+
+
+def reversal_from_result(method: str, result: ProcessResult | None) -> tuple[str, Decimal, str] | None:
+    """Converte um status consultado no provedor em ``(kind, total devolvido, event_key)``."""
+
+    if result is None:
+        return None
+    if result.status == "charged_back":
+        kind = "chargeback"
+    elif result.status == "disputed":
+        kind = "dispute_opened"
+    elif result.status == "refunded" or result.refunded_amount > 0:
+        kind = "refund"
+    else:
+        return None
+    total = result.refunded_amount
+    return kind, total, f"{method}:{result.external_id}:{kind}:{total}"
 
 
 @dataclass(frozen=True, slots=True)
@@ -666,6 +801,9 @@ class ApplyGatewayPaymentInput:
     order_id: UUID | None = None
     approved: bool = False
     payload: dict | None = None
+    # Outras referências do mesmo pagamento (ex.: PaymentIntent de uma Checkout Session),
+    # registradas para que estornos e disputas posteriores encontrem o pedido.
+    aliases: tuple[str, ...] = ()
 
 
 class ApplyGatewayPaymentUseCase(UseCase[ApplyGatewayPaymentInput, PaymentOrderEntity | None]):
@@ -681,9 +819,17 @@ class ApplyGatewayPaymentUseCase(UseCase[ApplyGatewayPaymentInput, PaymentOrderE
     retorno é ``PaymentOrderEntity | None``.
     """
 
-    def __init__(self, orders: IPaymentOrderRepository, settle: SettlePaymentUseCase) -> None:
+    def __init__(
+        self,
+        orders: IPaymentOrderRepository,
+        settle: SettlePaymentUseCase,
+        attempts: IPaymentAttemptRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
         self._orders = orders
         self._settle = settle
+        self._attempts = attempts
+        self._unit_of_work = unit_of_work
 
     def execute(self, data: ApplyGatewayPaymentInput) -> PaymentOrderEntity | None:
         order = None
@@ -703,11 +849,18 @@ class ApplyGatewayPaymentUseCase(UseCase[ApplyGatewayPaymentInput, PaymentOrderE
             return None
         if not data.approved:
             return order
-        return self._settle.execute(SettlePaymentInput(order_id=order.id))
+        settled = self._settle.execute(SettlePaymentInput(order_id=order.id, external_id=data.external_id))
+        aliases = [alias for alias in (data.external_id, *data.aliases) if alias]
+        if aliases and settled.status == "confirmed":
+            with self._unit_of_work:
+                for alias in aliases:
+                    self._attempts.record_alias(order.id, alias, status="approved")
+        return settled
 
     def _external_id_matches(self, order: PaymentOrderEntity, external_id: str) -> bool:
         # Pedido sem external_id continua aceito: o webhook pode chegar antes de o checkout
-        # persistir o identificador do gateway.
+        # persistir o identificador do gateway. Referências de tentativas anteriores do mesmo
+        # pedido também são aceitas (aprovação tardia).
         if not external_id or not order.external_id:
             return True
-        return str(order.external_id) == str(external_id)
+        return str(order.external_id) == str(external_id) or self._attempts.owns_external_id(order.id, external_id)

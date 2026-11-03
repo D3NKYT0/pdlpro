@@ -43,7 +43,9 @@ class IPaymentGateway(ABC):
     def create_checkout(self, order: PaymentOrderEntity) -> CheckoutSession:
         raise NotImplementedError
 
-    def process_payment(self, order: PaymentOrderEntity, payload: dict) -> ProcessResult:
+    def process_payment(self, order: PaymentOrderEntity, payload: dict, idempotency_key: str = "") -> ProcessResult:
+        """Cria a cobrança. ``idempotency_key`` identifica a tentativa lógica e deve ser
+        repassada ao provedor: o mesmo valor em um reenvio nunca pode gerar outra cobrança."""
         raise NotImplementedError
 
     def fetch_status(self, order: PaymentOrderEntity) -> ProcessResult | None:

@@ -5,14 +5,22 @@ from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
+from django.db.models import F, Max, Q
 from django.utils import timezone
 
-from apps.payment.domain.entities import PaymentOrderEntity
+from apps.payment.domain.entities import PaymentAttemptEntity, PaymentOrderEntity
 from apps.payment.domain.repositories import (
+    IPaymentAttemptRepository,
     IPaymentOrderRepository,
+    IPaymentReversalRepository,
     IWebhookLogRepository,
 )
-from apps.payment.infrastructure.models import PedidoPagamento, WebhookLog
+from apps.payment.infrastructure.models import (
+    PaymentAttempt,
+    PaymentReversal,
+    PedidoPagamento,
+    WebhookLog,
+)
 
 
 class DjangoWebhookLogRepository(IWebhookLogRepository):
@@ -49,6 +57,11 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
             gateway_data=row.gateway_data or {},
             created_at=row.created_at,
             paid_at=row.paid_at,
+            refunded_amount=row.refunded_amount,
+            coins_reversed=row.coins_reversed,
+            bonus_reversed=row.bonus_reversed,
+            reversal_shortfall=row.reversal_shortfall,
+            review_status=row.review_status,
         )
 
     def order_rows(self, user_id: UUID):
@@ -63,7 +76,14 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
     def get_by_external_id(self, external_id: str) -> PaymentOrderEntity | None:
         if not external_id:
             return None
-        row = PedidoPagamento.objects.select_related("user").filter(external_id=external_id).first()
+        # Referências de tentativas anteriores também identificam o pedido: uma aprovação ou
+        # um estorno tardio da cobrança antiga não pode ficar sem conciliação.
+        row = (
+            PedidoPagamento.objects.select_related("user")
+            .filter(Q(external_id=external_id) | Q(attempts__external_id=external_id))
+            .distinct()
+            .first()
+        )
         return self.to_entity(row) if row else None
 
     def get_for_update(self, order_id: UUID) -> PaymentOrderEntity | None:
@@ -206,3 +226,103 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
         ]
         row.save(update_fields=fields)
         return self.to_entity(row)
+
+    def apply_reversal(
+        self,
+        order_id: UUID,
+        *,
+        refunded_amount: Decimal,
+        coins_reversed: Decimal,
+        bonus_reversed: Decimal,
+        shortfall_increment: Decimal,
+    ) -> PaymentOrderEntity:
+        PedidoPagamento.objects.filter(id=order_id).update(
+            refunded_amount=refunded_amount,
+            coins_reversed=coins_reversed,
+            bonus_reversed=bonus_reversed,
+            reversal_shortfall=F("reversal_shortfall") + shortfall_increment,
+            updated_at=timezone.now(),
+        )
+        return self.to_entity(PedidoPagamento.objects.select_related("user").get(id=order_id))
+
+    def set_review_status(self, order_id: UUID, review_status: str) -> PaymentOrderEntity:
+        PedidoPagamento.objects.filter(id=order_id).update(review_status=review_status, updated_at=timezone.now())
+        return self.to_entity(PedidoPagamento.objects.select_related("user").get(id=order_id))
+
+
+class DjangoPaymentAttemptRepository(IPaymentAttemptRepository):
+    """Adaptador Django de ``IPaymentAttemptRepository``; o chamador mantém o pedido bloqueado."""
+
+    @staticmethod
+    def _entity(row: PaymentAttempt) -> PaymentAttemptEntity:
+        return PaymentAttemptEntity(
+            id=row.id,
+            order_id=row.order.id,
+            number=row.number,
+            idempotency_key=row.idempotency_key,
+            external_id=row.external_id,
+            status=row.status,
+        )
+
+    def current(self, order_id: UUID) -> PaymentAttemptEntity | None:
+        row = PaymentAttempt.objects.select_related("order").filter(order__id=order_id).order_by("-number").first()
+        return self._entity(row) if row else None
+
+    def open(self, order_id: UUID) -> PaymentAttemptEntity:
+        order = PedidoPagamento.objects.get(id=order_id)
+        number = (order.attempts.aggregate(top=Max("number"))["top"] or 0) + 1
+        row = PaymentAttempt.objects.create(order=order, number=number)
+        if order.status == PedidoPagamento.Status.FAILED:
+            order.status = PedidoPagamento.Status.PROCESSING
+            order.save(update_fields=["status", "updated_at"])
+        return self._entity(row)
+
+    def record(self, attempt_id: UUID, *, status: str, external_id: str = "") -> PaymentAttemptEntity:
+        row = PaymentAttempt.objects.select_related("order").get(id=attempt_id)
+        row.status = status
+        if external_id:
+            row.external_id = external_id
+        row.save(update_fields=["status", "external_id", "updated_at"])
+        return self._entity(row)
+
+    def owns_external_id(self, order_id: UUID, external_id: str) -> bool:
+        if not external_id:
+            return False
+        return PedidoPagamento.objects.filter(
+            Q(external_id=external_id) | Q(attempts__external_id=external_id), id=order_id
+        ).exists()
+
+    def record_alias(self, order_id: UUID, external_id: str, *, status: str) -> None:
+        if not external_id or self.owns_external_id(order_id, external_id):
+            return
+        order = PedidoPagamento.objects.get(id=order_id)
+        number = (order.attempts.aggregate(top=Max("number"))["top"] or 0) + 1
+        PaymentAttempt.objects.create(order=order, number=number, external_id=external_id, status=status)
+
+
+class DjangoPaymentReversalRepository(IPaymentReversalRepository):
+    """Adaptador Django de ``IPaymentReversalRepository``."""
+
+    def exists(self, event_key: str) -> bool:
+        return PaymentReversal.objects.filter(event_key=event_key).exists()
+
+    def record(
+        self,
+        order_id: UUID,
+        *,
+        event_key: str,
+        kind: str,
+        refunded_total: Decimal,
+        coins_debited: Decimal = Decimal(0),
+        bonus_debited: Decimal = Decimal(0),
+        shortfall: Decimal = Decimal(0),
+    ) -> None:
+        PaymentReversal.objects.create(
+            order=PedidoPagamento.objects.get(id=order_id),
+            event_key=event_key[:200],
+            kind=kind,
+            refunded_total=refunded_total,
+            coins_debited=coins_debited,
+            bonus_debited=bonus_debited,
+            shortfall=shortfall,
+        )

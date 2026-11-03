@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 21:46-0300\n"
+"POT-Creation-Date: 2026-11-03 12:32-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,18 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: .\extensions\_example\apps.py:21
-msgid "Extensão de exemplo"
-msgstr ""
 
-#: .\extensions\_example\apps.py:32
-msgid "Ping da extensão"
-msgstr ""
-
-#: .\extensions\_example\apps.py:33
-msgid "Extensões"
-msgstr ""
-
-#: .\extensions\_example\apps.py:34
-msgid "Página de fumaça do overlay de exemplo."
+#: .\extensions\valorem\apps.py:18
+msgid "Extensão Valorem"
 msgstr ""

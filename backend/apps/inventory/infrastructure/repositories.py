@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from uuid import UUID
 
+from django.db.models import F
+from django.utils import timezone
+
 from apps.inventory.domain.entities import InventoryEntity, InventoryItemEntity
 from apps.inventory.domain.exceptions import InsufficientItemQuantityError
 from apps.inventory.domain.repositories import IInventoryRepository
@@ -69,8 +72,10 @@ class DjangoInventoryRepository(IInventoryRepository):
         inventory = Inventory.objects.get(id=inventory_id)
         row = InventoryItem.objects.filter(inventory=inventory, item_id=item_id, enchant=enchant).first()
         if row:
-            row.quantity += quantity
-            row.save(update_fields=["quantity", "updated_at"])
+            # Incremento no banco: duas entregas simultâneas na mesma pilha não se sobrescrevem.
+            InventoryItem.objects.filter(pk=row.pk).update(
+                quantity=F("quantity") + quantity, updated_at=timezone.now()
+            )
             row = InventoryItem.objects.select_related("inventory").get(pk=row.pk)
         else:
             row = InventoryItem.objects.create(
@@ -89,14 +94,17 @@ class DjangoInventoryRepository(IInventoryRepository):
         row = InventoryItem.objects.select_related("inventory").filter(
             inventory__id=inventory_id, item_id=item_id, enchant=enchant
         ).first()
-        if row is None or row.quantity < quantity:
+        if row is None or quantity < 1 or row.quantity < quantity:
             raise InsufficientItemQuantityError()
         snapshot = self._item(row)
-        if row.quantity == quantity:
-            row.delete()
-        else:
-            row.quantity -= quantity
-            row.save(update_fields=["quantity", "updated_at"])
+        # Consumo condicional: a quantidade lida acima pode estar velha. Somente a requisição
+        # cujo UPDATE encontra saldo suficiente prossegue; as demais falham antes de entregar.
+        consumed = InventoryItem.objects.filter(pk=row.pk, quantity__gte=quantity).update(
+            quantity=F("quantity") - quantity, updated_at=timezone.now()
+        )
+        if consumed != 1:
+            raise InsufficientItemQuantityError()
+        InventoryItem.objects.filter(pk=row.pk, quantity=0).delete()
         return InventoryItemEntity(
             id=snapshot.id,
             inventory_id=snapshot.inventory_id,

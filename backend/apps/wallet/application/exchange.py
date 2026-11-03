@@ -102,6 +102,7 @@ class ExchangeCoinsUseCase:
         with self._unit_of_work:
             self.exchanges.lock_user(user.id)
             row = self.exchanges.find_by_request_key(user.id, data["request_key"])
+            resumed = row is not None
             if row:
                 if (row.direction, row.login, row.character_id, row.quantity) != (
                     data["direction"],
@@ -178,14 +179,20 @@ class ExchangeCoinsUseCase:
         if row.status in ("completed", "rejected"):
             return exchange_dump(row)
         try:
-            self.lineage.exchange_coins(
-                str(row.id),
-                row.login,
-                row.character_id,
-                row.item_id,
-                row.quantity,
-                row.direction,
-            )
+            # Uma retomada revalida o vínculo atual: se a conta mudou de dono, o recibo ainda
+            # não aplicado vira terminal no jogo; um recibo já aplicado segue para conciliação.
+            if resumed and not self.access.can_access(user.id, user.username, row.login):
+                if self.lineage.cancel_exchange(str(row.id), "Conta não vinculada ao seu usuário.") != "completed":
+                    raise ValidationDomainError("Conta não vinculada ao seu usuário.")
+            else:
+                self.lineage.exchange_coins(
+                    str(row.id),
+                    row.login,
+                    row.character_id,
+                    row.item_id,
+                    row.quantity,
+                    row.direction,
+                )
         except ValidationDomainError as exc:
             # A business rejection is raised only after the game transaction rolls back.
             with self._unit_of_work:

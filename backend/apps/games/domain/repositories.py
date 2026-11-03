@@ -135,11 +135,25 @@ class IBagRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def get_locked_by_user_id(self, user_id: UUID) -> Any | None:
+        """Bloqueia a bag do usuário até o fim da transação atual.
+
+        É o protocolo comum de produtores e consumidores da bag: quem adiciona, consome ou
+        transfere itens adquire este bloqueio antes de ler as pilhas.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
     def list_items(self, bag) -> list[Any]:
         raise NotImplementedError
 
     @abstractmethod
     def clear_items(self, bag) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete_items(self, bag, item_ids: list[UUID]) -> int:
+        """Remove somente as pilhas informadas da bag e devolve quantas linhas saíram."""
         raise NotImplementedError
 
     @abstractmethod

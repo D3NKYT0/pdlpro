@@ -1,4 +1,5 @@
 from apps.payment.application.pricing import CoinPricingService
+from apps.payment.application.reversals import ReconcilePaymentReversalUseCase
 from apps.payment.application.use_cases import (
     ApplyGatewayPaymentUseCase,
     CancelPaymentOrderUseCase,
@@ -19,14 +20,18 @@ from apps.payment.application.webhooks import (
 )
 from apps.payment.domain.gateways import IPaymentGatewayRegistry
 from apps.payment.domain.repositories import (
+    IPaymentAttemptRepository,
     IPaymentOrderRepository,
+    IPaymentReversalRepository,
     IWebhookLogRepository,
 )
 from apps.payment.infrastructure.mercadopago_gateway import MercadoPagoGateway
 from apps.payment.infrastructure.mock_gateway import MockPaymentGateway
 from apps.payment.infrastructure.registry import PaymentGatewayRegistry
 from apps.payment.infrastructure.repositories import (
+    DjangoPaymentAttemptRepository,
     DjangoPaymentOrderRepository,
+    DjangoPaymentReversalRepository,
     DjangoWebhookLogRepository,
 )
 from apps.payment.infrastructure.stripe_gateway import StripeGateway
@@ -46,6 +51,8 @@ class PaymentProvider(AppProvider):
     def register(self, container: Container) -> None:
         container.register(IPaymentOrderRepository, DjangoPaymentOrderRepository, lifetime=Lifetime.SCOPED)
         container.register(IWebhookLogRepository, DjangoWebhookLogRepository, lifetime=Lifetime.SCOPED)
+        container.register(IPaymentAttemptRepository, DjangoPaymentAttemptRepository, lifetime=Lifetime.SCOPED)
+        container.register(IPaymentReversalRepository, DjangoPaymentReversalRepository, lifetime=Lifetime.SCOPED)
         container.register_self(MockPaymentGateway, lifetime=Lifetime.SINGLETON)
         container.register_self(MercadoPagoGateway, lifetime=Lifetime.SINGLETON)
         container.register_self(StripeGateway, lifetime=Lifetime.SINGLETON)
@@ -66,6 +73,7 @@ class PaymentProvider(AppProvider):
             ProcessPaymentUseCase,
             GetPaymentStatusUseCase,
             ApplyGatewayPaymentUseCase,
+            ReconcilePaymentReversalUseCase,
             HandleMercadoPagoWebhookUseCase,
             HandleStripeWebhookUseCase,
         ):

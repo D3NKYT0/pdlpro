@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 1 de novembro de 2026
+> **Atualizado:** 3 de novembro de 2026
 
 Não basta habilitar uma tela: os bancos do painel e do jogo precisam manter recibos duráveis para retomar uma operação após falha de rede.
 
@@ -38,6 +38,8 @@ Homologue o envio de moedas e itens com o personagem online, a entrega real da f
 O envio usa a fila `items_delayed`. O retorno consome moedas sem encantamento no inventário/armazém. Saldo bônus não é transferível. A taxa se aplica apenas ao retorno. Moedas do site são inteiras: a quantidade enviada precisa corresponder a um número inteiro de moedas do saldo, e a taxa de retirada é arredondada para baixo. A tela começa em uma moeda na taxa ativa e só aceita múltiplos dela: com taxa 100, 100, 200, 300 unidades.
 
 Em erro de conexão, a operação fica **pendente** e deve ser retomada com a mesma chave pelo histórico; não é permitido abrir outra enquanto existir uma pendência. Não altere o status nem faça estorno manual sem conciliar o recibo do jogo: o commit externo pode ter ocorrido. Rejeições de negócio também têm recibo terminal, evitando que uma repetição aplique uma operação já estornada.
+
+A retomada revalida o vínculo da conta. Se a conta deixou de pertencer ao usuário, o painel pede ao jogo para encerrar o recibo (`cancel_exchange`) sob o mesmo bloqueio usado na aplicação: se nada foi aplicado, o recibo vira terminal, a operação é rejeitada e o envio é estornado; se o jogo já aplicou, a operação é concluída e conciliada normalmente. Sem conexão com o jogo, a operação continua pendente.
 
 Os testes locais validam o algoritmo transacional e os contratos SQL. Eles **não substituem a homologação no servidor Lineage real**, que não foi realizada nesta entrega.
 

@@ -230,20 +230,27 @@ class NullLineageGateway(ILineageGateway):
     def list_character_skills(self, char_id: int) -> list[GameSkill]:
         return list(self._skills.get(char_id, []))
 
-    def withdraw_item(self, char_id: int, item_id: int, quantity: int) -> GameItem:
-        items = self._items.setdefault(char_id, [])
-        for index, item in enumerate(items):
-            if item.slot is None and item.item_id == item_id and item.quantity >= quantity:
-                remaining = item.quantity - quantity
-                withdrawn = GameItem(item.item_id, item.name, quantity, item.enchant, location=item.location)
-                if remaining:
-                    items[index] = GameItem(item.item_id, item.name, remaining, item.enchant, location=item.location)
-                else:
-                    items.pop(index)
-                return withdrawn
+    def withdraw_item(self, char_id: int, item_id: int, quantity: int, enchant: int) -> GameItem:
         from common.architecture.exceptions import ValidationDomainError
 
-        raise ValidationDomainError("Quantidade insuficiente no personagem.")
+        items = self._items.setdefault(char_id, [])
+        matches = [
+            index for index, item in enumerate(items)
+            if item.slot is None and item.item_id == item_id and item.enchant == enchant
+        ]
+        if sum(items[index].quantity for index in matches) < quantity:
+            raise ValidationDomainError("Quantidade insuficiente no personagem.")
+        name = items[matches[0]].name
+        remaining = quantity
+        for index in matches:
+            item = items[index]
+            take = min(remaining, item.quantity)
+            items[index] = GameItem(item.item_id, item.name, item.quantity - take, item.enchant, location=item.location)
+            remaining -= take
+            if remaining == 0:
+                break
+        self._items[char_id] = [item for item in items if item.slot is not None or item.quantity > 0]
+        return GameItem(item_id, name, quantity, enchant)
 
     def allows_online_delivery(self) -> bool:
         """Simula em memória a opção administrativa de entrega online, sem acesso ao jogo."""

@@ -76,8 +76,9 @@ class LineageQueryCatalog:
         "verify_character_ownership",
         "transfer_character",
         "list_character_items",
-        "delete_item_stack",
-        "update_item_amount",
+        "withdraw_stacks",
+        "withdraw_decrement",
+        "withdraw_delete_empty",
         "find_character_id_by_name",
         "deposit_item",
     )

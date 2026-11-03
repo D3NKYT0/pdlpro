@@ -5850,3 +5850,75 @@ msgstr "El valor indicado no compra ninguna moneda entera."
 
 msgid "A quantidade deve corresponder a um número inteiro de moedas do saldo."
 msgstr "La cantidad debe corresponder a un número entero de monedas del saldo."
+
+msgid "Valor devolvido pelo provedor"
+msgstr "Importe devuelto por el proveedor"
+
+msgid "Moedas estornadas"
+msgstr "Monedas revertidas"
+
+msgid "Bônus estornado"
+msgstr "Bono revertido"
+
+msgid "Saldo devedor do estorno"
+msgstr "Saldo deudor del reembolso"
+
+msgid "Moedas e bônus já gastos que não puderam ser debitados no estorno."
+msgstr "Monedas y bono ya gastados que no se pudieron debitar en el reembolso."
+
+msgid "Revisão financeira"
+msgstr "Revisión financiera"
+
+msgid "Sem pendência"
+msgstr "Sin pendientes"
+
+msgid "Disputa aberta"
+msgstr "Disputa abierta"
+
+msgid "Revisão manual"
+msgstr "Revisión manual"
+
+msgid "Aprovada"
+msgstr "Aprobada"
+
+msgid "Rejeitada"
+msgstr "Rechazada"
+
+msgid "Tentativa de pagamento"
+msgstr "Intento de pago"
+
+msgid "Tentativas de pagamento"
+msgstr "Intentos de pago"
+
+msgid "Reembolso"
+msgstr "Reembolso"
+
+msgid "Chargeback"
+msgstr "Contracargo"
+
+msgid "Disputa ganha"
+msgstr "Disputa ganada"
+
+msgid "Disputa perdida"
+msgstr "Disputa perdida"
+
+msgid "Estorno de pagamento"
+msgstr "Reversión de pago"
+
+msgid "Estornos de pagamento"
+msgstr "Reversiones de pago"
+
+msgid "A bag foi alterada durante a transferência."
+msgstr "La bolsa cambió durante la transferencia."
+
+msgid "O inventário mudou. Tente novamente."
+msgstr "El inventario cambió. Inténtalo de nuevo."
+
+msgid "Quantidade insuficiente no personagem."
+msgstr "Cantidad insuficiente en el personaje."
+
+msgid "Conta não vinculada ao seu usuário."
+msgstr "Cuenta no vinculada a tu usuario."
+
+msgid "Evento financeiro inválido."
+msgstr "Evento financiero inválido."

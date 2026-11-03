@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Configuração](../configuracao/ambiente.md) · [Tutoriais](../tutoriais/README.md) · [Testes](../desenvolvimento/testes.md)
 
-> **Atualizado:** 1 de outubro de 2026
+> **Atualizado:** 3 de novembro de 2026
 
 `apps/payment` coordena compra de moedas; `apps/wallet` mantém saldo e extrato. Os adaptadores disponíveis são mock, Mercado Pago e Stripe. Este guia descreve o fluxo implementado pelo painel; credenciais e homologação devem corresponder ao ambiente do provedor escolhido.
 
@@ -98,9 +98,35 @@ Não copie URL de outro ambiente sem conferir o domínio.
 
 Para Mercado Pago, o serviço confere a assinatura HMAC e o timestamp. Para Stripe, a validação usa o SDK com os bytes originais do corpo. Preserve corpo e headers necessários no proxy. Segredos privados não devem aparecer no catálogo público nem em logs. O registro persistido do webhook (`sanitize_webhook_payload`) guarda só `id`, tipo, status e `order_id` de metadados — sem e-mail, documento, `client_secret` ou payload completo do provedor. Depois que o pedido confirma, falha ou cancela, `client_secret` e códigos PIX/boleto saem da linha do pedido; o checkout Stripe ainda usa o `client_secret` enquanto o pagamento está pendente.
 
+### Tentativas de cobrança
+
+Cada processamento do checkout embutido pertence a uma tentativa (`PaymentAttempt`) com chave de idempotência persistida, enviada ao Mercado Pago em `x-idempotency-key`:
+
+- reenvio ou timeout antes da resposta reutiliza a mesma chave, sem segunda cobrança;
+- uma tentativa com cobrança pendente (por exemplo, PIX aguardando) é consultada no provedor antes de qualquer nova cobrança; se já foi aprovada, o pedido é liquidado;
+- só uma rejeição definitiva abre a tentativa seguinte e devolve o pedido `failed` a `processing`;
+- referências de tentativas anteriores continuam ligadas ao pedido: uma aprovação tardia é creditada uma única vez, e um pedido `failed` só é liquidado por uma referência que pertence a ele.
+
+Gateways de extensões que ainda não aceitam o parâmetro `idempotency_key` em `process_payment` continuam funcionando, sem essa proteção.
+
+## Estornos e disputas
+
+`ReconcilePaymentReversalUseCase` aplica reembolsos, chargebacks e disputas recebidos por webhook (Mercado Pago `payment.updated` com status `refunded`, `charged_back`, `in_mediation` ou reembolso parcial; Stripe `charge.refunded`, `charge.dispute.created` e `charge.dispute.closed`) e pela consulta de status de um pedido já confirmado.
+
+| Evento | Efeito na carteira | Revisão do pedido |
+| --- | --- | --- |
+| Reembolso parcial ou total | Debita moedas e bônus na proporção do total devolvido | Só se faltar saldo |
+| Chargeback ou disputa perdida | Debita o restante do pedido | Só se faltar saldo |
+| Disputa aberta | Nenhum | **Disputa aberta** |
+| Disputa ganha | Nenhum | Encerra a disputa, se não houver devedor |
+
+Quando o jogador já gastou ou transferiu as moedas, o painel debita o que houver, soma o restante em **Saldo devedor do estorno** e marca **Revisão manual**; a equipe decide a cobrança ou restrição em Admin → Pedidos de pagamento. Cada evento grava `PaymentReversal` com chave única, e os totais devolvidos nunca regridem nem passam do valor do pedido: eventos repetidos ou fora de ordem não revertem duas vezes. Os débitos aparecem no extrato como “Estorno do pedido …” ou “Chargeback do pedido …”.
+
+No Stripe, o pedido é localizado pelo PaymentIntent; no checkout hospedado, o PaymentIntent da sessão é registrado na liquidação. Configure o endpoint do Stripe para enviar também os eventos de reembolso e disputa.
+
 ## Homologação
 
-Em um ambiente de testes do provedor, verifique criação/reutilização de pedido, processamento aprovado e rejeitado, consulta pendente, webhook válido e inválido, repetição e acesso por outro usuário. Confirme pedido, carteira e extrato; não se limite ao texto de sucesso da tela.
+Em um ambiente de testes do provedor, verifique criação/reutilização de pedido, processamento aprovado e rejeitado, nova tentativa após rejeição, reenvio e timeout, consulta pendente, webhook válido e inválido e atrasado, reembolso parcial e total, disputa ganha e perdida, repetição e acesso por outro usuário. Confirme pedido, carteira e extrato; não se limite ao texto de sucesso da tela.
 
 Os testes em [payment/tests](../../backend/apps/payment/tests/) e nos fluxos de comércio usam isolamento e simulações. A suíte local não comprova recebimento, estorno nem entrega de um webhook externo real. Registre a homologação com ambiente, revisão e resultados, sem incluir tokens ou dados sensíveis.
 

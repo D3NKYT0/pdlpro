@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import re
 import uuid
+from decimal import Decimal, InvalidOperation
 from typing import Any
 
 from django.conf import settings
@@ -93,7 +94,7 @@ class MercadoPagoGateway(IPaymentGateway):
             logger.exception("Mercado Pago falhou ao criar preferência")
             raise PaymentGatewayError("Não foi possível iniciar o pagamento externo.") from exc
 
-    def process_payment(self, order: PaymentOrderEntity, payload: dict) -> ProcessResult:
+    def process_payment(self, order: PaymentOrderEntity, payload: dict, idempotency_key: str = "") -> ProcessResult:
         if not self.is_available():
             raise PaymentMethodUnavailableError("Mercado Pago não está habilitado.")
         import mercadopago
@@ -166,7 +167,10 @@ class MercadoPagoGateway(IPaymentGateway):
             payment_data["notification_url"] = f"{str(notify).rstrip('/')}/api/v1/system/webhooks/mercadopago/"
 
         sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
-        response = sdk.payment().create(payment_data, RequestOptions(custom_headers={"x-idempotency-key": str(uuid.uuid4())}))
+        # A chave vem da tentativa persistida: reenvio ou timeout da mesma tentativa nunca
+        # cria uma segunda cobrança no provedor.
+        key = idempotency_key or str(uuid.uuid4())
+        response = sdk.payment().create(payment_data, RequestOptions(custom_headers={"x-idempotency-key": key}))
         if response.get("status", 500) >= 400:
             logger.error(
                 "Mercado Pago recusou o pagamento: %s",
@@ -202,7 +206,17 @@ class MercadoPagoGateway(IPaymentGateway):
 
     def _to_result(self, mp_payment: dict) -> ProcessResult:
         mp_status = mp_payment.get("status") or "pending"
-        mapped = {"approved": "approved", "rejected": "rejected", "cancelled": "rejected"}.get(mp_status, "pending")
+        mapped = {
+            "approved": "approved",
+            "rejected": "rejected",
+            "cancelled": "rejected",
+            "refunded": "refunded",
+            "charged_back": "charged_back",
+            "in_mediation": "disputed",
+        }.get(mp_status, "pending")
+        refunded = self._decimal(mp_payment.get("transaction_amount_refunded"))
+        if mapped == "refunded" and refunded <= 0:
+            refunded = self._decimal(mp_payment.get("transaction_amount"))
         transaction_data = (mp_payment.get("point_of_interaction") or {}).get("transaction_data") or {}
         details = mp_payment.get("transaction_details") or {}
         barcode = mp_payment.get("barcode") or {}
@@ -216,7 +230,16 @@ class MercadoPagoGateway(IPaymentGateway):
             boleto_barcode=(barcode.get("content") if isinstance(barcode, dict) else "") or "",
             message=str(mp_payment.get("status_detail") or ""),
             raw=mp_payment,
+            refunded_amount=refunded,
         )
+
+    @staticmethod
+    def _decimal(value) -> Decimal:
+        try:
+            amount = Decimal(str(value)) if value is not None else Decimal(0)
+        except (InvalidOperation, ValueError):
+            return Decimal(0)
+        return amount.quantize(Decimal("0.01")) if amount.is_finite() and amount > 0 else Decimal(0)
 
     def _error_message(self, payload: dict) -> str:
         cause = payload.get("cause")

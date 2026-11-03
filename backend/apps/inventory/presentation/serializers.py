@@ -7,13 +7,15 @@ class WithdrawSerializer(serializers.Serializer):
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
     validated_data. A autorização pertence ao fluxo chamador.
 
-    Campos declarados: ``login``, ``char_id``, ``item_id``, ``quantity``.
+    Campos declarados: ``login``, ``char_id``, ``item_id``, ``quantity``, ``enchant``. Somente
+    exemplares com o encantamento informado são consumidos; lotes mistos não existem.
     """
 
     login = serializers.CharField(required=False, allow_blank=True)
     char_id = serializers.IntegerField()
     item_id = serializers.IntegerField()
     quantity = serializers.IntegerField(min_value=1)
+    enchant = serializers.IntegerField(min_value=0, default=0)
 
 
 class DepositSerializer(serializers.Serializer):

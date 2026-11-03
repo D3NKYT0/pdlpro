@@ -161,7 +161,7 @@ const contracts: Contract[] = [
   ['inventory.accountItems', () => inventoryApi.gameItems(7, 'a&b'), '/customer/inventory/characters/7/items/?login=a%26b'],
   ['inventory.equipment', () => inventoryApi.equipment(7), '/customer/inventory/characters/7/equipment/'],
   ['inventory.accountEquipment', () => inventoryApi.equipment(7, 'a&b'), '/customer/inventory/characters/7/equipment/?login=a%26b'],
-  ['inventory.withdraw', () => inventoryApi.withdraw({ char_id: 7, item_id: 57, quantity: 2 }), '/customer/inventory/withdraw/', 'POST', { char_id: 7, item_id: 57, quantity: 2 }],
+  ['inventory.withdraw', () => inventoryApi.withdraw({ char_id: 7, item_id: 57, quantity: 2, enchant: 4 }), '/customer/inventory/withdraw/', 'POST', { char_id: 7, item_id: 57, quantity: 2, enchant: 4 }],
   ['inventory.deposit', () => inventoryApi.deposit({ inventory_id: 'inv', item_id: 57, quantity: 2, enchant: 0 }), '/customer/inventory/deposit/', 'POST', { inventory_id: 'inv', item_id: 57, quantity: 2, enchant: 0 }],
   ['inventory.trade', () => inventoryApi.trade({ origin_inventory_id: 'a', destination_inventory_id: 'b', item_id: 57, quantity: 2, enchant: 0 }), '/customer/inventory/trade/', 'POST', { origin_inventory_id: 'a', destination_inventory_id: 'b', item_id: 57, quantity: 2, enchant: 0 }],
   ['games.roulette', () => gamesApi.roulette(), '/customer/games/roulette/'],

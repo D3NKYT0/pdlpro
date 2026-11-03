@@ -20,16 +20,26 @@ FROM character_skills
 WHERE charId = :char_id
 ORDER BY skill_id, class_index
 
--- name: delete_item_stack
-DELETE FROM items
+-- Withdrawal locks the exact stacks (template + enchant) and consumes each one
+-- conditionally inside a single game transaction.
+-- name: withdraw_stacks
+SELECT object_id AS stack_id, count AS quantity
+FROM items
 WHERE owner_id = :char_id AND item_id = :item_id AND enchant_level = :enchant
-LIMIT 1
+  AND loc IN ('INVENTORY', 'WAREHOUSE')
+ORDER BY object_id
+FOR UPDATE
 
--- name: update_item_amount
+-- name: withdraw_decrement
 UPDATE items
 SET count = count - :qty
-WHERE owner_id = :char_id AND item_id = :item_id AND enchant_level = :enchant
-LIMIT 1
+WHERE object_id = :stack_id AND owner_id = :char_id AND enchant_level = :enchant
+  AND loc IN ('INVENTORY', 'WAREHOUSE') AND count >= :qty
+
+-- name: withdraw_delete_empty
+DELETE FROM items
+WHERE object_id = :stack_id AND owner_id = :char_id AND count = 0
+  AND loc IN ('INVENTORY', 'WAREHOUSE')
 
 -- name: deposit_item
 INSERT INTO items_delayed (

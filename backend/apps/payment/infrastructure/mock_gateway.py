@@ -23,5 +23,5 @@ class MockPaymentGateway(IPaymentGateway):
             checkout_url=f"/wallet?deposit={order.id}",
         )
 
-    def process_payment(self, order: PaymentOrderEntity, payload: dict) -> ProcessResult:
+    def process_payment(self, order: PaymentOrderEntity, payload: dict, idempotency_key: str = "") -> ProcessResult:
         return ProcessResult(status="approved", external_id=str(order.id), message="Pagamento mock aprovado.")

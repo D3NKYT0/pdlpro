@@ -5010,3 +5010,75 @@ msgstr "O valor informado não compra nenhuma moeda inteira."
 
 msgid "A quantidade deve corresponder a um número inteiro de moedas do saldo."
 msgstr "A quantidade deve corresponder a um número inteiro de moedas do saldo."
+
+msgid "Valor devolvido pelo provedor"
+msgstr ""
+
+msgid "Moedas estornadas"
+msgstr ""
+
+msgid "Bônus estornado"
+msgstr ""
+
+msgid "Saldo devedor do estorno"
+msgstr ""
+
+msgid "Moedas e bônus já gastos que não puderam ser debitados no estorno."
+msgstr ""
+
+msgid "Revisão financeira"
+msgstr ""
+
+msgid "Sem pendência"
+msgstr ""
+
+msgid "Disputa aberta"
+msgstr ""
+
+msgid "Revisão manual"
+msgstr ""
+
+msgid "Aprovada"
+msgstr ""
+
+msgid "Rejeitada"
+msgstr ""
+
+msgid "Tentativa de pagamento"
+msgstr ""
+
+msgid "Tentativas de pagamento"
+msgstr ""
+
+msgid "Reembolso"
+msgstr ""
+
+msgid "Chargeback"
+msgstr ""
+
+msgid "Disputa ganha"
+msgstr ""
+
+msgid "Disputa perdida"
+msgstr ""
+
+msgid "Estorno de pagamento"
+msgstr ""
+
+msgid "Estornos de pagamento"
+msgstr ""
+
+msgid "A bag foi alterada durante a transferência."
+msgstr ""
+
+msgid "O inventário mudou. Tente novamente."
+msgstr ""
+
+msgid "Quantidade insuficiente no personagem."
+msgstr ""
+
+msgid "Conta não vinculada ao seu usuário."
+msgstr ""
+
+msgid "Evento financeiro inválido."
+msgstr ""

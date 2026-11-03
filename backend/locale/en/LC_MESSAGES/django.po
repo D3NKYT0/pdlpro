@@ -5741,3 +5741,75 @@ msgstr "The amount entered does not buy a whole coin."
 
 msgid "A quantidade deve corresponder a um número inteiro de moedas do saldo."
 msgstr "The quantity must match a whole number of balance coins."
+
+msgid "Valor devolvido pelo provedor"
+msgstr "Amount refunded by the provider"
+
+msgid "Moedas estornadas"
+msgstr "Reversed coins"
+
+msgid "Bônus estornado"
+msgstr "Reversed bonus"
+
+msgid "Saldo devedor do estorno"
+msgstr "Reversal shortfall"
+
+msgid "Moedas e bônus já gastos que não puderam ser debitados no estorno."
+msgstr "Coins and bonus already spent that could not be debited by the reversal."
+
+msgid "Revisão financeira"
+msgstr "Financial review"
+
+msgid "Sem pendência"
+msgstr "Nothing pending"
+
+msgid "Disputa aberta"
+msgstr "Open dispute"
+
+msgid "Revisão manual"
+msgstr "Manual review"
+
+msgid "Aprovada"
+msgstr "Approved"
+
+msgid "Rejeitada"
+msgstr "Rejected"
+
+msgid "Tentativa de pagamento"
+msgstr "Payment attempt"
+
+msgid "Tentativas de pagamento"
+msgstr "Payment attempts"
+
+msgid "Reembolso"
+msgstr "Refund"
+
+msgid "Chargeback"
+msgstr "Chargeback"
+
+msgid "Disputa ganha"
+msgstr "Dispute won"
+
+msgid "Disputa perdida"
+msgstr "Dispute lost"
+
+msgid "Estorno de pagamento"
+msgstr "Payment reversal"
+
+msgid "Estornos de pagamento"
+msgstr "Payment reversals"
+
+msgid "A bag foi alterada durante a transferência."
+msgstr "The bag changed during the transfer."
+
+msgid "O inventário mudou. Tente novamente."
+msgstr "The inventory changed. Please try again."
+
+msgid "Quantidade insuficiente no personagem."
+msgstr "Not enough quantity on the character."
+
+msgid "Conta não vinculada ao seu usuário."
+msgstr "Account not linked to your user."
+
+msgid "Evento financeiro inválido."
+msgstr "Invalid financial event."

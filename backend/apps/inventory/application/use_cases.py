@@ -68,6 +68,7 @@ class WithdrawItemInput:
     char_id: int
     item_id: int
     quantity: int
+    enchant: int = 0
 
 
 class WithdrawItemUseCase(UseCase[WithdrawItemInput, InventoryItemEntity]):
@@ -91,7 +92,7 @@ class WithdrawItemUseCase(UseCase[WithdrawItemInput, InventoryItemEntity]):
         self._unit_of_work = unit_of_work
 
     def execute(self, data: WithdrawItemInput) -> InventoryItemEntity:
-        if data.quantity < 1:
+        if data.quantity < 1 or data.enchant < 0:
             raise ValidationDomainError("Quantidade inválida.")
         login = data.actor.login or data.actor.username
         if not self._access.can_access(data.actor.user_id, data.actor.username, login):
@@ -106,7 +107,7 @@ class WithdrawItemUseCase(UseCase[WithdrawItemInput, InventoryItemEntity]):
 
             raise CharacterOfflineRequiredError()
         with self._unit_of_work:
-            withdrawn = self._lineage.withdraw_item(data.char_id, data.item_id, data.quantity)
+            withdrawn = self._lineage.withdraw_item(data.char_id, data.item_id, data.quantity, data.enchant)
             inventory = self._inventories.get_or_create(data.actor.user_id, char.name, login)
             item = self._inventories.add_item(
                 inventory.id, withdrawn.item_id, withdrawn.name, withdrawn.quantity, withdrawn.enchant
@@ -170,8 +171,9 @@ class DepositItemUseCase(UseCase[DepositItemInput, None]):
         if not self._access.can_access(data.actor.user_id, data.actor.username, login):
             raise AuthorizationError()
         with self._unit_of_work:
+            # O jogo confirma na própria conexão; por isso a entrega é o último passo e toda
+            # escrita do painel que ainda pode falhar (remoção condicional, histórico) vem antes.
             removed = self._inventories.remove_item(inventory.id, data.item_id, data.quantity, data.enchant)
-            self._lineage.deposit_item(inventory.character_name, data.item_id, data.quantity, data.enchant)
             self._inventories.log(
                 data.actor.user_id,
                 action="INSERIU_NO_JOGO",
@@ -182,6 +184,7 @@ class DepositItemUseCase(UseCase[DepositItemInput, None]):
                 origin="painel",
                 destination=inventory.character_name,
             )
+            self._lineage.deposit_item(inventory.character_name, data.item_id, data.quantity, data.enchant)
 
 
 @dataclass(frozen=True, slots=True)

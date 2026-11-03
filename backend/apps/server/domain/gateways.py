@@ -241,6 +241,15 @@ class ILineageGateway(ABC):
         """Apply once, atomically with a durable receipt in the game database."""
         raise NotImplementedError("Transferência de moedas indisponível neste servidor.")
 
+    def cancel_exchange(self, receipt: str, reason: str) -> str:
+        """Torna terminal um recibo ainda não aplicado e devolve o estado final.
+
+        Serializa com ``exchange_coins`` pelo mesmo recibo: devolve ``"completed"`` quando o
+        jogo já aplicou a operação (precisa ser conciliada) e ``"rejected"`` quando nada foi
+        aplicado e nenhuma retomada futura poderá aplicá-lo.
+        """
+        raise NotImplementedError("Transferência de moedas indisponível neste servidor.")
+
     def ensure_columns(self) -> list[str]:
         """Garante a existência de colunas exigidas pelo PDL na tabela accounts do jogo."""
         return []
@@ -329,7 +338,12 @@ class ILineageGateway(ABC):
     def list_character_skills(self, char_id: int) -> list[GameSkill]: ...
 
     @abstractmethod
-    def withdraw_item(self, char_id: int, item_id: int, quantity: int) -> GameItem: ...
+    def withdraw_item(self, char_id: int, item_id: int, quantity: int, enchant: int) -> GameItem:
+        """Consome ``quantity`` unidades das pilhas com ``item_id`` e ``enchant`` exatos.
+
+        A operação é atômica no banco do jogo: ou todas as pilhas necessárias são consumidas,
+        ou nenhuma. Exemplares com outro encantamento nunca entram no lote retornado.
+        """
 
     @abstractmethod
     def deposit_item(self, char_name: str, item_id: int, quantity: int, enchant: int) -> None: ...

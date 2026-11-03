@@ -20,7 +20,7 @@ interface InventoryGameItemsProps {
   pageCount: number
   visiblePages: number[]
   onPageChange: (page: number | ((page: number) => number)) => void
-  onSelectItem: (itemId: number) => void
+  onSelectItem: (itemId: number, enchant: number) => void
 }
 
 export function InventoryGameItems({
@@ -138,7 +138,7 @@ export function InventoryGameItems({
                   type="button"
                   disabled={!item.tradeable}
                   title={item.tradeable ? t('inventory.gameItems.selectTitle') : t('inventory.gameItems.blockedTitle')}
-                  onClick={() => onSelectItem(item.item_id)}
+                  onClick={() => onSelectItem(item.item_id, item.enchant)}
                 >
                   {item.tradeable ? t('inventory.gameItems.select') : t('inventory.gameItems.blocked')}
                 </Button>

@@ -38,6 +38,7 @@ export function useInventoryDashboard() {
   const [charId, setCharId] = useState<number | ''>('')
   const [itemId, setItemId] = useState('57')
   const [quantity, setQuantity] = useState('1')
+  const [enchant, setEnchant] = useState('0')
   const [gameItemSearch, setGameItemSearch] = useState('')
   const [gameItemsPage, setGameItemsPage] = useState(1)
   const [gameItemsPageSize, setGameItemsPageSize] = useState(8)
@@ -124,6 +125,7 @@ export function useInventoryDashboard() {
         char_id: Number(charId),
         item_id: Number(itemId),
         quantity: Number(quantity),
+        enchant: Number(enchant),
       })
       toast.success(t('inventory.toast.withdrawn'))
       await queryClient.invalidateQueries({ queryKey: ['inventory', login] })
@@ -253,6 +255,8 @@ export function useInventoryDashboard() {
     setItemId,
     quantity,
     setQuantity,
+    enchant,
+    setEnchant,
     gameItemSearch,
     setGameItemSearch,
     gameItemsPage,

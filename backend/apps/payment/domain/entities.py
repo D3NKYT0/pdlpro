@@ -30,6 +30,11 @@ class PaymentOrderEntity:
     gateway_data: dict = field(default_factory=dict)
     created_at: datetime | None = None
     paid_at: datetime | None = None
+    refunded_amount: Decimal = Decimal(0)
+    coins_reversed: Decimal = Decimal(0)
+    bonus_reversed: Decimal = Decimal(0)
+    reversal_shortfall: Decimal = Decimal(0)
+    review_status: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -64,3 +69,24 @@ class ProcessResult:
     boleto_barcode: str = ""
     message: str = ""
     raw: dict = field(default_factory=dict)
+    # Total já devolvido ao pagador (estorno parcial ou total), na moeda do pedido.
+    refunded_amount: Decimal = Decimal(0)
+
+
+#: Resultados do provedor que indicam dinheiro devolvido ou contestado; nunca liquidam pedidos.
+REVERSAL_STATUSES = frozenset({"refunded", "charged_back", "disputed"})
+
+
+@dataclass(frozen=True, slots=True)
+class PaymentAttemptEntity:
+    """Tentativa lógica de cobrança: chave de idempotência, referência externa e estado.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM.
+    """
+
+    id: UUID
+    order_id: UUID
+    number: int
+    idempotency_key: UUID
+    external_id: str
+    status: str

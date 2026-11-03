@@ -148,6 +148,7 @@ class WithdrawItemView(ItemCatalogAPIView):
                 char_id=data["char_id"],
                 item_id=data["item_id"],
                 quantity=data["quantity"],
+                enchant=data["enchant"],
             )
         )
         return Response(dump_item(item))

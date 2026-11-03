@@ -5,7 +5,7 @@ from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
-from apps.payment.domain.entities import PaymentOrderEntity
+from apps.payment.domain.entities import PaymentAttemptEntity, PaymentOrderEntity
 
 
 class IWebhookLogRepository(ABC):
@@ -115,4 +115,86 @@ class IPaymentOrderRepository(ABC):
 
     @abstractmethod
     def mark_confirmed(self, order_id: UUID, *, bonus_applied: Decimal, total_credited: Decimal) -> PaymentOrderEntity:
+        raise NotImplementedError
+
+    @abstractmethod
+    def apply_reversal(
+        self,
+        order_id: UUID,
+        *,
+        refunded_amount: Decimal,
+        coins_reversed: Decimal,
+        bonus_reversed: Decimal,
+        shortfall_increment: Decimal,
+    ) -> PaymentOrderEntity:
+        """Grava os totais acumulados de estorno; chamar com o pedido bloqueado."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def set_review_status(self, order_id: UUID, review_status: str) -> PaymentOrderEntity:
+        """Define a revisão financeira (``""``, ``dispute`` ou ``manual_review``)."""
+
+        raise NotImplementedError
+
+
+class IPaymentAttemptRepository(ABC):
+    """Porta das tentativas de cobrança de um pedido (LBN-05/LBN-06).
+
+    Cada tentativa tem chave de idempotência própria, reutilizada em reenvios e timeouts. Chame
+    os métodos que alteram estado com o pedido bloqueado por ``get_for_update``.
+    """
+
+    @abstractmethod
+    def current(self, order_id: UUID) -> PaymentAttemptEntity | None:
+        """Última tentativa do pedido, ou None quando ainda não houve cobrança."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def open(self, order_id: UUID) -> PaymentAttemptEntity:
+        """Cria a próxima tentativa e devolve o pedido ``failed`` a ``processing``."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def record(self, attempt_id: UUID, *, status: str, external_id: str = "") -> PaymentAttemptEntity:
+        """Atualiza estado e referência externa (mantém a referência anterior se vazia)."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def owns_external_id(self, order_id: UUID, external_id: str) -> bool:
+        """Indica se a referência externa pertence ao pedido ou a uma de suas tentativas."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def record_alias(self, order_id: UUID, external_id: str, *, status: str) -> None:
+        """Registra outra referência do provedor para o pedido (ex.: PaymentIntent da sessão)."""
+
+        raise NotImplementedError
+
+
+class IPaymentReversalRepository(ABC):
+    """Porta do histórico idempotente de estornos, chargebacks e disputas (LBN-04)."""
+
+    @abstractmethod
+    def exists(self, event_key: str) -> bool:
+        raise NotImplementedError
+
+    @abstractmethod
+    def record(
+        self,
+        order_id: UUID,
+        *,
+        event_key: str,
+        kind: str,
+        refunded_total: Decimal,
+        coins_debited: Decimal = Decimal(0),
+        bonus_debited: Decimal = Decimal(0),
+        shortfall: Decimal = Decimal(0),
+    ) -> None:
+        """Grava o evento conciliado; ``event_key`` é único e impede reaplicação."""
+
         raise NotImplementedError

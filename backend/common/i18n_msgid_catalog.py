@@ -291,3 +291,10 @@ _("Buscar personagens")
 _("Disponibilidade desta ação dentro do módulo.")
 
 _("Configuração inicial de personagem inválida.")
+
+# Auditoria de compras (LBN-01..07): mensagens levantadas nos casos de uso.
+_("A bag foi alterada durante a transferência.")
+_("O inventário mudou. Tente novamente.")
+_("Quantidade insuficiente no personagem.")
+_("Conta não vinculada ao seu usuário.")
+_("Evento financeiro inválido.")

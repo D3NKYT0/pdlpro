@@ -207,6 +207,23 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         if rejection:
             raise ValidationDomainError(rejection)
 
+    def cancel_exchange(self, receipt: str, reason: str) -> str:
+        self.assert_exchange_ready()
+        params = {"receipt": receipt, "error": reason[:300]}
+        # Same receipt row lock as exchange_coins: either the transfer already committed
+        # (it must be reconciled) or the receipt becomes terminal before any retry applies it.
+        with self._engine_or_create().begin() as connection:
+            def execute(name):
+                return connection.execute(text(self._sql[name]), params)
+
+            execute("exchange_insert_receipt")
+            row = execute("exchange_get_receipt").mappings().one()
+            if row["completed"] == 1:
+                return "completed"
+            if row["completed"] != -1:
+                execute("exchange_reject_receipt")
+        return "rejected"
+
     def _bind(self, sql: str, params: dict | None) -> dict:
         needed = set(BIND_RE.findall(sql))
         source = params or {}
@@ -486,26 +503,35 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             for row in rows
         ]
 
-    def withdraw_item(self, char_id: int, item_id: int, quantity: int) -> GameItem:
-        items = [item for item in self.list_character_items(char_id) if item.item_id == item_id]
-        total = sum(item.quantity for item in items)
-        if total < quantity:
-            from common.architecture.exceptions import ValidationDomainError
+    def withdraw_item(self, char_id: int, item_id: int, quantity: int, enchant: int) -> GameItem:
+        from common.architecture.exceptions import ValidationDomainError
 
-            raise ValidationDomainError("Quantidade insuficiente no personagem.")
-        remaining = quantity
-        withdrawn_enchant = items[0].enchant if items else 0
-        for item in items:
-            take = min(remaining, item.quantity)
-            params = {"char_id": char_id, "item_id": item_id, "enchant": item.enchant, "qty": take}
-            if item.quantity - take <= 0:
-                self._execute("delete_item_stack", params)
-            else:
-                self._execute("update_item_amount", params)
-            remaining -= take
-            if remaining <= 0:
-                return GameItem(item.item_id, item.name, quantity, item.enchant)
-        return GameItem(item_id, item_display_name(item_id), quantity, withdrawn_enchant)
+        if quantity < 1 or enchant < 0:
+            raise ValidationDomainError("Quantidade inválida.")
+        params = {"char_id": char_id, "item_id": item_id, "enchant": enchant}
+        # One game transaction: the exact stacks (template + enchant) are locked, each
+        # decrement must hit its row, and any mismatch rolls every stack back.
+        with self._engine_or_create().begin() as connection:
+            def execute(name: str, values: dict):
+                sql = self._sql[name]
+                return connection.execute(text(sql), self._bind(sql, values))
+
+            stacks = list(execute("withdraw_stacks", params).mappings())
+            if sum(int(stack["quantity"] or 0) for stack in stacks) < quantity:
+                raise ValidationDomainError("Quantidade insuficiente no personagem.")
+            remaining = quantity
+            for stack in stacks:
+                take = min(remaining, int(stack["quantity"] or 0))
+                if take <= 0:
+                    continue
+                values = dict(params, stack_id=stack["stack_id"], qty=take)
+                if execute("withdraw_decrement", values).rowcount != 1:
+                    raise ValidationDomainError("O inventário mudou. Tente novamente.")
+                execute("withdraw_delete_empty", values)
+                remaining -= take
+                if remaining == 0:
+                    break
+        return GameItem(item_id, item_display_name(item_id), quantity, enchant)
 
     def deposit_item(self, char_name: str, item_id: int, quantity: int, enchant: int) -> None:
         from apps.server.domain.exceptions import CharacterOfflineRequiredError

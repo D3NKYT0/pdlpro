@@ -212,6 +212,7 @@
       "select": "Selecciona",
       "characterOption": "{{name}} — nivel {{level}}",
       "quantity": "Cantidad",
+      "enchant": "Encantamiento",
       "withdraw": "Retirar del juego",
       "chestEyebrow": "Baúl del panel · cuenta {{account}}",
       "itemMeta": "+{{enchant}} · cantidad {{quantity}}",

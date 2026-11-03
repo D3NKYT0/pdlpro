@@ -251,7 +251,7 @@ export const inventoryApi = {
     request<ApiCharacterEquipmentItem[]>(
       `/customer/inventory/characters/${charId}/equipment/${login ? `?login=${encodeURIComponent(login)}` : ''}`,
     ),
-  withdraw: (payload: { login?: string; char_id: number; item_id: number; quantity: number }) =>
+  withdraw: (payload: { login?: string; char_id: number; item_id: number; quantity: number; enchant: number }) =>
     request('/customer/inventory/withdraw/', { method: 'POST', body: JSON.stringify(payload) }),
   deposit: (payload: {
     login?: string

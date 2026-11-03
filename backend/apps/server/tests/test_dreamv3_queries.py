@@ -115,7 +115,7 @@ def test_complete_feature_catalog():
     assert CATALOG.has("list_character_skills")
     assert CATALOG.has("insert_character")
     assert CATALOG.has("insert_character_subclass")
-    assert len(CATALOG._statements) == 74
+    assert len(CATALOG._statements) == 75
     assert CATALOG.has("change_appearance")
     assert CATALOG.has("list_private_stores")
 
@@ -175,14 +175,16 @@ def test_inventory_and_equipment_use_distinct_locations(schema):
     ]
 
 
-@pytest.mark.parametrize("name", ["delete_item_stack", "update_item_amount"])
-def test_withdrawal_uses_same_locations_and_stack_order(name):
+@pytest.mark.parametrize("name", ["withdraw_stacks", "withdraw_decrement", "withdraw_delete_empty"])
+def test_withdrawal_uses_exact_stack_and_unequipped_locations(name):
     sql = CATALOG[name]
     assert "owner_id = :char_id" in sql
-    assert "item_type = :item_id" in sql
-    assert "enchant = :enchant" in sql
     assert "location IN ('INVENTORY', 'WAREHOUSE')" in sql
-    assert "ORDER BY item_id\nLIMIT 1" in sql
+    if name == "withdraw_stacks":
+        assert "item_type = :item_id AND enchant = :enchant" in sql
+        assert sql.rstrip().endswith("FOR UPDATE")
+    else:
+        assert "item_id = :stack_id" in sql
 
 
 def test_delayed_delivery_uses_auto_id_and_numeric_owner(schema):

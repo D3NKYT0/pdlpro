@@ -199,3 +199,19 @@ def test_completed_online_receipt_survives_policy_change_without_duplicate(gatew
     gateway.exchange_coins("completed-online", "player", 1, 57, 10, "to_game")
     with gateway._engine.connect() as conn:
         assert conn.execute(text("SELECT SUM(count) FROM items_delayed")).scalar() == 10
+
+
+def test_cancel_makes_an_unapplied_receipt_terminal_for_later_retries(gateway):
+    assert gateway.cancel_exchange("revoked", "Conta não vinculada ao seu usuário.") == "rejected"
+    with pytest.raises(ValidationDomainError, match="Conta não vinculada"):
+        gateway.exchange_coins("revoked", "player", 1, 57, 10, "from_game")
+    with gateway._engine.connect() as conn:
+        assert conn.execute(text("SELECT SUM(amount) FROM items")).scalar() == 25
+    assert gateway.cancel_exchange("revoked", "outro motivo") == "rejected"
+
+
+def test_cancel_reports_a_receipt_the_game_already_applied(gateway):
+    gateway.exchange_coins("applied", "player", 1, 57, 10, "from_game")
+    assert gateway.cancel_exchange("applied", "Conta não vinculada ao seu usuário.") == "completed"
+    with gateway._engine.connect() as conn:
+        assert conn.execute(text("SELECT completed FROM pdl_exchange_receipts")).scalar() == 1

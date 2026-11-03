@@ -6,18 +6,27 @@ import json
 import logging
 import urllib.parse
 from dataclasses import dataclass
+from decimal import Decimal, InvalidOperation
 from typing import Any
 from uuid import UUID
 
 from django.conf import settings
 from django.utils import timezone
 
+from apps.payment.application.reversals import (
+    ReconcilePaymentReversalInput,
+    ReconcilePaymentReversalUseCase,
+)
 from apps.payment.application.use_cases import (
     ApplyGatewayPaymentInput,
     ApplyGatewayPaymentUseCase,
+    reversal_from_result,
 )
 from apps.payment.domain.gateways import IPaymentGatewayRegistry
-from apps.payment.domain.repositories import IWebhookLogRepository
+from apps.payment.domain.repositories import (
+    IPaymentOrderRepository,
+    IWebhookLogRepository,
+)
 from common.architecture.base import UseCase
 
 logger = logging.getLogger(__name__)
@@ -116,10 +125,13 @@ class HandleMercadoPagoWebhookInput:
 
 
 class HandleMercadoPagoWebhookUseCase(UseCase[HandleMercadoPagoWebhookInput, None]):
-    """Registra o webhook do Mercado Pago e liquida pagamentos aprovados.
+    """Registra o webhook do Mercado Pago, liquida pagamentos aprovados e concilia estornos,
+    chargebacks e mediações.
 
     A view deve validar a assinatura com ``WebhookSignatureService`` antes de chamar
-    ``execute``. Consulta o pagamento no gateway e aplica via ``ApplyGatewayPaymentUseCase``.
+    ``execute``. O status vem sempre da consulta autenticada ao provedor, nunca do corpo do
+    evento. Aprovações seguem por ``ApplyGatewayPaymentUseCase``; devoluções por
+    ``ReconcilePaymentReversalUseCase``.
     """
 
     def __init__(
@@ -127,10 +139,14 @@ class HandleMercadoPagoWebhookUseCase(UseCase[HandleMercadoPagoWebhookInput, Non
         logs: IWebhookLogRepository,
         gateways: IPaymentGatewayRegistry,
         apply: ApplyGatewayPaymentUseCase,
+        orders: IPaymentOrderRepository,
+        reversals: ReconcilePaymentReversalUseCase,
     ) -> None:
         self._logs = logs
         self._gateways = gateways
         self._apply = apply
+        self._orders = orders
+        self._reversals = reversals
 
     def execute(self, data: HandleMercadoPagoWebhookInput) -> None:
         payload = data.payload
@@ -140,6 +156,19 @@ class HandleMercadoPagoWebhookUseCase(UseCase[HandleMercadoPagoWebhookInput, Non
         action = payload.get("action") or payload.get("type")
         if action in {"payment.created", "payment", "payment.updated"} and data_id:
             result = self._gateways.get("mercadopago").fetch_by_external_id(data_id)
+            reversal = reversal_from_result("mercadopago", result)
+            if reversal is not None:
+                order = self._orders.get_by_external_id(result.external_id)
+                if order is None:
+                    logger.warning("Estorno Mercado Pago sem pedido conhecido: %s", result.external_id)
+                    return
+                kind, refunded_total, key = reversal
+                self._reversals.execute(
+                    ReconcilePaymentReversalInput(
+                        order_id=order.id, event_key=key, kind=kind, refunded_total=refunded_total
+                    )
+                )
+                return
             if result and result.status == "approved":
                 order_id = None
                 metadata = (result.raw or {}).get("metadata") or {}
@@ -164,20 +193,43 @@ class HandleStripeWebhookInput:
     event: Any
 
 
+_STRIPE_DISPUTE_OUTCOMES = {"won": "dispute_won", "lost": "dispute_lost"}
+
+
+def _stripe_amount(cents: Any) -> Decimal:
+    try:
+        value = Decimal(str(cents or 0)) / 100
+    except (InvalidOperation, ValueError):
+        return Decimal(0)
+    return value if value.is_finite() and value > 0 else Decimal(0)
+
+
 class HandleStripeWebhookUseCase(UseCase[HandleStripeWebhookInput, None]):
-    """Registra o webhook do Stripe e liquida pagamentos concluídos.
+    """Registra o webhook do Stripe, liquida pagamentos concluídos e concilia reembolsos e
+    disputas.
 
     A view deve validar a assinatura com ``WebhookSignatureService`` antes de chamar
-    ``execute``. Aplica o crédito via ``ApplyGatewayPaymentUseCase``.
+    ``execute``. Aplica o crédito via ``ApplyGatewayPaymentUseCase`` e as devoluções via
+    ``ReconcilePaymentReversalUseCase``, localizando o pedido pelo PaymentIntent.
     """
 
-    def __init__(self, logs: IWebhookLogRepository, apply: ApplyGatewayPaymentUseCase) -> None:
+    def __init__(
+        self,
+        logs: IWebhookLogRepository,
+        apply: ApplyGatewayPaymentUseCase,
+        orders: IPaymentOrderRepository,
+        reversals: ReconcilePaymentReversalUseCase,
+    ) -> None:
         self._logs = logs
         self._apply = apply
+        self._orders = orders
+        self._reversals = reversals
 
     def execute(self, data: HandleStripeWebhookInput) -> None:
         event = data.event
         self._logs.create(kind=event["type"], data_id=event["id"], payload=sanitize_webhook_payload(event))
+        if self._reconcile(event):
+            return
         if event["type"] in {"payment_intent.succeeded", "checkout.session.completed", "checkout.session.async_payment_succeeded"}:
             obj = event["data"]["object"]
             if event["type"] == "checkout.session.completed" and obj.get("payment_status") != "paid":
@@ -190,10 +242,35 @@ class HandleStripeWebhookUseCase(UseCase[HandleStripeWebhookInput, None]):
                     order_id = UUID(str(metadata["order_id"]))
                 except ValueError:
                     order_id = None
+            intent = obj.get("payment_intent") if str(external_id or "").startswith("cs_") else None
             self._apply.execute(
                 ApplyGatewayPaymentInput(
                     external_id=str(external_id or ""),
                     order_id=order_id,
                     approved=True,
+                    aliases=(str(intent),) if intent else (),
                 )
             )
+
+    def _reconcile(self, event) -> bool:
+        kind = None
+        obj = event["data"]["object"]
+        if event["type"] == "charge.refunded":
+            kind, total = "refund", _stripe_amount(obj.get("amount_refunded"))
+        elif event["type"] == "charge.dispute.created":
+            kind, total = "dispute_opened", Decimal(0)
+        elif event["type"] == "charge.dispute.closed":
+            kind, total = _STRIPE_DISPUTE_OUTCOMES.get(str(obj.get("status") or "")), Decimal(0)
+        if kind is None:
+            return event["type"].startswith("charge.")
+        intent = str(obj.get("payment_intent") or "")
+        order = self._orders.get_by_external_id(intent) if intent else None
+        if order is None:
+            logger.warning("Evento Stripe %s sem pedido conhecido (payment_intent=%s)", event["type"], intent)
+            return True
+        # Reembolsos acumulados usam o total na chave: reenvios do mesmo estado não reaplicam.
+        key = f"stripe:{intent}:refund:{total}" if kind == "refund" else f"stripe:{event['id']}"
+        self._reversals.execute(
+            ReconcilePaymentReversalInput(order_id=order.id, event_key=key, kind=kind, refunded_total=total)
+        )
+        return True

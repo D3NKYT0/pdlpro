@@ -34,6 +34,8 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
     setItemId,
     quantity,
     setQuantity,
+    enchant,
+    setEnchant,
     onWithdraw,
     gameItemSearch,
     setGameItemSearch,
@@ -143,6 +145,10 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
               {t('inventory.characters.quantity')}
               <input inputMode="numeric" value={quantity} onChange={(e) => setQuantity(e.target.value)} required />
             </Field>
+            <Field>
+              {t('inventory.characters.enchant')}
+              <input inputMode="numeric" value={enchant} onChange={(e) => setEnchant(e.target.value)} required />
+            </Field>
             <MicroResource code="inventory-withdraw"><Button type="submit">
               <ArrowDownToLine aria-hidden="true" />
               {t('inventory.characters.withdraw')}
@@ -166,8 +172,9 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
             pageCount={gameItemsPageCount}
             visiblePages={visibleGameItemPages}
             onPageChange={setGameItemsPage}
-            onSelectItem={(selectedItemId) => {
+            onSelectItem={(selectedItemId, selectedEnchant) => {
               setItemId(String(selectedItemId))
+              setEnchant(String(selectedEnchant))
               setQuantity('1')
             }}
           />
