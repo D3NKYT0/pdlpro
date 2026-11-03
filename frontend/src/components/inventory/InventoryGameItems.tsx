@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { useCanSeeItemIds } from '../../hooks/useCanSeeItemIds'
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { ItemIcon } from '../ItemIcon'
@@ -41,6 +42,7 @@ export function InventoryGameItems({
   onSelectItem,
 }: InventoryGameItemsProps) {
   const { t } = useTranslation('panel')
+  const canSeeItemIds = useCanSeeItemIds()
 
   return (
     <section className="inventory-game-items" aria-labelledby="inventory-game-items-title">
@@ -93,10 +95,10 @@ export function InventoryGameItems({
       ) : null}
 
       {!loading && !error && visibleItems.length ? (
-        <div className="inventory-game-table" role="table" aria-label={t('inventory.gameItems.title')}>
+        <div className={`inventory-game-table${canSeeItemIds ? '' : ' is-without-id'}`} role="table" aria-label={t('inventory.gameItems.title')}>
           <div className="inventory-game-table-head" role="row">
             <span role="columnheader">{t('inventory.gameItems.columnItem')}</span>
-            <span role="columnheader">{t('inventory.gameItems.columnId')}</span>
+            {canSeeItemIds ? <span role="columnheader">{t('inventory.gameItems.columnId')}</span> : null}
             <span role="columnheader">{t('inventory.gameItems.columnEnchant')}</span>
             <span role="columnheader">{t('inventory.gameItems.columnQuantity')}</span>
             <span className="sr-only" role="columnheader">{t('inventory.gameItems.columnAction')}</span>
@@ -121,10 +123,12 @@ export function InventoryGameItems({
                     </small>
                   </span>
                 </div>
+{canSeeItemIds ? (
                 <span className="inventory-game-item-data" role="cell" data-label={t('inventory.gameItems.columnId')}>
                   <small>{t('inventory.gameItems.columnId')}</small>
                   <b>#{item.item_id}</b>
                 </span>
+                ) : null}
                 <span className="inventory-game-item-data" role="cell" data-label={t('inventory.gameItems.columnEnchant')}>
                   <small>{t('inventory.gameItems.columnEnchant')}</small>
                   <b>{item.enchant > 0 ? `+${item.enchant}` : '—'}</b>

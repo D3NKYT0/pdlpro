@@ -4,6 +4,8 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
+from django.conf import settings
+
 from apps.accounts.domain.repositories import IUserRepository
 from apps.wallet.domain.bonus import BonusPreview, IPurchaseBonusPolicy
 from apps.wallet.domain.coins import is_whole_coins
@@ -79,6 +81,8 @@ class TransferToPlayerUseCase(UseCase[TransferToPlayerInput, WalletEntity]):
         self._unit_of_work = unit_of_work
 
     def execute(self, data: TransferToPlayerInput) -> WalletEntity:
+        if not getattr(settings, "WALLET_PLAYER_TRANSFER_ENABLED", True):
+            raise InvalidTransferError("A transferência entre jogadores está desativada.")
         if data.amount <= 0:
             raise InvalidTransferError("O valor deve ser maior que zero.")
         if not is_whole_coins(data.amount):

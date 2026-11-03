@@ -5828,3 +5828,15 @@ msgstr "Invalid or expired link."
 
 msgid "Há compradores com estorno ou disputa em revisão nesta solicitação. Resolva a revisão antes de pagar."
 msgstr "Some buyers in this request have a refund or dispute under review. Resolve the review before paying."
+
+msgid "Compras com valor personalizado estão desativadas."
+msgstr "Custom amount purchases are disabled."
+
+msgid "O valor está fora do limite permitido para compras personalizadas."
+msgstr "The amount is outside the limit allowed for custom purchases."
+
+msgid "A transferência entre jogadores está desativada."
+msgstr "Transfers between players are disabled."
+
+msgid "Trazer moedas do jogo está desativado."
+msgstr "Bringing coins from the game is disabled."

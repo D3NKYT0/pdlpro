@@ -3,6 +3,7 @@ import { Button } from '../components/ui/Button'
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { useCanSeeItemIds } from "../hooks/useCanSeeItemIds";
 import { RefreshCw } from "lucide-react";
 import { ExchangeIcon, ShieldOkIcon } from "../components/icons";
 import { Link } from "react-router-dom";
@@ -40,6 +41,7 @@ export function GameExchangePage() {
   const [charId, setCharId] = useState("");
   const selectedChar = chars.data?.find((c) => String(c.char_id) === String(charId));
   const [direction, setDirection] = useState("to_game");
+  const canSeeItemIds = useCanSeeItemIds();
   const [typedQuantity, setQuantityInput] = useState<string | null>(null);
   const [confirmation, setConfirmation] = useState(false);
   const pending = useRef<ExchangeRequest | null>(null);
@@ -124,7 +126,9 @@ export function GameExchangePage() {
                 }}
               >
                 <option value="to_game">{t("exchange.form.toGame")}</option>
-                <option value="from_game">{t("exchange.form.fromGame")}</option>
+                {query.data?.allow_withdraw !== false ? (
+                  <option value="from_game">{t("exchange.form.fromGame")}</option>
+                ) : null}
               </select>
             </label>
             <label>
@@ -234,10 +238,9 @@ export function GameExchangePage() {
             </strong>
           </div>
           <p className="muted">
-            {t("exchange.summary.coin", {
-              name: coin?.name || t("exchange.summary.coinUnset"),
-              id: coin?.item_id || "—",
-            })}
+            {canSeeItemIds && coin?.item_id
+              ? t("exchange.summary.coin", { name: coin.name, id: coin.item_id })
+              : t("exchange.summary.coinName", { name: coin?.name || t("exchange.summary.coinUnset") })}
           </p>
           <p className="muted">
             {t("exchange.summary.rate", { multiplier: coin ? formatNumber(coin.game_units_per_coin) : "—" })}

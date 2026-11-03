@@ -466,17 +466,21 @@ export function WalletPage() {
           busy={busy}
           onStartPurchase={startPurchase}
           mpOptions={mpConfig?.options}
+          customAmountEnabled={catalog.data?.allow_custom_amount !== false}
+          customAmountLimits={catalog.data?.custom_amount}
         /></MicroResource>
 
         <aside className="wallet-side-column">
-          <MicroResource code="wallet-transfer"><WalletTransferCard
-            recipient={recipient}
-            amount={amount}
-            busy={transferBusy}
-            onRecipientChange={setRecipient}
-            onAmountChange={setAmount}
-            onSubmit={onTransfer}
-          /></MicroResource>
+          {wallet.data?.transfer_enabled !== false ? (
+            <MicroResource code="wallet-transfer"><WalletTransferCard
+              recipient={recipient}
+              amount={amount}
+              busy={transferBusy}
+              onRecipientChange={setRecipient}
+              onAmountChange={setAmount}
+              onSubmit={onTransfer}
+            /></MicroResource>
+          ) : null}
 
           <MicroResource code="wallet-history"><WalletActivityCard
             ordersCount={ordersCount}

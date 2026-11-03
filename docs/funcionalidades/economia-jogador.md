@@ -39,6 +39,19 @@ customizado ou do fallback durante carregamento, ausência e erro de consulta.
 - Promoção de banner: `/panel/admin/wallet` (uma campanha ativa).
 - Extrato paginado em `/panel/wallet/transactions`.
 
+### Recursos que a equipe pode desligar
+
+Em **Admin → Integrações → Pagamentos → Recursos da carteira**:
+
+| Opção | Variável | Efeito quando desligada |
+| --- | --- | --- |
+| Compra com valor personalizado | `WALLET_CUSTOM_AMOUNT_ENABLED` | Some o bloco **Prefere outro valor?**; pacotes continuam à venda |
+| Mínimo / máximo do valor personalizado | `WALLET_CUSTOM_AMOUNT_MIN_COINS` / `WALLET_CUSTOM_AMOUNT_MAX_COINS` | Limites em moedas do site (BRL e USD); `0` = sem limite |
+| Transferência entre jogadores | `WALLET_PLAYER_TRANSFER_ENABLED` | Some o cartão **Entre jogadores** |
+| Trazer moedas do jogo | `WALLET_GAME_WITHDRAW_ENABLED` | Some a opção no câmbio; o envio ao jogo continua |
+
+A API aplica a mesma política: esconder na tela não é a proteção. Uma retirada do jogo já pendente ainda pode ser retomada pelo histórico.
+
 ## Moedas inteiras
 
 Moeda do site é unidade, não dinheiro: saldo, bônus, preços internos, lances e comissões são números inteiros, exibidos como `2.500`. Valores em dinheiro real (BRL, USD e outras moedas de cobrança) continuam com centavos.

@@ -318,6 +318,13 @@ PAYMENT_METHODS = env.list("PAYMENT_METHODS", default=["mercadopago", "stripe"])
 PAYMENT_ALLOW_MOCK = env.bool("PAYMENT_ALLOW_MOCK", default=False)
 PAYMENT_MOCK_AUTO_CONFIRM = env.bool("PAYMENT_MOCK_AUTO_CONFIRM", default=False)
 PAYMENT_REUSE_HOURS = env.int("PAYMENT_REUSE_HOURS", default=2)
+# Recursos da carteira que a equipe pode desligar em Admin → Integrações → Pagamentos.
+# Limites do valor personalizado em moedas do site; 0 = sem limite.
+WALLET_CUSTOM_AMOUNT_ENABLED = env.bool("WALLET_CUSTOM_AMOUNT_ENABLED", default=True)
+WALLET_CUSTOM_AMOUNT_MIN_COINS = env.int("WALLET_CUSTOM_AMOUNT_MIN_COINS", default=0)
+WALLET_CUSTOM_AMOUNT_MAX_COINS = env.int("WALLET_CUSTOM_AMOUNT_MAX_COINS", default=0)
+WALLET_PLAYER_TRANSFER_ENABLED = env.bool("WALLET_PLAYER_TRANSFER_ENABLED", default=True)
+WALLET_GAME_WITHDRAW_ENABLED = env.bool("WALLET_GAME_WITHDRAW_ENABLED", default=True)
 PAYMENT_WEBHOOK_BASE_URL = env("PAYMENT_WEBHOOK_BASE_URL", default="")
 # Quando Mercado Pago e Stripe estão ativos ao mesmo tempo em BRL.
 # "user_choice" = o jogador escolhe (Mercado Pago por padrão).

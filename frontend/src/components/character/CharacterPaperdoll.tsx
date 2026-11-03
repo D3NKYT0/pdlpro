@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { useCanSeeItemIds } from '../../hooks/useCanSeeItemIds'
 import type { TFunction } from 'i18next'
 import { ItemIcon } from '../ItemIcon'
 import {
@@ -72,11 +73,12 @@ function EquipmentSlot({
   t: TFunction<'panel'>
   onSelect?: (item: CharacterItemDetail) => void
 }) {
+  const canSeeItemIds = useCanSeeItemIds()
   const Icon = EQUIPMENT_SLOT_ICONS[definition.key]
   const label = t(`character.slots.${definition.labelKey}`)
   const enchantLabel = item && item.enchant > 0 ? `+${item.enchant}` : ''
   const title = item
-    ? `${item.name}${enchantLabel ? ` ${enchantLabel}` : ''} · ${t('character.equipment.itemId', { id: item.item_id })}`
+    ? `${item.name}${enchantLabel ? ` ${enchantLabel}` : ''}${canSeeItemIds ? ` · ${t('character.equipment.itemId', { id: item.item_id })}` : ''}`
     : label
   const interactive = Boolean(item && onSelect)
 
@@ -161,6 +163,7 @@ interface CharacterPaperdollProps {
 
 export function CharacterPaperdoll({ items, loading, error, onSelect }: CharacterPaperdollProps) {
   const { t } = useTranslation('panel')
+  const canSeeItemIds = useCanSeeItemIds()
   const claimedSlots = new Set<number>()
   const paperdollItems = PAPERDOLL_SLOTS.map((definition) => ({
     definition,
@@ -224,7 +227,9 @@ export function CharacterPaperdoll({ items, loading, error, onSelect }: Characte
                 <span>
                   <strong>{item.name}</strong>
                   <small>
-                    {t('character.equipment.slotInfo', { slot: item.slot, id: item.item_id })}
+                    {canSeeItemIds
+                      ? t('character.equipment.slotInfo', { slot: item.slot, id: item.item_id })
+                      : t('character.equipment.slotOnly', { slot: item.slot })}
                     {item.enchant > 0 ? ` · +${item.enchant}` : ''}
                   </small>
                 </span>

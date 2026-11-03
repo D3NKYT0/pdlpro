@@ -43,6 +43,9 @@
       "loadingPackages": "Loading packages...",
       "customTitle": "Prefer another amount?",
       "customSubtitle": "Tell us how much you want to pay and we will calculate the {{coinName}}.",
+      "customLimitsRange": "Between {{min}} and {{max}} coins per purchase.",
+      "customLimitsMin": "Minimum of {{min}} coins per purchase.",
+      "customLimitsMax": "Maximum of {{max}} coins per purchase.",
       "customAmount": "Amount in {{currency}}",
       "buyNow": "Buy now",
       "document": "Payer tax ID (CPF or CNPJ)",
@@ -403,6 +406,7 @@
       "debit": "Balance to debit",
       "credit": "Balance to receive",
       "coin": "Coin: {{name}} · ID {{id}}",
+      "coinName": "Coin: {{name}}",
       "coinUnset": "Not configured",
       "rate": "1 balance {{coinNameSingular}} = {{multiplier}} unit(s) in the game.",
       "fee": "Withdrawal fee: {{percent}}%. On this operation: {{fee}}.",
@@ -1904,7 +1908,8 @@
       "emptySlot": "empty",
       "itemId": "ID {{id}}",
       "additional": "Other equipped slots",
-      "slotInfo": "Slot {{slot}} · ID {{id}}"
+      "slotInfo": "Slot {{slot}} · ID {{id}}",
+      "slotOnly": "Slot {{slot}}"
     },
     "bag": {
       "sectionLabel": "Character inventory and warehouse",

@@ -136,9 +136,10 @@ def test_game_exchange_state_returns_coin_and_empty_history(api, accounts, setti
     assert response.status_code == 200, response.data
     assert response.data["enabled"] is False
     assert response.data["unavailable_reason"]
+    assert response.data["allow_withdraw"] is True
+    # O jogador não recebe o ID do item da moeda.
     assert response.data["coin"] == {
         "name": "Adena",
-        "item_id": 57,
         "multiplier": "1.00",
         "usd_multiplier": "5.00",
         "game_units_per_coin": "1.00",

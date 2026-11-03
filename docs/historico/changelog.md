@@ -14,6 +14,8 @@ Correções da auditoria de compras, pagamentos e entrega de itens (LBN-01 a LBN
 
 ### Adicionado
 
+- A equipe pode desligar, em **Admin → Integrações → Pagamentos → Recursos da carteira**, a compra com valor personalizado, a transferência entre jogadores e a opção **Trazer moedas do jogo**. O valor personalizado também aceita mínimo e máximo em moedas do site. Desligado, o bloco some da carteira e a API recusa a operação; câmbios pendentes ainda podem ser retomados.
+- IDs de item ficam visíveis só para a equipe: o jogador vê o nome da moeda e dos itens no câmbio, no inventário, nos leilões e na ficha do personagem, e a API do câmbio não envia mais o ID do item ao jogador.
 - Estornos, reembolsos parciais, chargebacks e disputas do Mercado Pago e do Stripe agora conciliam a carteira automaticamente, uma única vez por evento: moedas e bônus saem na proporção do valor devolvido, o saldo já gasto fica registrado como devedor e o pedido vai para **Revisão manual**; disputa aberta só marca revisão, disputa perdida vira chargeback. O admin do pedido mostra tentativas e estornos. Veja [Estornos e disputas](../integracoes/pagamentos.md#estornos-e-disputas).
 - A retirada de itens do jogo tem campo **Encantamento**; selecionar um item na lista preenche o valor.
 

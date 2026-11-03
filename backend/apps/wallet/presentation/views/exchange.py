@@ -8,6 +8,7 @@ from rest_framework.response import Response
 
 from apps.wallet.application.exchange import (
     ExchangeCoinsUseCase,
+    ExchangeStateInput,
     GetExchangeStateUseCase,
 )
 from common.views import InjectedAPIView
@@ -50,7 +51,10 @@ class GameExchangeView(InjectedAPIView):
         ),
     )
     def get(self, request):
-        return Response(self.resolve(GetExchangeStateUseCase).execute(request.user.id))
+        staff = bool(getattr(request.user, "is_staff", False) or getattr(request.user, "is_superuser", False))
+        return Response(
+            self.resolve(GetExchangeStateUseCase).execute(ExchangeStateInput(user_id=request.user.id, staff=staff))
+        )
 
     @extend_schema(
         tags=["Carteira"],

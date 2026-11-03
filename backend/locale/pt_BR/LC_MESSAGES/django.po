@@ -5097,3 +5097,15 @@ msgstr ""
 
 msgid "Há compradores com estorno ou disputa em revisão nesta solicitação. Resolva a revisão antes de pagar."
 msgstr ""
+
+msgid "Compras com valor personalizado estão desativadas."
+msgstr ""
+
+msgid "O valor está fora do limite permitido para compras personalizadas."
+msgstr ""
+
+msgid "A transferência entre jogadores está desativada."
+msgstr ""
+
+msgid "Trazer moedas do jogo está desativado."
+msgstr ""

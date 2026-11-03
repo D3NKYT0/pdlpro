@@ -594,3 +594,28 @@ def test_checkout_mode_configuration(api, superuser, staff_user, hosts, settings
         assert getattr(settings, key) == mode
     else:
         assert key not in stored
+
+
+@pytest.mark.django_db
+def test_payments_patch_wallet_feature_switches(api, superuser, hosts, settings):
+    api.force_authenticate(superuser)
+    response = api.patch(
+        reverse("staff-integrations-section", kwargs={"section": "payments"}),
+        {
+            "WALLET_CUSTOM_AMOUNT_ENABLED": False,
+            "WALLET_PLAYER_TRANSFER_ENABLED": False,
+            "WALLET_GAME_WITHDRAW_ENABLED": False,
+            "WALLET_CUSTOM_AMOUNT_MIN_COINS": "10",
+            "WALLET_CUSTOM_AMOUNT_MAX_COINS": "500",
+        },
+        format="json",
+    )
+    assert response.status_code == 200, response.content
+    assert settings.WALLET_CUSTOM_AMOUNT_ENABLED is False
+    assert settings.WALLET_PLAYER_TRANSFER_ENABLED is False
+    assert settings.WALLET_GAME_WITHDRAW_ENABLED is False
+    assert (settings.WALLET_CUSTOM_AMOUNT_MIN_COINS, settings.WALLET_CUSTOM_AMOUNT_MAX_COINS) == (10, 500)
+    body = api.get(reverse("staff-integrations-status")).json()
+    values = {item["key"]: item.get("value") for item in body["payments"]["fields"]}
+    assert values["WALLET_PLAYER_TRANSFER_ENABLED"] is False
+    assert values["WALLET_CUSTOM_AMOUNT_MAX_COINS"] == 500

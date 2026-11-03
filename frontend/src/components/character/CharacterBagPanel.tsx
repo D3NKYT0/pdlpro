@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { useCanSeeItemIds } from '../../hooks/useCanSeeItemIds'
 import { Package, Warehouse } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { Tabs } from '../ui/Tabs'
@@ -26,13 +27,15 @@ function BagSlot({
   onSelect: (item: ApiGameItem) => void
 }) {
   const { t } = useTranslation('panel')
+  const canSeeItemIds = useCanSeeItemIds()
   if (!item) {
     return <div className="character-bag-slot is-empty" aria-hidden="true" />
   }
   const enchant = item.enchant > 0 ? `+${item.enchant}` : ''
   const compactQty = formatCompactQuantity(item.quantity)
   const fullQty = formatNumber(item.quantity)
-  const title = `${item.name}${enchant ? ` ${enchant}` : ''} · ${t('character.bag.itemId', { id: item.item_id })} · ${fullQty}`
+  const itemId = canSeeItemIds ? ` · ${t('character.bag.itemId', { id: item.item_id })}` : ''
+  const title = `${item.name}${enchant ? ` ${enchant}` : ''}${itemId} · ${fullQty}`
   return (
     <button
       type="button"

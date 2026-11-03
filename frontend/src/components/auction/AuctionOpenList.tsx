@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { useCanSeeItemIds } from '../../hooks/useCanSeeItemIds'
 import {
   ChevronRight,
   Clock3,
@@ -22,6 +23,7 @@ interface AuctionOpenListProps {
 
 export function AuctionOpenList({ auctions, username, loading, onSelect }: AuctionOpenListProps) {
   const { t } = useTranslation('panel')
+  const canSeeItemIds = useCanSeeItemIds()
 
   return (
     <>
@@ -58,7 +60,9 @@ export function AuctionOpenList({ auctions, username, loading, onSelect }: Aucti
                           className: getClassName(auction.char_class ?? 0),
                           level: auction.char_level ?? 1,
                         })
-                      : t('auctions.list.itemId', { id: auction.item_id })}
+                      : canSeeItemIds
+                        ? t('auctions.list.itemId', { id: auction.item_id })
+                        : auction.item_name}
                   </p>
                 </div>
                 <span className="auction-kind-badge">

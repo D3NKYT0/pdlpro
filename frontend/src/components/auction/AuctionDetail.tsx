@@ -3,6 +3,7 @@ import { Field } from '../ui/Field'
 import { Button } from '../ui/Button'
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useCanSeeItemIds } from '../../hooks/useCanSeeItemIds'
 import {
   Clock3,
   Eye,
@@ -59,6 +60,7 @@ export function AuctionDetail({
   onBid,
 }: AuctionDetailProps) {
   const { t } = useTranslation('panel')
+  const canSeeItemIds = useCanSeeItemIds()
   const status = auctionStatusFor(auction.status, t)
   const activeValue = auction.current_bid ?? auction.min_bid
   const character = isCharacterAuction(auction)
@@ -227,7 +229,7 @@ export function AuctionDetail({
         <div className="auction-detail-grid">
           <div className="auction-item-information">
             <dl className="marketplace-character-stats auction-item-stats">
-              <div><dt>{t('auctions.detail.itemId')}</dt><dd>{auction.item_id}</dd></div>
+              {canSeeItemIds ? <div><dt>{t('auctions.detail.itemId')}</dt><dd>{auction.item_id}</dd></div> : null}
               <div><dt>{t('auctions.detail.quantity')}</dt><dd>{formatNumber(auction.quantity)}</dd></div>
               <div><dt>{t('auctions.detail.enchant')}</dt><dd>{auction.item_enchant > 0 ? `+${auction.item_enchant}` : t('auctions.detail.noEnchant')}</dd></div>
               <div><dt>{t('auctions.detail.sourceInventory')}</dt><dd>{auction.character_name || t('auctions.detail.notInformed')}</dd></div>

@@ -1,5 +1,6 @@
 import { MicroResource } from '../programs/MicroResource'
 import { useTranslation } from 'react-i18next'
+import { useCanSeeItemIds } from '../../hooks/useCanSeeItemIds'
 import { ArrowRightLeft, Backpack, Send } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
@@ -12,6 +13,7 @@ type InventoryDashboard = ReturnType<typeof useInventoryDashboard>
 
 export function InventoryBagTab({ inventory }: { inventory: InventoryDashboard }) {
   const { t } = useTranslation('panel')
+  const canSeeItemIds = useCanSeeItemIds()
   const {
     bag,
     bagItemsQuantity,
@@ -52,7 +54,7 @@ export function InventoryBagTab({ inventory }: { inventory: InventoryDashboard }
             <article className="inventory-bag-item" key={`${item.item_id}-${item.enchant}`}>
               <ItemIcon itemId={item.item_id} name={item.item_name} size={46} />
               <div>
-                <span className="panel-eyebrow">{t('inventory.bag.itemId', { id: item.item_id })}</span>
+                {canSeeItemIds ? <span className="panel-eyebrow">{t('inventory.bag.itemId', { id: item.item_id })}</span> : null}
                 <strong>{item.item_name || t('inventory.itemFallback', { id: item.item_id })}</strong>
                 <small>{item.enchant > 0 ? t('inventory.bag.enchant', { enchant: item.enchant }) : t('inventory.bag.noEnchant')}</small>
               </div>

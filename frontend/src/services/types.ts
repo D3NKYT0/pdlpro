@@ -85,6 +85,8 @@ export interface ApiWallet {
   id: string
   balance: string
   bonus_balance: string
+  /** Falso quando a equipe desativou a transferência entre jogadores. */
+  transfer_enabled?: boolean
 }
 
 export interface ApiShopItem {
@@ -207,6 +209,8 @@ export interface ApiPaymentCatalog {
   }>
   packages: ApiCoinPackage[]
   allow_custom_amount: boolean
+  /** Limites do valor personalizado em moedas do site; 0 = sem limite. */
+  custom_amount?: { enabled: boolean; min_coins: number; max_coins: number }
   promo: ApiWalletPromo | null
   /** Prioridade de método para BRL quando ambos os gateways estão ativos. */
   brl_method_priority?: 'user_choice' | 'mercadopago' | 'stripe'

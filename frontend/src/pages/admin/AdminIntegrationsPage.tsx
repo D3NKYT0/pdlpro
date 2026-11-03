@@ -788,6 +788,17 @@ export function AdminIntegrationsPage() {
                   {renderText('COINS_PER_USD')}
                   {renderText('PAYMENT_REUSE_HOURS', 'number')}
                   {renderBool('PAYMENT_ALLOW_MOCK')}
+                  <div className="admin-integrations-subsection">
+                    <h4>{t('integrations.payments.walletFeaturesTitle')}</h4>
+                    <p className="muted">{t('integrations.payments.walletFeaturesHint')}</p>
+                    <div className="admin-integrations-toggles">
+                      {renderBool('WALLET_CUSTOM_AMOUNT_ENABLED')}
+                      {renderBool('WALLET_PLAYER_TRANSFER_ENABLED')}
+                      {renderBool('WALLET_GAME_WITHDRAW_ENABLED')}
+                    </div>
+                    {renderText('WALLET_CUSTOM_AMOUNT_MIN_COINS', 'number', t('integrations.payments.customAmountLimitHint'))}
+                    {renderText('WALLET_CUSTOM_AMOUNT_MAX_COINS', 'number', t('integrations.payments.customAmountLimitHint'))}
+                  </div>
                 </div>
               </SectionCard>
               <ChargeCurrenciesSection />

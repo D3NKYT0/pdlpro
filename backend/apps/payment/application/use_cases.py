@@ -45,6 +45,16 @@ from common.hooks import HookNames, IHookBus
 logger = logging.getLogger(__name__)
 
 
+def custom_amount_policy() -> dict:
+    """Política do valor personalizado da compra de moedas (limites em moedas; 0 = livre)."""
+
+    return {
+        "enabled": bool(getattr(settings, "WALLET_CUSTOM_AMOUNT_ENABLED", True)),
+        "min_coins": max(int(getattr(settings, "WALLET_CUSTOM_AMOUNT_MIN_COINS", 0) or 0), 0),
+        "max_coins": max(int(getattr(settings, "WALLET_CUSTOM_AMOUNT_MAX_COINS", 0) or 0), 0),
+    }
+
+
 def _configured_methods() -> list[str]:
     methods = [method.lower() for method in getattr(settings, "PAYMENT_METHODS", ["mercadopago", "stripe"])]
     if not getattr(settings, "PAYMENT_ALLOW_MOCK", False):
@@ -122,7 +132,8 @@ class GetPaymentCatalogUseCase(UseCase[None, dict]):
             "currencies": catalog_currencies,
             "methods": methods,
             "packages": packages,
-            "allow_custom_amount": True,
+            "allow_custom_amount": custom_amount_policy()["enabled"],
+            "custom_amount": custom_amount_policy(),
             "promo": self._wallets.get_current_purchase_promo(),
             "brl_method_priority": normalize_brl_method_priority(
                 getattr(settings, "PAYMENT_BRL_METHOD_PRIORITY", "user_choice")
@@ -275,6 +286,15 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
         )
         if quote.amount <= 0 or quote.coins <= 0:
             raise InvalidPaymentAmountError()
+        if not package_id and data.source_order_id is None:
+            # Esconder o campo na tela não basta: a API aplica a mesma política.
+            policy = custom_amount_policy()
+            if not policy["enabled"]:
+                raise PaymentMethodUnavailableError("Compras com valor personalizado estão desativadas.")
+            if (policy["min_coins"] and quote.coins < policy["min_coins"]) or (
+                policy["max_coins"] and quote.coins > policy["max_coins"]
+            ):
+                raise InvalidPaymentAmountError("O valor está fora do limite permitido para compras personalizadas.")
         method = self._resolve_method(quote.currency, data.method, stripe_retry=stripe_retry)
         if method == "mercadopago" and quote.currency != "BRL":
             raise ValidationDomainError("Mercado Pago aceita apenas BRL.")

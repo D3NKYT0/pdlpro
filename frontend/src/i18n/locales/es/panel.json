@@ -43,6 +43,9 @@
       "loadingPackages": "Cargando paquetes...",
       "customTitle": "¿Prefieres otro importe?",
       "customSubtitle": "Indica cuánto quieres pagar y calcularemos las {{coinName}}.",
+      "customLimitsRange": "Entre {{min}} y {{max}} monedas por compra.",
+      "customLimitsMin": "Mínimo de {{min}} monedas por compra.",
+      "customLimitsMax": "Máximo de {{max}} monedas por compra.",
       "customAmount": "Importe en {{currency}}",
       "buyNow": "Comprar ahora",
       "document": "Documento del pagador (CPF o CNPJ)",
@@ -403,6 +406,7 @@
       "debit": "Saldo a debitar",
       "credit": "Saldo a recibir",
       "coin": "Moneda: {{name}} · ID {{id}}",
+      "coinName": "Moneda: {{name}}",
       "coinUnset": "No configurada",
       "rate": "1 {{coinNameSingular}} de saldo = {{multiplier}} unidad(es) en el juego.",
       "fee": "Tasa de retirada: {{percent}}%. En esta operación: {{fee}}.",
@@ -1904,7 +1908,8 @@
       "emptySlot": "vacío",
       "itemId": "ID {{id}}",
       "additional": "Otros espacios equipados",
-      "slotInfo": "Espacio {{slot}} · ID {{id}}"
+      "slotInfo": "Espacio {{slot}} · ID {{id}}",
+      "slotOnly": "Ranura {{slot}}"
     },
     "bag": {
       "sectionLabel": "Inventario y warehouse del personaje",

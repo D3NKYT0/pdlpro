@@ -43,6 +43,9 @@
       "loadingPackages": "Carregando pacotes...",
       "customTitle": "Prefere outro valor?",
       "customSubtitle": "Informe quanto deseja pagar e calcularemos as {{coinName}}.",
+      "customLimitsRange": "Entre {{min}} e {{max}} moedas por compra.",
+      "customLimitsMin": "Mínimo de {{min}} moedas por compra.",
+      "customLimitsMax": "Máximo de {{max}} moedas por compra.",
       "customAmount": "Valor em {{currency}}",
       "buyNow": "Comprar agora",
       "document": "CPF ou CNPJ do pagador",
@@ -403,6 +406,7 @@
       "debit": "Saldo a debitar",
       "credit": "Saldo a receber",
       "coin": "Moeda: {{name}} · ID {{id}}",
+      "coinName": "Moeda: {{name}}",
       "coinUnset": "Não configurada",
       "rate": "1 {{coinNameSingular}} de saldo = {{multiplier}} unidade(s) no jogo.",
       "fee": "Taxa de retirada: {{percent}}%. Nesta operação: {{fee}}.",
@@ -1904,7 +1908,8 @@
       "emptySlot": "vazio",
       "itemId": "ID {{id}}",
       "additional": "Outros slots equipados",
-      "slotInfo": "Slot {{slot}} · ID {{id}}"
+      "slotInfo": "Slot {{slot}} · ID {{id}}",
+      "slotOnly": "Slot {{slot}}"
     },
     "bag": {
       "sectionLabel": "Inventário e warehouse do personagem",

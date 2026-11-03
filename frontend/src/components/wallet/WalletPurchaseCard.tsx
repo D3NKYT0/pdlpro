@@ -35,6 +35,9 @@ type WalletPurchaseCardProps = {
   onCustomAmountChange: (value: string) => void
   busy: boolean
   onStartPurchase: (packageId?: string) => void
+  /** Falso quando a equipe desativou o valor personalizado. */
+  customAmountEnabled?: boolean
+  customAmountLimits?: { min_coins: number; max_coins: number }
   mpOptions?: {
     pix?: boolean
     boleto?: boolean
@@ -75,6 +78,8 @@ export function WalletPurchaseCard({
   busy,
   onStartPurchase,
   mpOptions,
+  customAmountEnabled = true,
+  customAmountLimits,
 }: WalletPurchaseCardProps) {
   const { t } = useTranslation('panel')
   const currenciesList = availableCurrencies && availableCurrencies.length > 0 ? availableCurrencies : ['BRL', 'USD']
@@ -212,12 +217,25 @@ export function WalletPurchaseCard({
 
       {catalogLoading ? <div className="wallet-inline-state"><Clock3 aria-hidden="true" /> {t('wallet.purchase.loadingPackages')}</div> : null}
 
+      {customAmountEnabled ? (
       <div className="wallet-custom-purchase">
         <div className="wallet-custom-copy">
           <span className="wallet-section-icon" aria-hidden="true"><Banknote /></span>
           <div>
             <strong>{t('wallet.purchase.customTitle')}</strong>
             <small>{t('wallet.purchase.customSubtitle')}</small>
+            {customAmountLimits?.min_coins || customAmountLimits?.max_coins ? (
+              <small>
+                {customAmountLimits.min_coins && customAmountLimits.max_coins
+                  ? t('wallet.purchase.customLimitsRange', {
+                    min: formatCoinQuantity(customAmountLimits.min_coins),
+                    max: formatCoinQuantity(customAmountLimits.max_coins),
+                  })
+                  : customAmountLimits.min_coins
+                    ? t('wallet.purchase.customLimitsMin', { min: formatCoinQuantity(customAmountLimits.min_coins) })
+                    : t('wallet.purchase.customLimitsMax', { max: formatCoinQuantity(customAmountLimits.max_coins) })}
+              </small>
+            ) : null}
           </div>
         </div>
         <form
@@ -244,6 +262,7 @@ export function WalletPurchaseCard({
           </Button>
         </form>
       </div>
+      ) : null}
 
       {promo ? <WalletPromoBanner promo={promo} /> : null}
     </Card>

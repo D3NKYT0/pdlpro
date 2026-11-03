@@ -12,6 +12,11 @@ export function canAccessStaff(user: AccessUser | null) {
   return Boolean(user?.capabilities?.length)
 }
 
+/** IDs de item são dado operacional: aparecem só para quem acessa a área da equipe. */
+export function canSeeItemIds(user: AccessUser | null) {
+  return canAccessStaff(user) || Boolean(user?.is_superuser)
+}
+
 const routeCapabilities: Record<string, string> = {
   resources: 'resources.manage', roadmap: 'content.manage', supporters: 'programs.manage',
   commerce: 'commerce.manage', rewards: 'games.manage', items: 'items.view',

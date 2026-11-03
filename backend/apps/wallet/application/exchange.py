@@ -1,3 +1,5 @@
+import re
+from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
@@ -11,9 +13,11 @@ from apps.wallet.domain.entities import InsufficientBalanceError
 from apps.wallet.domain.repositories import IGameExchangeRepository, IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
+from common.currency_identity import coin_display_name
 
 
 def exchange_dump(row):
+    # Resposta do próprio jogador: o ID do item da moeda fica só nas telas da equipe.
     return {
         "id": str(row.id),
         "request_key": str(row.request_key),
@@ -21,7 +25,6 @@ def exchange_dump(row):
         "login": row.login,
         "character_id": row.character_id,
         "character_name": row.character_name,
-        "item_id": row.item_id,
         "quantity": row.quantity,
         "amount": str(row.amount),
         "fee": str(row.fee),
@@ -31,18 +34,41 @@ def exchange_dump(row):
     }
 
 
-class GetExchangeStateUseCase(UseCase[UUID, dict]):
+@dataclass(frozen=True, slots=True)
+class ExchangeStateInput:
+    """Consulta do câmbio: ``staff`` revela o ID do item da moeda, oculto para jogadores."""
+
+    user_id: UUID
+    staff: bool = False
+
+
+_GENERIC_ITEM_NAME = re.compile(r"^\s*item\s+#?\d+\s*$", re.IGNORECASE)
+
+
+def player_coin(coin: dict | None, *, staff: bool) -> dict | None:
+    """Recorta a moeda ativa para a tela do jogador: sem ID do item e sem nome genérico."""
+
+    if coin is None or staff:
+        return coin
+    visible = {key: value for key, value in coin.items() if key != "item_id"}
+    if not visible.get("name") or _GENERIC_ITEM_NAME.match(str(visible["name"])):
+        visible["name"] = coin_display_name(title=True)
+    return visible
+
+
+class GetExchangeStateUseCase(UseCase[ExchangeStateInput, dict]):
     """Consulta disponibilidade do câmbio, moeda ativa e histórico recente do usuário.
 
-    Uso: resolva pelo container e chame ``execute(user_id)``. Lê configuração e histórico
-    via ``IWalletRepository`` e verifica a prontidão do gateway do jogo quando habilitado.
+    Uso: resolva pelo container e chame ``execute(ExchangeStateInput(...))``. Lê configuração e
+    histórico via ``IWalletRepository`` e verifica a prontidão do gateway do jogo quando
+    habilitado. Jogadores não recebem o ID do item da moeda.
     """
 
     def __init__(self, lineage: ILineageGateway, wallets: IWalletRepository) -> None:
         self._lineage = lineage
         self._wallets = wallets
 
-    def execute(self, data: UUID) -> dict:
+    def execute(self, data: ExchangeStateInput) -> dict:
         enabled = False
         unavailable_reason = "O banco do jogo está desconectado."
         if settings.LINEAGE_DB_ENABLED:
@@ -56,10 +82,11 @@ class GetExchangeStateUseCase(UseCase[UUID, dict]):
                 )
         return {
             "enabled": enabled,
+            "allow_withdraw": bool(getattr(settings, "WALLET_GAME_WITHDRAW_ENABLED", True)),
             "allow_online_delivery": self._lineage.allows_online_delivery(),
             "unavailable_reason": unavailable_reason,
-            "coin": self._wallets.get_active_coin_config(),
-            "history": self._wallets.list_game_exchanges(data, limit=100),
+            "coin": player_coin(self._wallets.get_active_coin_config(), staff=data.staff),
+            "history": self._wallets.list_game_exchanges(data.user_id, limit=100),
         }
 
 
@@ -114,6 +141,9 @@ class ExchangeCoinsUseCase:
                         "Esta chave já pertence a outra transferência."
                     )
             else:
+                # Retomadas de operações já criadas seguem; só novas retiradas são recusadas.
+                if data["direction"] == "from_game" and not getattr(settings, "WALLET_GAME_WITHDRAW_ENABLED", True):
+                    raise ValidationDomainError("Trazer moedas do jogo está desativado.")
                 if self.exchanges.has_pending(user.id):
                     raise ValidationDomainError(
                         "Retome a transferência pendente no histórico antes de iniciar outra."

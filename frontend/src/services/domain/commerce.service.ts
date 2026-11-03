@@ -64,7 +64,6 @@ export type ExchangeRequest = {
 export type Exchange = ExchangeRequest & {
   id: string;
   character_name: string;
-  item_id: number;
   amount: string;
   fee: string;
   status: string;
@@ -73,11 +72,14 @@ export type Exchange = ExchangeRequest & {
 };
 export type ExchangeState = {
   enabled: boolean;
+  /** Falso quando a equipe desativou "Trazer moedas do jogo". */
+  allow_withdraw?: boolean;
   allow_online_delivery: boolean;
   unavailable_reason: string;
   coin: {
     name: string;
-    item_id: number;
+    /** Enviado só para a equipe. */
+    item_id?: number;
     game_units_per_coin: string;
     withdraw_fee_percent: string;
   } | null;

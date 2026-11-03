@@ -5937,3 +5937,15 @@ msgstr "Enlace de vinculación inválido o caducado."
 
 msgid "Há compradores com estorno ou disputa em revisão nesta solicitação. Resolva a revisão antes de pagar."
 msgstr "Hay compradores con reembolso o disputa en revisión en esta solicitud. Resuelve la revisión antes de pagar."
+
+msgid "Compras com valor personalizado estão desativadas."
+msgstr "Las compras con valor personalizado están desactivadas."
+
+msgid "O valor está fora do limite permitido para compras personalizadas."
+msgstr "El valor está fuera del límite permitido para compras personalizadas."
+
+msgid "A transferência entre jogadores está desativada."
+msgstr "La transferencia entre jugadores está desactivada."
+
+msgid "Trazer moedas do jogo está desativado."
+msgstr "Traer monedas del juego está desactivado."

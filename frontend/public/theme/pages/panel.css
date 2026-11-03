@@ -5253,6 +5253,12 @@ html.pdl-panel .inventory-game-item {
   gap: 12px;
 }
 
+/* Jogadores não veem a coluna de ID do item. */
+html.pdl-panel .inventory-game-table.is-without-id .inventory-game-table-head,
+html.pdl-panel .inventory-game-table.is-without-id .inventory-game-item {
+  grid-template-columns: minmax(260px, 1fr) 88px 102px 106px;
+}
+
 html.pdl-panel .inventory-game-table-head {
   min-height: 35px;
   padding: 0 12px;

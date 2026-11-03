@@ -534,3 +534,28 @@ it('não sobrepõe consultas de checkout e mantém o pedido em uma falha', async
   expect(screen.getByRole('link', { name: 'Continuar no provedor' })).not.toBeNull()
   expect(toast.success).not.toHaveBeenCalled()
 })
+
+it('esconde o valor personalizado quando a equipe o desativa', async () => {
+  vi.mocked(paymentApi.catalog).mockResolvedValue({ methods: [], packages: [], promo: null, allow_custom_amount: false } as any)
+  mount()
+  await waitFor(() => expect(paymentApi.catalog).toHaveBeenCalled())
+  await waitFor(() => expect(screen.queryByText('Prefere outro valor?')).toBeNull())
+  expect(screen.queryByRole('button', { name: /Comprar agora/ })).toBeNull()
+})
+
+it('mostra os limites do valor personalizado', async () => {
+  vi.mocked(paymentApi.catalog).mockResolvedValue({
+    methods: [], packages: [], promo: null, allow_custom_amount: true,
+    custom_amount: { enabled: true, min_coins: 10, max_coins: 500 },
+  } as any)
+  mount()
+  expect(await screen.findByText('Entre 10 e 500 moedas por compra.')).toBeTruthy()
+})
+
+it('esconde a transferência entre jogadores quando a equipe a desativa', async () => {
+  vi.mocked(walletApi.me).mockResolvedValue({ balance: '50.00', bonus_balance: '5.00', transfer_enabled: false } as any)
+  mount()
+  await waitFor(() => expect(walletApi.me).toHaveBeenCalled())
+  await waitFor(() => expect(screen.queryByRole('button', { name: 'Transferir moedas' })).toBeNull())
+  expect(screen.queryByLabelText('Destinatário')).toBeNull()
+})

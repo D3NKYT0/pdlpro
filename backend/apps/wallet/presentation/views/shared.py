@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.conf import settings
 from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
@@ -34,7 +35,9 @@ class WalletView(InjectedAPIView):
     )
     def get(self, request):
         wallet = self.resolve(GetWalletUseCase).execute(GetWalletInput(user_id=request.user.id))
-        return Response(WalletSerializer(wallet).data)
+        # A tela usa a política para esconder a transferência; a API a aplica de qualquer forma.
+        transfer_enabled = bool(getattr(settings, "WALLET_PLAYER_TRANSFER_ENABLED", True))
+        return Response({**WalletSerializer(wallet).data, "transfer_enabled": transfer_enabled})
 
 
 class WalletTransferView(InjectedAPIView):
