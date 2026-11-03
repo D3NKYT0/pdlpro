@@ -47,13 +47,14 @@ ROWS = [
 def _gateway(dialect: str):
     queries = LineageQueryCatalog.load(dialect)
     queries._statements = dict(queries._statements)
-    queries._statements["withdraw_stacks"] = re.sub(
-        r"\s+FOR UPDATE\s*$", "", queries["withdraw_stacks"], flags=re.IGNORECASE
-    )
+    for name in ("withdraw_stacks", "withdraw_character"):
+        queries._statements[name] = re.sub(r"\s+FOR UPDATE\s*$", "", queries[name], flags=re.IGNORECASE)
     create, _ = SCHEMAS[dialect]
     engine = create_engine("sqlite://")
     with engine.begin() as conn:
         conn.execute(text(create))
+        conn.execute(text("CREATE TABLE characters(obj_Id INTEGER PRIMARY KEY, account_name TEXT, online INTEGER)"))
+        conn.execute(text("INSERT INTO characters VALUES (1, 'hero', 0), (2, 'other', 0)"))
         for row in ROWS:
             conn.execute(text("INSERT INTO items VALUES (:a, :b, :c, :d, :e, :f)"), dict(zip("abcdef", row)))
     gateway = SqlAlchemyLineageGateway(queries)
@@ -74,7 +75,7 @@ def dialect(request):
 def test_withdraw_keeps_each_enchant_in_its_own_lot(dialect):
     gateway = _gateway(dialect)
 
-    withdrawn = gateway.withdraw_item(1, 6579, 1, 20)
+    withdrawn = gateway.withdraw_item(1, 6579, 1, 20, "hero")
 
     assert (withdrawn.item_id, withdrawn.quantity, withdrawn.enchant) == (6579, 1, 20)
     by_stack = {row[0]: row for row in _rows(gateway, dialect)}
@@ -86,23 +87,23 @@ def test_withdraw_never_aggregates_different_enchants(dialect):
     gateway = _gateway(dialect)
 
     with pytest.raises(ValidationDomainError):
-        gateway.withdraw_item(1, 6579, 2, 20)
+        gateway.withdraw_item(1, 6579, 2, 20, "hero")
     with pytest.raises(ValidationDomainError):
-        gateway.withdraw_item(1, 6579, 2, 0)
+        gateway.withdraw_item(1, 6579, 2, 0, "hero")
     assert len(_rows(gateway, dialect)) == len(ROWS)
 
 
 def test_withdraw_spans_inventory_and_warehouse_but_not_equipment_or_other_owner(dialect):
     gateway = _gateway(dialect)
 
-    gateway.withdraw_item(1, 57, 15, 0)
+    gateway.withdraw_item(1, 57, 15, 0, "hero")
 
     by_stack = {row[0]: row for row in _rows(gateway, dialect)}
     assert 3 not in by_stack
     assert by_stack[4] == (4, 57, 10, 0, "WAREHOUSE")
     assert 5 in by_stack and 6 in by_stack
     with pytest.raises(ValidationDomainError):
-        gateway.withdraw_item(1, 57, 11, 0)
+        gateway.withdraw_item(1, 57, 11, 0, "hero")
 
 
 def test_stale_stack_rolls_back_every_consumed_stack(dialect):
@@ -113,9 +114,23 @@ def test_stale_stack_rolls_back_every_consumed_stack(dialect):
     before = _rows(gateway, dialect)
 
     with pytest.raises(ValidationDomainError, match="inventário mudou"):
-        gateway.withdraw_item(1, 57, 15, 0)
+        gateway.withdraw_item(1, 57, 15, 0, "hero")
 
     assert _rows(gateway, dialect) == before
+
+
+@pytest.mark.parametrize("cause", ["online", "other_login"])
+def test_withdraw_requires_the_character_offline_and_owned_inside_the_transaction(dialect, cause):
+    gateway = _gateway(dialect)
+    login = "other" if cause == "other_login" else "hero"
+    if cause == "online":
+        with gateway._engine.begin() as conn:
+            conn.execute(text("UPDATE characters SET online = 1 WHERE obj_Id = 1"))
+
+    with pytest.raises(ValidationDomainError, match="online"):
+        gateway.withdraw_item(1, 57, 5, 0, login)
+
+    assert len(_rows(gateway, dialect)) == len(ROWS)
 
 
 @pytest.mark.parametrize("quantity,enchant", [(0, 0), (-1, 0), (1, -1)])
@@ -123,7 +138,7 @@ def test_withdraw_rejects_invalid_input_without_touching_the_game(quantity, ench
     gateway = _gateway("lucerav2")
 
     with pytest.raises(ValidationDomainError):
-        gateway.withdraw_item(1, 57, quantity, enchant)
+        gateway.withdraw_item(1, 57, quantity, enchant, "hero")
     assert len(_rows(gateway, "lucerav2")) == len(ROWS)
 
 
@@ -134,3 +149,5 @@ def test_every_dialect_scopes_withdrawal_to_unequipped_locations(dialect):
         assert ":char_id" in catalog[name]
     assert catalog["withdraw_stacks"].rstrip().upper().endswith("FOR UPDATE")
     assert ">= :qty" in catalog["withdraw_decrement"]
+    assert "account_name = :login" in catalog["withdraw_character"]
+    assert catalog["withdraw_character"].rstrip().upper().endswith("FOR UPDATE")

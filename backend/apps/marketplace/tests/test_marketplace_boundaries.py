@@ -16,6 +16,7 @@ def market(settings):
     users = [get_user_model().objects.create_user(username=name, email=f"{name}@test.dev") for name in ("seller", "buyer")]
     gateway = DependencyInjection.root().resolve(ILineageGateway)
     gateway.seed_character("buyer", "Existing")
+    gateway.link_account("buyer", str(users[1].id))
     char = gateway.seed_character(settings.MARKETPLACE_MASTER_ACCOUNT, "ForSale")
     listing = CharacterListing.objects.create(seller=users[0], char_id=char.char_id, char_name=char.name, price=25, old_account="seller")
     Wallet.objects.create(user=users[1], balance=40)

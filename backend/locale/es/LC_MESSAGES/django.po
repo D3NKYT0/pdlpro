@@ -5922,3 +5922,18 @@ msgstr "Cuenta no vinculada a tu usuario."
 
 msgid "Evento financeiro inválido."
 msgstr "Evento financiero inválido."
+
+msgid "Escolha uma conta de jogo vinculada ao seu usuário para receber o personagem."
+msgstr "Elige una cuenta del juego vinculada a tu usuario para recibir el personaje."
+
+msgid "Escolha um personagem seu para receber o item."
+msgstr "Elige uno de tus personajes para recibir el objeto."
+
+msgid "Personagem não pertence à conta ou está online."
+msgstr "El personaje no pertenece a la cuenta o está en línea."
+
+msgid "Link de vinculação inválido ou expirado."
+msgstr "Enlace de vinculación inválido o caducado."
+
+msgid "Há compradores com estorno ou disputa em revisão nesta solicitação. Resolva a revisão antes de pagar."
+msgstr "Hay compradores con reembolso o disputa en revisión en esta solicitud. Resuelve la revisión antes de pagar."

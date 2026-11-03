@@ -5813,3 +5813,18 @@ msgstr "Account not linked to your user."
 
 msgid "Evento financeiro inválido."
 msgstr "Invalid financial event."
+
+msgid "Escolha uma conta de jogo vinculada ao seu usuário para receber o personagem."
+msgstr "Choose a game account linked to your user to receive the character."
+
+msgid "Escolha um personagem seu para receber o item."
+msgstr "Choose one of your characters to receive the item."
+
+msgid "Personagem não pertence à conta ou está online."
+msgstr "The character does not belong to the account or is online."
+
+msgid "Link de vinculação inválido ou expirado."
+msgstr "Invalid or expired link."
+
+msgid "Há compradores com estorno ou disputa em revisão nesta solicitação. Resolva a revisão antes de pagar."
+msgstr "Some buyers in this request have a refund or dispute under review. Resolve the review before paying."

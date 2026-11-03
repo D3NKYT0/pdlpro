@@ -107,7 +107,7 @@ class WithdrawItemUseCase(UseCase[WithdrawItemInput, InventoryItemEntity]):
 
             raise CharacterOfflineRequiredError()
         with self._unit_of_work:
-            withdrawn = self._lineage.withdraw_item(data.char_id, data.item_id, data.quantity, data.enchant)
+            withdrawn = self._lineage.withdraw_item(data.char_id, data.item_id, data.quantity, data.enchant, login)
             inventory = self._inventories.get_or_create(data.actor.user_id, char.name, login)
             item = self._inventories.add_item(
                 inventory.id, withdrawn.item_id, withdrawn.name, withdrawn.quantity, withdrawn.enchant
@@ -170,6 +170,10 @@ class DepositItemUseCase(UseCase[DepositItemInput, None]):
         login = data.actor.login or inventory.account_name
         if not self._access.can_access(data.actor.user_id, data.actor.username, login):
             raise AuthorizationError()
+        # O inventário guarda só o nome do personagem; a entrega exige que ele pertença à conta
+        # acessível agora (personagem vendido ou de outra conta não recebe itens).
+        if not any(char.name == inventory.character_name for char in self._lineage.list_characters(login)):
+            raise InventoryNotFoundError("Personagem não encontrado nesta conta.")
         with self._unit_of_work:
             # O jogo confirma na própria conexão; por isso a entrega é o último passo e toda
             # escrita do painel que ainda pode falhar (remoção condicional, histórico) vem antes.

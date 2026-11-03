@@ -23,6 +23,7 @@ from apps.payment.domain.repositories import (
     IPaymentAttemptRepository,
     IPaymentOrderRepository,
     IPaymentReversalRepository,
+    IPaymentReviewPort,
     IWebhookLogRepository,
 )
 from apps.payment.infrastructure.mercadopago_gateway import MercadoPagoGateway
@@ -32,6 +33,7 @@ from apps.payment.infrastructure.repositories import (
     DjangoPaymentAttemptRepository,
     DjangoPaymentOrderRepository,
     DjangoPaymentReversalRepository,
+    DjangoPaymentReviewPort,
     DjangoWebhookLogRepository,
 )
 from apps.payment.infrastructure.stripe_gateway import StripeGateway
@@ -53,6 +55,7 @@ class PaymentProvider(AppProvider):
         container.register(IWebhookLogRepository, DjangoWebhookLogRepository, lifetime=Lifetime.SCOPED)
         container.register(IPaymentAttemptRepository, DjangoPaymentAttemptRepository, lifetime=Lifetime.SCOPED)
         container.register(IPaymentReversalRepository, DjangoPaymentReversalRepository, lifetime=Lifetime.SCOPED)
+        container.register(IPaymentReviewPort, DjangoPaymentReviewPort, lifetime=Lifetime.SCOPED)
         container.register_self(MockPaymentGateway, lifetime=Lifetime.SINGLETON)
         container.register_self(MercadoPagoGateway, lifetime=Lifetime.SINGLETON)
         container.register_self(StripeGateway, lifetime=Lifetime.SINGLETON)

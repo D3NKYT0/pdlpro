@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Pagamentos](../integracoes/pagamentos.md) · [Tutoriais MP](../tutoriais/mercado-pago.md) · [Tutoriais Stripe](../tutoriais/stripe.md)
 
-> **Atualizado:** 9 de outubro de 2026
+> **Atualizado:** 3 de novembro de 2026
 
 > [!NOTE]
 > Visão do **produto** (o que o jogador e a staff fazem). Detalhe de gateway e
@@ -103,10 +103,20 @@ Anúncio e compra de **personagens** entre jogadores. Regras de concorrência e
 débito estão cobertas pelos testes e pela
 [segurança operacional](../operacao/seguranca.md) (liquidação atômica).
 
+Na compra, o jogador escolhe a conta de jogo que recebe o personagem
+(`login` em `POST /api/v1/customer/marketplace/{id}/buy/`). A conta precisa
+estar vinculada ao comprador; o nome de usuário do painel não comprova a
+posse de uma conta de jogo com o mesmo login.
+
 ## Leilões
 
 Itens do inventário ou personagens com lances. Fechamento pode usar Celery
 Beat — veja variáveis de leilão em [Ambiente](../configuracao/ambiente.md).
+
+O lance informa a conta vinculada (`login`) e, em leilão de item, um
+personagem dessa conta. No fechamento de um leilão de personagem, o vínculo e
+os slots são conferidos de novo; se a entrega não for possível, o lance volta
+ao vencedor e o personagem volta ao vendedor.
 
 ## Relatórios
 

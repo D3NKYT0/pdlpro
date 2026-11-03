@@ -230,9 +230,12 @@ class NullLineageGateway(ILineageGateway):
     def list_character_skills(self, char_id: int) -> list[GameSkill]:
         return list(self._skills.get(char_id, []))
 
-    def withdraw_item(self, char_id: int, item_id: int, quantity: int, enchant: int) -> GameItem:
+    def withdraw_item(self, char_id: int, item_id: int, quantity: int, enchant: int, login: str) -> GameItem:
         from common.architecture.exceptions import ValidationDomainError
 
+        char = self.get_character(login, char_id)
+        if char is None or char.online:
+            raise ValidationDomainError("Personagem não pertence à conta ou está online.")
         items = self._items.setdefault(char_id, [])
         matches = [
             index for index, item in enumerate(items)

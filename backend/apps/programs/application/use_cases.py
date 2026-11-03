@@ -5,6 +5,7 @@ from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
+from apps.payment.domain.repositories import IPaymentReviewPort
 from apps.programs.domain.exceptions import (
     InvalidProgramActionError,
     PayoutNotFoundError,
@@ -205,10 +206,12 @@ class ReviewPayoutUseCase(UseCase[ReviewPayoutInput, Any]):
         wallets: IWalletRepository,
         unit_of_work: UnitOfWork,
         supporters: ISupporterRepository,
+        payment_reviews: IPaymentReviewPort,
     ) -> None:
         self._wallets = wallets
         self._unit_of_work = unit_of_work
         self._supporters = supporters
+        self._payment_reviews = payment_reviews
 
     def execute(self, data: ReviewPayoutInput) -> Any:
         with self._unit_of_work:
@@ -218,6 +221,11 @@ class ReviewPayoutUseCase(UseCase[ReviewPayoutInput, Any]):
             if payout.status != "pending":
                 raise InvalidProgramActionError("Esta solicitação já foi processada.")
             if data.status == "paid":
+                # Comissão sobre compras de quem tem estorno, chargeback ou disputa pendente não é paga.
+                if self._payment_reviews.users_under_review(self._supporters.payout_buyer_ids(payout)):
+                    raise InvalidProgramActionError(
+                        "Há compradores com estorno ou disputa em revisão nesta solicitação. Resolva a revisão antes de pagar."
+                    )
                 wallet = self._wallets.get_or_create(payout.supporter.user.id)
                 self._wallets.credit(
                     wallet.id,

@@ -514,6 +514,8 @@
       "cancelListing": "Cancelar anúncio",
       "processing": "Processando...",
       "buy": "Comprar personagem",
+      "receiveAccount": "Conta que recebe o personagem",
+      "noReceiveAccount": "Vincule uma conta de jogo para receber o personagem.",
       "ownerNote": "Esta é a mesma visualização apresentada ao comprador.",
       "titleEyebrow": "Título",
       "noTitle": "Sem título",

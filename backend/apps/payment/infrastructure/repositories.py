@@ -13,6 +13,7 @@ from apps.payment.domain.repositories import (
     IPaymentAttemptRepository,
     IPaymentOrderRepository,
     IPaymentReversalRepository,
+    IPaymentReviewPort,
     IWebhookLogRepository,
 )
 from apps.payment.infrastructure.models import (
@@ -325,4 +326,17 @@ class DjangoPaymentReversalRepository(IPaymentReversalRepository):
             coins_debited=coins_debited,
             bonus_debited=bonus_debited,
             shortfall=shortfall,
+        )
+
+
+class DjangoPaymentReviewPort(IPaymentReviewPort):
+    """Adaptador Django de ``IPaymentReviewPort`` sobre ``PedidoPagamento.review_status``."""
+
+    def users_under_review(self, user_ids: list[UUID]) -> set[UUID]:
+        if not user_ids:
+            return set()
+        return set(
+            PedidoPagamento.objects.filter(user__id__in=user_ids)
+            .exclude(review_status="")
+            .values_list("user__id", flat=True)
         )

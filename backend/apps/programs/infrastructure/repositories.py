@@ -113,6 +113,11 @@ class DjangoSupporterRepository(ISupporterRepository):
     def clear_payout_commissions(self, payout: CommissionPayout) -> None:
         Commission.objects.filter(payout=payout).update(payout=None)
 
+    def payout_buyer_ids(self, payout: CommissionPayout) -> list[UUID]:
+        return list(
+            Commission.objects.filter(payout=payout).values_list("purchase__user__id", flat=True).distinct()
+        )
+
     def save_payout(self, payout: CommissionPayout) -> CommissionPayout:
         payout.save()
         return payout

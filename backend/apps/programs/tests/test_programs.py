@@ -849,3 +849,27 @@ def test_admin_disable_stops_previously_enabled_automatic_rewards(api, player, s
     add_battle_pass_xp(player, 1, battle_pass=battle_pass, bags=bags)
     assert UserBattlePassClaim.objects.filter(user=player, reward=reward).count() == 1
     assert BagItem.objects.get(bag__user=player, item_id=57).quantity == 5
+
+
+@pytest.mark.parametrize("review_status", ["manual_review", "dispute"])
+def test_payout_is_blocked_while_a_buyer_has_a_reversal_under_review(staff, supporter, review_status):
+    from apps.payment.infrastructure.models import PedidoPagamento
+
+    buyer = get_user_model().objects.create_user(username="refunder", email="refunder@local.test")
+    purchase = ShopPurchase.objects.create(user=buyer, total=100)
+    Commission.objects.create(supporter=supporter, purchase=purchase, amount=10)
+    order = PedidoPagamento.objects.create(
+        user=buyer, amount=100, coins=100, currency="BRL", method="mercadopago", status="confirmed",
+        review_status=review_status,
+    )
+    client = APIClient()
+    client.force_authenticate(supporter.user)
+    result = client.post("/api/v1/customer/supporters/payout/", {}, format="json")
+    url = f"/api/v1/staff/supporter-payouts/{result.data['id']}/"
+
+    assert staff.patch(url, {"status": "paid"}, format="json").status_code == 400
+    assert not Wallet.objects.filter(user=supporter.user, balance__gt=0).exists()
+    order.review_status = ""
+    order.save(update_fields=["review_status"])
+    assert staff.patch(url, {"status": "paid"}, format="json").status_code == 200
+    assert Wallet.objects.get(user=supporter.user).balance == 10

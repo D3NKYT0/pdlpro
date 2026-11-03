@@ -165,6 +165,7 @@ class PlaceBidView(ItemCatalogAPIView):
                 auction_id=auction_id,
                 amount=serializer.validated_data["amount"],
                 character_name=serializer.validated_data.get("character_name") or "",
+                login=serializer.validated_data.get("login") or "",
             )
         )
         return Response(dump_bid(bid))

@@ -40,8 +40,9 @@ class PlaceBidSerializer(serializers.Serializer):
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
     validated_data. A autorização pertence ao fluxo chamador.
 
-    Campos declarados: ``amount``, ``character_name``.
+    Campos declarados: ``amount``, ``character_name``, ``login`` (conta vinculada que recebe).
     """
 
     amount = WholeCoinsField(max_digits=12, decimal_places=2)
     character_name = serializers.CharField(max_length=35, required=False, allow_blank=True, default="")
+    login = serializers.CharField(max_length=45, required=False, allow_blank=True, default="")

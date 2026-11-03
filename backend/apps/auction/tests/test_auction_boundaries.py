@@ -9,6 +9,7 @@ from rest_framework.test import APIClient
 
 from apps.auction.application.use_cases import CloseExpiredAuctionsUseCase
 from apps.auction.infrastructure.models import Auction, Bid
+from apps.auction.tests.helpers import link_player
 from apps.inventory.infrastructure.models import Inventory, InventoryItem
 from apps.wallet.infrastructure.models import Wallet, WalletTransaction
 from common.di.bootstrap import DependencyInjection
@@ -21,6 +22,7 @@ def world():
     users = [get_user_model().objects.create_user(username=name, email=f"{name}@test.dev") for name in ("seller", "bidder", "rival")]
     for user in users:
         Wallet.objects.create(user=user, balance=100)
+        link_player(user)
     auction = Auction.objects.create(seller=users[0], item_id=57, item_name="Adena", quantity=20, min_bid=10, character_name="SellerChar", ends_at=timezone.now() + timedelta(hours=1))
     return users, auction
 

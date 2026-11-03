@@ -203,3 +203,28 @@ def test_transfer_api_moves_stacks_and_keeps_items_added_after_the_transfer():
     bags.add_item(player, item_id=57, item_name="Adena", quantity=5)
     remaining = api.get("/api/v1/customer/games/bag/").data
     assert [(row["item_id"], row["quantity"], row["enchant"]) for row in remaining] == [(57, 5, 0)]
+
+
+def test_box_purchase_locks_the_buyer_before_charging(monkeypatch):
+    """VST-04: a compra serializa por usuário; duas compras simultâneas não cobram duas vezes."""
+    from unittest.mock import MagicMock
+
+    from apps.games.application import box_use_cases
+    from apps.games.application.box_use_cases import BuyBoxInput, BuyBoxUseCase
+
+    monkeypatch.setattr(box_use_cases, "_catalog_for", lambda box_type, boxes: [])
+    monkeypatch.setattr(box_use_cases, "_populate", lambda box, boxes: None)
+    order = []
+    boxes = MagicMock()
+    boxes.get_active_type.return_value = MagicMock(price=5, pk=1)
+    boxes.list_user_boxes.return_value = []
+    boxes.require_user_locked.side_effect = lambda user_id: order.append("lock")
+    boxes.count_closed_slots.return_value = 1
+    wallets = MagicMock()
+    wallets.debit.side_effect = lambda *args, **kwargs: order.append("debit")
+    uow = MagicMock()
+
+    BuyBoxUseCase(wallets, boxes, uow).execute(BuyBoxInput(user_id=uuid4(), box_type_id=uuid4()))
+
+    assert order == ["lock", "debit"]
+    boxes.require_user.assert_not_called()

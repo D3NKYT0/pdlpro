@@ -1,5 +1,6 @@
 """LBN-02/LBN-03: consumo condicional no painel e retirada por encantamento exato."""
 
+from types import SimpleNamespace
 from unittest.mock import Mock
 from uuid import uuid4
 
@@ -14,7 +15,10 @@ from apps.inventory.application.use_cases import (
     InventoryActor,
 )
 from apps.inventory.domain.entities import InventoryEntity, InventoryItemEntity
-from apps.inventory.domain.exceptions import InsufficientItemQuantityError
+from apps.inventory.domain.exceptions import (
+    InsufficientItemQuantityError,
+    InventoryNotFoundError,
+)
 from apps.inventory.infrastructure.models import Inventory, InventoryItem
 from apps.inventory.infrastructure.repositories import DjangoInventoryRepository
 from apps.server.domain.gateways import GameItem, ILineageGateway
@@ -95,7 +99,8 @@ def test_concurrent_additions_to_the_same_stack_are_both_kept(monkeypatch, stack
     assert added.quantity == 6
 
 
-def _deposit_use_case(lineage, inventories):
+def _deposit_use_case(lineage, inventories, characters=("Hero",)):
+    lineage.list_characters.return_value = [SimpleNamespace(name=name) for name in characters]
     access = Mock()
     access.can_access.return_value = True
     uow = Mock()
@@ -141,6 +146,17 @@ def test_deposit_reaches_the_game_only_after_every_panel_write():
     with pytest.raises(RuntimeError):
         _deposit_use_case(lineage, inventories).execute(_deposit_input())
     assert "game" not in calls
+
+
+def test_deposit_refuses_a_character_outside_the_informed_account():
+    lineage = Mock(spec=ILineageGateway)
+    inventories = Mock()
+    inventories.get_by_id.return_value = InventoryEntity(uuid4(), uuid4(), "SoldChar", "hero")
+
+    with pytest.raises(InventoryNotFoundError):
+        _deposit_use_case(lineage, inventories, characters=("Hero",)).execute(_deposit_input())
+    inventories.remove_item.assert_not_called()
+    lineage.deposit_item.assert_not_called()
 
 
 @pytest.mark.django_db

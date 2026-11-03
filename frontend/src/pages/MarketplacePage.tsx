@@ -98,7 +98,7 @@ export function MarketplacePage() {
   async function buy(id: string) {
     setPendingListingId(id)
     try {
-      const updated = await marketplaceApi.buy(id)
+      const updated = await marketplaceApi.buy(id, login)
       setSelectedListing(updated)
       toast.success(t('marketplace.toast.bought'))
       await refresh()
@@ -153,6 +153,12 @@ export function MarketplacePage() {
             onClose={() => setSelectedListing(null)}
             onBuy={(id) => void buy(id)}
             onCancel={(id) => void cancel(id)}
+            accounts={availableAccounts}
+            account={login}
+            onAccountChange={(newLogin) => {
+              setSelectedLogin(newLogin)
+              void setActiveAccount(newLogin)
+            }}
           />
         ) : null}
 

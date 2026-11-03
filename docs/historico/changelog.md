@@ -10,7 +10,7 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
-Correções da auditoria de compras, pagamentos e entrega de itens (LBN-01 a LBN-07). Inclui a migração `payment.0004`, que acrescenta tentativas de cobrança, histórico de estornos e campos de revisão financeira aos pedidos; aplique-a antes de reiniciar os workers.
+Correções da auditoria de compras, pagamentos e entrega de itens (LBN-01 a LBN-07) e da vistoria seguinte (VST-01 a VST-07). Inclui a migração `payment.0004`, que acrescenta tentativas de cobrança, histórico de estornos e campos de revisão financeira aos pedidos; aplique-a antes de reiniciar os workers.
 
 ### Adicionado
 
@@ -19,6 +19,12 @@ Correções da auditoria de compras, pagamentos e entrega de itens (LBN-01 a LBN
 
 ### Corrigido
 
+- Personagem comprado no marketplace ou arrematado em leilão ia para a conta de jogo com o mesmo login do nome de usuário do painel, mesmo quando essa conta era de outra pessoa. Agora o comprador escolhe uma das contas vinculadas a ele; o leilão confere o vínculo de novo no fechamento e, se ele caiu, devolve o lance e o personagem ao vendedor. Lances de leilão de personagem nunca ficam presos quando a entrega não acontece.
+- O envio de itens ao jogo e o lance em leilão de item só aceitam personagem da conta informada.
+- A retirada de itens trava o personagem como offline e da conta dentro da transação do jogo, evitando que o servidor devolva itens retirados de um personagem que entrou no jogo no meio da operação.
+- Duas compras simultâneas da mesma caixa não cobram mais duas vezes.
+- O vínculo de conta por e-mail não revela mais quais e-mails têm conta no jogo, tem limite de pedidos (`THROTTLE_LINK_EMAIL`, padrão 5/hora) e o link só vale para quem o pediu.
+- O repasse de comissão de apoiador fica bloqueado enquanto algum comprador ligado a ele tem estorno ou disputa em revisão.
 - Duas transferências simultâneas da bolsa para o inventário podiam entregar os mesmos itens duas vezes. A bolsa agora é bloqueada antes da leitura em todos os fluxos que adicionam, consomem ou transferem itens.
 - Retiradas e envios simultâneos entre o painel e o jogo podiam entregar duas vezes a mesma unidade. O consumo agora é condicional nos dois bancos, toda a retirada roda em uma transação do jogo, e a entrega ao jogo é o último passo do envio.
 - A retirada do jogo juntava exemplares com encantamentos diferentes e creditava o lote inteiro com o encantamento do último (um +0 e um +20 viravam dois +20). Cada retirada agora consome só o encantamento escolhido, nos três dialetos.

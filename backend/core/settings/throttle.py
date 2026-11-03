@@ -27,6 +27,7 @@ def get_throttle_rates(env: Any = None) -> dict[str, str]:
         "register": _get("THROTTLE_REGISTER", "10/hour"),
         "twofa": _get("THROTTLE_TWOFA", "10/minute"),
         "password_reset": _get("THROTTLE_PASSWORD_RESET", "5/hour"),
+        "link_email": _get("THROTTLE_LINK_EMAIL", "5/hour"),
         "lgpd_export": _get("THROTTLE_LGPD_EXPORT", "5/hour"),
         "lgpd_delete": _get("THROTTLE_LGPD_DELETE", "10/hour"),
     }

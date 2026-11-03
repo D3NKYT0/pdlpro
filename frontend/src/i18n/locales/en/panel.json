@@ -514,6 +514,8 @@
       "cancelListing": "Cancel listing",
       "processing": "Processing...",
       "buy": "Buy character",
+      "receiveAccount": "Account that receives the character",
+      "noReceiveAccount": "Link a game account to receive the character.",
       "ownerNote": "This is the same view presented to the buyer.",
       "titleEyebrow": "Title",
       "noTitle": "No title",

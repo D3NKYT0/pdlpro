@@ -97,6 +97,11 @@ class ISupporterRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def payout_buyer_ids(self, payout: Any) -> list[UUID]:
+        """Compradores das compras da loja que geraram as comissões do repasse."""
+        raise NotImplementedError
+
+    @abstractmethod
     def save_payout(self, payout: Any) -> Any:
         raise NotImplementedError
 

@@ -3,6 +3,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle
 
 from apps.server.application.account_use_cases import (
     AccountActor,
@@ -569,14 +570,22 @@ class ClearPkView(InjectedAPIView):
         return Response({"ok": True})
 
 
+class LinkByEmailRateThrottle(UserRateThrottle):
+    """Limita pedidos de vínculo por e-mail por usuário (escopo ``link_email``)."""
+
+    scope = "link_email"
+
+
 class RequestLinkByEmailView(InjectedAPIView):
     """Entrada HTTP para ``RequestLinkByEmailUseCase``.
 
     Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
     [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    A resposta é a mesma com ou sem conta encontrada, e os pedidos são limitados por usuário.
     """
 
     permission_classes = [IsAuthenticated]
+    throttle_classes = [LinkByEmailRateThrottle]
 
     @extend_schema(
         tags=["Conta Lineage"],

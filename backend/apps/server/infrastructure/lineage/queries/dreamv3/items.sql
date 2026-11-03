@@ -20,6 +20,11 @@ ORDER BY skill_id, class_index
 
 -- Withdrawal locks the exact stacks (template + enchant) and consumes each one
 -- conditionally inside a single game transaction.
+-- The character row is locked offline and owned by the login before any stack moves:
+-- removing items from a character that is logged in lets the game server save them back.
+-- name: withdraw_character
+SELECT obj_Id AS char_id, online FROM characters WHERE obj_Id = :char_id AND account_name = :login FOR UPDATE
+
 -- name: withdraw_stacks
 SELECT item_id AS stack_id, amount AS quantity
 FROM items

@@ -177,7 +177,8 @@ class BuyBoxUseCase(UseCase[BuyBoxInput, dict]):
             raise EntityNotFoundError("Tipo de caixa não encontrado.")
         _catalog_for(box_type, self._boxes)
         with self._unit_of_work:
-            user = self._boxes.require_user(data.user_id)
+            # Trava o usuário: duas compras simultâneas não podem cobrar duas vezes por uma caixa.
+            user = self._boxes.require_user_locked(data.user_id)
             for box in self._boxes.list_user_boxes(data.user_id):
                 if box.box_type.pk != box_type.pk:
                     continue

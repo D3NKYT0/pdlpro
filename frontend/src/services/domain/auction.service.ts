@@ -27,9 +27,9 @@ export const auctionApi = {
       method: 'POST',
       body: JSON.stringify(payload.kind === 'character' ? payload : { kind: 'item', ...payload }),
     }),
-  bid: (auctionId: string, amount: string, character_name = '') =>
+  bid: (auctionId: string, amount: string, character_name = '', login = '') =>
     request(`/customer/auctions/${auctionId}/bid/`, {
       method: 'POST',
-      body: JSON.stringify({ amount, character_name }),
+      body: JSON.stringify({ amount, character_name, login }),
     }),
 }

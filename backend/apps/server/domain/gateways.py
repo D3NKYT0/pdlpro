@@ -338,10 +338,11 @@ class ILineageGateway(ABC):
     def list_character_skills(self, char_id: int) -> list[GameSkill]: ...
 
     @abstractmethod
-    def withdraw_item(self, char_id: int, item_id: int, quantity: int, enchant: int) -> GameItem:
+    def withdraw_item(self, char_id: int, item_id: int, quantity: int, enchant: int, login: str) -> GameItem:
         """Consome ``quantity`` unidades das pilhas com ``item_id`` e ``enchant`` exatos.
 
-        A operação é atômica no banco do jogo: ou todas as pilhas necessárias são consumidas,
+        A operação é atômica no banco do jogo: o personagem é travado como offline e da conta
+        ``login`` antes de qualquer pilha mudar; ou todas as pilhas necessárias são consumidas,
         ou nenhuma. Exemplares com outro encantamento nunca entram no lote retornado.
         """
 

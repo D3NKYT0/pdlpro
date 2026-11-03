@@ -503,12 +503,12 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             for row in rows
         ]
 
-    def withdraw_item(self, char_id: int, item_id: int, quantity: int, enchant: int) -> GameItem:
+    def withdraw_item(self, char_id: int, item_id: int, quantity: int, enchant: int, login: str) -> GameItem:
         from common.architecture.exceptions import ValidationDomainError
 
         if quantity < 1 or enchant < 0:
             raise ValidationDomainError("Quantidade inválida.")
-        params = {"char_id": char_id, "item_id": item_id, "enchant": enchant}
+        params = {"char_id": char_id, "item_id": item_id, "enchant": enchant, "login": login}
         # One game transaction: the exact stacks (template + enchant) are locked, each
         # decrement must hit its row, and any mismatch rolls every stack back.
         with self._engine_or_create().begin() as connection:
@@ -516,6 +516,9 @@ class SqlAlchemyLineageGateway(ILineageGateway):
                 sql = self._sql[name]
                 return connection.execute(text(sql), self._bind(sql, values))
 
+            char = execute("withdraw_character", params).mappings().first()
+            if not char or char["online"]:
+                raise ValidationDomainError("Personagem não pertence à conta ou está online.")
             stacks = list(execute("withdraw_stacks", params).mappings())
             if sum(int(stack["quantity"] or 0) for stack in stacks) < quantity:
                 raise ValidationDomainError("Quantidade insuficiente no personagem.")

@@ -115,7 +115,7 @@ def test_complete_feature_catalog():
     assert CATALOG.has("list_character_skills")
     assert CATALOG.has("insert_character")
     assert CATALOG.has("insert_character_subclass")
-    assert len(CATALOG._statements) == 75
+    assert len(CATALOG._statements) == 76
     assert CATALOG.has("change_appearance")
     assert CATALOG.has("list_private_stores")
 

@@ -139,6 +139,13 @@ class AlwaysInCustody:
         self._inner.transfer_character(char_id, new_account, from_account=from_account)
 
 
+class _LinkedAccess:
+    """Acesso permitido: estes testes cobrem a corrida, não o vínculo da conta."""
+
+    def can_access(self, user_id, username, login):
+        return True
+
+
 def _listing_entity(*, seller_id: UUID, price: Decimal = Decimal("25.00")) -> CharacterListingEntity:
     return CharacterListingEntity(
         id=uuid4(),
@@ -174,7 +181,7 @@ def test_losing_buyer_does_not_debit_or_transfer_when_claim_fails():
     wallets.by_user[buyer_one] = MemoryWallet(uuid4(), buyer_one, Decimal(40))
     wallets.by_user[buyer_two] = MemoryWallet(uuid4(), buyer_two, Decimal(40))
     lineage = RecordingLineage()
-    use_case = PurchaseListingUseCase(listings, lineage, wallets, NullUnitOfWork())
+    use_case = PurchaseListingUseCase(listings, lineage, wallets, NullUnitOfWork(), _LinkedAccess())
 
     first = use_case.execute(PurchaseListingInput(buyer_one, "buyer1", listings.listing.id))
     assert first.status == "sold"
@@ -258,6 +265,7 @@ def test_stale_for_sale_read_does_not_double_charge_or_transfer(settings):
         lineage,
         DjangoWalletRepository(),
         DjangoUnitOfWork(),
+        _LinkedAccess(),
     )
 
     first = use_case.execute(PurchaseListingInput(buyer_one.id, buyer_one.username, listing.id))

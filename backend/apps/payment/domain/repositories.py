@@ -198,3 +198,14 @@ class IPaymentReversalRepository(ABC):
         """Grava o evento conciliado; ``event_key`` é único e impede reaplicação."""
 
         raise NotImplementedError
+
+
+class IPaymentReviewPort(ABC):
+    """Consulta, para outros apps, quais usuários têm pedido em revisão financeira.
+
+    Um pedido em ``dispute`` ou ``manual_review`` indica estorno, chargeback ou saldo devedor.
+    """
+
+    @abstractmethod
+    def users_under_review(self, user_ids: list[UUID]) -> set[UUID]:
+        raise NotImplementedError

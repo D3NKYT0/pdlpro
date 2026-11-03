@@ -2,6 +2,7 @@ import { MicroResource } from '../programs/MicroResource'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../ui/Button'
+import { Field } from '../ui/Field'
 import {
   Crown,
   Eye,
@@ -26,9 +27,23 @@ interface ListingDetailProps {
   onClose: () => void
   onBuy: (id: string) => void
   onCancel: (id: string) => void
+  /** Contas vinculadas; o personagem comprado vai para ``account``. */
+  accounts?: Array<{ login: string; is_primary?: boolean }>
+  account?: string
+  onAccountChange?: (login: string) => void
 }
 
-export function ListingDetail({ listing, isOwner, pending, onClose, onBuy, onCancel }: ListingDetailProps) {
+export function ListingDetail({
+  listing,
+  isOwner,
+  pending,
+  onClose,
+  onBuy,
+  onCancel,
+  accounts = [],
+  account = '',
+  onAccountChange,
+}: ListingDetailProps) {
   const { t } = useTranslation('panel')
   const status = listingStatusFor(listing.status, t)
   const [selectedItem, setSelectedItem] = useState<CharacterItemDetail | null>(null)
@@ -125,8 +140,29 @@ export function ListingDetail({ listing, isOwner, pending, onClose, onBuy, onCan
                 {pending ? t('marketplace.detail.cancelling') : t('marketplace.detail.cancelListing')}
               </Button>
             ) : null}
+            {!isOwner && listing.status === 'for_sale' && accounts.length > 0 ? (
+              <Field>
+                {t('marketplace.detail.receiveAccount')}
+                <select
+                  value={account}
+                  onChange={(event) => onAccountChange?.(event.target.value)}
+                  aria-label={t('marketplace.detail.receiveAccount')}
+                >
+                  {accounts.map((acc) => (
+                    <option key={acc.login} value={acc.login}>
+                      {t(acc.is_primary ? 'marketplace.sell.accountPrimaryOption' : 'marketplace.sell.accountOption', {
+                        login: acc.login,
+                      })}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+            ) : null}
+            {!isOwner && listing.status === 'for_sale' && accounts.length === 0 ? (
+              <small>{t('marketplace.detail.noReceiveAccount')}</small>
+            ) : null}
             {!isOwner && listing.status === 'for_sale' ? (
-              <MicroResource code="marketplace-buy"><Button type="button" onClick={() => onBuy(listing.id)} disabled={pending}>
+              <MicroResource code="marketplace-buy"><Button type="button" onClick={() => onBuy(listing.id)} disabled={pending || !account}>
                 <ShoppingCart aria-hidden="true" />
                 {pending ? t('marketplace.detail.processing') : t('marketplace.detail.buy')}
               </Button></MicroResource>

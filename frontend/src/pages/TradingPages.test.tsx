@@ -129,6 +129,9 @@ beforeEach(() => {
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 afterEach(async () => { cleanup(); client.clear(); vi.restoreAllMocks(); await i18n.changeLanguage('pt') })
+function linkBuyerAccount() {
+  vi.mocked(lineageApi.accounts).mockResolvedValue({ accounts: [{ login: 'buyer', is_primary: true }], slots: { used: 1, total: 3, can_link: true }, primary: { login: 'buyer', status: 'linked' } } as any)
+}
 function mount(page: ReactElement, disabled: string[] = []) {
   if (disabled.length) {
     client.setQueryData(['resources'], disabled.map(code => ({ code, enabled: false })))
@@ -146,6 +149,7 @@ async function prepareListing(user: ReturnType<typeof userEvent.setup>) {
 }
 it.each([false, true])('marketplace compra e apresenta resultado; erro=%s', async fail => {
   if (fail) vi.mocked(marketplaceApi.buy).mockRejectedValue(new ApiError('Saldo insuficiente', 400, 'INSUFFICIENT'))
+  linkBuyerAccount()
   const user = mount(<MarketplacePage />)
   expect(await screen.findByText('150 moedas')).toBeVisible()
   expect(await screen.findByRole('img', { name: 'Retrato de Elf' })).toHaveAttribute('src', '/theme/avatars/elf-m.png')
@@ -162,7 +166,7 @@ it.each([false, true])('marketplace compra e apresenta resultado; erro=%s', asyn
   expect(screen.getByLabelText('Grade do warehouse')).toBeVisible()
   expect(screen.getByLabelText('Festival Adena · sem encanto · qtd 5')).toBeVisible()
   await user.click(screen.getByRole('button', { name: 'Comprar personagem' }))
-  expect(marketplaceApi.buy).toHaveBeenCalledWith('listing')
+  expect(marketplaceApi.buy).toHaveBeenCalledWith('listing', 'buyer')
   if (fail) {
     expect(toast.error).toHaveBeenCalledWith('Saldo insuficiente')
     expect(screen.getByRole('button', { name: 'Comprar personagem' })).toBeEnabled()
@@ -211,6 +215,7 @@ it('impede anunciar personagem online', async () => {
 })
 it('compra pendente bloqueia cliques duplicados', async () => {
   vi.mocked(marketplaceApi.buy).mockImplementation(() => new Promise(() => {}))
+  linkBuyerAccount()
   const user = mount(<MarketplacePage />)
   await user.click(await screen.findByRole('button', { name: /Ver personagem/ }))
   await user.dblClick(screen.getByRole('button', { name: 'Comprar personagem' }))
@@ -234,7 +239,7 @@ it.each([false, true])('lance envia moedas inteiras e personagem selecionado; er
   expect(screen.getByRole('spinbutton', { name: 'Seu lance' })).toHaveValue(13)
   expect(screen.getByRole('combobox', { name: 'Personagem que receberá o item' })).toHaveValue('Elf')
   await user.click(screen.getByRole('button', { name: 'Dar lance' }))
-  expect(auctionApi.bid).toHaveBeenCalledWith('auction', '13', 'Elf')
+  expect(auctionApi.bid).toHaveBeenCalledWith('auction', '13', 'Elf', '')
   if (fail) expect(toast.error).toHaveBeenCalledWith('Lance ultrapassado')
   else await waitFor(() => expect(auctionApi.open).toHaveBeenCalledTimes(2))
 })
@@ -298,7 +303,15 @@ it('lance em personagem não pede inventário de destino', async () => {
   expect(screen.queryByRole('combobox', { name: 'Personagem que receberá o item' })).not.toBeInTheDocument()
   expect(screen.getByRole('spinbutton', { name: 'Seu lance' })).toHaveValue(11)
   await user.click(screen.getByRole('button', { name: 'Dar lance' }))
-  expect(auctionApi.bid).toHaveBeenCalledWith('char-auction', '11', '')
+  expect(auctionApi.bid).toHaveBeenCalledWith('char-auction', '11', '', '')
+})
+it('marketplace sem conta vinculada não permite comprar', async () => {
+  vi.mocked(lineageApi.accounts).mockResolvedValue({ accounts: [], slots: { used: 0, total: 3, can_link: true }, primary: { login: '', status: 'unclaimed' } } as any)
+  const user = mount(<MarketplacePage />)
+  await user.click(await screen.findByRole('button', { name: /Ver personagem/ }))
+  expect(await screen.findByText('Vincule uma conta de jogo para receber o personagem.')).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Comprar personagem' })).toBeDisabled()
+  expect(marketplaceApi.buy).not.toHaveBeenCalled()
 })
 it('marketplace segue o idioma ativo no catálogo, no anúncio e na venda', async () => {
   await i18n.changeLanguage('en')
@@ -483,7 +496,7 @@ it('leilão suporta mudança de conta no lance do leilão', async () => {
   await user.selectOptions(recipientSelect, 'OrcAlt')
   await user.click(screen.getByRole('button', { name: 'Dar lance' }))
 
-  expect(auctionApi.bid).toHaveBeenCalledWith('auction', '13', 'OrcAlt')
+  expect(auctionApi.bid).toHaveBeenCalledWith('auction', '13', 'OrcAlt', 'alt_acc')
 })
 
 

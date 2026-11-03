@@ -26,7 +26,7 @@ from apps.server.domain.gateways import ILineageGateway
 from apps.wallet.domain.entities import InsufficientBalanceError
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
-from common.architecture.exceptions import AuthorizationError
+from common.architecture.exceptions import AuthorizationError, ValidationDomainError
 
 
 class ListPublicListingsUseCase(UseCase[None, list[CharacterListingEntity]]):
@@ -163,6 +163,8 @@ class PurchaseListingInput:
     buyer_id: UUID
     buyer_username: str
     listing_id: UUID
+    # Conta de jogo que recebe o personagem; precisa estar vinculada ao comprador.
+    buyer_login: str = ""
 
 
 class PurchaseListingUseCase(UseCase[PurchaseListingInput, CharacterListingEntity]):
@@ -181,13 +183,19 @@ class PurchaseListingUseCase(UseCase[PurchaseListingInput, CharacterListingEntit
         lineage: ILineageGateway,
         wallets: IWalletRepository,
         unit_of_work: UnitOfWork,
+        access: IAccountAccessService,
     ) -> None:
         self._listings = listings
         self._lineage = lineage
         self._wallets = wallets
         self._unit_of_work = unit_of_work
+        self._access = access
 
     def execute(self, data: PurchaseListingInput) -> CharacterListingEntity:
+        # O nome de usuário do painel não prova a posse de uma conta de jogo de mesmo login.
+        receiver = (data.buyer_login or data.buyer_username).strip()
+        if not receiver or not self._access.can_access(data.buyer_id, data.buyer_username, receiver):
+            raise ValidationDomainError("Escolha uma conta de jogo vinculada ao seu usuário para receber o personagem.")
         with self._unit_of_work:
             listing = self._listings.get_by_id(data.listing_id, lock=True)
             if listing is None:
@@ -197,7 +205,7 @@ class PurchaseListingUseCase(UseCase[PurchaseListingInput, CharacterListingEntit
             if listing.seller_id == data.buyer_id:
                 raise CannotBuyOwnListingError()
             limit = int(getattr(settings, "MAX_CHARACTERS_PER_ACCOUNT", 7))
-            if self._lineage.count_characters(data.buyer_username) >= limit:
+            if self._lineage.count_characters(receiver) >= limit:
                 raise CharacterSlotLimitError()
             master = getattr(settings, "MARKETPLACE_MASTER_ACCOUNT", "MARKETPLACE_SYSTEM")
             if not self._lineage.verify_character_ownership(listing.char_id, master):
@@ -219,9 +227,7 @@ class PurchaseListingUseCase(UseCase[PurchaseListingInput, CharacterListingEntit
                 origin=data.buyer_username,
                 description=f"Venda de personagem: {listing.char_name}",
             )
-            self._lineage.transfer_character(
-                listing.char_id, data.buyer_username, from_account=master
-            )
+            self._lineage.transfer_character(listing.char_id, receiver, from_account=master)
             return sold
 
 

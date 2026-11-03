@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from dataclasses import asdict, dataclass
 from datetime import timedelta
 from decimal import Decimal
@@ -34,6 +35,8 @@ from apps.wallet.domain.entities import InsufficientBalanceError
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
+
+logger = logging.getLogger(__name__)
 
 
 class ListOpenAuctionsUseCase(UseCase[None, list[AuctionEntity]]):
@@ -245,6 +248,8 @@ class PlaceBidInput:
     auction_id: UUID
     amount: Decimal
     character_name: str
+    # Conta de jogo vinculada que recebe o personagem ou cujo personagem recebe o item.
+    login: str = ""
 
 
 class PlaceBidUseCase(UseCase[PlaceBidInput, BidEntity]):
@@ -263,16 +268,20 @@ class PlaceBidUseCase(UseCase[PlaceBidInput, BidEntity]):
         wallets: IWalletRepository,
         lineage: ILineageGateway,
         unit_of_work: UnitOfWork,
+        access: IAccountAccessService,
     ) -> None:
         self._auctions = auctions
         self._inventories = inventories
         self._wallets = wallets
         self._lineage = lineage
         self._unit_of_work = unit_of_work
+        self._access = access
 
     def execute(self, data: PlaceBidInput) -> BidEntity:
         if data.amount <= 0:
             raise InvalidBidError()
+        login = (data.login or data.username).strip()
+        linked = bool(login) and self._access.can_access(data.user_id, data.username, login)
         with self._unit_of_work:
             auction = self._auctions.get_by_id(data.auction_id, lock=True)
             if auction is None:
@@ -288,14 +297,19 @@ class PlaceBidUseCase(UseCase[PlaceBidInput, BidEntity]):
 
             destination = data.character_name.strip()
             if auction.kind == "character":
-                destination = data.username
+                # O lance guarda a conta vinculada escolhida; o fechamento a valida de novo.
+                if not linked:
+                    raise ValidationDomainError("Escolha uma conta de jogo vinculada ao seu usuário para receber o personagem.")
+                destination = login
                 limit = int(getattr(settings, "MAX_CHARACTERS_PER_ACCOUNT", 7))
                 if self._lineage.count_characters(destination) >= limit:
                     raise CharacterSlotLimitError()
             elif not destination:
                 raise ValidationDomainError("Informe o personagem que receberá o item.")
             else:
-                self._inventories.get_or_create(data.user_id, destination, "")
+                if not linked or not any(char.name == destination for char in self._lineage.list_characters(login)):
+                    raise ValidationDomainError("Escolha um personagem seu para receber o item.")
+                self._inventories.get_or_create(data.user_id, destination, login)
 
             wallet = self._wallets.get_or_create(data.user_id)
             if wallet.balance < data.amount:
@@ -340,12 +354,14 @@ class CloseExpiredAuctionsUseCase(UseCase[None, dict]):
         wallets: IWalletRepository,
         lineage: ILineageGateway,
         unit_of_work: UnitOfWork,
+        access: IAccountAccessService,
     ) -> None:
         self._auctions = auctions
         self._inventories = inventories
         self._wallets = wallets
         self._lineage = lineage
         self._unit_of_work = unit_of_work
+        self._access = access
 
     def execute(self, data: None = None) -> dict:
         closed = 0
@@ -369,39 +385,39 @@ class CloseExpiredAuctionsUseCase(UseCase[None, dict]):
     def _close_character(self, current: AuctionEntity) -> None:
         master = getattr(settings, "MARKETPLACE_MASTER_ACCOUNT", "MARKETPLACE_SYSTEM")
         label = current.char_name or current.item_name or "personagem"
-        if current.char_id is None or not current.old_account:
-            return
-        in_custody = self._lineage.verify_character_ownership(current.char_id, master)
-        if current.highest_bidder_id and current.current_bid and current.highest_bidder_username and in_custody:
+        in_custody = current.char_id is not None and self._lineage.verify_character_ownership(current.char_id, master)
+        if current.highest_bidder_id and current.current_bid:
+            winning = self._auctions.winning_bid(current.id)
+            destination = ((winning.character_name if winning else "") or current.highest_bidder_username or "").strip()
             limit = int(getattr(settings, "MAX_CHARACTERS_PER_ACCOUNT", 7))
-            if self._lineage.count_characters(current.highest_bidder_username) >= limit:
-                # Slot cheio no fechamento: devolve o lance e o personagem ao vendedor.
-                bidder_wallet = self._wallets.get_or_create(current.highest_bidder_id)
+            deliverable = (
+                in_custody
+                and bool(destination)
+                and self._access.can_access(current.highest_bidder_id, current.highest_bidder_username or "", destination)
+                and self._lineage.count_characters(destination) < limit
+            )
+            if deliverable:
+                seller_wallet = self._wallets.get_or_create(current.seller_id)
                 self._wallets.credit(
-                    bidder_wallet.id,
+                    seller_wallet.id,
                     current.current_bid,
-                    origin="auction",
-                    description=f"Devolução de lance (slot indisponível) — {label}",
+                    origin=current.highest_bidder_username or "",
+                    description=f"Venda no leilão {label}",
                 )
-                self._lineage.transfer_character(
-                    current.char_id, current.old_account, from_account=master
-                )
+                self._lineage.transfer_character(current.char_id, destination, from_account=master)
                 return
-            seller_wallet = self._wallets.get_or_create(current.seller_id)
+            # Sem custódia, conta desvinculada ou slot cheio: o lance sempre volta ao vencedor.
+            bidder_wallet = self._wallets.get_or_create(current.highest_bidder_id)
             self._wallets.credit(
-                seller_wallet.id,
+                bidder_wallet.id,
                 current.current_bid,
-                origin=current.highest_bidder_username,
-                description=f"Venda no leilão {label}",
+                origin="auction",
+                description=f"Devolução de lance (entrega indisponível) — {label}",
             )
-            self._lineage.transfer_character(
-                current.char_id, current.highest_bidder_username, from_account=master
-            )
-            return
-        if in_custody:
-            self._lineage.transfer_character(
-                current.char_id, current.old_account, from_account=master
-            )
+        if in_custody and current.old_account:
+            self._lineage.transfer_character(current.char_id, current.old_account, from_account=master)
+        elif not in_custody:
+            logger.warning("Leilão %s encerrado com o personagem fora da custódia", current.id)
 
     def _close_item_sold(self, current: AuctionEntity) -> None:
         winning = self._auctions.winning_bid(current.id)

@@ -144,6 +144,7 @@ export function AuctionPage() {
         auctionId,
         bidAmount,
         auction && isCharacterAuction(auction) ? '' : bidCharacter,
+        login,
       )
       toast.success(t('auctions.toast.bidSent'))
       await refresh()

@@ -631,8 +631,12 @@ class RequestLinkByEmailUseCase(UseCase[RequestLinkByEmailInput, dict]):
             raise ValidationDomainError("Informe um e-mail.")
         account = next((row for row in self._lineage.find_accounts_by_email(email) if not row.linked_user_id), None)
         if account is None:
-            raise ValidationDomainError("Nenhuma conta não vinculada foi encontrada com esse e-mail.")
-        token = signing.dumps({"login": account.login, "email": email}, salt=LINK_BY_EMAIL_SALT)
+            # Resposta igual à de sucesso: a API não revela quais e-mails têm conta no jogo.
+            return {"sent": True}
+        token = signing.dumps(
+            {"login": account.login, "email": email, "user_id": str(data.actor.user_id)},
+            salt=LINK_BY_EMAIL_SALT,
+        )
         base = getattr(settings, "FRONTEND_URL", "") or getattr(settings, "PROJECT_URL", "http://localhost:3000")
         link = f"{base.rstrip('/')}/accounts?link_token={token}"
         language = getattr(data.actor, "language", None) or getattr(data.actor, "preferred_language", None)
@@ -693,6 +697,9 @@ class ConfirmLinkByEmailUseCase(UseCase[ConfirmLinkByEmailInput, GameAccount]):
             raise ValidationDomainError("Link de vinculação inválido ou expirado.") from exc
         login = str(payload.get("login") or "")
         email = str(payload.get("email") or "")
+        # O link só vale para quem o pediu: encaminhado a outro painel, ele não vincula a conta.
+        if str(payload.get("user_id") or "") != str(data.actor.user_id):
+            raise ValidationDomainError("Link de vinculação inválido ou expirado.")
         account = self._lineage.get_account_by_login_and_email(login, email)
         if account is None:
             raise GameAccountNotFoundError()

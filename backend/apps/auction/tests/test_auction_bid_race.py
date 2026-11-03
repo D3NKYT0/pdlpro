@@ -12,6 +12,7 @@ from django.utils import timezone
 from apps.auction.domain.exceptions import InvalidBidError
 from apps.auction.infrastructure.models import Auction, Bid
 from apps.auction.infrastructure.repositories import DjangoAuctionRepository
+from apps.auction.tests.helpers import link_player
 from apps.wallet.infrastructure.models import Wallet
 
 pytestmark = pytest.mark.django_db
@@ -81,6 +82,7 @@ def test_sequential_outbid_does_not_double_refund():
     second = User.objects.create_user(username="auc_seq_b2", email="auc_seq_b2@test.dev")
     for user in (seller, first, second):
         Wallet.objects.create(user=user, balance=100)
+        link_player(user)
     auction = Auction.objects.create(
         seller=seller,
         item_id=57,
