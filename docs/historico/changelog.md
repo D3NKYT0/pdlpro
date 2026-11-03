@@ -10,7 +10,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
-Correções da auditoria de compras, pagamentos e entrega de itens (LBN-01 a LBN-07) e da vistoria seguinte (VST-01 a VST-07). Inclui a migração `payment.0004`, que acrescenta tentativas de cobrança, histórico de estornos e campos de revisão financeira aos pedidos; aplique-a antes de reiniciar os workers.
+## [2.8.2] - 2026-11-03
+
+Lançamento de segurança com as correções da auditoria de compras, pagamentos e entrega de itens (LBN-01 a LBN-07) e da vistoria seguinte (VST-01 a VST-07). Inclui a migração `payment.0004`, que acrescenta tentativas de cobrança, histórico de estornos e campos de revisão financeira aos pedidos; aplique-a antes de reiniciar os workers. Também traz novas opções da carteira para a equipe. A API acompanha a versão 2.8.2.
 
 ### Adicionado
 
