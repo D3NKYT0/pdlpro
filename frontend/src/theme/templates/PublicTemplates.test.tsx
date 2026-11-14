@@ -105,3 +105,27 @@ it.each(RENDERERS)('%s plays Classic video with the actual implicit layout defau
   expect(container.querySelectorAll('video')).toHaveLength(1)
   expect(container.querySelector('video')).toHaveAttribute('src', '/theme/default/images/video.mp4')
 })
+
+it('switches package copy from the header with the account link before the language control', async () => {
+  const { default: i18n } = await import('../../i18n')
+  const previous = i18n.getResourceBundle('en', 'public')
+  i18n.addResourceBundle('en', 'public', {
+    themePresentation: { navigation: { register: 'Create account' }, hero: { title: 'Night falls over Elmore' } },
+  }, true, true)
+  try {
+    mount('warhorn')
+    const user = userEvent.setup()
+    const account = await screen.findByRole('link', { name: /entrar/i })
+    const language = screen.getByRole('combobox', { name: /idioma/i })
+    expect(account.compareDocumentPosition(language) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    await user.click(language)
+    await user.click(screen.getByRole('option', { name: 'English' }))
+    expect(await screen.findByRole('heading', { name: 'Night falls over Elmore' })).toBeVisible()
+    expect(within(screen.getByRole('navigation', { name: /main navigation/i })).getByRole('link', { name: 'Create account' })).toHaveAttribute('href', '/register')
+  } finally {
+    cleanup()
+    i18n.removeResourceBundle('en', 'public')
+    i18n.addResourceBundle('en', 'public', previous)
+    await i18n.changeLanguage('pt')
+  }
+})

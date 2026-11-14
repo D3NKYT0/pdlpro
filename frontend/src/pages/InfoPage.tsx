@@ -22,6 +22,10 @@ import { serverApi } from '../services/api'
 import { InfoGuide } from '../components/info/InfoGuide'
 import { infoGuideStyle, type InfoGuideStyle } from '../lib/pageStyles'
 import { useTheme } from '../theme/ThemeProvider'
+import { ThemeHeroSurface } from '../components/themes/ThemeHeroSurface'
+import { ButtonLink } from '../components/ui/Button'
+import { resolveTemplateId } from '../theme/templates/resolve'
+import { firstText } from '../lib/site-metadata'
 
 const SECTION_ICONS: Record<(typeof INFO_SECTION_IDS)[number], LucideIcon> = {
   geral: Server,
@@ -48,6 +52,8 @@ function GuideInfoPage({ style }: { style: InfoGuideStyle }) {
 }
 
 function ClassicInfoPage() {
+  const theme = useTheme()
+  const videoEnabled = resolveTemplateId(theme.selected_template || theme.presentation?.renderer) === 'warhorn'
   const { t } = useTranslation('public')
   const { hash } = useLocation()
   const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
@@ -113,7 +119,7 @@ function ClassicInfoPage() {
 
   return (
     <div className="info-page">
-      <header className="info-hero">
+      <ThemeHeroSurface as="header" className="info-hero" enabled={videoEnabled}>
         <div className="info-hero-glow" aria-hidden="true" />
         <div className="container info-hero-inner">
           <div className="info-hero-copy">
@@ -126,14 +132,14 @@ function ClassicInfoPage() {
             </h1>
             <p>{t('info.lead')}</p>
             <div className="info-hero-actions">
-              <Link className="info-action info-action-primary" to="/downloads">
+              <ButtonLink appearance="image" to="/downloads">
                 <Download aria-hidden="true" />
                 {t('info.downloadGame')}
-              </Link>
-              <Link className="info-action info-action-secondary" to="/register">
+              </ButtonLink>
+              <ButtonLink appearance="image" variant="secondary" to="/register">
                 <UserPlus aria-hidden="true" />
                 {t('info.createAccount')}
-              </Link>
+              </ButtonLink>
             </div>
           </div>
 
@@ -143,7 +149,7 @@ function ClassicInfoPage() {
             </div>
             <div className="info-server-heading">
               <span>{t('info.mainServer')}</span>
-              <strong>{data?.name?.trim() || 'PDL PRO'}</strong>
+              <strong>{firstText(data?.name, theme.metadata?.site.name, theme.builtin === false ? theme.name : '', '—')}</strong>
             </div>
             <MicroResource code="server-status"><div className={`info-live-status ${statusClass}`}>
               <i aria-hidden="true" />
@@ -161,19 +167,19 @@ function ClassicInfoPage() {
             </dl>
           </aside>
         </div>
-      </header>
+      </ThemeHeroSurface>
 
       <nav className="info-nav container" aria-label={t('info.sectionsAria')}>
         {sections.map(({ id, label, icon: Icon }) => (
-          <a
+          <Link
             key={id}
-            href={`#${id}`}
+            to={`#${id}`}
             className={activeSection === id ? 'is-active' : undefined}
             aria-current={activeSection === id ? 'location' : undefined}
           >
             <Icon aria-hidden="true" />
             {label}
-          </a>
+          </Link>
         ))}
       </nav>
 
@@ -218,14 +224,14 @@ function ClassicInfoPage() {
                 <p>{t('info.ctaLead')}</p>
               </div>
               <div className="info-cta-actions">
-                <Link className="info-action info-action-primary" to="/register">
+                <ButtonLink appearance="image" to="/register">
                   <UserPlus aria-hidden="true" />
                   {t('info.createAccount')}
-                </Link>
-                <Link className="info-action info-action-secondary" to="/downloads">
+                </ButtonLink>
+                <ButtonLink appearance="image" variant="secondary" to="/downloads">
                   <Download aria-hidden="true" />
                   {t('info.downloadShort')}
-                </Link>
+                </ButtonLink>
                 <Link className="info-wiki-link" to="/wiki">
                   <BookOpen aria-hidden="true" />
                   {t('info.openWiki')}

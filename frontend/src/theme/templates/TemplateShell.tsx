@@ -89,11 +89,11 @@ export function TemplateShell({
             <nav className="tpl-nav" aria-label={t('nav.main')}>{links}</nav>
           ) : null}
           <div className="tpl-header__actions site-nav-actions">
-            <LanguageSwitcher className="language-switcher site-nav-language" id={`tpl-language-${templateId}`} />
             <Link className="user" to={user ? '/panel' : '/login'}>
               <CircleUserRound aria-hidden="true" />
               <span>{user ? t('nav.myAccount') : t('nav.signIn')}</span>
             </Link>
+            <LanguageSwitcher className="language-switcher site-nav-language" id={`tpl-language-${templateId}`} />
             {downloadsEnabled && !navigation.some(item => item.to === '/downloads') ? <Link className="download" to="/downloads">{t('nav.download')}</Link> : null}
             <button className="tpl-hamburger" type="button" aria-label={t('nav.openMenu')} aria-expanded={menuOpen} aria-controls={menuId} onClick={() => setMenuOpen(true)}>
               <span /><span /><span />

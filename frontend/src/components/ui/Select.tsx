@@ -30,7 +30,7 @@ export function Select({
   'aria-describedby'?: string
 }) {
   const generatedId = useId()
-  const listId = `${generatedId}-list`
+  const listId = `${id ?? generatedId}-list`
   const root = useRef<HTMLDivElement>(null)
   const trigger = useRef<HTMLButtonElement>(null)
   const listRef = useRef<HTMLUListElement>(null)

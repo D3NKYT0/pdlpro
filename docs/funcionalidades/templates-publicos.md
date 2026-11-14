@@ -109,3 +109,5 @@ npm run test:run -- src/theme/templates src/theme/renderers.test.ts src/theme/ac
 cd ../backend
 python -m pytest apps/themes/tests/test_theme_api.py -k "club_renderer or catalog_renderer or declarative_presentation or theme_template"
 ```
+
+O seletor de idioma segue o botão de conta nos cabeçalhos do catálogo. Pacotes podem traduzir os rótulos do manifesto em `public.themePresentation` nos arquivos de locale. As chaves de navegação usam o destino sem a barra inicial (`home` para `/`). As demais chaves seguem os campos de `hero`, `features`, `ranking`, `cta`, `news` e `footer`; `stats` usa o ID do indicador. O manifesto fornece o texto quando o locale omite a chave. A página clássica de Informações do Warhorn reutiliza o vídeo do tema e os botões compartilhados via `appearance="image"`.

@@ -17,7 +17,7 @@ import { Select } from './Select'
 
 afterEach(cleanup)
 it('link estilizado mantém navegação e semântica de link', async () => {
-  render(<MemoryRouter><Routes><Route path="/" element={<ButtonLink to="/destino" variant="secondary" size="sm">Ver detalhes</ButtonLink>} /><Route path="/destino" element={<h1>Detalhes</h1>} /></Routes></MemoryRouter>)
+  render(<MemoryRouter><Routes><Route path="/" element={<ButtonLink to="/destino" appearance="image" variant="secondary" size="sm">Ver detalhes</ButtonLink>} /><Route path="/destino" element={<h1>Detalhes</h1>} /></Routes></MemoryRouter>)
   const link = screen.getByRole('link', { name: 'Ver detalhes' })
   expect(link).toHaveAttribute('href', '/destino')
   expect(link).toHaveAttribute('data-theme-part', 'button')

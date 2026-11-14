@@ -320,7 +320,7 @@ it('Info, Rankings, extras e o loader usam tokens em vez de ouro/default cravado
   expect(info).toContain('--info-gold: var(--theme-accent')
   expect(info).toContain('var(--theme-art-bg-5')
   expect(info).toContain('var(--theme-art-bg-1')
-  expect(info).toContain('linear-gradient(135deg, var(--theme-accent-bright')
+  expect(uiCss).toMatch(/\.btn\.ui-button\.ui-button--image\s*\{[^}]*background: var\(--theme-button-primary\)/)
   expect(info).not.toMatch(/rgba\(\s*212\s*,\s*173\s*,\s*98/)
   expect(info).not.toMatch(/background:\s*linear-gradient\(135deg, #efd18e/)
   expect(info).not.toMatch(/color:\s*#c8a65f/)

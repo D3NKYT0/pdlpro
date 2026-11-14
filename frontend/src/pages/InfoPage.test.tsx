@@ -3,8 +3,9 @@ import type { ReactNode } from 'react'
 import '@testing-library/jest-dom/vitest'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { cleanup, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { I18nextProvider } from 'react-i18next'
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import i18n from '../i18n'
 import { serverApi } from '../services/api'
@@ -49,11 +50,36 @@ function mount(ui: ReactNode) {
   return render(
     <QueryClientProvider client={client}>
       <I18nextProvider i18n={i18n}>
-        <MemoryRouter initialEntries={['/info']}>{ui}</MemoryRouter>
+        <MemoryRouter initialEntries={['/info']}>{ui}<Location /></MemoryRouter>
       </I18nextProvider>
     </QueryClientProvider>,
   )
 }
+
+function Location() {
+  const location = useLocation()
+  return <output aria-label="Rota de teste">{location.pathname}{location.hash}</output>
+}
+
+it('Warhorn reproduz o vídeo do tema na /info e mantém as âncoras navegáveis sem reiniciar o player', async () => {
+  vi.mocked(useTheme).mockReturnValue({
+    id: 'l2-nightmare', name: 'L2 Nightmare', builtin: false, metadata: null,
+    selected_template: 'warhorn', presentation: { renderer: 'warhorn' },
+    assets: { 'images/video.mp4': '/media/nightmare/video.mp4' },
+  } as never)
+  const user = userEvent.setup()
+  const { container } = mount(<InfoPage />)
+  await screen.findByRole('navigation', { name: /seções/i })
+  const video = container.querySelector('.info-hero video')
+  expect(video).toHaveAttribute('src', '/media/nightmare/video.mp4')
+  expect(video).toHaveProperty('muted', true)
+  await user.click(screen.getByRole('link', { name: /^Rates$/ }))
+  expect(screen.getByLabelText('Rota de teste')).toHaveTextContent('/info#rates')
+  expect(screen.getByRole('link', { name: /^Rates$/ })).toHaveAttribute('aria-current', 'location')
+  expect(container.querySelector('.info-hero video')).toBe(video)
+  await user.click(screen.getByRole('link', { name: /^Baixar o jogo$/ }))
+  expect(screen.getByLabelText('Rota de teste')).toHaveTextContent('/downloads')
+})
 
 it('tema sem estilo declarado mantém a /info clássica', async () => {
   vi.mocked(useTheme).mockReturnValue({ presentation: null } as never)

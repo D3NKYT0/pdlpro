@@ -1,3 +1,4 @@
+import { useLocalizedPresentation } from '../theme/useLocalizedPresentation'
 import { useResourceControls } from '../contexts/ResourceControlsContext'
 import { MicroResource } from '../components/programs/MicroResource'
 import { useQuery } from '@tanstack/react-query'
@@ -405,15 +406,16 @@ function DefaultHomePage() {
 
 function HomeContent() {
   const theme = useTheme()
-  const templateId = resolveTemplateId(theme.presentation?.renderer)
-  if (isVesperlyn(theme.presentation?.renderer) && theme.presentation) {
-    return <ClubHomePage presentation={theme.presentation} />
+  const presentation = useLocalizedPresentation(theme.presentation)
+  const templateId = resolveTemplateId(presentation?.renderer)
+  if (isVesperlyn(presentation?.renderer) && presentation) {
+    return <ClubHomePage presentation={presentation} />
   }
-  if (isGemwright(theme.presentation?.renderer) && theme.presentation) {
-    return <PortalHomePage presentation={theme.presentation} />
+  if (isGemwright(presentation?.renderer) && presentation) {
+    return <PortalHomePage presentation={presentation} />
   }
-  if (templateId && theme.presentation) {
-    return <CatalogHomePage presentation={theme.presentation} templateId={templateId} />
+  if (templateId && presentation) {
+    return <CatalogHomePage presentation={presentation} templateId={templateId} />
   }
   return <DefaultHomePage />
 }

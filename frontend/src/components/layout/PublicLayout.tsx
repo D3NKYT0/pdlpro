@@ -1,3 +1,4 @@
+import { useLocalizedPresentation } from '../../theme/useLocalizedPresentation'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useDefaultTheme } from '../../theme/useDefaultTheme'
@@ -14,6 +15,7 @@ import { BannerModal } from '../public/BannerModal'
 export function PublicLayout() {
   useDefaultTheme()
   const theme = useTheme()
+  const presentation = useLocalizedPresentation(theme.presentation)
   const { pathname } = useLocation()
   const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
   const launchGate = pathname === '/' && Boolean(info.data?.coming_soon)
@@ -33,7 +35,7 @@ export function PublicLayout() {
 
   const isLanding = pathname === '/' || pathname === '/home'
   const bannerLocation = isLanding ? 'landing' : 'all'
-  const templateId = resolveTemplateId(theme.presentation?.renderer)
+  const templateId = resolveTemplateId(presentation?.renderer)
 
   let content = (
     <div data-theme-surface="public">
@@ -47,12 +49,12 @@ export function PublicLayout() {
     </div>
   )
 
-  if (isVesperlyn(theme.presentation?.renderer) && theme.presentation) {
-    content = <ClubPublicLayout presentation={theme.presentation} />
-  } else if (isGemwright(theme.presentation?.renderer) && theme.presentation) {
-    content = <PortalPublicLayout presentation={theme.presentation} />
-  } else if (templateId && theme.presentation) {
-    content = <TemplateShell presentation={theme.presentation} templateId={templateId} />
+  if (isVesperlyn(presentation?.renderer) && presentation) {
+    content = <ClubPublicLayout presentation={presentation} />
+  } else if (isGemwright(presentation?.renderer) && presentation) {
+    content = <PortalPublicLayout presentation={presentation} />
+  } else if (templateId && presentation) {
+    content = <TemplateShell presentation={presentation} templateId={templateId} />
   }
 
   return (

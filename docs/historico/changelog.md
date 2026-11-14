@@ -10,6 +10,17 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.8.4] - 2026-11-14
+
+### Adicionado
+
+- Os pacotes de tema podem traduzir a navegação, o hero e os demais textos públicos pelo seletor de idioma.
+
+### Corrigido
+
+- O cabeçalho do catálogo exibe o botão de conta antes do seletor de idioma.
+- Informações no Warhorn usa o vídeo do tema, botões compartilhados e navegação de seções ajustada para telas de menor altura.
+
 ## [2.8.3] - 2026-11-14
 
 Correções de identidade pública e carregamento de temas. A API acompanha a versão 2.8.3; esta atualização não exige migração de banco.

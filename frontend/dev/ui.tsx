@@ -72,6 +72,7 @@ function Showcase() {
             <IconButton label="Excluir item" variant="danger" onClick={() => setLastAction('Exclusão demonstrativa selecionada.')}><Trash2 aria-hidden="true" /></IconButton>
           </div>
           <h3>Estados e navegação</h3>
+          <div className="ui-showcase-actions"><ButtonLink appearance="image" to="#showcase-panel-components"><Download aria-hidden="true" /> Baixar o jogo</ButtonLink></div>
           <div className="ui-showcase-actions"><Button disabled>Indisponível</Button><Button busy busyLabel="Salvando...">Salvar</Button><IconButton label="Atualizar lista" variant="secondary" busy><RefreshCw aria-hidden="true" /></IconButton><ButtonLink variant="secondary" to="#showcase-panel-guidelines" onClick={() => setTab('guidelines')}>Como usar <ArrowRight aria-hidden="true" /></ButtonLink><ExternalButtonLink href="https://denky.dev.br/">Site externo <ArrowRight aria-hidden="true" /></ExternalButtonLink></div>
           <p className="ui-showcase-result" role="status">{lastAction}</p>
         </Card>

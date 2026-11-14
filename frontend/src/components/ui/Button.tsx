@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import './ui.css'
 
 export interface ButtonAppearance {
+  /** Usa as imagens primary/secondary do pacote em superfícies públicas. */
+  appearance?: 'default' | 'image'
   /** ghost é o nome legado da variante secondary, com textura azul. */
   variant?: 'primary' | 'secondary' | 'ghost' | 'success' | 'yellow' | 'warning' | 'orange' | 'danger' | 'muted' | 'help'
   size?: 'sm' | 'md' | 'lg'
@@ -15,17 +17,17 @@ export interface ButtonProps extends ComponentPropsWithRef<'button'>, ButtonAppe
 }
 
 /** Classes únicas para ações e links, preservando as texturas do tema do painel. */
-function buttonClasses({ variant = 'primary', size = 'md' }: ButtonAppearance, className = '') {
+function buttonClasses({ variant = 'primary', size = 'md', appearance = 'default' }: ButtonAppearance, className = '') {
   if (variant === 'help') return ['ui-button', 'ui-button--help', size === 'md' ? '' : `ui-button--${size}`, className].filter(Boolean).join(' ')
   const secondary = variant === 'secondary' || variant === 'ghost'
-  return ['btn', 'ui-button', secondary ? 'ghost' : '', `ui-button--${secondary ? 'secondary' : variant}`, size === 'md' ? '' : `ui-button--${size}`, className].filter(Boolean).join(' ')
+  return ['btn', 'ui-button', secondary ? 'ghost' : '', `ui-button--${secondary ? 'secondary' : variant}`, appearance === 'image' ? 'ui-button--image' : '', size === 'md' ? '' : `ui-button--${size}`, className].filter(Boolean).join(' ')
 }
 
 /** Ação padrão do painel. O tipo padrão é button; use type="submit" para salvar.
  * busy bloqueia interação e anuncia o envio. O hook de ação também deve impedir repetição.
  */
-export function Button({ variant, size, busy = false, busyLabel = 'Aguarde…', disabled, className, children, type = 'button', ...props }: ButtonProps) {
-  return <button {...props} type={type} data-theme-part="button" className={buttonClasses({ variant, size }, className)} disabled={disabled || busy} aria-busy={busy || undefined}>
+export function Button({ variant, size, appearance, busy = false, busyLabel = 'Aguarde…', disabled, className, children, type = 'button', ...props }: ButtonProps) {
+  return <button {...props} type={type} data-theme-part="button" className={buttonClasses({ variant, size, appearance }, className)} disabled={disabled || busy} aria-busy={busy || undefined}>
     {busy ? <><LoaderCircle className="ui-button-spinner" aria-hidden="true" /><span className="ui-button-busy-label">{busyLabel}</span></> : children}
   </button>
 }
@@ -38,11 +40,11 @@ export function IconButton({ label, className = '', ...props }: Omit<ButtonProps
 /** Navegação interna com a mesma aparência. Mantém semântica de link e Ctrl+clique.
  * Não oferece busy/disabled: para executar operações, use Button.
  */
-export function ButtonLink({ variant, size, className, ...props }: ComponentPropsWithRef<typeof Link> & ButtonAppearance) {
-  return <Link {...props} data-theme-part="button" className={buttonClasses({ variant, size }, className)} />
+export function ButtonLink({ variant, size, appearance, className, ...props }: ComponentPropsWithRef<typeof Link> & ButtonAppearance) {
+  return <Link {...props} data-theme-part="button" className={buttonClasses({ variant, size, appearance }, className)} />
 }
 
 /** Link externo com a aparência compartilhada de botão e isolamento da nova aba. */
-export function ExternalButtonLink({ variant, size, className, target = '_blank', rel = 'noopener noreferrer', ...props }: ComponentPropsWithRef<'a'> & ButtonAppearance) {
-  return <a {...props} target={target} rel={rel} data-theme-part="button" className={buttonClasses({ variant, size }, className)} />
+export function ExternalButtonLink({ variant, size, appearance, className, target = '_blank', rel = 'noopener noreferrer', ...props }: ComponentPropsWithRef<'a'> & ButtonAppearance) {
+  return <a {...props} target={target} rel={rel} data-theme-part="button" className={buttonClasses({ variant, size, appearance }, className)} />
 }

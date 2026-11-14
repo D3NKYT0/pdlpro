@@ -1,9 +1,31 @@
 .info-page {
+  --info-wrap: var(--public-container-width, 1440px);
   --info-gold: var(--theme-accent, #d4ad62);
   --info-gold-soft: var(--theme-accent, #8d7040);
   --info-line: color-mix(in srgb, var(--theme-accent, #d4ad62) 20%, transparent);
   --info-panel: color-mix(in srgb, var(--theme-bg-deep, #0e0c09) 90%, #000);
   padding: 0 0 100px;
+}
+
+.info-page .container {
+  box-sizing: border-box;
+  width: min(calc(100% - 48px), var(--info-wrap));
+  max-width: var(--info-wrap);
+  margin-inline: auto;
+}
+
+html[data-pdl-template="warhorn"] .info-page { --info-nav-top: 0px; }
+
+.info-hero.theme-hero-media {
+  --theme-hero-video-height: 100%;
+  --theme-hero-video-position: center;
+  background: var(--theme-bg-deep, #050505);
+}
+.info-hero.theme-hero-media > .video::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 96%, transparent), color-mix(in srgb, var(--theme-bg-deep, #050505) 76%, transparent) 48%, color-mix(in srgb, var(--theme-bg-deep, #050505) 30%, transparent));
 }
 
 .info-hero {
@@ -122,48 +144,10 @@
   margin-top: 32px;
 }
 
-.info-action {
-  min-width: 164px;
-  min-height: 47px;
-  padding: 0 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  border: 1px solid transparent;
-  color: #f7f0df;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  transition: 180ms ease;
-}
-
-.info-action svg {
+.info-hero-actions .ui-button svg,
+.info-cta-actions .ui-button svg {
   width: 17px;
   height: 17px;
-}
-
-.info-action-primary {
-  color: #16110a;
-  background: linear-gradient(135deg, var(--theme-accent-bright, #efd18e), var(--theme-accent, #a87937));
-  box-shadow: 0 10px 28px color-mix(in srgb, var(--theme-accent) 20%, transparent);
-}
-
-.info-action-secondary {
-  border-color: color-mix(in srgb, var(--info-gold) 42%, transparent);
-  background: color-mix(in srgb, var(--theme-bg-deep, #0b0906) 72%, transparent);
-}
-
-.info-action:hover {
-  color: #fff;
-  transform: translateY(-2px);
-  border-color: var(--info-gold);
-  filter: brightness(1.08);
-}
-
-.info-action-primary:hover {
-  color: #17110a;
 }
 
 .info-hero-card {
@@ -186,15 +170,15 @@
 .info-hero-card::before {
   top: -1px;
   left: -1px;
-  border-top: 2px solid;
-  border-left: 2px solid;
+  border-top: 2px solid var(--info-gold);
+  border-left: 2px solid var(--info-gold);
 }
 
 .info-hero-card::after {
   right: -1px;
   bottom: -1px;
-  border-right: 2px solid;
-  border-bottom: 2px solid;
+  border-right: 2px solid var(--info-gold);
+  border-bottom: 2px solid var(--info-gold);
 }
 
 .info-server-mark,
@@ -312,10 +296,14 @@
   margin: 5px 0 0;
 }
 
-.info-nav {
+html .info-page nav.info-nav {
   position: sticky;
-  top: 73px;
+  inset: auto;
+  top: var(--info-nav-top, var(--public-header-height, 73px));
   z-index: 40;
+  width: min(calc(100% - 48px), var(--info-wrap));
+  height: auto;
+  min-height: 0;
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   margin-top: -25px;
@@ -334,7 +322,7 @@
   justify-content: center;
   gap: 9px;
   color: rgba(255, 255, 255, 0.48);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   border: 1px solid transparent;
   white-space: nowrap;
@@ -866,11 +854,13 @@
     grid-template-columns: 1fr;
   }
 
+  .info-hero-inner { gap: 36px; }
+
   .info-hero-card {
     max-width: 560px;
   }
 
-  .info-nav {
+  html .info-page nav.info-nav {
     grid-template-columns: repeat(6, max-content);
     justify-content: flex-start;
     overflow-x: auto;
@@ -915,8 +905,7 @@
     font-size: 16px;
   }
 
-  .info-nav {
-    top: 64px;
+  html .info-page nav.info-nav {
     margin-bottom: 52px;
   }
 
@@ -957,11 +946,6 @@
     padding: 28px 24px;
   }
 
-  .info-hero-actions .info-action,
-  .info-cta-actions .info-action {
-    width: 100%;
-  }
-
   .info-plaque {
     grid-template-columns: 1fr;
   }
@@ -990,4 +974,9 @@
   .info-cta h2 {
     font-size: 29px;
   }
+}
+
+@media (min-width: 901px) and (max-height: 800px) {
+  html[data-pdl-template="warhorn"] .info-hero { min-height: 440px; }
+  html[data-pdl-template="warhorn"] .info-hero-inner { padding-block: 44px; }
 }
