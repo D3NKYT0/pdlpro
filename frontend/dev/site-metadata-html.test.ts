@@ -15,7 +15,8 @@ it('o HTML estático continua inicializável sem SSI e a API atualiza as tags se
   const parsed = new DOMParser().parseFromString(html, 'text/html')
   document.head.innerHTML = parsed.head.innerHTML
   document.body.innerHTML = parsed.body.innerHTML
-  expect(document.title).toContain('PDL PRO')
+  expect(document.title).toBe('')
+  expect(document.head.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe('noindex')
   expect(document.getElementById('root')).not.toBeNull()
   const info = {
     name: 'Saga Club', seo_title: 'Saga SEO', seo_description: 'Saga descrição',
@@ -23,6 +24,7 @@ it('o HTML estático continua inicializável sem SSI e a API atualiza as tags se
   }
   applyDocumentMetadata(resolveSiteMetadata(info as never, { assets: {}, metadata: null }))
   expect(document.title).toBe('Saga SEO')
+  expect(document.head.querySelector('[data-site-metadata-pending]')).toBeNull()
   for (const key of ['og:title', 'twitter:title']) {
     const nodes = document.head.querySelectorAll(`meta[property="${key}"], meta[name="${key}"]`)
     expect(nodes).toHaveLength(1)

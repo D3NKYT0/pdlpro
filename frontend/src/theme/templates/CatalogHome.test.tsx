@@ -198,6 +198,34 @@ it('o Wayfarer mostra os três primeiros recursos como passos', async () => {
   expect(screen.getByText('Cliente')).toBeVisible()
 })
 
+it('o Warhorn reproduz o vídeo declarado pelo pacote sem perder os CTAs', () => {
+  themeState.assets = { 'images/video.mp4': '/media/themes/demo/images/video.mp4' }
+  const { container } = renderHome('warhorn')
+  const video = container.querySelector('.tpl-warroom > .video video')
+  expect(video).toHaveAttribute('src', '/media/themes/demo/images/video.mp4')
+  expect(video).toHaveAttribute('poster', '/media/themes/demo/images/video-poster.jpg')
+  expect(video).toHaveAttribute('autoplay')
+  expect(video).toHaveProperty('muted', true)
+  expect(video).toHaveAttribute('loop')
+  expect(video).toHaveAttribute('playsinline')
+  expect(screen.getByRole('link', { name: 'DOWNLOAD' })).toBeVisible()
+})
+
+it('o Warhorn usa o vídeo padrão quando o pacote não declara vídeo', () => {
+  const { container } = renderHome('warhorn')
+  expect(container.querySelector('video')).toHaveAttribute('src', '/media/themes/demo/images/video.mp4')
+})
+
+it('o Warhorn não carrega vídeo quando a seção hero está desabilitada', () => {
+  themeState.assets = { 'images/video.mp4': '/media/themes/demo/images/video.mp4' }
+  const { container } = render(wrap(
+    <QueryClientProvider client={queryClient()}><MemoryRouter>
+      <CatalogHomePage presentation={{ ...presentation, home: { ...presentation.home, sections: ['news'] } }} templateId="warhorn" />
+    </MemoryRouter></QueryClientProvider>,
+  ))
+  expect(container.querySelector('video')).toBeNull()
+})
+
 it('o Warhorn esconde o relógio dummy e mantém o relógio de uma data real', () => {
   const { unmount } = renderHome('warhorn')
   expect(document.querySelector('.tpl-warroom')).not.toBeNull()

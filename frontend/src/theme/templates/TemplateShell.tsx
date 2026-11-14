@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CircleUserRound } from 'lucide-react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
@@ -13,7 +12,8 @@ import { LanguageSwitcher } from '../../components/i18n/LanguageSwitcher'
 import { PdlSymbol } from '../../components/PdlSymbol'
 import { PUBLIC_TEMPLATES } from './catalog'
 import type { ThemeCatalogId } from '../../services/api'
-import { isNavigationItemEnabled } from '../../lib/navigation'
+import { isNavigationItemEnabled, uniqueNavigation } from '../../lib/navigation'
+import { usePublicMenu } from '../../hooks/usePublicMenu'
 
 function activeRoute(pathname: string, target: string) {
   if (LANDING_PATHS.includes(target)) return LANDING_PATHS.includes(pathname)
@@ -33,7 +33,7 @@ export function TemplateShell({
   const landingPath = useLandingPath()
   const template = PUBLIC_TEMPLATES[templateId]
   const theme = useTheme()
-  const [menuOpen, setMenuOpen] = useState(false)
+  const { menuOpen, setMenuOpen, menuId, menuRef } = usePublicMenu(pathname)
   const resources = useQuery({
     queryKey: ['resources'],
     queryFn: programsApi.resources,
@@ -59,17 +59,18 @@ export function TemplateShell({
         ? packedWordmark
         : themeAsset('images/logo.png')
 
-  useEffect(() => setMenuOpen(false), [pathname])
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [menuOpen])
 
   const links = navigation.map((item) => (
     <Link className={activeRoute(pathname, item.to) ? 'is-active' : undefined} key={`${item.to}-${item.label}`} to={item.to}>
       {item.label}
     </Link>
   ))
+
+  const mobileNavigation = uniqueNavigation([...navigation,
+    { to: user ? '/panel' : '/login', label: user ? t('nav.myAccount') : t('nav.signIn') },
+    ...(!user ? [{ to: '/register', label: t('portal.createAccount') }] : []),
+    ...(downloadsEnabled ? [{ to: '/downloads', label: t('nav.download') }] : []),
+  ])
 
   return (
     <div
@@ -93,21 +94,18 @@ export function TemplateShell({
               <CircleUserRound aria-hidden="true" />
               <span>{user ? t('nav.myAccount') : t('nav.signIn')}</span>
             </Link>
-            {downloadsEnabled ? <Link className="download" to="/downloads">{t('nav.download')}</Link> : null}
-            <button className="tpl-hamburger" type="button" aria-label={t('nav.openMenu')} aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
+            {downloadsEnabled && !navigation.some(item => item.to === '/downloads') ? <Link className="download" to="/downloads">{t('nav.download')}</Link> : null}
+            <button className="tpl-hamburger" type="button" aria-label={t('nav.openMenu')} aria-expanded={menuOpen} aria-controls={menuId} onClick={() => setMenuOpen(true)}>
               <span /><span /><span />
             </button>
           </div>
         </div>
       </header>
 
-      <div className={`tpl-mobile${menuOpen ? ' is-open' : ''}`} hidden={!menuOpen}>
+      <div className={`tpl-mobile${menuOpen ? ' is-open' : ''}`} hidden={!menuOpen} id={menuId} ref={menuRef} role="dialog" aria-modal={menuOpen || undefined} aria-label={t('portal.mobileNav')}>
         <button className="tpl-mobile__close" type="button" aria-label={t('nav.closeMenu')} onClick={() => setMenuOpen(false)}>×</button>
         <nav aria-label={t('portal.mobileNav')}>
-          {navigation.map((item) => <Link key={`${item.to}-${item.label}`} to={item.to}>{item.label}</Link>)}
-          <Link to={user ? '/panel' : '/login'}>{user ? t('nav.myAccount') : t('nav.signIn')}</Link>
-          {downloadsEnabled ? <Link to="/downloads">{t('nav.download')}</Link> : null}
-          {!user ? <Link to="/register">{t('portal.createAccount')}</Link> : null}
+          {mobileNavigation.map(item => <Link key={item.to} to={item.to} onClick={() => setMenuOpen(false)}>{item.label}</Link>)}
         </nav>
       </div>
 

@@ -25,6 +25,7 @@
 }
 
 [data-pdl-template] .tpl-shell nav {
+  z-index: auto;
   position: static;
   inset: auto;
   width: auto;
@@ -1599,8 +1600,8 @@
 
 [data-pdl-template] .tpl-empty { color: var(--theme-muted, #aaa298); }
 
-/* Gemwright no Classic: casco de portal com tokens, sem o CSS do ZIP Valorem. */
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-shell {
+/* Gemwright: shared portal structure; identity remains in theme tokens and assets. */
+html[data-pdl-theme][data-pdl-template="gemwright"] .portal-shell {
   --gw-wrap: var(--public-container-width, 1175px);
   --gw-header: var(--public-header-height, 80px);
   position: relative;
@@ -1610,11 +1611,11 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-shell {
   background: var(--theme-bg-deep, #050505);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-shell .container {
+html[data-pdl-theme][data-pdl-template="gemwright"] .portal-shell .container {
   width: min(100%, var(--gw-wrap));
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-shell nav {
+html[data-pdl-theme][data-pdl-template="gemwright"] .portal-shell nav {
   position: static;
   inset: auto;
   width: auto;
@@ -1624,7 +1625,7 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-shell nav 
   backdrop-filter: none;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .site-header {
+html[data-pdl-theme][data-pdl-template="gemwright"] .site-header {
   position: absolute;
   inset: 0 0 auto;
   z-index: 40;
@@ -1632,7 +1633,7 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .site-header {
   background: linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 78%, transparent), transparent);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .site-header__inner {
+html[data-pdl-theme][data-pdl-template="gemwright"] .site-header__inner {
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-areas:
@@ -1645,20 +1646,20 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .site-header__inne
   padding-bottom: 14px;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .logo {
+html[data-pdl-theme][data-pdl-template="gemwright"] .logo {
   grid-area: logo;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .nav-main {
+html[data-pdl-theme][data-pdl-template="gemwright"] .nav-main {
   grid-area: nav;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .header-actions {
+html[data-pdl-theme][data-pdl-template="gemwright"] .header-actions {
   grid-area: actions;
   justify-self: end;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .logo img {
+html[data-pdl-theme][data-pdl-template="gemwright"] .logo img {
   display: block;
   height: 40px;
   width: auto;
@@ -1666,32 +1667,32 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .logo img {
   object-fit: contain;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .nav-main,
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .header-actions,
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .footer-nav {
+html[data-pdl-theme][data-pdl-template="gemwright"] .nav-main,
+html[data-pdl-theme][data-pdl-template="gemwright"] .header-actions,
+html[data-pdl-theme][data-pdl-template="gemwright"] .footer-nav {
   display: flex;
   align-items: center;
   gap: 12px 22px;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .nav-main,
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .header-actions {
+html[data-pdl-theme][data-pdl-template="gemwright"] .nav-main,
+html[data-pdl-theme][data-pdl-template="gemwright"] .header-actions {
   flex-wrap: nowrap;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .footer-nav {
+html[data-pdl-theme][data-pdl-template="gemwright"] .footer-nav {
   flex-wrap: wrap;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .nav-main {
+html[data-pdl-theme][data-pdl-template="gemwright"] .nav-main {
   justify-content: center;
   gap: 28px;
   padding-top: 6px;
   border-top: 1px solid color-mix(in srgb, var(--theme-accent, #d4af61) 18%, transparent);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .nav-main a,
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .footer-nav a {
+html[data-pdl-theme][data-pdl-template="gemwright"] .nav-main a,
+html[data-pdl-theme][data-pdl-template="gemwright"] .footer-nav a {
   color: color-mix(in srgb, var(--theme-text, #f4efe4) 78%, transparent);
   font-size: 12px;
   font-weight: 600;
@@ -1701,12 +1702,12 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .footer-nav a {
   white-space: nowrap;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .nav-main a:is(:hover, .is-active),
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .footer-nav a:hover {
+html[data-pdl-theme][data-pdl-template="gemwright"] .nav-main a:is(:hover, .is-active),
+html[data-pdl-theme][data-pdl-template="gemwright"] .footer-nav a:hover {
   color: var(--theme-accent-bright, #e6c77d);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .header-actions .user {
+html[data-pdl-theme][data-pdl-template="gemwright"] .header-actions .user {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -1714,7 +1715,7 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .header-actions .u
   text-decoration: none;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-shell .portal-cta.ui-button {
+html[data-pdl-theme][data-pdl-template="gemwright"] .portal-shell .portal-cta.ui-button {
   background-image: none;
   background-color: var(--theme-accent, #d4af61);
   color: var(--theme-bg-deep, #050505);
@@ -1723,13 +1724,13 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-shell .por
   text-transform: uppercase;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-shell .portal-cta.ui-button.ghost {
+html[data-pdl-theme][data-pdl-template="gemwright"] .portal-shell .portal-cta.ui-button.ghost {
   background-color: transparent;
   color: var(--theme-text, #f4efe4);
   border: 1px solid var(--theme-accent, #d4af61);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hamburger {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hamburger {
   display: none;
   flex-direction: column;
   gap: 5px;
@@ -1738,14 +1739,14 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hamburger {
   background: none;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hamburger span {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hamburger span {
   display: block;
   width: 18px;
   height: 2px;
   background: var(--theme-accent, #d4af61);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hero {
   position: relative;
   display: grid;
   place-items: center;
@@ -1757,7 +1758,7 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero {
   text-align: center;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__bg {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hero__bg {
   position: absolute;
   inset: 0;
   background:
@@ -1766,7 +1767,7 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__bg {
     var(--tpl-art-hero, var(--theme-art-bg-5)) center / cover no-repeat;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__content {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hero__content {
   position: relative;
   z-index: 1;
   display: grid;
@@ -1776,20 +1777,20 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__content {
   padding: 8px 20px 0;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__content .pdl-emblem-stage {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hero__content .pdl-emblem-stage {
   width: 168px;
   height: 168px;
   margin: 0 auto;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__content .pdl-emblem-symbol {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hero__content .pdl-emblem-symbol {
   width: 124px;
   height: 124px;
   margin: 0;
   justify-self: center;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__kicker {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hero__kicker {
   margin: 0;
   color: var(--theme-accent, #d4af61);
   font-size: 11px;
@@ -1798,14 +1799,14 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__kicker {
   text-transform: uppercase;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__title {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hero__title {
   margin: 0;
   color: var(--theme-accent-bright, #e6c77d);
   font-size: clamp(2.2rem, 5vw, 3.8rem);
   letter-spacing: 0.08em;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__desc {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hero__desc {
   margin: 0;
   max-width: 32rem;
   color: var(--theme-muted, #aaa298);
@@ -1813,7 +1814,7 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__desc {
   line-height: 1.55;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__actions {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hero__actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -1821,7 +1822,7 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__actions {
   margin-top: 8px;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__scroll {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hero__scroll {
   position: absolute;
   left: 50%;
   bottom: 28px;
@@ -1833,14 +1834,14 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__scroll {
   transform: translateX(-50%);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__scroll img {
+html[data-pdl-theme][data-pdl-template="gemwright"] .hero__scroll img {
   display: block;
   width: 22px;
   height: auto;
   opacity: 0.72;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .countdown__label {
+html[data-pdl-theme][data-pdl-template="gemwright"] .countdown__label {
   margin: 0 0 10px;
   color: var(--theme-accent, #d4af61);
   font-size: 11px;
@@ -1849,96 +1850,96 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .countdown__label 
   text-transform: uppercase;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .countdown__grid {
+html[data-pdl-theme][data-pdl-template="gemwright"] .countdown__grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .countdown__item {
+html[data-pdl-theme][data-pdl-template="gemwright"] .countdown__item {
   min-width: 72px;
   padding: 12px 10px;
   border: 1px solid color-mix(in srgb, var(--theme-accent, #d4af61) 32%, transparent);
   background: color-mix(in srgb, var(--theme-bg-deep, #050505) 62%, transparent);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .countdown__value {
+html[data-pdl-theme][data-pdl-template="gemwright"] .countdown__value {
   display: block;
   color: var(--theme-accent-bright, #e6c77d);
   font-size: 28px;
   font-weight: 700;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .countdown__unit {
+html[data-pdl-theme][data-pdl-template="gemwright"] .countdown__unit {
   color: var(--theme-muted, #aaa298);
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .section {
+html[data-pdl-theme][data-pdl-template="gemwright"] .section {
   padding: 72px 0;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .section-head {
+html[data-pdl-theme][data-pdl-template="gemwright"] .section-head {
   margin-bottom: 32px;
   text-align: center;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .section-head__divider {
+html[data-pdl-theme][data-pdl-template="gemwright"] .section-head__divider {
   display: none;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .section-head__title {
+html[data-pdl-theme][data-pdl-template="gemwright"] .section-head__title {
   margin: 0;
   color: var(--theme-accent-bright, #e6c77d);
   font-size: clamp(1.6rem, 3vw, 2.2rem);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .section-head__sub {
+html[data-pdl-theme][data-pdl-template="gemwright"] .section-head__sub {
   margin: 8px 0 0;
   color: var(--theme-muted, #aaa298);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .features-grid {
+html[data-pdl-theme][data-pdl-template="gemwright"] .features-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card {
+html[data-pdl-theme][data-pdl-template="gemwright"] .feature-card {
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--theme-accent, #d4af61) 22%, transparent);
   background: color-mix(in srgb, var(--theme-surface, #121212) 72%, #000);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card--scene {
+html[data-pdl-theme][data-pdl-template="gemwright"] .feature-card--scene {
   position: relative;
   min-height: 280px;
   display: grid;
   align-content: end;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card__art {
+html[data-pdl-theme][data-pdl-template="gemwright"] .feature-card__art {
   min-height: 180px;
   background: var(--theme-bg-deep, #050505) center / cover no-repeat;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card--scene .feature-card__art {
+html[data-pdl-theme][data-pdl-template="gemwright"] .feature-card--scene .feature-card__art {
   position: absolute;
   inset: 0;
   min-height: 0;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card--scene .feature-card__copy {
+html[data-pdl-theme][data-pdl-template="gemwright"] .feature-card--scene .feature-card__copy {
   position: relative;
   z-index: 1;
   padding: 72px 20px 22px;
   background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--theme-bg-deep, #050505) 92%, #000));
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card__icon img {
+html[data-pdl-theme][data-pdl-template="gemwright"] .feature-card__icon img {
   display: block;
   width: 56px;
   height: 56px;
@@ -1946,33 +1947,33 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card__ico
   object-fit: contain;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card__title,
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card__desc {
+html[data-pdl-theme][data-pdl-template="gemwright"] .feature-card__title,
+html[data-pdl-theme][data-pdl-template="gemwright"] .feature-card__desc {
   margin: 0;
   padding: 0 18px;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card__title {
+html[data-pdl-theme][data-pdl-template="gemwright"] .feature-card__title {
   padding-top: 16px;
   color: var(--theme-accent-bright, #e6c77d);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card__desc {
+html[data-pdl-theme][data-pdl-template="gemwright"] .feature-card__desc {
   padding-bottom: 20px;
   color: var(--theme-muted, #aaa298);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card--scene .feature-card__title,
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .feature-card--scene .feature-card__desc {
+html[data-pdl-theme][data-pdl-template="gemwright"] .feature-card--scene .feature-card__title,
+html[data-pdl-theme][data-pdl-template="gemwright"] .feature-card--scene .feature-card__desc {
   padding: 0;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .section__action {
+html[data-pdl-theme][data-pdl-template="gemwright"] .section__action {
   margin-top: 28px;
   text-align: center;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .rating-tabs {
+html[data-pdl-theme][data-pdl-template="gemwright"] .rating-tabs {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -1980,40 +1981,40 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .rating-tabs {
   margin-bottom: 18px;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .rating-tab {
+html[data-pdl-theme][data-pdl-template="gemwright"] .rating-tab {
   padding: 8px 14px;
   border: 1px solid color-mix(in srgb, var(--theme-accent, #d4af61) 28%, transparent);
   background: transparent;
   color: var(--theme-muted, #aaa298);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .rating-tab.is-active {
+html[data-pdl-theme][data-pdl-template="gemwright"] .rating-tab.is-active {
   color: var(--theme-bg-deep, #050505);
   background: var(--theme-accent, #d4af61);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .rating-panel {
+html[data-pdl-theme][data-pdl-template="gemwright"] .rating-panel {
   padding: 8px 18px 4px;
   border: 1px solid color-mix(in srgb, var(--theme-accent, #d4af61) 18%, transparent);
   background: color-mix(in srgb, var(--theme-surface, #121212) 55%, #000);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .rating-table {
+html[data-pdl-theme][data-pdl-template="gemwright"] .rating-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .rating-table :is(th, td) {
+html[data-pdl-theme][data-pdl-template="gemwright"] .rating-table :is(th, td) {
   padding: 10px 8px;
   text-align: left;
   border-bottom: 1px solid color-mix(in srgb, var(--theme-border, #333) 60%, transparent);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .section--cta {
+html[data-pdl-theme][data-pdl-template="gemwright"] .section--cta {
   padding: 0;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .cta-banner {
+html[data-pdl-theme][data-pdl-template="gemwright"] .cta-banner {
   width: 100%;
   max-width: none;
   min-height: 460px;
@@ -2026,7 +2027,7 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .cta-banner {
   text-align: center;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .cta-banner__content {
+html[data-pdl-theme][data-pdl-template="gemwright"] .cta-banner__content {
   display: grid;
   justify-items: center;
   gap: 12px;
@@ -2036,22 +2037,22 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .cta-banner__conte
   background: color-mix(in srgb, var(--theme-bg-deep, #050505) 48%, transparent);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .cta-banner__title {
+html[data-pdl-theme][data-pdl-template="gemwright"] .cta-banner__title {
   margin: 0 0 8px;
   color: var(--theme-accent-bright, #e6c77d);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .cta-banner__desc {
+html[data-pdl-theme][data-pdl-template="gemwright"] .cta-banner__desc {
   margin: 0 0 18px;
   color: var(--theme-muted, #aaa298);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .news-list {
+html[data-pdl-theme][data-pdl-template="gemwright"] .news-list {
   display: grid;
   gap: 16px;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .news-item {
+html[data-pdl-theme][data-pdl-template="gemwright"] .news-item {
   display: grid;
   gap: 6px;
   padding: 16px 18px;
@@ -2060,7 +2061,7 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .news-item {
   border: 1px solid color-mix(in srgb, var(--theme-accent, #d4af61) 18%, transparent);
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-shell .site-footer {
+html[data-pdl-theme][data-pdl-template="gemwright"] .portal-shell .site-footer {
   display: block;
   padding: 48px 0 32px;
   border-top: 1px solid color-mix(in srgb, var(--theme-accent, #d4af61) 18%, transparent);
@@ -2069,14 +2070,14 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-shell .sit
   box-shadow: none;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-shell .site-footer .container {
+html[data-pdl-theme][data-pdl-template="gemwright"] .portal-shell .site-footer .container {
   display: grid;
   justify-items: center;
   gap: 16px;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .logo--footer,
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-footer-mark {
+html[data-pdl-theme][data-pdl-template="gemwright"] .logo--footer,
+html[data-pdl-theme][data-pdl-template="gemwright"] .portal-footer-mark {
   display: grid;
   place-items: center;
   width: 96px;
@@ -2087,34 +2088,34 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-footer-mar
   text-decoration: none;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .logo--footer img,
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-footer-mark img {
+html[data-pdl-theme][data-pdl-template="gemwright"] .logo--footer img,
+html[data-pdl-theme][data-pdl-template="gemwright"] .portal-footer-mark img {
   display: block;
   width: 58px;
   height: 58px;
   object-fit: contain;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .footer-nav {
+html[data-pdl-theme][data-pdl-template="gemwright"] .footer-nav {
   justify-content: center;
   margin: 16px 0;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .site-footer__tagline,
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .site-footer__copy {
+html[data-pdl-theme][data-pdl-template="gemwright"] .site-footer__tagline,
+html[data-pdl-theme][data-pdl-template="gemwright"] .site-footer__copy {
   color: var(--theme-muted, #aaa298);
   font-size: 13px;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .portal-legal-links a {
+html[data-pdl-theme][data-pdl-template="gemwright"] .portal-legal-links a {
   color: inherit;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .mobile-nav {
+html[data-pdl-theme][data-pdl-template="gemwright"] .mobile-nav {
   display: none;
 }
 
-html[data-pdl-theme="default"][data-pdl-template="gemwright"] .mobile-nav.is-open {
+html[data-pdl-theme][data-pdl-template="gemwright"] .mobile-nav.is-open {
   display: grid;
   position: fixed;
   inset: 0;
@@ -2125,27 +2126,27 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .mobile-nav.is-ope
 }
 
 @media (max-width: 860px) {
-  html[data-pdl-theme="default"][data-pdl-template="gemwright"] .nav-main {
+  html[data-pdl-theme][data-pdl-template="gemwright"] .nav-main {
     display: none;
   }
-  html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hamburger {
+  html[data-pdl-theme][data-pdl-template="gemwright"] .hamburger {
     display: flex;
   }
-  html[data-pdl-theme="default"][data-pdl-template="gemwright"] .features-grid {
+  html[data-pdl-theme][data-pdl-template="gemwright"] .features-grid {
     grid-template-columns: 1fr;
   }
-  html[data-pdl-theme="default"][data-pdl-template="gemwright"] .site-header__inner {
+  html[data-pdl-theme][data-pdl-template="gemwright"] .site-header__inner {
     grid-template-columns: auto 1fr;
     grid-template-areas: "logo actions";
     padding-bottom: 16px;
   }
-  html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero {
+  html[data-pdl-theme][data-pdl-template="gemwright"] .hero {
     padding-top: 112px;
   }
-  html[data-pdl-theme="default"][data-pdl-template="gemwright"] .hero__content {
+  html[data-pdl-theme][data-pdl-template="gemwright"] .hero__content {
     padding: 8px 16px 0;
   }
-  html[data-pdl-theme="default"][data-pdl-template="gemwright"] .header-actions .user span {
+  html[data-pdl-theme][data-pdl-template="gemwright"] .header-actions .user span {
     display: none;
   }
 }
@@ -2178,3 +2179,39 @@ html[data-pdl-theme="default"][data-pdl-template="gemwright"] .mobile-nav.is-ope
     grid-template-columns: 1fr;
   }
 }
+/* Shared hero media: keep each layout's existing element, geometry and content. */
+html [data-theme-part="hero"].theme-hero-media{position:relative;isolation:isolate}
+html [data-theme-part="hero"].theme-hero-media > .video{position:absolute;inset:0 0 auto;z-index:-1;width:100%;height:var(--theme-hero-video-height,100%);margin:0;overflow:hidden;pointer-events:none}
+html [data-theme-part="hero"].theme-hero-media > .video video{display:block;position:static;width:100%;height:100%;object-fit:cover;object-position:var(--theme-hero-video-position,center);opacity:1}
+html [data-theme-part="hero"].theme-hero-media > .hero__bg{background-image:none}
+/* Drawer content must not inherit the global fixed <nav> chrome. */
+html :is(.tpl-mobile,.club-mobile,.mobile-nav)[role="dialog"]{box-sizing:border-box;overflow-y:auto;overscroll-behavior:contain;max-height:100dvh}
+html :is(.tpl-mobile,.club-mobile,.mobile-nav)[role="dialog"][hidden]{display:none}
+html :is(.tpl-mobile,.club-mobile,.mobile-nav)[role="dialog"] nav{position:static;inset:auto;display:grid;width:auto;height:auto;min-height:0;margin:0;padding:0;background:none;backdrop-filter:none;gap:8px}
+html :is(.tpl-mobile,.club-mobile,.mobile-nav)[role="dialog"] nav a{width:fit-content;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:left}
+html .tpl-shell:is(.tpl-shell--banner,.tpl-shell--minimal) .tpl-hamburger{display:flex}
+html :is(.tpl-header__actions,.club-header__actions,.site-header .header-actions){flex-wrap:nowrap;flex-shrink:0}
+@media(max-width:1280px){
+ html [data-theme-surface="public"] :is(.tpl-nav,.club-nav,.site-header .nav-main){display:none}
+ html [data-theme-surface="public"] :is(.tpl-hamburger,.club-hamburger,.site-header .hamburger){display:flex}
+}
+/* Portal packages need the same structural header bounds as the built-in theme. */
+html .portal-shell .site-header{position:relative;z-index:40;min-height:var(--public-header-height,84px);border-bottom:1px solid var(--theme-border,#443b32);background:var(--theme-bg-deep,#08090c)}
+html .portal-shell .site-header__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:var(--public-header-height,84px)}
+html .portal-shell .site-header .logo{display:flex;flex-shrink:0;align-items:center}
+html .portal-shell .site-header .logo img{display:block;width:clamp(140px,16vw,240px);height:72px;max-width:100%;object-fit:contain}
+html .portal-shell .site-header .nav-main{position:static;inset:auto;display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px;width:auto;background:none}
+html .portal-shell .site-header .header-actions{display:flex;align-items:center;gap:12px}
+html .portal-shell .site-header .hamburger{display:none}
+html :is(.tpl-mobile,.club-mobile,.mobile-nav)[role="dialog"] > button{position:absolute;inset:16px 16px auto auto;min-height:44px;padding:8px 16px;border:1px solid var(--theme-border,#443b32);background:var(--theme-surface,#151114);color:var(--theme-text,#eee9e5);font-size:24px}
+@media(max-width:1280px){html .portal-shell .site-header .nav-main{display:none}html .portal-shell .site-header .hamburger{display:flex}}
+@media(max-width:600px){
+ html .portal-shell .site-header__inner{gap:8px}
+ html .portal-shell .site-header .header-actions{gap:8px}
+ html .portal-shell .site-header .logo img{width:clamp(90px,30vw,140px);height:60px}
+}
+
+html :is(.tpl-mobile,.club-mobile,.mobile-nav)[role="dialog"] nav{z-index:auto}
+html :is(.tpl-mobile,.club-mobile,.mobile-nav)[role="dialog"] nav a{padding:12px 0;color:var(--theme-text,#eee9e5);font-size:16px;line-height:1.4;text-decoration:none}
+/* Nested hero art must not cover the moving backdrop in Classic or installed themes. */
+html [data-theme-part="hero"].theme-hero-media > :is(.tpl-war,.tpl-split__account,.tpl-split__client){background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--theme-bg-deep,#050505) 78%,transparent))}

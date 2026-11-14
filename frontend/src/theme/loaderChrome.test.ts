@@ -191,7 +191,7 @@ it('sem tokens do pacote cai no chrome clássico, mas mantém o brasão remapead
   expect(chrome.accent).toBe(DEFAULT_LOADER_CHROME.accent)
 })
 
-it('o splash HTML usa o layout clássico com losango, wordmark e barra', () => {
+it('o splash inicial mantém a estrutura sem carregar a marca default', () => {
   const html = readFileSync(resolve(__dirname, '../../index.html'), 'utf8')
   expect(html).toContain('bootstrap-loader.css')
   expect(html).toContain('class="pdl-booting"')
@@ -200,8 +200,17 @@ it('o splash HTML usa o layout clássico com losango, wordmark e barra', () => {
   expect(html).toContain('global-loader__crest')
   expect(html).toContain('global-loader__wordmark')
   expect(html).toContain('global-loader__progress')
-  expect(html).toContain('/theme/default/images/logo.png')
+  const parsed = new DOMParser().parseFromString(html, 'text/html')
+  expect(parsed.querySelector('#app-bootstrap-loader img[src]')).toBeNull()
   expect(html).not.toContain('<span>LINE</span>')
+})
+
+it('ignora o cache Classic antes de confirmar qual tema está ativo', () => {
+  document.body.innerHTML = '<div id="app-bootstrap-loader"><img alt="" /><span></span></div>'
+  writeLoaderChrome(DEFAULT_LOADER_CHROME)
+  window.eval(readFileSync(resolve(__dirname, '../../public/bootstrap-language.js'), 'utf8'))
+  expect(document.querySelector('#app-bootstrap-loader img')).not.toHaveAttribute('src')
+  expect(document.documentElement).not.toHaveAttribute('data-pdl-loader-theme')
 })
 
 it('o script estático de bootstrap aplica o chrome gravado', () => {

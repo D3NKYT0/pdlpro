@@ -2,13 +2,28 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 3 de novembro de 2026
+> **Atualizado:** 14 de novembro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Não publicado]
+
+## [2.8.3] - 2026-11-14
+
+Correções de identidade pública e carregamento de temas. A API acompanha a versão 2.8.3; esta atualização não exige migração de banco.
+
+### Adicionado
+
+- Os 20 layouts públicos reproduzem vídeo na área de abertura, incluindo o PDL Classic e os aliases legados, preservando a composição escolhida. O vídeo do pacote tem prioridade sobre o fallback interno; a troca pelo painel atualiza o player. A reprodução compartilha loop sem áudio, variante móvel e poster em caso de falha, sem imagens internas encobrindo Warhorn e Twinwake; pacotes podem ajustar altura e enquadramento por tokens CSS.
+
+### Corrigido
+
+- O carregamento aguarda o tema ativo e seu CSS, mantém o loading em falhas com nova tentativa e evita mostrar o Classic como fallback. O splash inicial começa sem marcas da plataforma e a atualização preserva o tema anterior até a substituição estar pronta.
+- O HTML inicial e o `robots.txt` usam a identidade pública do projeto, inclusive em temas sem arquivo de metadados. O fallback HTML indisponível fica neutro e com `noindex` provisório, evitando publicar título e descrição padrão da plataforma.
+- Menus móveis deixam de repetir destinos como Download e Criar conta, fecham por Escape e seleção de rota, contêm o foco e restauram a rolagem. A navegação lateral do Ironspine não sobrepõe o menu; cabeçalhos compactam a navegação em telas menores.
+- O Gemwright aplica a estrutura do portal e os limites de tamanho do logo também a temas instalados, evitando cabeçalho desproporcional e controles sem estilo.
 
 ## [2.8.2] - 2026-11-03
 

@@ -90,8 +90,8 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
         theme = self._packaged_metadata.get_overlay()
         env_name = str(getattr(settings, "PROJECT_TITLE", "PDL PRO"))
         env_description = str(getattr(settings, "PROJECT_DESCRIPTION", ""))
-        env_seo_title = first_text(getattr(settings, "SITE_SEO_TITLE", ""), env_name)
-        env_seo_description = first_text(getattr(settings, "SITE_SEO_DESCRIPTION", ""), env_description)
+        env_seo_title = first_text(getattr(settings, "SITE_SEO_TITLE", ""))
+        env_seo_description = first_text(getattr(settings, "SITE_SEO_DESCRIPTION", ""))
         env_og_image = str(getattr(settings, "SITE_OG_IMAGE", "") or "")
         name = project_display_name(theme_name=str(theme.get("name") or ""), env_name=env_name)
         slogan = first_text(theme.get("slogan"))
@@ -196,8 +196,16 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
             theme_name=str(theme.get("name") or ""),
             env_name=env_name,
         )
-        seo_title = first_text(getattr(row, "seo_title", ""), info.seo_title, name)
-        seo_description = first_text(getattr(row, "seo_description", ""), info.seo_description, description)
+        seo_title = first_text(
+            getattr(row, "seo_title", ""),
+            row.name if info.seo_title == info.name else "",
+            info.seo_title, name,
+        )
+        seo_description = first_text(
+            getattr(row, "seo_description", ""),
+            row.description if info.seo_description == info.description else "",
+            info.seo_description, description,
+        )
         return ServerInfo(
             name=name,
             slogan=slogan,

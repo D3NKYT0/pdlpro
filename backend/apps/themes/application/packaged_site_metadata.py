@@ -9,7 +9,11 @@ from apps.themes.domain.repositories import IThemePackageRepository
 
 
 class ThemePackagedSiteMetadata(IPackagedSiteMetadata):
-    """Lê o ``metadados.json`` do pacote ativo e devolve o overlay público."""
+    """Publica a identidade do pacote ativo, refinada por ``metadados.json``.
+
+    Pacotes sem metadados continuam fornecendo nome e descrição do manifesto;
+    assim o HTML inicial e os consumidores públicos não expõem a marca do core.
+    """
 
     def __init__(self, packages: IThemePackageRepository) -> None:
         self._packages = packages
@@ -19,4 +23,5 @@ class ThemePackagedSiteMetadata(IPackagedSiteMetadata):
         if theme is None:
             return {}
         published = serialize_theme(theme)
-        return flatten_theme_metadata(published.get("metadata"), published.get("assets"))
+        overlay = flatten_theme_metadata(published.get("metadata"), published.get("assets"))
+        return {"name": published["name"], "description": published["description"], **overlay}

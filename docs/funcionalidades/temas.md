@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Componentes](../desenvolvimento/componentes.md) · [Distribuição](../operacao/distribuicao.md)
 
-> **Atualizado:** 3 de outubro de 2026
+> **Atualizado:** 14 de novembro de 2026
 
 O PDL PRO aplica uma única identidade visual às páginas públicas, autenticação, painel do
 jogador e administração React. Além de CSS e assets locais, um pacote pode selecionar um
@@ -24,9 +24,41 @@ as URLs das imagens são absolutas e os valores são escapados como HTML.
 
 O HTML exige revalidação e o fragmento não usa cache. Alterações de configuração
 valem na próxima requisição, mas aplicativos de mensagens podem manter suas
-próprias prévias em cache. Se a API estiver indisponível, o SSI usa os metadados
-padrão e mantém a SPA carregável. No Vite local, os comentários SSI não são
+próprias prévias em cache. Se a API estiver indisponível, o SSI usa um head neutro
+com `noindex`, sem título ou descrição da plataforma, e mantém a SPA carregável.
+Quando a identidade é resolvida no navegador, somente esse `noindex` provisório é
+removido. No Vite local, os comentários SSI não são
 processados e o React continua sincronizando os metadados após carregar a API.
+
+Sem campos SEO específicos, título e descrição acompanham a identidade do
+projeto, inclusive nome/descrição do manifesto de um tema sem `metadados.json`.
+O nome do pacote não muda a identidade de um projeto configurado no admin.
+
+`/robots.txt` é encaminhado pelo Nginx (e pelo Vite local) para
+`/api/v1/public/server/robots/`. O texto inclui nome e descrição atuais como
+comentários, permite a área pública e desautoriza rastreamento de `/panel`,
+`/admin` e `/api/`. Não inclui sitemap fictício. Os comentários são reduzidos a
+uma linha para conteúdo editorial não virar diretiva. `robots.txt` controla
+rastreamento; título e descrição de busca vêm do HTML e do conteúdo. Autenticação
+continua protegendo áreas privadas. Mudanças no Google dependem de novo
+rastreamento e não apagam resultados existentes imediatamente.
+
+## Carregamento sem expor o tema padrão
+
+`ThemeProvider` aguarda a resposta explícita da API de tema e o carregamento do
+CSS instalado antes de montar a interface. A folha precisa conter regras válidas
+legíveis na mesma origem; uma resposta HTML ou uma folha vazia não libera a tela.
+Erro da API, erro do CSS ou timeout de
+5 segundos mantêm o loading e iniciam nova tentativa após 2 segundos. Uma falha
+não seleciona o Classic; esse tema só aparece quando a API o retorna como ativo.
+Durante atualização, a interface e o CSS anteriores permanecem até a substituição
+estar pronta. Refresh e desmontagem cancelam tentativas antigas e seus timers.
+
+O splash HTML começa sem brasão ou wordmark da plataforma. Pode usar o chrome
+instalado salvo, mas ignora cache do Classic até confirmar o tema atual. Assets
+do default não são exibidos no loader de um tema instalado que não remapeie suas
+marcas. Os cenários estão em `ThemeProvider.test.tsx`, `loaderChrome.test.ts`,
+`site-metadata-html.test.ts` e nos testes públicos de identidade do backend.
 
 Ao atualizar uma instalação existente, publique o backend e reconstrua a imagem
 web com `frontend/nginx.production.conf` e o novo build juntos. Não basta copiar
@@ -560,3 +592,15 @@ O controle de recursos usa os tokens semânticos `--panel-success`, `--panel-dan
 ### Papéis e delegação de acesso
 
 As partes `role-badge` (com `data-role`) e `access-preview` permitem personalizar a lista de usuários e o diálogo de papéis. Os tokens opcionais `--theme-role-player`, `--theme-role-admin`, `--theme-role-editor`, `--theme-role-moderator`, `--theme-role-promoter`, `--theme-role-partner`, `--theme-role-support`, `--theme-role-supporter` e `--theme-role-staff` usam como fallback as cores semânticas existentes (`info`, `success`, `danger`, `warning`, `epic` e destaque dourado). Texto e ícones permanecem presentes: cor não representa autorização. Os botões reutilizam as variantes compartilhadas, e o diálogo mantém rolagem e composição responsiva.
+
+### Vídeo em todos os layouts
+
+Os 20 layouts do catálogo reproduzem o vídeo do tema na abertura, incluindo o PDL Classic e os aliases legados. A composição escolhida permanece a mesma: `ThemeHeroSurface` mantém o elemento de abertura, seus textos, ações e demais seções e insere `ThemeHeroVideo` como fundo. Não é preciso trocar o renderer para habilitar o vídeo. Nos layouts que abrem por ranking, mural ou números, o vídeo ocupa esse quadro inicial existente. Fundos estáticos internos de Warhorn e Twinwake não encobrem a reprodução.
+
+O player usa `assets["images/video.mp4"]` ou o vídeo interno quando o pacote não declara esse asset. No celular, prefere `images/video-mobile.mp4`; se apenas o vídeo do pacote estiver disponível, usa essa fonte. Falha no arquivo móvel tenta o desktop e falha final mantém o poster. A atualização do tema ativo troca a fonte mesmo quando seu identificador permanece igual. O player mantém autoplay sem áudio, loop e reprodução inline. O tema pode definir `--theme-hero-video-height` e `--theme-hero-video-position`; o vídeo não recebe cliques nem altera a geometria das ações.
+
+Uma lista explícita de seções sem `hero` desabilita o vídeo. Quando a lista não é informada, os padrões do layout mantêm a abertura animada.
+
+A navegação móvel usa um ciclo compartilhado: cada destino aparece uma vez; Escape, o botão Fechar e a seleção de uma rota encerram o menu. O foco permanece no diálogo e retorna ao controle anterior; a rolagem original do documento é restaurada. Menus compridos rolam dentro da tela. A navegação lateral do Ironspine não sobrepõe o diálogo, e o Gemwright aplica sua estrutura de portal também a pacotes instalados.
+
+É necessário publicar o frontend atualizado. Um ZIP contém CSS, assets e configuração, sem JavaScript, e não acrescenta suporte a vídeo a uma SPA antiga. Depois da atualização, mantenha qualquer layout desejado no painel. A matriz `PublicTemplates.test.tsx` cobre as rotas e os menus; `AdminThemesPage.test.tsx` cobre as 20 escolhas para Classic e pacote instalado; `ThemeProvider.test.tsx` cobre a atualização do player e `ThemeHeroVideo.test.tsx` cobre fontes e falhas. A API possui a matriz equivalente de seleção em `apps/themes/tests/test_theme_api.py`. Na homologação, confira avanço de `currentTime`, visibilidade do vídeo e menu no desktop e celular; somente encontrar a tag ou `autoplay` não comprova movimento.

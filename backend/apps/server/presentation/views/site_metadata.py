@@ -28,3 +28,30 @@ class SiteMetadataView(InjectedAPIView):
         response = HttpResponse(html, content_type="text/html; charset=utf-8")
         response["Cache-Control"] = "no-store"
         return response
+
+
+class _PlainTextRenderer(StaticHTMLRenderer):
+    media_type = "text/plain"
+    format = "txt"
+
+
+class RobotsView(InjectedAPIView):
+    """Entrega regras de rastreamento com a identidade pública atual do projeto.
+
+    Usa a mesma porta do head e da API, sem ORM, cache ou consulta ao jogo.
+    Conteúdo editorial fica em comentários de uma linha para impedir que nomes
+    ou descrições sejam interpretados como diretivas. GET/HEAD são públicos.
+    """
+
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    renderer_classes = [_PlainTextRenderer]
+
+    @extend_schema(exclude=True)
+    def get(self, request):
+        info = self.resolve(GetServerInfoUseCase).execute()
+        comments = ["# " + " ".join(text.split()) for text in (info.name, info.description) if text]
+        rules = ["User-agent: *", "Allow: /", "Disallow: /panel", "Disallow: /admin", "Disallow: /api/"]
+        response = HttpResponse("\n".join([*comments, "", *rules, ""]), content_type="text/plain; charset=utf-8")
+        response["Cache-Control"] = "no-store"
+        return response

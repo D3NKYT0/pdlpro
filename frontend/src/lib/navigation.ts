@@ -1,5 +1,15 @@
 import type { Resource } from '../services/api'
 
+/** Merge theme links and shell actions once per destination, preserving the theme's label/order. */
+export function uniqueNavigation<T extends { to: string }>(items: T[]): T[] {
+  const seen = new Set<string>()
+  return items.filter(item => {
+    if (seen.has(item.to)) return false
+    seen.add(item.to)
+    return true
+  })
+}
+
 export const ROUTE_RESOURCE_MAP: Record<string, string> = {
   '/wiki': 'wiki',
   '/news': 'news',

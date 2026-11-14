@@ -14,10 +14,12 @@ import { rankingPortrait } from '../rankings/rankingsFormat'
 import { themeAsset, themeImage } from '../../theme/assets'
 import { useTheme } from '../../theme/ThemeProvider'
 import { extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
-import { isNavigationItemEnabled } from '../../lib/navigation'
+import { isNavigationItemEnabled, uniqueNavigation } from '../../lib/navigation'
+import { usePublicMenu } from '../../hooks/usePublicMenu'
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { PdlHeroEmblem, PdlSymbol } from '../PdlSymbol'
 import { ButtonLink } from '../ui/Button'
+import { ThemeHeroSurface } from './ThemeHeroSurface'
 
 function isSceneAsset(asset: string) {
   return /images\/home\//.test(asset)
@@ -56,7 +58,7 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
   const theme = useTheme()
   const classic = theme.id === 'default'
   const packedCircle = theme.assets['images/logo-circle.png']
-  const [menuOpen, setMenuOpen] = useState(false)
+  const { menuOpen, setMenuOpen, menuId, menuRef } = usePublicMenu(pathname)
   const resources = useQuery({
     queryKey: ['resources'],
     queryFn: programsApi.resources,
@@ -74,11 +76,11 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
       })),
   ]
 
-  useEffect(() => setMenuOpen(false), [pathname])
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [menuOpen])
+
+  const mobileNavigation = uniqueNavigation([...navigation,
+    { to: user ? '/panel' : '/login', label: user ? t('nav.myAccount') : t('nav.signIn') },
+    ...(!user ? [{ to: '/register', label: t('portal.createAccount') }] : []),
+  ])
 
   return (
     <div
@@ -110,24 +112,22 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
                 user ? t('portal.dashboard') : t('portal.login')
               )}
             </Link>
-            {classic ? (
+            {!navigation.some(item => item.to === '/register') && (classic ? (
               <ButtonLink className="portal-cta" variant="primary" size="sm" to="/register">{t('portal.createAccount')}</ButtonLink>
             ) : (
-              <Link className="btn-gem btn-gem--sm" to="/register">{t('portal.createAccount')}</Link>
-            )}
-            <button className="hamburger" type="button" aria-label={t('nav.openMenu')} aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
+              <ButtonLink className="btn-gem btn-gem--sm" to="/register">{t('portal.createAccount')}</ButtonLink>
+            ))}
+            <button className="hamburger" type="button" aria-label={t('nav.openMenu')} aria-expanded={menuOpen} aria-controls={menuId} onClick={() => setMenuOpen(true)}>
               <span /><span /><span />
             </button>
           </div>
         </div>
       </header>
 
-      <div className={`mobile-nav${menuOpen ? ' is-open' : ''}`} hidden={!menuOpen}>
+      <div className={`mobile-nav${menuOpen ? ' is-open' : ''}`} hidden={!menuOpen} id={menuId} ref={menuRef} role="dialog" aria-modal={menuOpen || undefined} aria-label={t('portal.mobileNav')}>
         <button className="mobile-nav__close" type="button" aria-label={t('nav.closeMenu')} onClick={() => setMenuOpen(false)}>×</button>
         <nav aria-label={t('portal.mobileNav')}>
-          {navigation.map((item) => <Link key={`${item.to}-${item.label}`} to={item.to}>{item.label}</Link>)}
-          <Link to={user ? '/panel' : '/login'}>{user ? t('portal.dashboard') : t('portal.login')}</Link>
-          {!user ? <Link to="/register">{t('portal.createAccount')}</Link> : null}
+          {mobileNavigation.map(item => <Link key={item.to} to={item.to} onClick={() => setMenuOpen(false)}>{item.label}</Link>)}
         </nav>
       </div>
 
@@ -235,7 +235,7 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
 
   const sectionNodes: Partial<Record<ThemeHomeSection, ReactNode>> = {
     hero: (
-      <section className="hero" key="hero">
+      <ThemeHeroSurface className="hero" key="hero">
         <div className="hero__bg" aria-hidden="true" />
         <div className="hero__content">
           {classic ? <PdlHeroEmblem /> : null}
@@ -264,13 +264,13 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
             {classic ? (
               <ButtonLink className="portal-cta" variant="primary" size="lg" to={hero.actionTo}>{hero.actionLabel}</ButtonLink>
             ) : (
-              <Link className="btn-gem btn-gem--lg" to={hero.actionTo}>{hero.actionLabel}</Link>
+              <ButtonLink className="btn-gem btn-gem--lg" to={hero.actionTo}>{hero.actionLabel}</ButtonLink>
             )}
             {hero.secondaryLabel && hero.secondaryTo ? (
               classic ? (
                 <ButtonLink className="portal-cta" variant="secondary" size="lg" to={hero.secondaryTo}>{hero.secondaryLabel}</ButtonLink>
               ) : (
-                <Link className="btn-gem" to={hero.secondaryTo}>{hero.secondaryLabel}</Link>
+                <ButtonLink className="btn-gem" to={hero.secondaryTo}>{hero.secondaryLabel}</ButtonLink>
               )
             ) : null}
           </div>
@@ -280,7 +280,7 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
             <img src={themeImage('icons/scroll.png')} alt="" />
           </a>
         ) : null}
-      </section>
+      </ThemeHeroSurface>
     ),
     features: (
       <section className="section" id="features" key="features">
@@ -301,7 +301,7 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
             {classic ? (
               <ButtonLink className="portal-cta" variant="secondary" to={features.actionTo}>{features.actionLabel}</ButtonLink>
             ) : (
-              <Link className="btn-gem" to={features.actionTo}>{features.actionLabel}</Link>
+              <ButtonLink className="btn-gem" to={features.actionTo}>{features.actionLabel}</ButtonLink>
             )}
           </div>
         </div>
@@ -356,7 +356,7 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
             {classic ? (
               <ButtonLink className="portal-cta" variant="secondary" to={ranking.actionTo}>{ranking.actionLabel}</ButtonLink>
             ) : (
-              <Link className="btn-gem" to={ranking.actionTo}>{ranking.actionLabel}</Link>
+              <ButtonLink className="btn-gem" to={ranking.actionTo}>{ranking.actionLabel}</ButtonLink>
             )}
           </div>
         </div>
@@ -374,7 +374,7 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
             {classic ? (
               <ButtonLink className="portal-cta" variant="primary" to={cta.actionTo}>{cta.actionLabel}</ButtonLink>
             ) : (
-              <Link className="btn-gem" to={cta.actionTo}>{cta.actionLabel}</Link>
+              <ButtonLink className="btn-gem" to={cta.actionTo}>{cta.actionLabel}</ButtonLink>
             )}
           </div>
         </div>

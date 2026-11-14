@@ -45,6 +45,8 @@ Os componentes básicos publicam `data-theme-part` estável (`button`, `field`, 
 esses seletores para alterar a aparência, mas não devem esconder estados, mudar semântica
 ou substituir a interação implementada pelo componente.
 
+Para o hero de um renderer, reutilize `ThemeHeroSurface` em `components/themes/`: `as` preserva o elemento estrutural e o componente adiciona o vídeo do pacote ou o fallback interno sem reconstruir o layout. `enabled` respeita a desativação explícita da seção. Os três shells públicos usam `usePublicMenu` para foco, Escape, troca de rota e rolagem; `uniqueNavigation` combina links do tema e ações sem repetir destinos. A matriz `PublicTemplates.test.tsx` monta as rotas reais dos 20 layouts, o Classic e os dois aliases legados.
+
 ## Botões
 
 | Propriedade | Valores e finalidade |

@@ -204,3 +204,7 @@ html[data-pdl-loader-wordmark="off"] .global-loader__crest img {
     transition-duration: 120ms;
   }
 }
+.global-loader img:not([src]),
+html[data-pdl-loader-theme]:not([data-pdl-loader-theme="default"]) .global-loader img[src^="/theme/default/"] {
+  visibility: hidden;
+}

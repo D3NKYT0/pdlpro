@@ -1,11 +1,12 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 
 import { themeApi, type ApiTheme } from '../services/api'
 import { themeImage } from './assets'
 import { ThemeProvider, installedStylesheetHref, useTheme } from './ThemeProvider'
+import { ThemeHeroVideo } from '../components/ThemeHeroVideo'
 
 vi.mock('../services/domain/theme.service', () => ({ themeApi: { active: vi.fn() } }))
 
@@ -22,9 +23,16 @@ function Consumer() {
   return <span>{theme.name}|{themeImage('logo.png')}|{themeImage('missing.png')}</span>
 }
 
+function loadStylesheet(link: Element) {
+  // Browser resource boundary: jsdom does not download external stylesheets.
+  Object.defineProperty(link, 'sheet', { configurable: true, value: { cssRules: [{}] } })
+  fireEvent.load(link)
+}
+
 beforeEach(() => vi.mocked(themeApi.active).mockReset())
 afterEach(() => {
   cleanup()
+  vi.useRealTimers()
   localStorage.clear()
   document.getElementById('app-bootstrap-loader')?.remove()
   document.querySelectorAll('link[data-pdl-installed-theme]').forEach((link) => link.remove())
@@ -37,6 +45,64 @@ afterEach(() => {
   document.documentElement.removeAttribute('data-panel-density')
   document.documentElement.style.cssText = ''
   vi.restoreAllMocks()
+})
+
+it('mantém o loading na falha da API e tenta novamente sem exibir o Classic', async () => {
+  vi.useFakeTimers()
+  vi.mocked(themeApi.active).mockRejectedValueOnce(new Error('offline')).mockResolvedValueOnce({ ...valorem, stylesheet_url: null })
+  render(<ThemeProvider><Consumer /></ThemeProvider>)
+  await act(async () => {})
+  expect(screen.queryByText(/PDL Classic/)).not.toBeInTheDocument()
+  expect(screen.getByRole('status')).toBeInTheDocument()
+  await act(async () => { await vi.advanceTimersByTimeAsync(2000) })
+  expect(screen.getByText(/Valorem/)).toBeInTheDocument()
+})
+
+it('não libera a página quando o CSS do tema falha; tenta carregar novamente', async () => {
+  vi.mocked(themeApi.active).mockResolvedValue(valorem)
+  render(<ThemeProvider><Consumer /></ThemeProvider>)
+  await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme="valorem"]')).not.toBeNull())
+  fireEvent.error(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
+  await act(async () => {})
+  expect(screen.queryByText(/Valorem/)).not.toBeInTheDocument()
+  expect(screen.getByRole('status')).toBeInTheDocument()
+  fireEvent(window, new Event('pdl-theme-refresh'))
+  await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme="valorem"]')).not.toBeNull())
+  loadStylesheet(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
+  expect(await screen.findByText(/Valorem/)).toBeInTheDocument()
+})
+
+it('não libera a página após o timeout do CSS', async () => {
+  vi.useFakeTimers()
+  vi.mocked(themeApi.active).mockResolvedValue(valorem)
+  render(<ThemeProvider><Consumer /></ThemeProvider>)
+  await act(async () => {})
+  await act(async () => { await vi.advanceTimersByTimeAsync(5000) })
+  expect(screen.queryByText(/Valorem/)).not.toBeInTheDocument()
+  expect(screen.getByRole('status')).toBeInTheDocument()
+})
+
+it('mantém o loading quando o servidor devolve HTML ou CSS vazio com status de sucesso', async () => {
+  vi.mocked(themeApi.active).mockResolvedValue(valorem)
+  render(<ThemeProvider><Consumer /></ThemeProvider>)
+  await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme]')).not.toBeNull())
+  const link = document.querySelector('link[data-pdl-installed-theme]')!
+  Object.defineProperty(link, 'sheet', { configurable: true, value: { cssRules: [] } })
+  fireEvent.load(link)
+  await act(async () => {})
+  expect(screen.queryByText(/Valorem/)).not.toBeInTheDocument()
+  expect(screen.getByRole('status')).toBeInTheDocument()
+})
+
+it('preserva o tema atual se a atualização falhar', async () => {
+  vi.mocked(themeApi.active).mockResolvedValue({ ...valorem, stylesheet_url: null })
+  render(<ThemeProvider><Consumer /></ThemeProvider>)
+  await screen.findByText(/Valorem/)
+  vi.mocked(themeApi.active).mockRejectedValueOnce(new Error('offline'))
+  fireEvent(window, new Event('pdl-theme-refresh'))
+  await act(async () => {})
+  expect(screen.getByText(/Valorem/)).toBeInTheDocument()
+  expect(screen.queryByText(/PDL Classic/)).not.toBeInTheDocument()
 })
 
 it('versiona a folha instalada para não reusar CSS antigo no mesmo URL', () => {
@@ -99,7 +165,7 @@ it('carrega CSS e resolve somente os assets declarados pelo pacote', async () =>
     'href',
     '/media/themes/valorem/theme.css?v=1.0.0.bg16',
   )
-  fireEvent.load(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
+  loadStylesheet(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
   expect(await screen.findByText(/Valorem/)).toHaveTextContent('/media/themes/valorem/images/logo.png')
   expect(screen.getByText(/Valorem/)).toHaveTextContent('/theme/default/images/missing.png')
   expect(document.documentElement.dataset.pdlRenderer).toBe('portal-v1')
@@ -123,7 +189,7 @@ it('pinta o splash HTML com o brasão e o acento do tema ativo', async () => {
   })
   render(<ThemeProvider><Consumer /></ThemeProvider>)
   await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme="valorem"]')).not.toBeNull())
-  fireEvent.load(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
+  loadStylesheet(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
   await screen.findByText(/Valorem/)
   expect(document.querySelector('#app-bootstrap-loader img')).toHaveAttribute(
     'src',
@@ -156,7 +222,7 @@ it('injeta knobs de layout como CSS variables', async () => {
   })
   render(<ThemeProvider><Consumer /></ThemeProvider>)
   await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme="valorem"]')).not.toBeNull())
-  fireEvent.load(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
+  loadStylesheet(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
   await screen.findByText(/Valorem/)
   expect(document.documentElement.dataset.panelDensity).toBe('compact')
   expect(document.documentElement.style.getPropertyValue('--panel-sidebar-width')).toBe('300px')
@@ -193,7 +259,7 @@ it('restaura o favicon original ao voltar para o tema default', async () => {
 
   render(<ThemeProvider><Consumer /></ThemeProvider>)
   await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme="valorem"]')).not.toBeNull())
-  fireEvent.load(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
+  loadStylesheet(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
   await screen.findByText(/Valorem/)
   expect(document.querySelector('link[rel="icon"]')).toHaveAttribute(
     'href',
@@ -215,4 +281,15 @@ it('restaura o favicon original ao voltar para o tema default', async () => {
   expect(document.querySelector('meta[name="theme-color"]')).toHaveAttribute('content', '#0b0a08')
   expect(document.querySelector('link[data-pdl-installed-theme]')).toBeNull()
   expect(document.documentElement).not.toHaveAttribute('data-pdl-renderer')
+})
+
+it('atualiza o vídeo ao receber o refresh do seletor para o mesmo tema ativo', async () => {
+  const first = { ...valorem, stylesheet_url: null, assets: { 'images/video.mp4': '/media/first.mp4' } }
+  vi.mocked(themeApi.active).mockResolvedValueOnce(first).mockResolvedValueOnce({ ...first, assets: { 'images/video.mp4': '/media/second.mp4' } })
+  const { container } = render(<ThemeProvider><ThemeHeroVideo /></ThemeProvider>)
+  await waitFor(() => expect(container.querySelector('video')).toHaveAttribute('src', '/media/first.mp4'))
+  fireEvent(window, new Event('pdl-theme-refresh'))
+  await waitFor(() => expect(container.querySelector('video')).toHaveAttribute('src', '/media/second.mp4'))
+  expect(container.querySelector('video')).toHaveProperty('muted', true)
+  expect(container.querySelectorAll('video')).toHaveLength(1)
 })

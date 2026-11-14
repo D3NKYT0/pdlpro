@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import type { ThemeCatalogId, ThemePresentation } from '../../services/api'
 import { PdlHeroEmblem } from '../../components/PdlSymbol'
-import { ThemeHeroVideo } from '../../components/ThemeHeroVideo'
+import { ThemeHeroSurface } from '../../components/themes/ThemeHeroSurface'
 import { ButtonLink } from '../../components/ui/Button'
 import { LANDING_PATHS, useLandingPath } from '../../hooks/useLandingPath'
 import { formatDate } from '../../lib/formatters'
@@ -41,6 +41,7 @@ export function CatalogHomePage({
   templateId: ThemeCatalogId
 }) {
   const home = useTemplateHome(presentation, templateId)
+  const heroMediaEnabled = presentation.home.sections?.includes('hero') ?? true
   const landingPath = useLandingPath()
   const template = PUBLIC_TEMPLATES[templateId]
   const { t, hero, features, ranking, cta, newsContent, stats, pillars, has } = home
@@ -110,13 +111,13 @@ export function CatalogHomePage({
       <>
         <div className="tpl-spine">
           {has('hero') ? (
-            <section className="tpl-spine__banner">
+            <ThemeHeroSurface as="section" enabled={heroMediaEnabled}  className="tpl-spine__banner">
               <div className="tpl-spine__banner-copy">
                 {hero.kicker && hero.kicker !== hero.title ? <p className="tpl-kicker">{hero.kicker}</p> : null}
                 <h1>{hero.title}</h1>
                 <p>{hero.description}</p>
               </div>
-            </section>
+            </ThemeHeroSurface>
           ) : null}
           <div className="tpl-spine__grid">
             <nav className="tpl-spine__nav" aria-label={t('nav.main')}>{nav}</nav>
@@ -141,12 +142,12 @@ export function CatalogHomePage({
   } else if (templateId === 'ashenledger') {
     body = (
       <div className="tpl-ledger">
-        <section className="tpl-ledger__mast">
+        <ThemeHeroSurface as="section" enabled={heroMediaEnabled}  className="tpl-ledger__mast">
           <p className="tpl-ledger__date">{formatDate(new Date().toISOString())}</p>
           <p className="tpl-kicker">{hero.kicker || t('templates.gazette')}</p>
           <h1>{hero.title}</h1>
           <p>{hero.description}</p>
-        </section>
+        </ThemeHeroSurface>
         <div className="tpl-ledger__columns">
           <div className="tpl-ledger__main">
             {newsBlock}
@@ -164,7 +165,7 @@ export function CatalogHomePage({
     const siegeClock = !hero.countdownAt.startsWith('2099-01-01')
     const featureTitle = features.title === hero.title ? t('templates.reports') : features.title
     body = (
-      <div className="tpl-warroom">
+      <ThemeHeroSurface as="div" enabled={heroMediaEnabled}  className="tpl-warroom">
         <section className="tpl-war">
           <p className="tpl-kicker">{hero.kicker || t('templates.warRoom')}</p>
           <h1>{hero.title}</h1>
@@ -187,7 +188,7 @@ export function CatalogHomePage({
         {rankingBlock}
         {newsBlock}
         {ctaBlock}
-      </div>
+      </ThemeHeroSurface>
     )
   } else if (templateId === 'ironpatch') {
     const notes = (
@@ -197,7 +198,7 @@ export function CatalogHomePage({
     body = (
       <div className="tpl-launcher">
         {has('hero') ? (
-          <section className="tpl-launcher__hero">
+          <ThemeHeroSurface as="section" enabled={heroMediaEnabled}  className="tpl-launcher__hero">
             <div className="tpl-launcher__lead">
               {hero.kicker && hero.kicker !== hero.title && hero.kicker !== hero.description ? <p className="tpl-kicker">{hero.kicker}</p> : null}
               <h1>{hero.title}</h1>
@@ -208,7 +209,7 @@ export function CatalogHomePage({
               <h2>{t('templates.clientNotes')}</h2>
               {notes}
             </aside>
-          </section>
+          </ThemeHeroSurface>
         ) : null}
         {has('features') ? (
           <section className="tpl-block">
@@ -237,14 +238,14 @@ export function CatalogHomePage({
     const featureTitle = features.title === hero.title ? '' : features.title
     body = (
       <div className="tpl-fame">
-        <section className="tpl-hall">
+        <ThemeHeroSurface as="section" enabled={heroMediaEnabled}  className="tpl-hall">
           <SectionHead
             kicker={hallKicker}
             title={ranking.title}
             action={<ButtonLink variant="secondary" to={ranking.actionTo}>{ranking.actionLabel}</ButtonLink>}
           />
           {rankingBlock}
-        </section>
+        </ThemeHeroSurface>
         {statsBlock}
         {newsBlock}
         {has('features') ? (
@@ -265,11 +266,11 @@ export function CatalogHomePage({
     const chapterTitle = features.title === hero.title ? t('templates.chapters') : features.title
     body = (
       <div className="tpl-codex">
-        <header className="tpl-codex__open">
+        <ThemeHeroSurface as="header" enabled={heroMediaEnabled}  className="tpl-codex__open">
           <PdlHeroEmblem />
           <h1>{hero.title}</h1>
           <p>{hero.description}</p>
-        </header>
+        </ThemeHeroSurface>
         {statsBlock}
         {has('features') ? (
           <section className="tpl-block">
@@ -297,7 +298,7 @@ export function CatalogHomePage({
     const sameAct = cta.title === hero.title && cta.actionTo === hero.actionTo
     body = (
       <div className="tpl-gate">
-        <section className="tpl-split">
+        <ThemeHeroSurface as="section" enabled={heroMediaEnabled}  className="tpl-split">
           <article className="tpl-split__account">
             <h1>{hero.title}</h1>
             <p>{hero.description}</p>
@@ -310,7 +311,7 @@ export function CatalogHomePage({
               {hero.secondaryLabel || t('nav.download')}
             </ButtonLink>
           </article>
-        </section>
+        </ThemeHeroSurface>
         {has('features') ? (
           <section className="tpl-block">
             {features.title !== hero.title ? <SectionHead title={features.title} /> : null}
@@ -325,11 +326,11 @@ export function CatalogHomePage({
     body = (
       <div className="tpl-atlas">
         {has('hero') ? (
-          <header className="tpl-atlas__legend">
+          <ThemeHeroSurface as="header" enabled={heroMediaEnabled}  className="tpl-atlas__legend">
             <p className="tpl-kicker">{hero.kicker && hero.kicker !== hero.title ? hero.kicker : t('templates.realmMap')}</p>
             <h1>{hero.title}</h1>
             <p>{hero.description}</p>
-          </header>
+          </ThemeHeroSurface>
         ) : null}
         {has('features') ? <FeatureCards items={features.items} variant="regions" /> : null}
         {statsBlock}
@@ -347,11 +348,11 @@ export function CatalogHomePage({
     body = (
       <div className="tpl-select">
         {has('hero') ? (
-          <header className="tpl-select__prompt">
+          <ThemeHeroSurface as="header" enabled={heroMediaEnabled}  className="tpl-select__prompt">
             <p className="tpl-kicker">{hero.kicker && hero.kicker !== hero.title ? hero.kicker : t('templates.choosePath')}</p>
             <h1>{hero.title}</h1>
             <p>{hero.description}</p>
-          </header>
+          </ThemeHeroSurface>
         ) : null}
         {has('features') ? <FeatureCards items={features.items} variant="paths" /> : null}
         {creed.length ? (
@@ -381,11 +382,11 @@ export function CatalogHomePage({
     body = (
       <article className="tpl-manuscript">
         {has('hero') ? (
-          <header>
+          <ThemeHeroSurface as="header" enabled={heroMediaEnabled}>
             {hero.kicker && hero.kicker !== hero.title ? <p className="tpl-kicker">{hero.kicker}</p> : null}
             <h1>{hero.title}</h1>
             <p>{hero.description}</p>
-          </header>
+          </ThemeHeroSurface>
         ) : null}
         {chapters.map((item, index) => (
           <section key={item.title}>
@@ -406,8 +407,7 @@ export function CatalogHomePage({
     )
   } else if (templateId === 'obsidian') {
     body = (
-      <section className="tpl-void">
-        <ThemeHeroVideo />
+      <ThemeHeroSurface as="section" enabled={heroMediaEnabled} className="tpl-void">
         <div className="tpl-void__stage">
           <PdlHeroEmblem />
           <h1>{hero.title}</h1>
@@ -418,19 +418,19 @@ export function CatalogHomePage({
           </div>
         </div>
         {newsBlock}
-      </section>
+      </ThemeHeroSurface>
     )
   } else if (templateId === 'hearthspire') {
     const rules = (pillars?.items ?? []).filter((item) => item.title !== hero.title)
     body = (
       <div className="tpl-tavern">
-        <section className="tpl-tavern__board">
+        <ThemeHeroSurface as="section" enabled={heroMediaEnabled}  className="tpl-tavern__board">
           <p className="tpl-kicker">{t('templates.board')}</p>
           {newsBlock}
           {has('cta') && cta.title === hero.title ? (
             <ButtonLink to={cta.actionTo}>{cta.actionLabel}</ButtonLink>
           ) : null}
-        </section>
+        </ThemeHeroSurface>
         {has('features') ? (
           <section className="tpl-tavern__hall">
             {features.title !== hero.title ? <h2>{features.title}</h2> : null}
@@ -463,13 +463,13 @@ export function CatalogHomePage({
     body = (
       <div className="tpl-court">
         {has('hero') ? (
-          <header className="tpl-court__crest">
+          <ThemeHeroSurface as="header" enabled={heroMediaEnabled}  className="tpl-court__crest">
             <PdlHeroEmblem />
             <p className="tpl-kicker">{hero.kicker}</p>
             <h1>{hero.title}</h1>
             <p>{hero.description}</p>
             <ButtonLink to={hero.actionTo}>{hero.actionLabel}</ButtonLink>
-          </header>
+          </ThemeHeroSurface>
         ) : null}
         <section className="tpl-court__decrees">
           <SectionHead kicker={t('templates.decrees')} title={newsContent.title} />
@@ -482,7 +482,7 @@ export function CatalogHomePage({
     )
   } else if (templateId === 'lampmarket') {
     body = (
-      <div className="tpl-bazaar">
+      <ThemeHeroSurface as="div" enabled={heroMediaEnabled}  className="tpl-bazaar">
         {has('features') ? (
           <section className="tpl-block">
             <SectionHead kicker={features.subtitle} title={features.title} />
@@ -492,15 +492,15 @@ export function CatalogHomePage({
         {ctaBlock}
         {newsBlock}
         {rankingBlock}
-      </div>
+      </ThemeHeroSurface>
     )
   } else if (templateId === 'bracket') {
     body = (
       <>
-        <section className="tpl-arena">
+        <ThemeHeroSurface className="tpl-arena" enabled={heroMediaEnabled}>
           <SectionHead kicker={ranking.subtitle || t('templates.arenaRules')} title={ranking.title} />
           {rankingBlock}
-        </section>
+        </ThemeHeroSurface>
         {has('features') ? <FeatureCards items={features.items} /> : null}
         {has('hero') ? (
           <section className="tpl-arena__call">
@@ -516,14 +516,13 @@ export function CatalogHomePage({
     body = (
       <>
         {has('hero') ? (
-          <section className="tpl-theater">
-            <ThemeHeroVideo />
-            <div className="tpl-theater__copy">
+          <ThemeHeroSurface as="section" enabled={heroMediaEnabled} className="tpl-theater">
+                <div className="tpl-theater__copy">
               <h1>{hero.title}</h1>
               <p>{hero.description}</p>
               <ButtonLink to={hero.actionTo}>{hero.actionLabel}</ButtonLink>
             </div>
-          </section>
+          </ThemeHeroSurface>
         ) : null}
         <div className="tpl-theater__row">
           {newsBlock}
@@ -537,11 +536,11 @@ export function CatalogHomePage({
     const steps = features.items.slice(0, 3)
     body = (
       <>
-        <header className="tpl-path__intro">
+        <ThemeHeroSurface as="header" enabled={heroMediaEnabled}  className="tpl-path__intro">
           <p className="tpl-kicker">{t('templates.startPath')}</p>
           <h1>{hero.title}</h1>
           <p>{hero.description}</p>
-        </header>
+        </ThemeHeroSurface>
         <ol className="tpl-path">
           {steps.map((item, index) => (
             <li key={item.title}>
@@ -559,11 +558,11 @@ export function CatalogHomePage({
   } else if (templateId === 'watchfire') {
     body = (
       <>
-        <section className="tpl-vigil" aria-label={t('club.statsAria')}>
+        <ThemeHeroSurface as="section" enabled={heroMediaEnabled}  className="tpl-vigil" aria-label={t('club.statsAria')}>
           <p className="tpl-kicker">{t('templates.watch')}</p>
           {statsBlock}
           {has('hero') ? <p className="tpl-vigil__line">{hero.description}</p> : null}
-        </section>
+        </ThemeHeroSurface>
         {has('hero') ? (
           <div className="tpl-vigil__cta">
             <ButtonLink to={hero.actionTo}>{hero.actionLabel}</ButtonLink>

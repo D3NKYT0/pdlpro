@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react'
 import { themeImage } from '../theme/assets'
+import { useTheme } from '../theme/ThemeProvider'
 
 const MOBILE_QUERY = '(max-width: 768px)'
 
-function heroVideoSrc(mobile: boolean) {
-  return themeImage(mobile ? 'video-mobile.mp4' : 'video.mp4')
-}
-
-function heroPosterSrc(mobile: boolean) {
-  return themeImage(mobile ? 'video-mobile-poster.jpg' : 'video-poster.jpg')
-}
-
 /** Fundo animado do hero: landscape no desktop e versão retrato no mobile. */
 export function ThemeHeroVideo() {
+  const theme = useTheme()
   const [mobile, setMobile] = useState(() => window.matchMedia?.(MOBILE_QUERY).matches ?? false)
-  const [src, setSrc] = useState(() => heroVideoSrc(mobile))
-  const poster = heroPosterSrc(mobile)
+  const desktop = theme.assets?.['images/video.mp4'] || themeImage('video.mp4')
+  const mobileSource = theme.assets?.['images/video-mobile.mp4'] || (theme.assets?.['images/video.mp4'] ? desktop : themeImage('video-mobile.mp4'))
+  const requested = mobile ? mobileSource : desktop
+  const posterPath = mobile ? 'video-mobile-poster.jpg' : 'video-poster.jpg'
+  const poster = theme.assets?.[`images/${posterPath}`] || themeImage(posterPath)
+  const [failedSources, setFailedSources] = useState<Set<string>>(() => new Set())
+  const src = !failedSources.has(requested) ? requested : mobile && !failedSources.has(desktop) ? desktop : undefined
+
+  useEffect(() => setFailedSources(new Set()), [requested, desktop])
 
   useEffect(() => {
     const media = window.matchMedia?.(MOBILE_QUERY)
@@ -23,7 +24,6 @@ export function ThemeHeroVideo() {
     const sync = () => {
       const next = media.matches
       setMobile(next)
-      setSrc(heroVideoSrc(next))
     }
     sync()
     media.addEventListener('change', sync)
@@ -33,7 +33,7 @@ export function ThemeHeroVideo() {
   return (
     <div className="video" aria-hidden="true">
       <video
-        key={src}
+        key={src ?? poster}
         autoPlay
         muted
         loop
@@ -42,17 +42,8 @@ export function ThemeHeroVideo() {
         poster={poster}
         src={src}
         onError={(event) => {
-          const el = event.currentTarget
-          if (src.includes('video-mobile')) {
-            const fallback = themeImage('video.mp4')
-            setSrc(fallback)
-            el.src = fallback
-            el.load()
-            void el.play().catch(() => undefined)
-            return
-          }
-          // Mantém o poster visível se o MP4 falhar.
-          el.removeAttribute('src')
+          const failed = event.currentTarget.getAttribute('src')
+          if (failed) setFailedSources(previous => new Set([...previous, failed]))
         }}
       />
     </div>

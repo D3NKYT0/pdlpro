@@ -55,6 +55,11 @@ export default defineConfig({
       ignored: ['**/public/item-icons/**', '**/public/skill-icons/**'],
     },
     proxy: {
+      '/robots.txt': {
+        target: process.env.PDL_API_TARGET || (process.env.DOCKER === 'true' ? 'http://backend:8000' : 'http://127.0.0.1:8000'),
+        changeOrigin: true,
+        rewrite: () => '/api/v1/public/server/robots/',
+      },
       '/api': {
         target: process.env.PDL_API_TARGET || (process.env.DOCKER === 'true' ? 'http://backend:8000' : 'http://127.0.0.1:8000'),
         changeOrigin: true,

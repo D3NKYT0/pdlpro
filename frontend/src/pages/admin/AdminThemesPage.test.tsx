@@ -9,6 +9,7 @@ import toast from 'react-hot-toast'
 
 import { themeApi, type ApiTheme } from '../../services/api'
 import { AdminThemesPage } from './AdminThemesPage'
+import { PUBLIC_TEMPLATE_LIST } from '../../theme/templates'
 
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 vi.mock('../../services/domain/theme.service', () => ({ themeApi: { list: vi.fn(), install: vi.fn(), activate: vi.fn(), setTemplate: vi.fn(), remove: vi.fn() } }))
@@ -105,4 +106,25 @@ it('oferece retry quando a listagem falha', async () => {
   expect(await screen.findByRole('alert')).toHaveTextContent('Catálogo indisponível')
   await user.click(screen.getByRole('button', { name: 'Tentar novamente' }))
   expect(await screen.findByText('PDL Classic')).toBeVisible()
+})
+
+
+it.each(PUBLIC_TEMPLATE_LIST.flatMap(layout => [
+  { layout, builtin: true }, { layout, builtin: false },
+]))('aplica $layout.id pelo seletor no tema builtin=$builtin e atualiza o site ativo', async ({ layout, builtin }) => {
+  const active = { ...(builtin ? defaultTheme : valorem), active: true, selected_template: null }
+  vi.mocked(themeApi.list).mockResolvedValue([active])
+  vi.mocked(themeApi.setTemplate).mockImplementation(async () => {
+    const updated = { ...active, selected_template: layout.id }
+    vi.mocked(themeApi.list).mockResolvedValue([updated])
+    return updated
+  })
+  const dispatch = vi.spyOn(window, 'dispatchEvent')
+  const user = mount()
+  const selector = await screen.findByRole('combobox', { name: 'Template da landing' })
+  await user.click(selector)
+  await user.click(screen.getByRole('option', { name: layout.name }))
+  await waitFor(() => expect(themeApi.setTemplate).toHaveBeenCalledWith(active, layout.id))
+  await waitFor(() => expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: 'pdl-theme-refresh' })))
+  expect(selector).toHaveTextContent(layout.name)
 })

@@ -1,7 +1,7 @@
 import { useResourceControls } from '../../contexts/ResourceControlsContext'
 import { serverStatVisible } from '../../lib/server-display'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react'
+import { useMemo, useState, type CSSProperties, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CircleUserRound } from 'lucide-react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
@@ -16,9 +16,10 @@ import { rankingPortrait } from '../rankings/rankingsFormat'
 import { themeAsset, themeImage } from '../../theme/assets'
 import { useTheme } from '../../theme/ThemeProvider'
 import { extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
-import { isNavigationItemEnabled } from '../../lib/navigation'
+import { isNavigationItemEnabled, uniqueNavigation } from '../../lib/navigation'
+import { usePublicMenu } from '../../hooks/usePublicMenu'
 import { PdlHeroEmblem, PdlSymbol } from '../PdlSymbol'
-import { ThemeHeroVideo } from '../ThemeHeroVideo'
+import { ThemeHeroSurface } from './ThemeHeroSurface'
 import { ButtonLink } from '../ui/Button'
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { ErrorNotice, LoadingState } from '../ui/Feedback'
@@ -49,7 +50,7 @@ export function ClubPublicLayout({ presentation }: { presentation: ThemePresenta
   const landingPath = useLandingPath()
   const theme = useTheme()
   const packedCircle = theme.assets['images/logo-circle.png']
-  const [menuOpen, setMenuOpen] = useState(false)
+  const { menuOpen, setMenuOpen, menuId, menuRef } = usePublicMenu(pathname)
   const resources = useQuery({
     queryKey: ['resources'],
     queryFn: programsApi.resources,
@@ -68,14 +69,15 @@ export function ClubPublicLayout({ presentation }: { presentation: ThemePresenta
   ]
   const downloadsEnabled = !resources.data?.some((item) => item.code === 'downloads' && !item.enabled)
 
-  useEffect(() => setMenuOpen(false), [pathname])
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [menuOpen])
+
+  const mobileNavigation = uniqueNavigation([...navigation,
+    { to: user ? '/panel' : '/login', label: user ? t('nav.myAccount') : t('nav.signIn') },
+    ...(!user ? [{ to: '/register', label: t('portal.createAccount') }] : []),
+    ...(downloadsEnabled ? [{ to: '/downloads', label: t('nav.download') }] : []),
+  ])
 
   return (
-    <div className="club-shell" data-theme-surface="public" data-theme-renderer="club-v1">
+    <div className="club-shell" data-theme-surface="public" data-theme-renderer={presentation.renderer}>
       <header className="club-header">
         <div className="club-header__inner club-wrap">
           <nav className="club-nav" aria-label={t('nav.main')}>
@@ -91,21 +93,18 @@ export function ClubPublicLayout({ presentation }: { presentation: ThemePresenta
               <CircleUserRound aria-hidden="true" />
               <span>{user ? t('nav.myAccount') : t('nav.signIn')}</span>
             </Link>
-            {downloadsEnabled ? <Link className="download" to="/downloads">{t('nav.download')}</Link> : null}
-            <button className="club-hamburger" type="button" aria-label={t('nav.openMenu')} aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
+            {downloadsEnabled && !navigation.some(item => item.to === '/downloads') ? <Link className="download" to="/downloads">{t('nav.download')}</Link> : null}
+            <button className="club-hamburger" type="button" aria-label={t('nav.openMenu')} aria-expanded={menuOpen} aria-controls={menuId} onClick={() => setMenuOpen(true)}>
               <span /><span /><span />
             </button>
           </div>
         </div>
       </header>
 
-      <div className={`club-mobile${menuOpen ? ' is-open' : ''}`} hidden={!menuOpen}>
+      <div className={`club-mobile${menuOpen ? ' is-open' : ''}`} hidden={!menuOpen} id={menuId} ref={menuRef} role="dialog" aria-modal={menuOpen || undefined} aria-label={t('portal.mobileNav')}>
         <button className="club-mobile__close" type="button" aria-label={t('nav.closeMenu')} onClick={() => setMenuOpen(false)}>×</button>
         <nav aria-label={t('portal.mobileNav')}>
-          {navigation.map((item) => <Link key={`${item.to}-${item.label}`} to={item.to}>{item.label}</Link>)}
-          <Link to={user ? '/panel' : '/login'}>{user ? t('nav.myAccount') : t('nav.signIn')}</Link>
-          {downloadsEnabled ? <Link to="/downloads">{t('nav.download')}</Link> : null}
-          {!user ? <Link to="/register">{t('portal.createAccount')}</Link> : null}
+          {mobileNavigation.map(item => <Link key={item.to} to={item.to} onClick={() => setMenuOpen(false)}>{item.label}</Link>)}
         </nav>
       </div>
 
@@ -192,8 +191,7 @@ export function ClubHomePage({ presentation }: { presentation: ThemePresentation
 
   const sectionNodes: Partial<Record<ThemeHomeSection, ReactNode>> = {
     hero: (
-      <section className="h club-hero" key="hero">
-        <ThemeHeroVideo />
+      <ThemeHeroSurface className="h club-hero" key="hero">
         <div className="h-logo">
           <PdlHeroEmblem />
         </div>
@@ -212,7 +210,7 @@ export function ClubHomePage({ presentation }: { presentation: ThemePresentation
             <img src={themeImage('icons/scroll.png')} alt="" />
           </a>
         </div>
-      </section>
+      </ThemeHeroSurface>
     ),
     stats: stats ? (
       <section className="club-stats" id="club-stats" key="stats" aria-label={t('club.statsAria')}>

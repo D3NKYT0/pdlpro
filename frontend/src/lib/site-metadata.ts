@@ -56,15 +56,15 @@ export function resolveHomeIdentity(
 
 export function resolveSiteMetadata(
   info: ApiServerInfo | undefined,
-  theme: Pick<ApiTheme, 'assets' | 'metadata'>,
+  theme: Pick<ApiTheme, 'assets' | 'metadata'> & Partial<Pick<ApiTheme, 'builtin' | 'name' | 'description'>>,
   env: { discordUrl?: string; trailerYoutubeId?: string } = {},
 ): ResolvedSiteMetadata {
   const metadata = theme.metadata ?? emptyThemeMetadata()
   const site = metadata.site
   const seo = metadata.seo
   const social = metadata.social
-  const name = firstText(info?.name, site.name)
-  const description = firstText(info?.description, site.description)
+  const name = firstText(info?.name, site.name, theme.builtin === false ? theme.name : '')
+  const description = firstText(info?.description, site.description, theme.builtin === false ? theme.description : '')
   const seoTitle = firstText(info?.seo_title, seo.title, site.title, name)
   const seoDescription = firstText(info?.seo_description, seo.description, description)
   const ogImage = firstText(
@@ -98,6 +98,7 @@ export function emptyThemeMetadata(): ThemeSiteMetadata {
 
 export function applyDocumentMetadata(meta: ResolvedSiteMetadata) {
   if (typeof document === 'undefined') return
+  if (meta.seoTitle) document.head.querySelector('meta[data-site-metadata-pending]')?.remove()
   if (meta.seoTitle) document.title = meta.seoTitle
   setMeta('name', 'title', meta.seoTitle)
   setMeta('name', 'description', meta.seoDescription)

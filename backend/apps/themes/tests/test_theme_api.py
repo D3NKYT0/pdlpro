@@ -9,6 +9,10 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework.test import APIClient
 
 from apps.themes.admin import ThemePackageAdminForm
+from apps.themes.application.template_catalog import (
+    SUPPORTED_RENDERERS,
+    resolve_renderer,
+)
 from apps.themes.infrastructure.models import ThemePackage
 
 User = get_user_model()
@@ -752,6 +756,33 @@ def test_presentation_rejects_duplicate_or_unknown_sections(api, admin, tmp_path
     assert ThemePackage.objects.count() == 0
 
 
+@pytest.mark.django_db
+def test_active_manifest_identity_reaches_head_and_robots_without_metadata_file(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    settings.PROJECT_TITLE = "PDL PRO"
+    settings.SITE_SEO_TITLE = ""
+    settings.SITE_SEO_DESCRIPTION = ""
+    api.force_authenticate(admin)
+    response = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile("nightmare.zip", theme_zip(manifest_overrides={
+            "name": "L2 Nightmare", "description": "O pesadelo começa",
+        }), content_type="application/zip")},
+        format="multipart",
+    )
+    assert response.status_code == 201, response.data
+    assert api.post(f"/api/v1/staff/themes/{response.data['package_id']}/activate/").status_code == 200
+    api.force_authenticate(None)
+    info = api.get("/api/v1/public/server/info/").data
+    assert info["name"] == info["seo_title"] == "L2 Nightmare"
+    assert info["seo_description"] == "O pesadelo começa"
+    for path in ("metadata", "robots"):
+        public = api.get(f"/api/v1/public/server/{path}/")
+        assert public.status_code == 200
+        assert "L2 Nightmare" in public.content.decode()
+        assert "PDL PRO" not in public.content.decode()
+
+
 def _site_metadata():
     return {
         "schemaVersion": 1,
@@ -865,3 +896,37 @@ def test_metadata_contract_is_enforced(api, admin, tmp_path, settings, archive, 
     assert response.status_code == 400
     assert message.lower() in response.data["message"].lower()
     assert ThemePackage.objects.count() == 0
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("renderer", SUPPORTED_RENDERERS)
+@pytest.mark.parametrize("installed", [False, True])
+def test_every_template_choice_is_published_for_classic_and_installed_themes(
+    api, admin, tmp_path, settings, renderer, installed,
+):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    package_id = "default"
+    if installed:
+        created = api.post(
+            "/api/v1/staff/themes/",
+            {"package": SimpleUploadedFile("plain.zip", theme_zip(), content_type="application/zip")},
+            format="multipart",
+        )
+        assert created.status_code == 201, created.data
+        package_id = created.data["package_id"]
+        activated = api.post(f"/api/v1/staff/themes/{package_id}/activate/")
+        assert activated.status_code == 200, activated.data
+    endpoint = f"/api/v1/staff/themes/{package_id}/template/"
+    for _ in range(2):
+        response = api.post(endpoint, {"template": renderer}, format="json")
+        assert response.status_code == 200, response.data
+        assert response.data["selected_template"] == resolve_renderer(renderer)
+    api.force_authenticate(None)
+    public = api.get("/api/v1/public/theme/")
+    assert public.status_code == 200
+    assert public.data["presentation"]["renderer"] == resolve_renderer(renderer)
+    assert public.data["selected_template"] == resolve_renderer(renderer)
+    assert public.data["id"] == ("valorem" if installed else "default")
+    assert "images/video.mp4" not in public.data["assets"]
+    assert ThemePackage.objects.count() == (1 if installed else 0)

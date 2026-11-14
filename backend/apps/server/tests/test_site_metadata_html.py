@@ -60,3 +60,38 @@ def test_html_metadata_escapes_configured_markup_and_uses_absolute_default_image
 @pytest.mark.django_db
 def test_html_metadata_rejects_writes():
     assert APIClient().post("/api/v1/public/server/metadata/", {}).status_code == 405
+
+
+@pytest.mark.django_db
+def test_project_identity_is_used_for_seo_without_separate_seo_fields(settings):
+    settings.PROJECT_TITLE = "PDL PRO"
+    settings.SITE_SEO_TITLE = ""
+    settings.SITE_SEO_DESCRIPTION = ""
+    IndexConfig.objects.create(name="L2 Nightmare", description="O pesadelo começa", is_active=True)
+    response = APIClient().get("/api/v1/public/server/metadata/")
+    html = response.content.decode()
+    meta = MetadataParser(html).meta
+    assert "<title>L2 Nightmare</title>" in html
+    assert meta["description"] == "O pesadelo começa"
+    assert "PDL PRO" not in html
+
+
+@pytest.mark.django_db
+def test_robots_uses_current_project_identity_and_plain_text():
+    row = IndexConfig.objects.create(name="Nightmare\nDisallow: /", description="Servidor Nightmare", is_active=True)
+    api = APIClient()
+    response = api.get("/api/v1/public/server/robots/", HTTP_ACCEPT="text/plain")
+    assert response.status_code == 200
+    assert response["Content-Type"].startswith("text/plain")
+    body = response.content.decode()
+    assert "# Nightmare Disallow: /\n" in body
+    assert "# Servidor Nightmare\n" in body
+    assert "User-agent: *\nAllow: /\n" in body
+    assert "\nDisallow: /\n" not in body
+    assert "PDL PRO" not in body
+    assert "no-store" in response["Cache-Control"]
+    row.name = "Novo projeto"
+    row.save()
+    assert "# Novo projeto" in api.get("/api/v1/public/server/robots/").content.decode()
+    assert api.head("/api/v1/public/server/robots/").status_code == 200
+    assert api.post("/api/v1/public/server/robots/", {}).status_code == 405

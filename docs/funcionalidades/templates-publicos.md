@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Temas](temas.md) · [Extensões](../arquitetura/extensoes.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 14 de novembro de 2026
 
 O `presentation.renderer` do tema ZIP **escolhe** um layout do catálogo. Não cria um
 layout novo. Os 20 nomes abaixo são React homologado no core: o pacote manda textos,
@@ -13,6 +13,12 @@ rotas e artes; o ZIP continua sem HTML/JS.
 
 Layout que nenhum destes cobre (outro casco em React) continua sendo
 [extensão de cliente](../arquitetura/extensoes.md) — não um 21º renderer “pra galera”.
+
+## Vídeo e navegação
+
+Todos os layouts reproduzem vídeo na abertura, sem alterar a composição selecionada. O asset `images/video.mp4` do pacote tem prioridade sobre o vídeo interno, também usado pelo PDL Classic. Uma lista explícita de seções precisa incluir `hero`; sem lista, a abertura animada permanece ativa. Consulte [Vídeo em todos os layouts](temas.md#vídeo-em-todos-os-layouts) para fallback, enquadramento e atualização da SPA. Os dois aliases legados usam os mesmos componentes de seus layouts canônicos.
+
+Os menus compartilham deduplicação por destino, diálogo com foco contido, fechamento por Escape/rota e restauração de rolagem. O navegador compacto aparece antes que os controles do cabeçalho se sobreponham. Cada layout mantém sua marca, posição de navegação e organização das seções.
 
 ## Como escolher
 

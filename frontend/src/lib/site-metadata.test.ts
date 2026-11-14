@@ -99,3 +99,15 @@ it('aplica title e Open Graph no documento', () => {
   expect(document.querySelector('meta[name="twitter:title"]')?.getAttribute('content')).toBe('Packaged OG')
   expect(document.querySelector('meta[name="twitter:description"]')?.getAttribute('content')).toBe('OG desc')
 })
+
+it('usa o manifesto do tema enquanto a API de informações está pendente e libera somente o noindex provisório', () => {
+  document.head.insertAdjacentHTML('beforeend', '<meta name="robots" content="noindex" data-site-metadata-pending /><meta name="googlebot" content="noarchive" />')
+  const meta = resolveSiteMetadata(undefined, { ...theme, metadata: null })
+  expect(meta.seoTitle).toBe('Packaged')
+  expect(meta.seoDescription).toBe('Pacote visual')
+  applyDocumentMetadata(meta)
+  expect(document.title).toBe('Packaged')
+  expect(document.head.querySelector('[data-site-metadata-pending]')).toBeNull()
+  expect(document.head.querySelector('meta[name="googlebot"]')?.getAttribute('content')).toBe('noarchive')
+  document.head.querySelector('meta[name="googlebot"]')?.remove()
+})

@@ -41,7 +41,7 @@
     var raw = localStorage.getItem('pdl.loaderChrome')
     if (!raw) return
     var chrome = JSON.parse(raw)
-    if (!chrome || !THEME_ID.test(chrome.id) || !isSymbol(chrome.symbol)) return
+    if (!chrome || chrome.id === 'default' || !THEME_ID.test(chrome.id) || !isSymbol(chrome.symbol)) return
     if (!isColor(chrome.accent) || !isColor(chrome.accentBright) || !isColor(chrome.background)) return
     var root = document.documentElement
     root.style.setProperty('--loader-accent', chrome.accent)
