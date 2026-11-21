@@ -48,6 +48,30 @@ def test_public_catalog_uses_configured_xml_without_game_connection(custom_catal
 
 
 @pytest.mark.django_db
+@pytest.mark.parametrize(("dialect", "available"), [("eternity", True), (" ETERNITY ", True), ("lucerav2", False)])
+def test_public_catalog_exposes_imported_item_icons_for_eternity(settings, dialect, available):
+    settings.LINEAGE_ITEM_XML_DIR = ""
+    settings.LINEAGE_QUERY_MODULE = dialect
+    get_item_catalog.cache_clear()
+    try:
+        response = APIClient().get("/api/v1/public/items/catalog/")
+    finally:
+        get_item_catalog.cache_clear()
+
+    assert response.status_code == 200
+    rows = {row["id"]: row for row in response.data["items"]}
+    if available:
+        talisman = rows["39634"]
+        assert talisman["name"] == "Venir's Talisman"
+        assert talisman["icon_url"] == "/item-icons/39634.jpg"
+        assert talisman["tradeable"] is False
+        assert rows["17290"]["name"] == "Requiem Shaper"
+        assert rows["17290"]["icon_url"] == "/item-icons/17290.jpg"
+    else:
+        assert "39634" not in rows
+
+
+@pytest.mark.django_db
 def test_response_adapter_preserves_values_and_never_mutates_stored_payload(custom_catalog):
     catalog = LineageItemCatalogAdapter()
     row = {"id": str(uuid4()), "item_id": 57, "item_name": "Old saved name", "quantity": 9007199254740993,

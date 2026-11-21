@@ -1,0 +1,1023 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <armor id="29000" name="Scorpio Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sco_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29001" name="Scorpio Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sco_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29002" name="Scorpio Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sco_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29003" name="Scorpio Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sco_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29004" name="Scorpio Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sco_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29005" name="Scorpio Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sco_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29006" name="Scorpio Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sco_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29007" name="Scorpio Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sco_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29008" name="Scorpio Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sco_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29009" name="Aquarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29010" name="Aquarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29011" name="Aquarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29012" name="Aquarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29013" name="Aquarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29014" name="Aquarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29015" name="Aquarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29016" name="Aquarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29017" name="Aquarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29018" name="Aquarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29019" name="Aquarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29020" name="Aquarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29021" name="Pisces Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29022" name="Pisces Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29023" name="Pisces Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29024" name="Pisces Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29025" name="Pisces Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29026" name="Pisces Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29027" name="Pisces Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29028" name="Pisces Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29029" name="Pisces Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29030" name="Pisces Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29031" name="Pisces Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29032" name="Pisces Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29033" name="Sagittarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29034" name="Sagittarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29035" name="Sagittarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29036" name="Sagittarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29037" name="Sagittarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29038" name="Sagittarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29039" name="Sagittarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29040" name="Sagittarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29041" name="Sagittarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29042" name="Sagittarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29043" name="Sagittarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29044" name="Sagittarius Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29045" name="Cancer Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29046" name="Cancer Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29047" name="Cancer Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29048" name="Cancer Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29049" name="Cancer Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29050" name="Cancer Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29051" name="Cancer Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29052" name="Cancer Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29053" name="Cancer Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29054" name="Cancer Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29055" name="Cancer Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29056" name="Cancer Agathion Charm From the Star">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29057" name="Sayha's Talisman Stage 1">
+    <set name="icon" value="icon.bm_sayhas_talisman" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="29058" name="Sayha's Talisman Stage 2">
+    <set name="icon" value="icon.bm_sayhas_talisman" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="29059" name="Sayha's Talisman Stage 3">
+    <set name="icon" value="icon.bm_sayhas_talisman" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="29060" name="Sayha's Talisman Stage 4">
+    <set name="icon" value="icon.bm_sayhas_talisman" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="29061" name="Sayha's Talisman Stage 5">
+    <set name="icon" value="icon.bm_sayhas_talisman" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="29062" name="Sayha's Talisman Stage 6">
+    <set name="icon" value="icon.bm_sayhas_talisman" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="29063" name="Sayha's Talisman Stage 7">
+    <set name="icon" value="icon.bm_sayhas_talisman" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="29064" name="Sayha's Talisman Stage 8">
+    <set name="icon" value="icon.bm_sayhas_talisman" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="29065" name="Sayha's Talisman Stage 9">
+    <set name="icon" value="icon.bm_sayhas_talisman" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="29066" name="Sayha's Talisman Stage 10">
+    <set name="icon" value="icon.bm_sayhas_talisman" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <etcitem id="29067" name="Sayha's Talisman Pack">
+    <set name="icon" value="icon.bm_sayhas_talisman_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29068" name="Sayha's Talisman Stage 7 Pack">
+    <set name="icon" value="icon.bm_sayhas_talisman_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29069" name="Sayha's Talisman Stage 8 Pack">
+    <set name="icon" value="icon.bm_sayhas_talisman_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29070" name="Sayha's Talisman Stage 9 Pack">
+    <set name="icon" value="icon.bm_sayhas_talisman_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29071" name="Sayha's Talisman Stage 10 Pack">
+    <set name="icon" value="icon.bm_sayhas_talisman_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29072" name="Fortune Talisman Pack">
+    <set name="icon" value="icon.bm_pendant_pve_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29073" name="Mother Tree's Blessed Herbs">
+    <set name="icon" value="BranchIcon.Icon.etc_g_bonus_herb_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29074" name="Jack O'Lantern">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29075" name="Halloween Gift">
+    <set name="icon" value="icon.event_halloween_king_pumpkini00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29076" name="Halloween Candy">
+    <set name="icon" value="BranchSys.br_hallowinday_candy_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29077" name="Talisman - Abundance Pack">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="29078" name="Greater Vital Stone">
+    <set name="icon" value="icon.bm_jewel_vital_high_lv1_lavianrose" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <etcitem id="29079" name="Greater Vital Stone Box\r\n">
+    <set name="icon" value="icon.etc_bm_jewelbox_vital" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29080" name="Ultimate Jewelry Box">
+    <set name="icon" value="icon.bm_sayha_blessed_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="29081" name="Dimensional Talisman - Attack Attribute">
+    <set name="icon" value="icon.npoint_talisman_stat" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <etcitem id="29082" name="Dimensional Talisman - Attack Attribute Pack (30-day)">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="29083" name="Virgo Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_virgo_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29084" name="Capricorn Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_capr_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29085" name="Libra Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_lib_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29086" name="Aries Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_aries_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29087" name="Taurus Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_tau_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29088" name="Leo Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_leo_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29089" name="Gemini Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_gem_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29090" name="Scorpio Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_sco_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29091" name="Aquarius Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29092" name="Pisces Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29093" name="Sagittarius Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29094" name="Cancer Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29095" name="Virgo Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_virgo_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29096" name="Capricorn Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_capr_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29097" name="Libra Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_lib_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29098" name="Aries Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_aries_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29099" name="Taurus Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_tau_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29100" name="Leo Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_leo_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29101" name="Gemini Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_gem_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29102" name="Scorpio Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_sco_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29103" name="Aquarius Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_aqu_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29104" name="Pisces Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_pis_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29105" name="Sagittarius Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_sag_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <armor id="29106" name="Cancer Agathion Charm - Stage 1">
+    <set name="icon" value="BranchIcon.icon.g_bm_can_agathion_charm" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <etcitem id="29107" name="Virgo Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29108" name="Virgo Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29109" name="Capricorn Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29110" name="Capricorn Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29111" name="Libra Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29112" name="Libra Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29113" name="Aries Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29114" name="Aries Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29115" name="Taurus Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29116" name="Taurus Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29117" name="Leo Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29118" name="Leo Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29119" name="Gemini Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29120" name="Gemini Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29121" name="Scorpio Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29122" name="Scorpio Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29123" name="Aquarius Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29124" name="Aquarius Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29125" name="Pisces Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29126" name="Pisces Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29127" name="Sagittarius Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29128" name="Sagittarius Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29129" name="Cancer Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29130" name="Cancer Agathion Charm Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29131" name="Matchstick">
+    <set name="icon" value="BranchIcon.icon.g_event_match_body" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29132" name="Match Head">
+    <set name="icon" value="BranchIcon.icon.g_event_match_head" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29133" name="Well-made Matchstick">
+    <set name="icon" value="BranchIcon.icon.g_event_match" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29134" name="Powerful Matchstick">
+    <set name="icon" value="BranchIcon.icon.g_event_white_match" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29135" name="Bonfire">
+    <set name="icon" value="icon.etc_torchlight_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29136" name="Regular Dish">
+    <set name="icon" value="icon.etc_food_dish_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29137" name="Very Delicious Dish">
+    <set name="icon" value="BranchIcon.icon.g_event_excellent_cuisine" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29138" name="Match Girls' Gift">
+    <set name="icon" value="icon.etc_pouch_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29139" name="Match Girls' Gratitude">
+    <set name="icon" value="icon.etc_candle_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29140" name="Cooking Ingredient">
+    <set name="icon" value="icon.etc_meat_of_monstereye_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29141" name="Freya's Charisma Potion">
+    <set name="icon" value="icon.bm_freya_charisma_potion1" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29142" name="Freya's Charisma Potion">
+    <set name="icon" value="icon.bm_freya_charisma_potion1" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="29143" name="Rudolph's Nose">
+    <set name="icon" value="icon.Accessory_nose_of_rudolph_mask_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR" />
+  </armor>
+  <etcitem id="29144" name="Freya's Thrilling Shopping Bag">
+    <set name="icon" value="icon.bm_freya_bag_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29145" name="Freya Winter Card">
+    <set name="icon" value="icon.bm_freya_winter_card" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29146" name="Sirra Winter Card">
+    <set name="icon" value="icon.bm_freya_sirr_winter_card" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29147" name="Snowman Winter Card">
+    <set name="icon" value="icon.bm_freya_snowman_winter_card" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29148" name="Freya's Christmas Treasure Chest">
+    <set name="icon" value="icon.bm_sheep_agathion_30d_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="29149" name="Sayha's Talisman Stage 6">
+    <set name="icon" value="icon.bm_sayhas_talisman" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <etcitem id="29150" name="Low-grade Zodiac Agathion Pack">
+    <set name="icon" value="icon.bm_dragon_shinning_present" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29151" name="Mid-grade Zodiac Agathion Pack">
+    <set name="icon" value="icon.bm_dragon_present_3" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29152" name="High-grade Zodiac Agathion Pack">
+    <set name="icon" value="icon.bm_dragon_present_4" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29153" name="Prestige Rune 30%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29154" name="Mochi">
+    <set name="icon" value="icon.etc_mochi_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29155" name="Lineage II Baseball Uniform Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29156" name="Lineage II Baseball Cap Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29157" name="Lineage II Baseball Uniform Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29158" name="Lineage II Baseball Cap Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="29159" name="Jindo Dog Hat">
+    <set name="icon" value="icon.accessory_jindo_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="29160" name="Shaggy Dog Hat">
+    <set name="icon" value="icon.accessory_sapsal_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="29161" name="Prestige Rune 300%  Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29162" name="Falling Stars Chest">
+    <set name="icon" value="BranchIcon.icon.etc_g_bm_godspirit_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29163" name="Stable Cloak Enchantment Scroll">
+    <set name="icon" value="BranchIcon.icon.g_bm_cloak_enchant_scroll_normal" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29164" name="Legendary Scroll (High-grade)">
+    <set name="icon" value="BranchIcon.icon.g_bm_cloak_legend_scroll" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29165" name="High-grade Spirit Stone - Ancient Kingdom">
+    <set name="icon" value="BranchIcon.icon.g_bm_cloak_mineral_normal" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29166" name="High-grade Spirit Stone - Elmoreden">
+    <set name="icon" value="BranchIcon.icon.g_bm_cloak_mineral_elmoreden" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29167" name="High-grade Spirit Stone - Aden">
+    <set name="icon" value="BranchIcon.icon.g_bm_cloak_mineral_aden" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29168" name="High-grade Spirit Stone - Elmore">
+    <set name="icon" value="BranchIcon.icon.g_bm_cloak_mineral_elmore" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29169" name="High-grade Spirit Stone - Ferios">
+    <set name="icon" value="BranchIcon.icon.g_bm_cloak_mineral_perios" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29170" name="High-grade Spirit Stone Pack - Legendary">
+    <set name="icon" value="icon.bm_freya_2016_gift_box" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="29171" name="High-grade Spirit Stone Pack - Cloak">
+    <set name="icon" value="icon.bm_freya_2016_gift_box" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="29172" name="Red Star Solvent">
+    <set name="icon" value="icon.etc_dragon_blood_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29173" name="Prestige Rune 300% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29174" name="Prestige Rune 300%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29175" name="Prestige Rune 300% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29176" name="Prestige Rune 300%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29177" name="Prestige Cube Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29178" name="Prestige Cube">
+    <set name="icon" value="icon.etc_dkbrown_crystal_cube_pc_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29179" name="Eva's Rune Pack (1-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29180" name="Eva's Rune">
+    <set name="icon" value="BranchSys.icon.br_rune_of_eva_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="29181" name="Mermaid Agathion Charm">
+    <set name="icon" value="icon.agathion_base" />
+    <set name="tradeable" value="false" />
+    <slot id="AGATHION" />
+  </armor>
+  <etcitem id="29182" name="Master's Fishing Coin">
+    <set name="icon" value="icon.etc_coins_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29183" name="Mermaid Agathion Enchant Scroll">
+    <set name="icon" value="icon.star_scrl_of_ench_ag" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29184" name="Mermaid's Trace">
+    <set name="icon" value="icon.etc_oren_fish_scale_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29185" name="Master's Fishing Potion">
+    <set name="icon" value="BranchIcon.etc_sign_agathion_feed_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29186" name="Golden Fishing Shot">
+    <set name="icon" value="icon.etc_spirit_bullet_fish_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29187" name="Fishing XP Box">
+    <set name="icon" value="icon.bm_special_pendant_abradant_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29188" name="Fishing XP Box">
+    <set name="icon" value="icon.bm_special_pendant_abradant_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29189" name="Fishing XP Box">
+    <set name="icon" value="icon.bm_special_pendant_abradant_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29190" name="Fishing XP Box">
+    <set name="icon" value="icon.bm_special_pendant_abradant_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29191" name="Fishing XP Box">
+    <set name="icon" value="icon.bm_special_pendant_abradant_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29192" name="Shining Fishing Box">
+    <set name="icon" value="icon.bm_sheep_agathion_30d_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29193" name="Fishing XP Scroll">
+    <set name="icon" value="icon.exp_bottle_scroll" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29194" name="Fishing XP Scroll">
+    <set name="icon" value="icon.exp_bottle_scroll" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29195" name="Fishing XP Scroll">
+    <set name="icon" value="icon.exp_bottle_scroll" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29196" name="Fishing XP Scroll">
+    <set name="icon" value="icon.exp_bottle_scroll" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29197" name="Fishing XP Scroll">
+    <set name="icon" value="icon.exp_bottle_scroll" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29198" name="Ultimate Fortune Jewelry Box">
+    <set name="icon" value="icon.bm_pendant_pvp_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="29199" name="New User's Leaf">
+    <set name="icon" value="icon.s_newbie_user_display" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="29200" name="Returning User's Leaf">
+    <set name="icon" value="icon.s_dormant_user_display" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <etcitem id="29201" name="New User's Leaf Box">
+    <set name="icon" value="icon.npoint_antaras_30day_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29202" name="Returning User's Leaf Box">
+    <set name="icon" value="icon.npoint_antaras_30day_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29203" name="Suspicious Safe">
+    <set name="icon" value="icon.bm_strongbox" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29204" name="Shiny Gold Bar">
+    <set name="icon" value="icon.bm_gold_bar" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29205" name="Vitality Beer">
+    <set name="icon" value="icon.bm_honey_beer" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29206" name="Honey Vitality Beer">
+    <set name="icon" value="icon.bm_royal_honey_beer" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29207" name="Teddy Bear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29208" name="Cat Plushie Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29209" name="Panda Plushie Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29210" name="Dark Eternal Ingredient Set">
+    <set name="icon" value="icon.etc_treasure_box_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29211" name="Bloody Eternal Ingredient Set">
+    <set name="icon" value="icon.etc_treasure_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="29212" name="Adventurer's Circlet">
+    <set name="icon" value="BranchSys.icon.br_valkyrie_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="29213" name="Adventurer's Bracelet">
+    <set name="icon" value="BranchIcon.icon.bracelet_of_explorer_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="RBRACELET" />
+  </armor>
+  <etcitem id="29214" name="Shirt Box">
+    <set name="icon" value="icon.event_six_party_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29215" name="Starter Kit">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29216" name="Starter Kit">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29217" name="Starter Kit">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29218" name="Accessory of the Gods Upgrade Set Box">
+    <set name="icon" value="br_cashtex.item.br_cash_lucky_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29219" name="Accessory of the Gods Upgrade Set Box">
+    <set name="icon" value="BranchSys3.icon.g_cash_fortuna_box_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29220" name="Accessory of the Gods Upgrade Set Box">
+    <set name="icon" value="BranchSys.icon.br_fortuna_box_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29221" name="Accessory of the Gods Crafting Set Box">
+    <set name="icon" value="br_cashtex.item.br_cash_lucky_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29222" name="Accessory of the Gods Crafting Set Box">
+    <set name="icon" value="BranchSys3.icon.g_cash_fortuna_box_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29223" name="Accessory of the Gods Crafting Set Box">
+    <set name="icon" value="BranchSys.icon.br_fortuna_box_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29224" name="Box of War Hero's Soul">
+    <set name="icon" value="BranchIcon.icon.etc_g_bm_godspirit_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29225" name="14th Anniversary Rune 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_exp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29226" name="14th Anniversary Rune 100% Pack (1 hour)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="29227" name="Broken Pumpkin's Crystal Fragment">
+    <set name="icon" value="BranchSys.icon.br_valentine_cream_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="29989" name="White Day Warrior Two-handed Blunt">
+    <set name="icon" value="icon.ev_hallowinday_candy_i00" />
+    <set name="type" value="blunt" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+</list>

@@ -16,7 +16,7 @@ if (!existsSync(iconsDir)) {
 }
 
 const count = readdirSync(iconsDir).filter((file) => file.toLowerCase().endsWith('.jpg')).length
-if (count < 19000) {
+if (count < 42000) {
   console.error(`Catálogo incompleto: apenas ${count} imagens encontradas.`)
   process.exit(1)
 }

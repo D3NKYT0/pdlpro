@@ -1,0 +1,4451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <etcitem id="5000" name="Recipe: Sword of Damascus (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5001" name="Recipe: Lance (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5002" name="Recipe: Deadman's Glory (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5003" name="Recipe: Art of Battle Axe (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5004" name="Recipe: Staff of Evil Spirits (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5005" name="Recipe: Demon's Dagger (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5006" name="Recipe: Bellion Cestus (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5007" name="Recipe: Bow of Peril (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5008" name="Recipe: Pata (60%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5009" name="Trophy of Alliance">
+    <set name="icon" value="icon.etc_trophy_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5010" name="Echo Crystal - Theme of Victory">
+    <set name="icon" value="icon.etc_echo_crystal_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5011" name="Star of Destiny">
+    <set name="icon" value="icon.etc_badge_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5012" name="Leikan's Letter">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5013" name="Spellbook: Elemental Assault">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5014" name="Spellbook: Elemental Symphony">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5015" name="Spellbook: Elemental Storm">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5016" name="Seed: Dark Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5017" name="Seed: Red Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5018" name="Seed: Chilly Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5019" name="Seed: Blue Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5020" name="Seed: Golden Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5021" name="Seed: Lute Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5022" name="Seed: Desert Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5023" name="Seed: Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5024" name="Seed: Blue Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5025" name="Seed: Golden Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5026" name="Seed: Lute Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5027" name="Seed: Desert Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5028" name="Seed: Red Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5029" name="Seed: Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5030" name="Seed: Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5031" name="Seed: Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5032" name="Seed: Great Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5033" name="Seed: Red Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5034" name="Seed: Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5035" name="Seed: Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5036" name="Seed: Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5037" name="Seed: Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5038" name="Seed: Great Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5039" name="Seed: Red Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5040" name="Seed: Twin Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5041" name="Seed: Desert Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5042" name="Seed: Dark Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5043" name="Seed: Red Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5044" name="Seed: Blue Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5045" name="Seed: Red Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5046" name="Seed: Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5047" name="Seed: Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5048" name="Seed: Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5049" name="Seed: Sea Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5050" name="Seed: Chilly Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5051" name="Seed: Blue Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5052" name="Seed: Twin Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5053" name="Seed: Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5054" name="Seed: Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5055" name="Seed: Great Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5056" name="Seed: Red Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5057" name="Seed: Chilly Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5058" name="Seed: Blue Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5059" name="Seed: Twin Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5060" name="Seed: Great Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5061" name="Seed: Desert Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5062" name="Trash">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5063" name="Trash">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5064" name="Trash">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5065" name="Chilly Coda">
+    <set name="icon" value="icon.etc_coda_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5066" name="Burning Coda">
+    <set name="icon" value="icon.etc_coda_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5067" name="Blue Coda">
+    <set name="icon" value="icon.etc_coda_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5068" name="Red Coda">
+    <set name="icon" value="icon.etc_coda_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5069" name="Golden Coda">
+    <set name="icon" value="icon.etc_coda_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5070" name="Desert Coda">
+    <set name="icon" value="icon.etc_coda_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5071" name="Lute Coda">
+    <set name="icon" value="icon.etc_coda_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5072" name="Twin Coda">
+    <set name="icon" value="icon.etc_coda_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5073" name="Dark Coda">
+    <set name="icon" value="icon.etc_coda_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5074" name="Shining Coda">
+    <set name="icon" value="icon.etc_coda_i09" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5075" name="Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5076" name="Burning Cobol">
+    <set name="icon" value="icon.etc_cobol_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5077" name="Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5078" name="Red Cobol">
+    <set name="icon" value="icon.etc_cobol_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5079" name="Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5080" name="Desert Cobol">
+    <set name="icon" value="icon.etc_cobol_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5081" name="Sea Cobol">
+    <set name="icon" value="icon.etc_cobol_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5082" name="Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5083" name="Dapple Cobol">
+    <set name="icon" value="icon.etc_cobol_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5084" name="Great Cobol">
+    <set name="icon" value="icon.etc_cobol_i09" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5085" name="Chilly Codran">
+    <set name="icon" value="icon.etc_codran_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5086" name="Burning Codran">
+    <set name="icon" value="icon.etc_codran_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5087" name="Blue Codran">
+    <set name="icon" value="icon.etc_codran_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5088" name="Red Codran">
+    <set name="icon" value="icon.etc_codran_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5089" name="Dapple Codran">
+    <set name="icon" value="icon.etc_codran_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5090" name="Desert Codran">
+    <set name="icon" value="icon.etc_codran_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5091" name="Sea Codran">
+    <set name="icon" value="icon.etc_codran_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5092" name="Twin Codran">
+    <set name="icon" value="icon.etc_codran_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5093" name="Thorn Codran">
+    <set name="icon" value="icon.etc_codran_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5094" name="Great Codran">
+    <set name="icon" value="icon.etc_codran_i09" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5095" name="Mature Chilly Coda">
+    <set name="icon" value="icon.etc_coda_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5096" name="Mature Burning Coda">
+    <set name="icon" value="icon.etc_coda_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5097" name="Mature Blue Coda">
+    <set name="icon" value="icon.etc_coda_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5098" name="Mature Red Coda">
+    <set name="icon" value="icon.etc_coda_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5099" name="Mature Golden Coda">
+    <set name="icon" value="icon.etc_coda_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5100" name="Mature Desert Coda">
+    <set name="icon" value="icon.etc_coda_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5101" name="Mature Lute Coda">
+    <set name="icon" value="icon.etc_coda_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5102" name="Mature Twin Coda">
+    <set name="icon" value="icon.etc_coda_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5103" name="Mature Dark Coda">
+    <set name="icon" value="icon.etc_coda_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5104" name="Mature Shining Coda">
+    <set name="icon" value="icon.etc_coda_i09" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5105" name="Mature Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5106" name="Mature Burning Cobol">
+    <set name="icon" value="icon.etc_cobol_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5107" name="Mature Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5108" name="Mature Red Cobol">
+    <set name="icon" value="icon.etc_cobol_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5109" name="Mature Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5110" name="Mature Desert Cobol">
+    <set name="icon" value="icon.etc_cobol_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5111" name="Mature Sea Cobol">
+    <set name="icon" value="icon.etc_cobol_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5112" name="Mature Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5113" name="Mature Dapple Cobol">
+    <set name="icon" value="icon.etc_cobol_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5114" name="Mature Great Cobol">
+    <set name="icon" value="icon.etc_cobol_i09" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5115" name="Mature Chilly Codran">
+    <set name="icon" value="icon.etc_codran_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5116" name="Mature Burning Codran">
+    <set name="icon" value="icon.etc_codran_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5117" name="Mature Blue Codran">
+    <set name="icon" value="icon.etc_codran_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5118" name="Mature Red Codran">
+    <set name="icon" value="icon.etc_codran_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5119" name="Mature Dapple Codran">
+    <set name="icon" value="icon.etc_codran_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5120" name="Mature Desert Codran">
+    <set name="icon" value="icon.etc_codran_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5121" name="Mature Sea Codran">
+    <set name="icon" value="icon.etc_codran_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5122" name="Mature Twin Codran">
+    <set name="icon" value="icon.etc_codran_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5123" name="Mature Thorn Codran">
+    <set name="icon" value="icon.etc_codran_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5124" name="Mature Great Codran">
+    <set name="icon" value="icon.etc_codran_i09" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5125" name="Harvester">
+    <set name="icon" value="icon.etc_reaper_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5126" name="Dualsword Craft Stamp">
+    <set name="icon" value="icon.etc_letter_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="5127" name="Dailaon Knife">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5128" name="Crokian Blade">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5129" name="Doll Knife">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5130" name="Nos Sword">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5131" name="Parhit Staff">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5132" name="Giant Trident">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5133" name="Chrono Unitus">
+    <set name="icon" value="icon.weapon_chrono_tambourine_i00" />
+    <set name="type" value="dualfist" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="5134" name="Compressed Package of Soulshots: No Grade">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5135" name="Compressed Package of Soulshots (D-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5136" name="Compressed Package of Soulshots (C-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5137" name="Compressed Package of Soulshots (B-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5138" name="Compressed Package of Soulshots (A-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5139" name="Compressed Package of Soulshots (S-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5140" name="Compressed Package of Spiritshots: No Grade">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5141" name="Compressed Package of Spiritshots (D-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5142" name="Compressed Package of Spiritshots (C-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5143" name="Compressed Package of Spiritshots (B-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5144" name="Compressed Package of Spiritshots (A-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5145" name="Compressed Package of Spiritshots (S-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5146" name="Compressed Package of Blessed Spiritshots: No Grade">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5147" name="Compressed Package of Blessed Spiritshots (D-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5148" name="Compressed Package of Blessed Spiritshots (C-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5149" name="Compressed Package of Blessed Spiritshots (B-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5150" name="Compressed Package of Blessed Spiritshots (A-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5151" name="Compressed Package of Blessed Spiritshots (S-Grade)">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5152" name="Magic Compressor">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5153" name="Recipe: Soulshot (D) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5154" name="Recipe: Soulshot (C) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5155" name="Recipe: Soulshot (B) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5156" name="Recipe: Soulshot (A) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5157" name="Recipe: Soulshot (S) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5158" name="Recipe: Spiritshot (D) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5159" name="Recipe: Spiritshot (C) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5160" name="Recipe: Spiritshot (B) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5161" name="Recipe: Spiritshot (A) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5162" name="Recipe: Spiritshot (S) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5163" name="Recipe: Blessed Spiritshot (D) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5164" name="Recipe: Blessed Spiritshot (C) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5165" name="Recipe: Blessed Spiritshot (B) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5166" name="Recipe: Blessed Spiritshot (A) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5167" name="Recipe: Blessed Spiritshot (S) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5168" name="Food for Strider">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5169" name="Deluxe Food for Strider">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <armor id="5170" name="Mithril Panzer Coat">
+    <set name="icon" value="icon.etc_pet_armor_i08" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="5171" name="Brigadine Panzer Coat">
+    <set name="icon" value="icon.etc_pet_armor_i09" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="5172" name="Draconic Panzer Coat">
+    <set name="icon" value="icon.etc_pet_armor_i09" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="5173" name="Blood Panzer Coat">
+    <set name="icon" value="icon.etc_pet_armor_i10" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="5174" name="Ophidian Panzer Coat">
+    <set name="icon" value="icon.etc_pet_armor_i10" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="5175" name="Inferno Panzer Coat">
+    <set name="icon" value="icon.etc_pet_armor_i11" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <weapon id="5176" name="Serpentine Spike">
+    <set name="icon" value="icon.etc_pet_arms_i08" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5177" name="Drake Horn">
+    <set name="icon" value="icon.etc_pet_arms_i09" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5178" name="Assault Alicorn">
+    <set name="icon" value="icon.etc_pet_arms_i09" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5179" name="Draconic Slicer">
+    <set name="icon" value="icon.etc_pet_arms_i10" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5180" name="Ohpdian Lance">
+    <set name="icon" value="icon.etc_pet_arms_i10" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5181" name="Diamond Drill">
+    <set name="icon" value="icon.etc_pet_arms_i11" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <armor id="5182" name="Hatchling's Gorgon Coat">
+    <set name="icon" value="icon.etc_pet_armor_i05" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="5183" name="Hatchling's Ophidian Plate">
+    <set name="icon" value="icon.etc_pet_armor_i05" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="5184" name="Hatchling's Crimson Plate">
+    <set name="icon" value="icon.etc_pet_armor_i06" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="5185" name="Hatchling's Draconic Plate">
+    <set name="icon" value="icon.etc_pet_armor_i06" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="5186" name="Hatchling's Inferno Plate">
+    <set name="icon" value="icon.etc_pet_armor_i07" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <weapon id="5187" name="Serpentine Grinder">
+    <set name="icon" value="icon.etc_pet_arms_i05" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5188" name="Fang of Dahak">
+    <set name="icon" value="icon.etc_pet_arms_i05" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5189" name="Crimson Blood Fang">
+    <set name="icon" value="icon.etc_pet_arms_i06" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5190" name="Draconic Chopper">
+    <set name="icon" value="icon.etc_pet_arms_i06" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5191" name="Diabolic Grinder">
+    <set name="icon" value="icon.etc_pet_arms_i07" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <etcitem id="5192" name="Rope of Magic (D-Grade)">
+    <set name="icon" value="icon.etc_braided_hemp_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5193" name="Rope of Magic (C-Grade)">
+    <set name="icon" value="icon.etc_braided_hemp_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5194" name="Rope of Magic (B-Grade)">
+    <set name="icon" value="icon.etc_braided_hemp_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5195" name="Rope of Magic (A-Grade)">
+    <set name="icon" value="icon.etc_braided_hemp_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5196" name="Rope of Magic (S-Grade)">
+    <set name="icon" value="icon.etc_braided_hemp_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5197" name="Chest Key - Grade 8">
+    <set name="icon" value="icon.etc_key_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5198" name="Chest Key - Grade 7">
+    <set name="icon" value="icon.etc_key_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5199" name="Chest Key - Grade 6">
+    <set name="icon" value="icon.etc_key_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5200" name="Chest Key - Grade 5">
+    <set name="icon" value="icon.etc_key_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5201" name="Chest Key - Grade 4">
+    <set name="icon" value="icon.etc_key_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5202" name="Chest Key - Grade 3">
+    <set name="icon" value="icon.etc_key_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5203" name="Chest Key - Grade 2">
+    <set name="icon" value="icon.etc_key_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5204" name="Chest Key - Grade 1">
+    <set name="icon" value="icon.etc_key_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5205" name="Mercenary Posting Ticket (Sword/Stationary)">
+    <set name="icon" value="icon.mticket_sword_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5206" name="Mercenary Posting Ticket (Spear/Stationary)">
+    <set name="icon" value="icon.mticket_pole_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5207" name="Mercenary Posting Ticket (Bow/Stationary)">
+    <set name="icon" value="icon.mticket_bow_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5208" name="Mercenary Posting Ticket (Cleric/Stationary)">
+    <set name="icon" value="icon.mticket_cleric_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5209" name="Mercenary Posting Ticket (Wizard/Stationary)">
+    <set name="icon" value="icon.mticket_wizard_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5210" name="Mercenary Posting Ticket (Sword/Mobile)">
+    <set name="icon" value="icon.mticket_sword_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5211" name="Mercenary Posting Ticket (Spear/Mobile)">
+    <set name="icon" value="icon.mticket_pole_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5212" name="Mercenary Posting Ticket (Bow/Mobile)">
+    <set name="icon" value="icon.mticket_bow_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5213" name="Mercenary Posting Ticket (Cleric/Mobile)">
+    <set name="icon" value="icon.mticket_cleric_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5214" name="Mercenary Posting Ticket (Wizard/Mobile)">
+    <set name="icon" value="icon.mticket_wizard_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5215" name="Mercenary Posting Ticket (Teleporter1)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <armor id="5216" name="Wolf's Level 75 Armor">
+    <set name="icon" value="icon.etc_pet_armor_i02" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <weapon id="5217" name="Wolf's Level 75 Weapon">
+    <set name="icon" value="icon.etc_pet_arms_i02" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <etcitem id="5218" name="Mercenary Posting Ticket (Teleporter2)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5219" name="Mercenary Posting Ticket (Teleporter3)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5220" name="Metal Hardener">
+    <set name="icon" value="icon.etc_plate_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5221" name="Seed: Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5222" name="Seed: Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5223" name="Seed: Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5224" name="Seed: Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5225" name="Seed: Great Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5226" name="Seed: Red Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5227" name="Seed: Sea Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5228" name="Trash">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5229" name="Trash">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5230" name="Recipe: Mithril Arrow (100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5231" name="Recipe: Metal Hardener (100%)">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5232" name="White Fabric">
+    <set name="icon" value="icon.etc_piece_of_cloth_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="5233" name="Keshanberk*Keshanberk">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="5234" name="Mystery Potion">
+    <set name="icon" value="icon.etc_lesser_potion_clear_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5235" name="Facelifting Potion - A">
+    <set name="icon" value="icon.etc_lesser_potion_purple_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5236" name="Facelifting Potion - B">
+    <set name="icon" value="icon.etc_lesser_potion_purple_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5237" name="Facelifting Potion - C">
+    <set name="icon" value="icon.etc_lesser_potion_purple_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5238" name="Dye Potion - A">
+    <set name="icon" value="icon.etc_lesser_potion_scarlet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5239" name="Dye Potion - B">
+    <set name="icon" value="icon.etc_lesser_potion_scarlet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5240" name="Dye Potion - C">
+    <set name="icon" value="icon.etc_lesser_potion_scarlet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5241" name="Dye Potion - D">
+    <set name="icon" value="icon.etc_lesser_potion_scarlet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5242" name="Hair Style Change Potion - A">
+    <set name="icon" value="icon.etc_lesser_potion_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5243" name="Hair Style Change Potion - B">
+    <set name="icon" value="icon.etc_lesser_potion_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5244" name="Hair Style Change Potion - C">
+    <set name="icon" value="icon.etc_lesser_potion_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5245" name="Hair Style Change Potion - D">
+    <set name="icon" value="icon.etc_lesser_potion_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5246" name="Hair Style Change Potion - E">
+    <set name="icon" value="icon.etc_lesser_potion_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5247" name="Hair Style Change Potion - F">
+    <set name="icon" value="icon.etc_lesser_potion_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5248" name="Hair Style Change Potion - G">
+    <set name="icon" value="icon.etc_lesser_potion_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5249" name="Commemorative Item: First Anniversary of Lineage II Service">
+    <set name="icon" value="icon.etc_l2_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5250" name="Greater Compressed Package of Soulshots (No-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5251" name="Greater Compressed Package of Soulshots (D-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5252" name="Greater Compressed Package of Soulshots (C-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5253" name="Greater Compressed Package of Soulshots (B-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5254" name="Greater Compressed Package of Soulshots (A-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5255" name="Greater Compressed Package of Soulshots (S-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5256" name="Greater Compressed Package of Spiritshots (No-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5257" name="Greater Compressed Package of Spiritshots (D-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5258" name="Greater Compressed Package of Spiritshots (C-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5259" name="Greater Compressed Package of Spiritshots (B-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5260" name="Greater Compressed Package of Spiritshots (A-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5261" name="Greater Compressed Package of Spiritshots (S-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5262" name="Greater Compressed Package of Blessed Spiritshots (No-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5263" name="Greater Compressed Package of Blessed Spiritshots (D-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5264" name="Greater Compressed Package of Blessed Spiritshots (C-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5265" name="Greater Compressed Package of Blessed Spiritshots (B-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5266" name="Greater Compressed Package of Blessed Spiritshots (A-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5267" name="Greater Compressed Package of Blessed Spiritshots (S-Grade)">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5268" name="Recipe: Greater Soulshot (D) Compressed Package (100%)">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5269" name="Recipe: Greater Soulshot (C) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5270" name="Recipe: Greater Soulshot (B) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5271" name="Recipe: Greater Soulshot (A) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5272" name="Recipe: Greater Soulshot (S) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5273" name="Recipe: Greater Spiritshot (D) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5274" name="Recipe: Greater Spiritshot (C) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5275" name="Recipe: Greater Spiritshot (B) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5276" name="Recipe: Greater Spiritshot (A) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5277" name="Recipe: Greater Spiritshot (S) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5278" name="Recipe: Greater Blessed Spiritshot (D) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5279" name="Recipe: Greater Blessed Spiritshot (C) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5280" name="Recipe: Greater Blessed Spiritshot (B) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5281" name="Recipe: Greater Blessed Spiritshot (A) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5282" name="Recipe: Greater Blessed Spiritshot (S) Compressed Package(100%)">
+    <set name="icon" value="icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5283" name="Rice Cake">
+    <set name="icon" value="icon.etc_mochi_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="5284" name="Zweihander">
+    <set name="icon" value="icon.weapon_zweihander_i00" />
+    <set name="type" value="bigsword" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5285" name="Heavy Sword">
+    <set name="icon" value="icon.weapon_heavy_sword_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5286" name="Berserker Blade">
+    <set name="icon" value="icon.weapon_berserker_blade_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <armor id="5287" name="Sealed Dark Crystal breastplate">
+    <set name="icon" value="icon.armor_t74_u_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="5288" name="Sealed Dark Crystal Gaiters">
+    <set name="icon" value="icon.armor_t74_l_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="5289" name="Sealed Dark Crystal Helmet">
+    <set name="icon" value="icon.armor_helmet_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="5290" name="Sealed Dark Crystal Gloves">
+    <set name="icon" value="icon.armor_t74_g_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5291" name="Sealed Dark Crystal Boots">
+    <set name="icon" value="icon.armor_t74_b_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5292" name="Sealed Dark Crystal Shield">
+    <set name="icon" value="icon.shield_dark_crystal_shield_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="5293" name="Sealed Tallum Plate Armor">
+    <set name="icon" value="icon.armor_t77_ul_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="5294" name="Sealed Tallum Helmet">
+    <set name="icon" value="icon.armor_helmet_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="5295" name="Sealed Tallum Gloves">
+    <set name="icon" value="icon.armor_t77_g_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5296" name="Sealed Tallum Boots">
+    <set name="icon" value="icon.armor_t77_b_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5297" name="Sealed Dark Crystal Leather Armor">
+    <set name="icon" value="icon.armor_t75_u_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="5298" name="Sealed Dark Crystal Leggings">
+    <set name="icon" value="icon.armor_t75_l_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="5299" name="Sealed Gloves of Underworld">
+    <set name="icon" value="icon.armor_t40_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5300" name="Sealed Boots of Underworld">
+    <set name="icon" value="icon.armor_t10_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5301" name="Sealed Tallum Leather Armor">
+    <set name="icon" value="icon.armor_t78_ul_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="5302" name="Sealed Gust Bracer">
+    <set name="icon" value="icon.armor_t45_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5303" name="Sealed Gust Boots">
+    <set name="icon" value="icon.armor_t45_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5304" name="Sealed Tallum Tunic">
+    <set name="icon" value="icon.armor_t79_u_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="5305" name="Sealed Tallum Stockings">
+    <set name="icon" value="icon.armor_t79_l_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="5306" name="Sealed Gloves of Black Ore">
+    <set name="icon" value="icon.armor_t14_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5307" name="Sealed Red Flame Boots">
+    <set name="icon" value="icon.armor_t14_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5308" name="Sealed Dark Crystal Robe">
+    <set name="icon" value="icon.armor_t76_ul_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="5309" name="Sealed Phoenix Gloves">
+    <set name="icon" value="icon.armor_t44_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5310" name="Sealed Phoenix Boots">
+    <set name="icon" value="icon.armor_t44_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5311" name="Sealed Armor of Nightmare">
+    <set name="icon" value="icon.armor_t80_ul_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="5312" name="Sealed Helm of Nightmare">
+    <set name="icon" value="icon.armor_leather_helmet_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="5313" name="Sealed Gauntlets of Nightmare">
+    <set name="icon" value="icon.armor_t80_g_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5314" name="Sealed Boots of Nightmare">
+    <set name="icon" value="icon.armor_t80_b_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5315" name="Sealed Shield of Nightmare">
+    <set name="icon" value="icon.shield_shield_of_nightmare_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="5316" name="Sealed Majestic Plate Armor">
+    <set name="icon" value="icon.armor_t83_ul_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="5317" name="Sealed Majestic Circlet">
+    <set name="icon" value="icon.armor_leather_helmet_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="5318" name="Sealed Majestic Gauntlets">
+    <set name="icon" value="icon.armor_t83_g_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5319" name="Sealed Majestic Boots">
+    <set name="icon" value="icon.armor_t83_b_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5320" name="Sealed Leather Armor of Nightmare">
+    <set name="icon" value="icon.armor_t81_ul_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="5321" name="Sealed Dark Legion Gloves">
+    <set name="icon" value="icon.armor_t45_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5322" name="Sealed Dark Legion Boots">
+    <set name="icon" value="icon.armor_t45_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5323" name="Sealed Majestic Leather Armor">
+    <set name="icon" value="icon.armor_t84_ul_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="5324" name="Sealed Gloves of Phantom">
+    <set name="icon" value="icon.armor_t45_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5325" name="Sealed Boots of Phantom">
+    <set name="icon" value="icon.armor_t45_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5326" name="Sealed Robe of Nightmare">
+    <set name="icon" value="icon.armor_t82_ul_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="5327" name="Sealed Cerberus Gloves">
+    <set name="icon" value="icon.armor_t44_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5328" name="Sealed Cerberus Boots">
+    <set name="icon" value="icon.armor_t44_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5329" name="Sealed Majestic Robe">
+    <set name="icon" value="icon.armor_t85_ul_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="5330" name="Sealed Dasparion's Gloves">
+    <set name="icon" value="icon.armor_t44_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5331" name="Sealed Dasparion's Boots">
+    <set name="icon" value="icon.armor_t44_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <etcitem id="5332" name="Recipe: Sealed Dark Crystal Leather Armor(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5333" name="Recipe: Sealed Dark Crystal Leather Armor(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5334" name="Recipe: Sealed Tallum Leather Armor(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5335" name="Recipe: Sealed Tallum Leather Armor(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5336" name="Recipe: Sealed Leather Armor of Nightmare(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5337" name="Recipe: Sealed Leather Armor of Nightmare(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5338" name="Recipe: Sealed Majestic Leather Armor(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5339" name="Recipe: Sealed Majestic Leather Armor(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5340" name="Recipe: Sealed Dark Crystal Leggings(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5341" name="Recipe: Sealed Dark Crystal Leggings(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5342" name="Echo Crystal - Sad Song">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5343" name="Echo Crystal - Holy Song">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5344" name="Recipe: Inferno Earring(70%)">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5345" name="Recipe: Inferno Earring(70%)">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5346" name="Recipe: Sealed Tallum Tunic(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5347" name="Recipe: Sealed Tallum Tunic(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5348" name="Recipe: Sealed Dark Crystal Robe(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5349" name="Recipe: Sealed Dark Crystal Robe(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5350" name="Recipe: Sealed Robe of Nightmare(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5351" name="Recipe: Sealed Robe of Nightmare(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5352" name="Recipe: Sealed Majestic Robe(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5353" name="Recipe: Sealed Majestic Robe(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5354" name="Recipe: Sealed Tallum Stockings(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5355" name="Recipe: Sealed Tallum Stockings(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5364" name="Recipe: Sealed Dark Crystal Shield(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5365" name="Recipe: Sealed Dark Crystal Shield(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5366" name="Recipe: Sealed Shield of Nightmare(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5367" name="Recipe: Sealed Shield of Nightmare(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5368" name="Recipe: Sealed Dark Crystal Boots(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5369" name="Recipe: Sealed Dark Crystal Boots(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5370" name="Recipe: Sealed Tallum Boots(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5371" name="Recipe: Sealed Tallum Boots(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5372" name="Recipe: Sealed Boots of Underworld(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5373" name="Recipe: Sealed Boots of Underworld(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5374" name="Recipe: Sealed Gust Boots(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5375" name="Recipe: Sealed Gust Boots(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5376" name="Recipe: Sealed Red Flame Boots(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5377" name="Recipe: Sealed Red Flame Boots(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5378" name="Recipe: Sealed Phoenix Boots(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5379" name="Recipe: Sealed Phoenix Boots(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5380" name="Recipe: Sealed Boots of Nightmare(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5381" name="Recipe: Sealed Boots of Nightmare(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5382" name="Recipe: Sealed Majestic Boots(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5383" name="Recipe: Sealed Majestic Boots(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5384" name="Recipe: Sealed Dark Legion Boots(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5385" name="Recipe: Sealed Dark Legion Boots(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5386" name="Recipe: Sealed Boots of Phantom(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5387" name="Recipe: Sealed Boots of Phantom(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5388" name="Recipe: Sealed Cerberus Boots(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5389" name="Recipe: Sealed Cerberus Boots(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5390" name="Recipe: Sealed Dasparion's Boots Boots(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5391" name="Recipe: Sealed Dasparion's Boots Boots(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5392" name="Recipe: Sealed Dark Crystal Gloves(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5393" name="Recipe: Sealed Dark Crystal Gloves(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5394" name="Recipe: Sealed Tallum Gloves(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5395" name="Recipe: Sealed Tallum Gloves(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5396" name="Recipe: Sealed Gloves of Underworld(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5397" name="Recipe: Sealed Gloves of Underworld(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5398" name="Recipe: Sealed Gust Bracer(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5399" name="Recipe: Sealed Gust Bracer(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5400" name="Recipe: Sealed Gloves of Black Ore(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5401" name="Recipe: Sealed Gloves of Black Ore(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5402" name="Recipe: Sealed Phoenix Gloves(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5403" name="Recipe: Sealed Phoenix Gloves(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5404" name="Recipe: Sealed Gauntlets of Nightmare(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5405" name="Recipe: Sealed Gauntlets of Nightmare(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5406" name="Recipe: Sealed Majestic Gauntlets(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5407" name="Recipe: Sealed Majestic Gauntlets(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5408" name="Recipe: Sealed Dark Legion Gloves(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5409" name="Recipe: Sealed Dark Legion Gloves(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5410" name="Recipe: Sealed Gloves of Phantom(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5411" name="Recipe: Sealed Gloves of Phantom(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5412" name="Recipe: Sealed Cerberus Gloves(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5413" name="Recipe: Sealed Cerberus Gloves(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5414" name="Recipe: Sealed Dasparion's Gloves(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5415" name="Recipe: Sealed Dasparion's Gloves(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5416" name="Recipe: Sealed Dark Crystal Breastplate(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5417" name="Recipe: Sealed Dark Crystal Breastplate(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5418" name="Recipe: Sealed Tallum Plate Armor(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5419" name="Recipe: Sealed Tallum Plate Armor(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5420" name="Recipe: Sealed Armor of Nightmare(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5421" name="Recipe: Sealed Armor of Nightmare(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5422" name="Recipe: Sealed Majestic Plate Armor(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5423" name="Recipe: Sealed Majestic Plate Armor(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5424" name="Recipe: Sealed Dark Crystal Gaiters(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5425" name="Recipe: Sealed Dark Crystal Gaiters(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5426" name="Recipe: Sealed Dark Crystal Helmet(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5427" name="Recipe: Sealed Dark Crystal Helmet(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5428" name="Recipe: Sealed Tallum Helmet(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5429" name="Recipe: Sealed Tallum Helmet(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5430" name="Recipe: Sealed Helm of Nightmare(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5431" name="Recipe: Sealed Helm of Nightmare(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5432" name="Recipe: Sealed Majestic Circlet (60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5433" name="Recipe: Sealed Majestic Circlet (100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5434" name="Recipe: Dragon Slayer(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5435" name="Recipe: Dragon Slayer(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5436" name="Recipe: Berserker Blade(100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5437" name="Recipe: Heavy Sword(100%)">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5438" name="Recipe: Meteor Shower(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5439" name="Recipe: Meteor Shower(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5440" name="Recipe: Elysian(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5441" name="Recipe: Elysian(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5442" name="Recipe: Soul Bow(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5443" name="Recipe: Soul Bow(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5444" name="Recipe: Carnage Bow(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5445" name="Recipe: Carnage Bow(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5446" name="Recipe: Bloody Orchid(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5447" name="Recipe: Bloody Orchid(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5448" name="Recipe: Soul Separator(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5449" name="Recipe: Soul Separator(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5450" name="Recipe: Dragon Grinder(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5451" name="Recipe: Dragon Grinder(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5452" name="Recipe: Blood Tornado(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5453" name="Recipe: Blood Tornado(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5454" name="Recipe: Orcish Halberd(60%)">
+    <set name="icon" value="icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5455" name="Recipe: Orcish Halberd(100%)">
+    <set name="icon" value="icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5456" name="Recipe: Tallum Glaive(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5457" name="Recipe: Tallum Glaive(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5458" name="Recipe: Halberd(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5459" name="Recipe: Halberd(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5460" name="Recipe: Dasparion's Staff(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5461" name="Recipe: Dasparion's Staff(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5462" name="Recipe: Branch of the Mother Tree(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5463" name="Recipe: Branch of the Mother Tree(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5464" name="Recipe: Dark Legion's Edge(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5465" name="Recipe: Dark Legion's Edge(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5466" name="Recipe: Sword of Miracles(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5467" name="Recipe: Sword of Miracles(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5468" name="Recipe: Elemental Sword(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5469" name="Recipe: Elemental Sword(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5470" name="Recipe: Tallum Blade(60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5471" name="Recipe: Tallum Blade(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5472" name="Recipe: Metallic Thread(100%)">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5473" name="Recipe: Durable Metal Plate(100%)">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5474" name="Recipe: Reorin's Mold(100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5475" name="Recipe: Warsmith's Mold(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5476" name="Recipe: Arcsmith's Anvil(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5477" name="Recipe: Warsmith's Holder(100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5478" name="Sealed Dark Crystal Leather Armor Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5479" name="Sealed Tallum Leather Armor Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5480" name="Sealed Leather Armor of Nightmare Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5481" name="Sealed Majestic Leather Armor Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5482" name="Sealed Dark Crystal Leggings Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5483" name="Phoenix Earring Gemstone">
+    <set name="icon" value="icon.etc_gem_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5484" name="Inferno Earring Gemstone">
+    <set name="icon" value="icon.etc_gem_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5485" name="Sealed Tallum Tunic Texture">
+    <set name="icon" value="icon.etc_leather_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5486" name="Sealed Dark Crystal Robe Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5487" name="Sealed Robe of Nightmare Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5488" name="Sealed Majestic Robe Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5489" name="Sealed Tallum Stockings Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5490" name="Phoenix Necklace Beads">
+    <set name="icon" value="icon.etc_crystal_ball_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5491" name="Inferno Necklace Beads">
+    <set name="icon" value="icon.etc_crystal_ball_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5492" name="Phoenix Ring Gemstone">
+    <set name="icon" value="icon.etc_gem_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5493" name="Inferno Ring Gemstone">
+    <set name="icon" value="icon.etc_gem_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5494" name="Sealed Dark Crystal Shield Fragment">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5495" name="Sealed Shield of Nightmare Fragment">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5496" name="Sealed Dark Crystal Boots Lining">
+    <set name="icon" value="icon.etc_piece_of_cloth_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5497" name="Sealed Tallum Boots Lining">
+    <set name="icon" value="icon.etc_piece_of_cloth_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5498" name="Sealed Boots of Underworld Lining">
+    <set name="icon" value="icon.etc_piece_of_cloth_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5499" name="Sealed Gust Boots Lining">
+    <set name="icon" value="icon.etc_piece_of_cloth_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5500" name="Sealed Red Flame Boots Lining">
+    <set name="icon" value="icon.etc_piece_of_cloth_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5501" name="Sealed Phoenix Boots Lining">
+    <set name="icon" value="icon.etc_piece_of_cloth_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5502" name="Sealed Boots of Nightmare Lining">
+    <set name="icon" value="icon.etc_piece_of_cloth_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5503" name="Sealed Majestic Boots Lining">
+    <set name="icon" value="icon.etc_piece_of_cloth_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5504" name="Sealed Dark Legion Boots Lining">
+    <set name="icon" value="icon.etc_piece_of_cloth_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5505" name="Sealed Boots of Phantom Lining">
+    <set name="icon" value="icon.etc_piece_of_cloth_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5506" name="Sealed Cerberus Boots Lining">
+    <set name="icon" value="icon.etc_piece_of_cloth_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5507" name="Sealed Dasparion's Boots Lining">
+    <set name="icon" value="icon.etc_piece_of_cloth_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5508" name="Sealed Dark Crystal Gloves Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5509" name="Sealed Tallum Gloves Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5510" name="Sealed Gloves of Underworld Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5511" name="Sealed Gust Bracer design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5512" name="Sealed Gloves of Black Ore Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5513" name="Sealed Phoenix Gloves Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5514" name="Sealed Gauntlets of Nightmare Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5515" name="Sealed Majestic Gauntlets Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5516" name="Sealed Dark Legion Gloves Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5517" name="Sealed Gloves of Phantom Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5518" name="Sealed Cerberus Gloves Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5519" name="Sealed Dasparion's Gloves Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5520" name="Sealed Dark Crystal Breastplate Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5521" name="Sealed Tallum Plate Armor Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5522" name="Sealed Armor of Nightmare Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5523" name="Sealed Majestic Plate Armor Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5524" name="Sealed Dark Crystal Gaiters Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5525" name="Sealed Dark Crystal Helmet Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5526" name="Sealed Tallum Helm Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5527" name="Sealed Helm of Nightmare Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5528" name="Sealed Majestic Circlet Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5529" name="Dragon Slayer Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5530" name="Berserker Blade Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5531" name="Heavy Sword Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5532" name="Meteor Shower Head">
+    <set name="icon" value="icon.etc_squares_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5533" name="Elysian Head">
+    <set name="icon" value="icon.etc_squares_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5534" name="Soul Bow Stave">
+    <set name="icon" value="icon.etc_branch_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5535" name="Carnage Bow Stave">
+    <set name="icon" value="icon.etc_branch_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5536" name="Bloody Orchid Head">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5537" name="Soul Separator Head">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5538" name="Dragon Grinder Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5539" name="Blood Tornado Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5540" name="Orcish Halberd Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5541" name="Tallum Glaive Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5542" name="Halberd Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5543" name="Dasparion's Staff Head">
+    <set name="icon" value="icon.etc_squares_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5544" name="Branch of the Mother Tree Head">
+    <set name="icon" value="icon.etc_squares_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5545" name="Dark Legion's Edge Blade">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5546" name="Sword of Miracles Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5547" name="Elemental Sword Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5548" name="Tallum Blade Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5549" name="Metallic Thread">
+    <set name="icon" value="icon.etc_skein_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5550" name="Durable Metal Plate">
+    <set name="icon" value="icon.etc_squares_wood_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5551" name="Reorin's Mold">
+    <set name="icon" value="icon.etc_blacksmiths_frame_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5552" name="Warsmith's Mold">
+    <set name="icon" value="icon.etc_blacksmiths_frame_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5553" name="Arcsmith's Anvil">
+    <set name="icon" value="icon.etc_blacksmiths_frame_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5554" name="Warsmith's Holder">
+    <set name="icon" value="icon.etc_blacksmiths_frame_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5555" name="Token of Love">
+    <set name="icon" value="icon.etc_x_mas_2004_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5556" name="Star Ornament">
+    <set name="icon" value="icon.etc_deco_star_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5557" name="Bead Ornament">
+    <set name="icon" value="icon.etc_deco_bead_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5558" name="Fir Tree Branch">
+    <set name="icon" value="icon.etc_fir_spring_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5559" name="Flower Pot">
+    <set name="icon" value="icon.etc_flowerpot_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5560" name="Christmas Tree">
+    <set name="icon" value="icon.etc_x_mas_tree_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5561" name="Special Christmas Tree">
+    <set name="icon" value="icon.etc_x_mas_tree_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5562" name="Echo Crystal - 1st Carol">
+    <set name="icon" value="icon.etc_echo_crystal_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5563" name="Echo Crystal - 2nd Carol">
+    <set name="icon" value="icon.etc_echo_crystal_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5564" name="Echo Crystal - 3rd Carol">
+    <set name="icon" value="icon.etc_echo_crystal_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5565" name="Echo Crystal - 4th Carol">
+    <set name="icon" value="icon.etc_echo_crystal_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5566" name="Echo Crystal - 5th Carol">
+    <set name="icon" value="icon.etc_echo_crystal_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5567" name="Letter of Greetings">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5568" name="Letter of Greetings">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5569" name="Water Rune">
+    <set name="icon" value="icon.etc_water_rune_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5570" name="Water Mantra">
+    <set name="icon" value="icon.etc_water_mantra_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5571" name="Wind Rune">
+    <set name="icon" value="icon.etc_wind_rune_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5572" name="Wind Mantra">
+    <set name="icon" value="icon.etc_wind_mantra_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5573" name="Fire Rune">
+    <set name="icon" value="icon.etc_fire_rune_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5574" name="Fire Mantra">
+    <set name="icon" value="icon.etc_fire_mantra_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5575" name="Ancient Adena">
+    <set name="icon" value="icon.etc_ancient_adena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <armor id="5576" name="Sound Test Boots">
+    <set name="icon" value="icon.armor_t30_b_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <etcitem id="5577" name="Red Soul Crystal - Stage 11">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5578" name="Green Soul Crystal - Stage 11">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5579" name="Blue Soul Crystal - Stage 11">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5580" name="Red Soul Crystal - Stage 12">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5581" name="Green Soul Crystal - Stage 12">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5582" name="Blue Soul Crystal - Stage 12">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5583" name="Echo Crystal - 6th Carol">
+    <set name="icon" value="icon.etc_echo_crystal_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5584" name="Echo Crystal - 7th Carol">
+    <set name="icon" value="icon.etc_echo_crystal_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5585" name="Echo Crystal - 8th Carol">
+    <set name="icon" value="icon.etc_echo_crystal_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5586" name="Echo Crystal - 9th Carol">
+    <set name="icon" value="icon.etc_echo_crystal_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5587" name="Echo Crystal - 10th Carol">
+    <set name="icon" value="icon.etc_echo_crystal_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5588" name="Tutorial Guide">
+    <set name="icon" value="icon.etc_spellbook_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5589" name="Energy Stone">
+    <set name="icon" value="icon.etc_energy_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <armor id="5590" name="Squeaking Shoes">
+    <set name="icon" value="icon.armor_t02_b_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <etcitem id="5591" name="CP Potion">
+    <set name="icon" value="icon.etc_cp_potion_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5592" name="Greater CP Potion">
+    <set name="icon" value="icon.etc_cp_potion_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5593" name="SP Scroll (Low-Grade)">
+    <set name="icon" value="icon.etc_sp_scroll1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5594" name="SP Scroll (Medium-Grade)">
+    <set name="icon" value="icon.etc_sp_scroll2_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5595" name="SP Scroll (High Grade)">
+    <set name="icon" value="icon.etc_sp_scroll3_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="5596" name="Dasparion's Staff - Mana Up">
+    <set name="icon" value="icon.weapon_dasparions_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5597" name="Dasparion's Staff - Conversion">
+    <set name="icon" value="icon.weapon_dasparions_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5598" name="Dasparion's Staff - Acumen">
+    <set name="icon" value="icon.weapon_dasparions_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5599" name="Meteor Shower - Focus">
+    <set name="icon" value="icon.weapon_meteor_shower_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5600" name="Meteor Shower - Critical Bleed">
+    <set name="icon" value="icon.weapon_meteor_shower_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5601" name="Meteor Shower - Rsk. Haste">
+    <set name="icon" value="icon.weapon_meteor_shower_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5602" name="Elysian - Health">
+    <set name="icon" value="icon.weapon_elysian_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5603" name="Elysian - Anger">
+    <set name="icon" value="icon.weapon_elysian_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5604" name="Elysian - Critical Drain">
+    <set name="icon" value="icon.weapon_elysian_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5605" name="Branch of the Mother Tree - Conversion">
+    <set name="icon" value="icon.weapon_worldtrees_branch_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5606" name="Branch of the Mother Tree - Magic Damage">
+    <set name="icon" value="icon.weapon_worldtrees_branch_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5607" name="Branch of the Mother Tree - Acumen">
+    <set name="icon" value="icon.weapon_worldtrees_branch_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5608" name="Carnage Bow - Light">
+    <set name="icon" value="icon.weapon_carnium_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5609" name="Carnage Bow - Critical Bleed">
+    <set name="icon" value="icon.weapon_carnium_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5610" name="Carnage Bow - Mana Up">
+    <set name="icon" value="icon.weapon_carnium_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5611" name="Soul Bow - Cheap Shot">
+    <set name="icon" value="icon.weapon_soul_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5612" name="Soul Bow - Quick Recovery">
+    <set name="icon" value="icon.weapon_soul_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5613" name="Soul Bow - Critical Poison">
+    <set name="icon" value="icon.weapon_soul_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5614" name="Bloody Orchid - Focus">
+    <set name="icon" value="icon.weapon_bloody_orchid_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5615" name="Bloody Orchid - Back Blow">
+    <set name="icon" value="icon.weapon_bloody_orchid_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5616" name="Bloody Orchid - Critical Bleed">
+    <set name="icon" value="icon.weapon_bloody_orchid_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5617" name="Soul Separator - Guidance">
+    <set name="icon" value="icon.weapon_soul_separator_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5618" name="Soul Separator - Critical Damage">
+    <set name="icon" value="icon.weapon_soul_separator_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5619" name="Soul Separator - Rsk. Haste">
+    <set name="icon" value="icon.weapon_soul_separator_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5620" name="Blood Tornado - Haste">
+    <set name="icon" value="icon.weapon_blood_tornado_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5621" name="Blood Tornado - Focus">
+    <set name="icon" value="icon.weapon_blood_tornado_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5622" name="Blood Tornado - Anger">
+    <set name="icon" value="icon.weapon_blood_tornado_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5623" name="Dragon Grinder - Rsk. Evasion">
+    <set name="icon" value="icon.weapon_dragon_grinder_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5624" name="Dragon Grinder - Guidance">
+    <set name="icon" value="icon.weapon_dragon_grinder_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5625" name="Dragon Grinder - Health">
+    <set name="icon" value="icon.weapon_dragon_grinder_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5626" name="Halberd - Haste">
+    <set name="icon" value="icon.weapon_halbard_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5627" name="Halberd - Critical Stun">
+    <set name="icon" value="icon.weapon_halbard_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5628" name="Halberd - Wide Blow">
+    <set name="icon" value="icon.weapon_halbard_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5629" name="Orcish Halberd">
+    <set name="icon" value="icon.weapon_orcish_halbard_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5630" name="Orcish Halberd">
+    <set name="icon" value="icon.weapon_orcish_halbard_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5631" name="Orcish Halberd">
+    <set name="icon" value="icon.weapon_orcish_halbard_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5632" name="Tallum Glaive - Guidance">
+    <set name="icon" value="icon.weapon_tallum_glaive_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5633" name="Tallum Glaive - Health">
+    <set name="icon" value="icon.weapon_tallum_glaive_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5634" name="Tallum Glaive - Wide Blow">
+    <set name="icon" value="icon.weapon_tallum_glaive_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5635" name="Tallum Blade - Critical Poison">
+    <set name="icon" value="icon.weapon_tallum_blade_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5636" name="Tallum Blade - Haste">
+    <set name="icon" value="icon.weapon_tallum_blade_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5637" name="Tallum Blade - Anger">
+    <set name="icon" value="icon.weapon_tallum_blade_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5638" name="Elemental Sword - M. Atk.">
+    <set name="icon" value="icon.weapon_elemental_sword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5639" name="Elemental Sword - Magic Paralyze">
+    <set name="icon" value="icon.weapon_elemental_sword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5640" name="Elemental Sword - Empower">
+    <set name="icon" value="icon.weapon_elemental_sword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5641" name="Sword of Miracles - M. Atk.">
+    <set name="icon" value="icon.weapon_sword_of_miracle_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5642" name="Sword of Miracles - Magic Silence">
+    <set name="icon" value="icon.weapon_sword_of_miracle_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5643" name="Sword of Miracles - Acumen">
+    <set name="icon" value="icon.weapon_sword_of_miracle_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5644" name="Dragon Slayer - Health">
+    <set name="icon" value="icon.weapon_dragon_slayer_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5645" name="Dragon Slayer - Critical Bleed">
+    <set name="icon" value="icon.weapon_dragon_slayer_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5646" name="Dragon Slayer - Critical Drain">
+    <set name="icon" value="icon.weapon_dragon_slayer_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5647" name="Dark Legion's Edge - Critical Damage">
+    <set name="icon" value="icon.weapon_dark_legions_edge_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5648" name="Dark Legion's Edge - Health">
+    <set name="icon" value="icon.weapon_dark_legions_edge_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5649" name="Dark Legion's Edge - Rsk. Focus">
+    <set name="icon" value="icon.weapon_dark_legions_edge_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <etcitem id="5650" name="Seed: Alternative Dark Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5651" name="Seed: Alternative Red Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5652" name="Seed: Alternative Chilly Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5653" name="Seed: Alternative Blue Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5654" name="Seed: Alternative Golden Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5655" name="Seed: Alternative Lute Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5656" name="Seed: Alternative Desert Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5657" name="Seed: Alternative Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5658" name="Seed: Alternative Blue Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5659" name="Seed: Alternative Golden Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5660" name="Seed: Alternative Lute Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5661" name="Seed: Alternative Desert Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5662" name="Seed: Alternative Red Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5663" name="Seed: Alternative Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5664" name="Seed: Alternative Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5665" name="Seed: Alternative Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5666" name="Seed: Alternative Great Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5667" name="Seed: Alternative Red Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5668" name="Seed: Alternative Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5669" name="Seed: Alternative Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5670" name="Seed: Alternative Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5671" name="Seed: Alternative Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5672" name="Seed: Alternative Great Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5673" name="Seed: Alternative Red Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5674" name="Seed: Alternative Twin Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5675" name="Seed: Alternative Desert Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5676" name="Seed: Alternative Dark Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5677" name="Seed: Alternative Red Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5678" name="Seed: Alternative Blue Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5679" name="Seed: Alternative Red Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5680" name="Seed: Alternative Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5681" name="Seed: Alternative Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5682" name="Seed: Alternative Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5683" name="Seed: Alternative Sea Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5684" name="Seed: Alternative Chilly Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5685" name="Seed: Alternative Blue Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5686" name="Seed: Alternative Twin Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5687" name="Seed: Alternative Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5688" name="Seed: Alternative Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5689" name="Seed: Alternative Great Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5690" name="Seed: Alternative Red Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5691" name="Seed: Alternative Chilly Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5692" name="Seed: Alternative Blue Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5693" name="Seed: Alternative Twin Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5694" name="Seed: Alternative Great Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5695" name="Seed: Alternative Desert Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5696" name="Seed: Alternative Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5697" name="Seed: Alternative Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5698" name="Seed: Alternative Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5699" name="Seed: Alternative Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5700" name="Seed: Alternative Great Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5701" name="Seed: Alternative Red Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5702" name="Seed: Alternative Sea Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5703" name="Lucky Charm">
+    <set name="icon" value="icon.etc_charm_of_luck_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="5704" name="Keshanberk*Keshanberk">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5705" name="Keshanberk*Damascus">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5706" name="Damascus*Damascus">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="5707" name="Record of Seven Signs">
+    <set name="icon" value="icon.etc_ssq_scroll_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5708" name="Lord of the Manor's Certificate of Approval">
+    <set name="icon" value="icon.etc_permit_card_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <armor id="5709" name="Sealed Zubei's Gauntlets">
+    <set name="icon" value="icon.armor_t64_g_i02" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5710" name="Zubei's Gauntlets - Heavy Armor">
+    <set name="icon" value="icon.armor_t64_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5711" name="Zubei's Gauntlets - Light Armor">
+    <set name="icon" value="icon.armor_t65_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5712" name="Zubei's Gauntlets - Robe">
+    <set name="icon" value="icon.armor_t56_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5713" name="Sealed Avadon Gloves">
+    <set name="icon" value="icon.armor_t66_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5714" name="Avadon Gloves - Heavy Armor">
+    <set name="icon" value="icon.armor_t66_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5715" name="Avadon Gloves - Light Armor">
+    <set name="icon" value="icon.armor_t67_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5716" name="Avadon Gloves - Robe">
+    <set name="icon" value="icon.armor_t59_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5717" name="Sealed Blue Wolf Gloves">
+    <set name="icon" value="icon.armor_t68_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5718" name="Blue Wolf Gloves - Heavy Armor">
+    <set name="icon" value="icon.armor_t68_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5719" name="Blue Wolf Gloves - Light Armor">
+    <set name="icon" value="icon.armor_t69_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5720" name="Blue Wolf Gloves - Robe">
+    <set name="icon" value="icon.armor_t70_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5721" name="Sealed Doom Gloves">
+    <set name="icon" value="icon.armor_t71_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5722" name="Doom Gloves - Heavy Armor">
+    <set name="icon" value="icon.armor_t71_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5723" name="Doom Gloves - Light Armor">
+    <set name="icon" value="icon.armor_t72_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5724" name="Doom Gloves - Robe">
+    <set name="icon" value="icon.armor_t73_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5725" name="Sealed Zubei's Boots">
+    <set name="icon" value="icon.armor_t64_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5726" name="Zubei's Boots - Heavy Armor">
+    <set name="icon" value="icon.armor_t64_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5727" name="Zubei's Boots - Light Armor">
+    <set name="icon" value="icon.armor_t65_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5728" name="Zubei's Boots - Robe">
+    <set name="icon" value="icon.armor_t56_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5729" name="Sealed Avadon Boots">
+    <set name="icon" value="icon.armor_t66_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5730" name="Avadon Boots - Heavy Armor">
+    <set name="icon" value="icon.armor_t66_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5731" name="Avadon Boots - Light Armor">
+    <set name="icon" value="icon.armor_t67_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5732" name="Avadon Boots - Robe">
+    <set name="icon" value="icon.armor_t59_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5733" name="Sealed Blue Wolf Boots">
+    <set name="icon" value="icon.armor_t68_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5734" name="Blue Wolf Boots - Heavy Armor">
+    <set name="icon" value="icon.armor_t68_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5735" name="Blue Wolf Boots - Light Armor">
+    <set name="icon" value="icon.armor_t69_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5736" name="Blue Wolf Boots - Robe">
+    <set name="icon" value="icon.armor_t70_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5737" name="Sealed Doom Boots">
+    <set name="icon" value="icon.armor_t71_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5738" name="Doom Boots - Heavy Armor">
+    <set name="icon" value="icon.armor_t71_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5739" name="Doom Boots - Light Armor">
+    <set name="icon" value="icon.armor_t72_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5740" name="Doom Boots - Robe">
+    <set name="icon" value="icon.armor_t73_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <etcitem id="5741" name="Recipe: Sealed Zubei's Gauntlets (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5742" name="Recipe: Sealed Zubei's Gauntlets (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5743" name="Recipe: Sealed Avadon Gloves (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5744" name="Recipe: Sealed Avadon Gloves (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5745" name="Recipe: Sealed Blue Wolf Gloves (100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5746" name="Recipe: Sealed Blue Wolf Gloves (60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5747" name="Recipe: Sealed Doom Gloves (100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5748" name="Recipe: Sealed Doom Gloves (60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5749" name="Recipe: Sealed Zubei's Boots (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5750" name="Recipe: Sealed Zubei's Boots (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5751" name="Recipe: Sealed Avadon Boots (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5752" name="Recipe: Sealed Avadon Boots (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5753" name="Recipe: Sealed Blue Wolf Boots (100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5754" name="Recipe: Sealed Blue Wolf Boots (60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5755" name="Recipe: Sealed Doom Boots (100%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5756" name="Recipe: Sealed Doom Boots (60%)">
+    <set name="icon" value="icon.etc_recipe_violet_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5757" name="Sealed Zubei's Gauntlet Part">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5758" name="Sealed Avadon Gloves Part">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5759" name="Sealed Blue Wolf Gloves Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5760" name="Sealed Doom Gloves Part">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5761" name="Sealed Zubei's Boots Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5762" name="Sealed Avadon Boots Design">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5763" name="Sealed Blue Wolf Boots Design">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5764" name="Sealed Doom Boots Part">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <armor id="5765" name="Dark Crystal Gloves - Heavy Armor">
+    <set name="icon" value="icon.armor_t74_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5766" name="Dark Crystal Gloves - Light Armor">
+    <set name="icon" value="icon.armor_t75_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5767" name="Dark Crystal Gloves - Robe">
+    <set name="icon" value="icon.armor_t76_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5768" name="Tallum Gloves - Heavy Armor">
+    <set name="icon" value="icon.armor_t77_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5769" name="Tallum Gloves - Light Armor">
+    <set name="icon" value="icon.armor_t78_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5770" name="Tallum Gloves - Robe">
+    <set name="icon" value="icon.armor_t79_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5771" name="Gauntlets of Nightmare - Heavy Armor">
+    <set name="icon" value="icon.armor_t80_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5772" name="Gauntlets of Nightmare - Light Armor">
+    <set name="icon" value="icon.armor_t81_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5773" name="Gauntlets of Nightmare - Robe">
+    <set name="icon" value="icon.armor_t82_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5774" name="Majestic Gauntlets - Heavy Armor">
+    <set name="icon" value="icon.armor_t83_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5775" name="Majestic Gauntlets - Light Armor">
+    <set name="icon" value="icon.armor_t84_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5776" name="Majestic Gauntlets - Robe">
+    <set name="icon" value="icon.armor_t85_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="5777" name="Dark Crystal Boots - Heavy Armor">
+    <set name="icon" value="icon.armor_t74_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5778" name="Dark Crystal Boots - Light Armor">
+    <set name="icon" value="icon.armor_t75_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5779" name="Dark Crystal Boots - Robe">
+    <set name="icon" value="icon.armor_t76_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5780" name="Tallum Boots - Heavy Armor">
+    <set name="icon" value="icon.armor_t77_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5781" name="Tallum Boots - Light Armor">
+    <set name="icon" value="icon.armor_t78_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5782" name="Tallum Boots - Robe">
+    <set name="icon" value="icon.armor_t79_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5783" name="Boots of Nightmare - Heavy Armor">
+    <set name="icon" value="icon.armor_t80_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5784" name="Boots of Nightmare - Light Armor">
+    <set name="icon" value="icon.armor_t81_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5785" name="Boots of Nightmare - Robe">
+    <set name="icon" value="icon.armor_t82_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5786" name="Majestic Boots - Heavy Armor">
+    <set name="icon" value="icon.armor_t83_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5787" name="Majestic Boots - Light Armor">
+    <set name="icon" value="icon.armor_t84_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="5788" name="Majestic Boots - Robe">
+    <set name="icon" value="icon.armor_t85_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <etcitem id="5789" name="Soulshot: No Grade for Beginners">
+    <set name="icon" value="icon.etc_soulshot_none_for_rookie_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5790" name="Spiritshot: No Grade for Beginners">
+    <set name="icon" value="icon.etc_spiritshot_none_for_rookie_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="5791" name="Tomb Guard A">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5792" name="Tomb Guard B">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5793" name="Tomb Savant A">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5794" name="Tomb Savant B">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5795" name="Tomb Guard A">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5796" name="Tomb Guard B">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="5797" name="Tomb Savant A">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5798" name="Tomb Savant B">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <armor id="5799" name="Nephilim Lord">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <weapon id="5800" name="Nephilim Lord">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5801" name="For NPC (Dusk)">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="5802" name="For NPC (Dawn)">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <etcitem id="5803" name="Lucky Charm (D-Grade)">
+    <set name="icon" value="icon.etc_charm_of_luck_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5804" name="Lucky Charm (C-Grade)">
+    <set name="icon" value="icon.etc_charm_of_luck_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5805" name="Lucky Charm (B-Grade)">
+    <set name="icon" value="icon.etc_charm_of_luck_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5806" name="Lucky Charm (A-Grade)">
+    <set name="icon" value="icon.etc_charm_of_luck_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5807" name="Lucky Charm (S-Grade)">
+    <set name="icon" value="icon.etc_charm_of_luck_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <armor id="5808" name="Party Mask">
+    <set name="icon" value="icon.etc_party_mask_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="HAIR" />
+  </armor>
+  <etcitem id="5809" name="Spellbook: Aqua Splash">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5810" name="Spellbook: Rain of Fire">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5811" name="Spellbook: Mass Slow">
+    <set name="icon" value="icon.etc_spell_books_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5812" name="Spellbook: Servitor Empowerment">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5813" name="Spellbook: Servitor Cure">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5814" name="Spellbook: Servitor Blessing">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5815" name="Spellbook: Wild Magic">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5816" name="Spellbook: Advanced Block">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="5817" name="Chrono Campana">
+    <set name="icon" value="icon.weapon_chrono_campana_i00" />
+    <set name="type" value="pole" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="5818" name="Alternative Dark Coda">
+    <set name="icon" value="icon.etc_coda_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5819" name="Alternative Red Coda">
+    <set name="icon" value="icon.etc_coda_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5820" name="Alternative Chilly Coda">
+    <set name="icon" value="icon.etc_coda_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5821" name="Alternative Blue Coda">
+    <set name="icon" value="icon.etc_coda_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5822" name="Alternative Golden Coda">
+    <set name="icon" value="icon.etc_coda_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5823" name="Alternative Lute Coda">
+    <set name="icon" value="icon.etc_coda_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5824" name="Alternative Desert Coda">
+    <set name="icon" value="icon.etc_coda_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5825" name="Alternative Red Cobol">
+    <set name="icon" value="icon.etc_cobol_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5826" name="Alternative Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5827" name="Alternative Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5828" name="Alternative Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5829" name="Alternative Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5830" name="Alternative Great Cobol">
+    <set name="icon" value="icon.etc_cobol_i09" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5831" name="Alternative Red Codran">
+    <set name="icon" value="icon.etc_codran_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5832" name="Alternative Sea Codran">
+    <set name="icon" value="icon.etc_codran_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5833" name="Alternative Chilly Codran">
+    <set name="icon" value="icon.etc_codran_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5834" name="Alternative Blue Codran">
+    <set name="icon" value="icon.etc_codran_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5835" name="Alternative Twin Codran">
+    <set name="icon" value="icon.etc_codran_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5836" name="Alternative Great Codran">
+    <set name="icon" value="icon.etc_codran_i09" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5837" name="Alternative Desert Codran">
+    <set name="icon" value="icon.etc_codran_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5838" name="Mature Alternative Dark Coda">
+    <set name="icon" value="icon.etc_coda_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5839" name="Mature Alternative Red Coda">
+    <set name="icon" value="icon.etc_coda_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5840" name="Mature Alternative Chilly Coda">
+    <set name="icon" value="icon.etc_coda_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5841" name="Mature Alternative Blue Coda">
+    <set name="icon" value="icon.etc_coda_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5842" name="Mature Alternative Golden Coda">
+    <set name="icon" value="icon.etc_coda_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5843" name="Mature Alternative Lute Coda">
+    <set name="icon" value="icon.etc_coda_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5844" name="Mature Alternative Desert Coda">
+    <set name="icon" value="icon.etc_coda_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5845" name="Mature Alternative Red Cobol">
+    <set name="icon" value="icon.etc_cobol_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5846" name="Mature Alternative Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5847" name="Mature Alternative Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5848" name="Mature Alternative Thorn Cobol">
+    <set name="icon" value="icon.etc_cobol_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5849" name="Mature Alternative Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5850" name="Mature Alternative Great Cobol">
+    <set name="icon" value="icon.etc_cobol_i09" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5851" name="Mature Alternative Red Codran">
+    <set name="icon" value="icon.etc_codran_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5852" name="Mature Alternative Sea Codran">
+    <set name="icon" value="icon.etc_codran_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5853" name="Mature Alternative Chilly Codran">
+    <set name="icon" value="icon.etc_codran_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5854" name="Mature Alternative Blue Codran">
+    <set name="icon" value="icon.etc_codran_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5855" name="Mature Alternative Twin Codran">
+    <set name="icon" value="icon.etc_codran_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5856" name="Mature Alternative Great Codran">
+    <set name="icon" value="icon.etc_codran_i09" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5857" name="Mature Alternative Desert Codran">
+    <set name="icon" value="icon.etc_codran_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5858" name="Blessed Scroll of Escape: Clan Hall">
+    <set name="icon" value="icon.etc_scroll_of_return_agit_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5859" name="Blessed Scroll of Escape: Castle">
+    <set name="icon" value="icon.etc_scroll_of_return_castle_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5860" name="Lienrik Egg">
+    <set name="icon" value="icon.etc_dragon_egg_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5861" name="Lienrik Egg">
+    <set name="icon" value="icon.etc_dragon_egg_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5862" name="Stone of Contract">
+    <set name="icon" value="icon.etc_bead_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5863" name="Alligator Tooth">
+    <set name="icon" value="icon.etc_fang_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5864" name="Mysterious Map Piece">
+    <set name="icon" value="icon.etc_map_piece_ivory_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5865" name="Carnivore Spore">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5866" name="Herbivorous Spore">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5867" name="Jade Crystal">
+    <set name="icon" value="icon.etc_gem_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5868" name="Snake Scale">
+    <set name="icon" value="icon.etc_scale_of_medusa_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5869" name="Remains of Aden Residents">
+    <set name="icon" value="icon.etc_ashes_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5870" name="Receipt of Supply">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5871" name="Suspicious Document Piece">
+    <set name="icon" value="icon.etc_piece_of_report_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5872" name="Supply Items">
+    <set name="icon" value="icon.etc_squares_wood_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5873" name="Pirate's Treasure Chest">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5874" name="Sairon's Silver Hair">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5875" name="Titan Lamp">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5876" name="Titan Lamp">
+    <set name="icon" value="icon.etc_bead_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5877" name="Titan Lamp">
+    <set name="icon" value="icon.etc_bead_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5878" name="Titan Lamp">
+    <set name="icon" value="icon.etc_bead_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5879" name="Titan Lamp">
+    <set name="icon" value="icon.etc_bead_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5880" name="Broken Titan Lamp">
+    <set name="icon" value="icon.etc_broken_crystal_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5881" name="Blade Stakato Fang">
+    <set name="icon" value="icon.etc_claw_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5882" name="Flare Shard">
+    <set name="icon" value="icon.etc_echo_crystal_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5883" name="Freezing Shard">
+    <set name="icon" value="icon.etc_echo_crystal_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5884" name="Cave Beast Tooth">
+    <set name="icon" value="icon.etc_fang_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5885" name="Death Wave Light">
+    <set name="icon" value="icon.etc_crystal_ball_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5886" name="Sealed Mysterious Stone">
+    <set name="icon" value="icon.etc_dragon_egg_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5887" name="Mysterious Stone">
+    <set name="icon" value="icon.etc_dragon_egg_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5888" name="Karik Horn">
+    <set name="icon" value="icon.etc_horn_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5889" name="Cave Howler Skull">
+    <set name="icon" value="icon.etc_skull_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5890" name="Mysterious Book">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5891" name="Ancient Language Dictionary: Basic Level">
+    <set name="icon" value="icon.etc_spellbook_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5892" name="Ancient Language Dictionary: Intermediate Level">
+    <set name="icon" value="icon.etc_spellbook_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5893" name="Leaf of Eucalyptus">
+    <set name="icon" value="icon.etc_herb_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5894" name="Stone of Chill">
+    <set name="icon" value="icon.etc_crystal_ball_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5895" name="Ritron's Fruit">
+    <set name="icon" value="icon.etc_cobol_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5896" name="Moon Face Flower">
+    <set name="icon" value="icon.etc_flower_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5897" name="Leech Fluids">
+    <set name="icon" value="icon.etc_reagent_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5898" name="Royal Membership">
+    <set name="icon" value="icon.etc_royal_membership_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5899" name="Kail's Coin">
+    <set name="icon" value="icon.etc_magic_coin_blood_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5900" name="Coin Collecting Album">
+    <set name="icon" value="icon.etc_magic_book_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5901" name="Blood Offering">
+    <set name="icon" value="icon.etc_dragon_blood_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5902" name="Scroll of Ancient Magic">
+    <set name="icon" value="icon.etc_scroll_of_enchant_weapon_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5903" name="Ancient Ash Urn">
+    <set name="icon" value="icon.etc_oil_pot_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5904" name="Wesley's Mixing Stone">
+    <set name="icon" value="icon.etc_gem_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5905" name="Magister's Mixing Stone">
+    <set name="icon" value="icon.etc_gem_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5906" name="5th Anniversary Gift Box (10 Honey Rice Cake Set)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5907" name="5th Anniversary Gift Box (9 Honey Rice Cake Set)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5908" name="Red Soul Crystal: Stage 13">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5909" name="5th Anniversary Gift Box (8 Honey Rice Cake Set)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5910" name="5th Anniversary Gift Box (7 Honey Rice Cake Set)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5911" name="Green Soul Crystal: Stage 13">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5912" name="5th Anniversary Gift Box (6 Honey Rice Cake Set)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5913" name="5th Anniversary Gift Box (3 Honey Wheat Cake Set)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="5914" name="Blue Soul Crystal: Stage 13">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5915" name="Pirate's Treasure Map">
+    <set name="icon" value="icon.etc_map_ivory_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5916" name="Spellbook Page">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5917" name="Kranvel's Spellbook: Chapter of Fire">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5918" name="Kranvel's Spellbook: Chapter of Water">
+    <set name="icon" value="icon.etc_paper_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5919" name="Kranvel's Spellbook: Chapter of Wind">
+    <set name="icon" value="icon.etc_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5920" name="Kranvel's Spellbook: Chapter of Earth">
+    <set name="icon" value="icon.etc_paper_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5921" name="Worthless Piece of Paper">
+    <set name="icon" value="icon.etc_piece_of_paper_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5922" name="Blueprint: Giants Golem 1">
+    <set name="icon" value="icon.etc_paper_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5923" name="Blueprint: Giants Golem 2">
+    <set name="icon" value="icon.etc_paper_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5924" name="Blueprint: Giants Golem 3">
+    <set name="icon" value="icon.etc_paper_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5925" name="Blueprint: Giants Golem 4">
+    <set name="icon" value="icon.etc_paper_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5926" name="Blueprint: Giants Golem 5">
+    <set name="icon" value="icon.etc_paper_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5927" name="Book: Basics of Giants Magic, Chapter 1">
+    <set name="icon" value="icon.etc_paper_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5928" name="Book: Basics of Giants Magic, Chapter 2">
+    <set name="icon" value="icon.etc_paper_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5929" name="Book: Basics of Giants Magic, Chapter 3">
+    <set name="icon" value="icon.etc_paper_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5930" name="Book: Basics of Giants Magic, Chapter 4">
+    <set name="icon" value="icon.etc_paper_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5931" name="Book: Basics of Giants Magic, Chapter 5">
+    <set name="icon" value="icon.etc_paper_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5932" name="Handbook: Giants Architecture, Chapter 1">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5933" name="Handbook: Giants Architecture, Chapter 2">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5934" name="Handbook: Giants Architecture, Chapter 3">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5935" name="Handbook: Giants Architecture, Chapter 4">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5936" name="Handbook: Giants Architecture, Chapter 5">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5937" name="Book: Giants Medical Science, Chapter 1">
+    <set name="icon" value="icon.etc_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5938" name="Book: Giants Medical Science, Chapter 2">
+    <set name="icon" value="icon.etc_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5939" name="Book: Giants Medical Science, Chapter 3">
+    <set name="icon" value="icon.etc_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5940" name="Book: Giants Medical Science, Chapter 4">
+    <set name="icon" value="icon.etc_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5941" name="Book: Giants Medical Science, Chapter 5">
+    <set name="icon" value="icon.etc_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5942" name="Giant's Love Letter">
+    <set name="icon" value="icon.etc_piece_of_report_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5943" name="Giants' Doodle">
+    <set name="icon" value="icon.etc_painting_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5944" name="Ancient Parchment">
+    <set name="icon" value="icon.etc_roll_of_paper_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5945" name="Book: Giants Science and Technology, Chapter 1">
+    <set name="icon" value="icon.etc_spell_books_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5946" name="Book: Giants Science and Technology, Chapter 2">
+    <set name="icon" value="icon.etc_spell_books_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5947" name="Book: Giants Science and Technology, Chapter 3">
+    <set name="icon" value="icon.etc_spell_books_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5948" name="Book: Giants Science and Technology, Chapter 4">
+    <set name="icon" value="icon.etc_spell_books_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5949" name="Book: Giants Science and Technology, Chapter 5">
+    <set name="icon" value="icon.etc_spell_books_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5950" name="Almanac: Titan Culture, Chapter 1">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5951" name="Almanac: Titan Culture, Chapter 2">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5952" name="Almanac: Titan Culture, Chapter 3">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5953" name="Almanac: Titan Culture, Chapter 4">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5954" name="Almanac: Titan Culture, Chapter 5">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5955" name="Ancient Titan Book">
+    <set name="icon" value="icon.etc_spell_books_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5956" name="15 Year Old Wine">
+    <set name="icon" value="icon.etc_luxury_wine_a_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5957" name="30 Year Old Wine">
+    <set name="icon" value="icon.etc_luxury_wine_b_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5958" name="60 Year Old Wine">
+    <set name="icon" value="icon.etc_luxury_wine_c_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5959" name="Ritron's Dessert Recipe">
+    <set name="icon" value="icon.etc_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5960" name="Ritron Jelly">
+    <set name="icon" value="icon.etc_cobol_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5961" name="Kail's Silver Basilisk">
+    <set name="icon" value="icon.etc_kyles_silver_basilisk_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5962" name="Kail's Gold Golem">
+    <set name="icon" value="icon.etc_kyles_gold_golem_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5963" name="Kail's Blood Dragon">
+    <set name="icon" value="icon.etc_kyles_blood_dragon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5964" name="Warehouse Keeper's Medal">
+    <set name="icon" value="icon.etc_irongate_medal_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5965" name="Blank Scroll">
+    <set name="icon" value="icon.etc_scroll_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5966" name="Ancient Red Papyrus">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5967" name="Ancient Blue Papyrus">
+    <set name="icon" value="icon.etc_paper_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5968" name="Ancient Black Papyrus">
+    <set name="icon" value="icon.etc_paper_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5969" name="Ancient White Papyrus">
+    <set name="icon" value="icon.etc_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5970" name="Ancient Chain Letter">
+    <set name="icon" value="icon.etc_piece_of_paper_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5971" name="Ancient Joke Book">
+    <set name="icon" value="icon.etc_piece_of_paper_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5972" name="Revelation of the Seals: Chapter of Avarice">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5973" name="Revelation of the Seals: Chapter of Gnosis">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5974" name="Revelation of the Seals: Chapter of Strife">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5975" name="Revelation of the Seals: Chapter of Vengeance">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5976" name="Revelation of the Seals: Chapter of Awakening">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5977" name="Revelation of the Seals: Chapter of Calamity">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5978" name="Revelation of the Seals: Chapter of Descent">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5979" name="Ancient Epic, Chapter 1">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5980" name="Ancient Epic, Chapter 2">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5981" name="Ancient Epic, Chapter 3">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5982" name="Ancient Epic, Chapter 4">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5983" name="Ancient Epic, Chapter 5">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5984" name="Imperial Genealogy 1">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5985" name="Imperial Genealogy 2">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5986" name="Imperial Genealogy 3">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5987" name="Imperial Genealogy 4">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5988" name="Imperial Genealogy 5">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5989" name="Blueprint: Tower of Insolence, 1st Floor">
+    <set name="icon" value="icon.etc_letter_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5990" name="Blueprint: Tower of Insolence, 2nd Floor">
+    <set name="icon" value="icon.etc_letter_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5991" name="Blueprint: Tower of Insolence, 3rd Floor">
+    <set name="icon" value="icon.etc_letter_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5992" name="Blueprint: Tower of Insolence, 4th Floor">
+    <set name="icon" value="icon.etc_letter_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5993" name="Blueprint: Tower of Insolence, 5th Floor">
+    <set name="icon" value="icon.etc_letter_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5994" name="Blueprint: Tower of Insolence, 6th Floor">
+    <set name="icon" value="icon.etc_letter_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5995" name="Blueprint: Tower of Insolence, 7th Floor">
+    <set name="icon" value="icon.etc_letter_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5996" name="Blueprint: Tower of Insolence, 8th Floor">
+    <set name="icon" value="icon.etc_letter_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5997" name="Blueprint: Tower of Insolence, 9th Floor">
+    <set name="icon" value="icon.etc_letter_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5998" name="Blueprint: Tower of Insolence, 10th Floor">
+    <set name="icon" value="icon.etc_letter_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="5999" name="Blueprint: Tower of Insolence, 11th Floor">
+    <set name="icon" value="icon.etc_letter_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+</list>

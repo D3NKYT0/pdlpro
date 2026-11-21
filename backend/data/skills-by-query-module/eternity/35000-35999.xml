@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="35001" levels="3" name="Augment Topaz">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35002" levels="3" name="Augment Ruby">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35003" levels="3" name="Augment Sapphire">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35004" levels="3" name="Augment Obsidian">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35005" levels="3" name="Augment Opal">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35006" levels="3" name="Augment Emerald">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35007" levels="3" name="Augment Aquamarine">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35008" levels="3" name="Augment Diamond">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35009" levels="3" name="Augment Pearl">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35010" levels="3" name="Augment Tanzanite">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35011" levels="3" name="Augment Garnet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35012" levels="3" name="Augment Vital Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35013" levels="3" name="Augment Red Cat's Eye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35014" levels="3" name="Augment Blue Cat's Eye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35015" levels="3" name="Augment Topaz">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35016" levels="3" name="Augment Ruby">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35017" levels="3" name="Augment Sapphire">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35018" levels="3" name="Augment Obsidian">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35019" levels="3" name="Augment Opal">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35020" levels="3" name="Augment Emerald">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35021" levels="3" name="Augment Aquamarine">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35022" levels="3" name="Augment Diamond">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35023" levels="3" name="Augment Pearl">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35024" levels="3" name="Augment Tanzanite">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35025" levels="3" name="Augment Garnet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35026" levels="3" name="Augment Vital Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35027" levels="3" name="Augment Red Cat's Eye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35028" levels="3" name="Augment Blue Cat's Eye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35029" levels="1" name="Freya's Dark Rune">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35030" levels="1" name="Freya's CHA Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="35031" levels="1" name="Entrance Pass: Shilen's Altar">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35032" levels="1" name="Summon Virgo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35033" levels="1" name="Summon Virgo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35034" levels="1" name="Summon Capricorn Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35035" levels="1" name="Summon Libra Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35036" levels="1" name="Summon Aries Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35037" levels="1" name="Summon Taurus Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35038" levels="1" name="Summon Leo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35039" levels="1" name="Summon Gemini Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35040" levels="1" name="Summon Scorpio Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35041" levels="1" name="Summon Aquarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35042" levels="1" name="Summon Pisces Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35043" levels="1" name="Summon Sagittarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35044" levels="1" name="Summon Cancer Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35045" levels="11" name="Virgo Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35046" levels="11" name="Capricorn Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35047" levels="11" name="Libra Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35048" levels="11" name="Aries Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35049" levels="11" name="Taurus Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35050" levels="11" name="Leo Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35051" levels="11" name="Gemini Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35052" levels="11" name="Scorpio Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35053" levels="11" name="Aquarius Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35054" levels="11" name="Pisces Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35055" levels="11" name="Sagittarius Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35056" levels="11" name="Cancer Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35057" levels="4" name="Virgo Agathion Special Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35058" levels="4" name="Capricorn Agathion Special Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35059" levels="4" name="Libra Agathion Special Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35060" levels="4" name="Aries Agathion Special Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35061" levels="4" name="Taurus Agathion Special Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35062" levels="4" name="Leo Agathion Special Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35063" levels="4" name="Gemini Agathion Special Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35064" levels="4" name="Scorpio Agathion Special Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35065" levels="4" name="Aquarius Agathion Special Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35066" levels="4" name="Pisces Agathion Special Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35067" levels="4" name="Sagittarius Agathion Special Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35068" levels="4" name="Cancer Agathion Special Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35069" levels="2" name="Expand Primary Agathion Slot">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35070" levels="4" name="Expand Secondary Agathion Slot">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35071" levels="4" name="Expand Primary and Secondary Agathion Slots">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35072" levels="1" name="Zodiac Agathion Book of Growth">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35073" levels="1" name="Ancient Zodiac Agathion Book of Growth">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35074" levels="1" name="Zodiac Agathion Cube">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35075" levels="1" name="Agathion Summon - Zaken's Spirit Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35076" levels="1" name="Agathion Cute Trick - Zaken's Spirit Swords">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35077" levels="1" name="Lantern Agathion's Gift">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35078" levels="1" name="Elementary Seed Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35079" levels="1" name="Intermediate Seed Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35080" levels="1" name="Advanced Seed Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35081" levels="1" name="Top-grade Seed Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35082" levels="1" name="Super Advanced Seed Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35083" levels="1" name="Seed Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35084" levels="1" name="Seed Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35085" levels="1" name="Seed Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35086" levels="1" name="Seed Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35087" levels="1" name="Agathion's Trick">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35088" levels="1" name="Notifier">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35089" levels="1" name="Summon Agathion - Makeshift Bat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35090" levels="1" name="Summon Agathion - Cow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35091" levels="1" name="Summon Agathion - Griffin">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35092" levels="1" name="Summon Agathion - Pegasus">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35093" levels="1" name="Summon Agathion - Lantern">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35094" levels="1" name="Secret Embryo Bait Cube">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35095" levels="1" name="Elysium Special Stew">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="35096" levels="1" name="R99 Bait Cube">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35097" levels="1" name="Hunter's Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35098" levels="1" name="Fire Stone for Practice">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35099" levels="1" name="Practice Weapon Enchant Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35100" levels="2" name="Herphah's Summoning Scroll">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35101" levels="1" name="Dragon Fighter - Balthus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35102" levels="1" name="Dragon Mage - Balthus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35103" levels="1" name="Blessed Circlet Enchant Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35104" levels="3" name="Circlet of Authority">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35105" levels="5" name="Circlet of Authority Enchant Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35106" levels="5" name="Noble Circlet of Authority Enchant Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35107" levels="5" name="Radiant Circlet of Authority Enchant Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35108" levels="3" name="Circlet of Foresight">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35109" levels="5" name="Circlet of Foresight Enchant Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35110" levels="5" name="Noble Circlet of Foresight Enchant Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35111" levels="5" name="Radiant Circlet of Foresight Enchant Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35112" levels="3" name="Circlet of Grace">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35113" levels="5" name="Circlet of Grace Enchant Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35114" levels="5" name="Noble Circlet of Grace Enchant Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35115" levels="5" name="Radiant Circlet of Grace Enchant Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35116" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35117" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35118" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35119" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35120" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35121" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35122" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35123" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35124" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35125" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35126" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35127" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35128" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35129" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35130" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35131" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35132" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35133" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35134" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35135" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35136" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35137" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35138" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35139" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35140" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35141" levels="1" name="Circlet Spirit Stone Augmentation Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35142" levels="1" name="Reconstruction Society's Enchantment Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35143" levels="1" name="Circlet Upgrade Stone Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35144" levels="5" name="Balthus Knight Supply Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35145" levels="3" name="Hanbok Costume">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="35146" levels="1" name="Lantern's Lucky Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="35147" levels="4" name="+7 Zodiac Agathion Charm Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35148" levels="1" name="Herphah's Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35149" levels="3" name="Basic Supply Box">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="35150" levels="2" name="Defender's Valor Chest">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35151" levels="1" name="Balthus Knight Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35152" levels="1" name="Clan Cloak Enchant Scroll">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35153" levels="1" name="Giant's Clan Cloak Enchant Scroll">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35154" levels="4" name="Clan Cloak - War Stage 1">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35155" levels="5" name="Clan Cloak - War Stage 1 Enchantment Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35156" levels="5" name="Clan Cloak - War Stage 2 Enchantment Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35157" levels="5" name="Clan Cloak - War Stage 3 Enchantment Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35158" levels="5" name="Clan Cloak - War Stage 4 Enchantment Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35159" levels="4" name="Clan Cloak - Combat Stage 1">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35160" levels="5" name="Clan Cloak - Combat Stage 1 Enchantment Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35161" levels="5" name="Clan Cloak - Combat Stage 2 Enchantment Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35162" levels="5" name="Clan Cloak - Combat Stage 3 Enchantment Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35163" levels="5" name="Clan Cloak - Combat Stage 4 Enchantment Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35164" levels="5" name="+12 Bloody Helios Weapon Capsule">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35165" levels="1" name="Ride Magic Broom">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35166" levels="1" name="Reporter Ability">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="35167" levels="1" name="Fortress Talisman - Vitality">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35168" levels="1" name="Fortress Talisman - P. Skill Power">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35169" levels="1" name="Fortress Talisman - M. Skill Power">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35170" levels="1" name="Fortress Talisman - P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35171" levels="1" name="Fortress Talisman - M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35172" levels="1" name="Fortress Talisman - P. Def">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35173" levels="1" name="Fortress Talisman - M. Def">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35174" levels="1" name="Fortress Talisman - Atk. Spd.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35175" levels="1" name="Fortress Talisman - Casting Spd.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35176" levels="1" name="Fortress Talisman - P. Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35177" levels="1" name="Fortress Talisman - M. Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35178" levels="1" name="Fortress Talisman - Shield Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35179" levels="1" name="Fortress Talisman - Max HP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35180" levels="1" name="Fortress Talisman - Max MP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35181" levels="1" name="Fortress Talisman - Speed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35182" levels="1" name="Dragon Shirt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35183" levels="1" name="Dragon Leather Shirt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35184" levels="1" name="Dragon Rind Leather Shirt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35185" levels="6" name="Dragon Shirt Enchantment Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35186" levels="6" name="Dragon Leather Shirt Enchantment Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35187" levels="6" name="Dragon Rind Leather Shirt Enchantment Effect">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="35188" levels="18" name="Dragon Rage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="35189" levels="18" name="Dragon Scale">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="35190" levels="18" name="Dragon Rise">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="35218" levels="1" name="Item Skill: Recovery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+</list>

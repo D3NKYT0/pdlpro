@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="30000" levels="1" name="Hydro Attack: Debuff">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30001" levels="28" name="Hydro Attack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="30002" levels="3" name="Storm Sign">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30003" levels="20" name="Hydro Flare">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="30004" levels="25" name="Hydro Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30005" levels="4" name="Storm Sign">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30006" levels="11" name="Storm Rage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30007" levels="15" name="Hydro Drain">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="30008" levels="5" name="Wind Blend">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30009" levels="10" name="Deceptive Blink">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30010" levels="2" name="Windy Refuge">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30011" levels="15" name="Threatening Wind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30012" levels="25" name="Air Rush">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30013" levels="1" name="Switch Places">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="30014" levels="15" name="Compelling Wind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30015" levels="1" name="Mass Compelling Wind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30016" levels="4" name="Eye of the Storm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30017" levels="4" name="Squall">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30018" levels="1" name="Windy Illusion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30019" levels="11" name="Sayha's Word">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30020" levels="1" name="Sayha's Fury">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30022" levels="2" name="Sayha's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30023" levels="1" name="Decoy Lock">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30026" levels="4" name="Lightning Squall">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30027" levels="1" name="Destructive Bolt">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30029" levels="4" name="Divine Storm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30030" levels="1" name="Storm Captivity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30031" levels="1" name="Magic Potential">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30040" levels="17" name="Eminent Blunt Weapon Mastery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30041" levels="17" name="Eminent Robe Mastery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30042" levels="13" name="Eminent Quick Recovery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30043" levels="11" name="Eminent Attribute Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30044" levels="2" name="Eminent Trait Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30045" levels="3" name="Eminent Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30400" levels="2" name="Divine Wind">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30401" levels="2" name="Tenacity">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30402" levels="2" name="Efficacy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30500" levels="28" name="Lateral Hit">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="30501" levels="27" name="Backspin Blow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="30502" levels="24" name="Chin Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30503" levels="11" name="Spinning Kick">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="30504" levels="16" name="Gravity Hit">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="30505" levels="10" name="Pressure Punch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="30506" levels="14" name="Distant Kick">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="30507" levels="24" name="Left Sidestep">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30508" levels="27" name="Right Sidestep">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30509" levels="5" name="Back Step">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="AGGREDUCE_CHAR" />
+  </skill>
+  <skill id="30510" levels="1" name="Infighter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30511" levels="7" name="Air Light">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30512" levels="3" name="Distortion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30514" levels="3" name="Fluid Weave">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30515" levels="1" name="Spallation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30516" levels="1" name="Gravity Barrier">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30517" levels="11" name="Heavy Hand">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30518" levels="11" name="Reverse Weight">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="30519" levels="1" name="Warped Space">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30520" levels="3" name="Steel Mind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30521" levels="1" name="Damage Up">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="30522" levels="1" name="Eminent Attack Movement">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30523" levels="3" name="Battle Dash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30524" levels="1" name="Reliable Hit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="30526" levels="1" name="Heavy Punch">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30527" levels="1" name="Twisted Space - NPC">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30528" levels="1" name="Spatial Trap">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30530" levels="15" name="Crushing Air">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30531" levels="1" name="Servitor's Rage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30532" levels="3" name="Inside Position">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="30533" levels="1" name="Backside Purge">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30534" levels="1" name="Transform Puppy 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="30535" levels="1" name="Transform Puppy 2">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="30536" levels="1" name="Transform Puppy 3">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="30540" levels="17" name="Eminent Fist Weapon Mastery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30541" levels="17" name="Eminent Light Armor Mastery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30542" levels="13" name="Eminent Stability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30543" levels="11" name="Eminent Attribute Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30544" levels="2" name="Eminent Trait Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30545" levels="3" name="Eminent Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30546" levels="11" name="Flying Knee Kick">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="30547" levels="4" name="Stamp Punch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="30600" levels="1" name="Heavy Hit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="30601" levels="1" name="Heavy Hit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="30602" levels="1" name="Eviscerator Aura">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="30603" levels="1" name="Eviscerator Force">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="30604" levels="1" name="Block Eviscerator Force">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30605" levels="1" name="Sayha's Seer Aura">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="30606" levels="1" name="Sayha's Seer Force">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="30607" levels="1" name="Block Sayha's Seer Force">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="30608" levels="5" name="Fury of Eviscerator">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+</list>

@@ -1,0 +1,4320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <etcitem id="7000" name="Recipe: Greater Dye of WIT(Wit+3 Int-3) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7001" name="Recipe: Greater Dye of WIT(Wit+3 Men-3) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7002" name="Recipe: Greater Dye of STR (Str+4 Con-4) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7003" name="Recipe: Greater Dye of STR (Str+4 Dex-4) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7004" name="Recipe: Greater Dye of CON (Con+4 Str-4) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7005" name="Recipe: Greater Dye of CON (Con+4 Dex-4) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7006" name="Recipe: Greater Dye of DEX (Dex+4 Str-4) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7007" name="Recipe: Greater Dye of DEX (Dex+4 Con-4) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7008" name="Recipe: Greater Dye of INT (Int+4 Men-4) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7009" name="Recipe: Greater Dye of INT (Int+4 Wit-4) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7010" name="Recipe: Greater Dye of MEN (Men+4 Int-4) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7011" name="Recipe: Greater Dye of MEN (Men+4 Wit-4) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7012" name="Recipe: Greater Dye of WIT(Wit+4 Int-4) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7013" name="Recipe: Greater Dye of WIT(Wit+4 Men-4) (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <armor id="7014" name="Monster Only (Shield of Dark Dragon)">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="7015" name="Shield of Castle Pledge">
+    <set name="icon" value="icon.shield_pledge_shield_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <etcitem id="7016" name="Seed: Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7017" name="Seed: Blue Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7018" name="Seed: Blue Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7019" name="Seed: Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7020" name="Seed: Chilly Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7021" name="Seed: Chilly Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7022" name="Seed: Chilly Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7023" name="Seed: Desert Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7024" name="Seed: Desert Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7025" name="Seed: Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7026" name="Seed: Golden Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7027" name="Seed: Great Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7028" name="Seed: Great Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7029" name="Seed: Great Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7030" name="Seed: Alternative Blue Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7031" name="Seed: Alternative Blue Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7032" name="Seed: Alternative Blue Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7033" name="Seed: Alternative Chilly Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7034" name="Seed: Alternative Chilly Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7035" name="Seed: Alternative Chilly Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7036" name="Seed: Alternative Chilly Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7037" name="Seed: Alternative Desert Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7038" name="Seed: Alternative Desert Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7039" name="Seed: Alternative Golden Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7040" name="Seed: Alternative Golden Coda">
+    <set name="icon" value="icon.etc_coda_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7041" name="Seed: Alternative Great Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7042" name="Seed: Alternative Great Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7043" name="Seed: Alternative Great Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7044" name="Seed: Alternative Red Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7045" name="Seed: Alternative Red Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7046" name="Seed: Alternative Red Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7047" name="Seed: Alternative Sea Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7048" name="Seed: Alternative Sea Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7049" name="Seed: Alternative Sea Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7050" name="Seed: Alternative Twin Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7051" name="Seed: Red Cobol">
+    <set name="icon" value="icon.etc_cobol_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7052" name="Seed: Red Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7053" name="Seed: Red Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7054" name="Seed: Sea Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7055" name="Seed: Sea Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7056" name="Seed: Sea Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7057" name="Seed: Twin Codran">
+    <set name="icon" value="icon.etc_codran_seed_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="7058" name="Chrono Darbuka">
+    <set name="icon" value="icon.weapon_chrono_darbuka_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <armor id="7059" name="Golden Festival Mask">
+    <set name="icon" value="icon.accessory_taiwan_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR" />
+  </armor>
+  <armor id="7060" name="Tateossian Hairband">
+    <set name="icon" value="icon.accessory_tateossian_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="HAIR" />
+  </armor>
+  <etcitem id="7061" name="Echo Crystal - Theme of Birthday">
+    <set name="icon" value="icon.etc_echo_crystal_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7062" name="Echo Crystal - Theme of Wedding">
+    <set name="icon" value="icon.etc_echo_crystal_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7063" name="Map - Forest of the Dead">
+    <set name="icon" value="icon.etc_map_ivory_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7064" name="Lidia's Diary">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7065" name="Lidia's Letter">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7066" name="Contract">
+    <set name="icon" value="icon.etc_permit_card_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7067" name="Special Bait 1">
+    <set name="icon" value="icon.etc_ultra_bomb_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="7068" name="Special Bait 2">
+    <set name="icon" value="icon.etc_ultra_bomb_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="7069" name="Special Bait 3">
+    <set name="icon" value="icon.etc_ultra_bomb_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="7070" name="Special Bait 4">
+    <set name="icon" value="icon.etc_ultra_bomb_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="7071" name="Special Fish 1">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7072" name="Special Fish 2">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7073" name="Special Fish 3">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7074" name="Special Fish 4">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7075" name="Entrance Pass to the Sepulcher">
+    <set name="icon" value="icon.etc_memopad_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7076" name="Mysterious Cloth">
+    <set name="icon" value="icon.etc_piece_of_cloth_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7077" name="Jewel Box">
+    <set name="icon" value="icon.etc_treasure_box_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7078" name="Sewing Kit">
+    <set name="icon" value="icon.etc_treasure_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7079" name="Dimensional Fragment">
+    <set name="icon" value="icon.etc_broken_crystal_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7080" name="Ice Crystal">
+    <set name="icon" value="icon.etc_crystal_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7081" name="Divine Stone of Wisdom">
+    <set name="icon" value="icon.etc_stone_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7082" name="Guild Report">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7083" name="Guild Report">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7084" name="Guild Report">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7085" name="Guild Report">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7086" name="Guild Report">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7087" name="Tattered Book">
+    <set name="icon" value="icon.etc_spellbook_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7088" name="Tattered Book">
+    <set name="icon" value="icon.etc_spellbook_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7089" name="Tattered Book">
+    <set name="icon" value="icon.etc_spellbook_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7090" name="Tattered Book">
+    <set name="icon" value="icon.etc_spellbook_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7091" name="Guild Report">
+    <set name="icon" value="icon.etc_scroll_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7092" name="Guild Report">
+    <set name="icon" value="icon.etc_scroll_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7093" name="Sculpture of the Fallen Knight">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7094" name="Record of Mother Tree Guardian">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7095" name="Criticism of Biel's Song">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7096" name="The Last Days of Swordsman Iron">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7097" name="Contemplation of White Wing Army">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7098" name="Record of Traitor Muhark">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7099" name="Secret Book of Khavatari">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7100" name="Importance of Strain">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7101" name="Danger of Ice Spirit">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7102" name="Guardian Angel of the Tablet - Vol. 1">
+    <set name="icon" value="icon.etc_spellbook_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7103" name="Guardian Angel of the Tablet - Vol. 1">
+    <set name="icon" value="icon.etc_spellbook_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7104" name="Guardian Angel of the Tablet - Vol. 1">
+    <set name="icon" value="icon.etc_spellbook_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7105" name="Guardian Angel of the Tablet - Vol. 2">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7106" name="Guardian Angel of the Tablet - Vol. 2">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7107" name="Guardian Angel of the Tablet - Vol. 2">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7108" name="Guild's Secret Report">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7109" name="Guild's Secret Report">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7110" name="Research Report">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7111" name="Research Report">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7112" name="Research Report">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7113" name="Dress Shoe Box">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7114" name="Voucher - Buffalo">
+    <set name="icon" value="icon.etc_ticket_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7115" name="Voucher - Cougar">
+    <set name="icon" value="icon.etc_ticket_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7116" name="Voucher - Kookaburra">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7117" name="Scroll of Escape: Talking Island Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7118" name="Scroll of Escape: Elven Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7119" name="Scroll of Escape: Dark Elven Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7120" name="Scroll of Escape: Orc Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7121" name="Scroll of Escape: Dwarven Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7122" name="Scroll of Escape: Gludin Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7123" name="Scroll of Escape: Town of Gludio">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7124" name="Scroll of Escape: Town of Dion">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7125" name="Scroll of Escape: Floran Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7126" name="Scroll of Escape: Town of Giran">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7127" name="Scroll of Escape: Hardin's Academy">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7128" name="Scroll of Escape: Heine">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7129" name="Scroll of Escape: Town of Oren">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7130" name="Scroll of Escape: Ivory Tower">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7131" name="Scroll of Escape: Hunters Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7132" name="Scroll of Escape: Town of Aden">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7133" name="Scroll of Escape: Town of Goddard">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7134" name="Scroll of Escape: Rune Township">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7135" name="Scroll of Escape: Town of Schuttgart">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7136" name="Fruit Basket">
+    <set name="icon" value="icon.etc_handbag_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7137" name="Avellan Spice">
+    <set name="icon" value="icon.etc_dragon_blood_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7138" name="Honey Pouch">
+    <set name="icon" value="icon.etc_seed_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7139" name="Bracelet of Lizardman">
+    <set name="icon" value="icon.etc_leash_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7140" name="Cross of Einhasad">
+    <set name="icon" value="icon.etc_cross_of_einhasad_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7141" name="Cross of Einhasad">
+    <set name="icon" value="icon.etc_cross_of_einhasad_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7142" name="Lost Skull of Elf">
+    <set name="icon" value="icon.etc_skull_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7143" name="Letter of Innocentin">
+    <set name="icon" value="icon.etc_letter_envelope_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7144" name="Jewel of Adventurer">
+    <set name="icon" value="icon.etc_jewel_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7145" name="Jewel of Adventurer">
+    <set name="icon" value="icon.etc_jewel_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7146" name="Sealed Report Box">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7147" name="Report Box">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7148" name="Lidia's Hairpin">
+    <set name="icon" value="icon.etc_flower_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7149" name="Silver Key">
+    <set name="icon" value="icon.etc_old_key_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7150" name="Silver Spear">
+    <set name="icon" value="icon.weapon_winged_spear_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7151" name="Suspicious Totem Doll">
+    <set name="icon" value="icon.etc_totem_necklace_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7152" name="Flower Bouquet">
+    <set name="icon" value="icon.etc_flower_bouquet_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7153" name="Silver Cross of Einhasad">
+    <set name="icon" value="icon.etc_cross_of_einhasad_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7154" name="Broken Silver Cross of Einhasad">
+    <set name="icon" value="icon.etc_cross_of_einhasad_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7155" name="Lidia's Dress">
+    <set name="icon" value="icon.etc_ladys_dress_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7156" name="Suspicious Totem Doll">
+    <set name="icon" value="icon.etc_totem_necklace_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7157" name="Gemstone Key">
+    <set name="icon" value="icon.etc_old_key_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7158" name="Suspicious Totem Doll">
+    <set name="icon" value="icon.etc_totem_necklace_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7159" name="Box of Cookies">
+    <set name="icon" value="icon.etc_oil_pot_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7160" name="Luxury Wine">
+    <set name="icon" value="icon.etc_luxury_wine_a_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7161" name="Skein of Yarn">
+    <set name="icon" value="icon.etc_skein_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7162" name="Rough Jewel">
+    <set name="icon" value="icon.etc_stone_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7163" name="Enchanted Iron">
+    <set name="icon" value="icon.etc_lump_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7164" name="Signet Ring">
+    <set name="icon" value="icon.etc_royal_seal_of_lord_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7165" name="Map">
+    <set name="icon" value="icon.etc_map_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7166" name="Medicinal Herb">
+    <set name="icon" value="icon.etc_ginseng_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7167" name="Crystal of Seal">
+    <set name="icon" value="icon.etc_crystal_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7168" name="Blood of Saint">
+    <set name="icon" value="icon.etc_dragon_blood_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7169" name="Blood of Saint">
+    <set name="icon" value="icon.etc_dragons_blood_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7170" name="Seal of Light">
+    <set name="icon" value="icon.etc_jewel_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7171" name="Bead of Obedience">
+    <set name="icon" value="icon.etc_crystal_ball_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7172" name="Gem of Saints">
+    <set name="icon" value="icon.etc_crystal_ball_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7173" name="Feather Ornament">
+    <set name="icon" value="icon.etc_feather_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7174" name="Tooth of Totem">
+    <set name="icon" value="icon.etc_claw_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7175" name="Tooth of Dragon">
+    <set name="icon" value="icon.etc_claw_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7176" name="Letter of Iris">
+    <set name="icon" value="icon.etc_letter_envelope_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7177" name="Letter of Rohmer">
+    <set name="icon" value="icon.etc_scroll_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7178" name="Black Bone Necklace">
+    <set name="icon" value="icon.etc_totem_necklace_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7179" name="Red Bone Necklace">
+    <set name="icon" value="icon.etc_totem_necklace_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7180" name="Incense Pouch">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7181" name="Gem of Maille Lizardman">
+    <set name="icon" value="icon.etc_crystal_ball_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7182" name="Patrol's Report">
+    <set name="icon" value="icon.etc_roll_of_paper_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7183" name="Shining Gem">
+    <set name="icon" value="icon.etc_crystal_ball_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7184" name="Shining Red Gem">
+    <set name="icon" value="icon.etc_bead_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7185" name="Jewel of Innocence">
+    <set name="icon" value="icon.etc_crystal_ball_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7186" name="Horn of Buffalo">
+    <set name="icon" value="icon.etc_horn_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7187" name="Nepenthes Seed">
+    <set name="icon" value="icon.etc_seed_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7188" name="Proof of Avenger">
+    <set name="icon" value="icon.etc_jewel_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7189" name="Eye of Darkness">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7190" name="Evil Spirit of Darkness">
+    <set name="icon" value="icon.etc_bead_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7191" name="Broken Crystal">
+    <set name="icon" value="icon.etc_broken_crystal_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7192" name="Unfinished Summon Crystal">
+    <set name="icon" value="icon.etc_crystal_ball_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7193" name="Summon Crystal">
+    <set name="icon" value="icon.etc_crystal_ball_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7194" name="Essence of Daimon">
+    <set name="icon" value="icon.etc_stone_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7195" name="Boiled Eggs">
+    <set name="icon" value="icon.etc_egg_bundle_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7196" name="Fee of Boiled Egg">
+    <set name="icon" value="icon.etc_coins_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7197" name="Special Drink">
+    <set name="icon" value="icon.etc_winebottle_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7198" name="Fee of Special Drink">
+    <set name="icon" value="icon.etc_coins_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7199" name="Leaf of Flava">
+    <set name="icon" value="icon.etc_herb_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7200" name="Buffalo Meat">
+    <set name="icon" value="icon.etc_meat_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7201" name="Antelope Horn">
+    <set name="icon" value="icon.etc_horn_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7202" name="Trunk of Nepenthes">
+    <set name="icon" value="icon.etc_ginseng_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7203" name="Foot of Bandersnatchling">
+    <set name="icon" value="icon.etc_meat_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7204" name="Secret Spice">
+    <set name="icon" value="icon.etc_lesser_potion_purple_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7205" name="Soy Sauce Jar">
+    <set name="icon" value="icon.etc_oil_pot_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7206" name="Boiled Eggs for Delivery">
+    <set name="icon" value="icon.etc_egg_bundle_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7207" name="Special Drink for Delivery">
+    <set name="icon" value="icon.etc_winebottle_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7208" name="Hot Food Box">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7209" name="Food for Bumbalump">
+    <set name="icon" value="icon.etc_food_dish_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7210" name="Special Yeti Meat">
+    <set name="icon" value="icon.etc_meat_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7211" name="Mark of Ketra's Alliance - Level 1">
+    <set name="icon" value="icon.etc_ketra_friendship_1_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7212" name="Mark of Ketra's Alliance - Level 2">
+    <set name="icon" value="icon.etc_ketra_friendship_2_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7213" name="Mark of Ketra's Alliance - Level 3">
+    <set name="icon" value="icon.etc_ketra_friendship_3_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7214" name="Mark of Ketra's Alliance - Level 4">
+    <set name="icon" value="icon.etc_ketra_friendship_4_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7215" name="Mark of Ketra's Alliance - Level 5">
+    <set name="icon" value="icon.etc_ketra_friendship_5_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7216" name="Varka's Badge - Soldier">
+    <set name="icon" value="icon.etc_barka_badge_grunt_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7217" name="Varka's Badge - Captain">
+    <set name="icon" value="icon.etc_barka_badge_captin_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7218" name="Varka's Badge - General">
+    <set name="icon" value="icon.etc_barka_badge_officer_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7219" name="Totem of Valor">
+    <set name="icon" value="icon.etc_royal_seal_of_lord_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7220" name="Totem of Wisdom">
+    <set name="icon" value="icon.etc_imperial_scepter_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7221" name="Mark of Varka's Alliance - Level 1">
+    <set name="icon" value="icon.etc_barka_friendship_1_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7222" name="Mark of Varka's Alliance - Level 2">
+    <set name="icon" value="icon.etc_barka_friendship_2_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7223" name="Mark of Varka's Alliance - Level 3">
+    <set name="icon" value="icon.etc_barka_friendship_3_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7224" name="Mark of Varka's Alliance - Level 4">
+    <set name="icon" value="icon.etc_barka_friendship_4_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7225" name="Mark of Varka's Alliance - Level 5">
+    <set name="icon" value="icon.etc_barka_friendship_5_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7226" name="Ketra's Badge - Soldier">
+    <set name="icon" value="icon.etc_ketra_badge_grunt_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7227" name="Ketra's Badge - Captain">
+    <set name="icon" value="icon.etc_ketra_badge_captn_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7228" name="Ketra's Badge - General">
+    <set name="icon" value="icon.etc_ketra_badge_officer_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7229" name="Feather of Valor">
+    <set name="icon" value="icon.etc_royal_seal_of_lord_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7230" name="Feather of Wisdom">
+    <set name="icon" value="icon.etc_imperial_scepter_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7231" name="Munitions Box">
+    <set name="icon" value="icon.etc_squares_wood_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7232" name="Munitions Box">
+    <set name="icon" value="icon.etc_squares_wood_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7233" name="Varka's Mane">
+    <set name="icon" value="icon.etc_mane_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7234" name="Molar of Ketra Orc">
+    <set name="icon" value="icon.etc_molar_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7235" name="Head of Shadith">
+    <set name="icon" value="icon.etc_skull_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7236" name="Head of Mos">
+    <set name="icon" value="icon.etc_skull_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7237" name="Stolen Green Totem">
+    <set name="icon" value="icon.etc_totem_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7238" name="Green Totem">
+    <set name="icon" value="icon.etc_totem_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7239" name="Ice Heart of Ashutar">
+    <set name="icon" value="icon.etc_jewel_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7240" name="Head of Hekaton">
+    <set name="icon" value="icon.etc_skull_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7241" name="Head of Tayr">
+    <set name="icon" value="icon.etc_skull_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7242" name="Stolen Red Totem">
+    <set name="icon" value="icon.etc_totem_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7243" name="Red Totem">
+    <set name="icon" value="icon.etc_totem_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7244" name="Fire Heart of Nastron">
+    <set name="icon" value="icon.etc_jewel_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7245" name="Supply Box">
+    <set name="icon" value="icon.etc_squares_wood_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7246" name="Golden Ram Badge - Recruit">
+    <set name="icon" value="icon.etc_badge_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7247" name="Golden Ram Badge - Soldier">
+    <set name="icon" value="icon.etc_badge_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7248" name="Splinter Stakato Chitin">
+    <set name="icon" value="icon.etc_scale_of_medusa_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7249" name="Needle Stakato Chitin">
+    <set name="icon" value="icon.etc_scale_of_medusa_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7250" name="Talon of Stakato">
+    <set name="icon" value="icon.etc_fang_ivory_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7251" name="Golden Ram Coin">
+    <set name="icon" value="icon.etc_ticket_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7252" name="Krorin's Journal">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7253" name="Letter to Archaeologist">
+    <set name="icon" value="icon.etc_letter_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7254" name="Broken Relic Part">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7255" name="Sealed Box">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7256" name="Goblet of Alectia">
+    <set name="icon" value="icon.etc_holy_grail_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7257" name="Goblet of Tishas">
+    <set name="icon" value="icon.etc_holy_grail_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7258" name="Goblet of Mekara">
+    <set name="icon" value="icon.etc_holy_grail_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7259" name="Goblet of Morigul">
+    <set name="icon" value="icon.etc_holy_grail_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7260" name="Chapel Key">
+    <set name="icon" value="icon.etc_key_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7261" name="Used Grave Pass">
+    <set name="icon" value="icon.etc_bead_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7262" name="Antique Brooch">
+    <set name="icon" value="icon.etc_jewel_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7263" name="Package to Vulcan">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7264" name="Torch">
+    <set name="icon" value="icon.etc_torch_on_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7265" name="Vacualite Ore">
+    <set name="icon" value="icon.etc_broken_crystal_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7266" name="Vacualite">
+    <set name="icon" value="icon.etc_vacualite_noglow_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7267" name="Vacualite Floating Stone">
+    <set name="icon" value="icon.etc_vacualite_glowing_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7268" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7269" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7270" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7271" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7272" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7273" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7274" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7275" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7276" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7277" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7278" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7279" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7280" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7281" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7282" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7283" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7284" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7285" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7286" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7287" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7288" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7289" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7290" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7291" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7292" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7293" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7294" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7295" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7296" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7297" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7298" name="Resonance Amulet - 1">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7299" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7300" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7301" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7302" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7303" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7304" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7305" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7306" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7307" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7308" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7309" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7310" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7311" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7312" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7313" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7314" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7315" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7316" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7317" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7318" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7319" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7320" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7321" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7322" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7323" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7324" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7325" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7326" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7327" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7328" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7329" name="Resonance Amulet - 2">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7330" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7331" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7332" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7333" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7334" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7335" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7336" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7337" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7338" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7339" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7340" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7341" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7342" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7343" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7344" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7345" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7346" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7347" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7348" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7349" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7350" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7351" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7352" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7353" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7354" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7355" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7356" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7357" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7358" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7359" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7360" name="Resonance Amulet - 3">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7361" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7362" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7363" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7364" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7365" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7366" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7367" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7368" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7369" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7370" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7371" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7372" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7373" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7374" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7375" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7376" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7377" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7378" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7379" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7380" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7381" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7382" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7383" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7384" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7385" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7386" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7387" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7388" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7389" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7390" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7391" name="Resonance Amulet - 4">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7392" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7393" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7394" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7395" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7396" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7397" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7398" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7399" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7400" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7401" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7402" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7403" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7404" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7405" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7406" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7407" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7408" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7409" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7410" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7411" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7412" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7413" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7414" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7415" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7416" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7417" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7418" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7419" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7420" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7421" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7422" name="Resonance Amulet - 5">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7423" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7424" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7425" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7426" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7427" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7428" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7429" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7430" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7431" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7432" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7433" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7434" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7435" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7436" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7437" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7438" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7439" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7440" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7441" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7442" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7443" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7444" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7445" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7446" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7447" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7448" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7449" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7450" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7451" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7452" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7453" name="Resonance Amulet - 6">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7454" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7455" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7456" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7457" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7458" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7459" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7460" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7461" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7462" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7463" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7464" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7465" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7466" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7467" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7468" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7469" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7470" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7471" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7472" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7473" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7474" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7475" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7476" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7477" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7478" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7479" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7480" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7481" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7482" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7483" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7484" name="Resonance Amulet - 7">
+    <set name="icon" value="icon.etc_resonance_amulet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7485" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7486" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7487" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7488" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7489" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7490" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7491" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7492" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7493" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7494" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7495" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7496" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7497" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7498" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7499" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7500" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7501" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7502" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7503" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7504" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7505" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7506" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7507" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7508" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7509" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7510" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7511" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7512" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7513" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7514" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7515" name="Halisha's Mark">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7516" name="Ice Wine">
+    <set name="icon" value="icon.etc_luxury_wine_c_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7517" name="Donath's' Dish">
+    <set name="icon" value="icon.etc_fish_seawater_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7518" name="Donath's' Note - Vol.1">
+    <set name="icon" value="icon.etc_spell_books_hfighter_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7519" name="Shaved Ice">
+    <set name="icon" value="icon.etc_broken_crystal_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7520" name="Ice Cream">
+    <set name="icon" value="icon.etc_cobol_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7521" name="Ice Crystal Gemstone">
+    <set name="icon" value="icon.etc_deco_beed_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7522" name="Offering">
+    <set name="icon" value="icon.etc_oil_pot_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7523" name="Offering">
+    <set name="icon" value="icon.etc_oil_pot_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7524" name="Offering">
+    <set name="icon" value="icon.etc_oil_pot_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7525" name="Offering">
+    <set name="icon" value="icon.etc_oil_pot_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7526" name="Ancient Language Dictionary">
+    <set name="icon" value="icon.etc_spell_books_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7527" name="Ancient Language Dictionary">
+    <set name="icon" value="icon.etc_spell_books_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7528" name="Spinneret">
+    <set name="icon" value="icon.etc_squares_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7529" name="Investigative Report">
+    <set name="icon" value="icon.etc_spell_books_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7530" name="Investigative Report">
+    <set name="icon" value="icon.etc_spell_books_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7531" name="Investigative Report">
+    <set name="icon" value="icon.etc_spell_books_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7532" name="Investigative Report">
+    <set name="icon" value="icon.etc_spell_books_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7533" name="Investigative Report">
+    <set name="icon" value="icon.etc_spell_books_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7534" name="Ice Cold Flower">
+    <set name="icon" value="icon.etc_flower_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7535" name="Pure Ice">
+    <set name="icon" value="icon.etc_echo_crystal_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7536" name="Bitter Cold Beer">
+    <set name="icon" value="icon.etc_oil_pot_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7537" name="Multiple Course Meal">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7538" name="Dead Souls Fish Soup">
+    <set name="icon" value="icon.etc_fish_seawater_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7539" name="Bitter Cold Vodka">
+    <set name="icon" value="icon.etc_luxury_wine_c_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7540" name="Silver Crystal">
+    <set name="icon" value="icon.etc_crystal_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7541" name="Red Crystal">
+    <set name="icon" value="icon.etc_crystal_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7542" name="Vampire's Heart">
+    <set name="icon" value="icon.etc_bodypart_heart_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7543" name="Zombie's Brain">
+    <set name="icon" value="icon.etc_bodypart_brain_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7544" name="Rib Bone of a Black Magus">
+    <set name="icon" value="icon.etc_rib_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7545" name="Zombie's Liver">
+    <set name="icon" value="icon.etc_bodypart_liver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7546" name="Top Quality Meat">
+    <set name="icon" value="icon.etc_meat_of_monstereye_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7547" name="Young Wild Beast Meat">
+    <set name="icon" value="icon.etc_meat_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7548" name="Map Piece">
+    <set name="icon" value="icon.etc_map_piece_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7549" name="Yellow Map">
+    <set name="icon" value="icon.etc_map_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7550" name="Map Piece">
+    <set name="icon" value="icon.etc_map_piece_ivory_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7551" name="Ivory Colored Map">
+    <set name="icon" value="icon.etc_map_ivory_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7552" name="Broken Gemstone Fragment">
+    <set name="icon" value="icon.etc_broken_crystal_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7553" name="Gold Colored Gemstone">
+    <set name="icon" value="icon.etc_gem_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7554" name="Scroll of Escape: Talking Island Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7555" name="Scroll of Escape: Elven Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7556" name="Scroll of Escape: Dark Elven Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7557" name="Scroll of Escape: Orc Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7558" name="Scroll of Escape: Dwarven Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7559" name="Scroll of Escape: Town of Giran">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="7560" name="Monster Only (Fishing Rod)">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="fishingrod" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="7561" name="Fishing Manual">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7562" name="Dimensional Diamond">
+    <set name="icon" value="icon.etc_gem_clear_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7563" name="Galladucci's Order (Document)">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7564" name="Galladucci's Order (Document)">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7565" name="Galladucci's Order (Document)">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7566" name="Purified Magic Necklace">
+    <set name="icon" value="icon.etc_evil_necklace_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7567" name="Gemstone Powder">
+    <set name="icon" value="icon.etc_powder_orange_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7568" name="Magic Sword Hilt">
+    <set name="icon" value="icon.etc_hilt_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7569" name="Four-leaf Golden Clover Coin">
+    <set name="icon" value="icon.etc_gold_knight_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7570" name="Mark of Traveler">
+    <set name="icon" value="icon.etc_crest_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7571" name="Baulro's Letter">
+    <set name="icon" value="icon.etc_letter_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7572" name="Ariel's Recommendation">
+    <set name="icon" value="icon.etc_letter_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7573" name="Roselyn's Note">
+    <set name="icon" value="icon.etc_paper_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7574" name="Very Expensive Necklace">
+    <set name="icon" value="icon.accessary_necklace_of_devotion_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="7575" name="Draconic Bow">
+    <set name="icon" value="icon.weapon_draconic_bow_i00" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7576" name="Draconic Bow - Cheap Shot">
+    <set name="icon" value="icon.weapon_draconic_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7577" name="Draconic Bow - Focus">
+    <set name="icon" value="icon.weapon_draconic_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7578" name="Draconic Bow - Critical Slow">
+    <set name="icon" value="icon.weapon_draconic_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="7579" name="Draconic Bow Shaft">
+    <set name="icon" value="icon.etc_branch_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7580" name="Recipe: Draconic Bow (60%)">
+    <set name="icon" value="icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7581" name="Recipe: Draconic Bow (100%)">
+    <set name="icon" value="icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7582" name="Baby Spice">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7583" name="Pet Exchange Ticket: Buffalo">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7584" name="Pet Exchange Ticket: Cougar">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7585" name="Pet Exchange Ticket: Kookaburra">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7586" name="Sweet Fluid">
+    <set name="icon" value="icon.etc_potion_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7587" name="Legend of Seventeen">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7588" name="Faded Poetry Book">
+    <set name="icon" value="icon.etc_spellbook_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7589" name="Echo Crystal - Forgotten Song">
+    <set name="icon" value="icon.etc_echo_crystal_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7590" name="Strand of Golden Hair">
+    <set name="icon" value="icon.etc_braided_hemp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7591" name="Ring of Goddess: Waterbinder">
+    <set name="icon" value="icon.accessary_elven_ring_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7592" name="Necklace of Goddess: EverGreen">
+    <set name="icon" value="icon.accessary_elemental_necklace_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7593" name="Staff of Goddess: Rain Song">
+    <set name="icon" value="icon.weapon_sprites_staff_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7594" name="Relic Box">
+    <set name="icon" value="icon.etc_treasure_box_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7595" name="Orb of Binding">
+    <set name="icon" value="icon.etc_crystal_ball_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7596" name="Sorcery Ingredient">
+    <set name="icon" value="icon.etc_oil_pot_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7597" name="Malruk Succubus Claw">
+    <set name="icon" value="icon.etc_fang_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7598" name="Crimson Moss">
+    <set name="icon" value="icon.etc_powder_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7599" name="Rahorakti's Miraculous Medicine">
+    <set name="icon" value="icon.etc_potion_scarlet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7600" name="Worn Tarot Card - Wealth">
+    <set name="icon" value="icon.etc_piece_of_report_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7601" name="Worn Tarot Card - Power">
+    <set name="icon" value="icon.etc_piece_of_report_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7602" name="Worn Tarot Card - Love">
+    <set name="icon" value="icon.etc_piece_of_report_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7603" name="Worn Tarot Card - Knowledge">
+    <set name="icon" value="icon.etc_piece_of_report_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7604" name="Summoner Keats' Letter">
+    <set name="icon" value="icon.etc_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7605" name="Miracle Potion of Transferred Life">
+    <set name="icon" value="icon.etc_bless_of_eva_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7606" name="Kamilen's Antidote">
+    <set name="icon" value="icon.etc_dragons_blood_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7607" name="Coolant of the Repaired Wilma #3">
+    <set name="icon" value="icon.etc_mechanic_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7608" name="Sealed Envelope">
+    <set name="icon" value="icon.etc_scroll_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7609" name="Proof of Catching a Fish">
+    <set name="icon" value="icon.etc_ticket_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7610" name="Wind Fishing Lure">
+    <set name="icon" value="icon.etc_broken_crystal_silver_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="7611" name="Icy Air Fishing Lure">
+    <set name="icon" value="icon.etc_broken_crystal_blue_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="7612" name="Earth Fishing Lure">
+    <set name="icon" value="icon.etc_broken_crystal_gold_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="7613" name="Flaming Fishing Lure">
+    <set name="icon" value="icon.etc_broken_crystal_red_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="7614" name="Chest Caught by Wind Fishing Lure">
+    <set name="icon" value="icon.etc_treasure_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7615" name="Chest Caught by Icy Air Fishing Lure">
+    <set name="icon" value="icon.etc_treasure_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7616" name="Chest Caught by Earth Fishing Lure">
+    <set name="icon" value="icon.etc_treasure_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7617" name="Chest Caught by using a Flaming Fishing Lure">
+    <set name="icon" value="icon.etc_treasure_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7618" name="Scroll of Escape: Ketra Orc Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7619" name="Scroll of Escape: Varka Silenos Village">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7620" name="Trash">
+    <set name="icon" value="icon.etc_dragons_blood_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7621" name="Essence of Wind">
+    <set name="icon" value="icon.etc_echo_crystal_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7622" name="Lost Bait Ingredient">
+    <set name="icon" value="icon.etc_codran_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7623" name="Eye of Tarlk Basilisk">
+    <set name="icon" value="icon.etc_eyeball_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7624" name="Crimson Drake Heart">
+    <set name="icon" value="icon.etc_inf_ore_high_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7625" name="Strange Golem Blueprint">
+    <set name="icon" value="icon.etc_ssq_scroll_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7626" name="Kiki's Letter">
+    <set name="icon" value="icon.etc_permit_card_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7627" name="Small Glass Box">
+    <set name="icon" value="icon.etc_silver_mold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7628" name="Rukal's Musical Score">
+    <set name="icon" value="icon.etc_ssq_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7629" name="Looted Goods - White Cargo box">
+    <set name="icon" value="icon.etc_treasure_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7630" name="Looted Goods - Blue Cargo box">
+    <set name="icon" value="icon.etc_treasure_box_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7631" name="Looted Goods - Yellow Cargo box">
+    <set name="icon" value="icon.etc_treasure_box_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7632" name="Looted Goods - Red Cargo Box">
+    <set name="icon" value="icon.etc_royal_seal_of_lord_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7633" name="Looted Goods - Purple Cargo Box">
+    <set name="icon" value="icon.etc_royal_seal_of_lord_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7634" name="Looted Goods - Brown Pouch">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7635" name="Looted Goods - Gray Pouch">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7636" name="Booty - Yellow Pouch">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7637" name="Booty - Brown Pouch">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7638" name="Spellbook - Mass Summon Storm Cubic">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7639" name="Spellbook - Mass Summon Aqua Cubic">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7640" name="Spellbook - Mass Summon Phantom Cubic">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7641" name="Spellbook - Summon Feline Queen">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7642" name="Spellbook - Summon Unicorn Seraphim">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7643" name="Spellbook - Summon Nightshade">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7644" name="Spellbook - Summon Cursed Man">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7645" name="Spellbook - Balance Life">
+    <set name="icon" value="icon.etc_spell_books_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7646" name="Spellbook - Curse of Doom">
+    <set name="icon" value="icon.etc_spell_books_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7647" name="Spellbook - Curse of Abyss">
+    <set name="icon" value="icon.etc_spell_books_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7648" name="Spellbook - Arcane Chaos">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7649" name="Spellbook - Fire Vortex">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7650" name="Spellbook - Ice Vortex">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7651" name="Spellbook - Wind Vortex">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7652" name="Spellbook - Light Vortex">
+    <set name="icon" value="icon.etc_spell_books_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7653" name="Spellbook - Dark Vortex">
+    <set name="icon" value="icon.etc_spell_books_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7654" name="Spellbook - Mass Warrior Bane">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7655" name="Spellbook - Mass Mage Bane">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7656" name="Spellbook - Warrior Servitor">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7657" name="Spellbook - Wizard Servitor">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7658" name="Spellbook - Assassin Servitor">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7659" name="Spellbook - Final Servitor">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7660" name="Spellbook - Warrior Bane">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7661" name="Spellbook - Mage Bane">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7662" name="Spellbook - Elemental Protection">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7663" name="Spellbook - Divine Protection">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7664" name="Spellbook - Arcane Protection">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7665" name="Spellbook - Prophecy of Water">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7666" name="Spellbook - Prophecy of Fire">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7667" name="Spellbook - Prophecy of Wind">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7668" name="Spellbook - Block Shield">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7669" name="Spellbook - Block Wind Walk">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7670" name="Spellbook - Mass Block Shield">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7671" name="Spellbook - Mass Block Wind Walk">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7672" name="Amulet - Chant of Spirit">
+    <set name="icon" value="icon.etc_orcish_talisman_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7673" name="Amulet - Chant of Victory">
+    <set name="icon" value="icon.etc_orcish_talisman_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7674" name="Amulet - Pa'agrio's Eye">
+    <set name="icon" value="icon.etc_orcish_talisman_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7675" name="Amulet - Pa'agrio's Soul">
+    <set name="icon" value="icon.etc_orcish_talisman_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7676" name="Amulet - Seal of Despair">
+    <set name="icon" value="icon.etc_orcish_talisman_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7677" name="Virgil's Letter">
+    <set name="icon" value="icon.etc_letter_envelope_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7678" name="Caradine's Letter">
+    <set name="icon" value="icon.etc_letter_envelope_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7679" name="Caradine's Letter">
+    <set name="icon" value="icon.etc_letter_envelope_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="7680" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="7681" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="HAIR" />
+  </armor>
+  <armor id="7682" name="Maiden's Hairpin">
+    <set name="icon" value="icon.accessory_maidens_hairpin_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="7683" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="HAIR2" />
+  </armor>
+  <etcitem id="7684" name="Raccoon Ears Fabric">
+    <set name="icon" value="icon.etc_piece_of_cloth_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7685" name="Outlaw's Eyepatch Strap">
+    <set name="icon" value="icon.etc_braided_hemp_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7686" name="Maiden's Hairpin Piece">
+    <set name="icon" value="icon.etc_broken_crystal_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7687" name="Rabbit Ears Fabric">
+    <set name="icon" value="icon.etc_piece_of_cloth_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7688" name="Cat Ears Fabric">
+    <set name="icon" value="icon.etc_piece_of_cloth_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7689" name="Recipe - Raccoon Ears (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7690" name="Recipe - Outlaw's Eyepatch (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7691" name="Recipe - Maiden's Hairpin (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7692" name="Recipe - Rabbit Ears (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7693" name="Recipe - Cat Ears (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <armor id="7694" name="Noblesse Tiara">
+    <set name="icon" value="icon.accessory_noblesse_tiara_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR" />
+  </armor>
+  <armor id="7695" name="Forget-me-not Hairpin">
+    <set name="icon" value="icon.accessory_forget_me_not_hairpin_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="7696" name="Daisy Hairpin">
+    <set name="icon" value="icon.accessory_daisy_hairpin_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="HAIR2" />
+  </armor>
+  <etcitem id="7697" name="Piece of Forget-me-not Hairpin">
+    <set name="icon" value="icon.etc_broken_crystal_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7698" name="Piece of Daisy Hairpin">
+    <set name="icon" value="icon.etc_broken_crystal_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7699" name="Recipe: Forget-me-not Hairpin (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7700" name="Recipe: Daisy Hairpin (100%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="7701" name="Stick of Faith - Mana Up">
+    <set name="icon" value="icon.weapon_stick_of_faith_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7702" name="Stick of Faith - Magic Hold">
+    <set name="icon" value="icon.weapon_stick_of_faith_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7703" name="Stick of Faith - Magic Shield">
+    <set name="icon" value="icon.weapon_stick_of_faith_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7704" name="Stick of Eternity - Empower">
+    <set name="icon" value="icon.weapon_stick_of_eternity_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7705" name="Stick of Eternity - Rsk. Evasion">
+    <set name="icon" value="icon.weapon_stick_of_eternity_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7706" name="Stick of Eternity - Blessed Body">
+    <set name="icon" value="icon.weapon_stick_of_eternity_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7707" name="Nirvana Axe - M. Atk.">
+    <set name="icon" value="icon.weapon_nirvana_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7708" name="Nirvana Axe - Magic Poison">
+    <set name="icon" value="icon.weapon_nirvana_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7709" name="Nirvana Axe - Magic Weakness">
+    <set name="icon" value="icon.weapon_nirvana_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7710" name="Club of Nature - Acumen">
+    <set name="icon" value="icon.weapon_club_of_nature_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7711" name="Club of Nature - Mental Shield">
+    <set name="icon" value="icon.weapon_club_of_nature_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7712" name="Club of Nature - Magic Hold">
+    <set name="icon" value="icon.weapon_club_of_nature_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7713" name="Mace of Underworld - Mana Up">
+    <set name="icon" value="icon.weapon_mace_of_underworld_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7714" name="Mace of Underworld - Magic Silence">
+    <set name="icon" value="icon.weapon_mace_of_underworld_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7715" name="Mace of Underworld - Conversion">
+    <set name="icon" value="icon.weapon_mace_of_underworld_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7716" name="Inferno Staff - Acumen">
+    <set name="icon" value="icon.weapon_inferno_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7717" name="Inferno Staff - Magic Silence">
+    <set name="icon" value="icon.weapon_inferno_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7718" name="Inferno Staff - Magic Paralyze">
+    <set name="icon" value="icon.weapon_inferno_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7719" name="Poleaxe - Critical Stun">
+    <set name="icon" value="icon.weapon_poleaxe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7720" name="Poleaxe - Towering Blow">
+    <set name="icon" value="icon.weapon_poleaxe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7721" name="Poleaxe - Wide Blow">
+    <set name="icon" value="icon.weapon_poleaxe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7722" name="Sword of Valhalla - Acumen">
+    <set name="icon" value="icon.weapon_sword_of_valhalla_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7723" name="Sword of Valhalla - Magic Weakness">
+    <set name="icon" value="icon.weapon_sword_of_valhalla_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7724" name="Sword of Valhalla - Magic Regeneration">
+    <set name="icon" value="icon.weapon_sword_of_valhalla_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <etcitem id="7725" name="Booty - Gray Pouch">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7726" name="Small Nimble Green Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7727" name="Small Ugly Green Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7728" name="Small Pudgy Green Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7729" name="Nimble Green Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7730" name="Ugly Green Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7731" name="Pudgy Green Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7732" name="Large Nimble Green Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7733" name="Large Ugly Green Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7734" name="Large Pudgy Green Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7735" name="Small Jade Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7736" name="Small Jade Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7737" name="Small Jade Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7738" name="Jade Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7739" name="Jade Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7740" name="Jade Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7741" name="Large Jade Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7742" name="Large Jade Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7743" name="Large Jade Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7744" name="Small Blue Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7745" name="Small Blue Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7746" name="Small Blue Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7747" name="Blue Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7748" name="Blue Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7749" name="Blue Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7750" name="Large Blue Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7751" name="Large Blue Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7752" name="Large Blue Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7753" name="Small Yellow Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7754" name="Small Yellow Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7755" name="Small Yellow Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7756" name="Yellow Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7757" name="Yellow Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7758" name="Yellow Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7759" name="Large Yellow Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7760" name="Large Yellow Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7761" name="Large Yellow Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7762" name="Small Orange Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7763" name="Small Orange Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7764" name="Small Orange Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7765" name="Orange Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7766" name="Orange Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7767" name="Orange Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7768" name="Large Orange Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7769" name="Large Orange Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7770" name="Large Orange Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7771" name="Small Purple Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7772" name="Small Purple Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7773" name="Small Purple Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7774" name="Purple Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7775" name="Purple Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7776" name="Purple Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7777" name="Large Purple Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7778" name="Large Purple Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7779" name="Large Purple Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7780" name="Small Red Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7781" name="Small Red Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7782" name="Small Red Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7783" name="Red Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7784" name="Red Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7785" name="Red Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7786" name="Large Red Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7787" name="Large Red Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7788" name="Large Red Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7789" name="Small White Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7790" name="Small White Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7791" name="Small White Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7792" name="White Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7793" name="White Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7794" name="White Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7795" name="Large White Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7796" name="Large White Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7797" name="Large White Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7798" name="Small Black Nimble Fish: For Beginners">
+    <set name="icon" value="icon.etc_tuna_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7799" name="Small Black Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7800" name="Small Black Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7801" name="Black Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7802" name="Black Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7803" name="Black Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7804" name="Large Black Nimble Fish - For Beginners">
+    <set name="icon" value="icon.etc_tuna_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7805" name="Large Black Ugly Fish - For Beginners">
+    <set name="icon" value="icon.etc_angler_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7806" name="Large Black Fat Fish - For Beginners">
+    <set name="icon" value="icon.etc_bream_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7807" name="Green Colored Lure - For Beginners">
+    <set name="icon" value="icon.etc_bait_i00" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="7808" name="Purple Colored Lure - For Beginners">
+    <set name="icon" value="icon.etc_bait_i01" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="7809" name="Yellow Colored Lure - For Beginners">
+    <set name="icon" value="icon.etc_bait_i02" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <weapon id="7810" name="Soulfire Dirk - Mana Up">
+    <set name="icon" value="icon.weapon_dagger_of_magicflame_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7811" name="Soulfire Dirk - Magic Hold">
+    <set name="icon" value="icon.weapon_dagger_of_magicflame_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7812" name="Soulfire Dirk - Magic Silence">
+    <set name="icon" value="icon.weapon_dagger_of_magicflame_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7813" name="Hell Knife - Magic Regeneration">
+    <set name="icon" value="icon.weapon_hell_knife_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7814" name="Hell Knife - Mental Shield">
+    <set name="icon" value="icon.weapon_hell_knife_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7815" name="Hell Knife - Magic Weakness">
+    <set name="icon" value="icon.weapon_hell_knife_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7816" name="Apprentice Adventurer's Staff">
+    <set name="icon" value="icon.weapon_apprentices_staff_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7817" name="Apprentice Adventurer's Bone Club">
+    <set name="icon" value="icon.weapon_club_i00" />
+    <set name="type" value="blunt" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7818" name="Apprentice Adventurer's Knife">
+    <set name="icon" value="icon.weapon_shining_knife_i00" />
+    <set name="type" value="dagger" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7819" name="Apprentice Adventurer's Cestus">
+    <set name="icon" value="icon.weapon_vipers_canine_i00" />
+    <set name="type" value="dualfist" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7820" name="Apprentice Adventurer's Bow">
+    <set name="icon" value="icon.weapon_short_bow_i00" />
+    <set name="type" value="bow" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7821" name="Apprentice Adventurer's Long Sword">
+    <set name="icon" value="icon.weapon_long_sword_i00" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7822" name="Traveler's Mace">
+    <set name="icon" value="icon.weapon_mace_of_prayer_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7823" name="Traveler's Dark Elven Bow">
+    <set name="icon" value="icon.weapon_dark_elven_bow_i00" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7824" name="Traveler's Long Bow">
+    <set name="icon" value="icon.weapon_strengthening_bow_i00" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7825" name="Traveler's Staff">
+    <set name="icon" value="icon.weapon_staff_of_mana_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7826" name="Traveler's Bastard Sword">
+    <set name="icon" value="icon.weapon_bastard_sword_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7827" name="Traveler's Wand">
+    <set name="icon" value="icon.weapon_divine_tome_i00" />
+    <set name="type" value="etc" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7828" name="Traveler's Jamadhr">
+    <set name="icon" value="icon.weapon_baghnakh_i00" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7829" name="Traveler's Tomahawk">
+    <set name="icon" value="icon.weapon_tomahawk_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7830" name="Traveler's Poniard Dagger">
+    <set name="icon" value="icon.weapon_dirk_i00" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7831" name="Traveler's Pike">
+    <set name="icon" value="icon.weapon_pike_i00" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="7832" name="Apprentice Adventurer's Weapon Exchange Coupon">
+    <set name="icon" value="icon.etc_lottery_card_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="7833" name="Adventurer's Magic Accessory Exchange Coupon">
+    <set name="icon" value="icon.etc_lottery_card_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="7834" name="Art of Battle Axe">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <etcitem id="7835" name="Amulet: Seal of Disease">
+    <set name="icon" value="icon.etc_orcish_talisman_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <armor id="7836" name="Santa's Hat">
+    <set name="icon" value="icon.accessory_santas_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="7837" name="Sayha's White Mask">
+    <set name="icon" value="icon.accessory_full_mask_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR" />
+  </armor>
+  <etcitem id="7838" name="Santa's Hat">
+    <set name="icon" value="icon.accessory_santas_cap_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <armor id="7839" name="Gran Kain's Black Mask">
+    <set name="icon" value="icon.accessory_full_mask_i01" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR" />
+  </armor>
+  <armor id="7840" name="Rabbit Ears - Event">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="7841" name="Racoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="7842" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="7843" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR" />
+  </armor>
+  <armor id="7844" name="Monocle">
+    <set name="icon" value="icon.accessory_glasses_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR" />
+  </armor>
+  <armor id="7845" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR" />
+  </armor>
+  <armor id="7846" name="Maiden's Hairpin">
+    <set name="icon" value="icon.accessory_maidens_hairpin_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="7847" name="Lady's Hairpin">
+    <set name="icon" value="icon.accessory_hairpin_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="7848" name="Forget-me-not Hairpin">
+    <set name="icon" value="icon.accessory_forget_me_not_hairpin_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="7849" name="Daisy Hairpin">
+    <set name="icon" value="icon.accessory_daisy_hairpin_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="7850" name="Clan Oath Helm">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="7851" name="Clan Oath Armor">
+    <set name="icon" value="icon.armor_t1001_ul_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="7852" name="Clan Oath Gauntlets - Heavy Armor">
+    <set name="icon" value="icon.armor_t1001_g_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="7853" name="Clan Oath Sabaton - Heavy Armor">
+    <set name="icon" value="icon.armor_t1001_b_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="7854" name="Clan Oath Brigandine">
+    <set name="icon" value="icon.armor_t1002_ul_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="7855" name="Clan Oath Leather Gloves - Light Armor">
+    <set name="icon" value="icon.armor_t1002_g_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="7856" name="Clan Oath Boots - Light Armor">
+    <set name="icon" value="icon.armor_t1002_b_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="7857" name="Clan Oath Aketon">
+    <set name="icon" value="icon.armor_t1003_ul_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="7858" name="Clan Oath Padded Gloves - Robe">
+    <set name="icon" value="icon.armor_t1003_g_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="7859" name="Clan Oath Sandals - Robe">
+    <set name="icon" value="icon.armor_t1003_b_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="7860" name="Apella Helm">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="7861" name="Apella Plate Armor">
+    <set name="icon" value="icon.armor_t1004_ul_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="7862" name="Apella Gauntlet - Heavy Armor">
+    <set name="icon" value="icon.armor_t1004_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="7863" name="Apella Solleret - Heavy Armor">
+    <set name="icon" value="icon.armor_t1004_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="7864" name="Apella Brigandine">
+    <set name="icon" value="icon.armor_t1005_ul_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="7865" name="Apella Leather Gloves - Light Armor">
+    <set name="icon" value="icon.armor_t1005_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="7866" name="Apella Boots - Light Armor">
+    <set name="icon" value="icon.armor_t1005_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="7867" name="Apella Doublet">
+    <set name="icon" value="icon.armor_t1006_ul_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="7868" name="Apella Silk Gloves - Robe">
+    <set name="icon" value="icon.armor_t1006_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="7869" name="Apella Sandals - Robe">
+    <set name="icon" value="icon.armor_t1006_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="7870" name="Sealed Apella Helm">
+    <set name="icon" value="icon.armor_helmet_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="7871" name="Sealed Apella Plate Armor">
+    <set name="icon" value="icon.armor_t1004_ul_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="7872" name="Sealed Apella Gauntlet">
+    <set name="icon" value="icon.armor_t1004_g_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="7873" name="Sealed Apella Solleret">
+    <set name="icon" value="icon.armor_t1004_b_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="7874" name="Sealed Apella Brigandine">
+    <set name="icon" value="icon.armor_t1005_ul_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="7875" name="Sealed Apella Leather Gloves">
+    <set name="icon" value="icon.armor_t1005_g_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="7876" name="Sealed Apella Boots">
+    <set name="icon" value="icon.armor_t1005_b_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="7877" name="Sealed Apella Doublet">
+    <set name="icon" value="icon.armor_t1006_ul_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="7878" name="Sealed Apella Silk Gloves">
+    <set name="icon" value="icon.armor_t1006_g_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="7879" name="Sealed Apella Sandals">
+    <set name="icon" value="icon.armor_t1006_b_i02" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="FEET" />
+  </armor>
+  <weapon id="7880" name="Steel Sword">
+    <set name="icon" value="icon.weapon_iron_sword_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7881" name="Titan Sword">
+    <set name="icon" value="icon.weapon_giants_sword_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7882" name="Pa'agrian Sword">
+    <set name="icon" value="icon.weapon_sword_of_paagrio_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7883" name="Guardian Sword">
+    <set name="icon" value="icon.weapon_guardians_sword_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7884" name="Infernal Master">
+    <set name="icon" value="icon.weapon_inferno_master_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7885" name="Priest Sword">
+    <set name="icon" value="icon.weapon_sword_of_priest_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7886" name="Sword of Magic Fog">
+    <set name="icon" value="icon.weapon_sword_of_magic_fog_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7887" name="Mysterious Sword">
+    <set name="icon" value="icon.weapon_mystery_sword_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7888" name="Ecliptic Sword">
+    <set name="icon" value="icon.weapon_sword_of_eclipse_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7889" name="Wizard's Tear">
+    <set name="icon" value="icon.weapon_tears_of_wizard_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7890" name="Priest Mace">
+    <set name="icon" value="icon.weapon_mace_of_priest_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7891" name="Ecliptic Axe">
+    <set name="icon" value="icon.weapon_eclipse_axe_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7892" name="Spell Breaker">
+    <set name="icon" value="icon.weapon_spell_breaker_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7893" name="Kaim Vanul's Bones">
+    <set name="icon" value="icon.weapon_bone_of_kaim_vanul_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7894" name="Spiritual Eye">
+    <set name="icon" value="icon.weapon_eye_of_soul_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7895" name="Flaming Dragon Skull">
+    <set name="icon" value="icon.weapon_dragon_flame_head_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="7896" name="Titan Hammer">
+    <set name="icon" value="icon.weapon_giants_hammer_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7897" name="Dwarven Hammer">
+    <set name="icon" value="icon.weapon_dwarven_hammer_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7898" name="Karik Horn">
+    <set name="icon" value="icon.weapon_horn_of_karik_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7899" name="Destroyer Hammer">
+    <set name="icon" value="icon.weapon_hammer_of_destroyer_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7900" name="Ice Storm Hammer">
+    <set name="icon" value="icon.weapon_ice_storm_hammer_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7901" name="Star Buster">
+    <set name="icon" value="icon.weapon_star_buster_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7902" name="Doom Crusher">
+    <set name="icon" value="icon.weapon_doom_crusher_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="7903" name="Frintezza's Sword">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="bigsword" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="7904" name="Boat Ticket: Rune to Gludin">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7905" name="Boat Ticket: Gludin to Rune">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7906" name="Fire Blessing">
+    <set name="icon" value="icon.etc_fire_crystal_1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7907" name="Water Blessing">
+    <set name="icon" value="icon.etc_water_crystal_1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7908" name="Wind Blessing">
+    <set name="icon" value="icon.etc_wind_crystal_1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7909" name="Earth Blessing">
+    <set name="icon" value="icon.etc_earth_crystal_1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7910" name="Dark Blessing">
+    <set name="icon" value="icon.etc_unholy_crystal_1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7911" name="Holy Blessing">
+    <set name="icon" value="icon.etc_holy_crystal_1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7912" name="Fire Shard">
+    <set name="icon" value="icon.etc_fire_crystal_1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7913" name="Water Shard">
+    <set name="icon" value="icon.etc_water_crystal_1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7914" name="Wind Shard">
+    <set name="icon" value="icon.etc_wind_crystal_1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7915" name="Earth Shard">
+    <set name="icon" value="icon.etc_earth_crystal_1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7916" name="Dark Shard">
+    <set name="icon" value="icon.etc_unholy_crystal_1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7917" name="Holy Shard">
+    <set name="icon" value="icon.etc_holy_crystal_1_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7918" name="Mercenary Posting Ticket (Sword/Stationary)">
+    <set name="icon" value="icon.mticket_sword_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7919" name="Mercenary Posting Ticket (Spear/Stationary)">
+    <set name="icon" value="icon.mticket_pole_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7920" name="Mercenary Posting Ticket (Bow/Stationary)">
+    <set name="icon" value="icon.mticket_bow_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7921" name="Mercenary Posting Ticket (Cleric/Stationary)">
+    <set name="icon" value="icon.mticket_cleric_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7922" name="Mercenary Posting Ticket (Wizard/Stationary)">
+    <set name="icon" value="icon.mticket_wizard_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7923" name="Mercenary Posting Ticket (Sword/Mobile)">
+    <set name="icon" value="icon.mticket_sword_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7924" name="Mercenary Posting Ticket (Spear/Mobile)">
+    <set name="icon" value="icon.mticket_pole_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7925" name="Mercenary Posting Ticket (Bow/Mobile)">
+    <set name="icon" value="icon.mticket_bow_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7926" name="Mercenary Posting Ticket (Cleric/Mobile)">
+    <set name="icon" value="icon.mticket_cleric_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7927" name="Mercenary Posting Ticket (Wizard/Mobile)">
+    <set name="icon" value="icon.mticket_wizard_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7928" name="Mercenary Posting Ticket (Teleporter1)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7929" name="Mercenary Posting Ticket (Teleporter2)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7930" name="Mercenary Posting Ticket (Teleporter3)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7931" name="Greater Mercenary Posting Ticket (Sword/Stationary)">
+    <set name="icon" value="icon.mticket_sword_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7932" name="Greater Mercenary Posting Ticket (Spear/Stationary)">
+    <set name="icon" value="icon.mticket_pole_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7933" name="Greater Mercenary Posting Ticket (Bow/Stationary)">
+    <set name="icon" value="icon.mticket_bow_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7934" name="Greater Mercenary Posting Ticket (Cleric/Stationary)">
+    <set name="icon" value="icon.mticket_cleric_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7935" name="Greater Mercenary Posting Ticket (Wizard/Stationary)">
+    <set name="icon" value="icon.mticket_wizard_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7936" name="Greater Mercenary Posting Ticket (Sword/Mobile)">
+    <set name="icon" value="icon.mticket_sword_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7937" name="Greater Mercenary Posting Ticket (Spear/Mobile)">
+    <set name="icon" value="icon.mticket_pole_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7938" name="Greater Mercenary Posting Ticket (Bow/Mobile)">
+    <set name="icon" value="icon.mticket_bow_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7939" name="Greater Mercenary Posting Ticket (Cleric/Mobile)">
+    <set name="icon" value="icon.mticket_cleric_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7940" name="Greater Mercenary Posting Ticket (Wizard/Mobile)">
+    <set name="icon" value="icon.mticket_wizard_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7941" name="Dawn Mercenary Posting Ticket (Sword/Stationary)">
+    <set name="icon" value="icon.mticket_sword_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7942" name="Dawn Mercenary Posting Ticket (Spear/Stationary)">
+    <set name="icon" value="icon.mticket_pole_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7943" name="Dawn Mercenary Posting Ticket (Bow/Stationary)">
+    <set name="icon" value="icon.mticket_bow_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7944" name="Dawn Mercenary Posting Ticket (Cleric/Stationary)">
+    <set name="icon" value="icon.mticket_cleric_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7945" name="Dawn Mercenary Posting Ticket (Wizard/Stationary)">
+    <set name="icon" value="icon.mticket_wizard_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7946" name="Dawn Mercenary Posting Ticket (Sword/Mobile)">
+    <set name="icon" value="icon.mticket_sword_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7947" name="Dawn Mercenary Posting Ticket (Spear/Mobile)">
+    <set name="icon" value="icon.mticket_pole_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7948" name="Dawn Mercenary Posting Ticket (Bow/Mobile)">
+    <set name="icon" value="icon.mticket_bow_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7949" name="Dawn Mercenary Posting Ticket (Cleric/Mobile)">
+    <set name="icon" value="icon.mticket_cleric_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7950" name="Dawn Mercenary Posting Ticket (Wizard/Mobile)">
+    <set name="icon" value="icon.mticket_wizard_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7951" name="Greater Recruit Posting Ticket (Sword/Stationary)">
+    <set name="icon" value="icon.mticket_sword_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7952" name="Greater Recruit Posting Ticket (Spear/Stationary)">
+    <set name="icon" value="icon.mticket_pole_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7953" name="Greater Recruit Posting Ticket (Bow/Stationary)">
+    <set name="icon" value="icon.mticket_bow_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7954" name="Greater Recruit Posting Ticket (Cleric/Stationary)">
+    <set name="icon" value="icon.mticket_cleric_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7955" name="Greater Recruit Posting Ticket (Wizard/Stationary)">
+    <set name="icon" value="icon.mticket_wizard_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7956" name="Greater Recruit Posting Ticket (Sword/Mobile)">
+    <set name="icon" value="icon.mticket_sword_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7957" name="Greater Recruit Posting Ticket (Spear/Mobile)">
+    <set name="icon" value="icon.mticket_pole_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7958" name="Greater Recruit Posting Ticket (Bow/Mobile)">
+    <set name="icon" value="icon.mticket_bow_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7959" name="Greater Recruit Posting Ticket (Cleric/Mobile)">
+    <set name="icon" value="icon.mticket_cleric_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7960" name="Greater Recruit Posting Ticket (Wizard/Mobile)">
+    <set name="icon" value="icon.mticket_wizard_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7961" name="Recruit Posting Ticket (Sword/Stationary)">
+    <set name="icon" value="icon.mticket_sword_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7962" name="Recruit Posting Ticket (Spear/Stationary)">
+    <set name="icon" value="icon.mticket_pole_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7963" name="Recruit Posting Ticket (Bow/Stationary)">
+    <set name="icon" value="icon.mticket_bow_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7964" name="Recruit Posting Ticket (Cleric/Stationary)">
+    <set name="icon" value="icon.mticket_cleric_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7965" name="Recruit Posting Ticket (Wizard/Stationary)">
+    <set name="icon" value="icon.mticket_wizard_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7966" name="Recruit Posting Ticket (Sword/Mobile)">
+    <set name="icon" value="icon.mticket_sword_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7967" name="Recruit Posting Ticket (Spear/Mobile)">
+    <set name="icon" value="icon.mticket_pole_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7968" name="Recruit Posting Ticket (Bow/Mobile)">
+    <set name="icon" value="icon.mticket_bow_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7969" name="Recruit Posting Ticket (Cleric/Mobile)">
+    <set name="icon" value="icon.mticket_cleric_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7970" name="Recruit Posting Ticket (Wizard/Mobile)">
+    <set name="icon" value="icon.mticket_wizard_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7971" name="Nephilim Warrior Posting Ticket">
+    <set name="icon" value="icon.mticket_sword_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7972" name="Nephilim Shaman Posting Ticket">
+    <set name="icon" value="icon.mticket_wizard_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7973" name="Mercenary Posting Ticket (Sword/Stationary)">
+    <set name="icon" value="icon.mticket_sword_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7974" name="Mercenary Posting Ticket (Spear/Stationary)">
+    <set name="icon" value="icon.mticket_pole_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7975" name="Mercenary Posting Ticket (Bow/Stationary)">
+    <set name="icon" value="icon.mticket_bow_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7976" name="Mercenary Posting Ticket (Cleric/Stationary)">
+    <set name="icon" value="icon.mticket_cleric_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7977" name="Mercenary Posting Ticket (Wizard/Stationary)">
+    <set name="icon" value="icon.mticket_wizard_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7978" name="Mercenary Posting Ticket (Sword/Mobile)">
+    <set name="icon" value="icon.mticket_sword_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7979" name="Mercenary Posting Ticket (Spear/Mobile)">
+    <set name="icon" value="icon.mticket_pole_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7980" name="Mercenary Posting Ticket (Bow/Mobile)">
+    <set name="icon" value="icon.mticket_bow_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7981" name="Mercenary Posting Ticket (Cleric/Mobile)">
+    <set name="icon" value="icon.mticket_cleric_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7982" name="Mercenary Posting Ticket (Wizard/Mobile)">
+    <set name="icon" value="icon.mticket_wizard_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7983" name="Mercenary Posting Ticket (Teleporter1)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7984" name="Mercenary Posting Ticket (Teleporter2)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7985" name="Mercenary Posting Ticket (Teleporter3)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7986" name="Mercenary Posting Ticket (Teleporter4)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7987" name="Mercenary Posting Ticket (Teleporter5)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7988" name="Greater Mercenary Posting Ticket (Sword/Stationary)">
+    <set name="icon" value="icon.mticket_sword_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7989" name="Greater Mercenary Posting Ticket (Spear/Stationary)">
+    <set name="icon" value="icon.mticket_pole_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7990" name="Greater Mercenary Posting Ticket (Bow/Stationary)">
+    <set name="icon" value="icon.mticket_bow_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7991" name="Greater Mercenary Posting Ticket (Cleric/Stationary)">
+    <set name="icon" value="icon.mticket_cleric_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7992" name="Greater Mercenary Posting Ticket (Wizard/Stationary)">
+    <set name="icon" value="icon.mticket_wizard_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7993" name="Greater Mercenary Posting Ticket (Sword/Mobile)">
+    <set name="icon" value="icon.mticket_sword_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7994" name="Greater Mercenary Posting Ticket (Spear/Mobile)">
+    <set name="icon" value="icon.mticket_pole_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7995" name="Greater Mercenary Posting Ticket (Bow/Mobile)">
+    <set name="icon" value="icon.mticket_bow_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7996" name="Greater Mercenary Posting Ticket (Cleric/Mobile)">
+    <set name="icon" value="icon.mticket_cleric_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7997" name="Greater Mercenary Posting Ticket (Wizard/Mobile)">
+    <set name="icon" value="icon.mticket_wizard_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7998" name="Dawn Mercenary Posting Ticket (Sword/Stationary)">
+    <set name="icon" value="icon.mticket_sword_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="7999" name="Dawn Mercenary Posting Ticket (Spear/Stationary)">
+    <set name="icon" value="icon.mticket_pole_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+</list>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="20000" levels="1" name="Block Checker Search">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="20001" levels="1" name="Block Checker Hammer Punch">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="20002" levels="1" name="Dragon Blow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BLOW" />
+  </skill>
+  <skill id="20003" levels="1" name="Dragon Slash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="20004" levels="1" name="Dragon Dash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="20005" levels="1" name="Dragon Aura">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="20006" levels="1" name="Soul Roar">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="20007" levels="1" name="Block Invincibility">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="20008" levels="1" name="Clan Advent (Event)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+</list>

@@ -1,0 +1,3144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="26000" levels="1" name="Small fortuna box">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26001" levels="1" name="Middle fortuna box">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26002" levels="1" name="Large fortuna box">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26003" levels="1" name="Small fortuna cube">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26004" levels="1" name="Middle fortuna cube">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26005" levels="1" name="Large fortuna cube">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26006" levels="1" name="Weapon Enchant Scroll - D Grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_WEAPON" />
+  </skill>
+  <skill id="26007" levels="1" name="Weapon Enchant Scroll - C Grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_WEAPON" />
+  </skill>
+  <skill id="26008" levels="1" name="Weapon Enchant Scroll - B Grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_WEAPON" />
+  </skill>
+  <skill id="26009" levels="1" name="Weapon Enchant Scroll - A Grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_WEAPON" />
+  </skill>
+  <skill id="26010" levels="1" name="Armor Enchant Scroll - D Grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_ARMOR" />
+  </skill>
+  <skill id="26011" levels="1" name="Armor Enchant Scroll - C Grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_ARMOR" />
+  </skill>
+  <skill id="26012" levels="1" name="Armor Enchant Scroll - B Grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_ARMOR" />
+  </skill>
+  <skill id="26013" levels="1" name="Armor Enchant Scroll - A Grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_ARMOR" />
+  </skill>
+  <skill id="26014" levels="1" name="Ancient Weapon Enchant Crystal - B grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_WEAPON" />
+  </skill>
+  <skill id="26015" levels="1" name="Ancient Weapon Enchant Crystal - A grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_WEAPON" />
+  </skill>
+  <skill id="26016" levels="1" name="Ancient Armor Enchant Crystal - B grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_ARMOR" />
+  </skill>
+  <skill id="26017" levels="1" name="Ancient Armor Enchant Crystal - A grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_ARMOR" />
+  </skill>
+  <skill id="26018" levels="1" name="Divine Weapon Enchant Crystal - B grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_WEAPON" />
+  </skill>
+  <skill id="26019" levels="1" name="Divine Weapon Enchant Crystal - A grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_WEAPON" />
+  </skill>
+  <skill id="26020" levels="1" name="Divine Armor Enchant Crystal - B grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_ARMOR" />
+  </skill>
+  <skill id="26021" levels="1" name="Divine Armor Enchant Crystal - A grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="ENCHANT_ARMOR" />
+  </skill>
+  <skill id="26022" levels="1" name="High grade potion which improves attack speed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26023" levels="1" name="High grade potion which improves moving speed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26024" levels="1" name="Temporary Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="HEAL" />
+  </skill>
+  <skill id="26025" levels="1" name="Powerful Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26026" levels="1" name="High-grade Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26027" levels="6" name="Secret medicine of Will">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26028" levels="6" name="Secret medicine of Life">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="HEAL" />
+  </skill>
+  <skill id="26029" levels="1" name="Potion of Will">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26030" levels="1" name="Healing medicine for Mana">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="MANAHEAL" />
+  </skill>
+  <skill id="26031" levels="1" name="Wind Walk Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26032" levels="1" name="Haste Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26033" levels="1" name="Might Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26034" levels="1" name="Shield Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26035" levels="1" name="Death Whisper Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26036" levels="1" name="Guidance Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26037" levels="1" name="Empower Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26038" levels="1" name="Greater Acumen Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26039" levels="1" name="Vampiric Rage Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26040" levels="1" name="Bless the Body Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26041" levels="1" name="Berserker Spirit Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26042" levels="1" name="Magic Barrier Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26043" levels="1" name="Bless the Soul Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26044" levels="1" name="Clarity Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26045" levels="1" name="Wild Magic Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26046" levels="5" name="Rune of Experience Points">
+    <set name="operateType" val="PASSIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26047" levels="5" name="Rune of SP">
+    <set name="operateType" val="PASSIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26048" levels="5" name="Rune of Crystal Form">
+    <set name="operateType" val="PASSIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26049" levels="1" name="Rune of Feather">
+    <set name="operateType" val="PASSIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26050" levels="1" name="Blessed Spiritshot - D grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SPIRITSHOT" />
+  </skill>
+  <skill id="26051" levels="1" name="Blessed Spiritshot - C grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SPIRITSHOT" />
+  </skill>
+  <skill id="26052" levels="1" name="Blessed Spiritshot - B grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SPIRITSHOT" />
+  </skill>
+  <skill id="26053" levels="1" name="Blessed Spiritshot - A grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SPIRITSHOT" />
+  </skill>
+  <skill id="26054" levels="1" name="Blessed Spiritshot - S grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SPIRITSHOT" />
+  </skill>
+  <skill id="26055" levels="1" name="Spiritshot - D grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SPIRITSHOT" />
+  </skill>
+  <skill id="26056" levels="1" name="Spiritshot - C grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SPIRITSHOT" />
+  </skill>
+  <skill id="26057" levels="1" name="Spiritshot - B grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SPIRITSHOT" />
+  </skill>
+  <skill id="26058" levels="1" name="Spiritshot - A grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SPIRITSHOT" />
+  </skill>
+  <skill id="26059" levels="1" name="Spiritshot - S grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SPIRITSHOT" />
+  </skill>
+  <skill id="26060" levels="1" name="Soulshot - D grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SOULSHOT" />
+  </skill>
+  <skill id="26061" levels="1" name="Soulshot - C grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SOULSHOT" />
+  </skill>
+  <skill id="26062" levels="1" name="Soulshot - B grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SOULSHOT" />
+  </skill>
+  <skill id="26063" levels="1" name="Soulshot - A grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SOULSHOT" />
+  </skill>
+  <skill id="26064" levels="1" name="Soulshot - S grade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SOULSHOT" />
+  </skill>
+  <skill id="26065" levels="1" name="A Scroll Bundle of Fighter">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26066" levels="1" name="A Scroll Bundle of Mage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26067" levels="5" name="Bone Quiver">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26068" levels="10" name="Blessed Spiritshot Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26069" levels="10" name="Spiritshot Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26070" levels="10" name="Soulshot Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26071" levels="17" name="Wrapped daisy hairpin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26072" levels="3" name="Wrapped Pet Exchange Ticket">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26073" levels="5" name="Bone Bolt Container">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26074" levels="1" name="Life Stone Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26075" levels="1" name="Adenian Life Stone Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26076" levels="1" name="Lucky Enchant Stone: Armor Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26077" levels="1" name="Lucky Enchant Stone: Weapon Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26078" levels="1" name="Core Cleanse 1 ур">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26079" levels="1" name="Ring of Core - 2 ур">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26080" levels="1" name="Samurai Hair Accessory Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26081" levels="1" name="Samurai Outfit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26082" levels="1" name="Vampire Top Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26083" levels="1" name="Vampire Pants Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26084" levels="1" name="Vampire Gloves Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26085" levels="1" name="Vampire Shoes Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26086" levels="1" name="Vampire Hair Accessory Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26087" levels="1" name="Pandora's Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26088" levels="1" name="Gambler's Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26089" levels="1" name="Tears One-handed Sword Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26090" levels="1" name="Tears Dagger Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26091" levels="1" name="Tears Two-handed Sword Appearance Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26092" levels="1" name="Tears Fist Weapon Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26093" levels="1" name="Tears Spear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26094" levels="1" name="Tears Bow Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26095" levels="1" name="Tears Crossbow Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26096" levels="1" name="Tears One-handed Blunt Weapon Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26097" levels="1" name="Tears Magic Sword Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26098" levels="1" name="Tears One-handed Magic Blunt Weapon Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26099" levels="1" name="Tears Two-handed Magic Blunt Weapon Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26100" levels="1" name="Tears Dual Sword Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26101" levels="1" name="Tears Dual Dagger Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26102" levels="1" name="Tears Dual Blunt Weapon Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26103" levels="1" name="Tears Shield Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26104" levels="1" name="Tears Sigil Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26105" levels="1" name="Extra Pass: Infernal Kamaloka">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26106" levels="1" name="Extra Pass: Lunatic Kamaloka">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26107" levels="1" name="Angel Cat's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="26108" levels="1" name="Returning Hero's Wondrous Cubic">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26109" levels="1" name="Extra Pass: Epic Kamaloka">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26110" levels="1" name="2014 World Olympiad Hero's Accessory">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="26111" levels="1" name="2014 World Olympiad Semifinalist's Accessory">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="26112" levels="1" name="Kamaloka Secret Chest">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26113" levels="1" name="Kamaloka Chest">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26114" levels="1" name="Daily PC Support">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="26115" levels="1" name="Extra Pass">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26116" levels="7" name="Zodiac Agathion Stat Boost">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="26117" levels="11" name="Zodiac Agathion Attribute Enchant">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="26118" levels="12" name="Healing Light">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26119" levels="12" name="Skipping Kid">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="26120" levels="12" name="Scale of Life">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="26121" levels="12" name="Rocky Camouflage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="AGGREMOVE" />
+  </skill>
+  <skill id="26122" levels="12" name="Battle Rhapsody">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26123" levels="12" name="Nemean Lion's Defense">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="26124" levels="12" name="Bountiful Resurrection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26125" levels="12" name="Scorpion's Mass Exile">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="26126" levels="12" name="Mass Binding Flood">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="26127" levels="12" name="Slippery Scale">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26128" levels="12" name="Archer's Call">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="26129" levels="12" name="Exoskeletal Shield">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26130" levels="1" name="Dark Assassin's Move">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26131" levels="1" name="Appearance Stone: Dark Assassin Suit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26132" levels="1" name="Lucky Day Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26133" levels="1" name="Blessed Helios Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26134" levels="1" name="Blessed Eternal Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26135" levels="1" name="Luck Box 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26136" levels="1" name="Luck Box 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26137" levels="1" name="Luck Box 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26138" levels="1" name="Agathion - Virgo Pack (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26139" levels="1" name="Agathion - Virgo Pack (Mid-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26140" levels="1" name="Agathion - Virgo Pack (High-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26141" levels="1" name="Agathion - Capricorn Pack (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26142" levels="1" name="Agathion - Capricorn Pack (Mid-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26143" levels="1" name="Agathion - Capricorn Pack (High-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26144" levels="1" name="Agathion - Libra Pack (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26145" levels="1" name="Agathion - Libra Pack (Mid-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26146" levels="1" name="Agathion - Libra Pack (High-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26147" levels="1" name="Agathion - Aries Pack (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26148" levels="1" name="Agathion - Aries Pack (Mid-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26149" levels="1" name="Agathion - Aries Pack (High-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26150" levels="1" name="Agathion - Taurus Pack (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26151" levels="1" name="Agathion - Taurus Pack (Mid-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26152" levels="1" name="Agathion - Taurus Pack (High-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26153" levels="1" name="Agathion - Leo Pack (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26154" levels="1" name="Agathion - Leo Pack (Mid-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26155" levels="1" name="Agathion - Leo Pack (High-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26156" levels="1" name="Agathion - Gemini Pack (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26157" levels="1" name="Agathion - Gemini Pack (Mid-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26158" levels="1" name="Agathion - Gemini Pack (High-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26159" levels="1" name="Agathion - Scorpio Pack (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26160" levels="1" name="Agathion - Scorpio Pack (Mid-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26161" levels="1" name="Agathion - Scorpio Pack (High-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26162" levels="1" name="Agathion - Aquarius Pack (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26163" levels="1" name="Agathion - Aquarius Pack (Mid-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26164" levels="1" name="Agathion - Aquarius Pack (High-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26165" levels="1" name="Agathion - Pisces Pack (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26166" levels="1" name="Agathion - Pisces Pack (Mid-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26167" levels="1" name="Agathion - Pisces Pack (High-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26168" levels="1" name="Agathion - Sagittarius Pack (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26169" levels="1" name="Agathion - Sagittarius Pack (Mid-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26170" levels="1" name="Agathion - Sagittarius Pack (High-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26171" levels="1" name="Agathion - Cancer Pack (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26172" levels="1" name="Agathion - Cancer Pack (Mid-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26173" levels="1" name="Agathion - Cancer Pack (High-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26174" levels="1" name="Easter Egg">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26175" levels="1" name="Agathion - Virgo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26176" levels="1" name="Agathion - Capricorn">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26177" levels="1" name="Agathion - Libra">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26178" levels="1" name="Agathion - Aries">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26179" levels="1" name="Agathion - Taurus">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26180" levels="1" name="Agathion - Leo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26181" levels="1" name="Agathion - Gemini">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26182" levels="1" name="Agathion - Scorpio">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26183" levels="1" name="Agathion - Aquarius">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26184" levels="1" name="Agathion - Pisces">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26185" levels="1" name="Agathion - Sagittarius">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26186" levels="1" name="Agathion - Cancer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26187" levels="1" name="Agathion - Virgo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26188" levels="1" name="Agathion - Capricorn">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26189" levels="1" name="Agathion - Libra">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26190" levels="1" name="Agathion - Aries">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26191" levels="1" name="Agathion - Taurus">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26192" levels="1" name="Agathion - Leo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26193" levels="1" name="Agathion - Gemini">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26194" levels="1" name="Agathion - Scorpio">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26195" levels="1" name="Agathion - Aquarius">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26196" levels="1" name="Agathion - Pisces">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26197" levels="1" name="Agathion - Sagittarius">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26198" levels="1" name="Agathion - Cancer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26199" levels="1" name="Agathion - Virgo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26200" levels="1" name="Agathion - Capricorn">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26201" levels="1" name="Agathion - Libra">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26202" levels="1" name="Agathion - Aries">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26203" levels="1" name="Agathion - Taurus">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26204" levels="1" name="Agathion - Leo">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26205" levels="1" name="Agathion - Gemini">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26206" levels="1" name="Agathion - Scorpio">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26207" levels="1" name="Agathion - Aquarius">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26208" levels="1" name="Agathion - Pisces">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26209" levels="1" name="Agathion - Sagittarius">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26210" levels="1" name="Agathion - Cancer">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26211" levels="1" name="La Vie En Rose's Jewelry Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26212" levels="1" name="Premium Account: Quick Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26213" levels="1" name="Dark Assassin's Move">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26214" levels="1" name="Appearance Stone: Dark Assassin Suit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26215" levels="1" name="Luck Box 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26216" levels="1" name="Luck Box 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26217" levels="4" name="Sayha's Rune: Growth">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="26218" levels="4" name="Sayha's Rune: Skill">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="26219" levels="4" name="Sayha's Rune: Luck">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="26240" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26241" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26242" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26243" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26244" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26245" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26246" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26247" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26248" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26249" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26250" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26251" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26252" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26253" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26254" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26255" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26256" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26257" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26258" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26259" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26260" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26261" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26262" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26263" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26264" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26265" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26266" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26267" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26268" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26269" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26270" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26271" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26272" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26273" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26274" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26275" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26276" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26277" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26278" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26279" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26280" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26281" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26282" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26283" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26284" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26285" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26286" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26287" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26288" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26289" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26290" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26291" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26292" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26293" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26294" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26295" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26296" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26297" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26298" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26299" levels="1" name="Formal Wear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26300" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26301" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26302" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26303" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26304" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26305" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26306" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26307" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26308" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26309" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26310" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26311" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26312" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26313" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26314" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26315" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26316" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26317" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26318" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26319" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26320" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26321" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26322" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26323" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26324" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26325" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26326" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26327" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26328" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26329" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26330" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26331" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26332" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26333" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26334" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26335" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26336" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26337" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26338" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26339" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26340" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26341" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26342" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26343" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26344" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26345" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26346" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26347" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26348" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26349" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26350" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26351" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26352" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26353" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26354" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26355" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26356" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26357" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26358" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26359" levels="1" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26360" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26361" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26362" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26363" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26364" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26365" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26366" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26367" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26368" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26369" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26370" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26371" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26372" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26373" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26374" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26375" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26376" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26377" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26378" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26379" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26380" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26381" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26382" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26383" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26384" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26385" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26386" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26387" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26388" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26389" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26390" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26391" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26392" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26393" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26394" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26395" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26396" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26397" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26398" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26399" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26400" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26401" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26402" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26403" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26404" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26405" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26406" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26407" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26408" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26409" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26410" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26411" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26412" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26413" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26414" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26415" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26416" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26417" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26418" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26419" levels="1" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26420" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26421" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26422" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26423" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26424" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26425" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26426" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26427" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26428" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26429" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26430" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26431" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26432" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26433" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26434" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26435" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26436" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26437" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26438" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26439" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26440" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26441" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26442" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26443" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26444" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26445" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26446" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26447" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26448" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26449" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26450" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26451" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26452" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26453" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26454" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26455" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26456" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26457" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26458" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26459" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26460" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26461" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26462" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26463" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26464" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26465" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26466" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26467" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26468" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26469" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26470" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26471" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26472" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26473" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26474" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26475" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26476" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26477" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26478" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26479" levels="1" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26480" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26481" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26482" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26483" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26484" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26485" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26486" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26487" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26488" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26489" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26490" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26491" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26492" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26493" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26494" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26495" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26496" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26497" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26498" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26499" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26500" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26501" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26502" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26503" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26504" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26505" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26506" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26507" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26508" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26509" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26510" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26511" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26512" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26513" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26514" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26515" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26516" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26517" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26518" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26519" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26520" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26521" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26522" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26523" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26524" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26525" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26526" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26527" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26528" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26529" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26530" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26531" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26532" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26533" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26534" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26535" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26536" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26537" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26538" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26539" levels="1" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26540" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26541" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26542" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26543" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26544" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26545" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26546" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26547" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26548" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26549" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26550" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26551" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26552" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26553" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26554" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26555" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26556" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26557" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26558" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26559" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26560" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26561" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26562" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26563" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26564" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26565" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26566" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26567" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26568" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26569" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26570" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26571" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26572" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26573" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26574" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26575" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26576" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26577" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26578" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26579" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26580" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26581" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26582" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26583" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26584" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26585" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26586" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26587" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26588" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26589" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26590" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26591" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26592" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26593" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26594" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26595" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26596" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26597" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26598" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26599" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26600" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26601" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26602" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26603" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26604" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26605" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26606" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26607" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26608" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26609" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26610" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26611" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26612" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26613" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26614" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26615" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26616" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26617" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26618" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26619" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26620" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26621" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26622" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26623" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26624" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26625" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26626" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26627" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26628" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26629" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26630" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26631" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26632" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26633" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26634" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26635" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26636" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26637" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26638" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26639" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26640" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26641" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26642" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26643" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26644" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26645" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26646" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26647" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26648" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26649" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26650" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26651" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26652" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26653" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26654" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26655" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26656" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26657" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26658" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26659" levels="1" name="Beach Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26660" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26661" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26662" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26663" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26664" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26665" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26666" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26667" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26668" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26669" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26670" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26671" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26672" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26673" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26674" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26675" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26676" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26677" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26678" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26679" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26680" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26681" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26682" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26683" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26684" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26685" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26686" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26687" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26688" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26689" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26690" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26691" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26692" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26693" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26694" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26695" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26696" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26697" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26698" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26699" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26700" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26701" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26702" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26703" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26704" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26705" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26706" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26707" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26708" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26709" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26710" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26711" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26712" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26713" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26714" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26715" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26716" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26717" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26718" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26719" levels="1" name="Alluring Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26720" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26721" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26722" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26723" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26724" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26725" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26726" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26727" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26728" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26729" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26730" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26731" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26732" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26733" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26734" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26735" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26736" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26737" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26738" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26739" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26740" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26741" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26742" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26743" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26744" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26745" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26746" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26747" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26748" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26749" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26750" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26751" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26752" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26753" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26754" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26755" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26756" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26757" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26758" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26759" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26760" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26761" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26762" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26763" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26764" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26765" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26766" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26767" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26768" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26769" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26770" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26771" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26772" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26773" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26774" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26775" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26776" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26777" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26778" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26779" levels="1" name="Seductive Swimsuit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26780" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26781" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26782" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26783" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26784" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26785" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26786" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26787" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26788" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26789" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26790" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26791" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26792" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26793" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26794" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26795" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26796" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26797" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26798" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26799" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26800" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26801" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26802" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26803" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26804" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26805" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26806" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26807" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26808" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26809" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26810" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26811" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26812" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26813" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26814" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26815" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26816" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26817" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26818" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26819" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26820" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26821" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26822" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26823" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26824" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26825" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26826" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26827" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26828" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26829" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26830" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26831" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26832" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26833" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26834" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26835" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26836" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26837" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26838" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26839" levels="1" name="Appearance Stone: Santa Outfit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26840" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26841" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26842" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26843" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26844" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26845" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26846" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26847" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26848" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26849" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26850" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26851" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26852" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26853" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26854" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26855" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26856" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26857" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26858" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26859" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26860" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26861" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26862" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26863" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26864" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26865" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26866" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26867" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26868" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26869" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26870" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26871" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26872" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26873" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26874" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26875" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26876" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26877" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26878" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26879" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26880" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26881" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26882" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26883" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26884" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26885" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26886" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26887" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26888" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26889" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26890" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26891" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26892" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26893" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26894" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26895" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26896" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26897" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26898" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26899" levels="1" name="Maid Costume Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26900" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26901" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26902" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26903" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26904" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26905" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26906" levels="4" name="Sayha's Rune: Growth Pack Lv. 1">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="26907" levels="4" name="Sayha's Rune: Skill Pack Lv. 1">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="26908" levels="4" name="Sayha's Rune: Luck Pack Lv. 1">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="26909" levels="4" name="Sayha's Rune Pack Lv. 1">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="26910" levels="1" name="Luck Box 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26911" levels="1" name="Luck Box 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26912" levels="1" name="Luck Box 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26913" levels="1" name="Luck Box 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26914" levels="1" name="Exotic Chest">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26915" levels="1" name="Scroll: Enchant Elemental Shirt">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26916" levels="1" name="Blessed Scroll: Enchant Elemental Shirt">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26917" levels="1" name="Transformation Scroll: Priestess Tsubaki">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="26918" levels="1" name="Premium Account: Enhanced Rose Spirit">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="26919" levels="1" name="Extra Pass">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26920" levels="1" name="Extra Pass">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26921" levels="1" name="Extra Pass">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26922" levels="1" name="Extra Pass">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26923" levels="1" name="Extra Pass">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26924" levels="1" name="Extra Pass">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26925" levels="1" name="Release Agathion's Seal - Minion Eye">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26926" levels="1" name="Release Agathion's Seal - Matryoshka">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26927" levels="1" name="Luck Box 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26928" levels="1" name="Luck Box 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26929" levels="1" name="Luck Box 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26930" levels="1" name="Luck Box 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26931" levels="1" name="Luck Box 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26932" levels="1" name="Luck Box 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26933" levels="1" name="Luck Box 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26934" levels="1" name="Luck Box 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26935" levels="1" name="Luck Box 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26936" levels="1" name="Luck Box 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26937" levels="1" name="Luck Box 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26938" levels="1" name="Luck Box 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26939" levels="1" name="Luck Box 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26940" levels="1" name="Luck Box 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26941" levels="1" name="Luck Box 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26942" levels="1" name="Luck Box 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26943" levels="1" name="Luck Box 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26944" levels="1" name="Luck Box 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26945" levels="1" name="Luck Box 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26946" levels="1" name="Luck Box 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26947" levels="1" name="Luck Box 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26948" levels="1" name="Luck Box 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26949" levels="1" name="Luck Box 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26950" levels="1" name="Luck Box 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26951" levels="1" name="Luck Box 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26952" levels="1" name="Luck Box 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26953" levels="1" name="Luck Box 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26954" levels="1" name="+4 Requiem Shaper Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26955" levels="1" name="+5 Requiem Shaper Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26956" levels="1" name="+6 Requiem Shaper Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26957" levels="1" name="+7 Requiem Shaper Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26958" levels="1" name="+8 Requiem Shaper Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26959" levels="1" name="+9 Requiem Shaper Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26960" levels="1" name="+10 Requiem Shaper Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26961" levels="1" name="+4 Requiem Cutter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26962" levels="1" name="+5 Requiem Cutter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26963" levels="1" name="+6 Requiem Cutter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26964" levels="1" name="+7 Requiem Cutter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26965" levels="1" name="+8 Requiem Cutter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26966" levels="1" name="+9 Requiem Cutter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26967" levels="1" name="+10 Requiem Cutter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26968" levels="1" name="+4 Requiem Slasher Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26969" levels="1" name="+5 Requiem Slasher Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26970" levels="1" name="+6 Requiem Slasher Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26971" levels="1" name="+7 Requiem Slasher Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26972" levels="1" name="+8 Requiem Slasher Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26973" levels="1" name="+9 Requiem Slasher Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26974" levels="1" name="+10 Requiem Slasher Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26975" levels="1" name="+4 Requiem Avenger Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26976" levels="1" name="+5 Requiem Avenger Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26977" levels="1" name="+6 Requiem Avenger Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26978" levels="1" name="+7 Requiem Avenger Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26979" levels="1" name="+8 Requiem Avenger Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26980" levels="1" name="+9 Requiem Avenger Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26981" levels="1" name="+10 Requiem Avenger Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26982" levels="1" name="+4 Requiem Fighter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26983" levels="1" name="+5 Requiem Fighter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26984" levels="1" name="+6 Requiem Fighter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26985" levels="1" name="+7 Requiem Fighter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26986" levels="1" name="+8 Requiem Fighter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26987" levels="1" name="+9 Requiem Fighter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26988" levels="1" name="+10 Requiem Fighter Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26989" levels="1" name="+4 Requiem Stormer Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26990" levels="1" name="+5 Requiem Stormer Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26991" levels="1" name="+6 Requiem Stormer Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26992" levels="1" name="+7 Requiem Stormer Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26993" levels="1" name="+8 Requiem Stormer Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26994" levels="1" name="+9 Requiem Stormer Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26995" levels="1" name="+10 Requiem Stormer Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26996" levels="1" name="+4 Requiem Thrower Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26997" levels="1" name="+5 Requiem Thrower Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26998" levels="1" name="+6 Requiem Thrower Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="26999" levels="1" name="+7 Requiem Thrower Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+</list>

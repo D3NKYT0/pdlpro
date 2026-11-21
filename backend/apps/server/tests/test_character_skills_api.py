@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 
 from apps.server.domain.gateways import GameSkill, ILineageGateway
 from apps.server.infrastructure.lineage.skill_catalog import (
+    get_skill_catalog,
     skill_metadata,
     skill_progress,
 )
@@ -97,3 +98,31 @@ def test_character_skills_reject_foreign_character(api, player):
 def test_character_skills_require_authentication(api):
     response = api.get("/api/v1/customer/server/characters/1/skills/")
     assert response.status_code == 401
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("dialect", ["eternity", "lucerav2"])
+def test_character_skills_use_the_active_datapack(api, player, settings, dialect):
+    settings.LINEAGE_QUERY_MODULE = dialect
+    settings.LINEAGE_SKILL_XML_DIR = ""
+    api.force_authenticate(user=player)
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    char = gateway.seed_character("hero", "Kamael", skills=[GameSkill(625, 1), GameSkill(626, 1)])
+
+    get_skill_catalog.cache_clear()
+    try:
+        response = api.get(f"/api/v1/customer/server/characters/{char.char_id}/skills/?login=hero")
+    finally:
+        get_skill_catalog.cache_clear()
+
+    assert response.status_code == 200
+    soul_gathering, critical_sense = response.data
+    assert soul_gathering["icon_url"] == "/skill-icons/625.png"
+    if dialect == "eternity":
+        assert soul_gathering["name"] == "Soul Gathering"
+        assert soul_gathering["enchant_max"] == 30
+        assert critical_sense["name"] == "Critical Sense"
+        assert critical_sense["operate"] == "passive"
+    else:
+        assert soul_gathering["name"] == "Skill 625"

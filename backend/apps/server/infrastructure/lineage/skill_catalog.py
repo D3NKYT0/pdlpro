@@ -7,6 +7,8 @@ from pathlib import Path
 
 from django.conf import settings
 
+from apps.server.infrastructure.lineage.catalog import xml_catalog_roots
+
 SKILL_RE = re.compile(r"<skill\b([^>]*)>([\s\S]*?)</skill>", re.IGNORECASE)
 ATTR_ID_RE = re.compile(r'\bid\s*=\s*"(\d+)"', re.IGNORECASE)
 ATTR_NAME_RE = re.compile(r'\bname\s*=\s*"([^"]*)"', re.IGNORECASE)
@@ -176,7 +178,7 @@ class L2Skill:
 
 
 class LineageSkillCatalog:
-    """Índice de nomes e categorias de skills lidos do XML em LINEAGE_SKILL_XML_DIR."""
+    """Índice de nomes, categorias e encantos das skills, com XMLs por módulo de queries."""
 
     def __init__(self, skills: dict[int, L2Skill]) -> None:
         self._skills = skills
@@ -200,13 +202,16 @@ class LineageSkillCatalog:
 
     @classmethod
     def load(cls, root: Path | None = None) -> LineageSkillCatalog:
-        folder = root or cls.default_root()
         skills: dict[int, L2Skill] = {}
-        if not folder.is_dir():
-            return cls(skills)
-        for path in sorted(folder.rglob("*.xml")):
-            for skill in cls._parse(path.read_text(encoding="utf-8")):
-                skills[skill.id] = skill
+        roots = (root,) if root is not None else xml_catalog_roots(
+            cls.default_root(),
+            Path(settings.BASE_DIR) / "data" / "skills",
+            str(getattr(settings, "LINEAGE_QUERY_MODULE", "") or ""),
+        )
+        for source in roots:
+            for path in sorted(source.rglob("*.xml")):
+                for skill in cls._parse(path.read_text(encoding="utf-8")):
+                    skills[skill.id] = skill
         return cls(skills)
 
     @classmethod

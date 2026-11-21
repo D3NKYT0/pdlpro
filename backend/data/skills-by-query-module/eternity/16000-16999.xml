@@ -1,0 +1,3782 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="16001" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16002" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16003" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16004" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16005" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16006" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16007" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16008" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16009" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16010" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16011" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16012" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16013" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16014" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16015" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16016" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16017" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16018" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16019" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16020" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16021" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16022" levels="1" name="Ground Slam">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="16023" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="16024" levels="1" name="Seeds Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="16025" levels="1" name="Whistle">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16026" levels="1" name="Chat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16027" levels="1" name="Chat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16028" levels="1" name="Ball Kicking">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16029" levels="1" name="Jump">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16030" levels="1" name="Sheep Herding">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16031" levels="1" name="Attraction">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="STUN" />
+  </skill>
+  <skill id="16032" levels="1" name="Gi-Sung Bae's Lineage II">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="16033" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16034" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16035" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="16036" levels="1" name="Tauti Leap Attack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16037" levels="1" name="Tauti Leap Attack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16038" levels="1" name="Idle Effect">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16039" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16040" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16041" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16042" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16043" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16044" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16045" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16046" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16047" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16048" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16049" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16050" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16051" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16052" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16053" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16054" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16055" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16056" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16057" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16058" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16059" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16060" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16061" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16062" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16063" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16064" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16065" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16066" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16067" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16068" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16069" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16070" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16071" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16072" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16073" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16074" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16075" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16076" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16077" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16078" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16079" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16080" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16081" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16082" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16083" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16084" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16085" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16086" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16087" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16088" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16089" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16090" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16091" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16092" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16093" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16094" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16095" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16096" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16097" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16098" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16099" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16100" levels="1" name="Presentation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16101" levels="1" name="Tauti">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16102" levels="1" name="Dark Storm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16103" levels="6" name="Death Lift">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16104" levels="7" name="Fatal Strike">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16105" levels="6" name="Fatal Bomber">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16106" levels="5" name="Chain Smash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="STUN" />
+  </skill>
+  <skill id="16107" levels="3" name="Fatal Blow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BLOW" />
+  </skill>
+  <skill id="16108" levels="7" name="Bloody Blades">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="#isMagic" />
+  </skill>
+  <skill id="16109" levels="1" name="Heavy Armor Rise">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16110" levels="1" name="Light Armor Rise">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16111" levels="1" name="Robe Rise">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16112" levels="1" name="Speed Rise">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16113" levels="1" name="Tragic Bleed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16114" levels="1" name="Curse of the Dead">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16115" levels="2" name="Chain Smash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16116" levels="2" name="Self-Devastation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16117" levels="1" name="Amplify Damage - Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16118" levels="1" name="Amplify Damage - Stage 2">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16119" levels="1" name="Flare Chain">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16120" levels="1" name="Magma Chain">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16121" levels="5" name="Sleeping Cloud">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16122" levels="1" name="Flare Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16123" levels="1" name="Flare Outburst">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16124" levels="1" name="Flare Life">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16125" levels="1" name="Volcano Sword Dance">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16126" levels="1" name="Volcano Buster">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16127" levels="1" name="Blind Flame">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16128" levels="1" name="Flame Bog">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16129" levels="5" name="Desert Thirst">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16130" levels="1" name="Oasis Energy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16131" levels="1" name="Thirst Quench">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16132" levels="1" name="Oasis Mirage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16133" levels="1" name="Watery Grave">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16134" levels="1" name="Doom Shrieker">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16135" levels="1" name="Begin Research">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16136" levels="1" name="Reward x 2">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16137" levels="1" name="Reward x 4">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16138" levels="1" name="Reward x 8">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16139" levels="1" name="Reward x 16">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16140" levels="1" name="Reward x 32">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16141" levels="1" name="Research Success">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16142" levels="1" name="Research Success">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16143" levels="1" name="Research Success">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16144" levels="1" name="Research Success">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16145" levels="1" name="Research Success">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16146" levels="1" name="Research Fail">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16147" levels="7" name="Fatal Wave">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16148" levels="5" name="Fear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16149" levels="5" name="Poison">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16150" levels="5" name="Decrease Speed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16151" levels="7" name="Aura Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16152" levels="7" name="Fire Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16153" levels="7" name="Power Slam">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16154" levels="6" name="Mass Chain Smash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16155" levels="1" name="Charmed Kefensis">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16156" levels="8" name="Mass Droop">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16157" levels="5" name="Bleed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16158" levels="1" name="Beleth's Volcano">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16159" levels="1" name="Beleth's Blaze">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16160" levels="1" name="Beleth's Flame">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16161" levels="1" name="Darion's Bleed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16162" levels="1" name="Beleth's Meteor">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16163" levels="1" name="Darion's Sword Storm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16164" levels="1" name="Flame Blade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16165" levels="1" name="Dark Blade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16166" levels="3" name="Escape Death">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16167" levels="2" name="Increase Evasion 1">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16168" levels="1" name="Half-kill">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16169" levels="1" name="Pull">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16170" levels="1" name="Hellbound Tornado">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16171" levels="1" name="Summon Poison Zone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16172" levels="1" name="Poisoned">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16173" levels="1" name="Invincibility">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16174" levels="1" name="Herb of Growth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16175" levels="1" name="Major Herb of Growth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16176" levels="1" name="Superior Herb of Growth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16177" levels="10" name="Knock Down Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16178" levels="1" name="Leona's Thunder Spear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16179" levels="1" name="Beleth">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16180" levels="1" name="Darion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16181" levels="10" name="Special Armor">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16182" levels="6" name="Decrease SP">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16183" levels="1" name="Skill Reflect Barrier">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16184" levels="1" name="Vengeful Petrify">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16185" levels="1" name="Sword Storm">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16186" levels="1" name="Belly Cut">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16187" levels="1" name="Head-on Crash">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16188" levels="1" name="Darkness">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16189" levels="1" name="Disciple's Blow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16190" levels="1" name="Recharge Fury">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16191" levels="1" name="Pandemonium">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16192" levels="1" name="Tyranny">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16193" levels="1" name="Lurking Lunacy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16194" levels="1" name="Quiet Path to Death">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16195" levels="1" name="Guided Death">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16196" levels="1" name="Blood Shower">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16197" levels="1" name="Haughty Slaughter">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16198" levels="1" name="Continuing Pain">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16199" levels="1" name="Howling Abyss">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16200" levels="1" name="Empty Cry">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16201" levels="6" name="Ekimus' Vitality">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16202" levels="6" name="Fatal Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16203" levels="4" name="Fatal Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16204" levels="4" name="Fatal Slasher">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16205" levels="6" name="Burst Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16206" levels="4" name="Holy Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16207" levels="4" name="Dark Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16208" levels="4" name="Fire Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16209" levels="4" name="Water Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16210" levels="6" name="Wind Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16211" levels="5" name="Earth Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16212" levels="4" name="Holy Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16213" levels="4" name="Dark Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16214" levels="4" name="Fire Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16215" levels="4" name="Water Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16216" levels="6" name="Wind Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16217" levels="5" name="Earth Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16218" levels="4" name="Holy Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16219" levels="4" name="Unholy Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16220" levels="4" name="Fire Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16221" levels="4" name="Water Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16222" levels="6" name="Wind Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16223" levels="6" name="Earth Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16224" levels="8" name="Mass Poison">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16225" levels="8" name="Mass Bleed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16226" levels="1" name="Battle Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16227" levels="1" name="Greater Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16228" levels="5" name="Wide Stun">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16229" levels="4" name="Mass Hold">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16230" levels="4" name="Sleeping Cloud">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16231" levels="5" name="Mass Airbind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16232" levels="4" name="Mass Chain Smash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16233" levels="5" name="Mass Fear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16234" levels="3" name="Raid Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16235" levels="1" name="Raid Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16236" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16237" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16238" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16239" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16240" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16241" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16242" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16243" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16244" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16245" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16246" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16247" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16248" levels="1" name="Raid Boss (Lv. 88)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16249" levels="1" name="Raid Boss (Lv. 92)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16250" levels="1" name="Raid Boss (Lv. 92)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16251" levels="1" name="Raid Boss (Lv. 92)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16252" levels="1" name="Raid Boss (Lv. 92)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16253" levels="1" name="Raid Boss (Lv. 92)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16254" levels="1" name="Raid Boss (Lv. 92)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16255" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16256" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16257" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16258" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16259" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16260" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16261" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16262" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16263" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16264" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16265" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16266" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16267" levels="1" name="Raid Boss (Lv. 93)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16268" levels="1" name="Raid Boss (Lv. 94)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16269" levels="1" name="Raid Boss (Lv. 94)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16270" levels="1" name="Raid Boss (Lv. 94)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16271" levels="1" name="Raid Boss (Lv. 94)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16272" levels="1" name="Raid Boss (Lv. 94)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16273" levels="1" name="Raid Boss (Lv. 94)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16274" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16275" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16276" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16277" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16278" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16279" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16280" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16281" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16282" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16283" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16284" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16285" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16286" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16287" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16288" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16289" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16290" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16291" levels="1" name="Raid Boss (Lv. 97)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16292" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16293" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16294" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16295" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16296" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16297" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16298" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16299" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16300" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16301" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16302" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16303" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16304" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16305" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16306" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16307" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16308" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16309" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16310" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16311" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16312" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16313" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16314" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16315" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16316" levels="1" name="Raid Boss (Lv. 98)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16317" levels="10" name="Pull Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16318" levels="2" name="Damage 1">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16319" levels="1" name="Dance Time">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16320" levels="1" name="Dance Time">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16321" levels="1" name="Orc Cyclone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16322" levels="1" name="Orc Cyclone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16323" levels="1" name="Orc Typhoon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16324" levels="1" name="Orc Typhoon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16325" levels="1" name="Aerial Yoke">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16326" levels="1" name="Phoenix Rush">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16327" levels="1" name="Evil Fragment's Power">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16328" levels="1" name="Explosive Light">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16329" levels="1" name="Spirit Sendoff">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16330" levels="1" name="Wind Loyalty">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16331" levels="1" name="Power Strike">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16332" levels="1" name="Double Strike">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16333" levels="1" name="Long Attack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16334" levels="3" name="Disarm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16335" levels="1" name="Fear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16336" levels="1" name="Physical Decrease">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16337" levels="3" name="Magic Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16338" levels="2" name="Stiff Charge">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16339" levels="1" name="Vortex Chaos">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16340" levels="1" name="Reaper's Seal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16341" levels="1" name="Spell of Light">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16342" levels="1" name="Lift Target">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16343" levels="1" name="Fire Breath">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16344" levels="1" name="Death's Bolt">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16345" levels="2" name="Fire Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16346" levels="1" name="Deadly Fear">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16347" levels="3" name="Breeze Shell">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16348" levels="3" name="Breeze Point">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16349" levels="1" name="Blot Pierce">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16350" levels="3" name="Blot Hail">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16351" levels="1" name="Kain's Sonic Star">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16352" levels="1" name="Kain's Sonic Storm">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16353" levels="1" name="Kain's Triple Sonic Slash">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16354" levels="1" name="Sacred Assault">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16355" levels="1" name="Sacred Blow Down">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16356" levels="1" name="Sacred Sphere">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16357" levels="3" name="Dimensional Barrier">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16358" levels="4" name="Dimensional Armor">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16359" levels="1" name="Dimensional Warp Hold">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16360" levels="1" name="Dimensional Warp Paralysis">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16361" levels="1" name="Dimensional Warp Stun">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16362" levels="1" name="Dimensional Warp Knock Back / Knock Down">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16363" levels="1" name="Dimensional Warp Aerial Yoke">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16364" levels="1" name="Dimensional Warp Pull/Danger Zone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16365" levels="2" name="Dimensional Defense Decrease">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16366" levels="2" name="Dimensional Resistance Decrease">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16367" levels="2" name="Dimensional Speed Decrease">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16368" levels="2" name="Dimensional Strike">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16369" levels="2" name="Dimensional Crush">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16370" levels="2" name="Dimensional Slasher">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16371" levels="2" name="Dimensional Storm">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16372" levels="2" name="Dimensional Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16373" levels="2" name="Dimensional Crash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16374" levels="2" name="Dimensional Destruction">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16375" levels="2" name="Dimensional Hammer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16376" levels="2" name="Dimensional Bind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16377" levels="2" name="Dimensional Chain">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16378" levels="2" name="Dimensional Eruption">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16379" levels="2" name="Dimensional Remedy">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16380" levels="2" name="Dimensional Recoil Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16381" levels="2" name="Dimensional Shield">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16382" levels="2" name="Dimensional Death Ring">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16383" levels="2" name="Dimensional Silence">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16384" levels="2" name="Dimensional Bleed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16385" levels="2" name="Dimesional Devil">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16386" levels="2" name="Dimensional Stun">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16387" levels="1" name="Chain Smash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16388" levels="1" name="Kain's Wrath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16389" levels="1" name="Absorb Wind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16390" levels="1" name="Wynn Summoner's Power">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16391" levels="1" name="Feoh Wizard's Power">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16392" levels="1" name="Tyrr Warrior's Power">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16393" levels="1" name="Othell Rogue's Power">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16394" levels="1" name="Iss Enchanter's Power">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16395" levels="1" name="Yul Archer's Power">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16396" levels="1" name="Sigel Knight's Power">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16397" levels="1" name="Aeore Healer's Power">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16398" levels="1" name="Atelia Energy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16399" levels="1" name="Ferin's Cure">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16400" levels="1" name="Ferin's Recharge">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16401" levels="2" name="Dimensional Death Skin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16402" levels="2" name="Dimensional Horror">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16403" levels="2" name="Dimensional Judgment">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+  </skill>
+  <skill id="16404" levels="2" name="Dimensional Wide Judgment">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+  </skill>
+  <skill id="16405" levels="2" name="Dimensional Mass Judgment">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+  </skill>
+  <skill id="16406" levels="2" name="Dimensional Fear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16407" levels="2" name="Dimensional Resurrection Block">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16408" levels="4" name="Trap Fear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16409" levels="4" name="Trap Hold">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16410" levels="4" name="Trap Aerial Yoke">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16411" levels="4" name="Trap Stun">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16412" levels="4" name="Trap Petrify">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16413" levels="4" name="Trap Poison">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16414" levels="2" name="Peace Zone Cure">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16415" levels="6" name="Dimensional Dark Forces">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16416" levels="10" name="Bluff Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16417" levels="10" name="Faint Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16418" levels="10" name="Seduction Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16419" levels="2" name="Stocking Fairy's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16420" levels="2" name="Tree Fairy's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16421" levels="2" name="Snowman Fairy's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16422" levels="1" name="Winter Holiday Reward">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="16423" levels="1" name="Noelle's Gift">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16424" levels="1" name="Appearance Stone: Santa Hat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16425" levels="1" name="Appearance Stone: Santa Suit">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16426" levels="1" name="Greater Abelius Cloak (20-day)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16427" levels="1" name="Greater Sapyros Cloak (20-day)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16428" levels="1" name="Greater Ashagen Cloak (20-day)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16429" levels="1" name="Greater Cranigg Cloak (20-day)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16430" levels="1" name="Greater Soltkreig Cloak (20-day)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16431" levels="1" name="Greater Naviarope Cloak (20-day)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16432" levels="1" name="Greater Leister Cloak (20-day)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16433" levels="1" name="Greater Lakcis Cloak (20-day)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16434" levels="1" name="Greater Sayha Cloak (20-day)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16435" levels="1" name="Greater Sayha Cloak (20-day)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16436" levels="1" name="Rush">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16437" levels="1" name="Master's Blessing - GM's Cheers">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16438" levels="1" name="Horn Melody Lv. 2 - Adventurer">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16439" levels="1" name="Drum Melody Lv. 2 - Adventurer">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16440" levels="1" name="Pipe Organ Melody Lv. 2 - Adventurer">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16441" levels="1" name="Guitar Melody Lv. 2 - Adventurer">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16442" levels="1" name="Harp Melody Lv. 2 - Adventurer">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16443" levels="1" name="Lute Melody Lv. 2 - Adventurer">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16444" levels="1" name="Fatal Slasher">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16445" levels="1" name="Dark Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16446" levels="1" name="Unholy Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16447" levels="1" name="Mass Poison">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16448" levels="1" name="Mass Airbind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16449" levels="1" name="Mass Hold">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16450" levels="1" name="Mass Fear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16451" levels="1" name="Wide Stun">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16452" levels="6" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16453" levels="1" name="Exalted Production">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="16454" levels="1" name="Spinning Slasher">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16455" levels="1" name="Spinning Power Slasher">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16456" levels="1" name="Decrease Speed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16457" levels="1" name="Mass Knock Down">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16458" levels="1" name="Mass Power Knock Down">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16459" levels="1" name="Decrease P. Def.">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16460" levels="1" name="Maliss Bloody Mark">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16461" levels="1" name="Isadora Chaos Mark">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16462" levels="1" name="Chaos Mark Retriever">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16463" levels="1" name="Bloody Mark Retriever">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16464" levels="1" name="Maliss Blood Splash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16465" levels="1" name="Isadora Dark Splash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16466" levels="1" name="Explosion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16467" levels="1" name="Dimensional Raid Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16468" levels="1" name="Tauti's Temporary Invincibility">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16469" levels="1" name="Poison Arrow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16470" levels="1" name="Scream Penetration">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16471" levels="1" name="Mighty Rush">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16472" levels="1" name="Holy Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16473" levels="1" name="Dark Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16474" levels="1" name="Fire Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16475" levels="1" name="Water Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16476" levels="1" name="Wind Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16477" levels="1" name="Earth Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16478" levels="1" name="Holy Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16479" levels="1" name="Fire Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16480" levels="1" name="Water Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16481" levels="1" name="Wind Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16482" levels="1" name="Earth Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16483" levels="1" name="Holy Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16484" levels="1" name="Fire Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16485" levels="1" name="Water Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16486" levels="1" name="Wind Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16487" levels="1" name="Earth Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16488" levels="1" name="Fatal Strike">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16489" levels="1" name="Luminosity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16490" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16491" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16492" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16493" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16494" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16495" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16496" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16497" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16498" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16499" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16500" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16501" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16502" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16503" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16504" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16505" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16506" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16507" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16508" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16509" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16510" levels="1" name="Raid Boss (Lv. 99)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16511" levels="6" name="Solo Fighter Monster">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16512" levels="6" name="Solo Mage Monster">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16513" levels="6" name="Solo Archer Monster">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16514" levels="6" name="Party Fighter Monster">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16515" levels="6" name="Party Mage Monster">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16516" levels="6" name="Party Archer Monster">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16517" levels="2" name="Kelbim">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16518" levels="1" name="Event Invincibility">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16519" levels="1" name="Slay X">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16520" levels="4" name="Shield of Atelia">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16521" levels="1" name="Embryo's Call">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16522" levels="1" name="Shield Swing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16523" levels="1" name="Magma Splash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16524" levels="4" name="Full Swing Crusher">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16525" levels="1" name="Spirit of Master">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16526" levels="4" name="Supply Blockade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16527" levels="1" name="Poor Equipment">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16528" levels="1" name="Atelia Brainwashing">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16529" levels="1" name="Adolph's Will of Steel">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16530" levels="1" name="Adolph's Will of Steel">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16531" levels="1" name="Barton's Potential Force">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16532" levels="1" name="Barton's Lunatic Hit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16533" levels="1" name="Barton's Sonic Star">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16534" levels="1" name="Elise's Protection Prayer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16535" levels="1" name="Elise's Summon Tree of Life">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16536" levels="1" name="Hayuk's Phoenix Arrow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16537" levels="1" name="Hayuk's Quick Fire">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16538" levels="1" name="Eliyah's Shadow Hell">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16539" levels="1" name="Eliyah's Elemental Detonation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16540" levels="1" name="Revolutionaries' Petrification">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16541" levels="1" name="Burnstein's Stigma">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16542" levels="3" name="Supply Blockade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16543" levels="1" name="Spy's Aid Request">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16544" levels="1" name="Rescue Captive">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16545" levels="1" name="Geork's Hammer">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16546" levels="1" name="Banished Captive">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16547" levels="10" name="Danger Zone Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16548" levels="1" name="Eternal Blizzard">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16549" levels="1" name="Freeze - Eternal Ice">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16550" levels="1" name="Zellaka's Quake">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16551" levels="1" name="Ice Attack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16552" levels="1" name="Ice Fist">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16553" levels="1" name="Ice Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16554" levels="1" name="Spinning Slash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16555" levels="1" name="Kelbim Deadly Blow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16556" levels="1" name="Kelbim Bluff">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16557" levels="1" name="Dancing Blade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16558" levels="1" name="Kelbim Mortality">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16559" levels="1" name="Dragonclaw Shield Stun">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16560" levels="1" name="Dragonclaw Ultimate Defense">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16561" levels="1" name="Dragonclaw Hurricane">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16562" levels="1" name="Dragonclaw Curse Fear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16563" levels="1" name="Dragonclaw Iron Punch">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16564" levels="1" name="Dragonclaw Soul Breaker">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16565" levels="1" name="Dragonclaw Divine Flash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16566" levels="1" name="Dragonclaw Battle Heal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16567" levels="1" name="Dragonclaw Blaze Quake">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16568" levels="1" name="Dragonclaw Power Smash">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16569" levels="1" name="Dragonclaw Power Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16570" levels="1" name="Dragonclaw Blaze">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16571" levels="1" name="Weakened Defense">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16572" levels="1" name="Seal Archangel's Wrath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16573" levels="1" name="Kelbim Petrify">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16574" levels="4" name="Shield of Infinity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16575" levels="1" name="Eternal Blizzard">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16576" levels="1" name="Freeze - Eternal Ice">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16577" levels="1" name="Dragonclaw Bluff">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16578" levels="1" name="Dragonclaw Crush">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16579" levels="1" name="Dragonclaw Vortex">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16580" levels="1" name="Dragonclaw Aggression Aura">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16581" levels="3" name="Growth Accelerator">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16582" levels="1" name="Let the Dogs Out!">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16583" levels="1" name="Pounce">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16584" levels="1" name="Mass Fear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16585" levels="1" name="Dragonclaw Cannon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16586" levels="1" name="Dragonclaw Siege Attack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16587" levels="1" name="Dragonclaw Siege Punch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16588" levels="1" name="Time Bomb Explosion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16589" levels="1" name="Teleport">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16590" levels="1" name="Ancient Power Thunder">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16591" levels="1" name="Ancient Plasma Wave">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16592" levels="1" name="Ancient Earthquake">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16593" levels="1" name="Prayer for the Emperor">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16594" levels="1" name="Plasma Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16595" levels="1" name="Plasma Shooter">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16596" levels="1" name="Plasma Ball">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16597" levels="1" name="Plasma Wave">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16598" levels="1" name="Stun Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16599" levels="1" name="Piercing Bolt">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16600" levels="1" name="Devil Swarm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16601" levels="1" name="Devil Fire">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16602" levels="1" name="Dark Curse">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16603" levels="1" name="Poison Wave">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16604" levels="1" name="Devil Trap">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16605" levels="4" name="Replenish Shine Energy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16606" levels="1" name="Energy Tremble">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16607" levels="1" name="Mimir">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16608" levels="10" name="Servitor Attack Weakness">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16609" levels="1" name="Helios' Plasma">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16610" levels="1" name="Helios' Grand Plasma">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16611" levels="1" name="Helios' Throne of Agony">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16612" levels="1" name="Emperor Helios' Authority">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16613" levels="1" name="Audience with Emperor Helios">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16614" levels="1" name="Helios Plasma Pressure">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16615" levels="1" name="Helios Plasma Wall">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16616" levels="1" name="Helios' Overawing Gaze">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16617" levels="1" name="Enuma Elish - Red Lightning Spear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16618" levels="1" name="Enuma Elish - Blue Lightning Spear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16619" levels="1" name="Stigma of Deterioration">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16620" levels="1" name="Stigma of Lightning">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16621" levels="1" name="Helios' Holy Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16622" levels="1" name="Helios' Bionic Bomb">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16623" levels="1" name="Helios' Lightning of Anger">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16624" levels="1" name="Shield of Light - Pranarach (100%)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16625" levels="4" name="Helios' Rage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16626" levels="1" name="Giants Particle Dissolver">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16627" levels="1" name="Giants Deterioration Protection Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16628" levels="1" name="Giants Lightning Protection Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16629" levels="1" name="Leopold Bomb">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16630" levels="1" name="Leopold Plasma Bomb">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16631" levels="1" name="Leopold Energy Bomb">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16632" levels="1" name="Leopold Mini Gun">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16633" levels="1" name="Leopold Spray Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16634" levels="1" name="Leopold Harpoon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16635" levels="1" name="Enuma Elish Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16636" levels="1" name="Origin Spinning Slasher">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16637" levels="1" name="Origin Lightning Harpoon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16638" levels="1" name="Delta Plasma Lightning">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16639" levels="1" name="Royal Plasma Lightning">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16640" levels="1" name="Triple Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16641" levels="1" name="Hyper Mega Plasma Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16642" levels="1" name="Hyper Mega Plasma Burst">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16643" levels="1" name="Napalm Death">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16644" levels="1" name="Ride the Lightning">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16645" levels="1" name="Ride the Lightning Mega Burst">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16646" levels="1" name="Hyper Mega Telekinesis">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16647" levels="1" name="Ultra Mega Telekinesis">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16648" levels="1" name="Dance of Death">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16649" levels="1" name="Ultra Purge">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16650" levels="1" name="Vertical Smash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16651" levels="1" name="Horizon Smash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16652" levels="1" name="Tombstone Attack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16653" levels="1" name="Delta Multi Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16654" levels="1" name="Delta Stun Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16655" levels="1" name="Delta Plasma Ball">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16656" levels="1" name="Delta Plasma Wave">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16657" levels="1" name="Royal Aggression Aura">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16658" levels="1" name="Royal Chain Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16659" levels="1" name="Royal Head Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16660" levels="1" name="Royal Multi Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16661" levels="1" name="Royal Stun Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16662" levels="1" name="Royal Plasma Ball">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16663" levels="1" name="Royal Plasma Wave">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16664" levels="1" name="Royal Sleep Cloud">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16665" levels="1" name="Royal Power Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16666" levels="1" name="Royal Armor Destruction">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16667" levels="1" name="Royal Ride the Lightning">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16668" levels="1" name="Royal Quick Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16669" levels="1" name="Royal Mark of Death">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16670" levels="1" name="Royal Super Plasma Ball">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16671" levels="1" name="Royal Super Plasma Wave">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16672" levels="1" name="Royal Super Magic Barrier Weakness">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16673" levels="1" name="Royal Super Lightning Field">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16674" levels="1" name="Hyper Mega Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16675" levels="1" name="Hyper Giga Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16676" levels="1" name="Hyper Taunt">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16677" levels="1" name="Hyper Power">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16678" levels="1" name="Hyper Intelligence">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16679" levels="1" name="Hyper Evasion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16680" levels="1" name="Commander Aggression Aura">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16681" levels="1" name="For the Queen">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16682" levels="1" name="Doom Hammer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16683" levels="1" name="Stun Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16684" levels="1" name="Multi Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16685" levels="1" name="Ultra Plasma Ball">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16686" levels="1" name="Ultra Plasma Wave">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16687" levels="1" name="Helios' Zone of Overawing Might">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16688" levels="1" name="Emperor Helios' Command">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16689" levels="2" name="Blessing of the Blackbird Clan">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16690" levels="2" name="Blessing of the Giant Trackers">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16691" levels="2" name="Blessing of the Unworldly Visitors">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16692" levels="2" name="Grace of the Mother Tree Guardians">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16693" levels="2" name="Grace of the Kingdom's Royal Guard">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16694" levels="1" name="Leopold Stance Switch">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16695" levels="1" name="Trackers' Shine Energy Injection">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16696" levels="1" name="Purge">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16697" levels="1" name="Thirst Quench">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16698" levels="1" name="Thirst Quench">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16699" levels="1" name="Critical Rise">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16700" levels="1" name="Biting Wind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16701" levels="1" name="Warm Wind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16702" levels="1" name="Royal Shout">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16703" levels="1" name="Flame Storm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16704" levels="1" name="Mimillion Flame">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16705" levels="1" name="Thunder Storm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16706" levels="1" name="Mimillus Thunder">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16707" levels="2" name="Horn Melody - Residence">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16708" levels="2" name="Guitar Melody - Residence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16709" levels="2" name="Drum Melody - Residence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16710" levels="2" name="Harp Melody - Residence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16711" levels="2" name="Lute Melody - Residence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16712" levels="2" name="Pipe Organ Melody - Residence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16713" levels="1" name="Dwelling - Prevailing Sonata">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16714" levels="1" name="Daring Sonata - Residence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16715" levels="1" name="Refreshing Sonata - R">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16716" levels="1" name="Knight's Harmony - Residence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16717" levels="1" name="Warrior's Harmony - Residence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16718" levels="1" name="Wizard's Harmony - Residence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16719" levels="1" name="Elemental Resistance - Residence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16720" levels="1" name="Resistance Debuff - Residence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16721" levels="1" name="Mental Attack Resistance - Residence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16722" levels="1" name="Resistance of Saha - Residence">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16723" levels="3" name="Powered Giant Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16724" levels="3" name="Powered Giant Slasher">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16725" levels="3" name="Powered Giant Plasma">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16726" levels="3" name="Powered Giant Storm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16727" levels="1" name="Helios Storm Fist">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16728" levels="1" name="Side Slasher">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16729" levels="1" name="Side Megabomber">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16730" levels="1" name="Amity Level-up">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16731" levels="1" name="Leaking Magic - Attack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16732" levels="1" name="Leaking Magic - Defense">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16733" levels="1" name="Leaking Magic - HP">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16734" levels="1" name="Leaking Magic - Eradication">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16735" levels="10" name="Inherent Abilities - Blackbird Clan Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16736" levels="10" name="Inherent Abilities - Mother Tree Guardians Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16737" levels="10" name="Inherent Abilities - Kingdom's Royal Guard Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16738" levels="10" name="Inherent Abilities - Unworldly Visitors Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16739" levels="10" name="Inherent Abilities - Giant Trackers Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16740" levels="1" name="Return to the Stronghold">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16741" levels="1" name="Return to the Stronghold">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16742" levels="1" name="Return to the Stronghold">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16743" levels="1" name="Return to the Stronghold">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16744" levels="1" name="Return to the Stronghold">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16745" levels="1" name="Kamael's Origin Dispatch">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16746" levels="2" name="Ramona">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16747" levels="1" name="Ring of the Beginning">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16748" levels="2" name="Ring of Authority">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16749" levels="2" name="Ring of the Truth">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16750" levels="1" name="Ramona's Fancy Earrings">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16751" levels="1" name="Helios' Majestic Earrings">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16752" levels="1" name="Harnak's Deformed Necklace">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16753" levels="1" name="Mimir's Worn Ring">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16754" levels="1" name="Forgotten Ring of the Core">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16755" levels="1" name="Activate.Paralysis">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16756" levels="1" name="Activate.Knock Down">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16757" levels="4" name="Superion Barrier">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16758" levels="1" name="Embryo">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16759" levels="10" name="Red Power">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16760" levels="1" name="Giant's Vitality Recovery">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16761" levels="50" name="Dissolving Shield of Light Particles - 2%">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16762" levels="1" name="Berserk">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16763" levels="5" name="Critical Slasher">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16764" levels="1" name="Fatal Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16765" levels="1" name="Fatal Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16766" levels="1" name="Fatal Slasher">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16767" levels="1" name="Burst Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16768" levels="1" name="Energy Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16769" levels="1" name="Energy Burst">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16770" levels="1" name="Energy Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="16771" levels="1" name="Death Lift">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16772" levels="1" name="Fatal Strike">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16773" levels="1" name="Unholy Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16774" levels="1" name="Stun Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16775" levels="1" name="Power Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16776" levels="1" name="Sleep">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16777" levels="1" name="Reprieve">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16778" levels="1" name="Execution">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16779" levels="3" name="Black Hearts Rage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16780" levels="2" name="Bloody Circle">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16781" levels="1" name="Ring of Corruption">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16782" levels="1" name="Violent Charge">
+    <set name="operateType" val="PASSIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16783" levels="1" name="Sentence of Death">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16784" levels="1" name="Guillotine Chopping">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16785" levels="1" name="Void Heal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16786" levels="1" name="Revenge Will">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16787" levels="1" name="Double Edge Slash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16788" levels="24" name="Raid Boss (Lv. 101)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16789" levels="5" name="Standby State">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16790" levels="1" name="Stun Crush">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16791" levels="1" name="Bloody Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16792" levels="1" name="Rush Assault">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16793" levels="1" name="Thirst of Blood">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16794" levels="1" name="Crack of Air">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16795" levels="1" name="Vampiric Force">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16796" levels="1" name="Robe of Embryo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16797" levels="1" name="Curse of Silence">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16798" levels="1" name="Absolute Black">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16799" levels="1" name="Curse of Blaze">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16800" levels="1" name="Meteor Hurricane">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16801" levels="1" name="Absolute Crimson">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16802" levels="1" name="Rage of Embryo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16803" levels="1" name="Dark Fire">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16804" levels="1" name="Dark Breaker">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16805" levels="1" name="Chaos Breaker">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16806" levels="1" name="Chaos Fire">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16807" levels="1" name="Dark Blade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16808" levels="1" name="Raven Flush">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16809" levels="1" name="Wild Slash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16810" levels="1" name="Shield Throwing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16811" levels="1" name="Abyss Fire">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16812" levels="1" name="Soul Drain">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16813" levels="1" name="Shining Punishment">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16814" levels="1" name="Empower Rush">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16815" levels="1" name="Abyss Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16816" levels="1" name="Destiny Waits">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16817" levels="1" name="Atelia Cannon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16818" levels="1" name="Overcharge Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16819" levels="1" name="Dirty Fighting">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16820" levels="1" name="Steady Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16821" levels="1" name="Black Powder">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16822" levels="1" name="Throw Grenade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16823" levels="1" name="Overseer Assault">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16824" levels="1" name="Black Powder Eruption">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16825" levels="1" name="Blood Stab">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16826" levels="1" name="Evasive Counterstrike">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16827" levels="1" name="Darkness Power Slasher">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16828" levels="1" name="Explosion of Despair">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16829" levels="1" name="Will of Survival">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16830" levels="1" name="Light of Protection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16831" levels="1" name="Roar of the Battlefield">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16832" levels="1" name="Giant Barrier">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16833" levels="1" name="Thunder Spear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16834" levels="1" name="Winged Spear">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16835" levels="1" name="Elemental Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16836" levels="1" name="Devil's Highway">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16837" levels="1" name="Mass Death Fear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16838" levels="1" name="Elemental Final Storm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16839" levels="1" name="Superior Aggression Aura">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16840" levels="1" name="Shield Wave">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16841" levels="1" name="Final Ultimate Defense">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16842" levels="1" name="Gravity Shock">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16843" levels="1" name="Spallation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="16844" levels="1" name="Mind of Steel">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16845" levels="1" name="Power Bomber">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16846" levels="1" name="Infinity Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16847" levels="1" name="Berserker">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16848" levels="1" name="Heavy Arrow Rain">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16849" levels="1" name="Tornado Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16850" levels="1" name="Hunting Instinct">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16851" levels="1" name="Chain Blaze">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16852" levels="1" name="Death Mass Unleash Hell">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16853" levels="1" name="Brilliant Heal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16854" levels="1" name="Mass Fatal Slip">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16855" levels="1" name="Celestial Protection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16856" levels="1" name="Hyper Hammer Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16857" levels="1" name="Hammer Splash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16858" levels="1" name="Aggression Aura">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16859" levels="1" name="Hammer Earthquake">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16860" levels="1" name="Encourage">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16861" levels="1" name="Power Slash">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16862" levels="1" name="Shield Slam">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16863" levels="1" name="Hatable Shout">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16864" levels="1" name="Holy Fire Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+  </skill>
+  <skill id="16865" levels="1" name="Sentence of Guilt">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16866" levels="1" name="Sentence of Death">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16867" levels="1" name="Joust Lunge">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16868" levels="1" name="Horizon Bash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16869" levels="1" name="Horseshoe Tramping">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16870" levels="1" name="Gigantic Horse Kick">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16871" levels="1" name="Etina's Call">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16872" levels="15" name="Etina's Benefaction">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16873" levels="1" name="Etina's Judgment">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16874" levels="2" name="Demise of Etina">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16875" levels="1" name="Power Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16876" levels="1" name="Grand Provoke">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16877" levels="1" name="Bloody Rush">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16878" levels="1" name="Execution">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16879" levels="1" name="Bleed Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16880" levels="1" name="Decapitation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16881" levels="1" name="Power Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16882" levels="1" name="Testudo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16883" levels="1" name="Holy Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16884" levels="1" name="Blood To Flesh">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16885" levels="1" name="Double Magic Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16886" levels="1" name="Double Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16887" levels="1" name="Blood For Blood">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16888" levels="1" name="Might of Wing">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16889" levels="1" name="Embryo Berserker">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16890" levels="1" name="Embryo Guardian">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16891" levels="1" name="Etina's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="16892" levels="1" name="Curse of Etina">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16893" levels="31" name="Messiah Outer Castle Elite Monster">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16894" levels="1" name="Defense Cannon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16895" levels="1" name="Overpower Defense Cannon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16896" levels="1" name="Defense Cannon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16897" levels="1" name="Overpower Defense Cannon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16898" levels="1" name="Kain of Betrayal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="16899" levels="1" name="Camille">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16900" levels="1" name="Kain Van Halter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="16901" levels="3" name="Martyrdom - Passion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16902" levels="3" name="Martyrdom - Faith">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16903" levels="3" name="Martyrdom - Truth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16904" levels="3" name="Martyrdom - Dedication">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16905" levels="3" name="Martyrdom - Wish">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16906" levels="3" name="Martyrdom - Sacrifice">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16907" levels="2" name="Vampire's Sleep">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16908" levels="1" name="Hellmann Cursed Pierce">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16909" levels="1" name="Hellmann Stun Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16910" levels="1" name="Robust Chain Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16911" levels="1" name="Robust Shield Strike">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16912" levels="1" name="Robust Challenge for Fate">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16913" levels="1" name="Mighty Fatal Strike">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16914" levels="1" name="Mighty Sonic Storm">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16915" levels="1" name="Keen Lethal Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16916" levels="1" name="Keen Flame Hawk">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16917" levels="1" name="Highest Aura Bolt">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16918" levels="1" name="Highest Aura Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16919" levels="1" name="Highest Meteor">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16920" levels="1" name="Robust Judgment">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16921" levels="1" name="Robust Plague">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16922" levels="1" name="Mighty Rush Impact">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16923" levels="1" name="Keen Multiple Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16924" levels="1" name="Atelia Power Crush">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16925" levels="1" name="Atelia Thunder Storm">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16926" levels="1" name="Atelia Fear Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16927" levels="1" name="Atelia Fatal Strike">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16928" levels="1" name="Atelia Sonic Storm">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16929" levels="1" name="Atelia Reverse">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16930" levels="1" name="Atelia Blood Nail">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16931" levels="1" name="Atelia Lethal Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16932" levels="1" name="Atelia Multiple Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16933" levels="1" name="Atelia Aura Bolt">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16934" levels="1" name="Atelia Aura Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16935" levels="1" name="Kain Sonic Slash">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16936" levels="1" name="Kain Sonic Storm">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16937" levels="1" name="Kain Rush Impact">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16938" levels="1" name="Atelia Sonic Slash">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16939" levels="1" name="Atelia Sonic Storm">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16940" levels="1" name="Atelia Bomber Effect">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16941" levels="1" name="Curse of Vampire - Slow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16942" levels="1" name="Curse of Vampire - Fear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16943" levels="1" name="Curse of Vampire - Trap">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16944" levels="1" name="Curse of Vampire - Bleed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16945" levels="1" name="Curse of Life">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16946" levels="1" name="Curse of Etis van Etina">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16947" levels="1" name="Dark Energy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16948" levels="1" name="Dark Energy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16949" levels="1" name="Stun">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16950" levels="1" name="Power Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="16951" levels="1" name="Quick Throw">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16952" levels="1" name="Berserker">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16953" levels="1" name="Rain of Fire">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16954" levels="1" name="Drain">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16955" levels="1" name="Counter Aggression">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16956" levels="1" name="Punishment">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16957" levels="1" name="Multi-Heal">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16958" levels="1" name="Blink">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16959" levels="1" name="Chain of Hatred">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16960" levels="1" name="Critical Bash">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16961" levels="1" name="Air Bind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16962" levels="1" name="Shillien Healing">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16963" levels="1" name="Brave Charge">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16964" levels="1" name="Prominence">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16965" levels="1" name="Striking Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16966" levels="1" name="Power Blow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16967" levels="1" name="Super Strike">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16968" levels="1" name="Mass Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16969" levels="1" name="Long Strike">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16970" levels="1" name="Sword Bash">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16971" levels="1" name="Spinning Slasher">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16972" levels="1" name="Aggression">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16973" levels="1" name="Hesitate Slash">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16974" levels="1" name="Healing Moonlight">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16975" levels="1" name="Night Canine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16976" levels="1" name="Darken Fear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16977" levels="1" name="Soul Link">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16978" levels="1" name="Ghost Blink">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16979" levels="1" name="Hellfire">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16980" levels="1" name="Infernal Icicles">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16981" levels="1" name="Fallen Execution">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16982" levels="1" name="Devil Horns of Shield">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16983" levels="1" name="Embryo's Blessing">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16984" levels="1" name="Blind Spark">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16985" levels="1" name="Darkness Energy Bomb">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16986" levels="1" name="Bless of Etina">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16987" levels="1" name="Bless of Blood">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16988" levels="1" name="Vampire's Awakening">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16989" levels="1" name="Death">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16990" levels="1" name="Dark Roar">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16991" levels="1" name="Defense Cannon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16992" levels="1" name="Overcharge Cannon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16993" levels="1" name="Orc's Dream">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16994" levels="1" name="Angry Magic Woodpile">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+  </skill>
+  <skill id="16995" levels="1" name="Paralysis">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="16996" levels="1" name="Furious Magic Woodpile">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16997" levels="1" name="Jumping Magic Woodpile">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="16998" levels="1" name="Angry Magic Woodpile">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="6" />
+  </skill>
+  <skill id="16999" levels="1" name="Energy of Evil Thoughts">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+</list>

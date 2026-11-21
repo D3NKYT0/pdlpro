@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <etcitem id="49783" name="Sibi's Coin">
+    <set name="icon" value="icon.ev_balthus_coin" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="49798" name="Cheer Pom Poms">
+    <set name="icon" value="icon.ev_12th_weapon" />
+    <set name="type" value="dual" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+</list>

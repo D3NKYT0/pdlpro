@@ -1,0 +1,4713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <etcitem id="4000" name="Mercenary Posting Ticket (Spear/Stationary)">
+    <set name="icon" value="icon.mticket_pole_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4001" name="Mercenary Posting Ticket (Bow/Stationary)">
+    <set name="icon" value="icon.mticket_bow_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4002" name="Mercenary Posting Ticket (Cleric/Stationary)">
+    <set name="icon" value="icon.mticket_cleric_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4003" name="Mercenary Posting Ticket (Wizard/Stationary)">
+    <set name="icon" value="icon.mticket_wizard_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4004" name="Mercenary Posting Ticket (Sword/Mobile)">
+    <set name="icon" value="icon.mticket_sword_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4005" name="Mercenary Posting Ticket (Spear/Mobile)">
+    <set name="icon" value="icon.mticket_pole_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4006" name="Mercenary Posting Ticket (Bow/Mobile)">
+    <set name="icon" value="icon.mticket_bow_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4007" name="Mercenary Posting Ticket (Cleric/Mobile)">
+    <set name="icon" value="icon.mticket_cleric_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4008" name="Mercenary Posting Ticket (Wizard/Mobile)">
+    <set name="icon" value="icon.mticket_wizard_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4009" name="Mercenary Posting Ticket (Teleporter1)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4010" name="Mercenary Posting Ticket (Teleporter2)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4011" name="Mercenary Posting Ticket (Teleporter3)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4012" name="Mercenary Posting Ticket (Sword/Stationary)">
+    <set name="icon" value="icon.mticket_sword_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4013" name="Mercenary Posting Ticket (Spear/Stationary)">
+    <set name="icon" value="icon.mticket_pole_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4014" name="Mercenary Posting Ticket (Bow/Stationary)">
+    <set name="icon" value="icon.mticket_bow_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4015" name="Mercenary Posting Ticket (Cleric/Stationary)">
+    <set name="icon" value="icon.mticket_cleric_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4016" name="Mercenary Posting Ticket (Wizard/Stationary)">
+    <set name="icon" value="icon.mticket_wizard_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4017" name="Mercenary Posting Ticket (Sword/Mobile)">
+    <set name="icon" value="icon.mticket_sword_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4018" name="Mercenary Posting Ticket (Spear/Mobile)">
+    <set name="icon" value="icon.mticket_pole_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4019" name="Mercenary Posting Ticket (Bow/Mobile)">
+    <set name="icon" value="icon.mticket_bow_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4020" name="Mercenary Posting Ticket (Cleric/Mobile)">
+    <set name="icon" value="icon.mticket_cleric_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4021" name="Mercenary Posting Ticket (Wizard/Mobile)">
+    <set name="icon" value="icon.mticket_wizard_move_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4022" name="Mercenary Posting Ticket (Teleporter1)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4023" name="Mercenary Posting Ticket (Teleporter2)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4024" name="Mercenary Posting Ticket (Teleporter3)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4025" name="Mercenary Posting Ticket (Teleporter4)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4026" name="Mercenary Posting Ticket (Teleporter5)">
+    <set name="icon" value="icon.mticket_teleporter_fix_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="4027" name="Bouquet">
+    <set name="icon" value="icon.etc_plan_i00" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4028" name="Giant Cannon">
+    <set name="icon" value="icon.weapon_monster_i00" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <etcitem id="4029" name="Red Paper">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4030" name="Orange Paper">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4031" name="Yellow Paper">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4032" name="Green Paper">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4033" name="Blue Paper">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4034" name="Purple Paper">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4035" name="White Paper">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4036" name="Black Paper">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4037" name="Coin of Luck">
+    <set name="icon" value="icon.etc_coins_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4038" name="Food For Hatchling">
+    <set name="icon" value="icon.etc_pouch_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4039" name="Mold Glue">
+    <set name="icon" value="icon.etc_reagent_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4040" name="Mold Lubricant">
+    <set name="icon" value="icon.etc_reagent_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4041" name="Mold Hardener">
+    <set name="icon" value="icon.etc_reagent_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4042" name="Enria">
+    <set name="icon" value="icon.etc_gem_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4043" name="Asofe">
+    <set name="icon" value="icon.etc_gem_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4044" name="Thons">
+    <set name="icon" value="icon.etc_gem_clear_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4045" name="Maestro Holder">
+    <set name="icon" value="icon.etc_lump_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4046" name="Maestro Anvil Lock">
+    <set name="icon" value="icon.etc_lump_dark_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4047" name="Craftsman Mold">
+    <set name="icon" value="icon.etc_mold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4048" name="Maestro Mold">
+    <set name="icon" value="icon.etc_silver_mold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4049" name="Adamantite Earring Gemstone">
+    <set name="icon" value="icon.etc_crystal_ball_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4050" name="Adamantite Ring Wire">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4051" name="Adamantite Necklace Chain">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4052" name="Earring of Black Ore Piece">
+    <set name="icon" value="icon.etc_broken_crystal_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4053" name="Ring of Black Ore Gemstone">
+    <set name="icon" value="icon.etc_gem_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4054" name="Necklace of Black Ore Beads">
+    <set name="icon" value="icon.etc_bead_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4055" name="Composite Shield Fragment">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4056" name="Zubei's Breastplate Part">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4057" name="Zubei's Gaiter Material">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4058" name="Implosion Boots Part">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4059" name="Boots of Silence Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4060" name="Guardian's Boots Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4061" name="Paradia Boots Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4062" name="Elemental Boots Lining">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4063" name="Boots of Grace Lining">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4064" name="Avadon Breastplate Part">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4065" name="Avadon Gaiters Material">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4066" name="Zubei's Leather Shirt Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4067" name="Zubei's Leather Gaiter Texture">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4068" name="Avadon Leather Armor Lining">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4069" name="Tunic of Zubei Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4070" name="Stockings of Zubei Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4071" name="Avadon Robe Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4072" name="Avadon Circlet Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4073" name="Sealed Avadon Gloves Part">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4074" name="Chain Gloves of Silence Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4075" name="Guardian's Gloves Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4076" name="Gloves of Blessing Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4077" name="Doom Shield Fragment">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4078" name="Blue Wolf Breastplate Part">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4079" name="Boots of Blessing Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4080" name="Blue Wolf Gaiters Material">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4081" name="Doom Plate Armor Temper">
+    <set name="icon" value="icon.etc_lump_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4082" name="Blue Wolf Leather Armor Texture">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4083" name="Leather Armor of Doom Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4084" name="Blue Wolf Tunic Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4085" name="Tunic of Doom Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4086" name="Blue Wolf Stockings Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4087" name="Stockings of Doom Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4088" name="Blue Wolf Helmet Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4089" name="Doom Helmet Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4090" name="Sealed Blue Wolf Boots Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4091" name="Sealed Doom Gloves Part">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4092" name="Elemental Gloves Lining">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4093" name="Gloves of Grace Lining">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4094" name="Implosion Gauntlet Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4095" name="Paradia Gloves Pattern">
+    <set name="icon" value="icon.etc_letter_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4096" name="Sealed Blue Wolf Gloves Fabric">
+    <set name="icon" value="icon.etc_leather_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4097" name="Sealed Zubei's Boots Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4098" name="Sealed Avadon Boots Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4099" name="Sealed Doom Boots Part">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4100" name="Sealed Zubei's Gauntlets Part">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4101" name="Zubei's Shield Fragment">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4102" name="Zubei's Helmet Design">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4103" name="Pata Blade">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4104" name="Great Sword Blade">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4105" name="Heavy War Axe Head">
+    <set name="icon" value="icon.etc_squares_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4106" name="Sprite's Staff Head">
+    <set name="icon" value="icon.etc_squares_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4107" name="Keshanberk Blade">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4108" name="Sword of Valhalla Blade">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4109" name="Kris Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4110" name="Hell Knife Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4111" name="Arthro Nail Blade">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4112" name="Dark Elven Longbow Shaft">
+    <set name="icon" value="icon.etc_branch_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4113" name="Great Axe Head">
+    <set name="icon" value="icon.etc_squares_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4114" name="Sword of Damascus Blade">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4115" name="Lance Blade">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4116" name="Deadman's Glory Stone">
+    <set name="icon" value="icon.etc_squares_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4117" name="Art of Battle Axe Blade">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4118" name="Evil Spirit Head">
+    <set name="icon" value="icon.etc_squares_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4119" name="Demon's Dagger Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4120" name="Bellion Cestus Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4121" name="Bow of Peril Shaft">
+    <set name="icon" value="icon.etc_branch_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4122" name="Recipe: Maestro Holder (100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4123" name="Recipe: Maestro Anvil Lock (100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4124" name="Recipe: Craftsman Mold (100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4125" name="Recipe: Maestro Mold (100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4126" name="Recipe: Adamantite Earrings (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4127" name="Recipe: Adamantite Ring (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4128" name="Recipe: Adamantite Necklace (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4129" name="Recipe: Earrings of Black Ore (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4130" name="Recipe: Ring of Black Ore (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4131" name="Recipe: Necklace of Black Ore (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4132" name="Recipe: Composite Shield (100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4133" name="Recipe: Zubei's Breastplate (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4134" name="Recipe: Zubei's Gaiters (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4135" name="Recipe: Implosion Boots (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4136" name="Recipe: Boots of Silence (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4137" name="Recipe: Guardian's Boots (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4138" name="Recipe: Paradia Boots (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4139" name="Recipe: Elemental Boots (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4140" name="Recipe: Boots of Grace (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4141" name="Recipe: Avadon Breastplate (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4142" name="Recipe: Avadon Gaiters (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4143" name="Recipe: Zubei's Leather Shirt (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4144" name="Recipe: Zubei's Leather Gaiters (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4145" name="Recipe: Avadon Leather Armor (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4146" name="Recipe: Tunic of Zubei (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4147" name="Recipe: Stockings of Zubei (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4148" name="Recipe: Avadon Robe (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4149" name="Recipe: Avadon Circlet (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4150" name="Recipe: Sealed Avadon Gloves (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4151" name="Recipe: Chain Gloves of Silence (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4152" name="Recipe: Guardian's Gloves (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4153" name="Recipe: Gloves of Blessing (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4154" name="Recipe: Doom Shield (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4155" name="Recipe: Blue Wolf Breastplate (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4156" name="Recipe: Boots of Blessing (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4157" name="Recipe: Blue Wolf Gaiters (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4158" name="Recipe: Doom Plate Armor (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4159" name="Recipe: Blue Wolf Leather Armor (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4160" name="Recipe: Leather Armor of Doom (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4161" name="Recipe: Blue Wolf Tunic (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4162" name="Recipe: Tunic of Doom (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4163" name="Recipe: Blue Wolf Stockings (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4164" name="Recipe: Stockings of Doom (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4165" name="Recipe: Blue Wolf Helmet (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4166" name="Recipe: Doom Helmet (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4167" name="Recipe: Sealed Blue Wolf Boots (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4168" name="Recipe: Sealed Doom Gloves (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4169" name="Recipe: Elemental Gloves (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4170" name="Recipe: Gloves of Grace (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4171" name="Recipe: Implosion Gauntlets (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4172" name="Recipe: Paradia Gloves (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4173" name="Recipe: Sealed Blue Wolf Gloves (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4174" name="Recipe: Sealed Zubei's Boots (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4175" name="Recipe: Sealed Avadon Boots (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4176" name="Recipe: Sealed Doom Boots (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4177" name="Recipe: Sealed Zubei's Gauntlets (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4178" name="Recipe: Zubei's Shield (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4179" name="Recipe: Zubei's Helmet (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4180" name="Recipe: Silver Arrow (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4181" name="Recipe: Pata (100%)">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4182" name="Recipe: Great Sword (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4183" name="Recipe: Heavy War Axe (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4184" name="Recipe: Sprite's Staff (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4185" name="Recipe: Keshanberk (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4186" name="Recipe: Sword of Valhalla (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4187" name="Recipe: Kris (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4188" name="Recipe: Hell Knife (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4189" name="Recipe: Arthro Nail (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4190" name="Recipe: Dark Elven Long Bow (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4191" name="Recipe: Great Axe (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4192" name="Recipe: Sword of Damascus (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4193" name="Recipe: Lance (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4194" name="Recipe: Deadman's Glory (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4195" name="Recipe: Art of Battle Axe (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4196" name="Recipe: Staff of Evil Spirits (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4197" name="Recipe: Demon's Dagger (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4198" name="Recipe: Bellion Cestus (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4199" name="Recipe: Bow of Peril (100%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4200" name="Spellbook: Restore Life">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4201" name="Spellbook: Resist Shock">
+    <set name="icon" value="icon.etc_spell_books_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="4202" name="Chrono Cithara">
+    <set name="icon" value="icon.weapon_chrono_cithara_i00" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <etcitem id="4203" name="Spellbook: Life Leech">
+    <set name="icon" value="icon.etc_spell_books_defighter_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4204" name="Amulet: Pa'agrio's Tact">
+    <set name="icon" value="icon.etc_orcish_talisman_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4205" name="Amulet: Pa'agrio's Rage">
+    <set name="icon" value="icon.etc_orcish_talisman_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4206" name="Spellbook: Transfer Pain">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4207" name="Spellbook: Mana Regeneration">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4208" name="Spellbook: Curse Gloom">
+    <set name="icon" value="icon.etc_spell_books_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4209" name="Change of Heart - Piece 1">
+    <set name="icon" value="icon.etc_heart_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4210" name="Change of Heart - Piece 2">
+    <set name="icon" value="icon.etc_heart_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4211" name="Change of Heart - Piece 3">
+    <set name="icon" value="icon.etc_heart_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4212" name="Change of Heart - Piece 4">
+    <set name="icon" value="icon.etc_heart_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4213" name="Change of Heart - Piece 5">
+    <set name="icon" value="icon.etc_heart_i05" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4214" name="Change of Heart - Piece 6">
+    <set name="icon" value="icon.etc_heart_i06" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4215" name="Change of Heart - Piece 7">
+    <set name="icon" value="icon.etc_heart_i07" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4216" name="Change of Heart - Piece 8">
+    <set name="icon" value="icon.etc_heart_i08" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4217" name="Change of Heart - Piece 9">
+    <set name="icon" value="icon.etc_heart_i09" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4218" name="L2 Day - Scroll of Mana Regeneration">
+    <set name="icon" value="icon.etc_scroll_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="4219" name="Dream Sword">
+    <set name="icon" value="icon.weapon_knights_sword_i00" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4220" name="Dream Knife">
+    <set name="icon" value="icon.weapon_assassin_knife_i00" />
+    <set name="type" value="dagger" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4221" name="Ubiquitous Axe">
+    <set name="icon" value="icon.weapon_tomahawk_i00" />
+    <set name="type" value="blunt" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <armor id="4222" name="Dream Shield">
+    <set name="icon" value="icon.shield_hoplon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="4223" name="Ubiquitous Shield">
+    <set name="icon" value="icon.shield_dwarven_chain_shield_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="4224" name="Dream Armor">
+    <set name="icon" value="icon.armor_blast_plate_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="4225" name="Dream Stockings">
+    <set name="icon" value="icon.armor_mithril_gaiters_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="4226" name="Dream Gloves">
+    <set name="icon" value="icon.armor_gauntlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="4227" name="Dream Boots">
+    <set name="icon" value="icon.armor_chain_boots_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="4228" name="Ubiquitous Armor">
+    <set name="icon" value="icon.armor_compound_scale_mail_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="4229" name="Ubiquitous Stockings">
+    <set name="icon" value="icon.armor_compound_scale_gaiters_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="4230" name="Ubiquitous Gloves">
+    <set name="icon" value="icon.armor_manticor_skin_gloves_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="4231" name="Ubiquitous Boots">
+    <set name="icon" value="icon.armor_iron_boots_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <etcitem id="4232" name="Dice">
+    <set name="icon" value="icon.etc_dice_a_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="4233" name="Knuckle Duster">
+    <set name="icon" value="icon.weapon_knuckle_dust_i00" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <armor id="4234" name="Hatchling's Level 65 Armor">
+    <set name="icon" value="icon.etc_pet_armor_i06" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="4235" name="Hatchling's Level 75 Armor">
+    <set name="icon" value="icon.etc_pet_armor_i07" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="4236" name="Gara Item">
+    <set name="icon" value="icon.etc_pet_armor_i07" />
+    <set name="tradeable" value="true" />
+    <slot id="CHEST" />
+  </armor>
+  <weapon id="4237" name="Hatchling's Level 65 Weapon">
+    <set name="icon" value="icon.etc_pet_arms_i04" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4238" name="Hatchling's Level 75 Weapon">
+    <set name="icon" value="icon.etc_pet_arms_i04" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <etcitem id="4239" name="Blade Mold">
+    <set name="icon" value="icon.etc_artisans_frame_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4240" name="Tyra's Bill">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4241" name="Ranger's Report - Part 1">
+    <set name="icon" value="icon.etc_piece_of_report_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4242" name="Ranger's Report - Part 2">
+    <set name="icon" value="icon.etc_piece_of_report_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4243" name="Ranger's Report - Part 3">
+    <set name="icon" value="icon.etc_piece_of_report_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4244" name="Ranger's Report - Part 4">
+    <set name="icon" value="icon.etc_piece_of_report_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4245" name="Weapons Trade Contract">
+    <set name="icon" value="icon.etc_paper_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4246" name="Attack Directives">
+    <set name="icon" value="icon.etc_roll_of_paper_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4247" name="Certificate of the Silver Scale Guild">
+    <set name="icon" value="icon.etc_crest_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4248" name="Rolento's Cargobox">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4249" name="Ol Mahum Captain's Head">
+    <set name="icon" value="icon.etc_skull_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4250" name="Jade Crystal">
+    <set name="icon" value="icon.etc_gem_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4251" name="Ancient Statue of Goddess">
+    <set name="icon" value="icon.etc_statue_of_einhasad_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4252" name="GalfRedo Romer's Bust">
+    <set name="icon" value="icon.etc_holy_statue_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4253" name="Eye of the Shadow">
+    <set name="icon" value="icon.etc_horn_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4254" name="Certificate of Participation: Battle Royal">
+    <set name="icon" value="icon.etc_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4255" name="Trade Cargo">
+    <set name="icon" value="icon.etc_pouch_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4256" name="Agnes's Holy Symbol">
+    <set name="icon" value="icon.etc_statue_of_einhasad_bronze_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4257" name="Agnes's Rosary">
+    <set name="icon" value="icon.etc_evil_necklace_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4258" name="Sinister Totem">
+    <set name="icon" value="icon.etc_totem_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4259" name="Bear Skin">
+    <set name="icon" value="icon.etc_leather_brown_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4260" name="Enku Orc's Head">
+    <set name="icon" value="icon.etc_skull_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4261" name="Orc Heads Bouquet -1">
+    <set name="icon" value="icon.etc_flower_bouquet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4262" name="Orc Heads Bouquet -2">
+    <set name="icon" value="icon.etc_flower_bouquet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4263" name="Orc Heads Bouquet -3">
+    <set name="icon" value="icon.etc_flower_bouquet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4264" name="Orc Heads Bouquet -4">
+    <set name="icon" value="icon.etc_flower_bouquet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4265" name="Orc Heads Bouquet -5">
+    <set name="icon" value="icon.etc_flower_bouquet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4266" name="Orc Heads Bouquet -6">
+    <set name="icon" value="icon.etc_flower_bouquet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4267" name="Orc Heads Bouquet -7">
+    <set name="icon" value="icon.etc_flower_bouquet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4268" name="Jennifer's Box">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4269" name="Articles of Dead Heroes">
+    <set name="icon" value="icon.etc_squares_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4270" name="Old Key">
+    <set name="icon" value="icon.etc_old_key_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4271" name="Old Hilt">
+    <set name="icon" value="icon.etc_hilt_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4272" name="Totem Necklace">
+    <set name="icon" value="icon.etc_totem_necklace_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4273" name="Einhasad Crucifix">
+    <set name="icon" value="icon.etc_magic_coin_silver_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4274" name="Victim's Arm Bone">
+    <set name="icon" value="icon.etc_piece_bone_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4275" name="Victim's Thigh Bone">
+    <set name="icon" value="icon.etc_piece_bone_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4276" name="Victim's Skull">
+    <set name="icon" value="icon.etc_skull_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4277" name="Victim's Rib Bone">
+    <set name="icon" value="icon.etc_rib_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4278" name="Victim's Spine">
+    <set name="icon" value="icon.etc_piece_bone_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4279" name="Jar of Bones">
+    <set name="icon" value="icon.etc_oil_pot_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4280" name="Useless Bone Pieces">
+    <set name="icon" value="icon.etc_mithril_ore_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4281" name="Powder to Summon Dead Souls">
+    <set name="icon" value="icon.etc_powder_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4282" name="Sack of the Dead">
+    <set name="icon" value="icon.etc_pouch_brown_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4283" name="Frog Prince">
+    <set name="icon" value="icon.etc_q_frog_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4284" name="Fly Powder">
+    <set name="icon" value="icon.etc_powder_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4285" name="Calculator">
+    <set name="icon" value="icon.etc_calculator_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4286" name="Gemstone Beast's Crystal">
+    <set name="icon" value="icon.etc_crystal_ball_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4287" name="Titan's Powerstone">
+    <set name="icon" value="icon.etc_instrument_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4288" name="Hanellin's 1st Letter">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4289" name="Hanellin's 2nd Letter">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4290" name="Hanellin's 3rd Letter">
+    <set name="icon" value="icon.etc_piece_of_paper_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4291" name="1st Key of Ark">
+    <set name="icon" value="icon.etc_old_key_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4292" name="2nd Key of Ark">
+    <set name="icon" value="icon.etc_old_key_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4293" name="3rd Key of Ark">
+    <set name="icon" value="icon.etc_old_key_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4294" name="White Fabric">
+    <set name="icon" value="icon.etc_piece_of_cloth_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4295" name="Blooded Fabric">
+    <set name="icon" value="icon.etc_piece_of_cloth_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4296" name="Order of Gosta">
+    <set name="icon" value="icon.etc_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4297" name="Lizard Fang">
+    <set name="icon" value="icon.etc_molar_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4298" name="Barrel of League">
+    <set name="icon" value="icon.etc_wine_barrel_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4299" name="Operation Document - 1/10">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4300" name="Operation Document - 2/10">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4301" name="Operation Document - 3/10">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4302" name="Operation Document - 4/10">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4303" name="Operation Document - 5/10">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4304" name="Operation Document - 6/10">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4305" name="Operation Document - 7/10">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4306" name="Operation Document - 8/10">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4307" name="Operation Document - 9/10">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4308" name="Operation Document - 10/10">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4309" name="Completed Operation Order">
+    <set name="icon" value="icon.etc_spellbook_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4310" name="Iason Heine's Bill">
+    <set name="icon" value="icon.etc_paper_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4311" name="Gillian's Diary">
+    <set name="icon" value="icon.etc_spellbook_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4312" name="Gillian's Notes">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4313" name="Unfinished Music">
+    <set name="icon" value="icon.etc_musical_note_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4314" name="Gillian's Heart">
+    <set name="icon" value="icon.etc_bodypart_heart_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4315" name="Gandi Tribe's Relic">
+    <set name="icon" value="icon.etc_royal_seal_of_lord_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4316" name="Swan's Flute">
+    <set name="icon" value="icon.etc_dragon_flute_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4317" name="Swan's Letter">
+    <set name="icon" value="icon.etc_scroll_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4318" name="Event Clothes">
+    <set name="icon" value="icon.etc_ladys_dress_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4319" name="Nanarin's Flute">
+    <set name="icon" value="icon.etc_dragon_flute_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4320" name="Sabrin's Black Beer">
+    <set name="icon" value="icon.etc_oil_pot_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4321" name="Stolen Black Beer">
+    <set name="icon" value="icon.etc_oil_pot_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4322" name="Stolen Event Clothes">
+    <set name="icon" value="icon.etc_ladys_dress_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4323" name="Clothes Chest Key">
+    <set name="icon" value="icon.etc_old_key_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4324" name="Beer Chest Key">
+    <set name="icon" value="icon.etc_old_key_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4325" name="Fairy Leaf">
+    <set name="icon" value="icon.etc_leaf_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4326" name="Ratman Scavenger's Skull">
+    <set name="icon" value="icon.etc_pet_arms_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4327" name="Turek War Hound's Tail">
+    <set name="icon" value="icon.etc_mane_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4328" name="Tyrant Kingpin's Heart">
+    <set name="icon" value="icon.etc_heart_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4329" name="Trisalim Tarantula's Venom Sac">
+    <set name="icon" value="icon.etc_poison_pouch_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4330" name="Penitent's Manacles">
+    <set name="icon" value="icon.etc_leash_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4331" name="Manual of Manacles">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4332" name="Tarlk Amulet">
+    <set name="icon" value="icon.etc_orcish_talisman_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4333" name="Contest Certificate">
+    <set name="icon" value="icon.etc_paper_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4334" name="Ant's Ichor">
+    <set name="icon" value="icon.etc_reagent_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4335" name="Noble Ant's Nerve Tissue">
+    <set name="icon" value="icon.etc_bodypart_brain_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4336" name="Casian's Enzyme">
+    <set name="icon" value="icon.etc_spell_shot_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4337" name="Alligator Leather">
+    <set name="icon" value="icon.etc_scale_of_medusa_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4338" name="Blue Back Alligator Leather">
+    <set name="icon" value="icon.etc_scale_of_medusa_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4339" name="Jewel Studded Alligator Leather">
+    <set name="icon" value="icon.etc_scale_of_medusa_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4340" name="Certificate of Approval to Create a Belt">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4341" name="Certificate of Approval to Create a Purse">
+    <set name="icon" value="icon.etc_recipe_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4342" name="Water Crystal">
+    <set name="icon" value="icon.etc_gem_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4343" name="Fire Crystal">
+    <set name="icon" value="icon.etc_gem_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4344" name="Wind Crystal">
+    <set name="icon" value="icon.etc_gem_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4345" name="Earth Crystal">
+    <set name="icon" value="icon.etc_gem_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4346" name="Dark Crystal">
+    <set name="icon" value="icon.etc_gem_clear_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4347" name="Crystal of Light">
+    <set name="icon" value="icon.etc_gem_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4348" name="Jade Crystal">
+    <set name="icon" value="icon.etc_gem_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4349" name="Bust of Ancient Goddess">
+    <set name="icon" value="icon.etc_holy_statue_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4350" name="The Work of the ancient sculptor Berona">
+    <set name="icon" value="icon.etc_statue_of_einhasad_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4351" name="Ancient Statue of Goddess: Prototype">
+    <set name="icon" value="icon.etc_statue_of_einhasad_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4352" name="Ancient Statue of Goddess: Original">
+    <set name="icon" value="icon.etc_statue_of_einhasad_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4353" name="Ancient Statue of Goddess: Replica">
+    <set name="icon" value="icon.etc_statue_of_einhasad_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4354" name="Ancient Statue of Goddess: Forgery">
+    <set name="icon" value="icon.etc_statue_of_einhasad_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4355" name="Blue Eva">
+    <set name="icon" value="icon.etc_magic_coin_blue_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4356" name="Gold Einhasad">
+    <set name="icon" value="icon.etc_magic_coin_gold_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4357" name="Silver Shilen">
+    <set name="icon" value="icon.etc_magic_coin_silver_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4358" name="Bloody Pa'agrio">
+    <set name="icon" value="icon.etc_magic_coin_blood_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4359" name="Barrel of Liquor">
+    <set name="icon" value="icon.etc_wine_barrel_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4360" name="Precious Scarab">
+    <set name="icon" value="icon.etc_beetle_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4361" name="Simbelmyne">
+    <set name="icon" value="icon.etc_flower_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4362" name="Odd (looking) Doll">
+    <set name="icon" value="icon.etc_totem_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4363" name="Scarlet Dress">
+    <set name="icon" value="icon.etc_ladys_dress_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4364" name="Nebulite Orb">
+    <set name="icon" value="icon.etc_crystal_ball_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4365" name="Ectoplasm Liqueur">
+    <set name="icon" value="icon.etc_dragon_blood_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4366" name="Prince's Trophy">
+    <set name="icon" value="icon.etc_trophy_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4367" name="Prince's Autobiography">
+    <set name="icon" value="icon.etc_spellbook_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4368" name="Prince's Bust">
+    <set name="icon" value="icon.etc_holy_statue_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4369" name="Silk Handkerchief">
+    <set name="icon" value="icon.etc_kerchief_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4370" name="Luxurious Goblet">
+    <set name="icon" value="icon.etc_holy_grail_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4371" name="Scepter of Darkness">
+    <set name="icon" value="icon.etc_imperial_scepter_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4372" name="Succubus Perfume">
+    <set name="icon" value="icon.etc_dragons_blood_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4373" name="Succubus Mirror">
+    <set name="icon" value="icon.etc_mirror_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4374" name="Heart of Darkness">
+    <set name="icon" value="icon.etc_heart_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4375" name="Royal Orc Totem">
+    <set name="icon" value="icon.etc_totem_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4376" name="Pearl Trodden/Trampled By A Wild Hog">
+    <set name="icon" value="icon.etc_crystal_ball_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4377" name="Boar's Tusk">
+    <set name="icon" value="icon.etc_horn_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4378" name="Sweet Potato">
+    <set name="icon" value="icon.etc_seed_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4379" name="Beast's Claws">
+    <set name="icon" value="icon.etc_fang_ivory_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4380" name="Beast's Mane">
+    <set name="icon" value="icon.etc_metallic_fiber_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4381" name="Ginseng Root">
+    <set name="icon" value="icon.etc_ginseng_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4382" name="Honey Jar">
+    <set name="icon" value="icon.etc_oil_pot_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4383" name="Bear's Gall">
+    <set name="icon" value="icon.etc_bodypart_liver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4384" name="Fresh Samon">
+    <set name="icon" value="icon.etc_fish_seawater_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4385" name="Sushi Riceball">
+    <set name="icon" value="icon.etc_meat_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4386" name="Avellan Spice">
+    <set name="icon" value="icon.etc_powder_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4387" name="Lucky Rabbit Weed">
+    <set name="icon" value="icon.etc_herb_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4388" name="Malcom's Check">
+    <set name="icon" value="icon.etc_paper_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4389" name="Deposit Box Key">
+    <set name="icon" value="icon.etc_old_key_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4390" name="Dwarven Royal Seal">
+    <set name="icon" value="icon.etc_royal_seal_of_lord_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4391" name="Dwarven Royal Crown">
+    <set name="icon" value="icon.etc_ancient_crown_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4392" name="Dwarven Dance Manual">
+    <set name="icon" value="icon.etc_spellbook_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4393" name="Calculator">
+    <set name="icon" value="icon.etc_calculator_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4394" name="Hanellin's White Flower">
+    <set name="icon" value="icon.etc_flower_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4395" name="Hanellin's Red Flower">
+    <set name="icon" value="icon.etc_flower_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4396" name="Hanellin's Yellow Flower">
+    <set name="icon" value="icon.etc_flower_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4397" name="Book of Saint">
+    <set name="icon" value="icon.etc_spellbook_gray_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4398" name="Blood of Saint">
+    <set name="icon" value="icon.etc_dragons_blood_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4399" name="Bough of Saint">
+    <set name="icon" value="icon.etc_branch_gold_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4400" name="White Fabric">
+    <set name="icon" value="icon.etc_piece_of_cloth_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4401" name="Green Dimensional Stone">
+    <set name="icon" value="icon.etc_gem_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4402" name="Blue Dimensional Stone">
+    <set name="icon" value="icon.etc_gem_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4403" name="Red Dimensional Stone">
+    <set name="icon" value="icon.etc_gem_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4404" name="Green Dimensional Stone - Shard">
+    <set name="icon" value="icon.etc_broken_crystal_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4405" name="Blue Dimensional Stone - Shard">
+    <set name="icon" value="icon.etc_broken_crystal_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4406" name="Red Dimensional Stone - Shard">
+    <set name="icon" value="icon.etc_broken_crystal_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4407" name="Bill of Iason Heine">
+    <set name="icon" value="icon.etc_paper_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4408" name="Musical Score - Theme of Love">
+    <set name="icon" value="icon.etc_musical_note_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4409" name="Musical Score - Theme of Battle">
+    <set name="icon" value="icon.etc_musical_note_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4410" name="Musical Score - Theme of Journey">
+    <set name="icon" value="icon.etc_musical_note_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4411" name="Echo Crystal - Theme of Journey">
+    <set name="icon" value="icon.etc_echo_crystal_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4412" name="Echo Crystal - Theme of Battle">
+    <set name="icon" value="icon.etc_echo_crystal_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4413" name="Echo Crystal - Theme of Love">
+    <set name="icon" value="icon.etc_echo_crystal_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4414" name="Echo Crystal - Theme of Solitude">
+    <set name="icon" value="icon.etc_echo_crystal_i03" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4415" name="Echo Crystal - Theme of the Feast">
+    <set name="icon" value="icon.etc_echo_crystal_i04" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4416" name="Echo Crystal - Theme of Celebration">
+    <set name="icon" value="icon.etc_echo_crystal_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4417" name="Echo Crystal - Theme of Comedy">
+    <set name="icon" value="icon.etc_echo_crystal_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4418" name="Musical Score - Theme of Celebration">
+    <set name="icon" value="icon.etc_musical_note_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4419" name="Musical Score - Theme of Comedy">
+    <set name="icon" value="icon.etc_musical_note_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4420" name="Musical Score - Theme of Solitude">
+    <set name="icon" value="icon.etc_musical_note_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4421" name="Musical Score - Theme of the Feast">
+    <set name="icon" value="icon.etc_musical_note_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4422" name="Dragon Bugle of Wind">
+    <set name="icon" value="icon.etc_bugle_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4423" name="Dragon Bugle of Star">
+    <set name="icon" value="icon.etc_bugle_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4424" name="Dragon Bugle of Twilight">
+    <set name="icon" value="icon.etc_bugle_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4425" name="Penitent's Manacles">
+    <set name="icon" value="icon.etc_leash_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4426" name="Manacles of Penitent">
+    <set name="icon" value="icon.etc_leash_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4427" name="Alligator Leather Belt">
+    <set name="icon" value="icon.etc_prefect_belt_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4428" name="Blue Alligator Leather Belt">
+    <set name="icon" value="icon.etc_prefect_belt_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4429" name="Bejeweled Leather Belt">
+    <set name="icon" value="icon.etc_prefect_belt_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4430" name="Alligator Leather Purse">
+    <set name="icon" value="icon.etc_handbag_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4431" name="Blue Alligator Leather Purse">
+    <set name="icon" value="icon.etc_handbag_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4432" name="Bejeweled Purse">
+    <set name="icon" value="icon.etc_handbag_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4433" name="Elemental Stone Powder">
+    <set name="icon" value="icon.etc_powder_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4434" name="Elemental Stone Shards">
+    <set name="icon" value="icon.etc_broken_crystal_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4435" name="Elemental Stone Lump">
+    <set name="icon" value="icon.etc_crystal_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4436" name="Bentley's Request">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4437" name="Carson's Request">
+    <set name="icon" value="icon.etc_piece_of_paper_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4438" name="Knuckle Duster Edge">
+    <set name="icon" value="icon.etc_sword_body_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4439" name="Avadon Shield Fragment">
+    <set name="icon" value="icon.etc_plate_silver_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4440" name="Recipe: Knuckle Duster">
+    <set name="icon" value="icon.etc_recipe_yellow_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4441" name="Recipe: Avadon Shield">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4442" name="Lottery Ticket">
+    <set name="icon" value="icon.etc_lottery_card_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4443" name="Monster Race Ticket - Single">
+    <set name="icon" value="icon.etc_ticket_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4444" name="Monster Race Ticket - Double">
+    <set name="icon" value="icon.etc_ticket_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4445" name="Dye of STR (Str+1 Con-3)">
+    <set name="icon" value="icon.etc_str_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4446" name="Dye of STR (Str+1 Dex-3)">
+    <set name="icon" value="icon.etc_str_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4447" name="Dye of CON (Con+1 Str-3)">
+    <set name="icon" value="icon.etc_con_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4448" name="Dye of CON (Con+1 Dex-3)">
+    <set name="icon" value="icon.etc_con_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4449" name="Dye of DEX (Dex+1 Str-3)">
+    <set name="icon" value="icon.etc_dex_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4450" name="Dye of DEX (Dex+1 Con-3)">
+    <set name="icon" value="icon.etc_dex_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4451" name="Dye of INT (Int+1 Men-3)">
+    <set name="icon" value="icon.etc_int_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4452" name="Dye of INT (Int+1 Wit-3)">
+    <set name="icon" value="icon.etc_int_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4453" name="Dye of MEN (Men+1 Int-3)">
+    <set name="icon" value="icon.etc_men_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4454" name="Dye of MEN (Men+1 Wit-3)">
+    <set name="icon" value="icon.etc_men_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4455" name="Dye of WIT (Wit+1 Int-3)">
+    <set name="icon" value="icon.etc_wit_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4456" name="Dye of WIT (Wit+1 Men-3)">
+    <set name="icon" value="icon.etc_wit_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4457" name="Dye of STR (Str+1 Con-2)">
+    <set name="icon" value="icon.etc_str_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4458" name="Dye of STR (Str+1 Dex-2)">
+    <set name="icon" value="icon.etc_str_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4459" name="Dye of CON (Con+1 Str-2)">
+    <set name="icon" value="icon.etc_con_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4460" name="Dye of CON (Con+1 Dex-2)">
+    <set name="icon" value="icon.etc_con_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4461" name="Dye of DEX (Dex+1 Str-2)">
+    <set name="icon" value="icon.etc_dex_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4462" name="Dye of DEX (Dex+1 Con-2)">
+    <set name="icon" value="icon.etc_dex_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4463" name="Dye of INT (Int+1 Men-2)">
+    <set name="icon" value="icon.etc_int_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4464" name="Dye of INT (Int+1 Wit-2)">
+    <set name="icon" value="icon.etc_int_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4465" name="Dye of MEN (Men+1 Int-2)">
+    <set name="icon" value="icon.etc_men_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4466" name="Dye of MEN (Men+1 Wit-2)">
+    <set name="icon" value="icon.etc_men_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4467" name="Dye of WIT (Wit+1 Int-2)">
+    <set name="icon" value="icon.etc_wit_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4468" name="Dye of WIT (Wit+1 Men-2)">
+    <set name="icon" value="icon.etc_wit_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4469" name="Dye of STR (Str+1 Con-1)">
+    <set name="icon" value="icon.etc_str_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4470" name="Dye of STR (Str+1 Dex-1)">
+    <set name="icon" value="icon.etc_str_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4471" name="Dye of CON (Con+1 Str-1)">
+    <set name="icon" value="icon.etc_con_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4472" name="Dye of CON (Con+1 Dex-1)">
+    <set name="icon" value="icon.etc_con_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4473" name="Dye of DEX (Dex+1 Str-1)">
+    <set name="icon" value="icon.etc_dex_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4474" name="Dye of DEX (Dex+1 Con-1)">
+    <set name="icon" value="icon.etc_dex_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4475" name="Dye of INT (Int+1 Men-1)">
+    <set name="icon" value="icon.etc_int_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4476" name="Dye of INT (Int+1 Wit-1)">
+    <set name="icon" value="icon.etc_int_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4477" name="Dye of MEN (Men+1 Int-1)">
+    <set name="icon" value="icon.etc_men_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4478" name="Dye of MEN (Men+1 Wit-1)">
+    <set name="icon" value="icon.etc_men_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4479" name="Dye of WIT (Wit+1 Int-1)">
+    <set name="icon" value="icon.etc_wit_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4480" name="Dye of WIT (Wit+1 Men-1)">
+    <set name="icon" value="icon.etc_wit_hena_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4481" name="Greater Dye of STR (Str+1 Con-3)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4482" name="Greater Dye of STR (Str+1 Dex-3)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4483" name="Greater Dye of CON(Con+1 Str-3)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4484" name="Greater Dye of CON(Con+1 Dex-3)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4485" name="Greater Dye of DEX (Dex+1 Str-3)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4486" name="Greater Dye of DEX (Dex+1 Con-3)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4487" name="Greater Dye of INT (Int+1 Men-3)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4488" name="Greater Dye of INT (Int+1 Wit-3)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4489" name="Greater Dye of MEN (Men+1 Int-3)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4490" name="Greater Dye of MEN (Men+1 Wit-3)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4491" name="Greater Dye of WIT (Wit+1 Int-3)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4492" name="Greater Dye of WIT (Wit+1 Men-3)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4493" name="Greater Dye of STR (Str+1 Con-2)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4494" name="Greater Dye of STR (Str+1 Dex-2)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4495" name="Greater Dye of CON (Con+1 Str-2)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4496" name="Greater Dye of CON (Con+1 Dex-2)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4497" name="Greater Dye of DEX (Dex+1 Str-2)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4498" name="Greater Dye of DEX (Dex+1 Con-2)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4499" name="Greater Dye of INT (Int+1 Men-2)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4500" name="Greater Dye of INT (Int+1 Wit-2)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4501" name="Greater Dye of MEN (Men+1 Int-2)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4502" name="Greater Dye of MEN (Men+1 Wit-2)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4503" name="Greater Dye of WIT (Wit+1 Int-2)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4504" name="Greater Dye of WIT (Wit+1 Men-2)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4505" name="Greater Dye of STR (Str+2 Con-4)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4506" name="Greater Dye of STR (Str+2 Dex-4)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4507" name="Greater Dye of CON (Con+2 Str-4)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4508" name="Greater Dye of CON (Con+2 Dex-4)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4509" name="Greater Dye of DEX (Dex+2 Str-4)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4510" name="Greater Dye of DEX (Dex+2 Con-4)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4511" name="Greater Dye of INT (Int+2 Men-4)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4512" name="Greater Dye of INT (Int+2 Wit-4)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4513" name="Greater Dye of MEN (Men+2 Int-4)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4514" name="Greater Dye of MEN (Men+2 Wit-4)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4515" name="Greater Dye of WIT (Wit+2 Int-4)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4516" name="Greater Dye of WIT (Wit+2 Men-4)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4517" name="Greater Dye of STR (Str+2 Con-3)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4518" name="Greater Dye of STR (Str+2 Dex-3)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4519" name="Greater Dye of CON (Con+2 Str-3)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4520" name="Greater Dye of CON (Con+2 Dex-3)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4521" name="Greater Dye of DEX (Dex+2 Str-3)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4522" name="Greater Dye of DEX (Dex+2 Con-3)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4523" name="Greater Dye of INT (Int+2 Men-3)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4524" name="Greater Dye of INT (Int+2 Wit-3)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4525" name="Greater Dye of MEN (Men+2 Int-3)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4526" name="Greater Dye of MEN (Men+2 Wit-3)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4527" name="Greater Dye of WIT (Wit+2 Int-3)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4528" name="Greater Dye of WIT (Wit+2 Men-3)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4529" name="Greater Dye of STR (Str+3 Con-5)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4530" name="Greater Dye of STR (Str+3 Dex-5)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4531" name="Greater Dye of CON (Con+3 Str-5)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4532" name="Greater Dye of CON (Con+3 Dex-5)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4533" name="Greater Dye of DEX (Dex+3 Str-5)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4534" name="Greater Dye of DEX (Dex+3 Con-5)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4535" name="Greater Dye of INT (Int+3 Men-5)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4536" name="Greater Dye of INT (Int+3 Wit-5)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4537" name="Greater Dye of MEN (Men+3 Int-5)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4538" name="Greater Dye of MEN (Men+3 Wit-5)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4539" name="Greater Dye of WIT (Wit+3 Int-5)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4540" name="Greater Dye of WIT (Wit+3 Men-5)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4541" name="Greater Dye of STR (Str+3 Con-4)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4542" name="Greater Dye of STR (Str+3 Dex-4)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4543" name="Greater Dye of CON (Con+3 Str-4)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4544" name="Greater Dye of CON (Con+3 Dex-4)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4545" name="Greater Dye of DEX (Dex+3 Str-4)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4546" name="Greater Dye of DEX (Dex+3 Con-4)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4547" name="Greater Dye of INT (Int+3 Men-4)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4548" name="Greater Dye of INT (Int+3 Wit-4)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4549" name="Greater Dye of MEN (Men+3 Int-4)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4550" name="Greater Dye of MEN (Men+3 Wit-4)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4551" name="Greater Dye of WIT (Wit+3 Int-4)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4552" name="Greater Dye of WIT (Wit+3 Men-4)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4553" name="Greater Dye of STR (Str+1 Con-1)">
+    <set name="icon" value="icon.etc_str_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4554" name="Greater Dye of STR (Str+1 Dex-1)">
+    <set name="icon" value="icon.etc_str_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4555" name="Greater Dye of CON (Con+1 Str-1)">
+    <set name="icon" value="icon.etc_con_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4556" name="Greater Dye of CON (Con+1 Dex-1)">
+    <set name="icon" value="icon.etc_con_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4557" name="Greater Dye of DEX (Dex+1 Str-1)">
+    <set name="icon" value="icon.etc_dex_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4558" name="Greater Dye of DEX (Dex+1 Con-1)">
+    <set name="icon" value="icon.etc_dex_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4559" name="Greater Dye of INT (Int+1 Men-1)">
+    <set name="icon" value="icon.etc_int_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4560" name="Greater Dye of INT (Int+1 Wit-1)">
+    <set name="icon" value="icon.etc_int_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4561" name="Greater Dye of MEN (Men+1 Int-1)">
+    <set name="icon" value="icon.etc_men_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4562" name="Greater Dye of MEN (Men+1 Wit-1)">
+    <set name="icon" value="icon.etc_men_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4563" name="Greater Dye of WIT (Wit+1 Int-1)">
+    <set name="icon" value="icon.etc_wit_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4564" name="Greater Dye of WIT (Wit+1 Men-1)">
+    <set name="icon" value="icon.etc_wit_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4565" name="Greater Dye of STR (Str+4 Con-6)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4566" name="Greater Dye of STR (Str+4 Dex-6)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4567" name="Greater Dye of CON (Con+4 Str-6)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4568" name="Greater Dye of CON (Con+4 Dex-6)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4569" name="Greater Dye of DEX (Dex+4 Str-6)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4570" name="Greater Dye of DEX (Dex+4 Con-6)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4571" name="Greater Dye of INT (Int+4 Men-6)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4572" name="Greater Dye of INT (Int+4 Wit-6)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4573" name="Greater Dye of MEN (Men+4 Int-6)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4574" name="Greater Dye of MEN (Men+4 Wit-6)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4575" name="Greater Dye of WIT (Wit+4 Int-6)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4576" name="Greater Dye of WIT (Wit+4 Men-6)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4577" name="Greater Dye of STR (Str+4 Con-5)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4578" name="Greater Dye of STR (Str+4 Dex-5)">
+    <set name="icon" value="icon.etc_str_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4579" name="Greater Dye of CON (Con+4 Str-5)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4580" name="Greater Dye of CON (Con+4 Dex-5)">
+    <set name="icon" value="icon.etc_con_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4581" name="Greater Dye of DEX (Dex+4 Str-5)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4582" name="Greater Dye of DEX (Dex+4 Con-5)">
+    <set name="icon" value="icon.etc_dex_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4583" name="Greater Dye of INT (Int+4 Men-5)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4584" name="Greater Dye of INT (Int+4 Wit-5)">
+    <set name="icon" value="icon.etc_int_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4585" name="Greater Dye of MEN (Men+4 Int-5)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4586" name="Greater Dye of MEN (Men+4 Wit-5)">
+    <set name="icon" value="icon.etc_men_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4587" name="Greater Dye of WIT (Wit+4 Int-5)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4588" name="Greater Dye of WIT (Wit+4 Men-5)">
+    <set name="icon" value="icon.etc_wit_hena_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4589" name="Greater Dye of STR (Str+2 Con-2)">
+    <set name="icon" value="icon.etc_str_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4590" name="Greater Dye of STR (Str+2 Dex-2)">
+    <set name="icon" value="icon.etc_str_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4591" name="Greater Dye of CON (Con+2 Str-2)">
+    <set name="icon" value="icon.etc_con_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4592" name="Greater Dye of CON (Con+2 Dex-2)">
+    <set name="icon" value="icon.etc_con_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4593" name="Greater Dye of DEX (Dex+2 Str-2)">
+    <set name="icon" value="icon.etc_dex_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4594" name="Greater Dye of DEX (Dex+2 Con-2)">
+    <set name="icon" value="icon.etc_dex_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4595" name="Greater Dye of INT (Int+2 Men-2)">
+    <set name="icon" value="icon.etc_int_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4596" name="Greater Dye of INT (Int+2 Wit-2)">
+    <set name="icon" value="icon.etc_int_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4597" name="Greater Dye of MEN (Men+2 Int-2)">
+    <set name="icon" value="icon.etc_men_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4598" name="Greater Dye of MEN (Men+2 Wit-2)">
+    <set name="icon" value="icon.etc_men_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4599" name="Greater Dye of WIT (Wit+2 Int-2)">
+    <set name="icon" value="icon.etc_wit_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4600" name="Greater Dye of WIT (Wit+2 Men-2)">
+    <set name="icon" value="icon.etc_wit_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4601" name="Greater Dye of STR (Str+3 Con-3)">
+    <set name="icon" value="icon.etc_str_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4602" name="Greater Dye of STR (Str+3 Dex-3)">
+    <set name="icon" value="icon.etc_str_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4603" name="Greater Dye of CON (Con+3 Str-3)">
+    <set name="icon" value="icon.etc_con_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4604" name="Greater Dye of CON (Con+3 Dex-3)">
+    <set name="icon" value="icon.etc_con_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4605" name="Greater Dye of DEX (Dex+3 Str-3)">
+    <set name="icon" value="icon.etc_dex_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4606" name="Greater Dye of DEX (Dex+3 Con-3)">
+    <set name="icon" value="icon.etc_dex_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4607" name="Greater Dye of INT (Int+3 Men-3)">
+    <set name="icon" value="icon.etc_int_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4608" name="Greater Dye of INT (Int+3 Wit-3)">
+    <set name="icon" value="icon.etc_int_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4609" name="Greater Dye of MEN (Men+3 Int-3)">
+    <set name="icon" value="icon.etc_men_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4610" name="Greater Dye of MEN (Men+3 Wit-3)">
+    <set name="icon" value="icon.etc_men_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4611" name="Greater Dye of WIT (Wit+3 Int-3)">
+    <set name="icon" value="icon.etc_wit_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4612" name="Greater Dye of WIT (Wit+3 Men-3)">
+    <set name="icon" value="icon.etc_wit_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4613" name="Greater Dye of STR (Str+4 Con-4)">
+    <set name="icon" value="icon.etc_str_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4614" name="Greater Dye of STR (Str+4 Dex-4)">
+    <set name="icon" value="icon.etc_str_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4615" name="Greater Dye of CON (Con+4 Str-4)">
+    <set name="icon" value="icon.etc_con_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4616" name="Greater Dye of CON (Con+4 Dex-4)">
+    <set name="icon" value="icon.etc_con_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4617" name="Greater Dye of DEX (Dex+4 Str-4)">
+    <set name="icon" value="icon.etc_dex_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4618" name="Greater Dye of DEX (Dex+4 Con-4)">
+    <set name="icon" value="icon.etc_dex_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4619" name="Greater Dye of INT (Int+4 Men-4)">
+    <set name="icon" value="icon.etc_int_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4620" name="Greater Dye of INT (Int+4 Wit-4)">
+    <set name="icon" value="icon.etc_int_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4621" name="Greater Dye of MEN (Men+4 Int-4)">
+    <set name="icon" value="icon.etc_men_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4622" name="Greater Dye of MEN (Men+4 Wit-4)">
+    <set name="icon" value="icon.etc_men_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4623" name="Greater Dye of WIT (Wit+4 Int-4)">
+    <set name="icon" value="icon.etc_wit_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4624" name="Greater Dye of WIT (Wit+4 Men-4)">
+    <set name="icon" value="icon.etc_wit_hena_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4625" name="Dice (Heart)">
+    <set name="icon" value="icon.etc_dice_a_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4626" name="Dice (Spade)">
+    <set name="icon" value="icon.etc_dice_b_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4627" name="Dice (Clover)">
+    <set name="icon" value="icon.etc_dice_c_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4628" name="Dice (Diamond)">
+    <set name="icon" value="icon.etc_dice_d_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4629" name="Red Soul Crystal">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4630" name="Red Soul Crystal - Stage 1">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4631" name="Red Soul Crystal - Stage 2">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4632" name="Red Soul Crystal - Stage 3">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4633" name="Red Soul Crystal - Stage 4">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4634" name="Red Soul Crystal - Stage 5">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4635" name="Red Soul Crystal - Stage 6">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4636" name="Red Soul Crystal - Stage 7">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4637" name="Red Soul Crystal - Stage 8">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4638" name="Red Soul Crystal - Stage 9">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4639" name="Red Soul Crystal - Stage 10">
+    <set name="icon" value="icon.etc_soul_stone_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4640" name="Green Soul Crystal">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4641" name="Green Soul Crystal - Stage 1">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4642" name="Green Soul Crystal - Stage 2">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4643" name="Green Soul Crystal - Stage 3">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4644" name="Green Soul Crystal - Stage 4">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4645" name="Green Soul Crystal - Stage 5">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4646" name="Green Soul Crystal - Stage 6">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4647" name="Green Soul Crystal - Stage 7">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4648" name="Green Soul Crystal - Stage 8">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4649" name="Green Soul Crystal - Stage 9">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4650" name="Green Soul Crystal - Stage 10">
+    <set name="icon" value="icon.etc_soul_stone_i02" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4651" name="Blue Soul Crystal">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4652" name="Blue Soul Crystal - Stage 1">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4653" name="Blue Soul Crystal - Stage 2">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4654" name="Blue Soul Crystal - Stage 3">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4655" name="Blue Soul Crystal - Stage 4">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4656" name="Blue Soul Crystal - Stage 5">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4657" name="Blue Soul Crystal - Stage 6">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4658" name="Blue Soul Crystal - Stage 7">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4659" name="Blue Soul Crystal - Stage 8">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4660" name="Blue Soul Crystal - Stage 9">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4661" name="Blue Soul Crystal - Stage 10">
+    <set name="icon" value="icon.etc_soul_stone_i01" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4662" name="Broken Red Soul Crystal">
+    <set name="icon" value="icon.etc_broken_crystal_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4663" name="Broken Green Soul Crystal">
+    <set name="icon" value="icon.etc_broken_crystal_green_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4664" name="Broken Blue Soul Crystal">
+    <set name="icon" value="icon.etc_broken_crystal_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="4665" name="Pipette Knife">
+    <set name="icon" value="icon.weapon_knife_i00" />
+    <set name="type" value="dagger" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <etcitem id="4666" name="Reiria's Soul Orb">
+    <set name="icon" value="icon.etc_bead_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4667" name="Kernon's Infernium Scepter">
+    <set name="icon" value="icon.etc_imperial_scepter_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4668" name="Golkonda's Infernium Scepter">
+    <set name="icon" value="icon.etc_imperial_scepter_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4669" name="Hallate's Infernium Scepter">
+    <set name="icon" value="icon.etc_imperial_scepter_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4670" name="Maestro Reorin's Hammer">
+    <set name="icon" value="icon.weapon_iron_hammer_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4671" name="Maestro Reorin's Mold">
+    <set name="icon" value="icon.etc_artisans_frame_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4672" name="Infernium Varnish">
+    <set name="icon" value="icon.etc_powder_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4673" name="Red Pipette Knife">
+    <set name="icon" value="icon.weapon_knife_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4674" name="Medal of Honor">
+    <set name="icon" value="icon.etc_magic_coin_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4675" name="Medal of Friendship">
+    <set name="icon" value="icon.etc_magic_coin_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4676" name="Medal of Victory">
+    <set name="icon" value="icon.etc_magic_coin_blood_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="4677" name="Potion of Critical Escape">
+    <set name="icon" value="icon.etc_potion_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4678" name="Decrease Haste Potion">
+    <set name="icon" value="icon.etc_scroll_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4679" name="Bless of Eva">
+    <set name="icon" value="icon.etc_bless_of_eva_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4680" name="Potion of Revenge">
+    <set name="icon" value="icon.etc_potion_blue_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <weapon id="4681" name="Stormbringer - Critical Anger">
+    <set name="icon" value="icon.weapon_stormbringer_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4682" name="Stormbringer - Focus">
+    <set name="icon" value="icon.weapon_stormbringer_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4683" name="Stormbringer - Light">
+    <set name="icon" value="icon.weapon_stormbringer_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4684" name="Shamshir - Guidance">
+    <set name="icon" value="icon.weapon_shamshir_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4685" name="Shamshir - Back Blow">
+    <set name="icon" value="icon.weapon_shamshir_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4686" name="Shamshir - Rsk. Evasion">
+    <set name="icon" value="icon.weapon_shamshir_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4687" name="Katana - Focus">
+    <set name="icon" value="icon.weapon_katana_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4688" name="Katana - Critical Damage">
+    <set name="icon" value="icon.weapon_katana_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4689" name="Katana - Haste">
+    <set name="icon" value="icon.weapon_katana_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4690" name="Spirit Sword - Critical Damage">
+    <set name="icon" value="icon.weapon_spirits_sword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4691" name="Spirit Sword - Critical Poison">
+    <set name="icon" value="icon.weapon_spirits_sword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4692" name="Spirit Sword - Haste">
+    <set name="icon" value="icon.weapon_spirits_sword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4693" name="Raid Sword - Focus">
+    <set name="icon" value="icon.weapon_raid_sword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4694" name="Raid Sword - Critical Drain">
+    <set name="icon" value="icon.weapon_raid_sword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4695" name="Raid Sword - Critical Poison">
+    <set name="icon" value="icon.weapon_raid_sword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4696" name="Caliburs - Guidance">
+    <set name="icon" value="icon.weapon_caliburs_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4697" name="Caliburs - Focus">
+    <set name="icon" value="icon.weapon_caliburs_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4698" name="Caliburs - Critical Damage">
+    <set name="icon" value="icon.weapon_caliburs_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4699" name="Sword of Delusion - Focus">
+    <set name="icon" value="icon.weapon_sword_of_delusion_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4700" name="Sword of Delusion - Health">
+    <set name="icon" value="icon.weapon_sword_of_delusion_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4701" name="Sword of Delusion - Rsk. Haste">
+    <set name="icon" value="icon.weapon_sword_of_delusion_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4702" name="Tsurugi - Focus">
+    <set name="icon" value="icon.weapon_tsurugi_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4703" name="Tsurugi - Critical Damage">
+    <set name="icon" value="icon.weapon_tsurugi_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4704" name="Tsurugi - Haste">
+    <set name="icon" value="icon.weapon_tsurugi_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4705" name="Sword of Nightmare - Health">
+    <set name="icon" value="icon.weapon_sword_of_nightmare_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4706" name="Sword of Nightmare - Focus">
+    <set name="icon" value="icon.weapon_sword_of_nightmare_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4707" name="Sword of Nightmare - Light">
+    <set name="icon" value="icon.weapon_sword_of_nightmare_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4708" name="Samurai Longsword - Focus">
+    <set name="icon" value="icon.weapon_samurai_longsword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4709" name="Samurai Longsword - Critical Damage">
+    <set name="icon" value="icon.weapon_samurai_longsword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4710" name="Samurai Longsword - Haste">
+    <set name="icon" value="icon.weapon_samurai_longsword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4711" name="Flamberge - Critical Damage">
+    <set name="icon" value="icon.weapon_flamberge_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4712" name="Flamberge - Focus">
+    <set name="icon" value="icon.weapon_flamberge_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4713" name="Flamberge - Light">
+    <set name="icon" value="icon.weapon_flamberge_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4714" name="Keshanberk - Guidance">
+    <set name="icon" value="icon.weapon_kshanberk_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4715" name="Keshanberk - Focus">
+    <set name="icon" value="icon.weapon_kshanberk_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4716" name="Keshanberk - Back Blow">
+    <set name="icon" value="icon.weapon_kshanberk_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4717" name="Sword of Damascus - Focus">
+    <set name="icon" value="icon.weapon_sword_of_damascus_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4718" name="Sword of Damascus - Critical Damage">
+    <set name="icon" value="icon.weapon_sword_of_damascus_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4719" name="Sword of Damascus - Haste">
+    <set name="icon" value="icon.weapon_sword_of_damascus_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4720" name="Tallum Blade - Health">
+    <set name="icon" value="icon.weapon_tallum_blade_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4721" name="Tallum Blade - Rsk. Evasion">
+    <set name="icon" value="icon.weapon_tallum_blade_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4722" name="Tallum Blade - Rsk. Haste">
+    <set name="icon" value="icon.weapon_tallum_blade_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4723" name="Great Sword - Health">
+    <set name="icon" value="icon.weapon_great_sword_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4724" name="Great Sword - Critical Damage">
+    <set name="icon" value="icon.weapon_great_sword_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4725" name="Great Sword - Focus">
+    <set name="icon" value="icon.weapon_great_sword_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4726" name="Big Hammer - Health">
+    <set name="icon" value="icon.weapon_big_hammer_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4727" name="Big Hammer - Rsk. Focus">
+    <set name="icon" value="icon.weapon_big_hammer_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4728" name="Big Hammer - Haste">
+    <set name="icon" value="icon.weapon_big_hammer_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4729" name="Battle Axe - Anger">
+    <set name="icon" value="icon.weapon_battle_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4730" name="Battle Axe - Rsk. Focus">
+    <set name="icon" value="icon.weapon_battle_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4731" name="Battle Axe - Haste">
+    <set name="icon" value="icon.weapon_battle_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4732" name="Silver Axe - Anger">
+    <set name="icon" value="icon.weapon_war_pick_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4733" name="Silver Axe - Rsk. Focus">
+    <set name="icon" value="icon.weapon_war_pick_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4734" name="Silver Axe - Haste">
+    <set name="icon" value="icon.weapon_war_pick_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4735" name="Skull Graver - Anger">
+    <set name="icon" value="icon.weapon_skull_graver_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4736" name="Skull Graver - Health">
+    <set name="icon" value="icon.weapon_skull_graver_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4737" name="Skull Graver - Rsk. Focus">
+    <set name="icon" value="icon.weapon_skull_graver_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4738" name="Dwarven War Hammer - Anger">
+    <set name="icon" value="icon.weapon_dwarven_warhammer_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4739" name="Dwarven War Hammer - Health">
+    <set name="icon" value="icon.weapon_dwarven_warhammer_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4740" name="Dwarven War Hammer - Haste">
+    <set name="icon" value="icon.weapon_dwarven_warhammer_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4741" name="War Axe - Anger">
+    <set name="icon" value="icon.weapon_war_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4742" name="War Axe - Health">
+    <set name="icon" value="icon.weapon_war_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4743" name="War Axe - Haste">
+    <set name="icon" value="icon.weapon_war_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4744" name="Yaksa Mace - Anger">
+    <set name="icon" value="icon.weapon_yaksa_mace_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4745" name="Yaksa Mace - Health">
+    <set name="icon" value="icon.weapon_yaksa_mace_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4746" name="Yaksa Mace - Rsk. Focus">
+    <set name="icon" value="icon.weapon_yaksa_mace_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4747" name="Heavy War Axe - Anger">
+    <set name="icon" value="icon.weapon_heavy_war_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4748" name="Heavy War Axe - Health">
+    <set name="icon" value="icon.weapon_heavy_war_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4749" name="Heavy War Axe - Rsk. Focus">
+    <set name="icon" value="icon.weapon_heavy_war_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4750" name="Deadman's Glory - Anger">
+    <set name="icon" value="icon.weapon_deadmans_glory_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4751" name="Deadman's Glory - Health">
+    <set name="icon" value="icon.weapon_deadmans_glory_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4752" name="Deadman's Glory - Haste">
+    <set name="icon" value="icon.weapon_deadmans_glory_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4753" name="Art of Battle Axe - Health">
+    <set name="icon" value="icon.weapon_art_of_battle_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4754" name="Art of Battle Axe - Rsk. Focus">
+    <set name="icon" value="icon.weapon_art_of_battle_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4755" name="Art of Battle Axe - Haste">
+    <set name="icon" value="icon.weapon_art_of_battle_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4756" name="Meteor Shower - Health">
+    <set name="icon" value="icon.weapon_meteor_shower_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4757" name="Meteor Shower - Focus">
+    <set name="icon" value="icon.weapon_meteor_shower_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4758" name="Meteor Shower - P.Focus">
+    <set name="icon" value="icon.weapon_meteor_shower_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4759" name="Cursed Dagger - Critical Bleed">
+    <set name="icon" value="icon.weapon_cursed_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4760" name="Cursed Dagger - Critical Poison">
+    <set name="icon" value="icon.weapon_cursed_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4761" name="Cursed Dagger - Rsk. Haste">
+    <set name="icon" value="icon.weapon_cursed_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4762" name="Dark Elven Dagger - Focus">
+    <set name="icon" value="icon.weapon_darkelven_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4763" name="Dark Elven Dagger - Back Blow">
+    <set name="icon" value="icon.weapon_darkelven_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4764" name="Dark Elven Dagger - Mortal Strike">
+    <set name="icon" value="icon.weapon_darkelven_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4765" name="Stiletto - Critical Bleed">
+    <set name="icon" value="icon.weapon_stiletto_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4766" name="Stiletto - Critical Poison">
+    <set name="icon" value="icon.weapon_stiletto_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4767" name="Stiletto - Mortal Strike">
+    <set name="icon" value="icon.weapon_stiletto_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4768" name="Grace Dagger - Evasion">
+    <set name="icon" value="icon.weapon_grace_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4769" name="Grace Dagger - Focus">
+    <set name="icon" value="icon.weapon_grace_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4770" name="Grace Dagger - Back Blow">
+    <set name="icon" value="icon.weapon_grace_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4771" name="Dark Screamer - Evasion">
+    <set name="icon" value="icon.weapon_dark_screamer_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4772" name="Dark Screamer - Focus">
+    <set name="icon" value="icon.weapon_dark_screamer_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4773" name="Dark Screamer - Critical Bleed">
+    <set name="icon" value="icon.weapon_dark_screamer_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4774" name="Crystal Dagger - Critical Bleed">
+    <set name="icon" value="icon.weapon_crystal_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4775" name="Crystal Dagger - Critical Poison">
+    <set name="icon" value="icon.weapon_crystal_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4776" name="Crystal Dagger - Mortal Strike">
+    <set name="icon" value="icon.weapon_crystal_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4777" name="Kris - Evasion">
+    <set name="icon" value="icon.weapon_kris_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4778" name="Kris - Focus">
+    <set name="icon" value="icon.weapon_kris_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4779" name="Kris - Back Blow">
+    <set name="icon" value="icon.weapon_kris_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4780" name="Demon's Dagger - Critical Bleed">
+    <set name="icon" value="icon.weapon_demons_sword_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4781" name="Demon's Dagger - Critical Poison">
+    <set name="icon" value="icon.weapon_demons_sword_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4782" name="Demon's Dagger - Mortal Strike">
+    <set name="icon" value="icon.weapon_demons_sword_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4783" name="Bloody Orchid - Evasion">
+    <set name="icon" value="icon.weapon_bloody_orchid_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4784" name="Bloody Orchid - Focus">
+    <set name="icon" value="icon.weapon_bloody_orchid_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4785" name="Bloody Orchid - Back Blow">
+    <set name="icon" value="icon.weapon_bloody_orchid_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4786" name="Hell Knife - Focus">
+    <set name="icon" value="icon.weapon_hell_knife_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4787" name="Hell Knife - Back Blow">
+    <set name="icon" value="icon.weapon_hell_knife_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4788" name="Hell Knife - Mortal Strike">
+    <set name="icon" value="icon.weapon_hell_knife_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="4789" name="Chakram - Critical Drain">
+    <set name="icon" value="icon.weapon_chakram_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4790" name="Chakram - Critical Poison">
+    <set name="icon" value="icon.weapon_chakram_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4791" name="Chakram - Rsk. Haste">
+    <set name="icon" value="icon.weapon_chakram_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4792" name="Fisted Blade - Rsk. Evasion">
+    <set name="icon" value="icon.weapon_fist_blade_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4793" name="Fisted Blade - Rsk. Haste">
+    <set name="icon" value="icon.weapon_fist_blade_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4794" name="Fisted Blade - Haste">
+    <set name="icon" value="icon.weapon_fist_blade_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4795" name="Great Pata - Critical Drain">
+    <set name="icon" value="icon.weapon_great_pata_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4796" name="Great Pata - Critical Poison">
+    <set name="icon" value="icon.weapon_great_pata_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4797" name="Great Pata - Rsk. Haste">
+    <set name="icon" value="icon.weapon_great_pata_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4798" name="Knuckle Duster - Rsk. Evasion">
+    <set name="icon" value="icon.weapon_knuckle_dust_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4799" name="Knuckle Duster - Rsk. Haste">
+    <set name="icon" value="icon.weapon_knuckle_dust_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4800" name="Knuckle Duster - Haste">
+    <set name="icon" value="icon.weapon_knuckle_dust_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4801" name="Arthro Nail - Critical Poison">
+    <set name="icon" value="icon.weapon_arthro_nail_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4802" name="Arthro Nail - Rsk. Evasion">
+    <set name="icon" value="icon.weapon_arthro_nail_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4803" name="Arthro Nail - Rsk. Haste">
+    <set name="icon" value="icon.weapon_arthro_nail_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4804" name="Bellion Cestus - Critical Drain">
+    <set name="icon" value="icon.weapon_bellion_cestus_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4805" name="Bellion Cestus - Critical Poison">
+    <set name="icon" value="icon.weapon_bellion_cestus_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4806" name="Bellion Cestus - Rsk. Haste">
+    <set name="icon" value="icon.weapon_bellion_cestus_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4807" name="Blood Tornado - Critical Drain">
+    <set name="icon" value="icon.weapon_blood_tornado_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4808" name="Blood Tornado - Rsk. Evasion">
+    <set name="icon" value="icon.weapon_blood_tornado_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4809" name="Blood Tornado - Haste">
+    <set name="icon" value="icon.weapon_blood_tornado_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4810" name="Crystallized Ice Bow - Guidance">
+    <set name="icon" value="icon.weapon_crystallized_ice_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4811" name="Crystallized Ice Bow - Evasion">
+    <set name="icon" value="icon.weapon_crystallized_ice_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4812" name="Crystallized Ice Bow - Quick Recovery">
+    <set name="icon" value="icon.weapon_crystallized_ice_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4813" name="Elemental Bow - Guidance">
+    <set name="icon" value="icon.weapon_elemental_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4814" name="Elemental Bow - Miser">
+    <set name="icon" value="icon.weapon_elemental_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4815" name="Elemental Bow - Quick Recovery">
+    <set name="icon" value="icon.weapon_elemental_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4816" name="Noble Elven Bow - Evasion">
+    <set name="icon" value="icon.weapon_noble_elven_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4817" name="Noble Elven Bow - Miser">
+    <set name="icon" value="icon.weapon_noble_elven_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4818" name="Noble Elven Bow - Cheap Shot">
+    <set name="icon" value="icon.weapon_noble_elven_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4819" name="Akat Long Bow - Guidance">
+    <set name="icon" value="icon.weapon_akat_long_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4820" name="Akat Long Bow - Evasion">
+    <set name="icon" value="icon.weapon_akat_long_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4821" name="Akat Long Bow - Miser">
+    <set name="icon" value="icon.weapon_akat_long_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4822" name="Eminence Bow - Guidance">
+    <set name="icon" value="icon.weapon_eminence_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4823" name="Eminence Bow - Miser">
+    <set name="icon" value="icon.weapon_eminence_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4824" name="Eminence Bow - Cheap Shot">
+    <set name="icon" value="icon.weapon_eminence_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4825" name="Dark Elven Long Bow - Evasion">
+    <set name="icon" value="icon.weapon_dark_elven_long_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4826" name="Dark Elven Long Bow - Critical Bleed">
+    <set name="icon" value="icon.weapon_dark_elven_long_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4827" name="Dark Elven Long Bow - Miser">
+    <set name="icon" value="icon.weapon_dark_elven_long_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4828" name="Bow of Peril - Guidance">
+    <set name="icon" value="icon.weapon_hazard_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4829" name="Bow of Peril - Quick Recovery">
+    <set name="icon" value="icon.weapon_hazard_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4830" name="Bow of Peril - Cheap Shot">
+    <set name="icon" value="icon.weapon_hazard_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4831" name="Carnage Bow - Critical Bleed">
+    <set name="icon" value="icon.weapon_carnium_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4832" name="Carnage Bow - Mana Up">
+    <set name="icon" value="icon.weapon_carnium_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4833" name="Carnage Bow - Quick Recovery">
+    <set name="icon" value="icon.weapon_carnium_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4834" name="Scythe - Anger">
+    <set name="icon" value="icon.weapon_scythe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4835" name="Scythe - Critical Stun">
+    <set name="icon" value="icon.weapon_scythe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4836" name="Scythe - Light">
+    <set name="icon" value="icon.weapon_scythe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4837" name="Orcish Glaive - Anger">
+    <set name="icon" value="icon.weapon_orcish_glaive_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4838" name="Orcish Glaive - Critical Stun">
+    <set name="icon" value="icon.weapon_orcish_glaive_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4839" name="Orcish Glaive - Towering Blow">
+    <set name="icon" value="icon.weapon_orcish_glaive_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4840" name="Body Slasher - Critical Stun">
+    <set name="icon" value="icon.weapon_body_slasher_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4841" name="Body Slasher - Towering Blow">
+    <set name="icon" value="icon.weapon_body_slasher_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4842" name="Body Slasher - Wide Blow">
+    <set name="icon" value="icon.weapon_body_slasher_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4843" name="Bec de Corbin - Critical Stun">
+    <set name="icon" value="icon.weapon_bech_de_corbin_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4844" name="Bec de Corbin - Towering Blow">
+    <set name="icon" value="icon.weapon_bech_de_corbin_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4845" name="Bec de Corbin - Light">
+    <set name="icon" value="icon.weapon_bech_de_corbin_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4846" name="Scorpion - Anger">
+    <set name="icon" value="icon.weapon_scorpion_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4847" name="Scorpion - Critical Stun">
+    <set name="icon" value="icon.weapon_scorpion_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4848" name="Scorpion - Towering Blow">
+    <set name="icon" value="icon.weapon_scorpion_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4849" name="Widow Maker - Critical Stun">
+    <set name="icon" value="icon.weapon_widow_maker_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4850" name="Widow Maker - Towering Blow">
+    <set name="icon" value="icon.weapon_widow_maker_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4851" name="Widow Maker - Wide Blow">
+    <set name="icon" value="icon.weapon_widow_maker_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4852" name="Orcish Poleaxe - Critical Stun">
+    <set name="icon" value="icon.weapon_orcish_poleaxe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4853" name="Orcish Poleaxe - Towering Blow">
+    <set name="icon" value="icon.weapon_orcish_poleaxe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4854" name="Orcish Poleaxe - Wide Blow">
+    <set name="icon" value="icon.weapon_orcish_poleaxe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4855" name="Great Axe - Anger">
+    <set name="icon" value="icon.weapon_great_axe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4856" name="Great Axe - Critical Stun">
+    <set name="icon" value="icon.weapon_great_axe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4857" name="Great Axe - Light">
+    <set name="icon" value="icon.weapon_great_axe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4858" name="Lance - Anger">
+    <set name="icon" value="icon.weapon_lancia_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4859" name="Lance - Critical Stun">
+    <set name="icon" value="icon.weapon_lancia_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4860" name="Lance - Towering Blow">
+    <set name="icon" value="icon.weapon_lancia_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4861" name="Halberd - Critical Stun">
+    <set name="icon" value="icon.weapon_halbard_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4862" name="Halberd - Towering Blow">
+    <set name="icon" value="icon.weapon_halbard_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4863" name="Halberd - Wide Blow">
+    <set name="icon" value="icon.weapon_halbard_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4864" name="Heavy Doom Hammer - Magic Regeneration">
+    <set name="icon" value="icon.weapon_heavy_doom_hammer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4865" name="Heavy Doom Hammer - Mental Shield">
+    <set name="icon" value="icon.weapon_heavy_doom_hammer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4866" name="Heavy Doom Hammer - Magic Hold">
+    <set name="icon" value="icon.weapon_heavy_doom_hammer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4867" name="Crystal Staff - Rsk. Evasion">
+    <set name="icon" value="icon.weapon_crystal_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4868" name="Crystal Staff - Mana Up">
+    <set name="icon" value="icon.weapon_crystal_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4869" name="Crystal Staff - Blessed Body">
+    <set name="icon" value="icon.weapon_crystal_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4870" name="Heavy Doom Axe - Magic Poison">
+    <set name="icon" value="icon.weapon_heavy_doom_axe_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4871" name="Heavy Doom Axe - Magic Weakness">
+    <set name="icon" value="icon.weapon_heavy_doom_axe_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4872" name="Heavy Doom Axe - Magic Chaos">
+    <set name="icon" value="icon.weapon_heavy_doom_axe_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4873" name="Cursed Staff - Magic Hold">
+    <set name="icon" value="icon.weapon_cursed_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4874" name="Cursed Staff - Magic Poison">
+    <set name="icon" value="icon.weapon_cursed_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4875" name="Cursed Staff - Magic Weakness">
+    <set name="icon" value="icon.weapon_cursed_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4876" name="Paradia Staff - Magic Regeneration">
+    <set name="icon" value="icon.weapon_paradia_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4877" name="Paradia Staff - Mental Shield">
+    <set name="icon" value="icon.weapon_paradia_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4878" name="Paradia Staff - Magic Hold">
+    <set name="icon" value="icon.weapon_paradia_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4879" name="Pa'agrian Hammer - Rsk. Evasion">
+    <set name="icon" value="icon.weapon_paagrio_hammer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4880" name="Pa'agrian Hammer - Magic Poison">
+    <set name="icon" value="icon.weapon_paagrio_hammer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4881" name="Pa'agrian Hammer - Magic Weakness">
+    <set name="icon" value="icon.weapon_paagrio_hammer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4882" name="Sage's Staff - Magic Hold">
+    <set name="icon" value="icon.weapon_sages_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4883" name="Sage's Staff - Magic Poison">
+    <set name="icon" value="icon.weapon_sages_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4884" name="Sage's Staff - Magic Weakness">
+    <set name="icon" value="icon.weapon_sages_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4885" name="Pa'agrian Axe - Mana Up">
+    <set name="icon" value="icon.weapon_paagrio_axe_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4886" name="Pa'agrian Axe - Magic Weakness">
+    <set name="icon" value="icon.weapon_paagrio_axe_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4887" name="Pa'agrian Axe - Magic Chaos">
+    <set name="icon" value="icon.weapon_paagrio_axe_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4888" name="Deadman's Staff - Magic Regeneration">
+    <set name="icon" value="icon.weapon_deadmans_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4889" name="Deadman's Staff - Mental Shield">
+    <set name="icon" value="icon.weapon_deadmans_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4890" name="Deadman's Staff - Magic Hold">
+    <set name="icon" value="icon.weapon_deadmans_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4891" name="Ghoul's Staff - Rsk. Evasion">
+    <set name="icon" value="icon.weapon_ghouls_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4892" name="Ghoul's Staff - Mana Up">
+    <set name="icon" value="icon.weapon_ghouls_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4893" name="Ghoul's Staff - Blessed Body">
+    <set name="icon" value="icon.weapon_ghouls_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4894" name="Demon's Staff - Magic Poison">
+    <set name="icon" value="icon.weapon_demons_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4895" name="Demon's Staff - Magic Weakness">
+    <set name="icon" value="icon.weapon_demons_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4896" name="Demon's Staff - Magic Chaos">
+    <set name="icon" value="icon.weapon_demons_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4897" name="Sprite's Staff - Magic Regeneration">
+    <set name="icon" value="icon.weapon_sprites_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4898" name="Sprite's Staff - Mental Shield">
+    <set name="icon" value="icon.weapon_sprites_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4899" name="Sprite's Staff - Magic Hold">
+    <set name="icon" value="icon.weapon_sprites_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4900" name="Staff of Evil Spirits - Magic Focus">
+    <set name="icon" value="icon.weapon_staff_of_evil_sprit_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4901" name="Staff of Evil Spirits - Blessed Body">
+    <set name="icon" value="icon.weapon_staff_of_evil_sprit_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4902" name="Staff of Evil Spirits - Magic Poison">
+    <set name="icon" value="icon.weapon_staff_of_evil_sprit_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4903" name="Dasparion's Staff">
+    <set name="icon" value="icon.weapon_dasparions_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4904" name="Dasparion's Staff">
+    <set name="icon" value="icon.weapon_dasparions_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="4905" name="Dasparion's Staff">
+    <set name="icon" value="icon.weapon_dasparions_staff_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="true" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="4906" name="Spellbook: Solar Spark">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4907" name="Spellbook: Solar Flare">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4908" name="Spellbook: Shadow Spark">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4909" name="Spellbook: Shadow Flare">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4910" name="Spellbook: Vampiric Rage">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4911" name="Spellbook: Curse Disease">
+    <set name="icon" value="icon.etc_spell_books_black_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4912" name="Spellbook: Benediction">
+    <set name="icon" value="icon.etc_spell_books_white_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4913" name="Spellbook: Word of Fear">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4914" name="Spellbook: Serenade of Eva">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4915" name="Blueprint: Summon Wild Hog Cannon">
+    <set name="icon" value="icon.etc_plan_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4916" name="Spellbook: Energy Bolt">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4917" name="Spellbook: Aura Bolt">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4918" name="Spellbook: Summon Kai the Cat">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4919" name="Spellbook: Summon Merrow the Unicorn">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4920" name="Spellbook: Summon Soulless">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4921" name="Blueprint: Summon Big Boom">
+    <set name="icon" value="icon.etc_plan_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4922" name="Spellbook: Summon Binding Cubic">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4923" name="Spellbook: Summon Aqua Cubic">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4924" name="Spellbook: Summon Spark Cubic">
+    <set name="icon" value="icon.etc_spell_books_summon_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4925" name="Amulet: Pa'agrio's Haste">
+    <set name="icon" value="icon.etc_orcish_talisman_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4926" name="Amulet: Soul Guard">
+    <set name="icon" value="icon.etc_orcish_talisman_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4927" name="Amulet: Chant of Revenge">
+    <set name="icon" value="icon.etc_orcish_talisman_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4928" name="Spellbook: Seed of Fire">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4929" name="Spellbook: Seed of Water">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4930" name="Spellbook: Seed of Wind">
+    <set name="icon" value="icon.etc_spell_books_assistance_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4931" name="Spellbook: Aura Symphony">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4932" name="Spellbook: Inferno">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4933" name="Spellbook: Blizzard">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4934" name="Spellbook: Demon Wind">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4935" name="Spellbook: Elemental Symphony">
+    <set name="icon" value="icon.etc_spell_books_element_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4936" name="Recipe: Avadon Shield (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4937" name="Recipe: Adamantite Earrings (70%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4938" name="Recipe: Adamantite Ring (70%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4939" name="Recipe: Adamantite Necklace (70%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4940" name="Recipe: Zubei's Breastplate (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4941" name="Recipe: Zubei's Gaiters (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4942" name="Recipe: Boots of Silence (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4943" name="Recipe: Guardian's Boots (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4944" name="Recipe: Avadon Breastplate (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4945" name="Recipe: Avadon Gaiters (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4946" name="Recipe: Zubei's Leather Shirt (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4947" name="Recipe: Zubei's Leather Gaiters (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4948" name="Recipe: Avadon Leather Armor (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4949" name="Recipe: Tunic of Zubei (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4950" name="Recipe: Stockings of Zubei (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4951" name="Recipe: Avadon Robe (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4952" name="Recipe: Avadon Circlet (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4953" name="Recipe: Sealed Avadon Gloves (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4954" name="Recipe: Chain Gloves of Silence (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4955" name="Recipe: Guardian's Gloves (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4956" name="Recipe: Gloves of Blessing (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4957" name="Recipe: Boots of Blessing (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4958" name="Recipe: Sealed Zubei's Boots (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4959" name="Recipe: Sealed Avadon Boots (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4960" name="Recipe: Sealed Zubei's Gauntlets (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4961" name="Recipe: Zubei's Shield (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4962" name="Recipe: Zubei's Helmet (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4963" name="Recipe: Great Sword (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4964" name="Recipe: Heavy War Axe (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4965" name="Recipe: Sprite's Staff (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4966" name="Recipe: Keshanberk (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4967" name="Recipe: Sword of Valhalla (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4968" name="Recipe: Kris (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4969" name="Recipe: Hell Knife (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4970" name="Recipe: Arthro Nail (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4971" name="Recipe: Dark Elven Long Bow (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4972" name="Recipe: Great Axe (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4973" name="Recipe: Earring of Black Ore (70%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4974" name="Recipe: Ring of Black Ore (70%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4975" name="Recipe: Necklace of Black Ore (70%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4976" name="Recipe: Implosion Boots (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4977" name="Recipe: Paradia Boots (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4978" name="Recipe: Elemental Boots (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4979" name="Recipe: Boots of Grace (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4980" name="Recipe: Doom Shield (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4981" name="Recipe: Blue Wolf Breastplate (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4982" name="Recipe: Blue Wolf Gaiters (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4983" name="Recipe: Doom Plate Armor (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4984" name="Recipe: Blue Wolf Leather Armor (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4985" name="Recipe: Leather Armor of Doom (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4986" name="Recipe: Blue Wolf Tunic (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4987" name="Recipe: Tunic of Doom (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4988" name="Recipe: Blue Wolf Stockings (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4989" name="Recipe: Stockings of Doom (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4990" name="Recipe: Blue Wolf Helmet (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4991" name="Recipe: Doom Helmet (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4992" name="Recipe: Sealed Blue Wolf Boots (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4993" name="Recipe: Sealed Doom Gloves (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4994" name="Recipe: Elemental Gloves (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4995" name="Recipe: Gloves of Grace (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4996" name="Recipe: Implosion Gauntlets (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4997" name="Recipe: Paradia Gloves (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4998" name="Recipe: Sealed Blue Wolf Gloves (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+  <etcitem id="4999" name="Recipe: Sealed Doom Boots (60%)">
+    <set name="icon" value="icon.etc_recipe_red_i00" />
+    <set name="tradeable" value="true" />
+  </etcitem>
+</list>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="29990" levels="1" name="Zaken Physical Reflection">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="29991" levels="1" name="Core Magic Reflection">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="29992" levels="1" name="Orfen Area Mana Burn">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MANADAM" />
+  </skill>
+  <skill id="29993" levels="1" name="Queen Ant Area Hold">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="ROOT" />
+  </skill>
+  <skill id="29994" levels="1" name="Beleth Reduced Debuff Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="29997" levels="1" name="Level 95 Status">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="29999" levels="1" name="Full Party Bonus">
+    <set name="operateType" val="TOGGLE" />
+    <set name="isMagic" val="2" />
+  </skill>
+</list>

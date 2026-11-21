@@ -1,0 +1,4189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <etcitem id="23000" name="Lv. 2 Giant STR Dye">
+    <set name="icon" value="icon.lv2_1_dye_str" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23001" name="Lv. 2 Giant DEX Dye">
+    <set name="icon" value="icon.lv2_1_dye_dex" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23002" name="Lv. 2 Giant CON Dye">
+    <set name="icon" value="icon.lv2_1_dye_con" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23003" name="Lv. 2 Giant INT Dye">
+    <set name="icon" value="icon.lv2_1_dye_int" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23004" name="Lv. 2 Giant WIT Dye">
+    <set name="icon" value="icon.lv2_1_dye_wit" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23005" name="Lv. 2 Giant MEN Dye">
+    <set name="icon" value="icon.lv2_1_dye_men" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23006" name="Lv. 2 Ancient STR Dye">
+    <set name="icon" value="icon.lv2_2_dye_str" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23007" name="Lv. 2 Ancient DEX Dye">
+    <set name="icon" value="icon.lv2_2_dye_dex" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23008" name="Lv. 2 Ancient CON Dye">
+    <set name="icon" value="icon.lv2_2_dye_con" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23009" name="Lv. 2 Ancient INT Dye">
+    <set name="icon" value="icon.lv2_2_dye_int" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23010" name="Lv. 2 Ancient WIT Dye">
+    <set name="icon" value="icon.lv2_2_dye_wit" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23011" name="Lv. 2 Ancient MEN Dye">
+    <set name="icon" value="icon.lv2_2_dye_men" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23012" name="Lv. 2 Legendary STR Dye">
+    <set name="icon" value="icon.lv2_3_dye_str" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23013" name="Lv. 2 Legendary DEX Dye">
+    <set name="icon" value="icon.lv2_3_dye_dex" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23014" name="Lv. 2 Legendary CON Dye">
+    <set name="icon" value="icon.lv2_3_dye_con" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23015" name="Lv. 2 Legendary INT Dye">
+    <set name="icon" value="icon.lv2_3_dye_int" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23016" name="Lv. 2 Legendary WIT Dye">
+    <set name="icon" value="icon.lv2_3_dye_wit" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23017" name="Lv. 2 Legendary MEN Dye">
+    <set name="icon" value="icon.lv2_3_dye_men" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23018" name="Lv. 3 Giant STR Dye">
+    <set name="icon" value="icon.lv3_1_dye_str" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23019" name="Lv. 3 Giant DEX Dye">
+    <set name="icon" value="icon.lv3_1_dye_dex" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23020" name="Lv. 3 Giant CON Dye">
+    <set name="icon" value="icon.lv3_1_dye_con" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23021" name="Lv. 3 Giant INT Dye">
+    <set name="icon" value="icon.lv3_1_dye_int" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23022" name="Lv. 3 Giant WIT Dye">
+    <set name="icon" value="icon.lv3_1_dye_wit" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23023" name="Lv. 3 Giant MEN Dye">
+    <set name="icon" value="icon.lv3_1_dye_men" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23024" name="Lv. 3 Ancient STR Dye">
+    <set name="icon" value="icon.lv3_2_dye_str" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23025" name="Lv. 3 Ancient DEX Dye">
+    <set name="icon" value="icon.lv3_2_dye_dex" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23026" name="Lv. 3 Ancient CON Dye">
+    <set name="icon" value="icon.lv3_2_dye_con" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23027" name="Lv. 3 Ancient INT Dye">
+    <set name="icon" value="icon.lv3_2_dye_int" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23028" name="Lv. 3 Ancient WIT Dye">
+    <set name="icon" value="icon.lv3_2_dye_wit" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23029" name="Lv. 3 Ancient MEN Dye">
+    <set name="icon" value="icon.lv3_2_dye_men" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23030" name="Lv. 3 Legendary STR Dye">
+    <set name="icon" value="icon.lv3_3_dye_str" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23031" name="Lv. 3 Legendary DEX Dye">
+    <set name="icon" value="icon.lv3_3_dye_dex" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23032" name="Lv. 3 Legendary CON Dye">
+    <set name="icon" value="icon.lv3_3_dye_con" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23033" name="Lv. 3 Legendary INT Dye">
+    <set name="icon" value="icon.lv3_3_dye_int" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23034" name="Lv. 3 Legendary WIT Dye">
+    <set name="icon" value="icon.lv3_3_dye_wit" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23035" name="Lv. 3 Legendary MEN Dye">
+    <set name="icon" value="icon.lv3_3_dye_men" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23036" name="Lv. 4 Giant STR Dye">
+    <set name="icon" value="icon.lv4_1_dye_str" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23037" name="Lv. 4 Giant DEX Dye">
+    <set name="icon" value="icon.lv4_1_dye_dex" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23038" name="Lv. 4 Giant CON Dye">
+    <set name="icon" value="icon.lv4_1_dye_con" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23039" name="Lv. 4 Giant INT Dye">
+    <set name="icon" value="icon.lv4_1_dye_int" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23040" name="Lv. 4 Giant WIT Dye">
+    <set name="icon" value="icon.lv4_1_dye_wit" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23041" name="Lv. 4 Giant MEN Dye">
+    <set name="icon" value="icon.lv4_1_dye_men" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23042" name="Lv. 4 Ancient STR Dye">
+    <set name="icon" value="icon.lv4_2_dye_str" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23043" name="Lv. 4 Ancient DEX Dye">
+    <set name="icon" value="icon.lv4_2_dye_dex" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23044" name="Lv. 4 Ancient CON Dye">
+    <set name="icon" value="icon.lv4_2_dye_con" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23045" name="Lv. 4 Ancient INT Dye">
+    <set name="icon" value="icon.lv4_2_dye_int" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23046" name="Lv. 4 Ancient WIT Dye">
+    <set name="icon" value="icon.lv4_2_dye_wit" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23047" name="Lv. 4 Ancient MEN Dye">
+    <set name="icon" value="icon.lv4_2_dye_men" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23048" name="Lv. 4 Legendary STR Dye">
+    <set name="icon" value="icon.lv4_3_dye_str" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23049" name="Lv. 4 Legendary DEX Dye">
+    <set name="icon" value="icon.lv4_3_dye_dex" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23050" name="Lv. 4 Legendary CON Dye">
+    <set name="icon" value="icon.lv4_3_dye_con" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23051" name="Lv. 4 Legendary INT Dye">
+    <set name="icon" value="icon.lv4_3_dye_int" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23052" name="Lv. 4 Legendary WIT Dye">
+    <set name="icon" value="icon.lv4_3_dye_wit" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23053" name="Lv. 4 Legendary MEN Dye">
+    <set name="icon" value="icon.lv4_3_dye_men" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23054" name="Lv. 5 Giant STR Dye">
+    <set name="icon" value="icon.lv5_1_dye_str" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23055" name="Lv. 5 Giant DEX Dye">
+    <set name="icon" value="icon.lv5_1_dye_dex" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23056" name="Lv. 5 Giant CON Dye">
+    <set name="icon" value="icon.lv5_1_dye_con" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23057" name="Lv. 5 Giant INT Dye">
+    <set name="icon" value="icon.lv5_1_dye_int" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23058" name="Lv. 5 Giant WIT Dye">
+    <set name="icon" value="icon.lv5_1_dye_wit" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23059" name="Lv. 5 Giant MEN Dye">
+    <set name="icon" value="icon.lv5_1_dye_men" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23060" name="Lv. 5 Ancient STR Dye">
+    <set name="icon" value="icon.lv5_2_dye_str" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23061" name="Lv. 5 Ancient DEX Dye">
+    <set name="icon" value="icon.lv5_2_dye_dex" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23062" name="Lv. 5 Ancient CON Dye">
+    <set name="icon" value="icon.lv5_2_dye_con" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23063" name="Lv. 5 Ancient INT Dye">
+    <set name="icon" value="icon.lv5_2_dye_int" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23064" name="Lv. 5 Ancient WIT Dye">
+    <set name="icon" value="icon.lv5_2_dye_wit" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23065" name="Lv. 5 Ancient MEN Dye">
+    <set name="icon" value="icon.lv5_2_dye_men" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23066" name="Lv. 5 Legendary STR Dye">
+    <set name="icon" value="icon.lv5_3_dye_str" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23067" name="Lv. 5 Legendary DEX Dye">
+    <set name="icon" value="icon.lv5_3_dye_dex" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23068" name="Lv. 5 Legendary CON Dye">
+    <set name="icon" value="icon.lv5_3_dye_con" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23069" name="Lv. 5 Legendary INT Dye">
+    <set name="icon" value="icon.lv5_3_dye_int" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23070" name="Lv. 5 Legendary WIT Dye">
+    <set name="icon" value="icon.lv5_3_dye_wit" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23071" name="Lv. 5 Legendary MEN Dye">
+    <set name="icon" value="icon.lv5_3_dye_men" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23072" name="STR Dye - Dye Pack (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23073" name="DEX Dye - Dye Pack (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23074" name="CON Dye - Dye Pack (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23075" name="INT Dye - Dye Pack (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23076" name="WIT Dye - Dye Pack (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23077" name="MEN Dye - Dye Pack (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23078" name="Castle Siege Soldier Badge">
+    <set name="icon" value="icon.etc_badge_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23079" name="Test - Drop Rate Rune 30% (3-hour)">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_rp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23080" name="Test - Drop Rate Rune 50% (5-hour)">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_rp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23081" name="Test - Drop Rate Rune 100% (7-day)">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_rp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23082" name="Mysterious Blessed Spiritshot (R-grade)">
+    <set name="icon" value="icon.blessed_spiritshot_r_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23083" name="Mysterious Blessed Spiritshot Large Pack (R-grade)">
+    <set name="icon" value="icon.br_cash_pack_of_spiritshot_r_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23084" name="Mysterious Blessed Spiritshot Modest Pack (R-grade)">
+    <set name="icon" value="icon.br_cash_pack_of_spiritshot_r_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23085" name="Power Shirt">
+    <set name="icon" value="BranchSys2.icon.7anni_shirt_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <etcitem id="23086" name="Easter Egg">
+    <set name="icon" value="BranchSys3.lcon.g_ev_easter_egg_ru" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23087" name="Enhanced Power Shirt Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23088" name="Discovery Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23089" name="Adventure Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23090" name="Destiny Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23091" name="Support Pack (S-grade)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23092" name="Support Pack (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="23093" name="Vesper Cutter of Fortune">
+    <set name="icon" value="icon.weapon_vesper_cutter_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="23094" name="Vesper Slasher of Fortune">
+    <set name="icon" value="icon.weapon_vesper_slasher_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23095" name="Vesper Buster of Fortune">
+    <set name="icon" value="icon.weapon_vesper_burster_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="23096" name="Vesper Shaper of Fortune">
+    <set name="icon" value="icon.weapon_vesper_shaper_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="23097" name="Vesper Fighter of Fortune">
+    <set name="icon" value="icon.weapon_vesper_fighter_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23098" name="Vesper Stormer of Fortune">
+    <set name="icon" value="icon.weapon_vesper_stormer_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23099" name="Vesper Avenger of Fortune">
+    <set name="icon" value="icon.weapon_vesper_avenger_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="23100" name="Vesper Retributer of Fortune">
+    <set name="icon" value="icon.weapon_vesper_retributer_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23101" name="Vesper Caster of Fortune">
+    <set name="icon" value="icon.weapon_vesper_caster_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="23102" name="Vesper Singer of Fortune">
+    <set name="icon" value="icon.weapon_vesper_singer_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23103" name="Vesper Thrower of Fortune">
+    <set name="icon" value="icon.weapon_vesper_thrower_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23104" name="Vesper Pincer of Fortune">
+    <set name="icon" value="icon.weapon_vesper_pincer_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="23105" name="Vesper Shooter of Fortune">
+    <set name="icon" value="icon.weapon_vesper_schutze_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23106" name="Vesper Nagan of Fortune">
+    <set name="icon" value="icon.weapon_vesper_nagen_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <armor id="23107" name="Vorpal Helmet of Fortune">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="23108" name="Vorpal Leather Helmet of Fortune">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="23109" name="Vorpal Circlet of Fortune">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="23110" name="Vorpal Breastplate of Fortune">
+    <set name="icon" value="icon.armor_t94_u_i03" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23111" name="Vorpal Leather Breastplate of Fortune">
+    <set name="icon" value="icon.armor_t95_u_i03" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23112" name="Vorpal Tunic of Fortune">
+    <set name="icon" value="icon.armor_t96_u_i03" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23113" name="Vorpal Gaiters of Fortune">
+    <set name="icon" value="icon.armor_t94_l_i03" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23114" name="Vorpal Leather Leggings of Fortune">
+    <set name="icon" value="icon.armor_t95_l_i03" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23115" name="Vorpal Stockings of Fortune">
+    <set name="icon" value="icon.armor_t96_l_i03" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23116" name="Vorpal Gauntlets of Fortune">
+    <set name="icon" value="icon.armor_t94_g_i03" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23117" name="Vorpal Leather Gloves of Fortune">
+    <set name="icon" value="icon.armor_t95_g_i03" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23118" name="Vorpal Gloves of Fortune">
+    <set name="icon" value="icon.armor_t96_g_i03" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23119" name="Vorpal Boots of Fortune">
+    <set name="icon" value="icon.armor_t94_b_i03" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="23120" name="Vorpal Leather Boots of Fortune">
+    <set name="icon" value="icon.armor_t95_b_i03" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="23121" name="Vorpal Shoes of Fortune">
+    <set name="icon" value="icon.armor_t96_b_i03" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="23122" name="Vorpal Shield of Fortune">
+    <set name="icon" value="icon.Evilgate_Shield_i01" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="23123" name="Vorpal Sigil of Fortune">
+    <set name="icon" value="icon.belleface_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <etcitem id="23124" name="Vorpal Heavy Armor of Fortune Set Pack (S80-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23125" name="Vorpal Light Armor of Fortune Set Pack (S80-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23126" name="Vorpal Robe of Fortune Set Pack (S80-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23127" name="Armor Pack (S80-grade) (90-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23128" name="Weapon Pack (S80-grade) (90-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23129" name="Accessory Pack (S80-grade) (90-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23130" name="Vorpal Ring of Fortune">
+    <set name="icon" value="icon.accessary_ponshrnoen_ring_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="23131" name="Vorpal Earring of Fortune">
+    <set name="icon" value="icon.accessary_ponshrnoen_earring_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="23132" name="Vorpal Necklace of Fortune">
+    <set name="icon" value="icon.accessary_ponshrnoen_necklace_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <etcitem id="23133" name="Gender Change Ticket">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23134" name="Name Change Ticket">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23135" name="Awakening Class Change Ticket">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23136" name="Uthanka's Ring">
+    <set name="icon" value="BranchSys3.lcon.g_ring_of_uthanka_jp" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <etcitem id="23137" name="Extra Pass: Ancient Kartia's Labyrinth">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="23138" name="Vesper Dual sword of Fortune">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23139" name="Vesper Dual Dagger of Fortune">
+    <set name="icon" value="icon.dual_dagger_i00" />
+    <set name="type" value="dualdagger" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <armor id="23140" name="Military Underwear">
+    <set name="icon" value="BranchSys3.icon1.g_co_military_undwrwear" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="23141" name="Premium Underwear">
+    <set name="icon" value="BranchSys3.icon1.g_co_premium_underwear" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="23142" name="Temptation Underwear">
+    <set name="icon" value="BranchSys3.icon1.g_co_sexy_underwear" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="23143" name="Cyber Underwear">
+    <set name="icon" value="BranchSys3.icon1.g_co_sf_underwear_01" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="23144" name="Maid Underwear">
+    <set name="icon" value="BranchSys3.icon1.g_co_maid_underwear_f01" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="23145" name="Consecrated Demon Eliminator">
+    <set name="icon" value="icon.etc_imperial_scepter_i01" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23146" name="Nevit's Holy Water Flask">
+    <set name="icon" value="icon.etc_water_potion_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="RBRACELET" />
+  </armor>
+  <etcitem id="23147" name="Ghost Potion">
+    <set name="icon" value="icon.etc_water_potion_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23148" name="Exorcist's Mark">
+    <set name="icon" value="icon.etc_badge_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23149" name="Exorcist's Gift">
+    <set name="icon" value="icon.etc_grave_goods_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23150" name="Einhasad's Gift">
+    <set name="icon" value="icon.event_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23151" name="Shilen's Gift">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23152" name="Soul Avatar - Lancet">
+    <set name="icon" value="BranchSys.icon.br_aga_local2009_b_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23153" name="Soul Avatar - Liposa">
+    <set name="icon" value="BranchSys.icon.br_aga_local2009_a_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23154" name="Soul Avatar - Velarin">
+    <set name="icon" value="BranchSys.icon.br_aga_local2009_f_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23155" name="Soul Avatar - Dulcinel">
+    <set name="icon" value="BranchSys.icon.br_aga_local2009_e_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23156" name="Soul Avatar - Chimeros">
+    <set name="icon" value="BranchSys.icon.br_aga_local2009_d_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23157" name="Soul Avatar - Niveri">
+    <set name="icon" value="BranchSys.icon.br_aga_local2009_c_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23158" name="Soul Avatar - Hamell">
+    <set name="icon" value="BranchSys.icon.br_aga_local2009_h_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23159" name="Soul Avatar - Joriya">
+    <set name="icon" value="BranchSys.icon.br_aga_local2009_g_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23160" name="Soul Avatar - Ralmak">
+    <set name="icon" value="BranchSys.icon.br_aga_local2009_i_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23161" name="Soul Avatar - Goras">
+    <set name="icon" value="BranchSys.icon.br_aga_local2009_j_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23162" name="Soul Avatar - Vensar">
+    <set name="icon" value="BranchSys.icon.br_aga_local2009_l_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23163" name="Soul Avatar - Kiela">
+    <set name="icon" value="BranchSys.icon.br_aga_local2009_k_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="23164" name="Soul Avatar's Large Placid">
+    <set name="icon" value="BranchSys.icon.br_shield_bread_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23165" name="Chocolate for Summer Slushie">
+    <set name="icon" value="BranchSys3.icon1.g_ev_icewater_cho" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23166" name="Cream for Summer Slushie">
+    <set name="icon" value="BranchSys3.icon1.g_ev_icewater_cream" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23167" name="Ice for Summer Slushie">
+    <set name="icon" value="icon.etc_broken_crystal_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23168" name="Biscuits for Summer Slushie">
+    <set name="icon" value="icon.etc_candy_basket_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23169" name="Sweet Summer Slushie">
+    <set name="icon" value="BranchSys3.icon1.g_ev_sweet_icewater" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23170" name="Fantastic Summer Slushie">
+    <set name="icon" value="BranchSys3.icon1.g_ev_sweet_icewater" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23171" name="Beach Swimsuit">
+    <set name="icon" value="BranchSys3.icon1.g_co_swimsuit_event_01" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <etcitem id="23172" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.lcon.g_scrl_change_co_swimsuit_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23173" name="Alluring Swimsuit">
+    <set name="icon" value="BranchSys3.icon1.g_co_swimsuit_event_02" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <etcitem id="23174" name="Herina's Gift Box">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23175" name="Brilliant Beach Sun Cap">
+    <set name="icon" value="BranchSys3.icon.g_beach_cap" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23176" name="Stylish Straw Hat">
+    <set name="icon" value="BranchSys3.icon.g_straw_hat" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="23177" name="Brilliant Beach Sun Cap Pack (30-day)">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23178" name="Stylish Straw Hat Pack (30-day)">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23179" name="Ninja Top">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_u" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23180" name="Ninja Pants">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_l" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23181" name="Ninja Gloves">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_g" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23182" name="Ninja Shoes">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="23183" name="Ninja Hair Accessory">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_hair" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23184" name="Tribal Warrior Top">
+    <set name="icon" value="BranchSys3.icon1.g_co_paiwan_u" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23185" name="Tribal Warrior Pants">
+    <set name="icon" value="BranchSys3.icon1.g_co_paiwan_l" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23186" name="Tribal Warrior Gloves">
+    <set name="icon" value="BranchSys3.icon1.g_co_paiwan_g" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23187" name="Tribal Warrior Shoes">
+    <set name="icon" value="BranchSys3.icon1.g_co_paiwan_b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="23188" name="Tribal Warrior Hair Accessory">
+    <set name="icon" value="BranchSys3.icon1.g_co_paiwan_hair" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="23189" name="Ninja Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23190" name="Ninja Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23191" name="Ninja Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23192" name="Ninja Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23193" name="Ninja Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23194" name="Tribal Warrior Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23195" name="Tribal Warrior Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23196" name="Tribal Warrior Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23197" name="Tribal Warrior Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23198" name="Tribal Warrior Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23199" name="Ninja Outfit Appearance Stone Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23200" name="Tribal Warrior Costume Appearance Stone Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23201" name="Dark Accessory Pack">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23202" name="Shiny Alien Mask">
+    <set name="icon" value="icon.ev_shiny_alien_mask_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23203" name="Shiny Reanimated Corpse Mask">
+    <set name="icon" value="icon.ev_shiny_frankenstein_mask_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23204" name="Shiny Shriek Mask">
+    <set name="icon" value="icon.ev_shiny_scream_mask_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23205" name="Shiny Red Devil Mask">
+    <set name="icon" value="icon.ev_shiny_doccabi_mask_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23206" name="Shiny Mummy Mask">
+    <set name="icon" value="icon.ev_shiny_mummy_mask_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="23207" name="Playful Hair Accessory Pack">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23208" name="Red Potion of Regeneration">
+    <set name="icon" value="BranchSys2.br_essence_rose_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23209" name="Blue Potion of Recovery">
+    <set name="icon" value="BranchSys.icon.br_vitality_potion_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23210" name="Transformation Scroll: Zombie">
+    <set name="icon" value="icon.etc_scroll_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23211" name="Drake Maul Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_twohand_blunt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23212" name="Freya's Staff Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_twohand_blunt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23213" name="Spezion's Claw Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dualfist" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23214" name="Maliss Stormer Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_pole" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23215" name="Steregos' Dagger Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dagger" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23216" name="Ron's Dual Blunt Weapon Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dualblunt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23217" name="Darion's Hellblade Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23218" name="Doll Blader's Butcher Blades Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dualdagger" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23219" name="Tiat's Claw of Destruction Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_blunt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23220" name="Aenkinel's Blades of Delusion Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dual" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23221" name="Yehan Klanikus' Blood Brother Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_twohand_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23222" name="Mardil's Fan Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23223" name="Monster Weapon Appearance Stone Pack A">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23224" name="Monster Weapon Appearance Stone Pack B">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23225" name="Soul Avatar's Giant Placid">
+    <set name="icon" value="BranchSys.icon.br_shield_bread_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23226" name="Seductive Swimsuit">
+    <set name="icon" value="BranchSys3.icon1.g_co_swimsuit_event_03" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <etcitem id="23227" name="Apple Spritzer">
+    <set name="icon" value="BranchSys3.icon1.g_apfelschorle_germany" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23228" name="Roasted Sausage">
+    <set name="icon" value="BranchSys3.icon1.g_bratwurst_germany" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23229" name="Pretzel">
+    <set name="icon" value="BranchSys3.icon1.g_brezel_germany" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23230" name="Snack Mix">
+    <set name="icon" value="BranchSys3.icon1.g_studentenfutter_germany" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23231" name="Aria's Warrior Helmet">
+    <set name="icon" value="BranchSys2.icon.br_close_helmet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="23232" name="Traces of Ancient Kartia's Labyrinth">
+    <set name="icon" value="BranchSys3.Icon.g_ev_magic_powder" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23233" name="Traces of Ancient Kartia's Labyrinth">
+    <set name="icon" value="BranchSys3.Icon.g_ev_magic_powder" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23234" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.lcon.g_scrl_change_co_swimsuit_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23235" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.lcon.g_scrl_change_co_swimsuit_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23236" name="Scroll of Escape: Uthanka's Tomb">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23237" name="Agathion - Pirate Captain Uthanka">
+    <set name="icon" value="BranchSys.icon.br_aga_uthanka_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="23238" name="Blessed Scroll: Enchant Elemental Shirt Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23239" name="Enchanted Pa'agrio's Shirt Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23240" name="Pa'agrio's Shirt">
+    <set name="icon" value="icon.pi_shirt_of_wolf_2nd_fire" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <etcitem id="23241" name="Blessed Scroll: Enchant Elemental Shirt">
+    <set name="icon" value="BranchSys2.icon.etc_scroll_of_enchant_shirt_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23242" name="Weapon Pack Blessed by Light (D-grade)">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23243" name="Weapon Pack Blessed by Light (C-grade)">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23244" name="Weapon Pack Blessed by Light (B-grade)">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23245" name="Weapon Pack Blessed by Light (A-grade)">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23246" name="Weapon Pack Blessed by Light (S-grade)">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23247" name="Armor Pack Blessed by Light (D-grade)">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23248" name="Armor Pack Blessed by Light (C-grade)">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23249" name="Armor Pack Blessed by Light (B-grade)">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23250" name="Armor Pack Blessed by Light (A-grade)">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23251" name="Armor Pack Blessed by Light (S-grade)">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23252" name="Pledge Token">
+    <set name="icon" value="icon.etc_badge_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23253" name="XP Rune III (Lv. 1-100+) 50%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_exp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23254" name="XP Rune III (Lv. 1-100+) 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_exp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23255" name="XP Rune III (Lv. 1-100+) 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_exp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23256" name="XP Rune III (Lv. 1-100+) 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_exp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23257" name="XP Rune III (Lv. 1-100+) 200%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_exp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23258" name="XP Rune III (Lv. 1-100+) 200%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_exp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23259" name="XP Rune III (Lv. 1-100+) 200%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_exp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23260" name="SP Rune 50%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_sp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23261" name="SP Rune 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_sp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23262" name="SP Rune 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_sp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23263" name="SP Rune 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_sp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23264" name="SP Rune 200%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_sp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23265" name="SP Rune 200%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_sp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23266" name="SP Rune 200%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_sp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23267" name="Eva's Rune">
+    <set name="icon" value="BranchSys.icon.br_rune_of_eva_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23268" name="Eva's Rune">
+    <set name="icon" value="BranchSys.icon.br_rune_of_eva_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23269" name="Eva's Rune">
+    <set name="icon" value="BranchSys.icon.br_rune_of_eva_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23270" name="Drop Rate Rune 50%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23271" name="Drop Rate Rune 100%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23272" name="Drop Rate Rune 200%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23273" name="Drop Rate Rune 50%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23274" name="Drop Rate Rune 100%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23275" name="Drop Rate Rune 200%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23276" name="XP Rune III (Lv. 1-100+) 50% Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23277" name="XP Rune III (Lv. 1-100+) 100% Pack (1-hour)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23278" name="XP Rune III (Lv. 1-100+) 100% Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23279" name="XP Rune III (Lv. 1-100+) 100% Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23280" name="XP Rune III (Lv. 1-100+) 200% Pack (1-hour)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23281" name="XP Rune III (Lv. 1-100+) 200% Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23282" name="XP Rune III (Lv. 1-100+) 200% Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23283" name="SP Rune 50% Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23284" name="SP Rune 100% Pack (1-hour)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23285" name="SP Rune 100% Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23286" name="SP Rune 100% Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23287" name="SP Rune 200% Pack (1-hour)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23288" name="SP Rune 200% Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23289" name="SP Rune 200% Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23290" name="Eva's Rune Pack (1-hour)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23291" name="Eva's Rune Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23292" name="Eva's Rune Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23293" name="Drop Rate Rune 50% Pack (1-hour)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23294" name="Drop Rate Rune 100% Pack (1-hour)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23295" name="Drop Rate Rune 200% Pack (1-hour)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23296" name="Drop Rate Rune 50% Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23297" name="Drop Rate Rune 100% Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23298" name="Drop Rate Rune 200% Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23299" name="Blessed Scroll: Enchant Elemental Shirt Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23300" name="Enchanted Sayha's Shirt Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23301" name="Sayha's Shirt">
+    <set name="icon" value="icon.pi_shirt_of_wolf_2nd_wind" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <etcitem id="23302" name="Blessed Scroll: Enchant Elemental Shirt Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23303" name="Enchanted Eva's Shirt Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23304" name="Eva's Shirt">
+    <set name="icon" value="icon.pi_shirt_of_wolf_2nd_water" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <etcitem id="23305" name="Blessed Scroll: Enchant Elemental Shirt Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23306" name="Enchanted Maphr's Shirt Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23307" name="Maphr's Shirt">
+    <set name="icon" value="icon.pi_shirt_of_wolf_2nd_earth" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <etcitem id="23308" name="Recipe: Elven Radler">
+    <set name="icon" value="BranchSys.icon.br_valentine_recipe_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23309" name="Elven Radler">
+    <set name="icon" value="BranchSys3.icon1.g_beerfestival_lager" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23310" name="Dion Pilsner">
+    <set name="icon" value="BranchSys3.icon1.g_beerfestival_lager" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23311" name="Dwarven Royal Blue Cocktail">
+    <set name="icon" value="BranchSys3.icon1.g_beerfestival_lager" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23312" name="Aden White Beer">
+    <set name="icon" value="BranchSys3.icon1.g_beerfestival_lager" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23313" name="Gran Kain's Delight">
+    <set name="icon" value="BranchSys3.icon1.g_beerfestival_octoberfest_beer" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23314" name="Beer Ingredient: Malt">
+    <set name="icon" value="BranchSys3.icon1.g_beerfestival_malt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23315" name="Beer Ingredient: Hops">
+    <set name="icon" value="BranchSys3.icon1.g_beerfestival_hops" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23316" name="Beer Ingredient: Yeast">
+    <set name="icon" value="BranchSys3.icon1.g_beerfestival_yeast" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23318" name="Beer Tankard">
+    <set name="icon" value="BranchSys3.icon1.g_beerfestival_beer_barrel" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23319" name="Harp's Sealed Rune of Power (3-day)">
+    <set name="icon" value="BranchSys3.icon1.g_rune_of_half_power" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23320" name="Harp's Sealed Rune of Magic (3-day)">
+    <set name="icon" value="BranchSys3.icon1.g_rune_of_half_magic" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23321" name="Flynt's Sealed Rune of Will (3-day)">
+    <set name="icon" value="BranchSys3.icon1.g_rune_of_flint_will" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23322" name="Flynt's Sealed Rune of Destruction (3-day)">
+    <set name="icon" value="BranchSys3.icon1.g_rune_of_flint_destroy" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23323" name="Dr. Destroy's Sealed Rune of Skill (3-day)">
+    <set name="icon" value="BranchSys3.icon1.g_rune_of_destroy_tech" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23324" name="Dr. Destroy's Sealed Rune of Wisdom (3-day)">
+    <set name="icon" value="BranchSys3.icon1.g_rune_of_destroy_wisdom" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23325" name="Harp's Sealed Rune of Power">
+    <set name="icon" value="BranchSys3.icon1.g_rune_of_half_power" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23326" name="Harp's Sealed Rune of Magic">
+    <set name="icon" value="BranchSys3.icon1.g_rune_of_half_magic" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23327" name="Flynt's Sealed Rune of Will">
+    <set name="icon" value="BranchSys3.icon1.g_rune_of_flint_will" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23328" name="Flynt's Sealed Rune of Destruction">
+    <set name="icon" value="BranchSys3.icon1.g_rune_of_flint_destroy" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23329" name="Dr. Destroy's Sealed Rune of Skill">
+    <set name="icon" value="BranchSys3.icon1.g_rune_of_destroy_tech" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23330" name="Dr. Destroy's Sealed Rune of Wisdom">
+    <set name="icon" value="BranchSys3.icon1.g_rune_of_destroy_wisdom" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23331" name="Vitality Maintaining Potion (30-minute)">
+    <set name="icon" value="icon.etc_lesser_potion_scarlet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23332" name="XP Buff 50% (1-hour)">
+    <set name="icon" value="icon.etc_dragons_blood_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23333" name="XP Buff 50% (2-hour)">
+    <set name="icon" value="icon.etc_dragons_blood_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23334" name="Soulshot Pack (R-grade)">
+    <set name="icon" value="icon.br_cash_pack_of_soulshot_r_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23335" name="Blessed Spiritshot Pack (R-grade)">
+    <set name="icon" value="icon.br_cash_pack_of_blessed_spiritshot_r_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23336" name="Scroll: Increase Vitality (High-grade)">
+    <set name="icon" value="BranchSys3.lcon.g_scrl_vitality_count_up_2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23337" name="Scroll: Increase Vitality (Top-grade)">
+    <set name="icon" value="BranchSys3.lcon.g_scrl_vitality_count_up_3" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23338" name="Scroll: Replenish Vitality">
+    <set name="icon" value="BranchSys3.lcon.g_scrl_vitality_point_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23339" name="Scroll: Replenish Vitality (High-grade)">
+    <set name="icon" value="BranchSys3.lcon.g_scrl_vitality_point_up_2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23340" name="Scroll: Replenish Vitality (Top-grade)">
+    <set name="icon" value="BranchSys3.lcon.g_scrl_vitality_point_up_3" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23341" name="Vitality Recovering Potion">
+    <set name="icon" value="icon.etc_hot_spring_mineral_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23342" name="Ancient Scroll: Enchant Weapon (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_ancient_cry_of_ench_wp_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23343" name="Heavenly Scroll: Enchant Weapon (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_holy_cry_of_ench_wp_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23344" name="Ancient Scroll: Enchant Armor (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_ancient_cry_of_ench_am_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23345" name="Heavenly Scroll: Enchant Armor (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_holy_cry_of_ench_am_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23346" name="Letter Collector's Gift">
+    <set name="icon" value="icon.shield_bread_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23347" name="Lucky Enchant Stone: Weapon (R-grade)">
+    <set name="icon" value="icon.ench_wp_potion_violet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23348" name="Lucky Enchant Stone: Armor (R-grade)">
+    <set name="icon" value="icon.ench_am_potion_violet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23349" name="Enhanced Power Shirt Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23350" name="Transformation Scroll Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23351" name="Weapon Appearance Stone (R-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_wp_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23352" name="Weapon Appearance Stone (S-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_wp_stone_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23353" name="Weapon Appearance Stone (A-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_wp_stone_a" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23354" name="Blessed Weapon Appearance Stone (R-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__wp_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23355" name="Blessed Weapon Appearance Stone (S-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__wp_stone_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23356" name="Blessed Weapon Appearance Stone (A-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__wp_stone_a" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23357" name="Weapon Restoration Stone (R-grade)">
+    <set name="icon" value="BranchSys3.icon.g_wp_processing_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23358" name="Weapon Restoration Stone (S-grade)">
+    <set name="icon" value="BranchSys3.icon.g_wp_processing_stone_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23359" name="Weapon Restoration Stone (A-grade)">
+    <set name="icon" value="BranchSys3.icon.g_wp_processing_stone_a" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23360" name="Armor Appearance Stone (R-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_am_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23361" name="Armor Appearance Stone (S-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_am_stone_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23362" name="Armor Appearance Stone (A-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_am_stone_a" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23363" name="Blessed Armor Appearance Stone (R-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23364" name="Blessed Armor Appearance Stone (S-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23365" name="Blessed Armor Appearance Stone (A-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_a" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23366" name="Armor Restoration Stone (R-grade)">
+    <set name="icon" value="BranchSys3.icon.g_wp_processing_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23367" name="Armor Restoration Stone (S-grade)">
+    <set name="icon" value="BranchSys3.icon.g_wp_processing_stone_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23368" name="Armor Restoration Stone (A-grade)">
+    <set name="icon" value="BranchSys3.icon.g_wp_processing_stone_a" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23369" name="Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2_stone" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23370" name="Blessed Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting_hair2_stone" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23371" name="Hair Accessory Restoration Stone">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23372" name="Weapon Appearance/Restoration Stone Pack (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23373" name="Weapon Appearance/Restoration Stone Pack (S-grade)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23374" name="Armor Appearance/Restoration Stone Pack (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23375" name="Armor Appearance/Restoration Stone Pack (S-grade)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23376" name="Hair Accessory Appearance/Restoration Stone Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23377" name="Heavenly Treasure Chest">
+    <set name="icon" value="BranchSys3.icon.g_cash_fortuna_box_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23378" name="Fantastical Treasure Chest">
+    <set name="icon" value="BranchSys.icon.br_fortuna_box_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23379" name="Glorious Treasure Chest">
+    <set name="icon" value="br_cashtex.item.br_cash_lucky_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23380" name="Adenian Military Underwear">
+    <set name="icon" value="BranchSys3.icon1.g_co_military_undwrwear" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="23381" name="Adenian Premium Underwear">
+    <set name="icon" value="BranchSys3.icon1.g_co_premium_underwear" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="23382" name="Adenian Temptation Underwear">
+    <set name="icon" value="BranchSys3.icon1.g_co_sexy_underwear" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="23383" name="Adenian Cyber Underwear">
+    <set name="icon" value="BranchSys3.icon1.g_co_sf_underwear_01" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="23384" name="Adenian Cute Underwear">
+    <set name="icon" value="BranchSys3.icon1.g_co_maid_underwear_f01" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <etcitem id="23385" name="Life Stone: Adenian Underwear">
+    <set name="icon" value="BranchSys3.icon1.g_life_dust_general_adenia" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23386" name="Agathion - Griffin">
+    <set name="icon" value="icon.etc_rbracelet_aga_agit_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="23387" name="Blessed Griffin Egg">
+    <set name="icon" value="BranchSys3.Icon.g_threehead_source" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23388" name="Transformation Scroll Pack">
+    <set name="icon" value="br_cashtex.item.br_cash_lucky_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23389" name="XP Rune II (Lv. 1-95) 100% Pack (1-hour)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23390" name="XP Rune II (Lv. 1-95) 100% Pack (3-hour)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23391" name="XP Rune II (Lv. 1-95) 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_feather_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23392" name="XP Rune II (Lv. 1-95) 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_feather_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23393" name="Brilliant Talisman Pack">
+    <set name="icon" value="br_cashtex.item.br_cash_lucky_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23394" name="Scroll: Seal Weapon Pack">
+    <set name="icon" value="br_cashtex.item.br_cash_lucky_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23395" name="Scroll: Seal Armor Pack">
+    <set name="icon" value="br_cashtex.item.br_cash_lucky_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23396" name="Scroll: Enchant Weapon Pack">
+    <set name="icon" value="br_cashtex.item.br_cash_lucky_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23397" name="Scroll: Enchant Armor Pack">
+    <set name="icon" value="br_cashtex.item.br_cash_lucky_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23398" name="Blessed Scroll: Enchant Weapon Pack">
+    <set name="icon" value="br_cashtex.item.br_cash_lucky_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23399" name="Blessed Scroll: Enchant Armor Pack">
+    <set name="icon" value="br_cashtex.item.br_cash_lucky_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23400" name="Transformation Scroll: Saber Tooth Tiger">
+    <set name="icon" value="icon.etc_trans_4f_s_b_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23401" name="Transformation Scroll: Oel Mahum">
+    <set name="icon" value="icon.etc_trans_4f_s_b_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23402" name="Transformation Scroll: Doll Blader">
+    <set name="icon" value="icon.etc_trans_4f_s_b_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23403" name="Transformation Scroll: Zaken">
+    <set name="icon" value="icon.etc_trans_4f_s_b_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23404" name="Transformation Scroll: Anakim">
+    <set name="icon" value="icon.etc_trans_4f_s_b_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23405" name="Transformation Scroll: Venom">
+    <set name="icon" value="icon.etc_trans_4f_s_b_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23406" name="Transformation Scroll: Gordon">
+    <set name="icon" value="icon.etc_trans_4f_s_b_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23407" name="Transformation Scroll: Ranku">
+    <set name="icon" value="icon.etc_trans_4f_s_b_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23408" name="Transformation Scroll: Kechi">
+    <set name="icon" value="icon.etc_trans_4f_s_b_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23409" name="Transformation Scroll: Demon Prince">
+    <set name="icon" value="icon.etc_trans_4f_s_b_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23410" name="Scroll: Enchant Weapon (R-grade)">
+    <set name="icon" value="icon.scroll_of_enchant_weapon_i06" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23411" name="Scroll: Enchant Weapon (S-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_weapon_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23412" name="Scroll: Enchant Weapon (A-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_weapon_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23413" name="Scroll: Enchant Weapon (B-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_weapon_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23414" name="Scroll: Enchant Weapon (C-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_weapon_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23415" name="Scroll: Enchant Weapon (D-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_weapon_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23416" name="Scroll: Enchant Armor (R-grade)">
+    <set name="icon" value="icon.scroll_of_enchant_armor_i06" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23417" name="Scroll: Enchant Armor (S-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_armor_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23418" name="Scroll: Enchant Armor (A-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_armor_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23419" name="Scroll: Enchant Armor (B-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_armor_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23420" name="Scroll: Enchant Armor (C-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_armor_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23421" name="Scroll: Enchant Armor (D-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_armor_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23422" name="Blessed Scroll: Enchant Weapon (R-grade)">
+    <set name="icon" value="icon.blessed_scroll_of_enchant_weapon_i06" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23423" name="Blessed Scroll: Enchant Weapon (S-grade)">
+    <set name="icon" value="icon.etc_blessed_scrl_of_ench_wp_s_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23424" name="Blessed Scroll: Enchant Weapon (A-grade)">
+    <set name="icon" value="icon.etc_blessed_scrl_of_ench_wp_a_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23425" name="Blessed Scroll: Enchant Weapon (B-grade)">
+    <set name="icon" value="icon.etc_blessed_scrl_of_ench_wp_b_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23426" name="Blessed Scroll: Enchant Weapon (C-grade)">
+    <set name="icon" value="icon.etc_blessed_scrl_of_ench_wp_c_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23427" name="Blessed Scroll: Enchant Weapon (D-grade)">
+    <set name="icon" value="icon.etc_blessed_scrl_of_ench_wp_d_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23428" name="Blessed Scroll: Enchant Armor (R-grade)">
+    <set name="icon" value="icon.blessed_scroll_of_enchant_armor_i06" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23429" name="Blessed Scroll: Enchant Armor (S-grade)">
+    <set name="icon" value="icon.etc_blessed_scrl_of_ench_am_s_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23430" name="Blessed Scroll: Enchant Armor (A-grade)">
+    <set name="icon" value="icon.etc_blessed_scrl_of_ench_am_a_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23431" name="Blessed Scroll: Enchant Armor (B-grade)">
+    <set name="icon" value="icon.etc_blessed_scrl_of_ench_am_b_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23432" name="Blessed Scroll: Enchant Armor (C-grade)">
+    <set name="icon" value="icon.etc_blessed_scrl_of_ench_am_c_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23433" name="Blessed Scroll: Enchant Armor (D-grade)">
+    <set name="icon" value="icon.etc_blessed_scrl_of_ench_am_d_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23434" name="Agathion - Phoenix Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23435" name="Agathion - Blue Opera Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23436" name="Agathion - Button-eyed Bear Doll Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23437" name="Mysterious Friend Summon Bracelet Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23438" name="Party Cake Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23439" name="Feather of Blessing Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23440" name="Super Healthy Juice Pack (HP)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23441" name="Super Healthy Juice Pack (CP)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23442" name="Kokoshnik">
+    <set name="icon" value="BranchSys3.icon1.g_hair_kokoshnik_f" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23443" name="Russian Navy Cap">
+    <set name="icon" value="BranchSys3.icon1.g_hair_peakless_cap_m" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23444" name="Russian Commemorative Cloak">
+    <set name="icon" value="BranchSys3.icon1.g_cloak_anniversary" />
+    <set name="tradeable" value="false" />
+    <slot id="BACK" />
+  </armor>
+  <armor id="23445" name="Kokoshnik">
+    <set name="icon" value="BranchSys3.icon1.g_hair_kokoshnik_f" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23446" name="Russian Navy Cap">
+    <set name="icon" value="BranchSys3.icon1.g_hair_peakless_cap_m" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23447" name="Russian Commemorative Cloak">
+    <set name="icon" value="BranchSys3.icon1.g_cloak_anniversary" />
+    <set name="tradeable" value="false" />
+    <slot id="BACK" />
+  </armor>
+  <armor id="23448" name="Metal Suit Top">
+    <set name="icon" value="BranchSys3.icon1.g_co_sf_u" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23449" name="Metal Suit Pants">
+    <set name="icon" value="BranchSys3.icon1.g_co_sf_l" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23450" name="Metal Suit Gloves">
+    <set name="icon" value="BranchSys3.icon1.g_co_sf_g" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23451" name="Metal Suit Shoes">
+    <set name="icon" value="BranchSys3.icon1.g_co_sf_b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="23452" name="Metal Suit Hair Accessory">
+    <set name="icon" value="BranchSys3.icon1.g_co_sf_hair" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23453" name="Military Top">
+    <set name="icon" value="BranchSys3.icon1.g_co_military_u" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23454" name="Military Pants">
+    <set name="icon" value="BranchSys3.icon1.g_co_military_l" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23455" name="Military Gloves">
+    <set name="icon" value="BranchSys3.icon1.g_co_military_g" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23456" name="Military Shoes">
+    <set name="icon" value="BranchSys3.icon1.g_co_military_b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="23457" name="Military Hair Accessory">
+    <set name="icon" value="BranchSys3.icon1.g_co_military_hair_m" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23458" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="23459" name="Maid Hair Accessory">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid_hair" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="23460" name="Ink Herb">
+    <set name="icon" value="BranchSys3.icon1.g_ev_invite_ink_02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23461" name="Greater Ink Herb">
+    <set name="icon" value="BranchSys3.icon1.g_ev_invite_ink_03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23462" name="Fantasy Isle Invitation">
+    <set name="icon" value="BranchSys3.icon1.g_ev_invite_invitation" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23463" name="Fantasy Isle VIP Invitation">
+    <set name="icon" value="BranchSys3.icon1.g_ev_invite_vip_invitation" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23464" name="RSVP Notice">
+    <set name="icon" value="BranchSys3.icon1.g_ev_invite_attendance" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23465" name="Declining Letter">
+    <set name="icon" value="BranchSys3.icon1.g_ev_invite_nonparticipation" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23466" name="Fantasy Gift Box">
+    <set name="icon" value="BranchSys3.icon1.g_ev_invite_fantasy_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23467" name="Fantasy Health Potion">
+    <set name="icon" value="BranchSys3.icon1.g_ev_invite_red_potion" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23468" name="Fantasy Mana Potion">
+    <set name="icon" value="BranchSys3.icon1.g_ev_invite_blue_potion" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23469" name="Fantasy Cookie">
+    <set name="icon" value="BranchSys3.Icon.ev_halloween_cookie" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23470" name="Fantasy Homemade Cookie">
+    <set name="icon" value="BranchSys3.Icon.ev_halloween_cookie" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23471" name="Fantasy Special Cookie">
+    <set name="icon" value="BranchSys3.Icon.ev_halloween_cookie" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23472" name="Fantasy Cookie Set">
+    <set name="icon" value="icon.etc_pi_gift_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23473" name="Fantasy Isle Medal of Glory">
+    <set name="icon" value="icon.etc_badge_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23474" name="Scroll: PK (Low-grade)">
+    <set name="icon" value="icon.etc_ev_draco_pk_count_down" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23475" name="Scroll: PK (Mid-grade)">
+    <set name="icon" value="icon.etc_ev_draco_pk_count_down" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23476" name="Scroll: PK (High-grade)">
+    <set name="icon" value="icon.etc_ev_draco_pk_count_down" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23477" name="Scroll: PK (Top-grade)">
+    <set name="icon" value="icon.etc_ev_draco_pk_count_down" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23478" name="Scroll: Reputation (Low-grade)">
+    <set name="icon" value="icon.etc_ev_draco_karma_down" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23479" name="Scroll: Reputation (Mid-grade)">
+    <set name="icon" value="icon.etc_ev_draco_karma_down" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23480" name="Scroll: Reputation (High-grade)">
+    <set name="icon" value="icon.etc_ev_draco_karma_down" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23481" name="Scroll: Reputation (Top-grade)">
+    <set name="icon" value="icon.etc_ev_draco_karma_down" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23482" name="Top Hat">
+    <set name="icon" value="icon.accessory_magicial_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23483" name="Butterfly Hairpin">
+    <set name="icon" value="icon.Accessary_butterfly_hearpin_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="23484" name="Wizard Hat">
+    <set name="icon" value="icon.accessory_magic_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23485" name="Santa Outfit">
+    <set name="icon" value="Branchsys3.icon1.armor_ev_santas_clothes" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <etcitem id="23486" name="Santa Outfit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23487" name="Santa Outfit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23488" name="Santa Outfit Appearance Stone Pack (14-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23489" name="Santa Outfit Appearance Stone Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23490" name="PA Vitality (1-hour)">
+    <set name="icon" value="icon.etc_pccafe_point_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23491" name="Vitality Maintaining Potion (10-minute) (Event)">
+    <set name="icon" value="icon.etc_lesser_potion_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23492" name="Vitality Maintaining Potion (30-minute)">
+    <set name="icon" value="icon.etc_lesser_potion_scarlet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23493" name="Metal Suit Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23494" name="Metal Suit Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23495" name="Metal Suit Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23496" name="Metal Suit Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23497" name="Metal Suit Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23503" name="Military Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23504" name="Military Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23505" name="Military Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23506" name="Military Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23507" name="Military Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23513" name="Maid Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid_stone" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23514" name="Maid Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23529" name="Fantasy Isle Instant Camera">
+    <set name="icon" value="icon.etc_mechanic_box_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="RBRACELET" />
+  </armor>
+  <etcitem id="23530" name="Automatic Appearance Stone: Emerald Weapon">
+    <set name="icon" value="BranchSys3.icon1.g_auto_shape_shift_stone" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23531" name="Automatic Appearance Stone: Japanese Weapon">
+    <set name="icon" value="BranchSys3.icon1.g_auto_shape_shift_stone" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23532" name="Contender's Mark">
+    <set name="icon" value="BranchSys3.icon1.g_ev_sponsor_token" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23533" name="Contender's Gift Box">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23534" name="Monster Weapon Appearance Stone Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23535" name="Hellblade Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23536" name="Claw of Destruction Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_blunt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23537" name="Butcher Blades Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dualdagger" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23538" name="Blades of Delusion Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dual" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23539" name="Blood Brother Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_twohand_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23540" name="Mardil's Fan Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23541" name="Vesper Noble Light Armor Appearance Stone Set">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23542" name="Vesper Noble Light Armor Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23543" name="Vesper Noble Light Armor Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23544" name="Vesper Noble Light Armor Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23545" name="Vesper Noble Light Armor Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23546" name="Vesper Noble Light Armor Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23547" name="Vesper Noble Light Armor Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23548" name="Vesper Noble Light Armor Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23549" name="Vesper Noble Light Armor Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23550" name="Mysterious Soulshot Small Pack (R-grade)">
+    <set name="icon" value="icon.br_cash_pack_of_soulshot_r_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23551" name="Mysterious Spiritshot Small Pack (R-grade)">
+    <set name="icon" value="icon.br_cash_pack_of_blessed_spiritshot_r_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23552" name="Mysterious Soulshot (R-grade)">
+    <set name="icon" value="icon.soulshot_r_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23553" name="Mysterious Spiritshot (R-grade)">
+    <set name="icon" value="icon.blessed_spiritshot_r_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23554" name="Ninja Top">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_u" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23555" name="Ninja Pants">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_l" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23556" name="Ninja Gloves">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_g" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23557" name="Ninja Shoes">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="23558" name="Ninja Hair Accessory">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_hair" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23559" name="Ninja Top">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_u" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23560" name="Ninja Pants">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_l" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23561" name="Ninja Gloves">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_g" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23562" name="Ninja Shoes">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="23563" name="Ninja Hair Accessory">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_hair" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="23564" name="Ninja Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23565" name="Ninja Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23566" name="Ninja Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23567" name="Ninja Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23568" name="Ninja Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23569" name="Ninja Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23570" name="Ninja Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23571" name="Ninja Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23572" name="Ninja Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23573" name="Ninja Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23574" name="Agathion - Hussar (Poland)">
+    <set name="icon" value="icon.etc_rbracelet_aga_agit_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="23575" name="Fantasy Top Appearance Stone Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23576" name="Fantasy Pants Appearance Stone Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23577" name="Fantasy Gloves Appearance Stone Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23578" name="Fantasy Shoes Appearance Stone Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23579" name="Shining Accessory Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23580" name="Vorpal Light Armor Appearance Stone Set">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23581" name="Vorpal Light Armor Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23582" name="Vorpal Light Armor Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23583" name="Vorpal Light Armor Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23584" name="Vorpal Light Armor Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23585" name="Vorpal Light Armor Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23586" name="Vorpal Light Armor Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23587" name="Vorpal Light Armor Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23588" name="Vorpal Light Armor Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23589" name="Monster Weapon Appearance Stone Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23590" name="Hellblade Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23591" name="Claw of Destruction Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_blunt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23592" name="Butcher Blades Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dualdagger" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23593" name="Blades of Delusion Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dual" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23594" name="Blood Brother Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_twohand_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23595" name="Mardil's Fan Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23596" name="Blessed Scroll: Enchant Weapon (R-grade)">
+    <set name="icon" value="icon.blessed_scroll_of_enchant_weapon_i06" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23597" name="Blessed Scroll: Enchant Armor (R-grade)">
+    <set name="icon" value="icon.blessed_scroll_of_enchant_armor_i06" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23599" name="Lucky Enchant Stone: Weapon (R-grade)">
+    <set name="icon" value="icon.ench_wp_potion_violet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23600" name="Lucky Enchant Stone: Armor (R-grade)">
+    <set name="icon" value="icon.ench_am_potion_violet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23601" name="PA - Gift Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23602" name="Hussar's Wing">
+    <set name="icon" value="BranchSys3.icon1.g_agathion_hussar_pl" />
+    <set name="tradeable" value="false" />
+    <slot id="BACK" />
+  </armor>
+  <etcitem id="23603" name="Automatic Appearance: Emerald Weapon">
+    <set name="icon" value="BranchSys3.icon1.g_auto_shape_shift" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23604" name="Automatic Appearance: Japanese Weapon">
+    <set name="icon" value="BranchSys3.icon1.g_auto_shape_shift" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23605" name="SP Rune 50% Pack (1-hour)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23606" name="Entrance Pass: Kartia's Labyrinth Lv. 85 Solo">
+    <set name="icon" value="icon.etc_kalie_instantzone_re" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23607" name="Entrance Pass: Kartia's Labyrinth Lv. 90 Solo">
+    <set name="icon" value="icon.etc_kalie_instantzone_re" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23608" name="Entrance Pass: Kartia's Labyrinth Lv. 95 Solo">
+    <set name="icon" value="icon.etc_kalie_instantzone_re" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23609" name="Entrance Pass: Kartia's Labyrinth Lv. 85 Party">
+    <set name="icon" value="icon.etc_kalie_instantzone_re" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23610" name="Entrance Pass: Kartia's Labyrinth Lv. 90 Party">
+    <set name="icon" value="icon.etc_kalie_instantzone_re" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23611" name="Entrance Pass: Kartia's Labyrinth Lv. 95 Party">
+    <set name="icon" value="icon.etc_kalie_instantzone_re" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23612" name="Elixir of Life (Novice)">
+    <set name="icon" value="br_cashtex.item.br_cash_elixir_of_life_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23613" name="2012 Tournament Winner's Crown - Cain">
+    <set name="icon" value="BranchSys.icon.br_comfortspirit_hat_a_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="23614" name="Vitality Maintaining Potion (10-minute)">
+    <set name="icon" value="BranchSys.icon.br_vitality_potion_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23615" name="Black Gem Mask">
+    <set name="icon" value="BranchSys.icon.br_black_gem_mask_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR" />
+  </armor>
+  <armor id="23616" name="Artisan's Goggles">
+    <set name="icon" value="icon.accessory_dwarf_goggle_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="23617" name="Vitality Maintaining Potion Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23618" name="Black Gem Mask Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23619" name="Artisan's Goggles Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23620" name="Dragon Vitality Replenishing Potion">
+    <set name="icon" value="icon.etc_potion_of_energy_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23621" name="Vitality Suspending Potion (30-minute)">
+    <set name="icon" value="BranchSys3.lcon.g_vitality_potion_stop" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23622" name="Name Change Ticket">
+    <set name="icon" value="icon.etc_exchange_ticket_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23623" name="Gender Change Ticket">
+    <set name="icon" value="icon.etc_exchange_ticket_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23624" name="Gorale Hat">
+    <set name="icon" value="BranchSys3.icon1.g_hair_gorale_hat_pl" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23625" name="Fancy Hat">
+    <set name="icon" value="BranchSys3.icon1.g_hair_fancy_hat_pl" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23626" name="Hat of Cheers">
+    <set name="icon" value="BranchSys3.icon1.g_hair_jester_hat_pl" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="23627" name="Chocolate Doughnut">
+    <set name="icon" value="BranchSys3.icon1.g_chocolate_doughnut_pl" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23628" name="Piroscki">
+    <set name="icon" value="BranchSys3.icon1.g_dumpling_pl" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23629" name="Torun Gingerbread">
+    <set name="icon" value="BranchSys3.icon1.g_torun_gingerbread_pl" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23630" name="Torun Gingerbread">
+    <set name="icon" value="BranchSys3.icon1.g_torun_gingerbread_pl" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23631" name="Torun Gingerbread">
+    <set name="icon" value="BranchSys3.icon1.g_torun_gingerbread_pl" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23632" name="Torun Gingerbread">
+    <set name="icon" value="BranchSys3.icon1.g_torun_gingerbread_pl" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23633" name="Torun Gingerbread">
+    <set name="icon" value="BranchSys3.icon1.g_torun_gingerbread_pl" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23634" name="Torun Gingerbread">
+    <set name="icon" value="BranchSys3.icon1.g_torun_gingerbread_pl" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23635" name="flint">
+    <set name="icon" value="BranchSys2.icon.g_campfire_flint" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23636" name="Polish Cloak">
+    <set name="icon" value="BranchSys3.icon1.g_pl_cape" />
+    <set name="tradeable" value="false" />
+    <slot id="BACK" />
+  </armor>
+  <armor id="23637" name="Blessed Antharas' Earring">
+    <set name="icon" value="icon.accessory_earring_of_antaras_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="23638" name="Blessed Antharas' Earring">
+    <set name="icon" value="icon.accessory_earring_of_antaras_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="23639" name="Blessed Valakas' Necklace">
+    <set name="icon" value="icon.accessory_necklace_of_valakas_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="23640" name="Blessed Valakas' Necklace">
+    <set name="icon" value="icon.accessory_necklace_of_valakas_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <etcitem id="23641" name="Star Agathion Pack">
+    <set name="icon" value="icon.etc_pi_box_joy_pack" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23642" name="Vitality Replenishing Star Candy">
+    <set name="icon" value="BranchSys.br_rudolf_food_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23643" name="Vitality Recovering Star Candy">
+    <set name="icon" value="BranchSys.br_rudolf_food_purple_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23644" name="Vitality Maintaining Star Candy">
+    <set name="icon" value="BranchSys.br_rudolf_food_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23645" name="MP Recovery Bonus Potion">
+    <set name="icon" value="BranchSys.icon.br_vitality_potion_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23646" name="High-grade Lucky Enchant Stone: Weapon (R-grade)">
+    <set name="icon" value="icon.ench_wp_potion_violet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23647" name="High-grade Lucky Enchant Stone: Armor (R-grade)">
+    <set name="icon" value="icon.ench_am_potion_violet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23648" name="Knighthood's Fortune Box">
+    <set name="icon" value="br_cashtex.item.br_cash_lucky_cube_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23649" name="Royal Guard's Fortune Box">
+    <set name="icon" value="BranchSys.icon.br_fortuna_cube_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23650" name="Blessed Weapon Appearance Stone (R-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23651" name="Blessed Weapon Appearance Stone (S-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23652" name="Blessed Weapon Appearance Stone (A-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_a" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23653" name="Blessed Weapon Appearance Stone (B-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_b" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23654" name="Blessed Weapon Appearance Stone (C-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_c" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23655" name="Blessed Weapon Appearance Stone (D-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_d" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23656" name="Blessed Weapon Appearance Stone (R-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23657" name="Blessed Weapon Appearance Stone (S-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23658" name="Blessed Weapon Appearance Stone (A-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_a" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23659" name="Blessed Weapon Appearance Stone (B-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_b" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23660" name="Blessed Weapon Appearance Stone (C-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_c" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23661" name="Blessed Weapon Appearance Stone (D-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_d" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23662" name="Blessed Weapon Appearance Stone (R-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23663" name="Blessed Weapon Appearance Stone (S-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23664" name="Blessed Weapon Appearance Stone (A-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_a" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23665" name="Blessed Weapon Appearance Stone (B-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_b" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23666" name="Blessed Weapon Appearance Stone (C-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_c" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23667" name="Blessed Weapon Appearance Stone (D-grade)">
+    <set name="icon" value="BranchSys3.icon.g_bless_wp_processing_stone_d" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23668" name="Blessed Armor Appearance Stone (R-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23669" name="Blessed Armor Appearance Stone (S-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23670" name="Blessed Armor Appearance Stone (A-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_a" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23671" name="Blessed Armor Appearance Stone (B-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_b" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23672" name="Blessed Armor Appearance Stone (C-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_c" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23673" name="Blessed Armor Appearance Stone (D-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_d" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23674" name="Blessed Armor Appearance Stone (R-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23675" name="Blessed Armor Appearance Stone (S-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23676" name="Blessed Armor Appearance Stone (A-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_a" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23677" name="Blessed Armor Appearance Stone (B-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_b" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23678" name="Blessed Armor Appearance Stone (C-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_c" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23679" name="Blessed Armor Appearance Stone (D-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_d" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23680" name="Blessed Armor Appearance Stone (R-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23681" name="Blessed Armor Appearance Stone (S-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23682" name="Blessed Armor Appearance Stone (A-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_a" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23683" name="Blessed Armor Appearance Stone (B-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_b" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23684" name="Blessed Armor Appearance Stone (C-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_c" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23685" name="Blessed Armor Appearance Stone (D-grade)">
+    <set name="icon" value="BranchSys3.Icon.g_bless_shape_shifting__am_stone_d" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23686" name="Dimension Traveler's Red Vitality Potion">
+    <set name="icon" value="icon.etc_potion_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23687" name="Dimension Traveler's Blue Vitality Potion">
+    <set name="icon" value="icon.etc_potion_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23688" name="Dimension Traveler's Gold Vitality Potion">
+    <set name="icon" value="icon.etc_potion_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23689" name="Dimension Protector's Red Vitality Potion">
+    <set name="icon" value="icon.etc_hot_spring_sulfur_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23690" name="Dimension Protector's Blue Vitality Potion">
+    <set name="icon" value="icon.etc_hot_spring_mineral_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23691" name="Dimension Protector's Gold Vitality Potion">
+    <set name="icon" value="icon.etc_hot_spring_nectar_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23692" name="Ninja Top">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_u" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23693" name="Ninja Pants">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_l" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23694" name="Ninja Gloves">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_g" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23695" name="Ninja Shoes">
+    <set name="icon" value="BranchSys3.icon1.g_co_ninja_b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <etcitem id="23696" name="Ninja Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23697" name="Ninja Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23698" name="Ninja Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23699" name="Ninja Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23700" name="Tribal Warrior Top">
+    <set name="icon" value="BranchSys3.icon1.g_co_paiwan_u" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23701" name="Tribal Warrior Pants">
+    <set name="icon" value="BranchSys3.icon1.g_co_paiwan_l" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23702" name="Tribal Warrior Gloves">
+    <set name="icon" value="BranchSys3.icon1.g_co_paiwan_g" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23703" name="Tribal Warrior Shoes">
+    <set name="icon" value="BranchSys3.icon1.g_co_paiwan_b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <etcitem id="23704" name="Tribal Warrior Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23705" name="Tribal Warrior Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23706" name="Tribal Warrior Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23707" name="Tribal Warrior Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23708" name="Metal Suit Top">
+    <set name="icon" value="BranchSys3.icon1.g_co_sf_u" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23709" name="Metal Suit Pants">
+    <set name="icon" value="BranchSys3.icon1.g_co_sf_l" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23710" name="Metal Suit Gloves">
+    <set name="icon" value="BranchSys3.icon1.g_co_sf_g" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23711" name="Metal Suit Shoes">
+    <set name="icon" value="BranchSys3.icon1.g_co_sf_b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <etcitem id="23712" name="Metal Suit Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23713" name="Metal Suit Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23714" name="Metal Suit Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23715" name="Metal Suit Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23716" name="Military Top">
+    <set name="icon" value="BranchSys3.icon1.g_co_military_u" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23717" name="Military Pants">
+    <set name="icon" value="BranchSys3.icon1.g_co_military_l" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23718" name="Military Gloves">
+    <set name="icon" value="BranchSys3.icon1.g_co_military_g" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23719" name="Military Shoes">
+    <set name="icon" value="BranchSys3.icon1.g_co_military_b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <etcitem id="23720" name="Military Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23721" name="Military Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23722" name="Military Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23723" name="Military Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23724" name="Adenian Tattoo: Wings">
+    <set name="icon" value="BranchSys3.icon1.g_co_tatu_i01" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="23725" name="Adenian Tattoo: Tribal">
+    <set name="icon" value="BranchSys3.icon1.g_co_tatu_i02" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="23726" name="Adenian Tattoo: Evil">
+    <set name="icon" value="BranchSys3.icon1.g_co_tatu_i03" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <etcitem id="23727" name="Life Stone: Tattoo">
+    <set name="icon" value="BranchSys3.icon1.g_life_dust_general_adenia" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23728" name="Erupting Vitality XP Potion">
+    <set name="icon" value="icon.etc_potion_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23729" name="Erupting Vitality Replenishing Potion">
+    <set name="icon" value="icon.etc_potion_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23730" name="Erupting Vitality Conservation Potion">
+    <set name="icon" value="icon.etc_potion_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23731" name="Divine Scroll: Enchant Weapon (A-grade)">
+    <set name="icon" value="br_cashtex.item.br_cash_blessed_cry_of_ench_wp_a_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23732" name="Divine Scroll: Enchant Weapon (S-grade)">
+    <set name="icon" value="BranchSys3.icon1.g_holy_cry_of_ench_wp_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23733" name="Divine Scroll: Enchant Weapon (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_holy_cry_of_ench_wp_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23734" name="Divine Scroll: Enchant Armor (A-grade)">
+    <set name="icon" value="br_cashtex.item.br_cash_blessed_cry_of_ench_am_a_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23735" name="Divine Scroll: Enchant Armor (S-grade)">
+    <set name="icon" value="BranchSys3.icon1.g_holy_cry_of_ench_am_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23736" name="Divine Scroll: Enchant Armor (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_holy_cry_of_ench_am_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23737" name="Divine Scroll: Enchant Weapon (A-grade)">
+    <set name="icon" value="br_cashtex.item.br_cash_blessed_cry_of_ench_wp_a_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23738" name="Divine Scroll: Enchant Weapon (S-grade)">
+    <set name="icon" value="BranchSys3.icon1.g_holy_cry_of_ench_wp_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23739" name="Divine Scroll: Enchant Weapon (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_holy_cry_of_ench_wp_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23740" name="Divine Scroll: Enchant Armor (A-grade)">
+    <set name="icon" value="br_cashtex.item.br_cash_blessed_cry_of_ench_am_a_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23741" name="Divine Scroll: Enchant Armor (S-grade)">
+    <set name="icon" value="BranchSys3.icon1.g_holy_cry_of_ench_am_s" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23742" name="Divine Scroll: Enchant Armor (R-grade)">
+    <set name="icon" value="BranchSys.icon.br_holy_cry_of_ench_am_s_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23743" name="Prestige Rune 30%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23744" name="Prestige Rune 30%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23745" name="Prestige Rune 30%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23746" name="Prestige Rune 30% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23747" name="Prestige Rune 30% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23748" name="Prestige Rune 30% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23749" name="Prestige Rune 50%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23750" name="Prestige Rune 50%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23751" name="Prestige Rune 50%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23752" name="Prestige Rune 50% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23753" name="Prestige Rune 50% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23754" name="Prestige Rune 50% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23755" name="Prestige Rune 100%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23756" name="Prestige Rune 100%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23757" name="Prestige Rune 100%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23758" name="Prestige Rune 100% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23759" name="Prestige Rune 100% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23760" name="Prestige Rune 100% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23761" name="Prestige Cube">
+    <set name="icon" value="icon.etc_dkbrown_crystal_cube_pc_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23762" name="High-grade Elixir Pack">
+    <set name="icon" value="icon.etc_box_of_adventure_3_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23763" name="Vitality Recovery Potion">
+    <set name="icon" value="BranchSys2.br_essence_rose_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23764" name="Heavenly Cocktail">
+    <set name="icon" value="icon.etc_fruit_cocktail_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23765" name="Feather of Blessing">
+    <set name="icon" value="icon.blessed_feather_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23766" name="Warrior's Quick CP Potion">
+    <set name="icon" value="BranchSys2.icon.br_breath_of_hero_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23767" name="Fortune Reading Ticket">
+    <set name="icon" value="BranchSys3.icon1.g_luckygame_card_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23768" name="Tarot Card">
+    <set name="icon" value="BranchSys3.icon1.g_luckygame_card_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23769" name="Improved Lucky Enchant Stone: Weapon (D-grade)">
+    <set name="icon" value="icon.ench_wp_stone_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23770" name="Improved Lucky Enchant Stone: Weapon (C-grade)">
+    <set name="icon" value="icon.ench_wp_stone_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23771" name="Improved Lucky Enchant Stone: Weapon (B-grade)">
+    <set name="icon" value="icon.ench_wp_stone_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23772" name="Improved Lucky Enchant Stone: Weapon (A-grade)">
+    <set name="icon" value="icon.ench_wp_stone_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23773" name="Improved Lucky Enchant Stone: Weapon (S-grade)">
+    <set name="icon" value="icon.ench_wp_stone_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23774" name="Improved Lucky Enchant Stone: Weapon (R-grade)">
+    <set name="icon" value="icon.ench_wp_potion_violet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23775" name="Improved Lucky Enchant Stone: Armor (D-grade)">
+    <set name="icon" value="icon.ench_am_stone_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23776" name="Improved Lucky Enchant Stone: Armor (C-grade)">
+    <set name="icon" value="icon.ench_am_stone_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23777" name="Improved Lucky Enchant Stone: Armor (B-grade)">
+    <set name="icon" value="icon.ench_am_stone_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23778" name="Improved Lucky Enchant Stone: Armor (A-grade)">
+    <set name="icon" value="icon.ench_am_stone_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23779" name="Improved Lucky Enchant Stone: Armor (S-grade)">
+    <set name="icon" value="icon.ench_am_stone_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23780" name="Improved Lucky Enchant Stone: Armor (R-grade)">
+    <set name="icon" value="icon.ench_am_potion_violet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23781" name="Giant's Lucky Enchant Stone: Weapon (R-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_am_giant_stone_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23782" name="Giant's Lucky Enchant Stone: Armor (R-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_wp_giant_stone_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23783" name="Blessed Giant's Lucky Enchant Stone: Weapon (R-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_am_giant_stone_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23784" name="Blessed Giant's Lucky Enchant Stone: Armor (R-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_wp_giant_stone_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23785" name="Lesser Giant's Lucky Enchant Stone: Weapon (R-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_am_giant_stone_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23786" name="Lesser Giant's Lucky Enchant Stone: Armor (R-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_wp_giant_stone_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23787" name="Blessed Lucky Enchant Stone: Weapon (D-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_wp_stone_blessed_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23788" name="Blessed Lucky Enchant Stone: Weapon (C-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_wp_stone_blessed_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23789" name="Blessed Lucky Enchant Stone: Weapon (B-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_wp_stone_blessed_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23790" name="Blessed Lucky Enchant Stone: Weapon (A-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_wp_stone_blessed_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23791" name="Blessed Lucky Enchant Stone: Weapon (S-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_wp_stone_blessed_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23792" name="Blessed Lucky Enchant Stone: Weapon (R-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_wp_blessed_violet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23793" name="Blessed Lucky Enchant Stone: Armor (D-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_am_stone_blessed_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23794" name="Blessed Lucky Enchant Stone: Armor (C-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_am_stone_blessed_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23795" name="Blessed Lucky Enchant Stone: Armor (B-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_am_stone_blessed_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23796" name="Blessed Lucky Enchant Stone: Armor (A-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_am_stone_blessed_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23797" name="Blessed Lucky Enchant Stone: Armor (S-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_am_stone_blessed_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23798" name="Blessed Lucky Enchant Stone: Armor (R-grade)">
+    <set name="icon" value="BranchSys3.icon1.ench_am_bleseed_violet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23799" name="Vitality Maintaining Potion (10-minute)">
+    <set name="icon" value="icon.etc_lesser_potion_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23800" name="Major Adenian Life Stone">
+    <set name="icon" value="BranchSys3.icon1.g_life_dust_general_adenia" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23801" name="Superior Adenian Life Stone: Tattoo">
+    <set name="icon" value="BranchSys3.icon1.g_life_dust_general_adenia" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23802" name="Adenian Life Stone">
+    <set name="icon" value="BranchSys3.icon1.g_life_dust_general_adenia" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23803" name="Major Adenian Life Stone">
+    <set name="icon" value="BranchSys3.icon1.g_life_dust_general_adenia" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23804" name="Superior Adenian Life Stone: Tattoo">
+    <set name="icon" value="BranchSys3.icon1.g_life_dust_general_adenia" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23805" name="Hero Coin">
+    <set name="icon" value="icon.etc_coins_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23806" name="Transformation Potion: Uthanka">
+    <set name="icon" value="icon.etc_lesser_potion_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23807" name="Prestige Rune 30%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23808" name="Prestige Rune 50%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23809" name="Prestige Rune 100%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23810" name="Prestige Rune 30% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23811" name="Prestige Rune 50% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23812" name="Prestige Rune 100% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23813" name="Prestige Cube Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23814" name="Chaos Essence Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23815" name="Chaos Essence Pack (Dual Class)">
+    <set name="icon" value="icon.etc_pi_gift_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23816" name="Uthanka's Treasure Chest">
+    <set name="icon" value="icon.etc_ev_kalie_treasure_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23817" name="Uthanka's Ring">
+    <set name="icon" value="BranchSys3.lcon.g_ring_of_uthanka" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="23818" name="Uthanka's Ring">
+    <set name="icon" value="BranchSys3.lcon.g_ring_of_uthanka" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <etcitem id="23819" name="Uthanka's Ring Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23820" name="Scroll of Escape: Uthanka's Tomb">
+    <set name="icon" value="icon.etc_scroll_of_return_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23821" name="Agathion - Pirate Captain Uthanka">
+    <set name="icon" value="BranchSys.icon.br_aga_uthanka_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23822" name="Agathion - Pirate Captain Uthanka">
+    <set name="icon" value="BranchSys.icon.br_aga_uthanka_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="23823" name="Agathion - Uthanka Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23824" name="Uthanka's Blessed Scroll of Resurrection">
+    <set name="icon" value="icon.etc_scroll_of_resurrection_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23825" name="Wondrous Human Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_race_human" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23826" name="Wondrous Elf Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_race_elf" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23827" name="Wondrous Dark Elf Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_race_darkelf" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23828" name="Wondrous Orc Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_race_orc" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23829" name="Wondrous Dwarf Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_race_dwarf" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23830" name="Wondrous Kamael Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_race_kamael" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23831" name="XP Rune I (Lv. 1-85) 100% Pack (1-hour)">
+    <set name="icon" value="icon.etc_pi_gift_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23832" name="Pa'agrio's Warm Breeze Pack (1-hour)">
+    <set name="icon" value="icon.etc_pi_gift_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23833" name="Talisman - Abundance">
+    <set name="icon" value="BranchSys2.icon.g_giant_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="23834" name="Talisman - Abundance">
+    <set name="icon" value="BranchSys2.icon.g_giant_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="23835" name="Talisman - Abundance">
+    <set name="icon" value="BranchSys2.icon.g_giant_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="23836" name="Talisman - Abundance">
+    <set name="icon" value="BranchSys2.icon.g_giant_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="23837" name="Talisman - Hunter">
+    <set name="icon" value="BranchSys2.icon.g_twilight_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="23838" name="Talisman - Slaughterer">
+    <set name="icon" value="BranchSys2.icon.g_twilight_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="23839" name="Talisman - Conquerer">
+    <set name="icon" value="BranchSys2.icon.g_twilight_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="23840" name="Talisman - Outlaw">
+    <set name="icon" value="BranchSys2.icon.g_twilight_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <etcitem id="23841" name="Abundance Gift Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23842" name="Abundance Gift Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23843" name="Abundance Gift Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23844" name="Abundance Gift Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23845" name="Mysterious Hunt Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_etc_defence" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23846" name="Mysterious Slaughter Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_etc_slaughter" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23847" name="Tarot Card Coupon">
+    <set name="icon" value="BranchSys3.icon1.g_luckygame_card_trade_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23848" name="Tarot Card Coupon">
+    <set name="icon" value="BranchSys3.icon1.g_luckygame_card_trade_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23849" name="Tarot Card Coupon">
+    <set name="icon" value="BranchSys3.icon1.g_luckygame_card_trade_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23850" name="Tarot Card Coupon">
+    <set name="icon" value="BranchSys3.icon1.g_luckygame_card_trade_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23851" name="Royal Training Camp Ticket">
+    <set name="icon" value="icon.ticket_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23852" name="Transparent Armor">
+    <set name="icon" value="icon.armor_t2000_ul_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <etcitem id="23853" name="Transparent Armor Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23854" name="XP Rune II (Lv. 1-95) 100% Pack (3-hour)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23855" name="Golden Crate">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23856" name="Silver Crate">
+    <set name="icon" value="icon.etc_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23857" name="Bronze Crate">
+    <set name="icon" value="icon.etc_treasure_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23858" name="Talisman Crate">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23859" name="Change Clan Name">
+    <set name="icon" value="icon.etc_exchange_ticket_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23860" name="Raid Boss' Soul Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23861" name="Bottle Fragment of Valakas' Soul">
+    <set name="icon" value="BranchSys3.iconItem.g_bottle_of_valakas_soul_fragment" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23862" name="Bottle Fragment of Antharas' Soul">
+    <set name="icon" value="BranchSys3.iconItem.g_bottle_of_antaras_soul_fragment" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23863" name="Bottle Fragment of Baium's Soul">
+    <set name="icon" value="BranchSys3.iconItem.g_bottle_of_baium_soul_fragment" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23864" name="Bottle Fragment of Orfen's Soul">
+    <set name="icon" value="BranchSys3.iconItem.g_bottle_of_orfen_soul_fragment" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23865" name="Bottle Fragment of Queen Ant's Soul">
+    <set name="icon" value="BranchSys3.iconItem.g_bottle_of_queen_ant_soul_fragment" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23866" name="Bottle Fragment of Frintezza's Soul">
+    <set name="icon" value="BranchSys3.iconItem.g_bottle_of_frintessa_soul_fragment" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23867" name="Bottle Fragment of Freya's Soul">
+    <set name="icon" value="BranchSys3.iconItem.g_bottle_of_freya_soul_fragment" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23868" name="Agathion - Van Halter's Memory">
+    <set name="icon" value="BranchSys2.icon.br_aga_tiger_grandma_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="23869" name="Angel Cat's Blessing Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23870" name="Angel Cat's Blessing">
+    <set name="icon" value="icon.accessory_cat_the_cat_cap_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23871" name="Prestige Rune 100%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23872" name="Prestige Rune 100%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23873" name="Prestige Rune 100%">
+    <set name="icon" value="BranchSys3.lcon.g_rune_itemdrop_up" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23874" name="Prestige Rune 100% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23875" name="Prestige Rune 100% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23876" name="Prestige Rune 100% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23877" name="Samurai Hair Accessory">
+    <set name="icon" value="BranchSys3.iconArmar.g_co_japan_general_hair_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="23878" name="Samurai Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23879" name="Samurai Outfit">
+    <set name="icon" value="BranchSys3.iconArmar.g_co_japan_general_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <etcitem id="23880" name="Samurai Outfit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23881" name="Anakim Outfit">
+    <set name="icon" value="BranchSys3.iconArmar.g_co_anakim_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <etcitem id="23882" name="Anakim Outfit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23883" name="Vampire Top">
+    <set name="icon" value="BranchSys3.iconArmar.g_co_vampiric_u_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="23884" name="Vampire Pants">
+    <set name="icon" value="BranchSys3.iconArmar.g_co_vampiric_l_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="23885" name="Vampire Gloves">
+    <set name="icon" value="BranchSys3.iconArmar.g_co_vampiric_g_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="23886" name="Vampire Shoes">
+    <set name="icon" value="BranchSys3.iconArmar.g_co_vampiric_b_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="23887" name="Vampire Hair Accessory">
+    <set name="icon" value="BranchSys3.iconArmar.g_co_vampiric_hair_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="23888" name="Vampire Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23889" name="Vampire Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23890" name="Vampire Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23891" name="Vampire Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23892" name="Vampire Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23893" name="Life Stone Pack">
+    <set name="icon" value="icon.present_of_destination_event" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23894" name="Adenian Life Stone Pack">
+    <set name="icon" value="icon.present_of_destination_event" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23895" name="Lucky Enchant Stone: Armor Pack">
+    <set name="icon" value="icon.present_of_destination_event" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23896" name="Lucky Enchant Stone: Weapon Pack">
+    <set name="icon" value="icon.present_of_destination_event" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23897" name="Soul Bottle Pack">
+    <set name="icon" value="icon.present_of_destination_event" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23898" name="Pandora's Box">
+    <set name="icon" value="icon.present_of_destination_event" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23899" name="Gambler's Box">
+    <set name="icon" value="icon.present_of_destination_event" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23900" name="Agathion - Anakim">
+    <set name="icon" value="BranchSys3.iconItem.g_agathion_anakim" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="23901" name="Mysterious Dark Resistance Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_attribute_unholy" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23902" name="Mysterious Holy Resistance Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_attribute_holy" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23903" name="Mysterious Fire Resistance Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_attribute_fire" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23904" name="Mysterious Water Resistance Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_attribute_water" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23905" name="Mysterious Wind Resistance Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_attribute_wind" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23906" name="Mysterious Earth Resistance Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_attribute_earth" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23907" name="Mysterious Abnormal State Resistance Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_etc_debuff" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23908" name="Mysterious Invincibility Boost Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_etc_buff" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23909" name="Mysterious World Boss Defense Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_boss_normal" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23910" name="Mysterious Antharas Defense Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_boss_antaras" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23911" name="Mysterious Valakas Defense Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_boss_valakas" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23912" name="Mysterious Lindvior Defense Dye">
+    <set name="icon" value="BranchSys3.icon1.g_premium_dye_boss_lindvior" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="23913" name="Tears One-handed Sword">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_sword_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="23914" name="Tears Dagger">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_dagger_i00" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="23915" name="Tears Two-handed Sword">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_twohand_sword_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23916" name="Tears Fist Weapon">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_dualfist_i00" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23917" name="Tears Spear">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_pole_i00" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23918" name="Tears Bow">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_bow_i00" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23919" name="Tears Crossbow">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_twohand_crossbow_i00" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23920" name="Tears One-handed Blunt Weapon">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_blunt_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="23921" name="Tears Magic Sword">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_magic_sword_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="23922" name="Tears One-handed Magic Blunt Weapon">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_magic_blunt_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="23923" name="Tears Two-handed Magic Blunt Weapon">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_magic_twohand_blunt_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23924" name="Tears Dual sword">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_dual_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23925" name="Tears Dual Dagger">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_dualdagger_i00" />
+    <set name="type" value="dualdagger" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23926" name="Tears Dual Blunt Weapon">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_dualblunt_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="23927" name="Tears Shield">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_shield_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </weapon>
+  <armor id="23928" name="Tears Sigil">
+    <set name="icon" value="BranchSys3.iconWeapon.g_tears_sigil_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <etcitem id="23929" name="Tears One-handed Sword Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23930" name="Tears Dagger Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dagger" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23931" name="Tears Two-handed Sword Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_twohand_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23932" name="Tears Fist Weapon Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dualfist" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23933" name="Tears Spear Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_pole" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23934" name="Tears Bow Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_bow" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23935" name="Tears Crossbow Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_twohand_crossbow" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23936" name="Tears One-handed Blunt Weapon Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_blunt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23937" name="Tears Magic Sword Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_twohand_blunt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23938" name="Tears One-handed Magic Blunt Weapon Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_magic_blunt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23939" name="Tears Two-handed Magic Blunt Weapon Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_magic_twohand_blunt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23940" name="Tears Dual sword Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dual" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23941" name="Tears Dual Dagger Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dualdagger" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23942" name="Tears Dual Blunt Weapon Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_dualblunt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23943" name="Tears Shield Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_shield" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23944" name="Tears Sigil Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_sigil" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23945" name="Prestige Rune 100% Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23946" name="XP Rune II (Lv. 1-95) 100% Pack (1-hour)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23947" name="Kamaloka Secret Chest Key">
+    <set name="icon" value="icon.aphros_key" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23948" name="Kamaloka Chest Key">
+    <set name="icon" value="icon.etc_old_key_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23949" name="Returning Hero's Wondrous Cubic">
+    <set name="icon" value="Branchsys2.icon.cube_event_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23950" name="Returning Hero's Gold Chest">
+    <set name="icon" value="icon.present_of_destination_event" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23951" name="Returning Hero's Support Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23952" name="Extra Pass: Infernal/Lunatic Kamaloka">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23953" name="2014 World Olympiad Hero's Accessory">
+    <set name="icon" value="icon.accessory_archer_hat2_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="23954" name="2014 World Olympiad Semifinalist's Accessory">
+    <set name="icon" value="icon.accessory_archer_hat2_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="23955" name="Kamaloka Secret Chest">
+    <set name="icon" value="icon.present_of_destination_event" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23956" name="Kamaloka Chest">
+    <set name="icon" value="icon.present_of_destination_event" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23957" name="Illusion 1">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23958" name="Illusion 2">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23959" name="Illusion 3">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23960" name="Illusion 4">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23961" name="Illusion 5">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23962" name="Illusion 6">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23963" name="Illusion 7">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23964" name="Illusion 8">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23965" name="Illusion 9">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23966" name="Illusion 10">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23967" name="Illusion 11">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23968" name="Illusion 12">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23969" name="Illusion 13">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23970" name="Illusion 14">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23971" name="Illusion 15">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23972" name="Illusion 16">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23973" name="Illusion 17">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23974" name="Illusion 18">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23975" name="Illusion 19">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23976" name="Illusion 20">
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23977" name="Agathion - Pegasus Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23978" name="Agathion - Pegasus">
+    <set name="icon" value="BranchSys.icon.br_aga_pegasus_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="23979" name="Vampire Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23980" name="Vampire Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23981" name="Vampire Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23982" name="Vampire Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23983" name="Vampire Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23984" name="Traces of Ancient Kartia's Labyrinth">
+    <set name="icon" value="BranchSys3.Icon.g_ev_magic_powder" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23985" name="Extra Pass: Ancient Kartia's Labyrinth">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23986" name="Rune of Bountiful Growth Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23987" name="Rune of Bountiful Growth (30-day)">
+    <set name="icon" value="icon.ev_charge_run" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="23988" name="Wondrous Wind Scroll">
+    <set name="icon" value="icon.ev_charge_scroll" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="23989" name="Agathion - Virgo">
+    <set name="icon" value="BranchIcon.Icon.accessary_lbracelet_sign_agathion_aug_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23990" name="Agathion - Virgo">
+    <set name="icon" value="BranchIcon.Icon.accessary_lbracelet_sign_agathion_aug_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23991" name="Agathion - Virgo">
+    <set name="icon" value="BranchIcon.Icon.accessary_lbracelet_sign_agathion_aug_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23992" name="Agathion - Virgo">
+    <set name="icon" value="BranchIcon.Icon.accessary_lbracelet_sign_agathion_aug_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23993" name="Agathion - Virgo">
+    <set name="icon" value="BranchIcon.Icon.accessary_lbracelet_sign_agathion_aug_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23994" name="Agathion - Virgo">
+    <set name="icon" value="BranchIcon.Icon.accessary_lbracelet_sign_agathion_aug_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23995" name="Agathion - Virgo">
+    <set name="icon" value="BranchIcon.Icon.accessary_lbracelet_sign_agathion_aug_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23996" name="Agathion - Virgo">
+    <set name="icon" value="BranchIcon.Icon.accessary_lbracelet_sign_agathion_aug_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23997" name="Agathion - Virgo">
+    <set name="icon" value="BranchIcon.Icon.accessary_lbracelet_sign_agathion_aug_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23998" name="Agathion - Virgo">
+    <set name="icon" value="BranchIcon.Icon.accessary_lbracelet_sign_agathion_aug_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="23999" name="Agathion - Virgo">
+    <set name="icon" value="BranchIcon.Icon.accessary_lbracelet_sign_agathion_aug_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+</list>

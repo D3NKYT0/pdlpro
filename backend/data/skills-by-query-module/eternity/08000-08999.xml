@@ -1,0 +1,3078 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="8001" levels="1" name="Augment Option - Divine Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8002" levels="1" name="Augment Option - Dark Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8003" levels="1" name="Augment Option - Fire Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8004" levels="1" name="Augment Option - Water Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8005" levels="1" name="Augment Option - Wind Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8006" levels="1" name="Augment Option - Earth Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8007" levels="1" name="Augment Option - Divine Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8008" levels="1" name="Augment Option - Dark Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8009" levels="1" name="Augment Option - Fire Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8010" levels="1" name="Augment Option - Water Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8011" levels="1" name="Augment Option - Wind Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8012" levels="1" name="Augment Option - Earth Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8013" levels="1" name="Augment Option - Divine Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8014" levels="1" name="Augment Option - Dark Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8015" levels="1" name="Augment Option - Fire Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8016" levels="1" name="Augment Option - Water Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8017" levels="1" name="Augment Option - Wind Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8018" levels="1" name="Augment Option - Earth Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8019" levels="1" name="Augment Option - Divine Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8020" levels="1" name="Augment Option - Dark Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8021" levels="1" name="Augment Option - Fire Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8022" levels="1" name="Augment Option - Water Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8023" levels="1" name="Augment Option - Wind Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8024" levels="1" name="Augment Option - Earth Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8025" levels="1" name="Augment Option - Divine Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8026" levels="1" name="Augment Option - Dark Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8027" levels="1" name="Augment Option - Fire Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8028" levels="1" name="Augment Option - Water Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8029" levels="1" name="Augment Option - Wind Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8030" levels="1" name="Augment Option - Earth Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8031" levels="1" name="Augment Option - Divine Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8032" levels="1" name="Augment Option - Dark Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8033" levels="1" name="Augment Option - Fire Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8034" levels="1" name="Augment Option - Water Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8035" levels="1" name="Augment Option - Wind Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8036" levels="1" name="Augment Option - Earth Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8037" levels="1" name="Augment Option - Divine Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8038" levels="1" name="Augment Option - Dark Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8039" levels="1" name="Augment Option - Fire Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8040" levels="1" name="Augment Option - Water Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8041" levels="1" name="Augment Option - Wind Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8042" levels="1" name="Augment Option - Earth Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8043" levels="1" name="Augment Option - Divine Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8044" levels="1" name="Augment Option - Dark Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8045" levels="1" name="Augment Option - Fire Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8046" levels="1" name="Augment Option - Water Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8047" levels="1" name="Augment Option - Wind Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8048" levels="1" name="Augment Option - Earth Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8049" levels="1" name="Augment Option - Enhance Shock">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8050" levels="1" name="Augment Option - Enhance Bleed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8051" levels="1" name="Augment Option - Enhance Poison">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8052" levels="1" name="Augment Option - Enhance Sleep">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8053" levels="1" name="Augment Option - Enhance Paralysis">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8054" levels="1" name="Augment Option - Enhance Mental Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8055" levels="1" name="Augment Option - Stun Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8056" levels="1" name="Augment Option - Bleed Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8057" levels="1" name="Augment Option - Poison Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8058" levels="1" name="Augment Option - Sleep Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8059" levels="1" name="Augment Option - Paralysis Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8060" levels="1" name="Augment Option - Mental Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8061" levels="1" name="Augment Option - Enhance Shock">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8062" levels="1" name="Augment Option - Enhance Bleed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8063" levels="1" name="Augment Option - Enhance Poison">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8064" levels="1" name="Augment Option - Enhance Sleep">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8065" levels="1" name="Augment Option - Enhance Paralysis">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8066" levels="1" name="Augment Option - Enhance Mental Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8067" levels="1" name="Augment Option - Stun Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8068" levels="1" name="Augment Option - Bleed Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8069" levels="1" name="Augment Option - Poison Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8070" levels="1" name="Augment Option - Sleep Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8071" levels="1" name="Augment Option - Paralysis Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8072" levels="1" name="Augment Option - Mental Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8073" levels="1" name="Augment Option - Enhance Shock">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8074" levels="1" name="Augment Option - Enhance Bleed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8075" levels="1" name="Augment Option - Enhance Poison">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8076" levels="1" name="Augment Option - Enhance Sleep">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8077" levels="1" name="Augment Option - Enhance Paralysis">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8078" levels="1" name="Augment Option - Enhance Mental Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8079" levels="1" name="Augment Option - Stun Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8080" levels="1" name="Augment Option - Bleed Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8081" levels="1" name="Augment Option - Poison Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8082" levels="1" name="Augment Option - Sleep Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8083" levels="1" name="Augment Option - Paralysis Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8084" levels="1" name="Augment Option - Mental Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8085" levels="1" name="Augment Option - Enhance Shock">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8086" levels="1" name="Augment Option - Enhance Bleed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8087" levels="1" name="Augment Option - Enhance Poison">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8088" levels="1" name="Augment Option - Enhance Sleep">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8089" levels="1" name="Augment Option - Enhance Paralysis">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8090" levels="1" name="Augment Option - Enhance Mental Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8091" levels="1" name="Augment Option - Stun Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8092" levels="1" name="Augment Option - Bleed Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8093" levels="1" name="Augment Option - Poison Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8094" levels="1" name="Augment Option - Sleep Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8095" levels="1" name="Augment Option - Paralysis Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8096" levels="1" name="Augment Option - Mental Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8097" levels="1" name="Augment Option - Divine Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8098" levels="1" name="Augment Option - Dark Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8099" levels="1" name="Augment Option - Fire Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8100" levels="1" name="Augment Option - Water Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8101" levels="1" name="Augment Option - Wind Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8102" levels="1" name="Augment Option - Earth Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8103" levels="1" name="Augment Option - Divine Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8104" levels="1" name="Augment Option - Dark Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8105" levels="1" name="Augment Option - Fire Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8106" levels="1" name="Augment Option - Water Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8107" levels="1" name="Augment Option - Wind Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8108" levels="1" name="Augment Option - Earth Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8109" levels="1" name="Augment Option - Divine Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8110" levels="1" name="Augment Option - Dark Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8111" levels="1" name="Augment Option - Fire Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8112" levels="1" name="Augment Option - Water Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8113" levels="1" name="Augment Option - Wind Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8114" levels="1" name="Augment Option - Earth Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8115" levels="1" name="Augment Option - Divine Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8116" levels="1" name="Augment Option - Dark Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8117" levels="1" name="Augment Option - Fire Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8118" levels="1" name="Augment Option - Water Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8119" levels="1" name="Augment Option - Wind Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8120" levels="1" name="Augment Option - Earth Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8121" levels="1" name="Augment Option - Divine Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8122" levels="1" name="Augment Option - Dark Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8123" levels="1" name="Augment Option - Fire Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8124" levels="1" name="Augment Option - Water Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8125" levels="1" name="Augment Option - Wind Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8126" levels="1" name="Augment Option - Earth Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8127" levels="1" name="Augment Option - Divine Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8128" levels="1" name="Augment Option - Dark Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8129" levels="1" name="Augment Option - Fire Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8130" levels="1" name="Augment Option - Water Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8131" levels="1" name="Augment Option - Wind Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8132" levels="1" name="Augment Option - Earth Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8133" levels="1" name="Augment Option - Divine Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8134" levels="1" name="Augment Option - Dark Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8135" levels="1" name="Augment Option - Fire Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8136" levels="1" name="Augment Option - Water Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8137" levels="1" name="Augment Option - Wind Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8138" levels="1" name="Augment Option - Earth Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8139" levels="1" name="Augment Option - Divine Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8140" levels="1" name="Augment Option - Dark Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8141" levels="1" name="Augment Option - Fire Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8142" levels="1" name="Augment Option - Water Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8143" levels="1" name="Augment Option - Wind Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8144" levels="1" name="Augment Option - Earth Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8145" levels="1" name="Augment Option - Stun Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8146" levels="1" name="Augment Option - Bleed Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8147" levels="1" name="Augment Option - Poison Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8148" levels="1" name="Augment Option - Sleep Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8149" levels="1" name="Augment Option - Paralysis Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8150" levels="1" name="Augment Option - Mental Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8151" levels="1" name="Augment Option - Stun Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8152" levels="1" name="Augment Option - Bleed Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8153" levels="1" name="Augment Option - Poison Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8154" levels="1" name="Augment Option - Sleep Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8155" levels="1" name="Augment Option - Paralysis Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8156" levels="1" name="Augment Option - Mental Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8157" levels="1" name="Augment Option - Stun Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8158" levels="1" name="Augment Option - Bleed Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8159" levels="1" name="Augment Option - Poison Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8160" levels="1" name="Augment Option - Sleep Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8161" levels="1" name="Augment Option - Paralysis Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8162" levels="1" name="Augment Option - Mental Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8163" levels="1" name="Augment Option - Stun Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8164" levels="1" name="Augment Option - Bleed Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8165" levels="1" name="Augment Option - Poison Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8166" levels="1" name="Augment Option - Sleep Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8167" levels="1" name="Augment Option - Paralysis Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8168" levels="1" name="Augment Option - Mental Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8169" levels="1" name="Augment Option - Stun Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8170" levels="1" name="Augment Option - Bleed Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8171" levels="1" name="Augment Option - Poison Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8172" levels="1" name="Augment Option - Sleep Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8173" levels="1" name="Augment Option - Paralysis Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8174" levels="1" name="Augment Option - Mental Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8175" levels="1" name="Augment Option - Stun Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8176" levels="1" name="Augment Option - Bleed Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8177" levels="1" name="Augment Option - Poison Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8178" levels="1" name="Augment Option - Sleep Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8179" levels="1" name="Augment Option - Paralysis Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8180" levels="1" name="Augment Option - Mental Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8181" levels="1" name="Augment Option - Stun Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8182" levels="1" name="Augment Option - Bleed Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8183" levels="1" name="Augment Option - Poison Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8184" levels="1" name="Augment Option - Sleep Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8185" levels="1" name="Augment Option - Paralysis Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8186" levels="1" name="Augment Option - Mental Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8187" levels="1" name="Augment Option - Stun Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8188" levels="1" name="Augment Option - Bleed Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8189" levels="1" name="Augment Option - Poison Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8190" levels="1" name="Augment Option - Sleep Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8191" levels="1" name="Augment Option - Paralysis Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8192" levels="1" name="Augment Option - Mental Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8193" levels="1" name="Heavy Armor of Nightmare Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8194" levels="1" name="Heavy Majestic Plate Armor Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8195" levels="1" name="Light Nightmarish Leather Armor Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8196" levels="1" name="Light Majestic Leather Armor Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8197" levels="1" name="Nightmare Robe Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8198" levels="1" name="Majestic Robe Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8199" levels="1" name="Heavy Imperial Crusader Breastplate Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8200" levels="1" name="Light Draconic Leather Armor Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8201" levels="1" name="Major Arcana Robe Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8202" levels="1" name="Dynasty Breastplate - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8203" levels="1" name="Dynasty Breastplate - PvP Shield Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8204" levels="1" name="Dynasty Breastplate - PvP Weapon Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8205" levels="1" name="Dynasty Breastplate - PvP Force Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8206" levels="1" name="Dynasty Breastplate - PvP Bard">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8207" levels="1" name="Dynasty Leather Armor - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8208" levels="1" name="Dynasty Leather Armor - PvP Dagger Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8209" levels="1" name="Dynasty Leather Armor - PvP Bow Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8210" levels="1" name="Dynasty Tunic - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8211" levels="1" name="Dynasty Tunic - PvP Healer">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8212" levels="1" name="Dynasty Tunic - PvP Enchanter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8213" levels="1" name="Dynasty Tunic - PvP Summoner">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8214" levels="1" name="Dynasty Tunic - PvP Wizard">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8215" levels="1" name="Dynasty Leather Armor - PvP Force Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8216" levels="1" name="Dynasty Leather Armor - PvP Weapon Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8217" levels="1" name="Dynasty Leather Armor - PvP Enchanter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8218" levels="1" name="Dynasty Leather Armor - PvP Summoner">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8219" levels="1" name="Dynasty Platinum Breastplate - PvP Shield Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8220" levels="1" name="Dynasty Platinum Breastplate - PvP Weapon Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8221" levels="1" name="Dynasty Platinum Breastplate - PvP Bard">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8222" levels="1" name="Dynasty Platinum Breastplate - PvP Force Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8223" levels="1" name="Dynasty Jewel Leather Armor - PvP Dagger Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8224" levels="1" name="Dynasty Jewel Leather Armor - PvP Bow Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8225" levels="1" name="Dynasty Jewel Leather Armor - PvP Force Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8226" levels="1" name="Dynasty Jewel Leather Armor - PvP Weapon Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8227" levels="1" name="Dynasty Jewel Leather Armor - PvP Summoner">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8228" levels="1" name="Dynasty Jewel Leather Armor - PvP Enchanter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8229" levels="1" name="Dynasty Silver Satin Tunic - PvP Healer">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8230" levels="1" name="Dynasty Silver Satin Tunic - PvP Enchanter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8231" levels="1" name="Dynasty Silver Satin Tunic - PvP Summoner">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8232" levels="1" name="Dynasty Silver Satin Tunic - PvP Wizard">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8233" levels="1" name="Zubei's Helmet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8234" levels="1" name="Zubei's Helmet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8235" levels="1" name="Nightmare Helm">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8236" levels="1" name="Nightmare Helm">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8237" levels="1" name="Shalin Heal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="HEAL" />
+  </skill>
+  <skill id="8238" levels="1" name="Shalin Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8239" levels="1" name="Critical Up">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8240" levels="3" name="Obliteration Storm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8241" levels="1" name="Critical Up">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="8242" levels="1" name="Ice Ball">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="8243" levels="1" name="Chill Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="8244" levels="1" name="Transform Gatekeeper">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8245" levels="1" name="Summon Agathion - Love">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8246" levels="1" name="Transform Pumpkin Ghost">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8247" levels="1" name="Mount Darkmane Pacer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8248" levels="1" name="Cancel Gatekeeper Transformation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8249" levels="1" name="Cancel Critical Hit">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8250" levels="2" name="Summon Tigress">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SUMMON" />
+  </skill>
+  <skill id="8251" levels="1" name="Collection Agathion Release Seal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8252" levels="1" name="Test - Transform Mount1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8253" levels="1" name="Test - Transform Mount2">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8254" levels="1" name="Release Seal on Agathion - Monkey">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8255" levels="1" name="Release Seal on Agathion - Griffin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8256" levels="1" name="Release Seal on Agathion - Joy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8257" levels="1" name="Release Seal on Agathion - Anger">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8258" levels="1" name="Release Seal on Agathion - Sorrow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8259" levels="1" name="Release Seal on Agathion - Girl Teddy Boy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8260" levels="1" name="Release Seal on Agathion - Girl Teddy Girl">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8261" levels="1" name="Steam Beatle Mount">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8262" levels="1" name="Tawny Maned Lion Mount">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8263" levels="1" name="Transform Snow King">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8264" levels="1" name="Transform Scarecrow Jack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8265" levels="1" name="Transform Tin Golem">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8266" levels="1" name="Gludio Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8267" levels="1" name="Dion Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8268" levels="1" name="Giran Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8269" levels="1" name="Oren Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8270" levels="1" name="Aden Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8271" levels="1" name="Innadril Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8272" levels="1" name="Goddard Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8273" levels="1" name="Rune Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8274" levels="1" name="Schuttgart Talisman">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8275" levels="1" name="Release Seal on Agathion - pvp">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8276" levels="1" name="Shield Branding">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="8277" levels="1" name="Transform Native">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8278" levels="1" name="Transform Guard of Dawn">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8279" levels="1" name="Blessing of Fire">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8280" levels="1" name="Blessing of Earth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8281" levels="1" name="Inventory Slot Add">
+    <set name="operateType" val="PASSIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8282" levels="1" name="Cloak Slot Add">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8283" levels="1" name="Vesper Heavy Armor Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8284" levels="1" name="Vesper Noble Heavy Armor Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8285" levels="1" name="Vesper Light Armor Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8286" levels="1" name="Vesper Noble Light Armor Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8287" levels="1" name="Vesper Robe Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8288" levels="1" name="Vesper Noble Robe Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8289" levels="3" name="Special Ability Focus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8290" levels="12" name="Add Belt Inventory Slot">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8291" levels="12" name="Add Belt Weight Gauge">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8292" levels="1" name="Olympiad Warrior's Ring">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8293" levels="1" name="Olympiad Warrior's Earring">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8294" levels="1" name="Olympiad Warrior's Necklace">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8295" levels="1" name="Special Ability Focus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8296" levels="1" name="Special Ability Focus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8297" levels="1" name="Special Ability Haste">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8298" levels="1" name="Special Ability Focus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8299" levels="1" name="Arcana Sigil">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8300" levels="1" name="Dynasty Sigil">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8301" levels="1" name="Vesper Heavy Armor Set for Adults">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8302" levels="1" name="Vesper Noble Heavy Armor Set for Adults">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8303" levels="1" name="Vesper Light Armor Set for Adults">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8304" levels="1" name="Vesper Noble Light Armor Set for Adults">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8305" levels="1" name="Vesper Robe Set for Adults">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8306" levels="1" name="Vesper Noble Robe Set for Adults">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8307" levels="1" name="Boing Hammer's Effect of Doubt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8308" levels="1" name="Red Talisman - Guardian of the Territory">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8309" levels="1" name="Red Talisman - Territory Convoy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8310" levels="1" name="Arcana Sigil">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8311" levels="1" name="Dynasty Sigil">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8312" levels="2" name="Special Ability Cheap Shot">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8314" levels="1" name="Release Seal on Agathion - Saerom">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8315" levels="1" name="Santa Claus' Blessed Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8316" levels="1" name="Santa Claus' Blessed Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8317" levels="1" name="Santa Claus' Blessed Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8318" levels="1" name="Santa Claus' Blessed Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8319" levels="1" name="Santa Claus' Blessed Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8320" levels="1" name="Santa Claus' Blessed Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8321" levels="1" name="Santa Claus' Blessed Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8322" levels="1" name="Santa Claus' Blessed Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8323" levels="1" name="Notifier">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8324" levels="1" name="Warrior's Shirt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8325" levels="1" name="Wild Rose Pig Candy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8326" levels="1" name="Wild Rose Pig Candy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8327" levels="1" name="Release Seal on Agathion - Juju">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8328" levels="1" name="Release Seal on Agathion - Oink oink">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8329" levels="1" name="Summon Friend">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8330" levels="1" name="Release Seal on Agathion - Dawn">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8331" levels="1" name="Blue Talisman - Buff Cancel">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8332" levels="1" name="Blue Talisman - Buff Steal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8333" levels="1" name="Red Talisman - Territory Guard">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8334" levels="1" name="Blue Talisman - Lord's Divine Protection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8335" levels="1" name="White Talisman - Attribute Resistance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8336" levels="1" name="Guardian's Strider Mount">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8337" levels="1" name="Weight Up">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8338" levels="4" name="Low-grade Magic Rune Clip Iron Belt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8339" levels="4" name="Low-grade Magic Rune Clip Mithril Belt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8340" levels="4" name="Low-grade Magic Rune Clip Iron Belt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8341" levels="4" name="Low-grade Magic Rune Clip Mithril Belt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8342" levels="4" name="Low-grade Magic Ornament Iron Belt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8343" levels="4" name="Low-grade Magic Ornament Iron Belt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8344" levels="4" name="Low-grade Magic Ornament Iron Belt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8345" levels="4" name="Low-grade Magic Ornament Mithril Belt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8346" levels="4" name="Low-grade Magic Ornament Mithril Belt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8347" levels="4" name="Low-grade Magic Ornament Mithril Belt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8348" levels="2" name="Royal Guard Earring - Gludio">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8349" levels="2" name="Royal Guard Earring - Dion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8350" levels="2" name="Royal Guard Earring - Giran">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8351" levels="2" name="Royal Guard Earring - Oren">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8352" levels="2" name="Royal Guard Earring - Aden">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8353" levels="2" name="Royal Guard Earring - Innadril">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8354" levels="2" name="Royal Guard Earring - Goddard">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8355" levels="2" name="Royal Guard Earring - Rune">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8356" levels="2" name="Royal Guard Earring - Schuttgart">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8357" levels="1" name="Einhasad's Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8358" levels="1" name="Remove the seal of an Agathion - Towbat">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8359" levels="1" name="Notifier">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8360" levels="1" name="Energy Maintenance Effect">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8361" levels="1" name="Sixth Anniversary Party Earring">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8362" levels="1" name="Beast Training - Release">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8363" levels="1" name="Beast Training - Accompany">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8364" levels="1" name="Beast Training - Use Special Ability">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8365" levels="1" name="Dynasty Tunic">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8366" levels="1" name="Dynasty Jewel Leather Armor">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8367" levels="1" name="Dynasty Jewel Leather Mail">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8368" levels="1" name="Dynasty Jewel Leather Mail">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8369" levels="1" name="Halloween Pumpkin Card">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8370" levels="1" name="Rotten Pumpkin Card">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8371" levels="1" name="Transform Halloween Pumpkin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8372" levels="1" name="Super Strong Giant's Mask">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8373" levels="1" name="Silent Scream's Mask">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8374" levels="1" name="Wrathful Spirit's Mask">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8375" levels="1" name="Unrotten Corpse's Mask">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8376" levels="1" name="Planet X235 Alien Mask's Effect">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8377" levels="1" name="Golden Jack O'Lantern Mask's Effect">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8378" levels="1" name="Beast Training - Release All">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8379" levels="2" name="Royal Guard Ring - Gludio">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8380" levels="2" name="Royal Guard Ring - Dion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8381" levels="2" name="Royal Guard Ring - Giran">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8382" levels="2" name="Royal Guard Ring - Oren">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8383" levels="2" name="Royal Guard Ring - Aden">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8384" levels="2" name="Royal Guard Ring - Innadril">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8385" levels="2" name="Royal Guard Ring - Goddard">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8386" levels="2" name="Royal Guard Ring - Rune">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8387" levels="2" name="Royal Guard Ring - Schuttgart">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8388" levels="2" name="Royal Guard Necklace - Gludio">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8389" levels="2" name="Royal Guard Necklace - Dion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8390" levels="2" name="Royal Guard Necklace - Giran">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8391" levels="2" name="Royal Guard Necklace - Oren">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8392" levels="2" name="Royal Guard Necklace - Aden">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8393" levels="2" name="Royal Guard Necklace - Innadril">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8394" levels="2" name="Royal Guard Necklace - Goddard">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8395" levels="2" name="Royal Guard Necklace - Rune">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8396" levels="2" name="Royal Guard Necklace - Schuttgart">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8397" levels="1" name="Moirai Armor Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8398" levels="1" name="Moirai Leather Armor Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8399" levels="1" name="Moirai Robe Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8400" levels="1" name="Vorpal Heavy Armor Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8401" levels="1" name="Vorpal Leather Armor Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8402" levels="1" name="Vorpal Robe Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8403" levels="1" name="Elegia Armor Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8404" levels="1" name="Elegia Leather Armor Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8405" levels="1" name="Elegia Robe Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8406" levels="1" name="Moirai Armor Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8407" levels="1" name="Moirai Leather Armor Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8408" levels="1" name="Moirai Robe Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8409" levels="1" name="Vorpal Heavy Armor Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8410" levels="1" name="Vorpal Leather Armor Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8411" levels="1" name="Vorpal Robe Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8412" levels="1" name="Elegia Armor Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8413" levels="1" name="Elegia Leather Armor Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8414" levels="1" name="Elegia Robe Set - PvP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8415" levels="5" name="Ring Ability - Drop Rate Up">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8416" levels="5" name="Earring Ability - Drop Rate Up">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8417" levels="5" name="Necklace Ability - Drop Rate Up">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8418" levels="1" name="Moirai Helmet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8419" levels="1" name="Moirai Cuirass">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8420" levels="1" name="Moirai Gaiter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8421" levels="1" name="Moirai Gauntlet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8422" levels="1" name="Moirai Boots">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8423" levels="1" name="Moirai Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8424" levels="1" name="Moirai Leather Helmet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8425" levels="1" name="Moirai Leather Hauberk">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8426" levels="1" name="Moirai Leather Legging">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8427" levels="1" name="Moirai Leather Gloves">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8428" levels="1" name="Moirai Leather Boots">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8429" levels="1" name="Moirai Circlet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8430" levels="1" name="Moirai Jacket">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8431" levels="1" name="Moirai Hose">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8432" levels="1" name="Moirai Gloves">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8433" levels="1" name="Moirai Shoes">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8434" levels="1" name="Moirai Sigil">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8435" levels="1" name="Vesper Helmet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8436" levels="1" name="Vesper Cuirass">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8437" levels="1" name="Vesper Gaiter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8438" levels="1" name="Vesper Gauntlet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8439" levels="1" name="Vesper Boots">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8440" levels="1" name="Vesper Verteidiger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8441" levels="1" name="Vesper Leather Helmet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8442" levels="1" name="Vesper Leather Hauberk">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8443" levels="1" name="Vesper Leather Legging">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8444" levels="1" name="Vesper Leather Gloves">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8445" levels="1" name="Vesper Leather Boots">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8446" levels="1" name="Vesper Circlet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8447" levels="1" name="Vesper Jacket">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8448" levels="1" name="Vesper Hose">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8449" levels="1" name="Vesper Gloves">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8450" levels="1" name="Vesper Shoes">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8451" levels="1" name="Vesper Sigil">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8452" levels="1" name="Moirai Earring">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8453" levels="1" name="Moirai Necklace">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8454" levels="1" name="Moirai Ring">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8455" levels="1" name="Vesper Earring">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8456" levels="1" name="Vesper Necklace">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8457" levels="1" name="Vesper Ring">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8458" levels="1" name="Bracelet Weight Gauge Add">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8459" levels="1" name="Necklace of Freya">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8460" levels="1" name="Blessed Necklace of Freya">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8461" levels="1" name="Heavy Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8462" levels="1" name="Light Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8463" levels="1" name="Magic Set">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8464" levels="1" name="Release the Seal on Agathion - Kid Rudolph">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8465" levels="1" name="Notifier">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8466" levels="2" name="Sword of Vampiric Rage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8467" levels="2" name="Two-handed Sword of Regeneration">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8468" levels="2" name="Magic Sword of Mana Regeneration">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8469" levels="2" name="Dagger of Avoidance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8470" levels="2" name="Fist of Haste">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8471" levels="2" name="Polearm of Focus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8472" levels="2" name="Blunt of Focus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8473" levels="2" name="Two-handed Blunt of Death Whisper">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8474" levels="2" name="Blunt of Empower">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8475" levels="2" name="Staff of Arcane Acumen">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8476" levels="2" name="Bow of Boost HP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8477" levels="2" name="Rapier of Vampiric Rage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8478" levels="2" name="Crossbow of Boost HP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8479" levels="2" name="Ancientsword of Regeneration">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8480" levels="2" name="Dual Weapon of Guidance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8481" levels="1" name="Vesper Noble Helmet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8482" levels="1" name="Vesper Noble Gaiter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8483" levels="1" name="Vesper Noble Gauntlet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8484" levels="1" name="Vesper Noble Boots">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8485" levels="1" name="Vesper Noble Leather Helmet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8486" levels="1" name="Vesper Noble Leather Legging">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8487" levels="1" name="Vesper Noble Leather Gloves">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8488" levels="1" name="Vesper Noble Leather Boots">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8489" levels="1" name="Vesper Noble Circlet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8490" levels="1" name="Vesper Noble Hose">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8491" levels="1" name="Vesper Noble Gloves">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8492" levels="1" name="Vesper Noble Shoes">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8493" levels="1" name="Moirai Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8494" levels="1" name="Vesper Verteidiger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8495" levels="1" name="Vorpal Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8496" levels="1" name="Elegia Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8497" levels="1" name="Ice Hair Circlet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8498" levels="1" name="Pink Talisman - STR">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8499" levels="1" name="Pink Talisman - DEX">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8500" levels="1" name="Pink Talisman - CON">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8501" levels="1" name="Pink Talisman - INT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8502" levels="1" name="Pink Talisman - WIT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8503" levels="1" name="Pink Talisman - MEN">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8504" levels="1" name="Pink Talisman - Stun Resist">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8505" levels="1" name="Pink Talisman - Sleep Resist">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8506" levels="1" name="Pink Talisman - Hold Resist">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8507" levels="1" name="Pink Talisman - Paralyze Resist">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8508" levels="1" name="Pink Talisman - All STAT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8509" levels="1" name="High Angel Circlet">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8510" levels="1" name="Summon Friend">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8511" levels="1" name="Blessing of Victory">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8512" levels="1" name="National Representative Warrior's Tenacity">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8513" levels="1" name="National Representative Spell of Blessing">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8514" levels="1" name="National Representative Energy of Victory">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8515" levels="1" name="Release Seal on Agathion - Ball Trapping Gnosian">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8516" levels="1" name="Release Seal on Agathion - Ball Trapping Orodriel">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8517" levels="1" name="Release Seal on Agathion - Penalty Kick">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8518" levels="1" name="Notifier">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8519" levels="1" name="Notifier">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8520" levels="1" name="Notifier">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8521" levels="1" name="Release Seal on Agathion - Antharas">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8522" levels="1" name="Release Seal on Agathion - Nevit's Messenger Kanna">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8523" levels="1" name="Release Seal on Agathion - Guardian of the Dawn Kallesin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8524" levels="1" name="Hero's Holy Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8525" levels="1" name="Hero's Holy Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8526" levels="1" name="Shiny Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8527" levels="1" name="Agathion Summon - Magmeld Fairy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8528" levels="1" name="Release Agathion's Seal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8529" levels="1" name="Ring of Insolence">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8530" levels="1" name="Ring of Insolence">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8531" levels="1" name="Ring of Insolence">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8532" levels="1" name="Ring of Insolence">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8533" levels="1" name="Ring of Insolence">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8534" levels="1" name="Ring of Insolence">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8535" levels="1" name="Ring of Insolence">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8536" levels="1" name="Ring of Insolence">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8537" levels="1" name="T-shirt of Insolence">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8538" levels="1" name="Vengeance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8539" levels="1" name="Spirit of the Phoenix">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8540" levels="1" name="Shield of Faith">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8541" levels="1" name="Seed of Revenge">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8542" levels="1" name="Touch of Eva">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8543" levels="1" name="Pain of Shilen">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8544" levels="1" name="Prophecy of Fire">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8545" levels="1" name="Turn to Stone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8546" levels="1" name="Arcane Wisdom">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="8547" levels="1" name="Song of Champion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8548" levels="1" name="Song of Purification">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8549" levels="1" name="Dance of Berserker">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8550" levels="1" name="Dance of Medusa">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8551" levels="1" name="Chant of Victory">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8552" levels="1" name="Onslaught of Pa'agrio">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8553" levels="1" name="Arcane Power">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="8554" levels="1" name="Lethal Blow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BLOW" />
+  </skill>
+  <skill id="8555" levels="1" name="Throwing Dagger">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8556" levels="1" name="Exciting Adventure">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8557" levels="1" name="Wind Riding">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8558" levels="1" name="Ghost Walking">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8559" levels="1" name="Lethal Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8560" levels="1" name="Flame Hawk">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8561" levels="1" name="Arrow Rain">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8562" levels="1" name="Ghost Piercing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8563" levels="1" name="Death Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8564" levels="1" name="Rush Impact">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8565" levels="1" name="Dread Pool">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8566" levels="1" name="Earthquake">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="AGGREDUCE_CHAR" />
+  </skill>
+  <skill id="8567" levels="1" name="Maximum Force Focus">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="8568" levels="1" name="Maximum Sonic Focus">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="8569" levels="1" name="Sonic Rage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8570" levels="1" name="Raging Force">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8571" levels="1" name="Demolition Impact">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8572" levels="1" name="Armor Crush">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8573" levels="1" name="Soul Rage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8574" levels="1" name="Enuma Elish">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8575" levels="1" name="Soul Vortex">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8576" levels="1" name="Soul Vortex Extinction">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="8577" levels="1" name="Wild Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8578" levels="1" name="Multiple Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="8579" levels="1" name="Fire Vortex">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8580" levels="1" name="Fire Vortex Buster">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="8581" levels="1" name="Meteor">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="8582" levels="1" name="Dark Vortex">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8583" levels="1" name="Day of Doom">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="8584" levels="1" name="Ice Vortex">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8585" levels="1" name="Ice Vortex Crusher">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="8586" levels="1" name="Star Fall">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="8587" levels="1" name="Wind Vortex">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8588" levels="1" name="Wind Vortex Slug">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="8589" levels="1" name="Summon Feline King">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="SUMMON" />
+  </skill>
+  <skill id="8590" levels="1" name="Final Servitor">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8591" levels="1" name="Summon Magnus the Unicorn">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="SUMMON" />
+  </skill>
+  <skill id="8592" levels="1" name="Summon Spectral Lord">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="SUMMON" />
+  </skill>
+  <skill id="8593" levels="1" name="Servitor Barrier">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8594" levels="1" name="Cleanse">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8595" levels="1" name="Prophecy of Water">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8596" levels="1" name="Prophecy of Wind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8597" levels="1" name="Dance of Siren">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8598" levels="1" name="Song of Silence">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8599" levels="1" name="Chain Heal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="8600" levels="1" name="Summon Royal Aegis">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8601" levels="1" name="Summon Battle Scar">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8602" levels="1" name="Summon Blood Tail">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8603" levels="1" name="Summon Tempest Arrow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8604" levels="1" name="Summon Blue Phantom">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8605" levels="1" name="Summon White Wing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8606" levels="1" name="Summon Swift Melody">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8607" levels="1" name="Summon Silver Saint">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8608" levels="1" name="Talisman (R-grade) - P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8609" levels="1" name="Talisman (R90-grade) - P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8610" levels="1" name="Talisman (R95-grade) - P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8611" levels="1" name="Talisman (R99-grade) - P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8612" levels="1" name="Talisman (R-grade) - P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8613" levels="1" name="Talisman (R90-grade) - P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8614" levels="1" name="Talisman (R95-grade) - P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8615" levels="1" name="Talisman (R99-grade) - P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8616" levels="1" name="Talisman (R-grade) - M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8617" levels="1" name="Talisman (R90-grade) - M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8618" levels="1" name="Talisman (R95-grade) - M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8619" levels="1" name="Talisman (R99-grade) - M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8620" levels="1" name="Talisman (R-grade) - M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8621" levels="1" name="Talisman (R90-grade) - M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8622" levels="1" name="Talisman (R95-grade) - M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8623" levels="1" name="Talisman (R99-grade) - M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8624" levels="1" name="Talisman (R-grade) - Max HP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8625" levels="1" name="Talisman (R90-grade) - Max HP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8626" levels="1" name="Talisman (R95-grade) - Max HP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8627" levels="1" name="Talisman (R99-grade) - Max HP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8628" levels="1" name="Talisman (R-grade) - Max MP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8629" levels="1" name="Talisman (R90-grade) - Max MP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8630" levels="1" name="Talisman (R95-grade) - Max MP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8631" levels="1" name="Talisman (R99-grade) - Max MP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8632" levels="1" name="Talisman (R-grade) - Max CP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8633" levels="1" name="Talisman (R90-grade) - Max CP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8634" levels="1" name="Talisman (R95-grade) - Max CP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8635" levels="1" name="Talisman (R99-grade) - Max CP">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8636" levels="1" name="Talisman (R-grade) - Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8637" levels="1" name="Talisman (R90-grade) - Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8638" levels="1" name="Talisman (R95-grade) - Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8639" levels="1" name="Talisman (R99-grade) - Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8640" levels="1" name="Talisman (R-grade) - Critical P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8641" levels="1" name="Talisman (R90-grade) - Critical P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8642" levels="1" name="Talisman (R95-grade) - Critical P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8643" levels="1" name="Talisman (R99-grade) - Critical P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8644" levels="1" name="Talisman (R-grade) - M. Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8645" levels="1" name="Talisman (R-grade) - P. Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8646" levels="1" name="Talisman (R-grade) - M. Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8647" levels="1" name="Talisman (R-grade) - P. Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8648" levels="1" name="Talisman (R-grade) - M. Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8649" levels="1" name="Talisman (R-grade) - P. Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8650" levels="1" name="Talisman (R-grade) - P. Critical Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8651" levels="1" name="Talisman (R-grade) - P. Atk. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8652" levels="1" name="Talisman (R90-grade) - P. Atk. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8653" levels="1" name="Talisman (R95-grade) - P. Atk. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8654" levels="1" name="Talisman (R99-grade) - P. Atk. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8655" levels="1" name="Talisman (R-grade) - P. Def. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8656" levels="1" name="Talisman (R90-grade) - P. Def. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8657" levels="1" name="Talisman (R95-grade) - P. Def. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8658" levels="1" name="Talisman (R99-grade) - P. Def. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8659" levels="1" name="Talisman (R-grade) - M. Atk. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8660" levels="1" name="Talisman (R90-grade) - M. Atk. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8661" levels="1" name="Talisman (R95-grade) - M. Atk. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8662" levels="1" name="Talisman (R99-grade) - M. Atk. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8663" levels="1" name="Talisman (R-grade) - M. Def. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8664" levels="1" name="Talisman (R90-grade) - M. Def. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8665" levels="1" name="Talisman (R95-grade) - M. Def. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8666" levels="1" name="Talisman (R99-grade) - M. Def. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8667" levels="1" name="Talisman (R-grade) - Max HP (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8668" levels="1" name="Talisman (R90-grade) - Max HP (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8669" levels="1" name="Talisman (R95-grade) - Max HP (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8670" levels="1" name="Talisman (R99-grade) - Max HP (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8671" levels="1" name="Talisman (R-grade) - Max MP (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8672" levels="1" name="Talisman (R90-grade) - Max MP (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8673" levels="1" name="Talisman (R95-grade) - Max MP (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8674" levels="1" name="Talisman (R99-grade) - Max MP (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8675" levels="1" name="Talisman (R-grade) - Max CP (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8676" levels="1" name="Talisman (R90-grade) - Max CP (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8677" levels="1" name="Talisman (R95-grade) - Max CP (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8678" levels="1" name="Talisman (R99-grade) - Max CP (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8679" levels="1" name="Talisman (R-grade) - Critical Damage (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8680" levels="1" name="Talisman (R90-grade) - Critical Damage (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8681" levels="1" name="Talisman (R95-grade) - Critical Damage (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8682" levels="1" name="Talisman (R99-grade) - Critical Damage (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8683" levels="1" name="Talisman (R-grade) - Critical P. Def. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8684" levels="1" name="Talisman (R90-grade) - Critical P. Def. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8685" levels="1" name="Talisman (R95-grade) - Critical P. Def. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8686" levels="1" name="Talisman (R99-grade) - Critical P. Def. (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8687" levels="1" name="Talisman (R-grade) - M. Critical Rate (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8688" levels="1" name="Talisman (R-grade) - P. Accuracy (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8689" levels="1" name="Talisman (R-grade) - M. Accuracy (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8690" levels="1" name="Talisman (R-grade) - P. Evasion (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8691" levels="1" name="Talisman (R-grade) - M. Evasion (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8692" levels="1" name="Talisman (R-grade) - P. Critical Rate (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8693" levels="1" name="Talisman (R-grade) - P. Critical Evasion (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8694" levels="1" name="Special Talisman (R-grade) - Shield Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8695" levels="1" name="Special Talisman (R90-grade) - Shield Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8696" levels="1" name="Special Talisman (R95-grade) - Shield Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8697" levels="1" name="Special Talisman (R99-grade) - Shield Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8698" levels="1" name="Special Talisman (R-grade) - Shield Defense (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8699" levels="1" name="Special Talisman (R90-grade) - Shield Defense (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8700" levels="1" name="Special Talisman (R95-grade) - Shield Defense (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8701" levels="1" name="Special Talisman (R99-grade) - Shield Defense (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8702" levels="1" name="Special Talisman (R-grade) - Momentum">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8703" levels="1" name="Special Talisman (R90-grade) - Momentum">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8704" levels="1" name="Special Talisman (R95-grade) - Momentum">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8705" levels="1" name="Special Talisman (R99-grade) - Momentum">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8706" levels="1" name="Special Talisman (R-grade) - Momentum (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8707" levels="1" name="Special Talisman (R90-grade) - Momentum (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8708" levels="1" name="Special Talisman (R95-grade) - Momentum (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8709" levels="1" name="Special Talisman (R99-grade) - Momentum (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8710" levels="1" name="Special Talisman (R-grade) - Mana Drain (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8711" levels="1" name="Special Talisman (R90-grade) - Mana Drain (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8712" levels="1" name="Special Talisman (R95-grade) - Mana Drain (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8713" levels="1" name="Special Talisman (R99-grade) - Mana Drain (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8714" levels="1" name="Steal Mana">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8715" levels="1" name="Steal Mana">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8716" levels="1" name="Steal Mana">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8717" levels="1" name="Steal Mana">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8718" levels="1" name="Special Talisman (R-grade) - Blood Siphon (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8719" levels="1" name="Special Talisman (R90-grade) - Blood Siphon (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8720" levels="1" name="Special Talisman (R95-grade) - Blood Siphon (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8721" levels="1" name="Special Talisman (R99-grade) - Blood Siphon (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8722" levels="1" name="Special Talisman (R-grade) - Increase Range">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8723" levels="1" name="Special Talisman (R90-grade) - Increase Range">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8724" levels="1" name="Special Talisman (R95-grade) - Increase Range">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8725" levels="1" name="Special Talisman (R99-grade) - Increase Range">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8726" levels="1" name="Special Talisman (R-grade) - Increase Range (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8727" levels="1" name="Special Talisman (R90-grade) - Increase Range (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8728" levels="1" name="Special Talisman (R95-grade) - Increase Range (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8729" levels="1" name="Special Talisman (R99-grade) - Increase Range (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8730" levels="1" name="Special Talisman (R-grade) - Increase Servitor Enhancement (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8731" levels="1" name="Special Talisman (R90-grade) - Increase Servitor Enhancement (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8732" levels="1" name="Special Talisman (R95-grade) - Increase Servitor Enhancement (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8733" levels="1" name="Special Talisman (R99-grade) - Increase Servitor Enhancement (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8734" levels="1" name="Special Talisman (R99-grade) - Increase Servitor Enhancement (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="8735" levels="1" name="Special Talisman (R-grade) - Increase Magic Cancel">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8736" levels="1" name="Special Talisman (R-grade) - Increase Magic Cancel (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8737" levels="1" name="Special Talisman (R-grade) - MP Recovery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8738" levels="1" name="Special Talisman (R90-grade) - MP Recovery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8739" levels="1" name="Special Talisman (R95-grade) - MP Recovery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8740" levels="1" name="Special Talisman (R99-grade) - MP Recovery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8741" levels="1" name="Special Talisman (R-grade) - Decrease MP Consumption">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8742" levels="1" name="Special Talisman (R-grade) - Enhance Heal">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8743" levels="1" name="Special Talisman (R90-grade) - Enhance Heal">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8744" levels="1" name="Special Talisman (R95-grade) - Enhance Heal">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8745" levels="1" name="Special Talisman (R99-grade) - Enhance Heal">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8746" levels="1" name="Special Talisman (R-grade) - Increase Heal Enhancement (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8747" levels="1" name="Special Talisman (R90-grade) - Increase Heal Enhancement (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8748" levels="1" name="Special Talisman (R95-grade) - Increase Heal Enhancement (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8749" levels="1" name="Special Talisman (R99-grade) - Increase Heal Enhancement (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8750" levels="1" name="Special Ability: Infinity Cutter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8751" levels="1" name="Decrease P. Def.">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8752" levels="1" name="Special Ability: Infinity Avenger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8753" levels="1" name="Discord">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="8754" levels="1" name="Special Ability: Infinity Slasher">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8755" levels="1" name="Special Ability: Infinity Crusher">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8756" levels="1" name="Stun">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8757" levels="1" name="Special Ability: Infinity Dual">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8758" levels="1" name="Restrain Physical Skills">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8759" levels="1" name="Special Ability: Infinity Fighter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8760" levels="1" name="Stun">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8761" levels="1" name="Special Ability: Infinity Dagger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8762" levels="1" name="Restrain Magic Skills">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8763" levels="1" name="Special Ability: Infinity Stormer">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8764" levels="1" name="Dispel">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="8765" levels="1" name="Special Ability: Infinity Thrower">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8766" levels="1" name="Decrease Speed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8767" levels="1" name="Special Ability: Infinity Retributer">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8768" levels="1" name="Full Recovery">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="8769" levels="1" name="Special Ability: Infinity Magic">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8770" levels="1" name="Full Recovery">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="8771" levels="1" name="Special Ability: Infinity Rapier">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8772" levels="1" name="Special Ability: Infinity Sword">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8773" levels="1" name="Special Ability: Infinity Shooter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8774" levels="1" name="Special Talisman (R-grade) - Cancel Debuff (Active)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8775" levels="1" name="Immortal Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8776" levels="1" name="Twilight Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8777" levels="1" name="Seraph Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8778" levels="1" name="Eternal Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8779" levels="1" name="Istina's Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8780" levels="1" name="Octavis' Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8781" levels="1" name="Equip Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8782" levels="1" name="Equip Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8783" levels="1" name="Equip Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8784" levels="1" name="Equip Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8785" levels="1" name="Equip Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8786" levels="1" name="Top-grade Royal Guard Earring - Gludio">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8787" levels="1" name="Top-grade Royal Guard Earring - Dion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8788" levels="1" name="Top-grade Royal Guard Earring - Giran">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8789" levels="1" name="Top-grade Royal Guard Earring - Oren">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8790" levels="1" name="Top-grade Royal Guard Earring - Aden">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8791" levels="1" name="Top-grade Royal Guard Earring - Innadril">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8792" levels="1" name="Top-grade Royal Guard Earring - Goddard">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8793" levels="1" name="Top-grade Royal Guard Earring - Rune">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8794" levels="1" name="Top-grade Royal Guard Earring - Schuttgart">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8795" levels="1" name="Top-grade Royal Guard Ring - Gludio">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8796" levels="1" name="Top-grade Royal Guard Ring - Dion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8797" levels="1" name="Top-grade Royal Guard Ring - Giran">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8798" levels="1" name="Top-grade Royal Guard Ring - Oren">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8799" levels="1" name="Top-grade Royal Guard Ring - Aden">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8800" levels="1" name="Top-grade Royal Guard Ring - Innadril">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8801" levels="1" name="Top-grade Royal Guard Ring - Goddard">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8802" levels="1" name="Top-grade Royal Guard Ring - Rune">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8803" levels="1" name="Top-grade Royal Guard Ring - Schuttgart">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8804" levels="1" name="Enhanced Tauti's Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8805" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8806" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8807" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8808" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8809" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8810" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8811" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8812" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8813" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8814" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8815" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8816" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8817" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8818" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8819" levels="1" name="PvP Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8820" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8821" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8822" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8823" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8824" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8825" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8826" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8827" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8828" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8829" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8830" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8831" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8832" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8833" levels="1" name="PvP Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8834" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8835" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8836" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8837" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8838" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8839" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8840" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8841" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8842" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8843" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8844" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8845" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8846" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8847" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8848" levels="1" name="PvE Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8849" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8850" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8851" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8852" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8853" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8854" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8855" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8856" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8857" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8858" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8859" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8860" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8861" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8862" levels="1" name="PvE Damage Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8863" levels="1" name="Tauti's Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8864" levels="7" name="Talisman - Infinity">
+    <set name="operateType" val="PASSIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="8870" levels="1" name="Tauti's Ring">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8871" levels="1" name="Glorious T-shirt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8872" levels="1" name="Refined Romantic Chapeau containing the GM's Sincerity">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8873" levels="1" name="Refined Romantic Chapeau containing the GM's Sincerity">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8874" levels="1" name="Refined Romantic Chapeau containing the GM's Sincerity">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8875" levels="1" name="Refined Romantic Chapeau containing the GM's Blessing">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8876" levels="1" name="Refined Romantic Chapeau containing the GM's Blessing">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8877" levels="1" name="Refined Romantic Chapeau containing the GM's Blessing">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8878" levels="2" name="Tauti's One-handed Axe">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8879" levels="2" name="Tauti's Two-handed Axe">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8880" levels="2" name="Tauti's Dual Axe">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8881" levels="1" name="Top-grade Resistance Earring - Stun">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8882" levels="1" name="Top-grade Resistance Earring - Hold">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8883" levels="1" name="Top-grade Resistance Earring - Bleed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8884" levels="1" name="Top-grade Resistance Earring - Paralyze">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8885" levels="1" name="Top-grade Resistance Earring - Mental Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8886" levels="1" name="Top-grade Resistance Earring - Sleep">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8887" levels="1" name="Top-grade Resistance Earring - Poison">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8888" levels="1" name="Top-grade Resistance Earring - Knock Back/Knock Down">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8889" levels="1" name="Top-grade Resistance Earring - Aerial Yoke">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8890" levels="1" name="Dignity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="8891" levels="1" name="Worship">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8892" levels="1" name="Bleed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8893" levels="1" name="Antharas' Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8894" levels="1" name="Paralyzing Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8895" levels="1" name="Antharas Lash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8896" levels="1" name="Valakas' Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8897" levels="1" name="Valakas' Bite">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8898" levels="1" name="Lindvior's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8899" levels="1" name="Lindvior's Wingbeat">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="8900" levels="1" name="Dragon Fighter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8901" levels="1" name="Dragon Knight">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8902" levels="1" name="Dragon Mage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8903" levels="1" name="Dragon Wizard">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="8904" levels="1" name="Summon Eviscerator Fox">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="8905" levels="1" name="Summon Sayha's Seer Fox">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="8906" levels="1" name="Riding the Hell Hound">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="AGGREDUCE_CHAR" />
+  </skill>
+  <skill id="8907" levels="1" name="Riding the Pegasus">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="AGGREDUCE_CHAR" />
+  </skill>
+  <skill id="8908" levels="1" name="Riding the Wing Hound">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="AGGREDUCE_CHAR" />
+  </skill>
+  <skill id="8909" levels="1" name="Riding the War Horse">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="AGGREDUCE_CHAR" />
+  </skill>
+  <skill id="8910" levels="1" name="Riding the Griffin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="AGGREDUCE_CHAR" />
+  </skill>
+</list>

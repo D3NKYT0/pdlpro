@@ -9,7 +9,7 @@ const publicDir = join(frontendDir, 'public')
 const iconsDir = join(publicDir, 'skill-icons')
 const assetsDir = join(frontendDir, 'assets')
 const archive = join(assetsDir, 'skill-icons.tar.gz')
-const MIN_SKILL_ICONS = 2000
+const MIN_SKILL_ICONS = 10300
 
 if (!existsSync(iconsDir)) {
   console.error('A pasta public/skill-icons não existe. Importe os ícones primeiro.')

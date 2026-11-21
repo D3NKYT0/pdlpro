@@ -1,0 +1,1847 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="21000" levels="1" name="Release Seal on Agathion - Majo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21001" levels="1" name="Release Seal on Agathion - Gold Majo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21002" levels="1" name="Release Seal on Agathion - Black Majo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21003" levels="1" name="Release Seal on Agathion - Plaipitak">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21004" levels="1" name="Wind Walk">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21005" levels="1" name="Agility">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21006" levels="1" name="Large Firework Effect">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21007" levels="1" name="Ability of Doubt">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21008" levels="1" name="Release Seal on Agathion - Baby Panda">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21009" levels="1" name="Release Seal on Agathion - Bamboo Panda">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21010" levels="1" name="Release Seal on Agathion - Sexy Panda">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21011" levels="1" name="Energy Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21012" levels="1" name="Energy Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21013" levels="1" name="Energy Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21014" levels="1" name="Scissors">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21015" levels="1" name="Rock">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21016" levels="1" name="Paper">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21017" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21018" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21019" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21020" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21021" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21022" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21023" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21024" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21025" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21026" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21027" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21028" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21029" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21030" levels="1" name="Holiday Dream Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21031" levels="1" name="Agathion Seal Release - Charming Cupid">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21032" levels="1" name="Agathion Seal Release - Naughty Cupid">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21033" levels="1" name="Release Seal on Agathion - White Maneki Neko">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21034" levels="1" name="Release Seal on Agathion - Black Maneki Neko">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21035" levels="1" name="Release Seal on Agathion - Brown Maneki Neko">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21036" levels="1" name="Release Seal on Agathion - One-eyed Bat Drove">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21037" levels="1" name="Release Seal on Agathion - Pegasus">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21038" levels="1" name="Release Seal on Agathion - Yellow-robed Tojigong">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21039" levels="1" name="Release Seal on Agathion - Blue-robed Tojigong">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21040" levels="1" name="Release Seal on Agathion - Green-robed Tojigong">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21041" levels="1" name="Release Seal on Agathion - Bugbear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21042" levels="1" name="Baguette's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21043" levels="1" name="Agathion Seal Cancel - Red Sumo Wrestler">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21044" levels="1" name="Agathion Seal Cancel - Blue Sumo Wrestler Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21045" levels="1" name="Agathion Seal Cancel - Great Sumo Match">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21046" levels="1" name="Agathion Seal Cancel - Button-Eyed Bear Doll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21047" levels="1" name="Agathion Seal Cancel - God of Fortune">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21048" levels="1" name="Agathion Seal Cancel - Dryad">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21049" levels="1" name="Agathion Seal Cancel - Wonboso">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21050" levels="1" name="Agathion Seal Cancel - Daewoonso">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21051" levels="1" name="Steam Beatle Mount">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21052" levels="1" name="Bless the Body">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21053" levels="1" name="Bless the Soul">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21054" levels="1" name="Blessed Resurrection Ability">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="RESURRECT" />
+  </skill>
+  <skill id="21055" levels="1" name="Wind Walk">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21056" levels="1" name="Agility">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21057" levels="1" name="Reflect">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21058" levels="1" name="Mana Regeneration">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21059" levels="1" name="Greater Heal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21060" levels="1" name="Death Whisper">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21061" levels="1" name="Agility">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21062" levels="1" name="Wild Magic">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21063" levels="1" name="Wind Walk">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21064" levels="1" name="Mana Regeneration">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21065" levels="1" name="Reflect">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21066" levels="1" name="Energy Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21067" levels="1" name="Blessed Escape Ability">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21068" levels="1" name="Resist Unholy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21069" levels="1" name="Wind Walk">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21070" levels="1" name="Death Whisper">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21071" levels="1" name="Agility">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21072" levels="1" name="Wild Magic">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21073" levels="1" name="Mana Regeneration">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21074" levels="1" name="Reflect">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21075" levels="1" name="Greater Heal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21076" levels="1" name="Resist Unholy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21077" levels="1" name="Wind Walk">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21078" levels="1" name="Death Whisper">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21079" levels="1" name="Agility">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21080" levels="1" name="Wild Magic">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21081" levels="1" name="Mana Regeneration">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21082" levels="1" name="Reflect">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21083" levels="1" name="Greater Heal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21084" levels="1" name="Energy Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21085" levels="1" name="Agathion Seal Cancel - Pomona">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21086" levels="1" name="Blessing of Love">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21087" levels="1" name="Berserker Spirit">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21088" levels="1" name="Summon Friend">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21089" levels="1" name="Dance of Shadows">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21090" levels="1" name="Soul of Phoenix">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21091" levels="1" name="Agathion Seal Cancel - Weaver">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21092" levels="1" name="Theme - Love">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21093" levels="1" name="Theme - Hero">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21094" levels="1" name="Theme - Theme Park">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21095" levels="1" name="Blessed Resurrection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="RESURRECT" />
+  </skill>
+  <skill id="21096" levels="1" name="Ability of Cool Watermelon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21097" levels="1" name="Summon Friend">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21098" levels="1" name="Great Adventurer's Soul Power : Endless">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21099" levels="1" name="Great Warrior's Soul Power: Strength">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21100" levels="1" name="Great Wizard's Soul Power: Brilliance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21101" levels="1" name="Blessed Escape">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21102" levels="1" name="Blessed Resurrection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="RESURRECT" />
+  </skill>
+  <skill id="21103" levels="1" name="Great Adventurer's Soul Power : Endless">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21104" levels="1" name="Instinct of Destruction">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21105" levels="1" name="Agathion Seal Cancel - Chon-chon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21106" levels="1" name="Agathion Seal Cancel - Tang-tang">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21107" levels="1" name="Agathion Seal Cancel - Dancing Lucky Kid">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21108" levels="1" name="Agathion Seal Cancel - Monkey King">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21109" levels="1" name="Agathion Seal Cancel - Utanka">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21110" levels="1" name="Agathion Seal Cancel - Bonus B">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21111" levels="1" name="Great Adventurer's Soul Power: Resilience">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21112" levels="1" name="Great Warrior's Soul Power: Strength">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21113" levels="1" name="Great Wizard's Soul Power: Acuity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21114" levels="1" name="Great Adventurer's Soul Power: Resilience">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21115" levels="1" name="Great Warrior's Soul Power: Strength">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21116" levels="1" name="Great Wizard's Soul Power: Acuity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21117" levels="1" name="Great Adventurer's Soul Power : Immortality">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21118" levels="1" name="Great Warrior's Soul Power: Destruction">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21119" levels="1" name="Great Wizard's Soul Power: Brilliance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21120" levels="1" name="Jack O'Lantern Card">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21121" levels="1" name="Rotten Jack O'Lantern Card">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21122" levels="1" name="Blessing of Skooldy : Protection of Darkness">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21123" levels="1" name="Blessing of Skooldy : Protection of Darkness">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21124" levels="1" name="Blessing of Skooldy : Protection of Darkness">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21125" levels="1" name="Blessing of Skooldy : Protection of Darkness">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21126" levels="1" name="Blessing of Skooldy : Protection of Darkness">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21127" levels="1" name="Blessing of Halloween">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21128" levels="1" name="Blessing of Halloween">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21129" levels="1" name="Blessing of Halloween">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21130" levels="1" name="Blessing of Halloween">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21131" levels="1" name="Blessing of Halloween">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21132" levels="1" name="Ability of Shadow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21133" levels="1" name="Agathion Seal Cancel - Zombie">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21134" levels="1" name="Agathion Seal Cancel - Baekyi Hwamae">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21135" levels="1" name="Agathion Seal Cancel - Kwanwoo Hwamae">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21136" levels="1" name="Authority of Golden Jack O'Lantern Mask">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21137" levels="1" name="Blessing of Halloween">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21138" levels="1" name="Blessing of Halloween">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21139" levels="1" name="Blessing of Halloween">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21140" levels="1" name="Blessing of Halloween">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21141" levels="1" name="Blessing of Halloween">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21142" levels="1" name="Agathion Seal Cancel - Gwangong">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21143" levels="1" name="Agathion Seal Cancel - Gwanseum Nyang Nyang">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21144" levels="1" name="Agathion Seal Cancel - Blue Opera">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21145" levels="1" name="Agathion Seal Cancel - Blue Opera">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21146" levels="1" name="Agathion Seal Cancel - Red Opera">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21147" levels="1" name="Agathion Seal Cancel - Opera">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21148" levels="1" name="Agathion Seal Cancel - Miss Chipao">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21149" levels="1" name="Agathion Seal Cancel - Nepal Snow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21150" levels="1" name="Agathion Seal Cancel - Round Ball Snow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21151" levels="1" name="Agathion Seal Cancel - Ladder Snow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21152" levels="1" name="Continuous Fireworks">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21153" levels="1" name="Blessed Body">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21154" levels="1" name="Blessed Soul">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21155" levels="1" name="Scent of Flavorful Cheese">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21156" levels="1" name="Scent of Sweet Cheese">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21157" levels="1" name="Agathion Seal Cancel - Iken">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21158" levels="1" name="Agathion Seal Cancel - Lana">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21159" levels="1" name="Agathion Seal Cancel - Gnocian">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21160" levels="1" name="Agathion Seal Cancel - Orodriel">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21161" levels="1" name="Agathion Seal Cancel - Lakinos">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21162" levels="1" name="Agathion Seal Cancel - Mortia">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21163" levels="1" name="Agathion Seal Cancel - Hayance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21164" levels="1" name="Agathion Seal Cancel - Meruril">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21165" levels="1" name="Agathion Seal Cancel - Taman ze Lapatui">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21166" levels="1" name="Agathion Seal Cancel - Kaurin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21167" levels="1" name="Agathion Seal Cancel - Ahertbein">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21168" levels="1" name="Agathion Seal Cancel - Naonin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21169" levels="1" name="Transform Kadomas">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21170" levels="1" name="Blessed Soul">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21171" levels="1" name="Riding Jet Bike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21172" levels="1" name="Enhanced Authority - CON+1 STR+1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="ENERGY_SPEND" />
+  </skill>
+  <skill id="21173" levels="1" name="Enhanced Authority - WIT+1 INT+1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="ENERGY_SPEND" />
+  </skill>
+  <skill id="21174" levels="1" name="Enhanced Authority - WIT+1 MEN+1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="ENERGY_SPEND" />
+  </skill>
+  <skill id="21175" levels="1" name="Enhanced Authority - CON+1 DEX+1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="ENERGY_SPEND" />
+  </skill>
+  <skill id="21176" levels="1" name="Divine Protection - Divinity">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21177" levels="1" name="Divine Protection - Water">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21178" levels="1" name="Divine Protection - Fire">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21179" levels="1" name="Divine Protection - Wind">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21180" levels="1" name="Divine Protection - Earth">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21181" levels="1" name="Divine Protection - Darkness">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21182" levels="1" name="Blessing of Resistance - Hold">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21183" levels="1" name="Blessing of Resistance - Paralysis">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21184" levels="1" name="Blessing of Resistance - Sleep">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21185" levels="1" name="Blessing of Resistance - Movement Speed Decrease">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21186" levels="1" name="Blessing of Resistance - Bleed">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21187" levels="1" name="Blessing of Resistance - Stun">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21188" levels="1" name="Recovery Power - HP">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21189" levels="1" name="Recovery Power - MP">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21190" levels="1" name="Soul Shield">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="ENERGY_SPEND" />
+  </skill>
+  <skill id="21191" levels="1" name="Agathion Seal Cancel - Phoenix">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21192" levels="1" name="Silent Move">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21193" levels="1" name="Power of Guardian Deity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="21194" levels="1" name="Agathion Seal Cancel - Three-headed Dragon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21195" levels="1" name="Blessed Child Transformation Skill - Trejuo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21196" levels="1" name="Blessed Child Transformation Skill - Sujin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21197" levels="1" name="Buff of Virtue">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21198" levels="1" name="Silence of Fidelity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21199" levels="1" name="Vitality of Courage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21200" levels="1" name="Age of the Three Kingdoms">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21201" levels="1" name="Haste">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21202" levels="1" name="Agathion Seal Cancel - Ball Trapping Gnocian">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21203" levels="1" name="Agathion Seal Cancel - Ball Trapping Orodriel">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21204" levels="1" name="Agathion Seal Cancel - Penalty Kick">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21205" levels="1" name="Agathion Seal Cancel - Ball Trapping Gnocian">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21206" levels="1" name="Agathion Seal Cancel - Ball Trapping Orodriel">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21207" levels="1" name="Agathion Seal Cancel - Penalty Kick">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21208" levels="1" name="Agathion Seal Cancel - Ball Trapping Gnocian">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21209" levels="1" name="Agathion Seal Cancel - Ball Trapping Orodriel">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21210" levels="1" name="Agathion Seal Cancel - Penalty Kick">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21211" levels="1" name="Blessing of Victory">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21212" levels="1" name="Agathion Seal Cancel - Granny Tiger">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21213" levels="1" name="Agathion Seal Cancel - Flower Fairy Spirit">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21214" levels="1" name="Agathion Seal Cancel - Cheerleader Orodriel">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21215" levels="1" name="Agathion Seal Cancel - Cheerleader Lana">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21216" levels="1" name="Agathion Seal Cancel - Cheerleader Naonin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21217" levels="1" name="Agathion Seal Cancel - Cheerleader Mortia">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21218" levels="1" name="Agathion Seal Cancel - Cheerleader Kaurin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21219" levels="1" name="Agathion Seal Cancel - Cheerleader Meruril">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21220" levels="1" name="Agathion Seal Cancel - Handy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21221" levels="1" name="Blessed Resurrection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21222" levels="1" name="Resist Elemental">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21223" levels="1" name="Ultimate Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21224" levels="1" name="Soul of an Adventurer of Immortality's Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21225" levels="1" name="Soul of a Strong Warrior's Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21226" levels="1" name="Soul of a Wise Magician's Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21227" levels="1" name="Ability of Prominent Adventure's Soul">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21228" levels="1" name="Soul of a Brave Warrior's Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21229" levels="1" name="Blood Awakening">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21230" levels="1" name="Improved Magic">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21231" levels="1" name="Improved Critical Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21232" levels="1" name="Shiny Lit Platform">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21233" levels="1" name="Release Seal on Agathion - Singer Dancer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21234" levels="1" name="Release Seal on Agathion - Zaken Spirit Sword">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21235" levels="1" name="7th Anniversary T-shirt: Speed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21236" levels="1" name="7th Anniversary T-shirt: Blessed Escape Ability">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21237" levels="1" name="7th Anniversary T-shirt: Blessed Protection Ability">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21238" levels="1" name="Jet Bike">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21239" levels="1" name="Release Seal on Agathion - Kau">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21240" levels="1" name="Release Seal on Agathion - Tow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21241" levels="1" name="Magic Glasses">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21242" levels="1" name="Zaken's Call">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21243" levels="1" name="Freya's Call">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21244" levels="1" name="Frintezza's Call">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21245" levels="1" name="Release Seal on Agathion - Rudolph">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21246" levels="1" name="Rudolph's Energy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21247" levels="1" name="Gift from Santa Claus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21248" levels="1" name="Release Seal on Agathion - Zinenze">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21249" levels="1" name="Release Seal on Agathion - Enze">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21250" levels="1" name="Academy Circlet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21251" levels="1" name="Shiny Party Hat - Greater Body">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21252" levels="1" name="Hellblade">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21253" levels="1" name="Butcher Blades">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21254" levels="1" name="Claw of Destruction">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21255" levels="1" name="Blades of Delusion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21256" levels="1" name="Blood Brother">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21257" levels="1" name="Mardil">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21258" levels="1" name="Rocking Horse Mount">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21259" levels="1" name="Release Seal on Agathion - Chorong">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21260" levels="1" name="Notifier">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21261" levels="1" name="Bad Bunny's Necklace">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21262" levels="1" name="Bad Bunny's Earring">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21263" levels="1" name="Bad Bunny's Ring">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21264" levels="1" name="Summon Friend">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21265" levels="1" name="Summon Friend">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21266" levels="1" name="Release Seal on Agathion - Juju">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21267" levels="1" name="Notifier">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21268" levels="1" name="Jack O'Lantern Crush">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21269" levels="1" name="Jack O'Lantern Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21270" levels="1" name="Ride Tame Princess Ant">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21271" levels="1" name="Ride Black Bear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21272" levels="1" name="Ride Halloween Witch's Broomstick">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21273" levels="7" name="Release Agathion's Seal - Valakas">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21274" levels="6" name="Start of Evolution">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21275" levels="5" name="Cloak Inventory Slot Add">
+    <set name="operateType" val="PASSIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="21276" levels="5" name="Add Cloak Weight Gauge">
+    <set name="operateType" val="PASSIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="21277" levels="1" name="Miracle of the Tree - Vitality Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="21278" levels="1" name="Vitality Recovery Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21279" levels="1" name="Drake Lord's Authority">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21280" levels="1" name="Freya's Authority">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21281" levels="1" name="Spezion's Authority">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21282" levels="1" name="Maliss' Authority">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21283" levels="1" name="Steregos' Authority">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21284" levels="1" name="Ron's Authority">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21285" levels="1" name="Scroll of Escape: Uthanka's Tomb">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21286" levels="1" name="Ride Unicorn">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21287" levels="1" name="Emergency Ballista Repair">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21288" levels="1" name="Emergency Ballista Repair">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21289" levels="1" name="Throw Corrosive Acid">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21290" levels="1" name="Throw Corrosive Acid">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21291" levels="1" name="Relic Engraving Activation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21292" levels="1" name="Relic Engraving Activation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21293" levels="1" name="Two-handed Weapon of Vampiric Rage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21294" levels="1" name="Transformed: Uthanka">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="21295" levels="1" name="Un-equip Uthanka's Ring">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21296" levels="1" name="Exorcist's Punishment">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21297" levels="1" name="Nevit's Touch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21298" levels="1" name="Release Agathion's Seal - Lancet">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21299" levels="1" name="Release Agathion's Seal - Liposa">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21300" levels="1" name="Release Agathion's Seal - Velarin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21301" levels="1" name="Release Agathion's Seal - Dulcinel">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21302" levels="1" name="Release Agathion's Seal - Chimeros">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21303" levels="1" name="Release Agathion's Seal - Niveri">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21304" levels="1" name="Release Agathion's Seal - Hamell">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21305" levels="1" name="Release Agathion's Seal - Joriya">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21306" levels="1" name="Release Agathion's Seal - Ralmak">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21307" levels="1" name="Release Agathion's Seal - Goras">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21308" levels="1" name="Release Agathion's Seal - Vensar">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21309" levels="1" name="Release Agathion's Seal - Kiela">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21310" levels="1" name="Soul's Shield">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21311" levels="1" name="Reinforced Authority">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21312" levels="1" name="Indomitable Spirit">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21313" levels="1" name="Soul Shroud">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21314" levels="1" name="Soul Seduction">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21315" levels="1" name="Soul Protection">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21316" levels="1" name="Intelligent Soul">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21317" levels="1" name="Sagacious Soul">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="21320" levels="1" name="Desperate Exorcism">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="21321" levels="1" name="Desperate Exorcism - Trigger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21322" levels="1" name="Cancel Transformation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21323" levels="1" name="Restore the Crystal of Protection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21324" levels="1" name="Einhasad's Authority">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21325" levels="1" name="Release Agathion's Seal - Uthanka">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21326" levels="1" name="Basic Effect: Elemental Shirt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21327" levels="10" name="Enchant Effect: Elemental Shirt">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21328" levels="1" name="Adenian Underwear: Speed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21329" levels="1" name="Adenian Underwear: Speed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21330" levels="1" name="Adenian Underwear: Speed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21331" levels="1" name="Adenian Underwear: Speed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21332" levels="1" name="Adenian Underwear: Speed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21333" levels="2" name="Adenia's Vampiric Rage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21334" levels="2" name="Adenia's Vampiric Rage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="21335" levels="2" name="Adenia's Damage Reflect">
+    <set name="operateType" val="PASSIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="21336" levels="2" name="Adenia's Damage Reflect">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="21337" levels="1" name="Adenia's Duel Might">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21338" levels="1" name="Adenia's Duel Might">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21339" levels="1" name="Adenia's Doom">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21340" levels="2" name="Adenia's Instant Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21341" levels="1" name="Adenia's Shield">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21342" levels="1" name="Adenia's Magic Barrier">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21343" levels="1" name="Adenia's Barrier">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21344" levels="2" name="Adenia's Invincibility">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21345" levels="2" name="Adenia's Return">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="#isMagic" />
+  </skill>
+  <skill id="21346" levels="1" name="Adenia's Weight Limit">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21347" levels="1" name="Release Agathion's Seal - Griffin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21348" levels="1" name="Summon Friend">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="21349" levels="1" name="Memory Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21350" levels="5" name="Modified Set Effect Test">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21351" levels="2" name="Modified Set Effect Test">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21352" levels="1" name="Release Agathion's Seal - Hussar">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21353" levels="1" name="Vitality Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21354" levels="1" name="Vitality Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21355" levels="1" name="Erupting Vitality XP Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21356" levels="1" name="Erupting Vitality Replenishing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21357" levels="1" name="Erupting Vitality Conservation Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21358" levels="1" name="Wondrous Human Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21359" levels="1" name="Wondrous Elf Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21360" levels="1" name="Wondrous Dark Elf Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21361" levels="1" name="Wondrous Orc Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21362" levels="1" name="Wondrous Dwarf Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21363" levels="1" name="Wondrous Kamael Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21364" levels="12" name="Talisman - Abundance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21365" levels="5" name="Talisman - Hunter">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21366" levels="1" name="Wondrous Hunt Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21367" levels="1" name="Wondrous Slaughter Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21368" levels="5" name="Wondrous Slaughter Dye">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21369" levels="1" name="Cancel Wondrous Dye Effect">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21370" levels="5" name="Talisman - Slaughterer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21371" levels="5" name="Talisman - Conquerer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21372" levels="5" name="Talisman - Outlaw">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21373" levels="1" name="Unequip Talisman - Hunter">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21374" levels="1" name="Unequip Talisman - Slaughterer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21375" levels="1" name="Unequip Talisman - Conquerer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21376" levels="1" name="Unequip Talisman - Outlaw">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21377" levels="3" name="Adenian Tattoo: Protection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21378" levels="3" name="Adenian Tattoo: Valor">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21379" levels="3" name="Adenian Tattoo: Deviance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21380" levels="1" name="Adenian Tattoo: Speed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21381" levels="1" name="Adenian Tattoo: Speed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21382" levels="1" name="Adenian Tattoo: Speed">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21383" levels="1" name="Transform: Uthanka">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21384" levels="1" name="Cancel Transformation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21385" levels="1" name="Cancel Dye Effect">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21386" levels="1" name="Parade Firecracker">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="21387" levels="1" name="Release Agathion's Seal - Van Halter's Memory">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21388" levels="1" name="Release Agathion's Seal - Anakim">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21389" levels="1" name="Mysterious Dark Resistance Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21390" levels="1" name="Mysterious Holy Resistance Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21391" levels="1" name="Mysterious Fire Resistance Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21392" levels="1" name="Mysterious Water Resistance Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21393" levels="1" name="Mysterious Wind Resistance Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21394" levels="1" name="Mysterious Earth Resistance Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21395" levels="1" name="Mysterious Abnormal State Resistance Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21396" levels="1" name="Mysterious Invincibility Boost Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21397" levels="1" name="Mysterious World Boss Defense Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21398" levels="1" name="Mysterious Antharas Defense Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21399" levels="1" name="Mysterious Valakas Defense Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21400" levels="1" name="Mysterious Lindvior Defense Dye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21401" levels="1" name="Mysterious Buff Boost Dye - Noblesse Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21402" levels="1" name="Mysterious Human Dye - Unbind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21403" levels="1" name="Mysterious Elf Dye - Prevision">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21404" levels="1" name="Mysterious Dark Elf Dye - Disparition">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="21405" levels="1" name="Mysterious Orc Dye - Savage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21406" levels="1" name="Mysterious Dwarf Dye - Endurance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="21407" levels="1" name="Mysterious Kamael Dye - Soul Protection">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21408" levels="1" name="Mysterious Dye Cancellation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21409" levels="1" name="Release Agathion's Seal - Three-headed Dragon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21410" levels="1" name="Cloak of the Chosen: Blessed Escape">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="21411" levels="1" name="Halloween Outfit Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21412" levels="1" name="Halloween Weapon Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21413" levels="1" name="Mysterious Halloween Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="21414" levels="1" name="Halloween: Outfit">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21415" levels="1" name="Halloween: Weapon">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21416" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21417" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21418" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21419" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21420" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21421" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21422" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21423" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21424" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21425" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21426" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21427" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21428" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21429" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21430" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21431" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21432" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21433" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21434" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21435" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21436" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21437" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21438" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21439" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21440" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21441" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21442" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21443" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21444" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21445" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21446" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21447" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21448" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21449" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21450" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21451" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21452" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21453" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21454" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21455" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21456" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21457" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21458" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21459" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21460" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21461" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21462" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21463" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21464" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21465" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21466" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21467" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21468" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21469" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21470" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21471" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21472" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21473" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21474" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21475" levels="1" name="Visual Enchant Stone">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21476" levels="1" name="Cloak of the Chosen">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21477" levels="4" name="Power of Abundance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="21478" levels="1" name="Release Agathion's Seal - Griffin">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21479" levels="1" name="Agathion Teleport - Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21480" levels="1" name="Agathion Teleport - Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21481" levels="1" name="Agathion Teleport - Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21482" levels="1" name="Blessed Griffin Agathion's Egg">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21483" levels="1" name="Blessed Griffin Egg">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="21484" levels="1" name="Fancy Fishing Rod">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="21618" levels="1" name="Ready Burst">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+</list>

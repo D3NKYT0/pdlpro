@@ -1,0 +1,3342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="17000" levels="1" name="Scroll: 10,000,000 SP">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17001" levels="1" name="Blessed Weapon Appearance Stone (R-grade) (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17002" levels="1" name="Blessed Weapon Appearance Stone (S-grade) (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17003" levels="1" name="Blessed Weapon Appearance Stone (A-grade) (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17004" levels="1" name="Blessed Weapon Appearance Stone (B-grade) (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17005" levels="1" name="Blessed Weapon Appearance Stone (C-grade) (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17006" levels="1" name="Blessed Weapon Appearance Stone (D-grade) (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17007" levels="1" name="Blessed Armor Appearance Stone (R-grade) (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17008" levels="1" name="Blessed Armor Appearance Stone (S-grade) (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17009" levels="1" name="Blessed Armor Appearance Stone (A-grade) (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17010" levels="1" name="Blessed Armor Appearance Stone (B-grade) (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17011" levels="1" name="Blessed Armor Appearance Stone (C-grade) (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17012" levels="1" name="Blessed Armor Appearance Stone (D-grade) (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17013" levels="1" name="Emerald Weapon Appearance Stone: Sword (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17014" levels="1" name="Emerald Weapon Appearance Stone: Dagger (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17015" levels="1" name="Emerald Weapon Appearance Stone: Two-handed Sword (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17016" levels="1" name="Emerald Weapon Appearance Stone: Fist Weapon (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17017" levels="1" name="Emerald Weapon Appearance Stone: Spear (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17018" levels="1" name="Emerald Weapon Appearance Stone: Bow (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17019" levels="1" name="Emerald Weapon Appearance Stone: Crossbow (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17020" levels="1" name="Emerald Weapon Appearance Stone: One-handed Blunt (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17021" levels="1" name="Emerald Weapon Appearance Stone: Two-handed Blunt (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17022" levels="1" name="Emerald Weapon Appearance Stone: One-handed Magic Blunt (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17023" levels="1" name="Emerald Weapon Appearance Stone: Two-handed Magic Blunt (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17024" levels="1" name="Emerald Weapon Appearance Stone: Dual Sword (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17025" levels="1" name="Emerald Weapon Appearance Stone: Dual Dagger (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17026" levels="1" name="Emerald Weapon Appearance Stone: Dual Blunt (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17027" levels="1" name="Emerald Weapon Appearance Stone: Shield (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17028" levels="1" name="Emerald Weapon Appearance Stone: Sigil (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17029" levels="1" name="Emerald Weapon Appearance Stone: Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17030" levels="1" name="Emerald Weapon Appearance Stone: Dagger">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17031" levels="1" name="Emerald Weapon Appearance Stone: Two-handed Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17032" levels="1" name="Emerald Weapon Appearance Stone: Fist Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17033" levels="1" name="Emerald Weapon Appearance Stone: Spear">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17034" levels="1" name="Emerald Weapon Appearance Stone: Bow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17035" levels="1" name="Emerald Weapon Appearance Stone: Crossbow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17036" levels="1" name="Emerald Weapon Appearance Stone: One-handed Blunt">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17037" levels="1" name="Emerald Weapon Appearance Stone: Two-handed Blunt">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17038" levels="1" name="Emerald Weapon Appearance Stone: One-handed Magic Blunt">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17039" levels="1" name="Emerald Weapon Appearance Stone: Two-handed Magic Blunt">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17040" levels="1" name="Emerald Weapon Appearance Stone: Dual Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17041" levels="1" name="Emerald Weapon Appearance Stone: Dual Dagger">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17042" levels="1" name="Emerald Weapon Appearance Stone: Dual Blunt">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17043" levels="1" name="Emerald Weapon Appearance Stone: Shield">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17044" levels="1" name="Emerald Weapon Appearance Stone: Sigil">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17045" levels="1" name="Black Anvil Guild's Dimensional Chest">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17046" levels="1" name="Dimensional Castle Lord's Support Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17047" levels="1" name="Remove Trick">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17048" levels="1" name="Premium Buff">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="17049" levels="1" name="Scroll of Escape: Gainak">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17050" levels="1" name="Scroll of Escape: Raider's Crossroads">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17051" levels="1" name="Scroll of Escape: Land of Chaos">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17052" levels="1" name="Elmore's Support Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17053" levels="1" name="Elmore's Mysterious Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17054" levels="1" name="Elmore's Noble Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17055" levels="1" name="Eternal Recipe Pouch">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17056" levels="1" name="Eternal Ingredient Pouch">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17057" levels="1" name="Energy of Dimensions">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17058" levels="1" name="Dimensional Blessing (Event)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17059" levels="1" name="Talisman - Escape: Town of Gludio">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17060" levels="1" name="Talisman - Escape: Town of Dion">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17061" levels="1" name="Talisman - Escape: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17062" levels="1" name="Talisman - Escape: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17063" levels="1" name="Talisman - Escape: Town of Oren">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17064" levels="1" name="Talisman - Escape: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17065" levels="1" name="Talisman - Escape: Town of Goddard">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17066" levels="1" name="Talisman - Escape: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17067" levels="1" name="Talisman - Escape: Town of Schuttgart">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17068" levels="1" name="Talisman - Escape: Talking Island Village">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17069" levels="1" name="Talisman - Escape: Elven Village">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17070" levels="1" name="Talisman - Escape: Dark Elf Village">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17071" levels="1" name="Talisman - Escape: Orc Village">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17072" levels="1" name="Talisman - Escape: Dwarven Village">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17073" levels="1" name="Talisman - Escape: Floran Village">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17074" levels="1" name="Talisman - Escape: Hardin's Academy">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17075" levels="1" name="Talisman - Escape: Ivory Tower">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17076" levels="1" name="Talisman - Escape: Hunters' Village">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17077" levels="1" name="Talisman - Escape: Ketra Orc Village">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17078" levels="1" name="Talisman - Escape: Varka Silenos Village">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17079" levels="1" name="Talisman - Escape: Kamael Village">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17080" levels="1" name="Hair Accessory Restoration Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17081" levels="1" name="Summon Lyn Draco">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17082" levels="1" name="Mentor's Prevailing Sonata">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17083" levels="1" name="Daring Sonata - Mentor">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17084" levels="1" name="Refreshing Sonata - Mentor">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17085" levels="1" name="Kisung's Power Up">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17086" levels="1" name="Agathion Summon - Bae Kisung">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17087" levels="1" name="Kisung's Power Up (Event)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17088" levels="1" name="Kisung's Emote 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17089" levels="1" name="Kisung's Cuteness">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17090" levels="1" name="Kisung's Cute Trick">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17091" levels="1" name="Sealbook: One-eyed ParaPara Cat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17092" levels="1" name="Sealbook: Smiling ParaPara Cat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17093" levels="1" name="Sealbook: Charming ParaPara Cat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17094" levels="1" name="Sealbook: Ferocious ParaPara Cat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17095" levels="1" name="Sealbook: Merchant ParaPara Cat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17096" levels="1" name="Transform: One-eyed ParaPara Cat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17097" levels="1" name="Transform: Smiling ParaPara Cat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17098" levels="1" name="Transform: Charming ParaPara Cat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17099" levels="1" name="Transform: Ferocious ParaPara Cat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17100" levels="1" name="Transform: Merchant ParaPara Cat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17101" levels="1" name="Passion Treasure Chest">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17102" levels="1" name="Passion Gift Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17103" levels="1" name="Santa's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17104" levels="1" name="Bae Kisung Teleport - Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17105" levels="1" name="Bae Kisung Teleport - Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17106" levels="1" name="Bae Kisung Teleport - Talking Island Village">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17107" levels="1" name="Snowman's Gift">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="17108" levels="1" name="Snowman's Buff">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17109" levels="1" name="-">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17110" levels="1" name="Nectar">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17111" levels="1" name="Wintermelon Seed">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17112" levels="1" name="Large Wintermelon Seed">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17113" levels="1" name="2012 Christmas Gift">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17114" levels="1" name="Promise Cube">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17115" levels="1" name="Promise Cube Skill">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17116" levels="1" name="Promise Cube Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17117" levels="2" name="Rune of Bountiful Growth">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17118" levels="1" name="Emperor's Growth Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17119" levels="1" name="Emperor's Vitality Tonic">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17120" levels="1" name="Emperor's Vitality Tonic (Medium)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17121" levels="1" name="Emperor's Special Vitality Tonic (3 bars)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17122" levels="1" name="Returning Hero's Vitality Replenishing Juice">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17123" levels="1" name="Snake's Blessing Effect (Paid)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17124" levels="24" name="Snake's Blessing - Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17125" levels="1" name="Lucky Box 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17126" levels="24" name="Lucky Box 2">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17127" levels="1" name="Lord of the Western Winds">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17128" levels="1" name="Successors of Destiny">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17129" levels="1" name="Dragon Rising">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17130" levels="1" name="Awakening Darkness">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17131" levels="1" name="Treasure Chest">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17132" levels="1" name="Hair Accessory Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17133" levels="1" name="Pendant Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17134" levels="1" name="Enchant Scroll Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17135" levels="1" name="Attribute Stone Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17136" levels="1" name="Ingredient Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17137" levels="1" name="Hero's Treasure Chest">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17138" levels="1" name="Hero's Lucky Enchant Stone Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17139" levels="1" name="Hero's Giant Enchant Scroll Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17140" levels="1" name="Hero's Blessed Enchant Scroll Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17141" levels="1" name="Hero's Unbind Scroll Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17142" levels="1" name="Hero's Attribute Crystal Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17143" levels="1" name="PK Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17144" levels="1" name="Reputation Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17145" levels="1" name="Mysterious Shot Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17146" levels="1" name="Kaliel's Energy Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17147" levels="1" name="Soul Bottle Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17148" levels="1" name="Top-grade Life Stone Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17149" levels="1" name="Legendary Card Pouch: Dragon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17150" levels="1" name="Legendary Card Pouch: Hero">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17151" levels="1" name="Legendary Card Pouch: Demon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17152" levels="1" name="Mysterious Healthy Juice">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17153" levels="1" name="Heavenly Recovery Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17154" levels="1" name="Love Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17155" levels="1" name="Coco's Magic">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17156" levels="1" name="Decadence">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17157" levels="1" name="Sugar Rush">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17158" levels="1" name="Forever Alone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17159" levels="1" name="Transformation Skill">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17160" levels="1" name="Summon Friend">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17161" levels="1" name="Chocolate Truffle">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17162" levels="1" name="Candy Heart">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17163" levels="1" name="Comfort Cookie">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17164" levels="1" name="Demonic Sword Zariche Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17165" levels="1" name="Blood Sword Akamanah Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17166" levels="1" name="Knight's Harmony - GM's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17167" levels="1" name="Warrior's Harmony - GM's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17168" levels="1" name="Wizard's Harmony - GM's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17169" levels="1" name="Horn Melody - GM's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17170" levels="1" name="Drum Melody - GM's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17171" levels="1" name="Pipe Organ Melody - GM's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17172" levels="1" name="Guitar Melody - GM's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17173" levels="1" name="Harp Melody - GM's Blessing">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17174" levels="1" name="Lute Melody - GM's Blessing">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17175" levels="1" name="GM's Blessing - Prevailing Sonata">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17176" levels="1" name="Daring Sonata - GM's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17177" levels="1" name="Refreshing Sonata - GM's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17178" levels="1" name="Transformation Scroll: Makeshift Bat">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17179" levels="1" name="Transformation Scroll: Lady Tow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17180" levels="1" name="Transformation Scroll: Angry Tow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17181" levels="1" name="Transformation Scroll: Sleepy Tow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17182" levels="1" name="Eva's Special Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17183" levels="1" name="Pa'agrio's Special Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17184" levels="1" name="Maphr's Special Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17185" levels="1" name="Sayha's Special Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17186" levels="1" name="Dandy's Cheers">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17187" levels="1" name="Dandy's Challenge">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17188" levels="1" name="Dandy's Faith">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17189" levels="1" name="Dandy's Passion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17190" levels="1" name="Reinforced Soulshot (D-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17191" levels="1" name="Reinforced Soulshot (C-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17192" levels="1" name="Change Hair Accessory">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17193" levels="1" name="Indomitable Hero's Olympiad Reward Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17194" levels="1" name="Vitality Replenishing Potion">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17195" levels="1" name="Potion of Protection: Stun (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17196" levels="1" name="Potion of Protection: Hold (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17197" levels="1" name="Potion of Protection: Bleed (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17198" levels="1" name="Potion of Protection: Paralyze (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17199" levels="1" name="Potion of Protection: Mental (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17200" levels="1" name="Potion of Protection: Sleep (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17201" levels="1" name="Potion of Protection: Poison (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17202" levels="1" name="Potion of Protection: Knock Back/ Knock Down (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17203" levels="1" name="Potion of Protection: Aerial Yoke (Low-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17204" levels="1" name="Scroll: 100,000 SP">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17205" levels="1" name="Scroll: 1,000,000 SP">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17206" levels="1" name="Scroll: 10,000,000 SP">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17207" levels="1" name="Master Yogi's Special Scroll: Enchant Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17208" levels="1" name="Transformation Potion: Metal Suit">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17209" levels="1" name="Metal Suit Hair Accessory Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17210" levels="1" name="Metal Suit Breastplate Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17211" levels="1" name="Metal Suit Gaiters Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17212" levels="1" name="Metal Suit Boots Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17213" levels="1" name="Metal Suit Gloves Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17214" levels="1" name="Master Yogi's Force Effect (Free)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17215" levels="11" name="Master Yogi's Force - Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17216" levels="1" name="Master Yogi's Force Effect (Paid)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17217" levels="11" name="Master Yogi's Force - Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17218" levels="1" name="Valiant Chest">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17219" levels="1" name="Hero's Gift">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17220" levels="1" name="Valiant Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17221" levels="1" name="Hero's SP Scroll (Novice)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17222" levels="2" name="Hero's SP Scroll (Experienced)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="17223" levels="3" name="Hero's SP Scroll (Expert)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="17224" levels="1" name="Valentine Appearance Stone: Dagger">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17225" levels="1" name="Valentine Appearance Stone: One-handed Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17226" levels="1" name="Valentine Appearance Stone: Two-handed Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17227" levels="1" name="Valentine Appearance Stone: One-handed Blunt Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17228" levels="1" name="Valentine Appearance Stone: Fist Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17229" levels="1" name="Valentine Appearance Stone: Spear">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17230" levels="1" name="Valentine Appearance Stone: Bow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17231" levels="1" name="Valentine Appearance Stone: Crossbow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17232" levels="1" name="Valentine Appearance Stone: One-handed Magic Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17233" levels="1" name="Valentine Appearance Stone: One-handed Magic Blunt Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17234" levels="1" name="Valentine Appearance Stone: Two-handed Magic Blunt Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17235" levels="1" name="Valentine Appearance Stone: Dual Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17236" levels="1" name="Valentine Appearance Stone: Dual Dagger">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17237" levels="1" name="Valentine Appearance Stone: Dual Blunt Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17238" levels="1" name="Valentine Appearance Stone: Shield">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17239" levels="1" name="Valentine Appearance Stone: Sigil">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17240" levels="1" name="Valentine Appearance Stone: Dagger">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17241" levels="1" name="Valentine Appearance Stone: One-handed Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17242" levels="1" name="Valentine Appearance Stone: Two-handed Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17243" levels="1" name="Valentine Appearance Stone: One-handed Blunt Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17244" levels="1" name="Valentine Appearance Stone: Fist Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17245" levels="1" name="Valentine Appearance Stone: Spear">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17246" levels="1" name="Valentine Appearance Stone: Bow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17247" levels="1" name="Valentine Appearance Stone: Crossbow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17248" levels="1" name="Valentine Appearance Stone: One-handed Magic Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17249" levels="1" name="Valentine Appearance Stone: One-handed Magic Blunt Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17250" levels="1" name="Valentine Appearance Stone: Two-handed Magic Blunt Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17251" levels="1" name="Valentine Appearance Stone: Dual Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17252" levels="1" name="Valentine Appearance Stone: Dual Dagger">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17253" levels="1" name="Valentine Appearance Stone: Dual Blunt Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17254" levels="1" name="Valentine Appearance Stone: Shield">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17255" levels="1" name="Valentine Appearance Stone: Sigil">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17256" levels="1" name="Hero's XP Scroll">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17257" levels="1" name="Hero's SP Rune">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17258" levels="1" name="NC Dinos Hat Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17259" levels="1" name="NC Dinos Hat Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17260" levels="1" name="Zorro Hat Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17261" levels="1" name="Zorro Hat Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17262" levels="1" name="Leona's Gift">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17263" levels="1" name="Warrior's Quick Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17264" levels="1" name="Scroll of Escape: Hellbound">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17265" levels="1" name="Leona's Reward Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17266" levels="3" name="SP Rune 10%">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17267" levels="3" name="SP Rune 10%">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17268" levels="1" name="Master Yogi's Force Effect (Free)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17269" levels="1" name="Master Yogi's Force Effect (Paid)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17270" levels="1" name="Scroll: 1,000,000,000 SP">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17271" levels="1" name="Kat the Cat's Surprise Gift">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17272" levels="1" name="Pig Lollipop Appearance Stone: One-handed Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17273" levels="1" name="Chrono Cithara Appearance Stone: One-handed Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17274" levels="1" name="Chrono Unitus Appearance Stone: Fist Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17275" levels="1" name="Chrono Campana Appearance Stone: Spear">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17276" levels="1" name="Chrono Darbuka Appearance Stone: Two-handed Blunt Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17277" levels="1" name="Chrono Maracas Appearance Stone: Dual Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17278" levels="1" name="Pumpkin Dagger Appearance Stone: Dagger">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17279" levels="1" name="Pumpkin Dual Dagger Appearance Stone: Dual Dagger">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17280" levels="1" name="Scarecrow Sword Appearance Stone: One-handed Magic Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17281" levels="1" name="Pig Lollipop Appearance Stone: One-handed Sword (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17282" levels="1" name="Chrono Cithara Appearance Stone: One-handed Sword (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17283" levels="1" name="Chrono Unitus Appearance Stone: Fist Weapon (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17284" levels="1" name="Chrono Campana Appearance Stone: Spear (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17285" levels="1" name="Chrono Darbuka Appearance Stone: Two-handed Blunt Weapon (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17286" levels="1" name="Chrono Maracas Appearance Stone: Dual Sword (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17287" levels="1" name="Pumpkin Dagger Appearance Stone: Dagger (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17288" levels="1" name="Pumpkin Dual Dagger Appearance Stone: Dual Dagger (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17289" levels="1" name="Scarecrow Sword Appearance Stone: One-handed Magic Sword (15-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17290" levels="1" name="Premium Account - Art of Seduction">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17291" levels="1" name="Premium Account - Prevailing Sonata">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17292" levels="1" name="Premium Account - Daring Sonata">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17293" levels="1" name="Premium Account - Refreshing Sonata">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17294" levels="1" name="Premium Account - Knight's Harmony">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="17295" levels="1" name="Premium Account - Warrior's Harmony">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="17296" levels="1" name="Premium Account - Wizard's Harmony">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="17297" levels="1" name="Emperor's Cookie: Prevailing Sonata">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17298" levels="1" name="Daring Sonata - Emperor's Cookie">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17299" levels="1" name="Refreshing Sonata - Emperor's Cookie">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17300" levels="1" name="Shy Bounce">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17301" levels="1" name="Lively Bounce">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17302" levels="1" name="Spirited Bounce">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17303" levels="1" name="Prevailing Sonata - Enhanced Cocktail">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17304" levels="1" name="Daring Sonata - Enhanced Cocktail">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17305" levels="1" name="Refreshing Sonata - Enhanced Cocktail">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17306" levels="1" name="Real Tor's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17307" levels="24" name="Real Tor's Blessing Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17308" levels="1" name="Destruction's Shadow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17309" levels="1" name="Evolving Darkness">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17310" levels="1" name="Sliver of Truth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17311" levels="1" name="Chaotic Ambush">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17312" levels="1" name="Real Tor's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17313" levels="24" name="Real Tor's Blessing Stage 1 (Premium)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17314" levels="1" name="Territory Card Pouch: Demon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17315" levels="1" name="Territory Card Pouch: Undead">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17316" levels="1" name="Territory Card Pouch: Monster">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17317" levels="1" name="Territory Card Pouch: Orc">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17318" levels="1" name="Leona's Cube">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17319" levels="1" name="Leona's Will">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17320" levels="1" name="Leona's Scroll: Buffs">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17321" levels="1" name="Leona's Scroll: 1,000,000 SP">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17322" levels="1" name="Leona's Scroll: 5,000,000 SP">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17323" levels="1" name="Leona's Scroll: 10,000,000 SP">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17324" levels="1" name="Superior CP Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17325" levels="1" name="Leona's Cube (1-time)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17326" levels="1" name="Small Green Mackerel">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17327" levels="1" name="Small Blue Mackerel">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17328" levels="1" name="Small Flatfish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17329" levels="1" name="Small Rockfish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17330" levels="1" name="Small Salmon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17331" levels="1" name="Small Marlin">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17332" levels="1" name="Small Tuna">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17333" levels="1" name="Green Mackerel">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17334" levels="1" name="Blue Mackerel">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17335" levels="1" name="Flatfish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17336" levels="1" name="Rockfish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17337" levels="1" name="Salmon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17338" levels="1" name="Marlin">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17339" levels="1" name="Tuna">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17340" levels="1" name="Large Green Mackerel">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17341" levels="1" name="Large Blue Mackerel">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17342" levels="1" name="Large Flatfish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17343" levels="1" name="Large Rockfish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17344" levels="1" name="Large Salmon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17345" levels="1" name="Large Marlin">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17346" levels="1" name="Large Tuna">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17347" levels="1" name="Small Killifish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17348" levels="1" name="Small Minnow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17349" levels="1" name="Small Mandarin Fish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17350" levels="1" name="Small Goldfish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17351" levels="1" name="Small Eel">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17352" levels="1" name="Small Catfish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17353" levels="1" name="Small Carp">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17354" levels="1" name="Killifish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17355" levels="1" name="Minnow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17356" levels="1" name="Mandarin Fish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17357" levels="1" name="Goldfish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17358" levels="1" name="Eel">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17359" levels="1" name="Catfish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17360" levels="1" name="Carp">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17361" levels="1" name="Large Killifish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17362" levels="1" name="Large Minnow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17363" levels="1" name="Large Mandarin Fish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17364" levels="1" name="Large Goldfish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17365" levels="1" name="Large Eel">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17366" levels="1" name="Large Catfish">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17367" levels="1" name="Large Carp">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17368" levels="1" name="Whale">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17370" levels="1" name="Samurai Long Sword Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17371" levels="1" name="Apprentice's Spellbook Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17372" levels="1" name="Crystal Dagger Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17373" levels="1" name="Hellblade Appearance Stone (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17374" levels="1" name="Butcher Blades Appearance Stone (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17375" levels="1" name="Claw of Destruction Appearance Stone (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17376" levels="1" name="Blades of Delusion Appearance Stone (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17377" levels="1" name="Blood Brother Appearance Stone (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17378" levels="1" name="Mardil's Fan Appearance Stone (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17379" levels="1" name="Hellblade Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17380" levels="1" name="Butcher Blades Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17381" levels="1" name="Claw of Destruction Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17382" levels="1" name="Blades of Delusion Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17383" levels="1" name="Blood Brother Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17384" levels="1" name="Mardil's Fan Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17385" levels="1" name="Normal Fishing Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17386" levels="1" name="High-grade Fishing Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17387" levels="1" name="Fish Stew: WIT">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17388" levels="1" name="Fish Stew: INT">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17389" levels="1" name="Fish Stew: MEN">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17390" levels="1" name="Fish Stew: DEX">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17391" levels="1" name="Fish Stew: STR">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17392" levels="1" name="Fish Stew: CON">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17393" levels="1" name="Lady's Hairpin: STR">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17394" levels="1" name="Lady's Hairpin: DEX">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17395" levels="1" name="Lady's Hairpin: CON">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17396" levels="1" name="Lady's Hairpin: MEN">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17397" levels="1" name="Lady's Hairpin: INT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17398" levels="1" name="Lady's Hairpin: WIT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17399" levels="1" name="Lady's Hairpin: Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17400" levels="1" name="Lady's Hairpin: Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17401" levels="1" name="Lady's Hairpin: P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17402" levels="1" name="Lady's Hairpin: M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17403" levels="1" name="Lady's Hairpin: Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17404" levels="1" name="Lady's Hairpin: P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17405" levels="1" name="Lady's Hairpin: M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17406" levels="1" name="Lady's Hairpin: Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17407" levels="1" name="Party Mask: STR">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17408" levels="1" name="Party Mask: DEX">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17409" levels="1" name="Party Mask: CON">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17410" levels="1" name="Party Mask: MEN">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17411" levels="1" name="Party Mask: INT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17412" levels="1" name="Party Mask: WIT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17413" levels="1" name="Party Mask: Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17414" levels="1" name="Party Mask: Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17415" levels="1" name="Party Mask: P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17416" levels="1" name="Party Mask: M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17417" levels="1" name="Party Mask: Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17418" levels="1" name="Party Mask: P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17419" levels="1" name="Party Mask: M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17420" levels="1" name="Party Mask: Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17421" levels="1" name="Monocle: STR">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17422" levels="1" name="Monocle: DEX">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17423" levels="1" name="Monocle: CON">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17424" levels="1" name="Monocle: MEN">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17425" levels="1" name="Monocle: INT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17426" levels="1" name="Monocle: WIT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17427" levels="1" name="Monocle: Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17428" levels="1" name="Monocle: Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17429" levels="1" name="Monocle: P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17430" levels="1" name="Monocle: M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17431" levels="1" name="Monocle: Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17432" levels="1" name="Monocle: P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17433" levels="1" name="Monocle: M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17434" levels="1" name="Monocle: Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17435" levels="1" name="Maiden's Hairpin: STR">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17436" levels="1" name="Maiden's Hairpin: DEX">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17437" levels="1" name="Maiden's Hairpin: CON">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17438" levels="1" name="Maiden's Hairpin: MEN">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17439" levels="1" name="Maiden's Hairpin: INT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17440" levels="1" name="Maiden's Hairpin: WIT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17441" levels="1" name="Maiden's Hairpin: Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17442" levels="1" name="Maiden's Hairpin: Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17443" levels="1" name="Maiden's Hairpin: P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17444" levels="1" name="Maiden's Hairpin: M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17445" levels="1" name="Maiden's Hairpin: Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17446" levels="1" name="Maiden's Hairpin: P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17447" levels="1" name="Maiden's Hairpin: M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17448" levels="1" name="Maiden's Hairpin: Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17449" levels="1" name="Forget-me-not Hairpin: STR">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17450" levels="1" name="Forget-me-not Hairpin: DEX">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17451" levels="1" name="Forget-me-not Hairpin: CON">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17452" levels="1" name="Forget-me-not Hairpin: MEN">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17453" levels="1" name="Forget-me-not Hairpin: INT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17454" levels="1" name="Forget-me-not Hairpin: WIT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17455" levels="1" name="Forget-me-not Hairpin: Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17456" levels="1" name="Forget-me-not Hairpin: Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17457" levels="1" name="Forget-me-not Hairpin: P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17458" levels="1" name="Forget-me-not Hairpin: M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17459" levels="1" name="Forget-me-not Hairpin: Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17460" levels="1" name="Forget-me-not Hairpin: P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17461" levels="1" name="Forget-me-not Hairpin: M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17462" levels="1" name="Forget-me-not Hairpin: Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17463" levels="1" name="Daisy Hairpin: STR">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17464" levels="1" name="Daisy Hairpin: DEX">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17465" levels="1" name="Daisy Hairpin: CON">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17466" levels="1" name="Daisy Hairpin: MEN">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17467" levels="1" name="Daisy Hairpin: INT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17468" levels="1" name="Daisy Hairpin: WIT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17469" levels="1" name="Daisy Hairpin: Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17470" levels="1" name="Daisy Hairpin: Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17471" levels="1" name="Daisy Hairpin: P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17472" levels="1" name="Daisy Hairpin: M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17473" levels="1" name="Daisy Hairpin: Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17474" levels="1" name="Daisy Hairpin: P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17475" levels="1" name="Daisy Hairpin: M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17476" levels="1" name="Daisy Hairpin: Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17477" levels="1" name="Little Angel Wings: STR">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17478" levels="1" name="Little Angel Wings: DEX">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17479" levels="1" name="Little Angel Wings: CON">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17480" levels="1" name="Little Angel Wings: MEN">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17481" levels="1" name="Little Angel Wings: INT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17482" levels="1" name="Little Angel Wings: WIT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17483" levels="1" name="Little Angel Wings: Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17484" levels="1" name="Little Angel Wings: Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17485" levels="1" name="Little Angel Wings: P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17486" levels="1" name="Little Angel Wings: M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17487" levels="1" name="Little Angel Wings: Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17488" levels="1" name="Little Angel Wings: P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17489" levels="1" name="Little Angel Wings: M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17490" levels="1" name="Little Angel Wings: Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17491" levels="1" name="Fairy Antennae: STR">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17492" levels="1" name="Fairy Antennae: DEX">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17493" levels="1" name="Fairy Antennae: CON">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17494" levels="1" name="Fairy Antennae: MEN">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17495" levels="1" name="Fairy Antennae: INT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17496" levels="1" name="Fairy Antennae: WIT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17497" levels="1" name="Fairy Antennae: Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17498" levels="1" name="Fairy Antennae: Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17499" levels="1" name="Fairy Antennae: P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17500" levels="1" name="Fairy Antennae: M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17501" levels="1" name="Fairy Antennae: Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17502" levels="1" name="Fairy Antennae: P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17503" levels="1" name="Fairy Antennae: M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17504" levels="1" name="Fairy Antennae: Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17505" levels="1" name="Chapeau: STR">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17506" levels="1" name="Chapeau: DEX">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17507" levels="1" name="Chapeau: CON">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17508" levels="1" name="Chapeau: MEN">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17509" levels="1" name="Chapeau: INT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17510" levels="1" name="Chapeau: WIT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17511" levels="1" name="Chapeau: Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17512" levels="1" name="Chapeau: Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17513" levels="1" name="Chapeau: P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17514" levels="1" name="Chapeau: M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17515" levels="1" name="Chapeau: Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17516" levels="1" name="Chapeau: P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17517" levels="1" name="Chapeau: M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17518" levels="1" name="Chapeau: Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17519" levels="1" name="Artisan's Goggles: STR">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17520" levels="1" name="Artisan's Goggles: DEX">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17521" levels="1" name="Artisan's Goggles: CON">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17522" levels="1" name="Artisan's Goggles: MEN">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17523" levels="1" name="Artisan's Goggles: INT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17524" levels="1" name="Artisan's Goggles: WIT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17525" levels="1" name="Artisan's Goggles: Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17526" levels="1" name="Artisan's Goggles: Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17527" levels="1" name="Artisan's Goggles: P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17528" levels="1" name="Artisan's Goggles: M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17529" levels="1" name="Artisan's Goggles: Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17530" levels="1" name="Artisan's Goggles: P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17531" levels="1" name="Artisan's Goggles: M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17532" levels="1" name="Artisan's Goggles: Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17533" levels="1" name="Arrow-pierced Apple: STR">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17534" levels="1" name="Arrow-pierced Apple: DEX">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17535" levels="1" name="Arrow-pierced Apple: CON">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17536" levels="1" name="Arrow-pierced Apple: MEN">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17537" levels="1" name="Arrow-pierced Apple: INT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17538" levels="1" name="Arrow-pierced Apple: WIT">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17539" levels="1" name="Arrow-pierced Apple: Critical Rate">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17540" levels="1" name="Arrow-pierced Apple: Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17541" levels="1" name="Arrow-pierced Apple: P. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17542" levels="1" name="Arrow-pierced Apple: M. Def.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17543" levels="1" name="Arrow-pierced Apple: Evasion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17544" levels="1" name="Arrow-pierced Apple: P. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17545" levels="1" name="Arrow-pierced Apple: M. Atk.">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17546" levels="1" name="Arrow-pierced Apple: Accuracy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17547" levels="1" name="Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17548" levels="1" name="Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17549" levels="1" name="Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17550" levels="1" name="Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17551" levels="2" name="Balanced Power">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17552" levels="1" name="Attribute Enchant">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17553" levels="1" name="Lady's Hairpin Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17554" levels="1" name="Party Mask Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17555" levels="1" name="Monocle Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17556" levels="1" name="Maiden's Hairpin Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17557" levels="1" name="Forget-me-not Hairpin Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17558" levels="1" name="Daisy Hairpin Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17559" levels="1" name="Little Angel Wings Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17560" levels="1" name="Fairy Antennae Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17561" levels="1" name="Chapeau Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17562" levels="1" name="Artisan's Goggles Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17563" levels="1" name="Arrow-pierced Apple Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17564" levels="1" name="Pirate's Eyepatch Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17565" levels="1" name="Outlaw's Eyepatch Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17566" levels="1" name="Party Hat Pendant Pouch">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17567" levels="1" name="Enchant Attribute Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17568" levels="1" name="Enchant Attribute Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17569" levels="1" name="Expertise Rune (D-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17570" levels="1" name="Expertise Rune (C-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17571" levels="1" name="Expertise Rune (B-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17572" levels="1" name="Expertise Rune (A-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17573" levels="1" name="Expertise Rune (S-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17574" levels="1" name="Expertise Rune (S80-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17575" levels="1" name="Expertise Rune (R-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17576" levels="1" name="Expertise Rune (R95-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17577" levels="1" name="Expertise Rune (R99-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17578" levels="1" name="Blue Mackerel Appearance Stone: One-handed Sword (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17579" levels="1" name="Trumpetfish Appearance Stone: Dagger (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17580" levels="1" name="Shark Appearance Stone: Two-handed Sword (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17581" levels="1" name="Squid Appearance Stone: Spear (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17582" levels="1" name="Sea Horse Appearance Stone: Two-handed Magic Blunt Weapon (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17583" levels="1" name="Lobster Appearance Stone: Fist Weapon (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17584" levels="1" name="Giant Crab Appearance Stone: Bow (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17585" levels="1" name="Crayfish Appearance Stone: Crossbow (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17586" levels="1" name="Starfish Appearance Stone: Sigil (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17587" levels="1" name="Turtle Appearance Stone: Shield (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17588" levels="1" name="Blue Mackerel Appearance Stone: Dual Sword (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17589" levels="1" name="Blue Mackerel Appearance Stone: Dual Blunt Weapon (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17590" levels="1" name="Trumpetfish Appearance Stone: Dual Dagger (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17591" levels="1" name="Blue Mackerel Appearance Stone: One-handed Blunt Weapon (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17592" levels="1" name="Blue Mackerel Appearance Stone: One-handed Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17593" levels="1" name="Trumpetfish Appearance Stone: Dagger">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17594" levels="1" name="Shark Appearance Stone: Two-handed Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17595" levels="1" name="Squid Appearance Stone: Spear">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17596" levels="1" name="Sea Horse Appearance Stone: Two-handed Magic Blunt Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17597" levels="1" name="Lobster Appearance Stone: Fist Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17598" levels="1" name="Giant Crab Appearance Stone: Bow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17599" levels="1" name="Crayfish Appearance Stone: Crossbow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17600" levels="1" name="Starfish Appearance Stone: Sigil">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17601" levels="1" name="Turtle Appearance Stone: Shield">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17602" levels="1" name="Blue Mackerel Appearance Stone: Dual Sword">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17603" levels="1" name="Blue Mackerel Appearance Stone: Dual Blunt Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17604" levels="1" name="Trumpetfish Appearance Stone: Dual Dagger">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17605" levels="1" name="Blue Mackerel Appearance Stone: One-handed Blunt Weapon">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17606" levels="1" name="Entrance Pass: Fantasy Fishing Dock (1-hour)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17607" levels="1" name="Entrance Pass: Fantasy Fishing Dock (2-hour)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17608" levels="1" name="Fantastical Energy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17609" levels="1" name="Fishing Rod's Power (Hero)">
+    <set name="operateType" val="PASSIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17610" levels="3" name="Release Agathion's Seal - Virgo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17611" levels="3" name="Release Agathion's Seal - Capricorn">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17612" levels="3" name="Release Agathion's Seal - Libra">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17613" levels="3" name="Release Agathion's Seal - Aries">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17614" levels="3" name="Release Agathion's Seal - Taurus">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17615" levels="3" name="Release Agathion's Seal - Leo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17616" levels="3" name="Release Agathion's Seal - Gemini">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17617" levels="3" name="Release Agathion's Seal - Scorpio">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17618" levels="3" name="Release Agathion's Seal - Aquarius">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17619" levels="3" name="Release Agathion's Seal - Pisces">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17620" levels="3" name="Release Agathion's Seal - Saggitarius">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17621" levels="3" name="Release Agathion's Seal - Cancer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17622" levels="1" name="Agathion Cute Trick - Virgo">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17623" levels="1" name="Agathion Cute Trick - Capricorn">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17624" levels="1" name="Agathion Cute Trick - Libra">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17625" levels="1" name="Agathion Cute Trick - Aries">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17626" levels="1" name="Agathion Cute Trick - Taurus">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17627" levels="1" name="Agathion Cute Trick - Leo">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17628" levels="1" name="Agathion Cute Trick - Gemini">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17629" levels="1" name="Agathion Cute Trick - Scorpio">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17630" levels="1" name="Agathion Cute Trick - Aquarius">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17631" levels="1" name="Agathion Cute Trick - Pisces">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17632" levels="1" name="Agathion Cute Trick - Sagittarius">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17633" levels="1" name="Agathion Cute Trick - Cancer">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17634" levels="1" name="Virgo Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17635" levels="1" name="Capricorn Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17636" levels="1" name="Libra Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17637" levels="1" name="Aries Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17638" levels="1" name="Taurus Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17639" levels="1" name="Leo Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17640" levels="1" name="Gemini Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17641" levels="1" name="Scorpio Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17642" levels="1" name="Aquarius Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17643" levels="1" name="Pisces Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17644" levels="1" name="Sagittarius Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17645" levels="1" name="Cancer Agathion Teleport: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17646" levels="1" name="Virgo Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17647" levels="1" name="Capricorn Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17648" levels="1" name="Libra Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17649" levels="1" name="Aries Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17650" levels="1" name="Taurus Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17651" levels="1" name="Leo Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17652" levels="1" name="Gemini Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17653" levels="1" name="Scorpio Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17654" levels="1" name="Aquarius Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17655" levels="1" name="Pisces Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17656" levels="1" name="Sagittarius Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17657" levels="1" name="Cancer Agathion Teleport: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17658" levels="1" name="Virgo Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17659" levels="1" name="Capricorn Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17660" levels="1" name="Libra Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17661" levels="1" name="Aries Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17662" levels="1" name="Taurus Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17663" levels="1" name="Leo Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17664" levels="1" name="Gemini Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17665" levels="1" name="Scorpio Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17666" levels="1" name="Aquarius Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17667" levels="1" name="Pisces Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17668" levels="1" name="Sagittarius Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17669" levels="1" name="Cancer Agathion Teleport: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17670" levels="1" name="Virgo Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17671" levels="1" name="Capricorn Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17672" levels="1" name="Libra Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17673" levels="1" name="Aries Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17674" levels="1" name="Taurus Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17675" levels="1" name="Leo Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17676" levels="1" name="Gemini Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17677" levels="1" name="Scorpio Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17678" levels="1" name="Aquarius Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17679" levels="1" name="Pisces Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17680" levels="1" name="Sagittarius Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17681" levels="1" name="Cancer Agathion Teleport: Heine">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17682" levels="1" name="Fishing Rod (Hero) - Inkill">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17683" levels="1" name="Steel Weapon Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17684" levels="1" name="Steel Armor Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17685" levels="1" name="Lara's Gift">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17686" levels="4" name="Uldie’s Creepy Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17687" levels="1" name="Lara's Gift">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17688" levels="4" name="Lara's Random Buff">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17689" levels="1" name="Lara's Secret Gift">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17690" levels="1" name="Lara's Gift">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17691" levels="1" name="Blessed High-grade Lucky Enchant Stone: Weapon (R-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17692" levels="1" name="Blessed High-grade Lucky Enchant Stone: Armor (R-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17693" levels="1" name="Blessed High-grade Lucky Enchant Stone: Weapon (S-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17694" levels="1" name="Blessed High-grade Lucky Enchant Stone: Armor (S-grade)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17695" levels="1" name="Summon Squash">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17696" levels="1" name="Summon Large Squash">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17701" levels="6" name="Topaz - Spiritshot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="17702" levels="5" name="Jewel: Quick Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17703" levels="5" name="Jewel: Heal Boost">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17704" levels="10" name="Obsidian">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17705" levels="10" name="Opal">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17706" levels="5" name="Jewel: Atk. Spd. Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17707" levels="5" name="Jewel: Casting Spd. Increase">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17708" levels="10" name="Diamond">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17709" levels="10" name="Pearl">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17710" levels="1" name="10th Anniversary Blessing Effect (Free)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17711" levels="24" name="10th Anniversary Blessing - Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17712" levels="1" name="10th Anniversary Blessing Effect (Paid)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17713" levels="24" name="10th Anniversary Special Blessing - Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17714" levels="1" name="Dancing Cat's Steps">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="17715" levels="1" name="Spirit Hit Lv. 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17716" levels="1" name="Spirit Hit Lv. 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17717" levels="1" name="Spirit Hit Lv. 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17718" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17719" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17720" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17721" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17722" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17723" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17724" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17725" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17726" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17727" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17728" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17729" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17730" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17731" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17732" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17733" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17734" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17735" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17736" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17737" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17738" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17739" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17740" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17741" levels="1" name="Dandy's Breath">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="CONVERT_ITEM" />
+  </skill>
+  <skill id="17742" levels="1" name="Toy Knight's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17743" levels="1" name="Toy Knight's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17744" levels="1" name="Toy Knight's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17745" levels="1" name="Toy Knight's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17746" levels="1" name="Toy Knight's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17747" levels="1" name="Toy Knight's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17748" levels="1" name="Toy Knight's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17749" levels="1" name="Toy Knight's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17750" levels="1" name="Toy Knight's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17751" levels="1" name="Toy Knight's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17752" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17753" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17754" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17755" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17756" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17757" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17758" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17759" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17760" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17761" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17762" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17763" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17764" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17765" levels="1" name="Dandy's Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17766" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17767" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17768" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17769" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17770" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17771" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17772" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17773" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17774" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17775" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17776" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17777" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17778" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17779" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17780" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17781" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17782" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17783" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17784" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17785" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17786" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17787" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17788" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17789" levels="1" name="Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17790" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17791" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17792" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17793" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17794" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17795" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17796" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17797" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17798" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17799" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17800" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17801" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17802" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17803" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17804" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17805" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17806" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17807" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17808" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17809" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17810" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17811" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17812" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17813" levels="1" name="Great Assisting Strength">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17814" levels="2" name="Ruby">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17815" levels="1" name="Ruby">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17816" levels="1" name="Ruby">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17817" levels="1" name="Ruby">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17818" levels="4" name="Sapphire">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17819" levels="2" name="Sapphire">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17820" levels="2" name="Sapphire">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17821" levels="2" name="Sapphire">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17822" levels="2" name="Aquamarine - MP Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="17823" levels="6" name="Aquamarine">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17824" levels="1" name="La Vie En Rose's Jewelry Box">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17825" levels="6" name="Emerald">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17826" levels="1" name="10th Anniversary Time Capsule Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17827" levels="1" name="10th Anniversary Designer's Edition">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17828" levels="1" name="10th Anniversary Welcome Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17829" levels="1" name="10th Anniversary Cake">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17830" levels="1" name="Appearance Stone: Formal Wear (100-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17831" levels="1" name="Appearance Stone: Formal Wear (100-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17832" levels="1" name="Appearance Stone: NC Dinos Hat (100-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17833" levels="1" name="Appearance Stone: Wedding Veil (100-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17834" levels="1" name="Appearance Stone: Black Phantom Mask (100-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17835" levels="1" name="Eternal Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17836" levels="1" name="Seraph Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17837" levels="1" name="Twilight Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17838" levels="1" name="Elegia Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17839" levels="1" name="Crafting Ingredients Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17840" levels="1" name="Eternal Crafting Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17841" levels="1" name="Eternal Completion Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17842" levels="1" name="+5 Eternal Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17843" levels="1" name="+6 Eternal Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17844" levels="1" name="+8 Eternal Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17845" levels="1" name="Seraph Crafting Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17846" levels="1" name="Seraph Completion Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17847" levels="1" name="+5 Seraph Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17848" levels="1" name="+6 Seraph Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17849" levels="1" name="+8 Seraph Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17850" levels="1" name="Twilight Crafting Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17851" levels="1" name="Twilight Completion Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17852" levels="1" name="+5 Twilight Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17853" levels="1" name="+6 Twilight Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17854" levels="1" name="+8 Twilight Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17855" levels="1" name="Vesper Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17856" levels="1" name="Apocalypse Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17857" levels="1" name="Apocalypse Crafting Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17858" levels="1" name="Apocalypse Completion Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17859" levels="1" name="+4 Apocalypse Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17860" levels="1" name="+5 Apocalypse Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17861" levels="1" name="+6 Apocalypse Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17862" levels="1" name="+7 Apocalypse Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17863" levels="1" name="+8 Apocalypse Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17864" levels="1" name="Specter Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17865" levels="1" name="Specter Crafting Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17866" levels="1" name="Specter Completion Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17867" levels="1" name="+4 Specter Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17868" levels="1" name="+5 Specter Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17869" levels="1" name="+6 Specter Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17870" levels="1" name="+7 Specter Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17871" levels="1" name="+8 Specter Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17872" levels="1" name="Helios Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17873" levels="1" name="Helios Crafting Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17874" levels="1" name="Helios Completion Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17875" levels="1" name="+4 Helios Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17876" levels="1" name="+5 Helios Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17877" levels="1" name="+6 Helios Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17878" levels="1" name="+7 Helios Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17879" levels="1" name="+8 Helios Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17880" levels="1" name="Scroll: 1,000,000 SP">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17881" levels="1" name="Scroll: 5,000,000 SP">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17882" levels="1" name="Scroll: 10,000,000 SP">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17883" levels="1" name="Daily Attendance Reward">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17884" levels="1" name="Reward: Week 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17885" levels="1" name="Reward: Week 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17886" levels="1" name="Reward: Week 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17887" levels="1" name="Reward: Week 4">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17888" levels="2" name="Ruby">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17889" levels="1" name="Ruby">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17890" levels="1" name="Ruby">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17891" levels="1" name="Ruby">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17892" levels="1" name="Yum Yum Candy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17893" levels="1" name="Nom Nom Candy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17894" levels="1" name="10th Anniversary Raid Defeat Reward">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17895" levels="1" name="Lindvior's Egg">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17896" levels="1" name="Orc Recovery Block">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17897" levels="1" name="10th Anniversary Inventory Boost">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17898" levels="1" name="Mysterious Wind Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17900" levels="1" name="Giant's Lucky Enchant Stone: Armor (R-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17901" levels="1" name="Giant's Lucky Enchant Stone: Weapon (R-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17902" levels="1" name="Giant's Lucky Enchant Stone: Armor (R-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17903" levels="1" name="Giant's Lucky Enchant Stone: Weapon (R-grade)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17904" levels="1" name="Windy Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="17905" levels="1" name="Major Windy Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="17906" levels="1" name="Greater Windy Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="17907" levels="1" name="Superior Windy Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="17908" levels="1" name="Supreme Windy Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="17909" levels="1" name="Windy Quick Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17910" levels="1" name="Major Windy Quick Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17911" levels="1" name="Greater Windy Quick Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17912" levels="1" name="Superior Windy Quick Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17913" levels="1" name="Supreme Windy Quick Healing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17914" levels="1" name="Low-grade Love Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17915" levels="1" name="Love Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17916" levels="1" name="Mid-grade Love Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17917" levels="1" name="High-grade Love Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17918" levels="1" name="Cruel Love Potion">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17919" levels="1" name="Super Elixir">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17920" levels="4" name="Windy Healing Potion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17921" levels="4" name="Windy Quick Healing Potion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17922" levels="5" name="Low-grade Love Potion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17923" levels="1" name="Super Elixir">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17924" levels="3" name="Supreme Windy Healing Potion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17925" levels="2" name="Giant's Scroll: Enchant Armor (R-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17926" levels="2" name="Giant's Lucky Enchant Stone: Armor (R-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17927" levels="2" name="Windy Lucky Enchant Stone: Armor (R-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17928" levels="6" name="Lv. 1 Legendary MEN Dye (Luck)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17929" levels="6" name="Lv. 2 Legendary MEN Dye (Luck)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17930" levels="6" name="Lv. 3 Legendary MEN Dye (Luck)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17931" levels="6" name="Lv. 4 Legendary MEN Dye (Luck)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17932" levels="6" name="Lv. 1 Legendary MEN Dye (Charisma)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17933" levels="6" name="Lv. 2 Legendary MEN Dye (Charisma)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17934" levels="6" name="Lv. 3 Legendary MEN Dye (Charisma)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17935" levels="6" name="Lv. 4 Legendary MEN Dye (Charisma)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17936" levels="14" name="Lv. 5 Legendary MEN Dye (Luck)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17937" levels="3" name="Mid-grade Life Stone (R-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17938" levels="3" name="Mid-grade Life Stone (R95-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17939" levels="3" name="Mid-grade Life Stone (R99-grade)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17940" levels="1" name="Life Stone: Giant's Power">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17941" levels="4" name="Lv. 1 Windy CHA Dye (Luck)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17942" levels="4" name="Lv. 1 Windy LUC Dye (Charisma)">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17943" levels="2" name="Alchemy Cube">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17944" levels="1" name="Scroll of Escape: Talking Island Village">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17945" levels="2" name="Escape - Hunter's Village Teleport">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17946" levels="2" name="Scroll of Escape: Magmeld">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17947" levels="1" name="Scroll of Escape: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17948" levels="1" name="Scroll of Escape: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17949" levels="1" name="Scroll of Escape: Town of Oren">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17950" levels="1" name="Scroll of Escape: Sea of Spores">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17951" levels="1" name="Scroll of Escape: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17952" levels="1" name="Scroll of Escape: Forsaken Plains">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17953" levels="1" name="Scroll of Escape: Town of Aden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17954" levels="1" name="Scroll of Escape: Fields of Massacre">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17955" levels="1" name="Scroll of Escape: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17956" levels="1" name="Scroll of Escape: Swamp of Screams">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17957" levels="1" name="Scroll of Escape: Town of Rune">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17958" levels="1" name="Scroll of Escape: Forest of the Dead">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17959" levels="1" name="Scroll of Escape: Town of Goddard">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17960" levels="1" name="Scroll of Escape: Wall of Argos">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17961" levels="1" name="Scroll of Escape: Town of Giran">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17962" levels="1" name="Scroll of Escape: Dragon Valley">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17963" levels="1" name="Alchemy Acquisition">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17964" levels="1" name="Master Alchemy: Failure">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17965" levels="1" name="Master Alchemy: Success">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17966" levels="1" name="Alchemy Cube: Random Success">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17967" levels="1" name="Low-grade Talisman Ingredient Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17968" levels="1" name="High-grade Tallisman Ingredient Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17969" levels="1" name="Low-grade Wind Dye Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17970" levels="1" name="Mid-grade Wind Dye Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17971" levels="1" name="High-grade Wind Dye Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17972" levels="1" name="New Talisman Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17973" levels="1" name="Talisman - Wind: P. Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17974" levels="1" name="Talisman - Wind: M. Critical Damage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="17975" levels="1" name="Talisman - Wind: Defense">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17976" levels="1" name="Talisman - Wind: Debuff Resistance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="17978" levels="1" name="Equip Talisman - Insanity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="17979" levels="1" name="Unequip Talisman - Insanity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17980" levels="1" name="Unseal Talisman - Insanity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17981" levels="1" name="Scroll of Escape: Gludin Village">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17982" levels="1" name="Scroll of Escape: Windy Hill">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17983" levels="1" name="Scroll of Escape: Gludin Village Temple">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17984" levels="1" name="Scroll of Escape: Orc Barracks">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17985" levels="1" name="Scroll of Escape: Town of Dion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17986" levels="1" name="Scroll of Escape: Cruma Tower">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17987" levels="1" name="Scroll of Escape: Town of Dion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17988" levels="1" name="Scroll of Escape: Cruma Tower">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17989" levels="2" name="Scroll of Escape: Bloody Swampland">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17990" levels="1" name="Scroll of Escape: Seed of Annihilation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17991" levels="2" name="Scroll of Escape: Harnak Underground Ruins">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17992" levels="2" name="Scroll of Escape: Kartia's Labyrinth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17993" levels="1" name="Scroll of Escape: Fairy Settlement">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17994" levels="1" name="Scroll of Escape: Garden of Genesis">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17995" levels="1" name="Scroll of Escape: Prison of Darkness">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17996" levels="1" name="Scroll of Escape: Fortuna">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="17997" levels="2" name="Scroll of Escape: Isle of Souls">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17998" levels="1" name="Scroll of Escape: Nornil's Cave">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="17999" levels="2" name="Scroll of Escape: Seal of Shilen">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+</list>

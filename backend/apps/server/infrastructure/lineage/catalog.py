@@ -9,6 +9,17 @@ from apps.server.domain.character_creation import HIGH_FIVE, INTERLUDE
 from common.architecture.exceptions import DomainError
 
 
+def xml_catalog_roots(configured: Path, bundled: Path, dialect: str) -> tuple[Path, ...]:
+    """Order XML sources so a dedicated catalog extends the bundled defaults and explicit overrides win."""
+    dialect = dialect.strip().lower()
+    if not LineageQueryCatalog.DIALECT_RE.fullmatch(dialect):
+        return (configured,)
+    module_root = bundled.with_name(f"{bundled.name}-by-query-module") / dialect
+    if configured.resolve() == bundled.resolve():
+        return configured, module_root
+    return module_root, configured
+
+
 class QueryDialectNotFoundError(DomainError):
     """Falha de domínio: Dialeto de queries Lineage não encontrado.
 

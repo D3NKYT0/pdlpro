@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <armor id="92318" name="Wifi">
+    <set name="icon" value="Icon.wifi_event_goggle_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+</list>

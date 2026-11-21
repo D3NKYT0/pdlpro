@@ -1,0 +1,3096 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <armor id="45372" name="Agathion - Blessed Pisces">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="45373" name="Blessed Pisces Agathion Bracelet Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="45374" name="Laser Gun">
+    <set name="icon" value="icon.invasion_gun" />
+    <set name="type" value="crossbow" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="45375" name="Battle Rations">
+    <set name="icon" value="icon.ev_invasion_buff_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45376" name="Reward Capsule">
+    <set name="icon" value="icon.general_fuel_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45377" name="L2B2's Gift Box">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45378" name="Vitality Replenishing Herb - Party">
+    <set name="icon" value="icon.general_fuel_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45379" name="Monster Research">
+    <set name="icon" value="icon.etc_magic_book_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="45380" name="Depleted Plasma Gun">
+    <set name="icon" value="icon.invasion_gun" />
+    <set name="type" value="crossbow" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45381" name="Charged Plasma Gun">
+    <set name="icon" value="icon.invasion_gun" />
+    <set name="type" value="crossbow" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <armor id="45382" name="Top Hat">
+    <set name="icon" value="icon.accessory_magicial_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="45383" name="Maid Hairband">
+    <set name="icon" value="icon.maid_hairband" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="45384" name="Laborer Hat">
+    <set name="icon" value="icon.people_cap" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR" />
+  </armor>
+  <armor id="45385" name="Ruthless Tribe Mask">
+    <set name="icon" value="icon.crazy_driving_mask" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR" />
+  </armor>
+  <etcitem id="45386" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45387" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45388" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45389" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45390" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45391" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45392" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45393" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45394" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45395" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45396" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45397" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45398" name="Drop Rate Setting Comparison Purpose">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45399" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45400" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45401" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45402" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45403" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45404" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45405" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45406" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45407" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45408" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45409" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45410" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45411" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45412" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45413" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45414" name="Auto Tooltip Check">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45415" name="Dandy's Home Run Ball">
+    <set name="icon" value="BranchIcon.icon.g_ev_homerunball" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45416" name="Blue Save Card (R-grade)">
+    <set name="icon" value="icon.blue_save_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45417" name="Blue Save Card (R95-grade)">
+    <set name="icon" value="icon.blue_save_r95" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45418" name="Blue Save Card (R99-grade)">
+    <set name="icon" value="icon.blue_save_r99" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45419" name="Red Save Card (R-grade)">
+    <set name="icon" value="icon.red_save_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45420" name="Red Save Card (R95-grade)">
+    <set name="icon" value="icon.red_save_r95" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45421" name="Red Save Card (R99-grade)">
+    <set name="icon" value="icon.red_save_r99" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45422" name="Royal Blue Save Card (R-grade)">
+    <set name="icon" value="icon.royal_blue_save_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45423" name="Royal Blue Save Card (R95-grade)">
+    <set name="icon" value="icon.royal_blue_save_r95" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45424" name="Royal Blue Save Card (R99-grade)">
+    <set name="icon" value="icon.royal_blue_save_r99" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45425" name="Royal Red Save Card (R-grade)">
+    <set name="icon" value="icon.royal_red_save_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45426" name="Royal Red Save Card (R95-grade)">
+    <set name="icon" value="icon.royal_red_save_r95" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45427" name="Royal Red Save Card (R99-grade)">
+    <set name="icon" value="icon.royal_red_save_r99" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45428" name="Orichalcum Arrow">
+    <set name="icon" value="icon.etc_oricalcum_quiver_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45429" name="Orichalcum Bolt">
+    <set name="icon" value="icon.etc_oricalcum_bolt_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45430" name="Entrance Pass: Spezion (Epic)">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45431" name="Entrance Pass: Baylor">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45432" name="Entrance Pass: Kartia's Labyrinth Lv. 95 Party">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45433" name="NC Dinos Hat Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair1" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45434" name="NC Dinos Hat Appearance Stone Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45435" name="NC Dinos Uniform Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45436" name="NC Dinos Uniform Appearance Stone Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45437" name="Baium's Ring">
+    <set name="icon" value="icon.bm_ring_of_baium" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <etcitem id="45438" name="Baium's Ring Pack (30-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45439" name="High-grade Lucky Enchant Stone: Weapon (R-grade)">
+    <set name="icon" value="icon.ench_wp_potion_violet_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45440" name="Agathion - Bae Kisung">
+    <set name="icon" value="icon.bracelet_agathion_bm_i01" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="45441" name="Agathion - Alien Celebrity Pack">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45442" name="Alien's Gulp Potion">
+    <set name="icon" value="icon.etc_ev_draco_purple_bottle" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45443" name="Transformation Potion: L2B2">
+    <set name="icon" value="icon.etc_whiteday_herb" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45444" name="Scroll of Escape: Blazing Swamp">
+    <set name="icon" value="icon.etc_scroll_of_return_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45445" name="Sealed Visitation Scroll: Hellbound">
+    <set name="icon" value="icon.etc_exchange_ticket_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45446" name="Visitation Scroll: Hellbound">
+    <set name="icon" value="icon.etc_exchange_ticket_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45447" name="Sealed Visitation Scroll: Hellbound">
+    <set name="icon" value="icon.etc_exchange_ticket_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45448" name="Visitation Scroll: Hellbound">
+    <set name="icon" value="icon.etc_exchange_ticket_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45449" name="Magma Ore">
+    <set name="icon" value="icon.high_energy_condense_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45450" name="Test Arrow">
+    <set name="icon" value="icon.etc_oricalcum_quiver_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45451" name="Harp's Reward Box">
+    <set name="icon" value="icon.etc_box_of_adventure_3_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45452" name="Flower Petal">
+    <set name="icon" value="icon.etc_flower_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45453" name="Cool Hat Pack">
+    <set name="icon" value="icon.etc_box_of_adventure_3_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45454" name="Kokko's Love">
+    <set name="icon" value="icon.event_altair_enchant_scroll_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45455" name="Appearance Stone: Zorro Hat">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45456" name="Appearance Stone: Top Hat">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45457" name="Appearance Stone: Napoleon Hat">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45458" name="Appearance Stone: Ruthless Tribe Mask">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45459" name="Appearance Stone: Zorro Hat">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45460" name="Appearance Stone: Top Hat">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45461" name="Appearance Stone: Napoleon Hat">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45462" name="Appearance Stone: Ruthless Tribe Mask">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45463" name="Entrance Pass: Nightmare Kamaloka">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45464" name="Zorro Hat">
+    <set name="icon" value="icon.zorocap" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="45465" name="Ruthless Tribe Mask">
+    <set name="icon" value="icon.crazy_driving_mask" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR" />
+  </armor>
+  <etcitem id="45466" name="Damaged PK Pack">
+    <set name="icon" value="icon.etc_box_of_adventure_1_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45467" name="Intact PK Pack">
+    <set name="icon" value="icon.etc_box_of_adventure_1_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45468" name="Damaged Reputation Pack">
+    <set name="icon" value="icon.etc_box_of_adventure_1_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45469" name="Intact Reputation Pack">
+    <set name="icon" value="icon.etc_box_of_adventure_1_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45470" name="Damaged Elcyum Pack">
+    <set name="icon" value="icon.etc_box_of_adventure_1_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45471" name="Intact Elcyum Pack">
+    <set name="icon" value="icon.etc_box_of_adventure_1_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45472" name="Flash Grenade">
+    <set name="icon" value="icon.etc_small_ultra_bomb_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45473" name="Fresh Blue Mackerel">
+    <set name="icon" value="icon.fish_normal_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45474" name="Fresh Minnow">
+    <set name="icon" value="icon.fish_normal_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45475" name="Fresh Flatfish">
+    <set name="icon" value="icon.fish_normal_i06" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45476" name="Fresh Mandarin Fish">
+    <set name="icon" value="icon.fish_normal_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45477" name="Fresh Rockfish">
+    <set name="icon" value="icon.fish_normal_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45478" name="Fresh Goldfish">
+    <set name="icon" value="icon.fish_normal_i07" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45479" name="Fresh Salmon">
+    <set name="icon" value="icon.fish_normal_i10" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45480" name="Fresh Eel">
+    <set name="icon" value="icon.fish_normal_i09" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45481" name="Glowing Marlin">
+    <set name="icon" value="icon.fish_normal_i12" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45482" name="Glowing  Catfish">
+    <set name="icon" value="icon.fish_small_i11" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45483" name="Glowing  Tuna">
+    <set name="icon" value="icon.fish_normal_i14" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45484" name="Glowing  Carp">
+    <set name="icon" value="icon.fish_normal_i13" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45485" name="Glowing  Whale">
+    <set name="icon" value="icon.fish_huge_i15" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45486" name="Wooden Treasure Chest">
+    <set name="icon" value="icon.etc_treasure_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45487" name="Silver Treasure Chest">
+    <set name="icon" value="icon.etc_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45488" name="Golden Treasure Chest">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45489" name="Crafted Fish">
+    <set name="icon" value="icon.etc_fish_scale_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45490" name="Fish Pearl">
+    <set name="icon" value="icon.etc_giran_fish_scale_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45491" name="Fresh Whale Blubber">
+    <set name="icon" value="icon.etc_fish_oil_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="45492" name="Normal Fishing Rod">
+    <set name="icon" value="icon.weapon_fishing_rod_i03" />
+    <set name="type" value="fishingrod" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="45493" name="Fishing Rod Pack (30-day)">
+    <set name="icon" value="icon.etc_box_of_adventure_1_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="45494" name="Sturdy Fishing Rod">
+    <set name="icon" value="icon.weapon_fishing_rod_i04" />
+    <set name="type" value="fishingrod" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="45495" name="Normal Bait">
+    <set name="icon" value="icon.etc_huge_lure" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="45496" name="Special Bait">
+    <set name="icon" value="icon.etc_gludio_fish_lure_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="45497" name="Fishing shot">
+    <set name="icon" value="icon.etc_spirit_bullet_fish_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45498" name="Fishing Pack">
+    <set name="icon" value="icon.etc_treasure_box_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45499" name="Fishing Rod Pack">
+    <set name="icon" value="icon.etc_treasure_box_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45500" name="Agathion - Twinkling Virgo">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45501" name="Agathion - Radiant Virgo">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45502" name="Agathion - Virgo">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45503" name="Agathion - Twinkling Capricorn">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45504" name="Agathion - Radiant Capricorn">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45505" name="Agathion - Capricorn">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45506" name="Agathion - Twinkling Libra">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45507" name="Agathion - Radiant Libra">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45508" name="Agathion - Libra">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45509" name="Agathion - Twinkling Aries">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45510" name="Agathion - Radiant Aries">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45511" name="Agathion - Aries">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45512" name="Agathion - Twinkling Taurus">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45513" name="Agathion - Radiant Taurus">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45514" name="Agathion - Taurus">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45515" name="Agathion - Twinkling Leo">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45516" name="Agathion - Radiant Leo">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45517" name="Agathion - Leo">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45518" name="Agathion - Twinkling Gemini">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45519" name="Agathion - Radiant Gemini">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45520" name="Agathion - Gemini">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45521" name="Agathion - Twinkling Scorpio">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45522" name="Agathion - Radiant Scorpio">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45523" name="Agathion - Scorpio">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45524" name="Agathion - Twinkling Aquarius">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45525" name="Agathion - Radiant Aquarius">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45526" name="Agathion - Aquarius">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45527" name="Agathion - Twinkling Pisces">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45528" name="Agathion - Radiant Pisces">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45529" name="Agathion - Pisces">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45530" name="Agathion - Twinkling Sagittarius">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45531" name="Agathion - Radiant Sagittarius">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45532" name="Agathion - Sagittarius">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45533" name="Agathion - Twinkling Cancer">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45534" name="Agathion - Radiant Cancer">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="45535" name="Agathion - Cancer">
+    <set name="icon" value="icon.agathion_magmeld_teleport" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="45536" name="Agathion - Twinkling Virgo Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45537" name="Agathion - Radiant Virgo Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45538" name="Agathion - Virgo Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45539" name="Agathion - Twinkling Capricorn Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45540" name="Agathion - Radiant Capricorn Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45541" name="Agathion - Capricorn Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45542" name="Agathion - Twinkling Libra Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45543" name="Agathion - Radiant Libra Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45544" name="Agathion - Libra Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45545" name="Agathion - Twinkling Aries Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45546" name="Agathion - Radiant Aries Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45547" name="Agathion - Aries Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45548" name="Agathion - Twinkling Taurus Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45549" name="Agathion - Radiant Taurus Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45550" name="Agathion - Taurus Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45551" name="Agathion - Twinkling Leo Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45552" name="Agathion - Radiant Leo Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45553" name="Agathion - Leo Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45554" name="Agathion - Twinkling Gemini Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45555" name="Agathion - Radiant Gemini Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45556" name="Agathion - Gemini Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45557" name="Agathion - Twinkling Scorpio Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45558" name="Agathion - Radiant Scorpio Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45559" name="Agathion - Scorpio Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45560" name="Agathion - Twinkling Aquarius Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45561" name="Agathion - Radiant Aquarius Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45562" name="Agathion - Aquarius Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45563" name="Agathion - Twinkling Pisces Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45564" name="Agathion - Radiant Pisces Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45565" name="Agathion - Pisces Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45566" name="Agathion - Twinkling Sagittarius Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45567" name="Agathion - Radiant Sagittarius Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45568" name="Agathion - Sagittarius Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45569" name="Agathion - Twinkling Cancer Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45570" name="Agathion - Radiant Cancer Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45571" name="Agathion - Cancer Pack">
+    <set name="icon" value="icon.etc_exchange_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45572" name="Zodiac Agathion Pack (15-day)">
+    <set name="icon" value="icon.etc_treasure_box_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45573" name="Radiant Zodiac Agathion Box (30-day)">
+    <set name="icon" value="icon.etc_treasure_box_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45574" name="Twinkling Zodiac Agathion Pack (30-day)">
+    <set name="icon" value="icon.etc_treasure_box_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45575" name="Special Bait Pack">
+    <set name="icon" value="icon.etc_treasure_box_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45576" name="SP Scroll Pack">
+    <set name="icon" value="icon.etc_treasure_box_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45577" name="Zodiac Agathion Pack (15-day)">
+    <set name="icon" value="icon.etc_treasure_box_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45578" name="Enhanced Orichalcum Arrow">
+    <set name="icon" value="icon.etc_oricalcum_quiver_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="45579" name="Enhanced Orichalcum Arrow">
+    <set name="icon" value="icon.etc_oricalcum_quiver_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="45580" name="Enhanced Orichalcum Arrow">
+    <set name="icon" value="icon.etc_oricalcum_quiver_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="45581" name="Enhanced Orichalcum Bolt">
+    <set name="icon" value="icon.etc_oricalcum_bolt_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="45582" name="Enhanced Orichalcum Bolt">
+    <set name="icon" value="icon.etc_oricalcum_bolt_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="45583" name="Enhanced Orichalcum Bolt">
+    <set name="icon" value="icon.etc_oricalcum_bolt_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </etcitem>
+  <etcitem id="45584" name="Mark of Battle">
+    <set name="icon" value="icon.bel_mark_clear" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45585" name="Special Water Resistance Necklace">
+    <set name="icon" value="icon.accessary_inferno_necklace_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="45586" name="Special Fire Resistance Necklace">
+    <set name="icon" value="icon.accessary_inferno_necklace_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="45587" name="Special Holy Resistance Necklace">
+    <set name="icon" value="icon.accessary_inferno_necklace_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="45588" name="Special Dark Resistance Necklace">
+    <set name="icon" value="icon.accessary_inferno_necklace_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="45589" name="Special Wind Resistance Necklace">
+    <set name="icon" value="icon.accessary_inferno_necklace_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="45590" name="Special Earth Resistance Necklace">
+    <set name="icon" value="icon.accessary_inferno_necklace_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="45591" name="Special Earth Resistance Ring">
+    <set name="icon" value="icon.accessary_inferno_ring_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="45592" name="Special Water Resistance Ring">
+    <set name="icon" value="icon.accessary_inferno_ring_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="45593" name="Special Fire Resistance Ring">
+    <set name="icon" value="icon.accessary_inferno_ring_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="45594" name="Special Holy Resistance Ring">
+    <set name="icon" value="icon.accessary_inferno_ring_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="45595" name="Special Dark Resistance Ring">
+    <set name="icon" value="icon.accessary_inferno_ring_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="45596" name="Special Wind Resistance Ring">
+    <set name="icon" value="icon.accessary_inferno_ring_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="45597" name="Special Resistance Earring - Stun">
+    <set name="icon" value="icon.accessary_inferno_earing_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="45598" name="Special Resistance Earring - Hold">
+    <set name="icon" value="icon.accessary_inferno_earing_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="45599" name="Special Resistance Earring - Bleed">
+    <set name="icon" value="icon.accessary_inferno_earing_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="45600" name="Special Resistance Earring - Paralyze">
+    <set name="icon" value="icon.accessary_inferno_earing_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="45601" name="Special Resistance Earring - Mental Attack">
+    <set name="icon" value="icon.accessary_inferno_earing_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="45602" name="Special Resistance Earring - Sleep">
+    <set name="icon" value="icon.accessary_inferno_earing_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="45603" name="Special Resistance Earring - Poison">
+    <set name="icon" value="icon.accessary_inferno_earing_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="45604" name="Special Resistance Earring - Knock Back/Knock Down">
+    <set name="icon" value="icon.accessary_inferno_earing_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="45605" name="Special Resistance Earring - Aerial Yoke">
+    <set name="icon" value="icon.accessary_inferno_earing_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="45606" name="Special Magic Ornament Eternal Belt">
+    <set name="icon" value="icon.r99_magic_pouch_belt_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="WAIST" />
+  </armor>
+  <armor id="45607" name="Special Magic Ornament Eternal Belt">
+    <set name="icon" value="icon.r99_magic_pouch_belt_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="WAIST" />
+  </armor>
+  <armor id="45608" name="Special Magic Ornament Eternal Belt">
+    <set name="icon" value="icon.r99_magic_pouch_belt_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="WAIST" />
+  </armor>
+  <armor id="45609" name="Special Magic Ornament Eternal Belt">
+    <set name="icon" value="icon.r99_magic_pouch_belt_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="WAIST" />
+  </armor>
+  <etcitem id="45610" name="Atelia Energy Crystal">
+    <set name="icon" value="icon.etc_ertheia_astatine" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45611" name="Atelia Energy Crystal">
+    <set name="icon" value="icon.etc_ertheia_astatine" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45612" name="Atelia Energy Crystal">
+    <set name="icon" value="icon.etc_ertheia_astatine" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45613" name="Atelia Energy Crystal">
+    <set name="icon" value="icon.etc_ertheia_astatine" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45614" name="Talisman - Battle: Attack (1-day)">
+    <set name="icon" value="icon.etc_talisman_i07" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="45615" name="Talisman - Battle: Attack (3-day)">
+    <set name="icon" value="icon.etc_talisman_i07" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="45616" name="Talisman - Battle: Attack (30-day)">
+    <set name="icon" value="icon.etc_talisman_i07" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="45617" name="Talisman - Battle: Speed (1-day)">
+    <set name="icon" value="icon.etc_talisman_i07" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="45618" name="Talisman - Battle: Speed (3-day)">
+    <set name="icon" value="icon.etc_talisman_i07" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="45619" name="Talisman - Battle: Speed (30-day)">
+    <set name="icon" value="icon.etc_talisman_i07" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="45620" name="Talisman - Battle: Support (1-day)">
+    <set name="icon" value="icon.etc_talisman_i07" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="45621" name="Talisman - Battle: Support (3-day)">
+    <set name="icon" value="icon.etc_talisman_i07" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="45622" name="Talisman - Battle: Support (30-day)">
+    <set name="icon" value="icon.etc_talisman_i07" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <etcitem id="45623" name="Elikia's Certificate">
+    <set name="icon" value="icon.etc_roll_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45624" name="Mysterious Butler's Certificate">
+    <set name="icon" value="icon.etc_roll_of_paper_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45625" name="Galladucci's Certificate">
+    <set name="icon" value="icon.etc_roll_of_paper_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45626" name="Sir Eric Rodemai's Certificate">
+    <set name="icon" value="icon.etc_roll_of_paper_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45627" name="Lionel Hunter's Mission List - Part 1">
+    <set name="icon" value="icon.etc_piece_of_paper_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45628" name="Daichir's Certificate">
+    <set name="icon" value="icon.etc_roll_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45629" name="Olympiad Manager's Certificate">
+    <set name="icon" value="icon.etc_roll_of_paper_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45630" name="Ishuma's Certificate">
+    <set name="icon" value="icon.etc_roll_of_paper_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45631" name="Sir Kristof Rodemai's Certificate">
+    <set name="icon" value="icon.etc_roll_of_paper_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45632" name="Lionel Hunter's Mission List - Part 2">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45633" name="Kaiena's Certificate">
+    <set name="icon" value="icon.etc_roll_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45634" name="Merlot's Certificate">
+    <set name="icon" value="icon.etc_roll_of_paper_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45635" name="Blacksmith of Mammon's Certificate">
+    <set name="icon" value="icon.etc_roll_of_paper_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45636" name="Sir Gustav Athebaldt's Certificate">
+    <set name="icon" value="icon.etc_roll_of_paper_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45637" name="Lionel Hunter's Mission List - Part 3">
+    <set name="icon" value="icon.etc_piece_of_paper_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45638" name="Obtain Exalted Status">
+    <set name="icon" value="icon.etc_nobless_teleport_coupon_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45639" name="Citrine Pendant Fragment">
+    <set name="icon" value="icon.etc_gem_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45640" name="Citrine Pendant">
+    <set name="icon" value="icon.accessary_blessed_earing_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45641" name="Rodemai's Rune">
+    <set name="icon" value="icon.skill19226" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45642" name="Rodemai's Rune Pack (15-day)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45643" name="Recipe: Citrine Pendant (10%)">
+    <set name="icon" value="icon.etc_recipe_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45644" name="Exalted Tiara">
+    <set name="icon" value="icon.accessory_noblesse2_tiara_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <weapon id="45645" name="Lady's Ornamental Silver Knife">
+    <set name="icon" value="icon.weapon_shining_knife_i00" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <etcitem id="45646" name="Mysterious Egg">
+    <set name="icon" value="icon.egg_white" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45647" name="Returning Warrior's Bracelet">
+    <set name="icon" value="icon.high_agathion_bracelet_i01" />
+    <set name="tradeable" value="false" />
+    <slot id="RBRACELET" />
+  </armor>
+  <armor id="45648" name="Pippi's Talisman">
+    <set name="icon" value="icon.accessory_chicken_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="45649" name="Kokko's Talisman">
+    <set name="icon" value="icon.accessory_chicken_cap2_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <etcitem id="45650" name="Pippi's Fortune Pocket - Stage 1">
+    <set name="icon" value="icon.etc_lucky_pocket_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45651" name="Pippi's Fortune Pocket - Stage 2">
+    <set name="icon" value="icon.etc_lucky_pocket_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45652" name="Pippi's Fortune Pocket - Stage 3">
+    <set name="icon" value="icon.etc_lucky_pocket_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45653" name="Dynasty Breastplate of Fortune Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45654" name="Dynasty Leather Armor of Fortune Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45655" name="Dynasty Tunic of Fortune Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45656" name="Dynasty Accessory of Fortune Set">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45657" name="Dynasty Breastplate of Fortune">
+    <set name="icon" value="icon.armor_t91_u_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45658" name="Dynasty Gaiters of Fortune">
+    <set name="icon" value="icon.armor_t91_l_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45659" name="Dynasty Gauntlets of Fortune">
+    <set name="icon" value="icon.armor_t91_g_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45660" name="Dynasty Boots of Fortune">
+    <set name="icon" value="icon.armor_t91_b_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45661" name="Dynasty Helmet of Fortune">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45662" name="Dynasty Shield of Fortune">
+    <set name="icon" value="icon.shield_dynasty_shield_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="45663" name="Dynasty Leather Armor of Fortune">
+    <set name="icon" value="icon.armor_t92_u_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45664" name="Dynasty Leather Leggings of Fortune">
+    <set name="icon" value="icon.armor_t92_l_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45665" name="Dynasty Leather Helmet of Fortune">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45666" name="Dynasty Leather Gloves of Fortune">
+    <set name="icon" value="icon.armor_t92_g_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45667" name="Dynasty Leather Boots of Fortune">
+    <set name="icon" value="icon.armor_t92_b_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45668" name="Dynasty Tunic of Fortune">
+    <set name="icon" value="icon.armor_t93_u_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45669" name="Dynasty Stockings of Fortune">
+    <set name="icon" value="icon.armor_t93_l_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45670" name="Dynasty Circlet of Fortune">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45671" name="Dynasty Gloves of Fortune">
+    <set name="icon" value="icon.armor_t93_g_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45672" name="Dynasty Shoes of Fortune">
+    <set name="icon" value="icon.armor_t93_b_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45673" name="Dynasty Sigil of Fortune">
+    <set name="icon" value="icon.dynasty_sigil_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="45674" name="Dynasty Earring of Fortune">
+    <set name="icon" value="icon.accessary_dynasty_earing_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="45675" name="Dynasty Necklace of Fortune">
+    <set name="icon" value="icon.accessary_dynasty_necklace_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="45676" name="Dynasty Ring of Fortune">
+    <set name="icon" value="icon.accessary_dynasty_ring_i00" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <etcitem id="45677" name="Twilight Attack Type Heavy Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45678" name="Twilight Defense Type Heavy Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45679" name="Twilight Assassin Type Light Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45680" name="Twilight Enchant Type Light Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45681" name="Twilight Magic Type Robe Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45682" name="Twilight Recovery Type Robe Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45683" name="Twilight Helmet">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45684" name="Twilight Breastplate">
+    <set name="icon" value="icon.armor_t601_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45685" name="Twilight Gaiters">
+    <set name="icon" value="icon.armor_t601_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45686" name="Twilight Gauntlets">
+    <set name="icon" value="icon.armor_t601_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45687" name="Twilight Boots">
+    <set name="icon" value="icon.armor_t601_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45688" name="Twilight Shield">
+    <set name="icon" value="icon.kratere_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="45689" name="Twilight Helmet">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45690" name="Twilight Breastplate">
+    <set name="icon" value="icon.armor_t601_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45691" name="Twilight Gaiters">
+    <set name="icon" value="icon.armor_t601_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45692" name="Twilight Gauntlets">
+    <set name="icon" value="icon.armor_t601_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45693" name="Twilight Boots">
+    <set name="icon" value="icon.armor_t601_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45694" name="Twilight Shield">
+    <set name="icon" value="icon.kratere_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="45695" name="Twilight Leather Helmet">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45696" name="Twilight Leather Armor">
+    <set name="icon" value="icon.armor_t602_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45697" name="Twilight Leather Leggings">
+    <set name="icon" value="icon.armor_t602_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45698" name="Twilight Leather Gloves">
+    <set name="icon" value="icon.armor_t602_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45699" name="Twilight Leather Boots">
+    <set name="icon" value="icon.armor_t602_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45700" name="Twilight Leather Helmet">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45701" name="Twilight Leather Armor">
+    <set name="icon" value="icon.armor_t602_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45702" name="Twilight Leather Leggings">
+    <set name="icon" value="icon.armor_t602_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45703" name="Twilight Leather Gloves">
+    <set name="icon" value="icon.armor_t602_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45704" name="Twilight Leather Boots">
+    <set name="icon" value="icon.armor_t602_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45705" name="Twilight Circlet">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45706" name="Twilight Tunic">
+    <set name="icon" value="icon.armor_t603_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45707" name="Twilight Stockings">
+    <set name="icon" value="icon.armor_t603_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45708" name="Twilight Gloves">
+    <set name="icon" value="icon.armor_t603_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45709" name="Twilight Shoes">
+    <set name="icon" value="icon.armor_t603_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45710" name="Twilight Sigel">
+    <set name="icon" value="icon.weapon_dynaksus_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="45711" name="Twilight Circlet">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45712" name="Twilight Tunic">
+    <set name="icon" value="icon.armor_t603_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45713" name="Twilight Stockings">
+    <set name="icon" value="icon.armor_t603_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45714" name="Twilight Gloves">
+    <set name="icon" value="icon.armor_t603_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45715" name="Twilight Shoes">
+    <set name="icon" value="icon.armor_t603_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <etcitem id="45716" name="Returning Warrior's Support Goods Coupon">
+    <set name="icon" value="icon.etc_lottery_card_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45717" name="Eternal Attack Type Heavy Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45718" name="Eternal Defense Type Heavy Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45719" name="Eternal Assassin Type Light Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45720" name="Eternal Enchant Type Light Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45721" name="Eternal Magic Type Robe Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45722" name="Eternal Recovery Type Robe Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45723" name="Eternal Helmet">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45724" name="Eternal Breastplate">
+    <set name="icon" value="icon.armor_t701_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45725" name="Eternal Gaiters">
+    <set name="icon" value="icon.armor_t701_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45726" name="Eternal Gauntlets">
+    <set name="icon" value="icon.armor_t701_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45727" name="Eternal Boots">
+    <set name="icon" value="icon.armor_t701_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45728" name="Eternal Shield">
+    <set name="icon" value="icon.weapon_akra_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="45729" name="Eternal Helmet">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45730" name="Eternal Breastplate">
+    <set name="icon" value="icon.armor_t701_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45731" name="Eternal Gaiters">
+    <set name="icon" value="icon.armor_t701_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45732" name="Eternal Gauntlets">
+    <set name="icon" value="icon.armor_t701_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45733" name="Eternal Boots">
+    <set name="icon" value="icon.armor_t701_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45734" name="Eternal Shield">
+    <set name="icon" value="icon.weapon_akra_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="45735" name="Eternal Leather Helmet">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45736" name="Eternal Leather Armor">
+    <set name="icon" value="icon.armor_t702_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45737" name="Eternal Leather Leggings">
+    <set name="icon" value="icon.armor_t702_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45738" name="Eternal Leather Gloves">
+    <set name="icon" value="icon.armor_t702_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45739" name="Eternal Leather Boots">
+    <set name="icon" value="icon.armor_t702_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45740" name="Eternal Leather Helmet">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45741" name="Eternal Leather Armor">
+    <set name="icon" value="icon.armor_t702_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45742" name="Eternal Leather Leggings">
+    <set name="icon" value="icon.armor_t702_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45743" name="Eternal Leather Gloves">
+    <set name="icon" value="icon.armor_t702_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45744" name="Eternal Leather Boots">
+    <set name="icon" value="icon.armor_t702_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45745" name="Eternal Circlet">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45746" name="Eternal Tunic">
+    <set name="icon" value="icon.armor_t703_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45747" name="Eternal Stockings">
+    <set name="icon" value="icon.armor_t703_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45748" name="Eternal Gloves">
+    <set name="icon" value="icon.armor_t703_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45749" name="Eternal Shoes">
+    <set name="icon" value="icon.armor_t703_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45750" name="Eternal Sigil">
+    <set name="icon" value="icon.elos_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="45751" name="Eternal Circlet">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45752" name="Eternal Tunic">
+    <set name="icon" value="icon.armor_t703_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45753" name="Eternal Stockings">
+    <set name="icon" value="icon.armor_t703_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45754" name="Eternal Gloves">
+    <set name="icon" value="icon.armor_t703_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45755" name="Eternal Shoes">
+    <set name="icon" value="icon.armor_t703_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45756" name="Eternal Sigil">
+    <set name="icon" value="icon.elos_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <etcitem id="45757" name="Seraph Attack Type Heavy Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45758" name="Seraph Defense Type Heavy Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45759" name="Seraph Assassin Type Light Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45760" name="Seraph Enchant Type Light Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45761" name="Seraph Magic Type Robe Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45762" name="Seraph Recovery Type Robe Set Pack">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45763" name="Seraph Helmet">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45764" name="Seraph Breastplate">
+    <set name="icon" value="icon.armor_t401_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45765" name="Seraph Gaiters">
+    <set name="icon" value="icon.armor_t401_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45766" name="Seraph Gauntlets">
+    <set name="icon" value="icon.armor_t401_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45767" name="Seraph Boots">
+    <set name="icon" value="icon.armor_t401_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45768" name="Seraph Shield">
+    <set name="icon" value="icon.beranka_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="45769" name="Seraph Helmet">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45770" name="Seraph Breastplate">
+    <set name="icon" value="icon.armor_t401_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45771" name="Seraph Gaiters">
+    <set name="icon" value="icon.armor_t401_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45772" name="Seraph Gauntlets">
+    <set name="icon" value="icon.armor_t401_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45773" name="Seraph Boots">
+    <set name="icon" value="icon.armor_t401_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45774" name="Seraph Shield">
+    <set name="icon" value="icon.beranka_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="45775" name="Seraph Leather Helmet">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45776" name="Seraph Leather Armor">
+    <set name="icon" value="icon.armor_t402_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45777" name="Seraph Leather Leggings">
+    <set name="icon" value="icon.armor_t402_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45778" name="Seraph Leather Gloves">
+    <set name="icon" value="icon.armor_t402_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45779" name="Seraph Leather Boots">
+    <set name="icon" value="icon.armor_t402_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45780" name="Seraph Leather Helmet">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45781" name="Seraph Leather Armor">
+    <set name="icon" value="icon.armor_t402_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45782" name="Seraph Leather Leggings">
+    <set name="icon" value="icon.armor_t402_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45783" name="Seraph Leather Gloves">
+    <set name="icon" value="icon.armor_t402_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45784" name="Seraph Leather Boots">
+    <set name="icon" value="icon.armor_t402_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45785" name="Seraph Circlet">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45786" name="Seraph Tunic">
+    <set name="icon" value="icon.armor_t403_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45787" name="Seraph Stockings">
+    <set name="icon" value="icon.armor_t403_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45788" name="Seraph Gloves">
+    <set name="icon" value="icon.armor_t403_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45789" name="Seraph Shoes">
+    <set name="icon" value="icon.armor_t403_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45790" name="Seraph Sigil">
+    <set name="icon" value="icon.airtoil_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="45791" name="Seraph Circlet">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="45792" name="Seraph Tunic">
+    <set name="icon" value="icon.armor_t403_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="45793" name="Seraph Stockings">
+    <set name="icon" value="icon.armor_t403_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="45794" name="Seraph Gloves">
+    <set name="icon" value="icon.armor_t403_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="45795" name="Seraph Shoes">
+    <set name="icon" value="icon.armor_t403_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="45796" name="Seraph Sigil_not used">
+    <set name="icon" value="icon.airtoil_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <weapon id="45797" name="Dynasty Phantom of Fortune">
+    <set name="icon" value="icon.weapon_dynasty_magic_sword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45798" name="Dynasty Knife of Fortune">
+    <set name="icon" value="icon.weapon_dynasty_dagger_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45799" name="Dynasty Bow of Fortune">
+    <set name="icon" value="icon.weapon_dynasty_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45800" name="Dynasty Hammer of Fortune">
+    <set name="icon" value="icon.weapon_dynasty_hammer_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45801" name="Dynasty Blade of Fortune">
+    <set name="icon" value="icon.weapon_dynasty_blade_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45802" name="Dynasty Two Hand Sword of Fortune">
+    <set name="icon" value="icon.weapon_dynasty_twohand_sword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45803" name="Dynasty Bagh-Nakh of Fortune">
+    <set name="icon" value="icon.weapon_dynasty_jamadhr_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45804" name="Dynasty Dual sword of Fortune">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45805" name="Dynasty Halberd of Fortune">
+    <set name="icon" value="icon.weapon_dynasty_spear_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45806" name="Dynasty Ancient Sword of Fortune">
+    <set name="icon" value="icon.weapon_dynasty_ancient_sword_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45807" name="Dynasty Rapier of Fortune">
+    <set name="icon" value="icon.weapon_dynasty_rapier_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45808" name="Dynasty Crossbow of Fortune">
+    <set name="icon" value="icon.weapon_dynasty_crossbow_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="45809" name="Returning Warrior's Soulshot Pack">
+    <set name="icon" value="icon.etc_box_of_adventure_2_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45810" name="Returning Warrior's Blessed Spiritshot Pack">
+    <set name="icon" value="icon.etc_box_of_adventure_3_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45811" name="Clan Reward">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45812" name="Clan Reward">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45813" name="Clan Reward">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45814" name="Clan Reward">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45815" name="Clan Reward">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45816" name="Clan Reward">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45817" name="Weapon Attribute Change Crystal (R-grade)">
+    <set name="icon" value="icon.change_elemental_crystal" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45818" name="PA Points Coupon (360 Points)">
+    <set name="icon" value="icon.etc_ticket_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45819" name="PA Points Coupon (720 Points)">
+    <set name="icon" value="icon.etc_ticket_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45820" name="Observation Report">
+    <set name="icon" value="icon.etc_scroll_gray_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45821" name="Unstable Spirit's Energy">
+    <set name="icon" value="icon.etc_talisman_beads_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45822" name="Unbalanced Energy">
+    <set name="icon" value="icon.etc_crystal_ball_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="45823" name="Apocalypse Shaper - Focus">
+    <set name="icon" value="icon.weapon_phasian_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45824" name="Apocalypse Cutter - Focus">
+    <set name="icon" value="icon.weapon_pasis_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45825" name="Apocalypse Slasher - Focus">
+    <set name="icon" value="icon.weapon_volver_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45826" name="Apocalypse Avenger - Focus">
+    <set name="icon" value="icon.weapon_raksilion_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45827" name="Apocalypse Fighter - Focus">
+    <set name="icon" value="icon.weapon_kirche_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45828" name="Apocalypse Stormer - Damage Up">
+    <set name="icon" value="icon.weapon_grave_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45829" name="Apocalypse Thrower - Focus">
+    <set name="icon" value="icon.weapon_spina_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45830" name="Apocalypse Shooter - Focus">
+    <set name="icon" value="icon.weapon_medianox_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45831" name="Apocalypse Buster - Acumen">
+    <set name="icon" value="icon.weapon_imerose_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45832" name="Apocalypse Caster - Acumen">
+    <set name="icon" value="icon.weapon_yuke_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45833" name="Apocalypse Retributer - Acumen">
+    <set name="icon" value="icon.weapon_herencia_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45834" name="Apocalypse Dual sword - Damage Up">
+    <set name="icon" value="icon.weapon_r_dualsword_i21" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45835" name="Apocalypse Dual Dagger - Focus">
+    <set name="icon" value="icon.weapon_r_dualdagger_i21" />
+    <set name="type" value="dualdagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45836" name="Apocalypse Dual Blunt Weapon - Damage Up">
+    <set name="icon" value="icon.weapon_r_dualblunt_i21" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="45837" name="Sad Energy">
+    <set name="icon" value="icon.etc_crystal_ball_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45838" name="Angry Energy">
+    <set name="icon" value="icon.etc_crystal_ball_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45839" name="Isabella's Evil Thoughts">
+    <set name="icon" value="icon.etc_ertheia_astatine" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45840" name="Mark of Trust (Low-grade)">
+    <set name="icon" value="icon.etc_jewel_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45841" name="Mark of Trust (Low-grade)">
+    <set name="icon" value="icon.etc_jewel_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45842" name="Mark of Trust (Low-grade)">
+    <set name="icon" value="icon.etc_jewel_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45843" name="Mark of Trust (Mid-grade)">
+    <set name="icon" value="icon.etc_jewel_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45844" name="Mark of Trust (Mid-grade)">
+    <set name="icon" value="icon.etc_jewel_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45845" name="Mark of Trust (Mid-grade)">
+    <set name="icon" value="icon.etc_jewel_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45846" name="Mark of Trust (Mid-grade)">
+    <set name="icon" value="icon.etc_jewel_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45847" name="Mark of Trust (Mid-grade)">
+    <set name="icon" value="icon.etc_jewel_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45848" name="Mark of Trust (High-grade)">
+    <set name="icon" value="icon.etc_jewel_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45849" name="Mutated Spirit's Soul">
+    <set name="icon" value="icon.change_elemental_crystal" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45850" name="Detector">
+    <set name="icon" value="icon.etc_instrument_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="45851" name="Specter Shaper - Focus">
+    <set name="icon" value="icon.weapon_ignicion_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45852" name="Specter Cutter - Focus">
+    <set name="icon" value="icon.weapon_ninfea_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45853" name="Specter Slasher - Focus">
+    <set name="icon" value="icon.weapon_skia_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45854" name="Specter Avenger - Focus">
+    <set name="icon" value="icon.weapon_ikeon_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45855" name="Specter Fighter - Focus">
+    <set name="icon" value="icon.weapon_deodos_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45856" name="Specter Stormer - Damage Up">
+    <set name="icon" value="icon.weapon_transgredi_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45857" name="Specter Thrower - Focus">
+    <set name="icon" value="icon.weapon_solenas_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45858" name="Specter Shooter - Focus">
+    <set name="icon" value="icon.weapon_lapis_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45859" name="Specter Buster - Acumen">
+    <set name="icon" value="icon.weapon_zihel_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45860" name="Specter Caster - Acumen">
+    <set name="icon" value="icon.weapon_alacer_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45861" name="Specter Retributer - Acumen">
+    <set name="icon" value="icon.weapon_rupe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45862" name="Specter Dual sword - Damage Up">
+    <set name="icon" value="icon.weapon_r_dualsword_i21" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45863" name="Specter Dual Dagger - Focus">
+    <set name="icon" value="icon.weapon_r_dualdagger_i21" />
+    <set name="type" value="dualdagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45864" name="Specter Dual Blunt Weapon - Damage Up">
+    <set name="icon" value="icon.weapon_r_dualblunt_i21" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="45865" name="Festival Coin">
+    <set name="icon" value="icon.ev_festival_coin" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45866" name="Golden Festival Coin">
+    <set name="icon" value="icon.ev_festival_goldcoin" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45867" name="Summon Scroll: Kableon">
+    <set name="icon" value="icon.ev_festival_summon" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45868" name="Regular Lucky Tarot Card">
+    <set name="icon" value="BranchSys3.icon1.g_luckygame_card_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45869" name="Premium Lucky Tarot Card">
+    <set name="icon" value="BranchSys3.icon1.g_luckygame_card_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45870" name="Spellbook: Favor of the Exalted">
+    <set name="icon" value="icon.giant_book_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45871" name="Proof of Disposal">
+    <set name="icon" value="icon.etc_inf_ore_medium_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45872" name="Proof of Battle">
+    <set name="icon" value="icon.etc_charm_of_courage_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45873" name="Proof of Battle">
+    <set name="icon" value="icon.etc_charm_of_courage_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45874" name="Kokko's Friend Summon Scroll">
+    <set name="icon" value="icon.etc_scroll_chalik_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45875" name="Kokko's Fishing Rod Support Box">
+    <set name="icon" value="icon.etc_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45876" name="Kokko's Fishing Shot Support Box">
+    <set name="icon" value="icon.etc_treasure_box_i06" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45877" name="Kokko's Bait Pack">
+    <set name="icon" value="icon.etc_treasure_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45878" name="Mysterious Aid Pack">
+    <set name="icon" value="icon.new_user_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="45879" name="Helios Shaper - Focus">
+    <set name="icon" value="icon.weapon_stanpid_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45880" name="Helios Cutter - Focus">
+    <set name="icon" value="icon.weapon_plenitas_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45881" name="Helios Slasher - Focus">
+    <set name="icon" value="icon.weapon_bauen_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45882" name="Helios Avenger - Focus">
+    <set name="icon" value="icon.weapon_qutram_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45883" name="Helios Fighter - Focus">
+    <set name="icon" value="icon.weapon_durga_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45884" name="Helios Stormer - Damage Up">
+    <set name="icon" value="icon.weapon_crabel_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45885" name="Helios Thrower - Focus">
+    <set name="icon" value="icon.weapon_castron_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45886" name="Helios Shooter - Focus">
+    <set name="icon" value="icon.weapon_stilla_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45887" name="Helios Buster - Acumen">
+    <set name="icon" value="icon.weaon_serapear_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45888" name="Helios Caster - Acumen">
+    <set name="icon" value="icon.weapon_pilia_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="45889" name="Helios Retributer - Acumen">
+    <set name="icon" value="icon.weapon_shaelon_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45890" name="Helios Dual sword - Damage Up">
+    <set name="icon" value="icon.weapon_r_dualsword_i21" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45891" name="Helios Dual Dagger - Focus">
+    <set name="icon" value="icon.weapon_r_dualdagger_i21" />
+    <set name="type" value="dualdagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="45892" name="Helios Dual Blunet Weapon - Damage Up">
+    <set name="icon" value="icon.weapon_r_dualblunt_i21" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="45893" name="Magic Armor Set (R-grade) Pack">
+    <set name="icon" value="icon.etc_treasure_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45894" name="Filled Necklace (Valakas Energy)">
+    <set name="icon" value="icon.accessory_necklace_of_valakas_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="45895" name="Filled Necklace (Frintezza Energy)">
+    <set name="icon" value="icon.accessory_necklace_of_frintessa_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="45896" name="Filled Earring (Antharas Energy)">
+    <set name="icon" value="icon.accessory_earring_of_antaras_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="45897" name="Filled Earring (Zaken Energy)">
+    <set name="icon" value="icon.accessory_earring_of_zaken_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="45898" name="Filled Ring (Baium Energy)">
+    <set name="icon" value="icon.accessory_ring_of_baium_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="45899" name="Filled Ring (Queen Ant Energy)">
+    <set name="icon" value="icon.accessory_ring_of_queen_ant_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <etcitem id="45900" name="Kokko's Egg">
+    <set name="icon" value="icon.egg_white" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45901" name="Kokko's Shiny Egg">
+    <set name="icon" value="icon.egg_twinkle" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45902" name="Kokko's Golden Egg">
+    <set name="icon" value="icon.egg_gold" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45903" name="Apocalypse Weapon Pack Coupon">
+    <set name="icon" value="icon.fairy_encounter_letter" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="45904" name="Pippi's Shirt">
+    <set name="icon" value="icon.r1_shirt_i01" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="45905" name="Kokko's Shirt">
+    <set name="icon" value="icon.r1_shirt_i01" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="45906" name="Pippi's Belt">
+    <set name="icon" value="icon.belt_i03" />
+    <set name="tradeable" value="false" />
+    <slot id="WAIST" />
+  </armor>
+  <armor id="45907" name="Kokko's Belt">
+    <set name="icon" value="icon.belt_i03" />
+    <set name="tradeable" value="false" />
+    <slot id="WAIST" />
+  </armor>
+  <etcitem id="45908" name="Apocalypse Shaper Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45909" name="Apocalypse Cutter Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45910" name="Apocalypse Slasher Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45911" name="Apocalypse Avenger Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45912" name="Apocalypse Fighter Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45913" name="Apocalypse Stormer Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45914" name="Apocalypse Thrower Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45915" name="Apocalypse Shooter Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45916" name="Apocalypse Buster Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45917" name="Apocalypse Caster Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45918" name="Apocalypse Retributer Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45919" name="Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45920" name="Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45921" name="Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.ev_charge_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45922" name="Spellbook: Dignity of the Exalted">
+    <set name="icon" value="icon.giant_book_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45923" name="Spellbook: Dignity of the Exalted">
+    <set name="icon" value="icon.giant_book_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45924" name="Spellbook: Dignity of the Exalted">
+    <set name="icon" value="icon.giant_book_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45925" name="Spellbook: Belief of the Exalted">
+    <set name="icon" value="icon.giant_book_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45926" name="Spellbook: Blessing of the Exalted">
+    <set name="icon" value="icon.giant_book_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45927" name="Spellbook: Summon Battle Potion">
+    <set name="icon" value="icon.giant_book_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45928" name="Spellbook: Favor of the Exalted">
+    <set name="icon" value="icon.giant_book_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45929" name="Spirit Stone">
+    <set name="icon" value="icon.renewal_mineral_46" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45930" name="Mid-grade Spirit Stone">
+    <set name="icon" value="icon.renewal_mineral_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45931" name="High-grade Spirit Stone">
+    <set name="icon" value="icon.renewal_mineral_r95" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45932" name="Top-grade Spirit Stone">
+    <set name="icon" value="icon.renewal_mineral_r99" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45933" name="Accessory Spirit Stone">
+    <set name="icon" value="icon.renewal_mineral_46" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45934" name="Mid-grade Accessory Spirit Stone">
+    <set name="icon" value="icon.renewal_mineral_r" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45935" name="High-grade Accessory Spirit Stone">
+    <set name="icon" value="icon.renewal_mineral_r95" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45936" name="Top-grade Accessory Spirit Stone">
+    <set name="icon" value="icon.renewal_mineral_r99" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45937" name="Hair Accessory Spirit Stone">
+    <set name="icon" value="icon.renewal_mineral_hairacc" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45938" name="Dimensional Coin">
+    <set name="icon" value="icon.etc_gold_knight_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45939" name="Dimensional Coin">
+    <set name="icon" value="icon.etc_gold_knight_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45940" name="Dimensional Coin">
+    <set name="icon" value="icon.etc_gold_knight_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45941" name="Dimensional Coin">
+    <set name="icon" value="icon.etc_gold_knight_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45942" name="Atelia Energy Combination Box">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45943" name="Enhanced Atelia Energy Combination Box">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45944" name="Dimensional Hero's Supply Box">
+    <set name="icon" value="icon.new_user_box" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45945" name="Battle Recovery Potion">
+    <set name="icon" value="icon.etc_potion_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45946" name="Sirra's Blade of Fortune Capsule">
+    <set name="icon" value="icon.weapon_sirr_blade_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45947" name="Damascus Sword of Fortune Capsule">
+    <set name="icon" value="icon.weapon_sword_of_damascus_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45948" name="Samurai Long Sword of Fortune Capsule">
+    <set name="icon" value="icon.weapon_samurai_longsword_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45949" name="Dynasty Sword of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dynasty_blade_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45950" name="Tallum Blade*Damascus of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45951" name="Samurai Long Sword*Samurai Long Sword of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45952" name="Spirit Sword*Raid Sword of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45953" name="Dynasty Dual sword of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45954" name="Tiphon's Spear of Fortune Capsule">
+    <set name="icon" value="icon.weapon_tiphon_spear_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45955" name="Lance of Fortune Capsule">
+    <set name="icon" value="icon.weapon_lancia_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45956" name="Orcish Poleaxe of Fortune Capsule">
+    <set name="icon" value="icon.weapon_orcish_poleaxe_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45957" name="Dynasty Halberd of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dynasty_spear_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45958" name="Barakiel's Axe of Fortune Capsule">
+    <set name="icon" value="icon.weapon_barakiel_axe_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45959" name="Art of Battle Axe of Fortune Capsule">
+    <set name="icon" value="icon.weapon_art_of_battle_axe_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45960" name="Yaksa Mace of Fortune Capsule">
+    <set name="icon" value="icon.weapon_yaksa_mace_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45961" name="Dynasty Cudgel of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dynasty_spear_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45962" name="Sword of Ipos of Fortune Capsule">
+    <set name="icon" value="icon.weapon_sword_of_ipos_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45963" name="Guardian's Sword of Fortune Capsule">
+    <set name="icon" value="icon.weapon_guardians_sword_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45964" name="Berserker Blade of Fortune Capsule">
+    <set name="icon" value="icon.weapon_berserker_blade_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45965" name="Dynasty Blade of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dynasty_twohand_sword_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45966" name="Sobekk's Hurricane of Fortune Capsule">
+    <set name="icon" value="icon.weapon_sobekk_hurricane_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45967" name="Bellion Cestus of Fortune Capsule">
+    <set name="icon" value="icon.weapon_bellion_cestus_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45968" name="Great Pata of Fortune Capsule">
+    <set name="icon" value="icon.weapon_great_pata_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45969" name="Dynasty Bagh-Nakh of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dynasty_jamadhr_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45970" name="Naga Storm of Fortune Capsule">
+    <set name="icon" value="icon.weapon_naga_storm_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45971" name="Kris of Fortune Capsule">
+    <set name="icon" value="icon.weapon_kris_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45972" name="Dark Screamer of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dark_screamer_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45973" name="Dynasty Knife of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dynasty_dagger_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45974" name="Shyeed's Bow of Fortune Capsule">
+    <set name="icon" value="icon.weapon_shyid_bow_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45975" name="Bow of Peril of Fortune Capsule">
+    <set name="icon" value="icon.weapon_hazard_bow_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45976" name="Eminence Bow of Fortune Capsule">
+    <set name="icon" value="icon.weapon_eminence_bow_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45977" name="Dynasty Bow of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dynasty_bow_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45978" name="Sword of Miracles of Fortune Capsule">
+    <set name="icon" value="icon.weapon_sword_of_miracle_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45979" name="Wizard's Tear of Fortune Capsule">
+    <set name="icon" value="icon.weapon_tears_of_wizard_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45980" name="Homunkulus' Sword of Fortune Capsule">
+    <set name="icon" value="icon.weapon_homunkuluss_sword_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45981" name="Dynasty Phantom of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dynasty_magic_sword_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45982" name="Durendal of Fortune Capsule">
+    <set name="icon" value="icon.weapon_death_bringer_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45983" name="Dismantler of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dismantler_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45984" name="Saber Tooth of Fortune Capsule">
+    <set name="icon" value="icon.weapon_invincible_blade_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45985" name="Dynasty Ancient Sword of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dynasty_ancient_sword_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45986" name="Éclair Bijou of Fortune Capsule">
+    <set name="icon" value="icon.weapon_greed_stinger_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45987" name="Colichemarde of Fortune Capsule">
+    <set name="icon" value="icon.weapon_colichemarde_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45988" name="Admiral's Estoc of Fortune Capsule">
+    <set name="icon" value="icon.weapon_blink_slasher_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45989" name="Dynasty Rapier of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dynasty_rapier_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45990" name="Screaming Vengeance of Fortune Capsule">
+    <set name="icon" value="icon.weapon_soul_shooter_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45991" name="Hell Hound of Fortune Capsule">
+    <set name="icon" value="icon.weapon_hell_hound_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45992" name="Sharpshooter of Fortune Capsule">
+    <set name="icon" value="icon.weapon_taslam_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45993" name="Dynasty Crossbow of Fortune Capsule">
+    <set name="icon" value="icon.weapon_dynasty_crossbow_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45994" name="Apocalypse Shaper Focus Capsule">
+    <set name="icon" value="icon.weapon_phasian_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45995" name="Apocalypse Cutter Focus Capsule">
+    <set name="icon" value="icon.weapon_pasis_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45996" name="Apocalypse Slasher Focus Capsule">
+    <set name="icon" value="icon.weapon_volver_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45997" name="Apocalypse Dual sword Damage Up Capsule">
+    <set name="icon" value="icon.weapon_r_dualsword_i21" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45998" name="Apocalypse Dual Dagger Focus Capsule">
+    <set name="icon" value="icon.weapon_r_dualdagger_i21" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="45999" name="Apocalypse Dual Blunt Weapon Damage Up Capsule">
+    <set name="icon" value="icon.weapon_r_dualblunt_i21" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+</list>

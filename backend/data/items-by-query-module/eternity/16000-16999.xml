@@ -1,0 +1,3366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <weapon id="16000" name="Jade Claw {PvP} - Health">
+    <set name="icon" value="icon.weapon_jademice_claw_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16001" name="Demitelum {PvP} - Haste">
+    <set name="icon" value="icon.weapon_ghostcleaner_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16002" name="Demitelum {PvP} - Health">
+    <set name="icon" value="icon.weapon_ghostcleaner_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16003" name="Demitelum {PvP} - Guidance">
+    <set name="icon" value="icon.weapon_ghostcleaner_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16004" name="Sacredium {PvP} - Mana Up">
+    <set name="icon" value="icon.weapon_sacredumors_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16005" name="Sacredium {PvP} - Acumen">
+    <set name="icon" value="icon.weapon_sacredumors_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16006" name="Sacredium {PvP} - MP Regeneration">
+    <set name="icon" value="icon.weapon_sacredumors_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16007" name="Cyclic Cane {PvP} - Magic Hold">
+    <set name="icon" value="icon.weapon_psyskilt_cane_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16008" name="Cyclic Cane {PvP} - Empower">
+    <set name="icon" value="icon.weapon_psyskilt_cane_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16009" name="Cyclic Cane {PvP} - MP Regeneration">
+    <set name="icon" value="icon.weapon_psyskilt_cane_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16010" name="Archangel Sword {PvP} - Magic Hold">
+    <set name="icon" value="icon.weapon_archangel_sword_i001" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16011" name="Archangel Sword {PvP} - Mana Up">
+    <set name="icon" value="icon.weapon_archangel_sword_i001" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16012" name="Archangel Sword {PvP} - Acumen">
+    <set name="icon" value="icon.weapon_archangel_sword_i001" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16013" name="Recurve Thorne Bow {PvP} - Critical Slow">
+    <set name="icon" value="icon.weapon_recurvethorne_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16014" name="Recurve Thorne Bow {PvP} - Cheap Shot">
+    <set name="icon" value="icon.weapon_recurvethorne_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16015" name="Recurve Thorne Bow {PvP} - Focus">
+    <set name="icon" value="icon.weapon_recurvethorne_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16016" name="Heavenstare Rapier {PvP} - Focus">
+    <set name="icon" value="icon.weapon_heavenstair_rapier_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16017" name="Heavenstare Rapier {PvP} - Haste">
+    <set name="icon" value="icon.weapon_heavenstair_rapier_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16018" name="Heavenstare Rapier {PvP} - Health">
+    <set name="icon" value="icon.weapon_heavenstair_rapier_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16019" name="Pyseal Blade {PvP} - Focus">
+    <set name="icon" value="icon.weapon_pyseal_blade_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16020" name="Pyseal Blade {PvP} - Haste">
+    <set name="icon" value="icon.weapon_pyseal_blade_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16021" name="Pyseal Blade {PvP} - Health">
+    <set name="icon" value="icon.weapon_pyseal_blade_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16022" name="Thorne Crossbow {PvP} - Critical Slow">
+    <set name="icon" value="icon.weapon_thorne_crossbow_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16023" name="Thorne Crossbow {PvP} - Cheap Shot">
+    <set name="icon" value="icon.weapon_thorne_crossbow_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16024" name="Thorne Crossbow {PvP} - Focus">
+    <set name="icon" value="icon.weapon_thorne_crossbow_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <armor id="16025" name="Necklace of Freya">
+    <set name="icon" value="icon.accessary_queen_of_ice_necklace_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="16026" name="Blessed Necklace of Freya">
+    <set name="icon" value="icon.accessary_queen_of_ice_necklace_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <etcitem id="16027" name="Bottle of Freya's Soul">
+    <set name="icon" value="icon.etc_recovery_set_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16028" name="Vesper Cutter of Chaos">
+    <set name="icon" value="icon.weapon_vesper_cutter_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16029" name="Vesper Slasher of Chaos">
+    <set name="icon" value="icon.weapon_vesper_slasher_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16030" name="Vesper Buster of Chaos">
+    <set name="icon" value="icon.weapon_vesper_burster_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16031" name="Vesper Shaper of Chaos">
+    <set name="icon" value="icon.weapon_vesper_shaper_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16032" name="Vesper Fighter of Chaos">
+    <set name="icon" value="icon.weapon_vesper_fighter_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16033" name="Vesper Stormer of Chaos">
+    <set name="icon" value="icon.weapon_vesper_stormer_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16034" name="Vesper Avenger of Chaos">
+    <set name="icon" value="icon.weapon_vesper_avenger_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16035" name="Vesper Retributer of Chaos">
+    <set name="icon" value="icon.weapon_vesper_retributer_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16036" name="Vesper Caster of Chaos">
+    <set name="icon" value="icon.weapon_vesper_caster_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16037" name="Vesper Singer of Chaos">
+    <set name="icon" value="icon.weapon_vesper_singer_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16038" name="Vesper Thrower of Chaos">
+    <set name="icon" value="icon.weapon_vesper_thrower_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16039" name="Vesper Pincer of Chaos">
+    <set name="icon" value="icon.weapon_vesper_pincer_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16040" name="Vesper Shooter of Chaos">
+    <set name="icon" value="icon.weapon_vesper_schutze_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16041" name="Vesper Nagan of Chaos">
+    <set name="icon" value="icon.weapon_vesper_nagen_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="16042" name="Vesper Cutter - Thunder">
+    <set name="icon" value="icon.weapon_vesper_cutter_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16043" name="Vesper Slasher - Gale">
+    <set name="icon" value="icon.weapon_vesper_slasher_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16044" name="Vesper Buster - Cleverness">
+    <set name="icon" value="icon.weapon_vesper_burster_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16045" name="Vesper Shaper - Gale">
+    <set name="icon" value="icon.weapon_vesper_shaper_i00" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16046" name="Vesper Fighter - Gale">
+    <set name="icon" value="icon.weapon_vesper_fighter_i00" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16047" name="Vesper Stormer - Thunder">
+    <set name="icon" value="icon.weapon_vesper_stormer_i00" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16048" name="Vesper Avenger - Landslide">
+    <set name="icon" value="icon.weapon_vesper_avenger_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16049" name="Vesper Retributer - Gale">
+    <set name="icon" value="icon.weapon_vesper_retributer_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16050" name="Vesper Caster - Cleverness">
+    <set name="icon" value="icon.weapon_vesper_caster_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16051" name="Vesper Singer - Hail">
+    <set name="icon" value="icon.weapon_vesper_singer_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16052" name="Vesper Thrower - Clairvoyance">
+    <set name="icon" value="icon.weapon_vesper_thrower_i00" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16053" name="Vesper Pincer - Thunder">
+    <set name="icon" value="icon.weapon_vesper_pincer_i00" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16054" name="Vesper Shooter - Clairvoyance">
+    <set name="icon" value="icon.weapon_vesper_schutze_i00" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16055" name="Vesper Nagan - Gale">
+    <set name="icon" value="icon.weapon_vesper_nagen_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16056" name="Vesper Cutter - Thunder - Haste">
+    <set name="icon" value="icon.weapon_vesper_cutter_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16057" name="Vesper Cutter - Thunder - Health">
+    <set name="icon" value="icon.weapon_vesper_cutter_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16058" name="Vesper Cutter - Thunder - Focus">
+    <set name="icon" value="icon.weapon_vesper_cutter_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16059" name="Vesper Slasher - Gale - Haste">
+    <set name="icon" value="icon.weapon_vesper_slasher_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16060" name="Vesper Slasher - Gale - Health">
+    <set name="icon" value="icon.weapon_vesper_slasher_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16061" name="Vesper Slasher - Gale - Focus">
+    <set name="icon" value="icon.weapon_vesper_slasher_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16062" name="Vesper Buster - Cleverness - Mana Up">
+    <set name="icon" value="icon.weapon_vesper_burster_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16063" name="Vesper Buster - Cleverness - Acumen">
+    <set name="icon" value="icon.weapon_vesper_burster_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16064" name="Vesper Buster - Cleverness - Magic Hold">
+    <set name="icon" value="icon.weapon_vesper_burster_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16065" name="Vesper Shaper - Gale - Critical Damage">
+    <set name="icon" value="icon.weapon_vesper_shaper_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16066" name="Vesper Shaper - Gale - HP Drain">
+    <set name="icon" value="icon.weapon_vesper_shaper_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16067" name="Vesper Shaper - Gale - Haste">
+    <set name="icon" value="icon.weapon_vesper_shaper_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16068" name="Vesper Fighter - Gale - Focus">
+    <set name="icon" value="icon.weapon_vesper_fighter_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16069" name="Vesper Fighter - Gale - Health">
+    <set name="icon" value="icon.weapon_vesper_fighter_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16070" name="Vesper Fighter - Gale - Critical Stun">
+    <set name="icon" value="icon.weapon_vesper_fighter_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16071" name="Vesper Stormer - Thunder - Health">
+    <set name="icon" value="icon.weapon_vesper_stormer_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16072" name="Vesper Stormer - Thunder - Guidance">
+    <set name="icon" value="icon.weapon_vesper_stormer_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16073" name="Vesper Stormer - Thunder - Haste">
+    <set name="icon" value="icon.weapon_vesper_stormer_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16074" name="Vesper Avenger - Landslide - HP Drain">
+    <set name="icon" value="icon.weapon_vesper_avenger_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16075" name="Vesper Avenger - Landslide - Health">
+    <set name="icon" value="icon.weapon_vesper_avenger_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16076" name="Vesper Avenger - Landslide - HP Regeneration">
+    <set name="icon" value="icon.weapon_vesper_avenger_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16077" name="Vesper Retributer - Gale - HP Regeneration">
+    <set name="icon" value="icon.weapon_vesper_retributer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16078" name="Vesper Retributer - Gale - Health">
+    <set name="icon" value="icon.weapon_vesper_retributer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16079" name="Vesper Retributer - Gale - HP Drain">
+    <set name="icon" value="icon.weapon_vesper_retributer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16080" name="Vesper Caster - Cleverness - Acumen">
+    <set name="icon" value="icon.weapon_vesper_caster_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16081" name="Vesper Caster - Cleverness - MP Regeneration">
+    <set name="icon" value="icon.weapon_vesper_caster_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16082" name="Vesper Caster - Cleverness - Mana Up">
+    <set name="icon" value="icon.weapon_vesper_caster_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16083" name="Vesper Singer - Hail - Empower">
+    <set name="icon" value="icon.weapon_vesper_singer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16084" name="Vesper Singer - Hail - MP Regeneration">
+    <set name="icon" value="icon.weapon_vesper_singer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16085" name="Vesper Singer - Hail - Magic Hold">
+    <set name="icon" value="icon.weapon_vesper_singer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16086" name="Vesper Thrower - Clairvoyance - Cheap Shot">
+    <set name="icon" value="icon.weapon_vesper_thrower_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16087" name="Vesper Thrower - Clairvoyance - Focus">
+    <set name="icon" value="icon.weapon_vesper_thrower_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16088" name="Vesper Thrower - Clairvoyance - Critical Slow">
+    <set name="icon" value="icon.weapon_vesper_thrower_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16089" name="Vesper Pincer - Thunder - Haste">
+    <set name="icon" value="icon.weapon_vesper_pincer_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16090" name="Vesper Pincer - Thunder - Health">
+    <set name="icon" value="icon.weapon_vesper_pincer_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16091" name="Vesper Pincer - Thunder - Focus">
+    <set name="icon" value="icon.weapon_vesper_pincer_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16092" name="Vesper Shooter - Clairvoyance - Cheap Shot">
+    <set name="icon" value="icon.weapon_vesper_schutze_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16093" name="Vesper Shooter - Clairvoyance - Focus">
+    <set name="icon" value="icon.weapon_vesper_schutze_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16094" name="Vesper Shooter - Clairvoyance - Critical Slow">
+    <set name="icon" value="icon.weapon_vesper_schutze_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16095" name="Vesper Nagan - Gale - Haste">
+    <set name="icon" value="icon.weapon_vesper_nagen_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16096" name="Vesper Nagan - Gale - Health">
+    <set name="icon" value="icon.weapon_vesper_nagen_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16097" name="Vesper Nagan - Gale - Focus">
+    <set name="icon" value="icon.weapon_vesper_nagen_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <armor id="16098" name="Refined Black Skeleton Circlet">
+    <set name="icon" value="icon.accessory_animal_skeleton_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="16099" name="Refined Orange Skeleton Circlet">
+    <set name="icon" value="icon.accessory_animal_feather_skeleton_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="16100" name="Refined Green Skeleton Circlet">
+    <set name="icon" value="icon.accessory_animal_warrior_skeleton_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="16101" name="Refined Brown Skeleton Circlet">
+    <set name="icon" value="icon.accessory_animal_rage_skeleton_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="16102" name="Refined Shark Hat">
+    <set name="icon" value="icon.accessory_shark_of_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="16103" name="Chic Gold Horn Cap">
+    <set name="icon" value="icon.accessory_horn01_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="16104" name="Chic Silver Horn Cap">
+    <set name="icon" value="icon.accessory_horn01_hat_i01" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="16105" name="Refined Penguin Hat">
+    <set name="icon" value="icon.accessory_penguin_of_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="16106" name="Refined Brown Turban">
+    <set name="icon" value="icon.accessory_turban_yellow_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="16107" name="Refined Yellow Turban">
+    <set name="icon" value="icon.accessory_turban_yellow_hat_i01" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="16108" name="Refined Turtle Hat">
+    <set name="icon" value="icon.accessory_turtle_of_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="16109" name="Refined Cow Hat">
+    <set name="icon" value="icon.accessory_cow_of_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="16110" name="Recipe - Refined Black Skeleton Circlet (10%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16111" name="Recipe - Refined Orange Skeleton Circlet (10%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16112" name="Recipe - Refined Green Skeleton Circlet (10%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16113" name="Recipe - Refined Brown Skeleton Circlet (10%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16114" name="Recipe - Refined Shark Hat (10%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16115" name="Recipe - Chick Gold Horn Cap (10%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16116" name="Recipe - Chick Silver Horn Cap (10%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16117" name="Recipe - Refined Penguin Hat (10%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16118" name="Recipe - Refined Brown Turban (10%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16119" name="Recipe - Refined Yellow Turban (10%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16120" name="Recipe - Refined Turtle Hat (10%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16121" name="Recipe - Refined Cow Hat (10%)">
+    <set name="icon" value="icon.etc_recipe_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16122" name="Refined Black Skeleton Circlet Piece">
+    <set name="icon" value="icon.etc_broken_crystal_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16123" name="Refined Orange Skeleton Circlet Piece">
+    <set name="icon" value="icon.etc_broken_crystal_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16124" name="Refined Green Skeleton Circlet Piece">
+    <set name="icon" value="icon.etc_broken_crystal_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16125" name="Refined Brown Skeleton Circlet Piece">
+    <set name="icon" value="icon.etc_broken_crystal_green_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16126" name="Fabric of Refined Shark Hat">
+    <set name="icon" value="icon.etc_piece_of_cloth_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16127" name="Fabric of Chic Gold Horn Cap">
+    <set name="icon" value="icon.etc_piece_of_cloth_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16128" name="Fabric of Chic Silver Horn Cap">
+    <set name="icon" value="icon.etc_piece_of_cloth_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16129" name="Fabric of Refined Penguin Hat">
+    <set name="icon" value="icon.etc_piece_of_cloth_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16130" name="Fabric of Refined Brown Turban">
+    <set name="icon" value="icon.etc_piece_of_cloth_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16131" name="Fabric of Refined Yellow Turban">
+    <set name="icon" value="icon.etc_piece_of_cloth_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16132" name="Fabric of Refined Turtle Hat">
+    <set name="icon" value="icon.etc_piece_of_cloth_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16133" name="Fabric of Refined Cow Hat">
+    <set name="icon" value="icon.etc_piece_of_cloth_blue_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="16134" name="Vesper Cutter- Thunder {PvP}">
+    <set name="icon" value="icon.weapon_vesper_cutter_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16135" name="Vesper Slasher- Gale {PvP}">
+    <set name="icon" value="icon.weapon_vesper_slasher_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16136" name="Vesper Buster - Cleverness {PvP}">
+    <set name="icon" value="icon.weapon_vesper_burster_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16137" name="Vesper Shaper - Gale {PvP}">
+    <set name="icon" value="icon.weapon_vesper_shaper_i00" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16138" name="Vesper Fighter - Gale {PvP}">
+    <set name="icon" value="icon.weapon_vesper_fighter_i00" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16139" name="Vesper Stormer - Thunder {PvP}">
+    <set name="icon" value="icon.weapon_vesper_stormer_i00" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16140" name="Vesper Avenger - Landslide {PvP}">
+    <set name="icon" value="icon.weapon_vesper_avenger_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16141" name="Vesper Retributer - Gale {PvP}">
+    <set name="icon" value="icon.weapon_vesper_retributer_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16142" name="Vesper Caster - Cleverness {PvP}">
+    <set name="icon" value="icon.weapon_vesper_caster_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16143" name="Vesper Singer - Hail {PvP}">
+    <set name="icon" value="icon.weapon_vesper_singer_i00" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16144" name="Vesper Thrower - Clairvoyance {PvP}">
+    <set name="icon" value="icon.weapon_vesper_thrower_i00" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16145" name="Vesper Pincer- Thunder {PvP}">
+    <set name="icon" value="icon.weapon_vesper_pincer_i00" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16146" name="Vesper Shooter - Clairvoyance {PvP}">
+    <set name="icon" value="icon.weapon_vesper_schutze_i00" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16147" name="Vesper Nagan - Gale {PvP}">
+    <set name="icon" value="icon.weapon_vesper_nagen_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16148" name="Vesper Dual Daggers - Gale">
+    <set name="icon" value="icon.dual_dagger_i00" />
+    <set name="type" value="dualdagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16149" name="Vesper Dual Daggers - Gale {PvP}">
+    <set name="icon" value="icon.dual_dagger_i00" />
+    <set name="type" value="dualdagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16150" name="Vesper Dual Sword - Destruction">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16151" name="Vesper Dual Sword - Destruction {PvP}">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16152" name="Skull Edge Dual Daggers">
+    <set name="icon" value="icon.dual_dagger_i00" />
+    <set name="type" value="dualdagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16153" name="Skull Edge Dual Daggers {PvP}">
+    <set name="icon" value="icon.dual_dagger_i00" />
+    <set name="type" value="dualdagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16154" name="Periel Dual Sword">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16155" name="Periel Dual Sword {PvP}">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16156" name="Mamba Edge Dual Daggers">
+    <set name="icon" value="icon.dual_dagger_i00" />
+    <set name="type" value="dualdagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16157" name="Mamba Edge Dual Daggers {PvP}">
+    <set name="icon" value="icon.dual_dagger_i00" />
+    <set name="type" value="dualdagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16158" name="Eternal Core Dual Sword">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16159" name="Eternal Core Dual Sword {PvP}">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="16160" name="Life Stone - Level 85">
+    <set name="icon" value="icon.etc_mineral_general_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16161" name="Mid-Grade Life Stone - Level 85">
+    <set name="icon" value="icon.etc_mineral_special_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16162" name="High-Grade Life Stone - Level 85">
+    <set name="icon" value="icon.etc_mineral_rare_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16163" name="Top-Grade Life Stone - Level 85">
+    <set name="icon" value="icon.etc_mineral_unique_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16164" name="Life Stone - Level 86">
+    <set name="icon" value="icon.etc_mineral_general_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16165" name="Mid-Grade Life Stone - Level 86">
+    <set name="icon" value="icon.etc_mineral_special_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16166" name="High-Grade Life Stone - Level 86">
+    <set name="icon" value="icon.etc_mineral_rare_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16167" name="Top-Grade Life Stone - Level 86">
+    <set name="icon" value="icon.etc_mineral_unique_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="16168" name="Elegia Breastplate {PvP}">
+    <set name="icon" value="icon.armor_t97_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16169" name="Elegia Leather Breastplate {PvP}">
+    <set name="icon" value="icon.armor_t98_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16170" name="Elegia Tunic {PvP}">
+    <set name="icon" value="icon.armor_t99_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16171" name="Vorpal Breastplate {PvP}">
+    <set name="icon" value="icon.armor_t94_u_i03" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16172" name="Vorpal Leather Breastplate {PvP}">
+    <set name="icon" value="icon.armor_t95_u_i03" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16173" name="Vorpal Tunic {PvP}">
+    <set name="icon" value="icon.armor_t96_u_i03" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16174" name="Moirai Breastplate {PvP}">
+    <set name="icon" value="icon.armor_t100_u_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16175" name="Moirai Leather Breastplate {PvP}">
+    <set name="icon" value="icon.armor_t101_u_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16176" name="Moirai Tunic {PvP}">
+    <set name="icon" value="icon.armor_t102_u_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <etcitem id="16177" name="Accessory Type Life Stone - Level 85">
+    <set name="icon" value="icon.etc_mineral_general_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16178" name="Accessory Type Life Stone - Level 86">
+    <set name="icon" value="icon.etc_mineral_general_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="16179" name="Vesper Cutter- Thunder {PvP} - Haste">
+    <set name="icon" value="icon.weapon_vesper_cutter_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16180" name="Vesper Cutter- Thunder {PvP} - Health">
+    <set name="icon" value="icon.weapon_vesper_cutter_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16181" name="Vesper Cutter- Thunder {PvP} - Focus">
+    <set name="icon" value="icon.weapon_vesper_cutter_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16182" name="Vesper Slasher- Gale {PvP} - Haste">
+    <set name="icon" value="icon.weapon_vesper_slasher_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16183" name="Vesper Slasher- Gale {PvP} - Health">
+    <set name="icon" value="icon.weapon_vesper_slasher_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16184" name="Vesper Slasher- Gale {PvP} - Focus">
+    <set name="icon" value="icon.weapon_vesper_slasher_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16185" name="Vesper Buster - Cleverness {PvP} - Mana Up">
+    <set name="icon" value="icon.weapon_vesper_burster_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16186" name="Vesper Buster - Cleverness {PvP} - Acumen">
+    <set name="icon" value="icon.weapon_vesper_burster_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16187" name="Vesper Buster - Cleverness {PvP} - Magic Hold">
+    <set name="icon" value="icon.weapon_vesper_burster_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16188" name="Vesper Shaper - Gale {PvP} - Critical Damage">
+    <set name="icon" value="icon.weapon_vesper_shaper_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16189" name="Vesper Shaper - Gale {PvP} - HP Drain">
+    <set name="icon" value="icon.weapon_vesper_shaper_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16190" name="Vesper Shaper - Gale {PvP} - Haste">
+    <set name="icon" value="icon.weapon_vesper_shaper_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16191" name="Vesper Fighter - Gale {PvP} - Focus">
+    <set name="icon" value="icon.weapon_vesper_fighter_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16192" name="Vesper Fighter - Gale {PvP} - Health">
+    <set name="icon" value="icon.weapon_vesper_fighter_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16193" name="Vesper Fighter - Gale {PvP} - Critical Stun">
+    <set name="icon" value="icon.weapon_vesper_fighter_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16194" name="Vesper Stormer - Thunder {PvP} - Health">
+    <set name="icon" value="icon.weapon_vesper_stormer_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16195" name="Vesper Stormer - Thunder {PvP} - Guidance">
+    <set name="icon" value="icon.weapon_vesper_stormer_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16196" name="Vesper Stormer - Thunder {PvP} - Haste">
+    <set name="icon" value="icon.weapon_vesper_stormer_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16197" name="Vesper Avenger - Landslide {PvP} - HP Drain">
+    <set name="icon" value="icon.weapon_vesper_avenger_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16198" name="Vesper Avenger - Landslide {PvP} - Health">
+    <set name="icon" value="icon.weapon_vesper_avenger_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16199" name="Vesper Avenger - Landslide {PvP} - HP Regeneration">
+    <set name="icon" value="icon.weapon_vesper_avenger_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16200" name="Vesper Retributer - Gale {PvP} - HP Regeneration">
+    <set name="icon" value="icon.weapon_vesper_retributer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16201" name="Vesper Retributer - Gale {PvP} - Health">
+    <set name="icon" value="icon.weapon_vesper_retributer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16202" name="Vesper Retributer - Gale {PvP} - HP Drain">
+    <set name="icon" value="icon.weapon_vesper_retributer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16203" name="Vesper Caster - Cleverness {PvP} - Acumen">
+    <set name="icon" value="icon.weapon_vesper_caster_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16204" name="Vesper Caster - Cleverness {PvP} - MP Regeneration">
+    <set name="icon" value="icon.weapon_vesper_caster_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16205" name="Vesper Caster - Cleverness {PvP} - Mana Up">
+    <set name="icon" value="icon.weapon_vesper_caster_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16206" name="Vesper Singer - Hail {PvP} - Empower">
+    <set name="icon" value="icon.weapon_vesper_singer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16207" name="Vesper Singer - Hail {PvP} - MP Regeneration">
+    <set name="icon" value="icon.weapon_vesper_singer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16208" name="Vesper Singer - Hail {PvP} - Magic Hold">
+    <set name="icon" value="icon.weapon_vesper_singer_i01" />
+    <set name="type" value="bigblunt" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16209" name="Vesper Thrower - Clairvoyance {PvP} - Cheap Shot">
+    <set name="icon" value="icon.weapon_vesper_thrower_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16210" name="Vesper Thrower - Clairvoyance {PvP} - Focus">
+    <set name="icon" value="icon.weapon_vesper_thrower_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16211" name="Vesper Thrower - Clairvoyance {PvP} - Critical Slow">
+    <set name="icon" value="icon.weapon_vesper_thrower_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16212" name="Vesper Pincer- Thunder {PvP} - Haste">
+    <set name="icon" value="icon.weapon_vesper_pincer_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16213" name="Vesper Pincer- Thunder {PvP} - Health">
+    <set name="icon" value="icon.weapon_vesper_pincer_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16214" name="Vesper Pincer- Thunder {PvP} - Focus">
+    <set name="icon" value="icon.weapon_vesper_pincer_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16215" name="Vesper Shooter - Clairvoyance {PvP} - Cheap Shot">
+    <set name="icon" value="icon.weapon_vesper_schutze_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16216" name="Vesper Shooter - Clairvoyance {PvP} - Focus">
+    <set name="icon" value="icon.weapon_vesper_schutze_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16217" name="Vesper Shooter - Clairvoyance {PvP} - Critical Slow">
+    <set name="icon" value="icon.weapon_vesper_schutze_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16218" name="Vesper Nagan - Gale {PvP} - Haste">
+    <set name="icon" value="icon.weapon_vesper_nagen_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16219" name="Vesper Nagan - Gale {PvP} - Health">
+    <set name="icon" value="icon.weapon_vesper_nagen_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16220" name="Vesper Nagan - Gale {PvP} - Focus">
+    <set name="icon" value="icon.weapon_vesper_nagen_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="16221" name="Sealed Moirai Helmet of Chaos">
+    <set name="icon" value="icon.armor_helmet_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16222" name="Sealed Moirai Leather Helmet of Chaos">
+    <set name="icon" value="icon.armor_leather_helmet_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16223" name="Sealed Moirai Circlet of Chaos">
+    <set name="icon" value="icon.armor_circlet_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16224" name="Sealed Moirai Breastplate of Chaos">
+    <set name="icon" value="icon.armor_t94_u_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16225" name="Sealed Moirai Leather Breastplate of Chaos">
+    <set name="icon" value="icon.armor_t95_u_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16226" name="Sealed Moirai Tunic of Chaos">
+    <set name="icon" value="icon.armor_t96_u_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16227" name="Sealed Moirai Gaiter of Chaos">
+    <set name="icon" value="icon.armor_t94_l_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16228" name="Sealed Moirai Leather Legging of Chaos">
+    <set name="icon" value="icon.armor_t95_l_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16229" name="Sealed Moirai Stockings of Chaos">
+    <set name="icon" value="icon.armor_t96_l_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16230" name="Sealed Moirai Gauntlet of Chaos">
+    <set name="icon" value="icon.armor_t94_g_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16231" name="Sealed Moirai Leather Gloves of Chaos">
+    <set name="icon" value="icon.armor_t95_g_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16232" name="Sealed Moirai Gloves of Chaos">
+    <set name="icon" value="icon.armor_t96_g_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16233" name="Sealed Moirai Boots of Chaos">
+    <set name="icon" value="icon.armor_t94_b_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16234" name="Sealed Moirai Leather Boots of Chaos">
+    <set name="icon" value="icon.armor_t95_b_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16235" name="Sealed Moirai Shoes of Chaos">
+    <set name="icon" value="icon.armor_t96_b_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16236" name="Sealed Moirai Shield of Chaos">
+    <set name="icon" value="icon.weapon_vesper_verteidiger_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16237" name="Sealed Moirai Sigil of Chaos">
+    <set name="icon" value="icon.verper_sigil_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16238" name="Sealed Vesper Helmet of Chaos">
+    <set name="icon" value="icon.armor_helmet_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16239" name="Sealed Vesper Leather Helmet of Chaos">
+    <set name="icon" value="icon.armor_leather_helmet_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16240" name="Sealed Vesper Circlet of Chaos">
+    <set name="icon" value="icon.armor_circlet_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16241" name="Sealed Vesper Breastplate of Chaos">
+    <set name="icon" value="icon.armor_t94_u_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16242" name="Sealed Vesper Leather Breastplate of Chaos">
+    <set name="icon" value="icon.armor_t95_u_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16243" name="Sealed Moirai Tunic of Chaos">
+    <set name="icon" value="icon.armor_t96_u_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16244" name="Sealed Vesper Gaiter of Chaos">
+    <set name="icon" value="icon.armor_t94_l_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16245" name="Sealed Vesper Leather Legging of Chaos">
+    <set name="icon" value="icon.armor_t95_l_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16246" name="Sealed Vesper Stockings of Chaos">
+    <set name="icon" value="icon.armor_t96_l_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16247" name="Sealed Vesper Gauntlet of Chaos">
+    <set name="icon" value="icon.armor_t94_g_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16248" name="Sealed Vesper Leather Gloves of Chaos">
+    <set name="icon" value="icon.armor_t95_g_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16249" name="Sealed Vesper Gloves of Chaos">
+    <set name="icon" value="icon.armor_t96_g_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16250" name="Sealed Vesper Boots of Chaos">
+    <set name="icon" value="icon.armor_t94_b_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16251" name="Sealed Vesper Leather Boots of Chaos">
+    <set name="icon" value="icon.armor_t95_b_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16252" name="Sealed Vesper Shoes of Chaos">
+    <set name="icon" value="icon.armor_t96_b_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16253" name="Sealed Vesper Shield of Chaos">
+    <set name="icon" value="icon.weapon_vesper_verteidiger_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16254" name="Sealed Vesper Sigil of Chaos">
+    <set name="icon" value="icon.armor_verper_sigil_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16255" name="Moirai Helmet of Chaos">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16256" name="Moirai Leather Helmet of Chaos">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16257" name="Moirai Circlet of Chaos">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16258" name="Moirai Breastplate of Chaos">
+    <set name="icon" value="icon.armor_t100_u_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16259" name="Moirai Leather Breastplate of Chaos">
+    <set name="icon" value="icon.armor_t101_u_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16260" name="Moirai Tunic of Chaos">
+    <set name="icon" value="icon.armor_t102_u_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16261" name="Moirai Gaiter of Chaos">
+    <set name="icon" value="icon.armor_t100_l_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16262" name="Moirai Leather Legging of Chaos">
+    <set name="icon" value="icon.armor_t101_l_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16263" name="Moirai Stockings of Chaos">
+    <set name="icon" value="icon.armor_t102_l_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16264" name="Moirai Gauntlet of Chaos">
+    <set name="icon" value="icon.armor_t100_g_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16265" name="Moirai Leather Gloves of Chaos">
+    <set name="icon" value="icon.armor_t101_g_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16266" name="Moirai Gloves of Chaos">
+    <set name="icon" value="icon.armor_t102_g_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16267" name="Moirai Boots of Chaos">
+    <set name="icon" value="icon.armor_t100_b_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16268" name="Moirai Leather Boots of Chaos">
+    <set name="icon" value="icon.armor_t101_b_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16269" name="Moirai Shoes of Chaos">
+    <set name="icon" value="icon.armor_t102_b_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16270" name="Moirai Shield of Chaos">
+    <set name="icon" value="icon.weapon_tysandy_shield_i01" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16271" name="Moirai Sigil of Chaos">
+    <set name="icon" value="icon.weapon_tysandy_sigil_i01" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16272" name="Vesper Helmet of Chaos">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16273" name="Vesper Leather Helmet of Chaos">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16274" name="Vesper Circlet of Chaos">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16275" name="Vesper Breastplate of Chaos">
+    <set name="icon" value="icon.armor_t94_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16276" name="Vesper Leather Breastplate of Chaos">
+    <set name="icon" value="icon.armor_t95_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16277" name="Vesper Tunic of Chaos">
+    <set name="icon" value="icon.armor_t96_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16278" name="Vesper Gaiter of Chaos">
+    <set name="icon" value="icon.armor_t94_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16279" name="Vesper Leather Legging of Chaos">
+    <set name="icon" value="icon.armor_t95_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16280" name="Vesper Stockings of Chaos">
+    <set name="icon" value="icon.armor_t96_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16281" name="Vesper Gauntlet of Chaos">
+    <set name="icon" value="icon.armor_t94_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16282" name="Vesper Leather Gloves of Chaos">
+    <set name="icon" value="icon.armor_t95_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16283" name="Vesper Gloves of Chaos">
+    <set name="icon" value="icon.armor_t96_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16284" name="Vesper Boots of Chaos">
+    <set name="icon" value="icon.armor_t94_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16285" name="Vesper Leather Boots of Chaos">
+    <set name="icon" value="icon.armor_t95_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16286" name="Vesper Shoes of Chaos">
+    <set name="icon" value="icon.armor_t96_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16287" name="Vesper Shield of Chaos">
+    <set name="icon" value="icon.weapon_vesper_verteidiger_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16288" name="Vesper Sigil of Chaos">
+    <set name="icon" value="icon.armor_verper_sigil_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="16289" name="Moirai Helmet">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16290" name="Moirai Leather Helmet">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16291" name="Moirai Circlet">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16292" name="Moirai Breastplate">
+    <set name="icon" value="icon.armor_t100_u_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16293" name="Moirai Leather Breastplate">
+    <set name="icon" value="icon.armor_t101_u_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16294" name="Moirai Tunic">
+    <set name="icon" value="icon.armor_t102_u_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16295" name="Moirai Gaiter">
+    <set name="icon" value="icon.armor_t100_l_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16296" name="Moirai Leather Legging">
+    <set name="icon" value="icon.armor_t101_l_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16297" name="Moirai Stockings">
+    <set name="icon" value="icon.armor_t102_l_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16298" name="Moirai Gauntlet">
+    <set name="icon" value="icon.armor_t100_g_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16299" name="Moirai Leather Gloves">
+    <set name="icon" value="icon.armor_t101_g_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16300" name="Moirai Gloves">
+    <set name="icon" value="icon.armor_t102_g_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16301" name="Moirai Boots">
+    <set name="icon" value="icon.armor_t100_b_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16302" name="Moirai Leather Boots">
+    <set name="icon" value="icon.armor_t101_b_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16303" name="Moirai Shoes">
+    <set name="icon" value="icon.armor_t102_b_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16304" name="Moirai Shield">
+    <set name="icon" value="icon.weapon_tysandy_shield_i01" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="16305" name="Moirai Sigil">
+    <set name="icon" value="icon.weapon_tysandy_sigil_i01" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="16306" name="Vesper Helmet">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16307" name="Vesper Leather Helmet">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16308" name="Vesper Circlet">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16309" name="Vesper Breastplate">
+    <set name="icon" value="icon.armor_t94_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16310" name="Vesper Leather Breastplate">
+    <set name="icon" value="icon.armor_t95_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16311" name="Vesper Tunic">
+    <set name="icon" value="icon.armor_t96_u_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16312" name="Vesper Gaiter">
+    <set name="icon" value="icon.armor_t94_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16313" name="Vesper Leather Legging">
+    <set name="icon" value="icon.armor_t95_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16314" name="Vesper Stockings">
+    <set name="icon" value="icon.armor_t96_l_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16315" name="Vesper Gauntlet">
+    <set name="icon" value="icon.armor_t94_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16316" name="Vesper Leather Gloves">
+    <set name="icon" value="icon.armor_t95_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16317" name="Vesper Gloves">
+    <set name="icon" value="icon.armor_t96_g_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16318" name="Vesper Boots">
+    <set name="icon" value="icon.armor_t94_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16319" name="Vesper Leather Boots">
+    <set name="icon" value="icon.armor_t95_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16320" name="Vesper Shoes">
+    <set name="icon" value="icon.armor_t96_b_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16321" name="Vesper Shield">
+    <set name="icon" value="icon.weapon_vesper_verteidiger_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="16322" name="Vesper Sigil">
+    <set name="icon" value="icon.verper_sigil_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="16323" name="Sealed Moirai Helmet">
+    <set name="icon" value="icon.armor_helmet_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16324" name="Sealed Moirai Leather Helmet">
+    <set name="icon" value="icon.armor_leather_helmet_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16325" name="Sealed Moirai Circlet">
+    <set name="icon" value="icon.armor_circlet_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16326" name="Sealed Moirai Breastplate">
+    <set name="icon" value="icon.armor_t94_u_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16327" name="Sealed Moirai Leather Breastplate">
+    <set name="icon" value="icon.armor_t95_u_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16328" name="Sealed Moirai Tunic">
+    <set name="icon" value="icon.armor_t96_u_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16329" name="Sealed Moirai Gaiter">
+    <set name="icon" value="icon.armor_t94_l_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16330" name="Sealed Moirai Leather Legging">
+    <set name="icon" value="icon.armor_t95_l_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16331" name="Sealed Moirai Stockings">
+    <set name="icon" value="icon.armor_t96_l_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16332" name="Sealed Moirai Gauntlet">
+    <set name="icon" value="icon.armor_t94_g_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16333" name="Sealed Moirai Leather Gloves">
+    <set name="icon" value="icon.armor_t95_g_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16334" name="Sealed Moirai Gloves">
+    <set name="icon" value="icon.armor_t96_g_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16335" name="Sealed Moirai Boots">
+    <set name="icon" value="icon.armor_t94_b_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16336" name="Sealed Moirai Leather Boots">
+    <set name="icon" value="icon.armor_t95_b_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16337" name="Sealed Moirai Shoes">
+    <set name="icon" value="icon.armor_t96_b_i02" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16338" name="Sealed Moirai Shield">
+    <set name="icon" value="icon.weapon_tysandy_shield_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="16339" name="Sealed Moirai Sigil">
+    <set name="icon" value="icon.weapon_tysandy_sigil_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="16340" name="Sealed Vesper Helmet">
+    <set name="icon" value="icon.armor_helmet_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16341" name="Sealed Vesper Leather Helmet">
+    <set name="icon" value="icon.armor_leather_helmet_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16342" name="Sealed Vesper Circlet">
+    <set name="icon" value="icon.armor_circlet_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16343" name="Sealed Vesper Breastplate">
+    <set name="icon" value="icon.armor_t94_u_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16344" name="Sealed Vesper Leather Leather Breastplate">
+    <set name="icon" value="icon.armor_t95_u_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16345" name="Sealed Vesper Tunic">
+    <set name="icon" value="icon.armor_t96_u_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16346" name="Sealed Vesper Gaiter">
+    <set name="icon" value="icon.armor_t94_l_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16347" name="Sealed Vesper Leather Legging">
+    <set name="icon" value="icon.armor_t95_l_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16348" name="Sealed Vesper Stockings">
+    <set name="icon" value="icon.armor_t96_l_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16349" name="Sealed Vesper Gauntlet">
+    <set name="icon" value="icon.armor_t94_g_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16350" name="Sealed Vesper Leather Gloves">
+    <set name="icon" value="icon.armor_t95_g_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16351" name="Sealed Vesper Gloves">
+    <set name="icon" value="icon.armor_t96_g_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16352" name="Sealed Vesper Boots">
+    <set name="icon" value="icon.armor_t94_b_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16353" name="Sealed Vesper Leather Boots">
+    <set name="icon" value="icon.armor_t95_b_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16354" name="Sealed Vesper Shoes">
+    <set name="icon" value="icon.armor_t96_b_i02" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16355" name="Sealed Vesper Shield">
+    <set name="icon" value="icon.weapon_vesper_verteidiger_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="16356" name="Sealed Vesper Sigil">
+    <set name="icon" value="icon.armor_verper_sigil_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <etcitem id="16357" name="Sealed Vesper Ring of Chaos">
+    <set name="icon" value="icon.vesper_ring_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16358" name="Sealed Vesper Earring of Chaos">
+    <set name="icon" value="icon.vesper_earring_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16359" name="Sealed Vesper Necklace of Chaos">
+    <set name="icon" value="icon.vesper_necklace_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16360" name="Sealed Moirai Ring of Chaos">
+    <set name="icon" value="icon.accessary_sealed_bluelycan_ring_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16361" name="Sealed Moirai Earring of Chaos">
+    <set name="icon" value="icon.accessary_sealed_bluelycan_earring_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16362" name="Sealed Moirai Necklace of Chaos">
+    <set name="icon" value="icon.accessary_sealed_bluelycan_necklace_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16363" name="Vesper Ring of Chaos">
+    <set name="icon" value="icon.vesper_ring_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16364" name="Vesper Earring of Chaos">
+    <set name="icon" value="icon.vesper_earring_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16365" name="Vesper Necklace of Chaos">
+    <set name="icon" value="icon.vesper_necklace_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16366" name="Moirai Ring of Chaos">
+    <set name="icon" value="icon.accessary_bluelycan_earring_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16367" name="Moirai Earring of Chaos">
+    <set name="icon" value="icon.accessary_bluelycan_necklace_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16368" name="Moirai Necklace of Chaos">
+    <set name="icon" value="icon.accessary_bluelycan_ring_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="16369" name="Sealed Vesper Ring">
+    <set name="icon" value="icon.vesper_ring_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="16370" name="Sealed Vesper Earring">
+    <set name="icon" value="icon.vesper_earring_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="16371" name="Sealed Vesper Necklace">
+    <set name="icon" value="icon.vesper_necklace_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="16372" name="Sealed Moirai Ring">
+    <set name="icon" value="icon.accessary_sealed_bluelycan_ring_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="16373" name="Sealed Moirai Earring">
+    <set name="icon" value="icon.accessary_sealed_bluelycan_earring_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="16374" name="Sealed Moirai Necklace">
+    <set name="icon" value="icon.accessary_sealed_bluelycan_necklace_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="16375" name="Vesper Ring">
+    <set name="icon" value="icon.vesper_ring_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="16376" name="Vesper Earring">
+    <set name="icon" value="icon.vesper_earring_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="16377" name="Vesper Necklace">
+    <set name="icon" value="icon.vesper_necklace_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="16378" name="Moirai Ring">
+    <set name="icon" value="icon.accessary_bluelycan_ring_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="16379" name="Moirai Earring">
+    <set name="icon" value="icon.accessary_bluelycan_earring_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="16380" name="Moirai Necklace">
+    <set name="icon" value="icon.accessary_bluelycan_necklace_i00" />
+    <set name="crystal_type" value="s80" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <etcitem id="16381" name="Training Order Paper">
+    <set name="icon" value="icon.roll_of_paper_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16382" name="Shoes String of Sel Mahum">
+    <set name="icon" value="icon.etc_braided_hemp_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16383" name="Christmas Cake Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16384" name="Special Christmas Cake Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16385" name="Teddy Boy Gift Box Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16386" name="Teddy Girl Gift Box Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16387" name="Christmas Cake Pack (event)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16388" name="Special Christmas Cake Pack (event)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16389" name="Teddy Boy Gift Box Pack (event)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16390" name="Teddy Girl Gift Box Pack (event)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16391" name="Christmas Cake Box">
+    <set name="icon" value="icon.lucky_bag_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16392" name="Special Christmas Cake Box">
+    <set name="icon" value="icon.four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16393" name="Christmas Cake Box (event)">
+    <set name="icon" value="icon.lucky_bag_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16394" name="Special Christmas Cake Box (event)">
+    <set name="icon" value="icon.four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16395" name="Teddy Boy Gift Box">
+    <set name="icon" value="icon.lucky_bag_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16396" name="Teddy Girl Gift Box">
+    <set name="icon" value="icon.lucky_bag_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16397" name="Teddy Boy Gift Box (event)">
+    <set name="icon" value="icon.lucky_bag_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16398" name="Teddy Girl Gift Box (event)">
+    <set name="icon" value="icon.lucky_bag_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="16399" name="Teddy Boy Summon Bracelet - Permanent Use">
+    <set name="icon" value="icon.etc_rbracelet_aga_agit_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="16400" name="Teddy Girl Summon Bracelet - Permanent Use">
+    <set name="icon" value="icon.etc_rbracelet_aga_agit_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="16401" name="Teddy Boy Summon Bracelet (event) - Permanent Use">
+    <set name="icon" value="icon.etc_rbracelet_aga_agit_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="16402" name="Teddy Girl Summon Bracelet (event) - Permanent Use">
+    <set name="icon" value="icon.etc_rbracelet_aga_agit_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="16403" name="Christmas Cake">
+    <set name="icon" value="icon.event_six_party_cake_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16404" name="White Christmas Wish Candle">
+    <set name="icon" value="icon.etc_candle_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16405" name="Christmas Cake (event)">
+    <set name="icon" value="icon.event_six_party_cake_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16406" name="White Christmas Wish Candle (event)">
+    <set name="icon" value="icon.etc_candle_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16407" name="Santa's Stocking - Event">
+    <set name="icon" value="icon.xmas_present_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16408" name="Santa's Buff Scroll - Event">
+    <set name="icon" value="icon.mysterious_wedding_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="16837" name="Vesper Noble Helmet">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16838" name="Vesper Noble Leather Helmet">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16839" name="Vesper Noble Circlet">
+    <set name="icon" value="icon.armor_circlet_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16840" name="Vesper Noble Breastplate">
+    <set name="icon" value="icon.armor_t94_u_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16841" name="Vesper Noble Houberk">
+    <set name="icon" value="icon.armor_t95_u_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16842" name="Vesper Noble Tunic">
+    <set name="icon" value="icon.armor_t96_u_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16843" name="Vesper Noble Gaiter">
+    <set name="icon" value="icon.armor_t94_l_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16844" name="Vesper Noble Leather Legging">
+    <set name="icon" value="icon.armor_t95_l_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16845" name="Vesper Noble Stockings">
+    <set name="icon" value="icon.armor_t96_l_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16846" name="Vesper Noble Gauntlet">
+    <set name="icon" value="icon.armor_t94_g_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16847" name="Vesper Noble Leather Gloves">
+    <set name="icon" value="icon.armor_t95_g_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16848" name="Vesper Noble Gloves">
+    <set name="icon" value="icon.armor_t96_g_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16849" name="Vesper Noble Boots">
+    <set name="icon" value="icon.armor_t94_b_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16850" name="Vesper Noble Leather Boots">
+    <set name="icon" value="icon.armor_t95_b_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16851" name="Vesper Noble Shoes">
+    <set name="icon" value="icon.armor_t96_b_i01" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <etcitem id="16852" name="Hero's Treasure Chest - 90-day limited period">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16853" name="Equipment Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="16854" name="Majestic Earring of Fortune - 90-day limited period">
+    <set name="icon" value="icon.accessary_inferno_earing_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="16855" name="Majestic Necklace of Fortune - 90-day limited period">
+    <set name="icon" value="icon.accessary_inferno_necklace_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="16856" name="Majestic Ring of Fortune - 90-day limited period">
+    <set name="icon" value="icon.accessary_inferno_ring_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="16857" name="Fortune Earring of Black Ore - 90-day limited period">
+    <set name="icon" value="icon.accessary_earing_of_black_ore_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="16858" name="Fortune Necklace of Black Ore - 90-day limited period">
+    <set name="icon" value="icon.accessary_necklace_of_black_ore_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="16859" name="Fortune Ring of Black Ore - 90-day limited period">
+    <set name="icon" value="icon.accessary_ring_of_black_ore_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="16860" name="Fortune Earring of Seal - 90-day limited period">
+    <set name="icon" value="icon.accessary_earing_of_binding_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="16861" name="Fortune Necklace of Seal - 90-day limited period">
+    <set name="icon" value="icon.accessary_necklace_of_binding_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="16862" name="Fortune Ring of Seal - 90-day limited period">
+    <set name="icon" value="icon.accessary_ring_of_binding_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="16863" name="Elven Earring of Fortune - 90-day limited period">
+    <set name="icon" value="icon.accessary_elven_earing_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="16864" name="Elven Earring of Fortune - 90-day limited period">
+    <set name="icon" value="icon.accessary_elven_necklace_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="NECK" />
+  </armor>
+  <armor id="16865" name="Elven Ring of Fortune - 90-day limited period">
+    <set name="icon" value="icon.accessary_elven_ring_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_FINGER" />
+    <slot id="LEFT_FINGER" />
+  </armor>
+  <armor id="16866" name="Dark Crystal Robe of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t76_ul_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="16867" name="Dark Crystal Helmet of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_helmet_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16868" name="Dark Crystal Gloves of Fortune - Robe - 90-day limited period">
+    <set name="icon" value="icon.armor_t76_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16869" name="Dark Crystal Boots of Fortune - Robe - 90-day limited period">
+    <set name="icon" value="icon.armor_t76_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16870" name="Dark Crystal Shield of Fortune - 90-day limited period">
+    <set name="icon" value="icon.shield_dark_crystal_shield_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="16871" name="Avadon Robe of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t59_ul_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="16872" name="Avadon Circlet of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16873" name="Avadon Gloves of Fortune - Robe - 90-day limited period">
+    <set name="icon" value="icon.armor_t59_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16874" name="Avadon Boots of Fortune - Robe - 90-day limited period">
+    <set name="icon" value="icon.armor_t59_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16875" name="Avadon Shield of Fortune - 90-day limited period">
+    <set name="icon" value="icon.shield_avadon_shield_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="16876" name="Karmian Tunic of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t53_u_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16877" name="Karmian Stockings of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t53_l_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16878" name="Karmian Gloves of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t53_g_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16879" name="Karmian Boots of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t53_b_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16880" name="Mithril Tunic of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t51_u_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16881" name="Mithril Stockings of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t51_l_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16882" name="Elven Mithril Gloves of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t51_g_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16883" name="Elven Mithril Boots of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t51_b_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16884" name="Dark Crystal Leather Armor of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t75_u_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16885" name="Dark Crystal Leggings of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t75_l_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16886" name="Dark Crystal Gloves of Fortune - Light Armor - 90-day limited period">
+    <set name="icon" value="icon.armor_t75_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16887" name="Dark Crystal Boots of Fortune - Light Armor - 90-day limited period">
+    <set name="icon" value="icon.armor_t75_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16888" name="Leather Armor of Doom of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t72_ul_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="16889" name="Doom Helmet of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16890" name="Doom Gloves of Fortune - Heavy Armor - 90-day limited period">
+    <set name="icon" value="icon.armor_t71_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16891" name="Doom Gloves of Fortune - Light Armor - 90-day limited period">
+    <set name="icon" value="icon.armor_t72_g_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16892" name="Doom Boots of Fortune - Heavy Armor - 90-day limited period">
+    <set name="icon" value="icon.armor_t71_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16893" name="Doom Boots of Fortune - Light Armor - 90-day limited period">
+    <set name="icon" value="icon.armor_t72_b_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16894" name="Doom Plate Armor of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t71_ul_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="16895" name="Doom Shield of Fortune - 90-day limited period">
+    <set name="icon" value="icon.shield_doom_shield_i00" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="16896" name="Plate Leather Armor of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t47_u_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16897" name="Plate Leather Gaiters of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t47_l_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16898" name="Plate Leather Boots of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t47_b_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16899" name="Plate Leather Gloves of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t47_g_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16900" name="Full Plate Helmet of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16901" name="Full Plate Armor of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t62_ul_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="16902" name="Full Plate Boots of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t62_b_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16903" name="Full Plate Gauntlet of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t62_g_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16904" name="Full Plate Shield of Fortune - 90-day limited period">
+    <set name="icon" value="icon.shield_full_plate_shield_i00" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="16905" name="Manticore Skin Shirt of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t42_u_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16906" name="Manticore Skin Gaiters of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t42_l_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16907" name="Manticore Skin Boots of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t42_b_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16908" name="Manticore Skin Gloves of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t42_g_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16909" name="Brigandine of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t43_u_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="CHEST" />
+  </armor>
+  <armor id="16910" name="Brigandine Gaiters of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t43_l_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEGS" />
+  </armor>
+  <armor id="16911" name="Brigandine Helmet of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16912" name="Brigandine Boots of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t43_b_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16913" name="Brigandine Gauntlet of Fortune - 90-day limited period">
+    <set name="icon" value="icon.armor_t43_g_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16914" name="Brigandine Shield of Fortune - 90-day limited period">
+    <set name="icon" value="icon.shield_brigandine_shield_i00" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="16915" name="Fortune Armor of Nightmare - 90-day limited period">
+    <set name="icon" value="icon.armor_t80_ul_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="ONEPIECE" />
+  </armor>
+  <armor id="16916" name="Fortune Helm of Nightmare - 90-day limited period">
+    <set name="icon" value="icon.armor_leather_helmet_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="HEAD" />
+  </armor>
+  <armor id="16917" name="Fortune Gauntlet of Nightmare - Heavy Armor - 90-day limited period">
+    <set name="icon" value="icon.armor_t80_g_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="GLOVES" />
+  </armor>
+  <armor id="16918" name="Fortune Boots of Nightmare - Heavy Armor - 90-day limited period">
+    <set name="icon" value="icon.armor_t80_b_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="FEET" />
+  </armor>
+  <armor id="16919" name="Fortune Shield of Nightmare - 90-day limited period">
+    <set name="icon" value="icon.shield_shield_of_nightmare_i00" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <weapon id="16920" name="Sword of Miracles of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_sword_of_miracle_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16921" name="Wizard's Tear of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_tears_of_wizard_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16922" name="Homunkulus's Sword of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_homunkuluss_sword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16923" name="Fortune Staff of Life - 90-day limited period">
+    <set name="icon" value="icon.weapon_life_stick_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16924" name="Naga Storm of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_naga_storm_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16925" name="Kris of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_kris_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16926" name="Dark Screamer of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_dark_screamer_i01" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16927" name="Mithril Dagger of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_mithril_dagger_i00" />
+    <set name="type" value="dagger" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16928" name="Shyeed's Bow of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_shyid_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16929" name="Fortune Bow of Peril - 90-day limited period">
+    <set name="icon" value="icon.weapon_hazard_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16930" name="Eminence Bow of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_eminence_bow_i01" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16931" name="Light Crossbow of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_cyclone_bow_i00" />
+    <set name="type" value="bow" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16932" name="Barakiel's Axe of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_barakiel_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16933" name="Art of Battle Axe of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_art_of_battle_axe_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16934" name="Yaksa Mace of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_yaksa_mace_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16935" name="Bonebreaker of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_bonebreaker_i00" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16936" name="Sirra's Blade of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_sirr_blade_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16937" name="Fortune Sword of Damascus - 90-day limited period">
+    <set name="icon" value="icon.weapon_sword_of_damascus_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16938" name="Samurai Longsword of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_samurai_longsword_i01" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16939" name="Elven Long Sword of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_elven_long_sword_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16940" name="Fortune Sword of Ipos - 90-day limited period">
+    <set name="icon" value="icon.weapon_sword_of_ipos_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16941" name="Guardian Sword of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_guardians_sword_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16942" name="Berserker Blade of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_berserker_blade_i01" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16943" name="Claymore of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_claymore_i00" />
+    <set name="type" value="bigsword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16944" name="Sobekk's Hurricane of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_sobekk_hurricane_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16945" name="Bellion Cestus of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_bellion_cestus_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16946" name="Great Pata of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_great_pata_i01" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16947" name="Scallop Jamadhr of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_scallop_jamadhr_i00" />
+    <set name="type" value="dualfist" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16948" name="Tallum Blade*Damascus of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16949" name="Samurai Long Sword*Samurai Long Sword of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16950" name="Spirit Sword*Raid Sword of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16951" name="Bastard Sword*Elven Sword of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_dual_sword_i00" />
+    <set name="type" value="dual" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16952" name="Tiphon's Spear of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_tiphon_spear_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16953" name="Lance of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_lancia_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16954" name="Orcish Poleaxe of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_orcish_poleaxe_i01" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16955" name="Glaive of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_glaive_i00" />
+    <set name="type" value="pole" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16956" name="Durendal of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_death_bringer_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16957" name="Dismantler of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_dismantler_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16958" name="Saber Tooth of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_invincible_blade_i01" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16959" name="General's Katzbalger of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_tulwar_i00" />
+    <set name="type" value="ancientsword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16960" name="Eclair Bijou of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_greed_stinger_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16961" name="Colichemarde of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_colichemarde_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16962" name="Admiral's Estoc of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_blink_slasher_i01" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16963" name="Grand Epee of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_rapier_i00" />
+    <set name="type" value="rapier" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="16964" name="Screaming Vengeance of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_soul_shooter_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16965" name="Hell Hound of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_hell_hound_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16966" name="Sharpshooter of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_taslam_i01" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="16967" name="Cranequin of Fortune - 90-day limited period">
+    <set name="icon" value="icon.weapon_hunting_gun_i00" />
+    <set name="type" value="crossbow" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="16968" name="Knight Class Equipment Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16969" name="Mage Class Equipment Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16970" name="Warrior Class Equipment Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16971" name="Rogue Class Equipment Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16972" name="Kamael Class Equipment Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16973" name="Orc Fighter Class Equipment Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16974" name="Orc Mage Class Equipment Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16975" name="Fortune Heavy Armor of Nightmare Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16976" name="Doom Plate Armor of Fortune Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16977" name="Full Plate of Fortune Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16978" name="Brigandine of Fortune Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16979" name="Dark Crystal Light Armor of Fortune Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16980" name="Leather Armor of Doom of Fortune Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16981" name="Plate Leather of Fortune Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16982" name="Manticore Leather of Fortune Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16983" name="Dark Crystal Robe of Fortune Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16984" name="Avadon Robe of Fortune Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16985" name="Karmian of Fortune Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16986" name="Mithril Tunic of Fortune Set Pack - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i02" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16987" name="Magic Weapon of Fortune Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16988" name="Dagger of Fortune Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16989" name="Bow of Fortune Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16990" name="Blunt Weapon of Fortune Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16991" name="One-handed Sword of Fortune Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16992" name="Two-handed Sword of Fortune Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16993" name="Hand-to-hand Combat Weapon of Fortune Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16994" name="Dualsword of Fortune Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16995" name="Spear of Fortune Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16996" name="Ancient Sword of Fortune Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16997" name="Short Sword of Fortune Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16998" name="Crossbow of Fortune Set - 90-day limited period">
+    <set name="icon" value="icon.etc_equip_item_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="16999" name="Majestic Set of Fortune - 90-day limited period">
+    <set name="icon" value="icon.etc_jewel_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+</list>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="55031" levels="1" name="Blocked">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="55032" levels="1" name="Rune of Generosity">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="55033" levels="1" name="Blood Thirst Cancel">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="0" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+</list>

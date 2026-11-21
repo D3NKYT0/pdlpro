@@ -1,0 +1,4065 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <armor id="25000" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25001" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25002" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25003" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25004" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25005" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25006" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25007" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25008" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25009" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25010" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25011" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25012" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25013" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25014" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25015" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25016" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25017" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25018" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25019" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25020" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25021" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25022" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25023" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25024" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25025" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25026" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25027" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25028" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25029" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25030" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25031" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25032" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25033" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25034" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25035" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25036" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25037" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25038" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25039" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25040" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25041" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25042" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25043" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25044" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25045" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25046" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25047" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25048" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25049" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25050" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25051" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25052" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25053" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25054" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25055" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25056" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25057" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25058" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="25059" name="Maid Costume">
+    <set name="icon" value="BranchSys3.icon1.g_co_cutie_maid" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <etcitem id="25060" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25061" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25062" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25063" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25064" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25065" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25066" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25067" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25068" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25069" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25070" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25071" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25072" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25073" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25074" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25075" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25076" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25077" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25078" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25079" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25080" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25081" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25082" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25083" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25084" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25085" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25086" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25087" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25088" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25089" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25090" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25091" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25092" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25093" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25094" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25095" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25096" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25097" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25098" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25099" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25100" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25101" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25102" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25103" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25104" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25105" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25106" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25107" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25108" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25109" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25110" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25111" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25112" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25113" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25114" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25115" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25116" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25117" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25118" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25119" name="Formal Wear Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25120" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25121" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25122" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25123" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25124" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25125" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25126" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25127" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25128" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25129" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25130" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25131" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25132" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25133" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25134" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25135" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25136" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25137" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25138" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25139" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25140" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25141" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25142" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25143" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25144" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25145" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25146" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25147" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25148" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25149" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25150" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25151" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25152" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25153" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25154" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25155" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25156" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25157" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25158" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25159" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25160" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25161" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25162" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25163" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25164" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25165" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25166" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25167" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25168" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25169" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25170" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25171" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25172" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25173" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25174" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25175" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25176" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25177" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25178" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25179" name="Appearance Stone: Male Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25180" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25181" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25182" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25183" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25184" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25185" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25186" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25187" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25188" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25189" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25190" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25191" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25192" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25193" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25194" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25195" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25196" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25197" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25198" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25199" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25200" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25201" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25202" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25203" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25204" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25205" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25206" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25207" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25208" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25209" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25210" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25211" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25212" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25213" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25214" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25215" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25216" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25217" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25218" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25219" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25220" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25221" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25222" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25223" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25224" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25225" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25226" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25227" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25228" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25229" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25230" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25231" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25232" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25233" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25234" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25235" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25236" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25237" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25238" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25239" name="Appearance Stone: Male Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25240" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25241" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25242" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25243" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25244" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25245" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25246" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25247" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25248" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25249" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25250" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25251" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25252" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25253" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25254" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25255" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25256" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25257" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25258" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25259" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25260" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25261" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25262" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25263" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25264" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25265" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25266" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25267" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25268" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25269" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25270" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25271" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25272" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25273" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25274" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25275" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25276" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25277" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25278" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25279" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25280" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25281" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25282" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25283" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25284" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25285" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25286" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25287" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25288" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25289" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25290" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25291" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25292" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25293" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25294" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25295" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25296" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25297" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25298" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25299" name="Appearance Stone: Female Swimsuit No. 1">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25300" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25301" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25302" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25303" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25304" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25305" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25306" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25307" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25308" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25309" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25310" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25311" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25312" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25313" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25314" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25315" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25316" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25317" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25318" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25319" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25320" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25321" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25322" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25323" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25324" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25325" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25326" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25327" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25328" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25329" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25330" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25331" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25332" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25333" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25334" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25335" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25336" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25337" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25338" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25339" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25340" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25341" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25342" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25343" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25344" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25345" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25346" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25347" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25348" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25349" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25350" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25351" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25352" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25353" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25354" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25355" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25356" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25357" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25358" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25359" name="Appearance Stone: Female Swimsuit No. 2">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25360" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25361" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25362" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25363" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25364" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25365" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25366" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25367" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25368" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25369" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25370" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25371" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25372" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25373" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25374" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25375" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25376" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25377" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25378" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25379" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25380" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25381" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25382" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25383" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25384" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25385" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25386" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25387" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25388" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25389" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25390" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25391" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25392" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25393" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25394" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25395" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25396" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25397" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25398" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25399" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25400" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25401" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25402" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25403" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25404" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25405" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25406" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25407" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25408" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25409" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25410" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25411" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25412" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25413" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25414" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25415" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25416" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25417" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25418" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25419" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25420" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25421" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25422" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25423" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25424" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25425" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25426" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25427" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25428" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25429" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25430" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25431" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25432" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25433" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25434" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25435" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25436" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25437" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25438" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25439" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25440" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25441" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25442" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25443" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25444" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25445" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25446" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25447" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25448" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25449" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25450" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25451" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25452" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25453" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25454" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25455" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25456" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25457" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25458" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25459" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25460" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25461" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25462" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25463" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25464" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25465" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25466" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25467" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25468" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25469" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25470" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25471" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25472" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25473" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25474" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25475" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25476" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25477" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25478" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25479" name="Beach Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25480" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25481" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25482" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25483" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25484" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25485" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25486" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25487" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25488" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25489" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25490" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25491" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25492" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25493" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25494" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25495" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25496" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25497" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25498" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25499" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25500" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25501" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25502" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25503" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25504" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25505" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25506" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25507" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25508" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25509" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25510" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25511" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25512" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25513" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25514" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25515" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25516" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25517" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25518" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25519" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25520" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25521" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25522" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25523" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25524" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25525" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25526" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25527" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25528" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25529" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25530" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25531" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25532" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25533" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25534" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25535" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25536" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25537" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25538" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25539" name="Alluring Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25540" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25541" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25542" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25543" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25544" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25545" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25546" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25547" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25548" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25549" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25550" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25551" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25552" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25553" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25554" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25555" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25556" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25557" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25558" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25559" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25560" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25561" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25562" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25563" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25564" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25565" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25566" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25567" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25568" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25569" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25570" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25571" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25572" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25573" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25574" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25575" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25576" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25577" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25578" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25579" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25580" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25581" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25582" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25583" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25584" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25585" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25586" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25587" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25588" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25589" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25590" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25591" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25592" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25593" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25594" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25595" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25596" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25597" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25598" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25599" name="Seductive Swimsuit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25600" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25601" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25602" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25603" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25604" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25605" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25606" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25607" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25608" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25609" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25610" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25611" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25612" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25613" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25614" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25615" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25616" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25617" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25618" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25619" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25620" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25621" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25622" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25623" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25624" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25625" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25626" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25627" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25628" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25629" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25630" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25631" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25632" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25633" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25634" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25635" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25636" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25637" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25638" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25639" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25640" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25641" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25642" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25643" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25644" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25645" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25646" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25647" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25648" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25649" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25650" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25651" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25652" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25653" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25654" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25655" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25656" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25657" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25658" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25659" name="Appearance Stone: Santa Outfit">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25660" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25661" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25662" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25663" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25664" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25665" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25666" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25667" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25668" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25669" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25670" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25671" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25672" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25673" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25674" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25675" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25676" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25677" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25678" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25679" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25680" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25681" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25682" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25683" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25684" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25685" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25686" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25687" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25688" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25689" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25690" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25691" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25692" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25693" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25694" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25695" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25696" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25697" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25698" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25699" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25700" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25701" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25702" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25703" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25704" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25705" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25706" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25707" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25708" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25709" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25710" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25711" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25712" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25713" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25714" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25715" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25716" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25717" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25718" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25719" name="Maid Costume Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25720" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25721" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25722" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25723" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25724" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25725" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25726" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25727" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25728" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25729" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25730" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25731" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25732" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25733" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25734" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25735" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25736" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25737" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25738" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25739" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25740" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25741" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25742" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25743" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25744" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25745" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25746" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25747" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25748" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25749" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25750" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25751" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25752" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25753" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25754" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25755" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25756" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25757" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25758" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25759" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25760" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25761" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25762" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25763" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25764" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25765" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25766" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25767" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25768" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25769" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25770" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25771" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25772" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25773" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25774" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25775" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25776" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25777" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25778" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25779" name="Visual Enchant Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25780" name="Visual Enchant Stone Pack">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25781" name="Visual Enchant Stone Pack">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25782" name="Visual Enchant Stone Pack">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25783" name="Visual Enchant Stone Pack">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25784" name="Visual Enchant Stone Pack">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25785" name="Visual Enchant Stone Pack">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25786" name="Vintage Casket">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25787" name="Shabby Casket">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25788" name="Vintage Casket">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25789" name="Shabby Casket">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25790" name="Ancient Hero's Weapon Pack">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25791" name="Exotic Chest">
+    <set name="icon" value="icon.present_of_destination_event" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25792" name="Scroll: Enchant Elemental Shirt">
+    <set name="icon" value="icon.g_scrl_of_ench_wolf_shirt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25793" name="Blessed Scroll: Enchant Elemental Shirt">
+    <set name="icon" value="BranchSys2.icon.etc_scroll_of_enchant_shirt_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25794" name="Transformation Scroll: Priestess Tsubaki">
+    <set name="icon" value="icon.etc_scroll_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25795" name="Entrance Pass: Kartia's Labyrinth Lv. 85 Solo">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25796" name="Entrance Pass: Kartia's Labyrinth Lv. 90 Solo">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25797" name="Entrance Pass: Kartia's Labyrinth Lv. 95 Solo">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25798" name="Entrance Pass: Kartia's Labyrinth Lv. 85 Party">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25799" name="Entrance Pass: Kartia's Labyrinth Lv. 90 Party">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25800" name="Entrance Pass: Kartia's Labyrinth Lv. 95 Party">
+    <set name="icon" value="icon.etc_ticket_red_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="25801" name="Agathion - Minion Eye">
+    <set name="icon" value="icon.etc_rbracelet_aga_agit_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="25802" name="Agathion - Matryoshka">
+    <set name="icon" value="icon.etc_rbracelet_aga_agit_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="25803" name="Wondrous Casket">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25804" name="Vintage Casket">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25805" name="Shabby Casket">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25806" name="Luck Box 1">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25807" name="Luck Box 2">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25808" name="Luck Box 3">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25809" name="Luck Box 1">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25810" name="Luck Box 2">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25811" name="Luck Box 3">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25812" name="Luck Box 1">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25813" name="Luck Box 2">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25814" name="Luck Box 3">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25815" name="Luck Box 1">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25816" name="Luck Box 2">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25817" name="Luck Box 3">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25818" name="Luck Box 1">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25819" name="Luck Box 2">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25820" name="Luck Box 3">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25821" name="Luck Box 1">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25822" name="Luck Box 2">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25823" name="Luck Box 3">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25824" name="Luck Box 1">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25825" name="Luck Box 2">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25826" name="Luck Box 3">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25827" name="Luck Box 1">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25828" name="Luck Box 2">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25829" name="Luck Box 3">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25830" name="Einhasad's Enhancement Stone">
+    <set name="icon" value="icon.etc_bead_gold_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25831" name="+4 Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25832" name="+5 Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25833" name="+6 Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25834" name="+7 Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25835" name="+8 Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25836" name="+9 Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25837" name="+10 Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25838" name="+4 Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25839" name="+5 Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25840" name="+6 Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25841" name="+7 Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25842" name="+8 Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25843" name="+9 Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25844" name="+10 Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25845" name="+4 Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25846" name="+5 Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25847" name="+6 Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25848" name="+7 Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25849" name="+8 Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25850" name="+9 Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25851" name="+10 Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25852" name="+4 Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25853" name="+5 Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25854" name="+6 Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25855" name="+7 Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25856" name="+8 Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25857" name="+9 Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25858" name="+10 Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25859" name="+4 Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25860" name="+5 Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25861" name="+6 Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25862" name="+7 Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25863" name="+8 Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25864" name="+9 Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25865" name="+10 Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25866" name="+4 Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25867" name="+5 Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25868" name="+6 Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25869" name="+7 Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25870" name="+8 Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25871" name="+9 Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25872" name="+10 Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25873" name="+4 Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25874" name="+5 Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25875" name="+6 Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25876" name="+7 Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25877" name="+8 Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25878" name="+9 Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25879" name="+10 Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25880" name="+4 Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25881" name="+5 Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25882" name="+6 Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25883" name="+7 Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25884" name="+8 Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25885" name="+9 Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25886" name="+10 Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25887" name="+4 Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25888" name="+5 Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25889" name="+6 Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25890" name="+7 Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25891" name="+8 Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25892" name="+9 Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25893" name="+10 Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25894" name="+4 Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25895" name="+5 Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25896" name="+6 Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25897" name="+7 Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25898" name="+8 Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25899" name="+9 Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25900" name="+10 Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25901" name="+4 Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25902" name="+5 Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25903" name="+6 Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25904" name="+7 Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25905" name="+8 Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25906" name="+9 Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25907" name="+10 Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25908" name="+4 Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25909" name="+5 Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25910" name="+6 Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25911" name="+7 Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25912" name="+8 Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25913" name="+9 Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25914" name="+10 Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25915" name="+4 Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25916" name="+5 Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25917" name="+6 Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25918" name="+7 Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25919" name="+8 Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25920" name="+9 Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25921" name="+10 Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25922" name="+4 Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25923" name="+5 Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25924" name="+6 Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25925" name="+7 Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25926" name="+8 Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25927" name="+9 Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25928" name="+10 Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25929" name="+4 Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25930" name="+5 Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25931" name="+6 Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25932" name="+7 Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25933" name="+8 Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25934" name="+9 Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25935" name="+10 Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25936" name="+4 Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25937" name="+5 Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25938" name="+6 Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25939" name="+7 Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25940" name="+8 Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25941" name="+9 Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25942" name="+10 Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25943" name="+4 Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25944" name="+5 Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25945" name="+6 Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25946" name="+7 Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25947" name="+8 Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25948" name="+9 Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25949" name="+10 Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25950" name="+4 Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25951" name="+5 Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25952" name="+6 Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25953" name="+7 Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25954" name="+8 Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25955" name="+9 Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25956" name="+10 Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25957" name="+4 Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25958" name="+5 Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25959" name="+6 Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25960" name="+7 Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25961" name="+8 Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25962" name="+9 Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25963" name="+10 Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25964" name="+4 Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25965" name="+5 Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25966" name="+6 Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25967" name="+7 Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25968" name="+8 Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25969" name="+9 Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25970" name="+10 Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25971" name="+4 Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25972" name="+5 Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25973" name="+6 Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25974" name="+7 Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25975" name="+8 Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25976" name="+9 Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25977" name="+10 Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25978" name="+4 Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25979" name="+5 Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25980" name="+6 Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25981" name="+7 Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25982" name="+8 Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25983" name="+9 Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25984" name="+10 Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25985" name="+4 Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25986" name="+5 Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25987" name="+6 Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25988" name="+7 Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25989" name="+8 Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25990" name="+9 Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25991" name="+10 Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25992" name="+4 Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25993" name="+5 Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25994" name="+6 Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25995" name="+7 Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25996" name="+8 Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25997" name="+9 Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25998" name="+10 Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="25999" name="+4 Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+</list>

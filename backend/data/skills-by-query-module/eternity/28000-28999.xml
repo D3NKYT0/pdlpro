@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="28000" levels="3" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28001" levels="3" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28002" levels="3" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28003" levels="3" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28004" levels="3" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28005" levels="3" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28006" levels="3" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28007" levels="1" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28008" levels="1" name="Legendary Cloak - Silence">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="28009" levels="1" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="28010" levels="3" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28011" levels="3" name="Legendary Cloak - Barrier">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28012" levels="3" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28013" levels="1" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="28014" levels="1" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28015" levels="1" name="Legendary Cloak - Spallation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28016" levels="1" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28017" levels="1" name="Legendary Cloak - Invincibility">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="28018" levels="1" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28019" levels="1" name="Legendary Cloak - Spallation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="28020" levels="3" name="Empire Legendary Cloak Augmentation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28021" levels="1" name="Scroll: Enchant Cloak">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28022" levels="1" name="Scroll: Enchant Cloak - Legendary">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28023" levels="1" name="Scroll: Ancient Cloak">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28024" levels="1" name="Spirit Stone Pack - Legendary">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28025" levels="2" name="Dragon's Treasure Chest">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28026" levels="4" name="+10 Elmoreden Cloak - Legendary Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28027" levels="1" name="Summon Virgo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28028" levels="1" name="Summon Capricorn Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28029" levels="1" name="Summon Libra Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28030" levels="1" name="Summon Aries Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28031" levels="1" name="Summon Taurus Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28032" levels="1" name="Summon Leo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28033" levels="1" name="Summon Gemini Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28034" levels="1" name="Summon Scorpio Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28035" levels="1" name="Summon Aquarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28036" levels="1" name="Summon Pisces Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28037" levels="1" name="Summon Sagittarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28038" levels="1" name="Summon Cancer Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28039" levels="1" name="Summon Virgo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28040" levels="1" name="Summon Capricorn Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28041" levels="1" name="Summon Libra Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28042" levels="1" name="Summon Aries Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28043" levels="1" name="Summon Taurus Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28044" levels="1" name="Summon Leo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28045" levels="1" name="Summon Gemini Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28046" levels="1" name="Summon Scorpio Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28047" levels="1" name="Summon Aquarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28048" levels="1" name="Summon Pisces Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28049" levels="1" name="Summon Sagittarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28050" levels="1" name="Summon Cancer Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28051" levels="1" name="Summon Virgo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28052" levels="1" name="Summon Capricorn Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28053" levels="1" name="Summon Libra Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28054" levels="1" name="Summon Aries Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28055" levels="1" name="Summon Taurus Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28056" levels="1" name="Summon Leo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28057" levels="1" name="Summon Gemini Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28058" levels="1" name="Summon Scorpio Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28059" levels="1" name="Summon Aquarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28060" levels="1" name="Summon Pisces Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28061" levels="1" name="Summon Sagittarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28062" levels="1" name="Summon Cancer Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28063" levels="1" name="Agathion Cute Trick">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28064" levels="12" name="Release Seal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28065" levels="1" name="Zodiac Agathion Charm Book of Growth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28066" levels="1" name="Ancient Zodiac Agathion Charm Book of Growth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28067" levels="1" name="Zodiac Agathion Cube">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28068" levels="1" name="Scroll: Enchant Cloak - Legendary">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28069" levels="1" name="Scroll: Ancient Cloak">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28070" levels="11" name="Virgo Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28071" levels="11" name="Capricorn Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28072" levels="11" name="Libra Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28073" levels="11" name="Aries Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28074" levels="11" name="Taurus Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28075" levels="11" name="Leo Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28076" levels="11" name="Gemini Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28077" levels="11" name="Scorpio Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28078" levels="11" name="Aquarius Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28079" levels="11" name="Pisces Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28080" levels="11" name="Sagittarius Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28081" levels="11" name="Cancer Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28082" levels="12" name="Healing Light">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="28083" levels="12" name="Skipping Kid">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="28084" levels="12" name="Scale of Life">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="28085" levels="12" name="Rocky Camouflage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="AGGREMOVE" />
+  </skill>
+  <skill id="28086" levels="12" name="Battle Rhapsody">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="28087" levels="12" name="Maiden's Prayer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="28088" levels="12" name="Bountiful Resurrection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="28089" levels="12" name="Scorpion's Mass Exile">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="28090" levels="12" name="Mass Binding Flood">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="28091" levels="12" name="Slippery Scale">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28092" levels="12" name="Archer's Call">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28093" levels="12" name="Exoskeletal Shield">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="28094" levels="12" name="Healing Light">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="28095" levels="12" name="Skipping Kid">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="28096" levels="12" name="Scale of Life">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="28097" levels="12" name="Rocky Camouflage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="AGGREMOVE" />
+  </skill>
+  <skill id="28098" levels="12" name="Battle Rhapsody">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="28099" levels="12" name="Maiden's Prayer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="28100" levels="12" name="Bountiful Resurrection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="28101" levels="12" name="Scorpion's Mass Exile">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="28102" levels="12" name="Mass Binding Flood">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="28103" levels="12" name="Slippery Scale">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28104" levels="12" name="Archer's Call">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28105" levels="12" name="Exoskeletal Shield">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="28106" levels="1" name="Summon Virgo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28107" levels="1" name="Summon Capricorn Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28108" levels="1" name="Summon Libra Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28109" levels="1" name="Summon Aries Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28110" levels="1" name="Summon Taurus Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28111" levels="1" name="Summon Leo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28112" levels="1" name="Summon Gemini Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28113" levels="1" name="Summon Scorpio Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28114" levels="1" name="Summon Aquarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28115" levels="1" name="Summon Pisces Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28116" levels="1" name="Summon Sagittarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28117" levels="1" name="Summon Cancer Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28118" levels="1" name="Summon Virgo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28119" levels="1" name="Summon Capricorn Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28120" levels="1" name="Summon Libra Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28121" levels="1" name="Summon Aries Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28122" levels="1" name="Summon Taurus Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28123" levels="1" name="Summon Leo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28124" levels="1" name="Summon Gemini Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28125" levels="1" name="Summon Scorpio Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28126" levels="1" name="Summon Aquarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28127" levels="1" name="Summon Pisces Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28128" levels="1" name="Summon Sagittarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28129" levels="1" name="Summon Cancer Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28130" levels="1" name="Summon Virgo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28131" levels="1" name="Summon Capricorn Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28132" levels="1" name="Summon Libra Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28133" levels="1" name="Summon Aries Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28134" levels="1" name="Summon Taurus Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28135" levels="1" name="Summon Leo Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28136" levels="1" name="Summon Gemini Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28137" levels="1" name="Summon Scorpio Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28138" levels="1" name="Summon Aquarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28139" levels="1" name="Summon Pisces Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28140" levels="1" name="Summon Sagittarius Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28141" levels="1" name="Summon Cancer Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28142" levels="10" name="Sayha's Talisman">
+    <set name="operateType" val="PASSIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="28143" levels="4" name="Sayha's Trust">
+    <set name="operateType" val="PASSIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="28144" levels="4" name="Sayha's Protection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="28145" levels="4" name="Sayha's Encouragement">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="28146" levels="4" name="Sayha's Anger">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="28147" levels="3" name="Sayha's Support">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28148" levels="1" name="Fortune Talisman Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28149" levels="10" name="Faint Attack Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28150" levels="1" name="Mother Tree's Blessed Herbs">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28151" levels="4" name="Halloween Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28152" levels="1" name="Halloween Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28153" levels="1" name="Halloween Gift">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28154" levels="1" name="Talisman - Abundance Pack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28155" levels="1" name="Ultimate Jewelry Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28156" levels="12" name="Virgo Agathion Charm Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28157" levels="12" name="Virgo Agathion Charm Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28158" levels="1" name="Bonfire">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28159" levels="1" name="Regular Dish">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28160" levels="1" name="Match Sisters' Gift">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28161" levels="1" name="Match Girls' Gratitude">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28162" levels="2" name="Cooking Ingredient">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28163" levels="1" name="Match Girls' Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28164" levels="1" name="Freya's Charisma Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28165" levels="1" name="Freya's Charisma Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28166" levels="1" name="Freya's Thrilling Shopping Bag">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28167" levels="3" name="Freya Winter Card">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28168" levels="1" name="Freya's Christmas Treasure Chest">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28169" levels="1" name="Low-grade Zodiac Agathion">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28170" levels="1" name="Mid-grade Zodiac Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28171" levels="1" name="High-grade Zodiac Agathion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28172" levels="1" name="Test Rune 200%">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28173" levels="1" name="Blessing of Protection">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28174" levels="1" name="Mochi">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28175" levels="1" name="Lineage II Baseball Uniform Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28176" levels="1" name="Lineage II Baseball Cap Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28177" levels="1" name="Falling Stars Chest">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28178" levels="1" name="Agathion Summon - Antharas">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28179" levels="1" name="Antharas' Cute Tricks">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28180" levels="1" name="Stable Cloak Enchantment Scroll">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28181" levels="1" name="High-grade Spirit Stone Pack - Legendary">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28182" levels="1" name="High-grade Spirit Stone Pack - Cloak">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28183" levels="1" name="Summon Agathion - Mermaid">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28184" levels="1" name="Mermaid Agathion Enchant Scroll">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28185" levels="1" name="Master's Fishing Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28186" levels="1" name="Golden Fishing Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28187" levels="1" name="Shining Fishing Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28188" levels="5" name="Fishing XP Scroll">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28189" levels="11" name="Mermaid Agathion Unique Ability">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28190" levels="4" name="Mermaid's Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28191" levels="1" name="Ultimate Fortune Jewelry Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28192" levels="1" name="Unequip New User's Leaf">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28193" levels="1" name="Unequip Returning User's Leaf">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28194" levels="1" name="Suspicious Safe">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28195" levels="1" name="Vitality Beer">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28196" levels="3" name="Honey Vitality Beer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="28197" levels="1" name="Teddy Bear Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28198" levels="1" name="Cat Plushie Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28199" levels="1" name="Panda Plushie Appearance Stone">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28200" levels="1" name="Adventurer's Circlet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28201" levels="1" name="Adventurer's Bracelet">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="28202" levels="1" name="T-shirt Box">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="28204" levels="1" name="Box of War Hero's Soul">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="28205" levels="5" name="14th Anniversary Rune 100%">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+</list>

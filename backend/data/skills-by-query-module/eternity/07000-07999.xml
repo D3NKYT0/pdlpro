@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="7000" levels="1" name="NPC Default">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="NOTDONE" />
+  </skill>
+  <skill id="7001" levels="1" name="Dispel Buff">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="NEGATE" />
+  </skill>
+  <skill id="7002" levels="1" name="Dispel Debuff">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="NEGATE" />
+  </skill>
+  <skill id="7003" levels="1" name="Dispel All">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="NEGATE" />
+  </skill>
+  <skill id="7004" levels="2" name="Dispel Petrification">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="NEGATE" />
+  </skill>
+  <skill id="7005" levels="4" name="Greater Chant of Vampire">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7006" levels="13" name="The Love of Pa'agrio">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="PASSIVE" />
+  </skill>
+  <skill id="7007" levels="4" name="Greater Seal of Flame">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DOT" />
+  </skill>
+  <skill id="7008" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7009" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7010" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7011" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7012" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7013" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7014" levels="1" name="Test - Critical Damage Up">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="7015" levels="1" name="Test - Critical Damage Down">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="7016" levels="1" name="Test - Critical Damage Up">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="7017" levels="1" name="Test - Critical Damage Down">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="7018" levels="1" name="Test - Critical Rate Up">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="7019" levels="1" name="Test - Critical Rate Down">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="7020" levels="1" name="Test - Critical Rate Up">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="7021" levels="1" name="Test - Critical Rate Down">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="7022" levels="1" name="Test - Find Hidden Door">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7023" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7024" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7025" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7026" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7027" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7028" levels="1" name="For Stationary NPCs">
+    <set name="operateType" val="PASSIVE" />
+    <set name="skillType" val="NOTDONE" />
+  </skill>
+  <skill id="7029" levels="4" name="Super Haste">
+    <set name="operateType" val="TOGGLE" />
+    <set name="skillType" val="CONT" />
+  </skill>
+  <skill id="7030" levels="1" name="Summon King Bugbear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="SUMMON" />
+  </skill>
+  <skill id="7031" levels="1" name="Summon Skeleton Royal Guard">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="SUMMON" />
+  </skill>
+  <skill id="7032" levels="1" name="Summon Hunter Gargoyle">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="SUMMON" />
+  </skill>
+  <skill id="7033" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7034" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7035" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7036" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7037" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7038" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7039" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7040" levels="1" name="not_used">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7041" levels="1" name="Master's Blessing - Focus">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7042" levels="1" name="Master's Blessing - Death Whisper">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7043" levels="1" name="Master's Blessing - Haste">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7044" levels="1" name="Master's Blessing - Guidance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7045" levels="1" name="Master's Blessing - Blessed Body">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7046" levels="1" name="Master's Blessing - Blessed Soul">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7047" levels="1" name="Master's Blessing - Agility">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7048" levels="1" name="Master's Blessing - Acumen">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7049" levels="1" name="Master's Blessing - Decrease Weight">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7050" levels="1" name="Master's Blessing - Might">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7051" levels="1" name="Master's Blessing - Shield">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7052" levels="1" name="Master's Blessing - Magic Barrier">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7053" levels="1" name="Master's Blessing - Vampiric Rage">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7054" levels="1" name="Master's Blessing - Empower">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7055" levels="1" name="Master's Blessing - Wind Walk">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7056" levels="1" name="Master's Blessing - Berserker Spirit">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7057" levels="1" name="Master's Blessing - Greater Might">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7058" levels="1" name="Master's Blessing - Greater Shield">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7059" levels="1" name="Master's Blessing - Wild Magic">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7060" levels="1" name="Master's Blessing - Clarity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7061" levels="1" name="Master's Blessing - Prophecy of Water">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7062" levels="1" name="Master's Blessing - Prophecy of Fire">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7063" levels="1" name="Master's Blessing - Prophecy of Wind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7064" levels="1" name="Master's Blessing - Chant of Victory">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7065" levels="1" name="Test - Charge">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7066" levels="1" name="Test Stun Charge">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7067" levels="1" name="Test Range Charge">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7068" levels="1" name="Test Steal Abnormal State">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7069" levels="1" name="Test Abnormal State DD">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7070" levels="1" name="Test - Soul Eating Passive">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="7071" levels="1" name="Test - Soul Transfer">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7072" levels="1" name="Test - Basic Trap">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7073" levels="1" name="Test - Find Trap">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7074" levels="1" name="Test - Cancel Trap">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7075" levels="1" name="Test - Distance DD">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7076" levels="1" name="Test - Delay Debuff">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7077" levels="1" name="Test - Delay Debuff - Call">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7078" levels="1" name="Test - Blink">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7079" levels="1" name="Test - Party Damage Absorb">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7080" levels="1" name="Test - General Attack Prohibited">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7081" levels="1" name="Effect Test - Land Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7082" levels="1" name="Effect Test - Chain Lightning">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7083" levels="1" name="Test - Trap Skill">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7084" levels="1" name="Test - Trap Skill">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7085" levels="1" name="Self-Destruct Explosion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7086" levels="1" name="Last Stand_test">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7087" levels="1" name="Chain Magic - Dark Explosion_test">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7088" levels="1" name="Master's Blessing - Improve Combat">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7089" levels="1" name="Master's Blessing - Improve Magic">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7090" levels="1" name="Master's Blessing - Improve Condition">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7091" levels="1" name="Master's Blessing - Improve Critical">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7092" levels="1" name="Master's Blessing - Improve Shield Defense">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7093" levels="1" name="Master's Blessing - Improve Movement">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7094" levels="1" name="Master's Blessing - Sharpen Edge">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7095" levels="1" name="Master's Blessing - Face Harden">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7096" levels="1" name="Master's Blessing - Blessing of Noblesse">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7097" levels="1" name="Cancel Shadow Move">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="7098" levels="1" name="Clan-exclusive Pet Heal">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="HEAL" />
+  </skill>
+  <skill id="7099" levels="1" name="Clan-exclusive Pet Fear">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="7100" levels="1" name="Clan-exclusive Pet Stun">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="7101" levels="1" name="Clan-exclusive Pet Aerial Thrust">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="7102" levels="1" name="Summon Clan Pet">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="7103" levels="1" name="Helping Tree CP Recovery Range">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7104" levels="1" name="Pa'agrio's Hand">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="7105" levels="1" name="Incubation Possible">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7106" levels="1" name="Optimal Temperature Incubation Success">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7107" levels="1" name="Incubation Success">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7108" levels="1" name="Incubation Failure">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="7109" levels="1" name="Summon Bratty Angma">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7110" levels="1" name="Summon Bratty Angma">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7111" levels="1" name="Summon Bratty Angma">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7112" levels="1" name="Summon Bratty Angma">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="7113" levels="1" name="Pet Invincibility Effect">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="7114" levels="1" name="Spellbook: Clan Flag">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="7115" levels="1" name="Energy of Chaos">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="7116" levels="1" name="Spellbook: Air Bike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="7117" levels="1" name="Spellbook: Hell Hound">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="7118" levels="1" name="Spellbook: Pegasus">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="7119" levels="1" name="Spellbook: Wing Hound">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="7120" levels="1" name="Spellbook: War Horse">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="7121" levels="1" name="Spellbook: Griffin">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+</list>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="39101" levels="1" name="Chase Down">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="39102" levels="1" name="Sneak">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="39169" levels="1" name="Cheer Firecracker">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39171" levels="3" name="Member of the Balthus Knight">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="39172" levels="1" name="Party Scroll of Escape">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="39173" levels="1" name="Stealth Detector">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DETECTION" />
+  </skill>
+  <skill id="39174" levels="1" name="Valor Recovery Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="39175" levels="1" name="Scroll: PK">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="39176" levels="1" name="Scroll: Reputation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="39177" levels="1" name="Resolute Raid Point Rune">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="39178" levels="1" name="Resolute Attack Scroll">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39179" levels="1" name="Resolute Defense Scroll">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39180" levels="1" name="Resolute Recovery Potion">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39181" levels="3" name="Honey Vitality Beer">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="39182" levels="1" name="Lantern's Summon Friend Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="39183" levels="1" name="Vitality Beer">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39184" levels="5" name="Suspicious Safe">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39185" levels="1" name="Divine Zodiac Agathion Book of Growth">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39186" levels="1" name="Zodiac Agathion Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39187" levels="21" name="Burnstein's Aufgabe Shield Appearance Stone (30-day)">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39188" levels="1" name="Red Libra Kaliel's Energy Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39189" levels="2" name="Clan Hall Belt - Stage 1">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="39190" levels="1" name="GM Lassana's Present Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39191" levels="1" name="Talisman - Wind Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39192" levels="1" name="Talisman - Fortress Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39193" levels="1" name="Item Seal Scroll">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39194" levels="1" name="Item Unseal Scroll">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39195" levels="1" name="Dark/Bloody Helios Enhancement Stone Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39196" levels="1" name="Knights' Basic Supplies">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39197" levels="1" name="+8 Shiny Elemental T-shirt Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39198" levels="1" name="+8 Reflect Attack T-shirt Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39199" levels="1" name="+8 Reflect Magic T-shirt Pack">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39200" levels="1" name="Merlot's Gift">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39201" levels="4" name="Dragon's Relic">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39202" levels="3" name="+10 Bloody Armor - Heavy Armor Capsule">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39203" levels="1" name="Blessed Dragon Shirt Enchant Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="39204" levels="2" name="Mysterious Weapon Enchant Scroll">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="39205" levels="1" name="Glowing Dragon's Attribute Potion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="39206" levels="1" name="Royal Red Save Ticket Box">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="39231" levels="4" name="Master Fisherman's Blessing - 1-hr">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+</list>

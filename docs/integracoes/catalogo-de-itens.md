@@ -41,10 +41,12 @@ negociável.
 
 ## Catálogo consolidado
 
-O catálogo servido pelo PDL combina duas fontes:
+O catálogo servido pelo PDL aplica estas fontes em ordem de prioridade:
 
-1. os XMLs encontrados em `LINEAGE_ITEM_XML_DIR`;
-2. os itens customizados ativos cadastrados no banco do painel.
+1. os XMLs de um diretório próprio definido em `LINEAGE_ITEM_XML_DIR`, quando configurado;
+2. os XMLs em `backend/data/items-by-query-module/<módulo>/`, selecionados por `LINEAGE_QUERY_MODULE`;
+3. os XMLs de `backend/data/items/` quando o diretório padrão está em uso;
+4. os itens customizados ativos cadastrados no banco do painel.
 
 Os XMLs têm prioridade. Um item customizado não pode reutilizar um ID já definido nos
 arquivos e, caso um XML adicionado posteriormente passe a utilizar o mesmo ID, a
@@ -103,8 +105,9 @@ frontend.
 
 ## Cache e atualização
 
-Os XMLs são mantidos em cache pelo processo do backend. Após alterar os arquivos ou o
-valor de `LINEAGE_ITEM_XML_DIR`, reinicie os processos do backend para recarregá-los.
+Os XMLs são mantidos em cache pelo processo do backend. Após alterar os arquivos,
+`LINEAGE_ITEM_XML_DIR` ou `LINEAGE_QUERY_MODULE`, reinicie os processos do backend
+para recarregá-los.
 
 Itens customizados são consultados a cada requisição e podem ser criados, editados,
 ativados ou desativados sem reiniciar o backend. No frontend, o catálogo possui cache

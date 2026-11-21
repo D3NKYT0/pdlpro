@@ -8,12 +8,12 @@ const frontendDir = join(scriptsDir, '..')
 const publicDir = join(frontendDir, 'public')
 const iconsDir = join(publicDir, 'item-icons')
 const archive = join(frontendDir, 'assets', 'item-icons.tar.gz')
-const requiredIcons = ['57.jpg', '5575.jpg', '6361.jpg', '3950.jpg', '1459.jpg']
+const requiredIcons = ['57.jpg', '5575.jpg', '6361.jpg', '3950.jpg', '1459.jpg', '17290.jpg', '39634.jpg']
 
 function hasCompleteCatalog() {
   if (!existsSync(iconsDir)) return false
   const files = readdirSync(iconsDir)
-  return files.filter((file) => file.toLowerCase().endsWith('.jpg')).length >= 19000
+  return files.filter((file) => file.toLowerCase().endsWith('.jpg')).length >= 42000
     && requiredIcons.every((file) => files.includes(file))
 }
 

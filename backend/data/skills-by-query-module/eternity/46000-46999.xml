@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="46715" levels="1" name="Pa'agrio - Reliable Hit">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="46716" levels="2" name="Pa'agrio - Reliable Hit">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46717" levels="1" name="Equip Gran Kain's Necklace - Necklace Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46718" levels="1" name="Unequip Gran Kain's Necklace - Necklace Stage 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46719" levels="1" name="Equip Pa'agrio's Earring - Earring Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46720" levels="1" name="Unequip Pa'agrio's Earring - Earring Stage 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46721" levels="1" name="Equip Sayha's Ring - Ring Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46722" levels="1" name="Unequip Sayha's Ring - Ring Stage 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46723" levels="1" name="Equip Gran Kain's Necklace - Necklace Stage 2">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46724" levels="1" name="Unequip Gran Kain's Necklace - Necklace Stage 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46725" levels="1" name="Equip Pa'agrio's Earring - Earring Stage 2">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46726" levels="1" name="Unequip Pa'agrio's Earring - Earring Stage 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46727" levels="1" name="Equip Sayha's Ring - Ring Stage 2">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46728" levels="1" name="Unequip Sayha's Ring - Ring Stage 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46729" levels="1" name="Equip Gran Kain's Necklace - Necklace Stage 3">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46730" levels="1" name="Unequip Gran Kain's Necklace - Necklace Stage 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46731" levels="1" name="Equip Pa'agrio's Earring - Earring Stage 3">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46732" levels="1" name="Unequip Pa'agrio's Earring - Earring Stage 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46733" levels="1" name="Equip Sayha's Ring - Ring Stage 3">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46734" levels="1" name="Unequip Sayha's Ring - Ring Stage 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46735" levels="1" name="Equip Einhasad's Necklace - Necklace Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46736" levels="1" name="Unequip Einhasad's Necklace - Necklace Stage 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46737" levels="1" name="Equip Eva's Earring - Earring Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46738" levels="1" name="Unequip Eva's Earring - Earring Stage 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46739" levels="1" name="Equip Maphr's Ring - Ring Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46740" levels="1" name="Unequip Maphr's Ring - Ring Stage 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46741" levels="1" name="Equip Einhasad's Necklace - Necklace Stage 2">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46742" levels="1" name="Unequip Einhasad's Necklace - Necklace Stage 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46743" levels="1" name="Equip Eva's Earring - Earring Stage 2">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46744" levels="1" name="Unequip Eva's Earring - Earring Stage 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46745" levels="1" name="Equip Maphr's Ring - Ring Stage 2">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46746" levels="1" name="Unequip Maphr's Ring - Ring Stage 2">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46747" levels="1" name="Equip Einhasad's Necklace - Necklace Stage 3">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46748" levels="1" name="Unequip Einhasad's Necklace - Necklace Stage 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46749" levels="1" name="Equip Eva's Earring - Earring Stage 3">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46750" levels="1" name="Unequip Eva's Earring - Earring Stage 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46751" levels="1" name="Equip Maphr's Ring - Ring Stage 3">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46752" levels="1" name="Unequip Maphr's Ring - Ring Stage 3">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46753" levels="1" name="Equip Shilen's Necklace - Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46754" levels="1" name="Unequip Shilen's Necklace - Stage 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46755" levels="1" name="Equip Shilen's Earring - Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46756" levels="1" name="Unequip Shilen's Earring - Stage 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46757" levels="1" name="Equip Shilen's Ring - Stage 1">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46758" levels="1" name="Unequip Shilen's Ring - Stage 1">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46759" levels="1" name="Equip Gran Kain's Necklace - Necklace Stage 4">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46760" levels="1" name="Unequip Gran Kain's Necklace - Necklace Stage 4">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46761" levels="1" name="Equip Pa'agrio's Earring - Earring Stage 4">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46762" levels="1" name="Unequip Pa'agrio's Earring - Earring Stage 4">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46763" levels="1" name="Equip Sayha's Ring - Ring Stage 4">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46764" levels="1" name="Unequip Sayha's Ring - Ring Stage 4">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46765" levels="1" name="Equip Gran Kain's Necklace - Necklace Stage 5">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46766" levels="1" name="Unequip Gran Kain's Necklace - Necklace Stage 5">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46767" levels="1" name="Equip Pa'agrio's Earring - Earring Stage 5">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46768" levels="1" name="Unequip Pa'agrio's Earring - Earring Stage 5">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46769" levels="1" name="Equip Sayha's Ring - Ring Stage 5">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46770" levels="1" name="Unequip Sayha's Ring - Ring Stage 5">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46771" levels="1" name="Equip Gran Kain's Necklace - Necklace Stage 6">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46772" levels="1" name="Unequip Gran Kain's Necklace - Necklace Stage 6">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46773" levels="1" name="Equip Pa'agrio's Earring - Earring Stage 6">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46774" levels="1" name="Unequip Pa'agrio's Earring - Earring Stage 6">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46775" levels="1" name="Equip Sayha's Ring - Ring Stage 6">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46776" levels="1" name="Unequip Sayha's Ring - Ring Stage 6">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46777" levels="1" name="Equip Einhasad's Necklace - Necklace Stage 4">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46778" levels="1" name="Unequip Einhasad's Necklace - Necklace Stage 4">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46779" levels="1" name="Equip Eva's Earring - Earring Stage 4">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46780" levels="1" name="Unequip Eva's Earring - Earring Stage 4">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46781" levels="1" name="Equip Maphr's Ring - Ring Stage 4">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46782" levels="1" name="Unequip Maphr's Ring - Ring Stage 4">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46783" levels="1" name="Equip Einhasad's Necklace - Necklace Stage 5">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46784" levels="1" name="Unequip Einhasad's Necklace - Necklace Stage 5">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46785" levels="1" name="Equip Eva's Earring - Earring Stage 5">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46786" levels="1" name="Unequip Eva's Earring - Earring Stage 5">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46787" levels="1" name="Equip Maphr's Ring - Ring Stage 5">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46788" levels="1" name="Unequip Maphr's Ring - Ring Stage 5">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46789" levels="1" name="Equip Einhasad's Necklace - Necklace Stage 6">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46790" levels="1" name="Unequip Einhasad's Necklace - Necklace Stage 6">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46791" levels="1" name="Equip Eva's Earring - Earring Stage 6">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46792" levels="1" name="Unequip Eva's Earring - Earring Stage 6">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46793" levels="1" name="Equip Maphr's Ring - Ring Stage 6">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+  </skill>
+  <skill id="46794" levels="1" name="Unequip Maphr's Ring - Ring Stage 6">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="46797" levels="1" name="Sayha - Restrain Physical and Magic">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="46798" levels="1" name="Maphr - Yoke">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="46799" levels="6" name="Sayha's Ring">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="46800" levels="6" name="Sayha's Ring">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="46801" levels="6" name="Maphr's Ring">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="46802" levels="6" name="Maphr's Ring">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+</list>

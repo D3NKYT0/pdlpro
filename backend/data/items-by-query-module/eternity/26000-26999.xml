@@ -1,0 +1,4641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <etcitem id="26000" name="+5 Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26001" name="+6 Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26002" name="+7 Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26003" name="+8 Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26004" name="+9 Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26005" name="+10 Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26006" name="+4 Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26007" name="+5 Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26008" name="+6 Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26009" name="+7 Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26010" name="+8 Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26011" name="+9 Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26012" name="+10 Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26013" name="+4 Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26014" name="+5 Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26015" name="+6 Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26016" name="+7 Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26017" name="+8 Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26018" name="+9 Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26019" name="+10 Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26020" name="+4 Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26021" name="+5 Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26022" name="+6 Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26023" name="+7 Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26024" name="+8 Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26025" name="+9 Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26026" name="+10 Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26027" name="+4 Blessed Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26028" name="+5 Blessed Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26029" name="+6 Blessed Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26030" name="+7 Blessed Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26031" name="+8 Blessed Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26032" name="+9 Blessed Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26033" name="+10 Blessed Requiem Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26034" name="+4 Blessed Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26035" name="+5 Blessed Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26036" name="+6 Blessed Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26037" name="+7 Blessed Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26038" name="+8 Blessed Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26039" name="+9 Blessed Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26040" name="+10 Blessed Requiem Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26041" name="+4 Blessed Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26042" name="+5 Blessed Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26043" name="+6 Blessed Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26044" name="+7 Blessed Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26045" name="+8 Blessed Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26046" name="+9 Blessed Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26047" name="+10 Blessed Requiem Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26048" name="+4 Blessed Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26049" name="+5 Blessed Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26050" name="+6 Blessed Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26051" name="+7 Blessed Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26052" name="+8 Blessed Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26053" name="+9 Blessed Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26054" name="+10 Blessed Requiem Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26055" name="+4 Blessed Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26056" name="+5 Blessed Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26057" name="+6 Blessed Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26058" name="+7 Blessed Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26059" name="+8 Blessed Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26060" name="+9 Blessed Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26061" name="+10 Blessed Requiem Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26062" name="+4 Blessed Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26063" name="+5 Blessed Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26064" name="+6 Blessed Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26065" name="+7 Blessed Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26066" name="+8 Blessed Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26067" name="+9 Blessed Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26068" name="+10 Blessed Requiem Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26069" name="+4 Blessed Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26070" name="+5 Blessed Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26071" name="+6 Blessed Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26072" name="+7 Blessed Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26073" name="+8 Blessed Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26074" name="+9 Blessed Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26075" name="+10 Blessed Requiem Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26076" name="+4 Blessed Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26077" name="+5 Blessed Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26078" name="+6 Blessed Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26079" name="+7 Blessed Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26080" name="+8 Blessed Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26081" name="+9 Blessed Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26082" name="+10 Blessed Requiem Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26083" name="+4 Blessed Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26084" name="+5 Blessed Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26085" name="+6 Blessed Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26086" name="+7 Blessed Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26087" name="+8 Blessed Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26088" name="+9 Blessed Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26089" name="+10 Blessed Requiem Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26090" name="+4 Blessed Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26091" name="+5 Blessed Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26092" name="+6 Blessed Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26093" name="+7 Blessed Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26094" name="+8 Blessed Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26095" name="+9 Blessed Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26096" name="+10 Blessed Requiem Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26097" name="+4 Blessed Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26098" name="+5 Blessed Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26099" name="+6 Blessed Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26100" name="+7 Blessed Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26101" name="+8 Blessed Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26102" name="+9 Blessed Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26103" name="+10 Blessed Requiem Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26104" name="+4 Blessed Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26105" name="+5 Blessed Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26106" name="+6 Blessed Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26107" name="+7 Blessed Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26108" name="+8 Blessed Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26109" name="+9 Blessed Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26110" name="+10 Blessed Requiem Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26111" name="+4 Blessed Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26112" name="+5 Blessed Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26113" name="+6 Blessed Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26114" name="+7 Blessed Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26115" name="+8 Blessed Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26116" name="+9 Blessed Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26117" name="+10 Blessed Requiem Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26118" name="+4 Blessed Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26119" name="+5 Blessed Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26120" name="+6 Blessed Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26121" name="+7 Blessed Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26122" name="+8 Blessed Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26123" name="+9 Blessed Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26124" name="+10 Blessed Requiem Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26125" name="+4 Blessed Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26126" name="+5 Blessed Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26127" name="+6 Blessed Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26128" name="+7 Blessed Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26129" name="+8 Blessed Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26130" name="+9 Blessed Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26131" name="+10 Blessed Apocalypse Shaper Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26132" name="+4 Blessed Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26133" name="+5 Blessed Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26134" name="+6 Blessed Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26135" name="+7 Blessed Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26136" name="+8 Blessed Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26137" name="+9 Blessed Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26138" name="+10 Blessed Apocalypse Cutter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26139" name="+4 Blessed Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26140" name="+5 Blessed Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26141" name="+6 Blessed Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26142" name="+7 Blessed Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26143" name="+8 Blessed Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26144" name="+9 Blessed Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26145" name="+10 Blessed Apocalypse Slasher Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26146" name="+4 Blessed Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26147" name="+5 Blessed Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26148" name="+6 Blessed Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26149" name="+7 Blessed Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26150" name="+8 Blessed Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26151" name="+9 Blessed Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26152" name="+10 Blessed Apocalypse Avenger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26153" name="+4 Blessed Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26154" name="+5 Blessed Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26155" name="+6 Blessed Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26156" name="+7 Blessed Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26157" name="+8 Blessed Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26158" name="+9 Blessed Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26159" name="+10 Blessed Apocalypse Fighter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26160" name="+4 Blessed Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26161" name="+5 Blessed Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26162" name="+6 Blessed Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26163" name="+7 Blessed Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26164" name="+8 Blessed Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26165" name="+9 Blessed Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26166" name="+10 Blessed Apocalypse Stormer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26167" name="+4 Blessed Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26168" name="+5 Blessed Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26169" name="+6 Blessed Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26170" name="+7 Blessed Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26171" name="+8 Blessed Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26172" name="+9 Blessed Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26173" name="+10 Blessed Apocalypse Thrower Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26174" name="+4 Blessed Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26175" name="+5 Blessed Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26176" name="+6 Blessed Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26177" name="+7 Blessed Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26178" name="+8 Blessed Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26179" name="+9 Blessed Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26180" name="+10 Blessed Apocalypse Shooter Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26181" name="+4 Blessed Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26182" name="+5 Blessed Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26183" name="+6 Blessed Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26184" name="+7 Blessed Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26185" name="+8 Blessed Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26186" name="+9 Blessed Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26187" name="+10 Blessed Apocalypse Buster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26188" name="+4 Blessed Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26189" name="+5 Blessed Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26190" name="+6 Blessed Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26191" name="+7 Blessed Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26192" name="+8 Blessed Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26193" name="+9 Blessed Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26194" name="+10 Blessed Apocalypse Caster Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26195" name="+4 Blessed Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26196" name="+5 Blessed Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26197" name="+6 Blessed Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26198" name="+7 Blessed Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26199" name="+8 Blessed Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26200" name="+9 Blessed Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26201" name="+10 Blessed Apocalypse Retributer Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26202" name="+4 Blessed Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26203" name="+5 Blessed Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26204" name="+6 Blessed Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26205" name="+7 Blessed Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26206" name="+8 Blessed Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26207" name="+9 Blessed Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26208" name="+10 Blessed Apocalypse Dual sword Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26209" name="+4 Blessed Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26210" name="+5 Blessed Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26211" name="+6 Blessed Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26212" name="+7 Blessed Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26213" name="+8 Blessed Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26214" name="+9 Blessed Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26215" name="+10 Blessed Apocalypse Dual Dagger Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26216" name="+4 Blessed Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26217" name="+5 Blessed Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26218" name="+6 Blessed Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26219" name="+7 Blessed Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26220" name="+8 Blessed Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26221" name="+9 Blessed Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26222" name="+10 Blessed Apocalypse Dual Blunt Weapon Pack">
+    <set name="icon" value="icon.etc_treasure_box_i08" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26223" name="Steel Support Box">
+    <set name="icon" value="icon.etc_box_of_adventure_1_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="26224" name="Steel Demon's Staff (60-day)">
+    <set name="icon" value="icon.weapon_demons_staff_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="c" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26225" name="Steel Spirit's Staff (60-day)">
+    <set name="icon" value="icon.weapon_sprites_staff_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="b" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26226" name="Steel Dasparion's Staff (60-day)">
+    <set name="icon" value="icon.weapon_dasparions_staff_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="a" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26227" name="Steel Imperial Staff (60-day)">
+    <set name="icon" value="icon.weapon_imperial_staff_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26228" name="Steel Dynasty Staff (60-day)">
+    <set name="icon" value="icon.weapon_dynasty_twohand_staff_i01" />
+    <set name="type" value="blunt" />
+    <set name="crystal_type" value="s" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="26229" name="Fated Support Box: Ertheia Wizard (C-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26230" name="Fated Support Box: Ertheia Fighter (C-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26231" name="Fated Support Box: Ertheia Wizard (B-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26232" name="Fated Support Box: Ertheia Fighter (B-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26233" name="Fated Support Box: Ertheia Wizard (A-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26234" name="Fated Support Box: Ertheia Fighter (A-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26235" name="Fated Support Box: Ertheia Wizard - Stage 1 (S-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26236" name="Fated Support Box: Ertheia Fighter - Stage 1 (S-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26237" name="Fated Support Box: Ertheia Wizard - Stage 2 (S-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26238" name="Fated Support Box: Ertheia Fighter - Stage 2 (S-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26239" name="Fated Support Box: Sayha's Seer (R-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26240" name="Fated Support Box: Eviscerator (R-grade)">
+    <set name="icon" value="icon.etc_equip_item_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26241" name="Lost Gloves">
+    <set name="icon" value="icon.armor_t32_g_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26242" name="Lost Boots">
+    <set name="icon" value="icon.armor_iron_boots_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26243" name="Lost Armor">
+    <set name="icon" value="icon.armor_t01_u_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26244" name="Symbol of Courage">
+    <set name="icon" value="icon.etc_badge_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26245" name="Symbol of Courage">
+    <set name="icon" value="icon.etc_badge_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26246" name="Returning Hero's Support Box">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26247" name="Returning Hero's High-grade Support Box">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26248" name="Returning Hero's Support Cube">
+    <set name="icon" value="icon.cube_upgrade" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26249" name="Cloak of Light for the Chosen">
+    <set name="icon" value="icon.amor_goodness_cloak" />
+    <set name="tradeable" value="false" />
+    <slot id="BACK" />
+  </armor>
+  <armor id="26250" name="Cloak of Darkness for the Chosen">
+    <set name="icon" value="icon.amor_evilness_cloak" />
+    <set name="tradeable" value="false" />
+    <slot id="BACK" />
+  </armor>
+  <armor id="26251" name="Lilith Arrival’s Mask">
+    <set name="icon" value="icon.accessory_middle_age_party_mask2_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="26252" name="Halloween Outfit Appearance Stone">
+    <set name="icon" value="BranchSys3.lcon.g_scrl_change_co_swimsuit_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26253" name="Halloween Weapon Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_auto_shape_shift_stone" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26254" name="Halloween Outfit">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="26255" name="Halloween Outfit">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <weapon id="26256" name="Halloween Shaper">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="dagger" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="26257" name="Halloween Cutter">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="26258" name="Halloween Slasher">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26259" name="Halloween Avenger">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="blunt" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="26260" name="Halloween Fighter">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="dualfist" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26261" name="Halloween Stormer">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="pole" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26262" name="Halloween Thrower">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="bow" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26263" name="Halloween Shooter">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="crossbow" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26264" name="Halloween Buster">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="26265" name="Halloween Caster">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="blunt" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="26266" name="Halloween Retributer">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="blunt" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26267" name="Halloween Dual sword">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="dual" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26268" name="Halloween Dual Dagger">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="dualdagger" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26269" name="Halloween Dual Blunt Weapon">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="dual" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <armor id="26270" name="Halloween Shield">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="26271" name="Halloween Sigil">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <etcitem id="26272" name="Mysterious Halloween Potion">
+    <set name="icon" value="icon.etc_whiteday_herb" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26273" name="Halloween Outfit Appearance Stone">
+    <set name="icon" value="BranchSys3.lcon.g_scrl_change_co_swimsuit_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26274" name="Halloween Weapon Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_auto_shape_shift_stone" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="26275" name="Halloween Shaper">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="dagger" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="26276" name="Halloween Cutter">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="26277" name="Halloween Slasher">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26278" name="Halloween Avenger">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="blunt" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="26279" name="Halloween Fighter">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="dualfist" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26280" name="Halloween Stormer">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="pole" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26281" name="Halloween Thrower">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="bow" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26282" name="Halloween Shooter">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="crossbow" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26283" name="Halloween Buster">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="sword" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="26284" name="Halloween Caster">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="blunt" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_HAND" />
+  </weapon>
+  <weapon id="26285" name="Halloween Retributer">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="blunt" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26286" name="Halloween Dual sword">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="dual" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26287" name="Halloween Dual Dagger">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="dualdagger" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <weapon id="26288" name="Halloween Dual Blunt Weapon">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="type" value="dual" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <armor id="26289" name="Halloween Shield">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <armor id="26290" name="Halloween Sigil">
+    <set name="icon" value="icon.ev_wp_halloween" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_HAND" />
+  </armor>
+  <etcitem id="26291" name="Kaliel's Energy">
+    <set name="icon" value="icon.etc_spirit_kalie_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26292" name="Agathion - Minion Eye">
+    <set name="icon" value="icon.etc_rbracelet_aga_agit_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="26293" name="Agathion - Matryoshka">
+    <set name="icon" value="icon.etc_rbracelet_aga_agit_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="26294" name="Agathion - Minion Eye">
+    <set name="icon" value="icon.etc_rbracelet_aga_agit_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="26295" name="Agathion - Matryoshka">
+    <set name="icon" value="icon.etc_rbracelet_aga_agit_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="26296" name="La Vie En Rose's Jewelry Box">
+    <set name="icon" value="icon.etc_bm_jewelbox_main_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26297" name="La Vie En Rose's Jewelry Pack">
+    <set name="icon" value="icon.etc_bm_jewelbox_main_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26298" name="La Vie En Rose's Noble Brooch">
+    <set name="icon" value="icon.etc_pi_box_wish_pack" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26299" name="La Vie En Rose's Brilliant Brooch">
+    <set name="icon" value="icon.etc_pi_box_love_pack" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26300" name="3rd Anniversary Hat">
+    <set name="icon" value="BranchSys.icon.br_party_hat_gold_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26301" name="3rd Anniversary Agathion">
+    <set name="icon" value="BranchSys.icon.br_aga_suno_trumpet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <armor id="26302" name="6th Anniversary Hat">
+    <set name="icon" value="BranchSys.icon.br_party_hat_gold_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26303" name="6th Anniversary Agathion">
+    <set name="icon" value="BranchSys.icon.br_aga_suno_trumpet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="26304" name="Campfire Flint">
+    <set name="icon" value="BranchSys2.icon.g_campfire_flint" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26305" name="Kotatsu">
+    <set name="icon" value="BranchSys.icon.br_kotatsu_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26306" name="Offering Test Recipe 1">
+    <set name="icon" value="icon.etc_recipe_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26307" name="Offering Test Recipe 2">
+    <set name="icon" value="icon.etc_recipe_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26308" name="Offering Test Recipe 3">
+    <set name="icon" value="icon.etc_recipe_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26309" name="Offering Test Recipe 4">
+    <set name="icon" value="icon.etc_recipe_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26310" name="Offering Test Recipe 5">
+    <set name="icon" value="icon.etc_recipe_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26311" name="Offering Test Ingredient 1">
+    <set name="icon" value="icon.etc_crystal_ball_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <weapon id="26312" name="Offering Test Ingredient  2">
+    <set name="icon" value="icon.weapon_two_handed_sword_i00" />
+    <set name="type" value="sword" />
+    <set name="crystal_type" value="d" />
+    <set name="tradeable" value="false" />
+    <slot id="LEFT_RIGHT_HAND" />
+  </weapon>
+  <etcitem id="26313" name="Offering Test Ingredient  3">
+    <set name="icon" value="icon.etc_crystal_ball_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26314" name="Offering Test Ingredient  4">
+    <set name="icon" value="icon.etc_crystal_ball_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26315" name="Offering Test Ingredient  5">
+    <set name="icon" value="icon.etc_crystal_ball_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26316" name="Offering Test Ingredient  6">
+    <set name="icon" value="icon.etc_crystal_ball_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26317" name="Offering Test Ingredient  7">
+    <set name="icon" value="icon.etc_crystal_ball_silver_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26318" name="Dragon Scales">
+    <set name="icon" value="BranchIcon.Icon.etc_dragon_skin_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26319" name="Venir's Talisman Stage 1 Pack">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26320" name="Venir's Talisman Stage 2 Pack">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26321" name="Venir's Talisman Stage 3 Pack">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26322" name="Venir's Talisman Stage 4 Pack">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26323" name="Venir's Talisman Stage 5 Pack">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26324" name="Venir's Talisman Stage 6 Pack">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26325" name="Santa's Cloak">
+    <set name="icon" value="BranchSys3.icon.g_christmas_cloak" />
+    <set name="tradeable" value="false" />
+    <slot id="BACK" />
+  </armor>
+  <armor id="26326" name="Lineage II Baseball Uniform">
+    <set name="icon" value="icon.london_olympic_bikini" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="26327" name="Lineage II Baseball Cap">
+    <set name="icon" value="icon.accessory_mining_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26328" name="School Uniform A">
+    <set name="icon" value="BranchSys3.icon1.Br_schoollook" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="26329" name="School Uniform Hair A">
+    <set name="icon" value="icon.accessory_mining_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26330" name="School Uniform B">
+    <set name="icon" value="BranchSys3.icon1.Br_schoollook" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="26331" name="School Uniform Hair B">
+    <set name="icon" value="icon.accessory_mining_cap_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <etcitem id="26332" name="Lineage II Baseball Uniform Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26333" name="Lineage II Baseball Cap Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26334" name="School Uniform A Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26335" name="School Uniform Hair A Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26336" name="School Uniform B Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26337" name="School Uniform Hair B Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26338" name="Talisman - Abundance Lv. 1 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.g_therich_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26339" name="Talisman - Abundance Lv. 2 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.g_therich_i01" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26340" name="Talisman - Abundance Lv. 3 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.g_therich_i02" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26341" name="Talisman - Abundance Lv. 4 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.g_therich_i03" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <etcitem id="26342" name="Recipe: Talisman - Abundance Lv. 1 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26343" name="Recipe: Talisman - Abundance Lv. 2 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26344" name="Recipe: Talisman - Abundance Lv. 3 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26345" name="Recipe: Talisman - Abundance Lv. 4 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26346" name="Kaliel's Wish Pouch">
+    <set name="icon" value="BranchIcon.Icon.etc_taiwan_bag_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26347" name="Kaliel's Token">
+    <set name="icon" value="BranchIcon.Icon.event_upgradegold" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26348" name="Kaliel's Soul Pouch">
+    <set name="icon" value="BranchIcon.Icon.newyear_lucky_bag3" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26349" name="Kaliel's Gift Box Pouch">
+    <set name="icon" value="BranchIcon.Icon.newyear_lucky_bag3" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26350" name="Scroll: Enchant Weapon (A-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_weapon_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26351" name="Scroll: Enchant Armor (A-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_armor_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26352" name="Scroll: Enchant Weapon (S-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_weapon_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26353" name="Scroll: Enchant Armor (S-grade)">
+    <set name="icon" value="icon.etc_scroll_of_enchant_armor_i05" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26354" name="Gem">
+    <set name="icon" value="icon.etc_talisman_energy_i01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26355" name="Pirate Captain Outfit">
+    <set name="icon" value="BranchSys3.iconArmor.g_co_captain_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="26356" name="Pirate Crew Outfit">
+    <set name="icon" value="BranchSys3.iconArmor.g_co_pirate_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <etcitem id="26357" name="Pirate Captain Appeareance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26358" name="Pirate Crew Appeareance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26359" name="Automatic Appearance Stone: Tears Weapon">
+    <set name="icon" value="BranchSys3.icon1.g_auto_shape_shift_stone" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26360" name="Automatic Appearance Stone: Tears Weapon">
+    <set name="icon" value="BranchSys3.icon1.g_auto_shape_shift_stone" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26361" name="Metal Suit Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26362" name="Metal Suit Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26363" name="Metal Suit Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26364" name="Metal Suit Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26365" name="Metal Suit Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26366" name="Ninja Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26367" name="Ninja Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26368" name="Ninja Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26369" name="Ninja Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26370" name="Ninja Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26371" name="Tribal Warrior Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26372" name="Tribal Warrior Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26373" name="Tribal Warrior Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26374" name="Tribal Warrior Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26375" name="Tribal Warrior Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26376" name="Military Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26377" name="Military Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26378" name="Military Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26379" name="Military Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26380" name="Military Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26381" name="Samurai Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26382" name="Samurai Outfit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26383" name="Vampire Top Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26384" name="Vampire Pants Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_legs" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26385" name="Vampire Gloves Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_gloves" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26386" name="Vampire Shoes Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_feet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26387" name="Vampire Hair Accessory Appearance Stone">
+    <set name="icon" value="BranchSys3.Icon.g_shape_shifting_hair2" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26388" name="Anakim Outfit Appearance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26389" name="Agathion - Anakim">
+    <set name="icon" value="BranchSys3.iconItem.g_agathion_anakim" />
+    <set name="tradeable" value="false" />
+    <slot id="LBRACELET" />
+  </armor>
+  <etcitem id="26390" name="Mysterious Quick Healing Potion">
+    <set name="icon" value="icon.etc_reagent_white_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26391" name="Rune of Feather Pack (7-day)">
+    <set name="icon" value="BranchSys.icon.br_four_leaf_clover_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26392" name="Rune of Feather">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_feather_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26393" name="Transformation Scroll: Rose (F)">
+    <set name="icon" value="icon.etc_trans_4f_s_b_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26394" name="Transformation Scroll: Rose (M)">
+    <set name="icon" value="icon.etc_trans_4f_s_b_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26395" name="Sealed Shadow Shaper">
+    <set name="icon" value="icon.weapon_shadow_dagger" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26396" name="Sealed Shadow Cutter">
+    <set name="icon" value="icon.weapon_shadow_onehand_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26397" name="Sealed Shadow Slasher">
+    <set name="icon" value="icon.weapon_shadow_twohand_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26398" name="Sealed Shadow Fighter">
+    <set name="icon" value="icon.weapon_shadow_fist" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26399" name="Sealed Shadow Stormer">
+    <set name="icon" value="icon.weapon_shadow_spear" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26400" name="Sealed Shadow Thrower">
+    <set name="icon" value="icon.weapon_shadow_bow" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26401" name="Sealed Shadow Shooter">
+    <set name="icon" value="icon.weapon_shadow_crossbow" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26402" name="Sealed Shadow Buster">
+    <set name="icon" value="icon.weapon_shadow_magic_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26403" name="Sealed Shadow Retributer">
+    <set name="icon" value="icon.weapon_shadow_magic_blunt" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26404" name="Sealed Shadow Dual sword">
+    <set name="icon" value="icon.weapon_shadow_dual_sword" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26405" name="Alien's Ingredient Box">
+    <set name="icon" value="icon.event_hero_treasure_box_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26406" name="XP Rune IV (Lv. 1-99) 100% Pack (1-hr)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26407" name="XP Rune IV (Lv. 1-99) 100% Pack (1-hr)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26408" name="XP Rune IV (Lv. 1-99) 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_feather_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26409" name="XP Rune IV (Lv. 1-99) 100% Pack (1-day)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26410" name="XP Rune IV (Lv. 1-99) 100% Pack (1-day)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26411" name="XP Rune IV (Lv. 1-99) 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_feather_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26412" name="XP Rune IV (Lv. 1-99) 100% Pack (7-day)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26413" name="XP Rune IV (Lv. 1-99) 100% Pack (7-day)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26414" name="XP Rune IV (Lv. 1-99) 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_feather_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26415" name="XP Rune IV (Lv. 1-99) 100% Pack (30-day)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26416" name="XP Rune IV (Lv. 1-99) 100% Pack (30-day)">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26417" name="XP Rune IV (Lv. 1-99) 100%">
+    <set name="icon" value="br_cashtex.item.br_cash_rune_of_feather_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26418" name="Recipe: Talisman - Abundance Lv. 1 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26419" name="Recipe: Talisman - Abundance Lv. 2 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26420" name="Recipe: Talisman - Abundance Lv. 3 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26421" name="Recipe: Talisman - Abundance Lv. 4 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26422" name="Wondrous Casket">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26423" name="Vintage Casket">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26424" name="Shabby Casket">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26425" name="Talisman - Annihilation Crafting Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26426" name="Talisman - Hellfire Upgrade Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26427" name="Talisman - Desire Upgrade Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26428" name="Talisman - Longing Upgrade Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26429" name="Talisman - Insanity Upgrade Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26430" name="Immortal Scroll">
+    <set name="icon" value="icon.esagira_telepo_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26431" name="Immortal Scroll Chapter 1">
+    <set name="icon" value="icon.esagira_telepo_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26432" name="Immortal Scroll Chapter 2">
+    <set name="icon" value="icon.esagira_telepo_01" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26433" name="Star Bottle For Testing">
+    <set name="icon" value="BranchIcon.Icon.etc_sign_agathion_feed_yellow_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26434" name="Test Card - Talisman">
+    <set name="icon" value="icon.card2_event_giyotine" />
+    <set name="tradeable" value="false" />
+    <slot id="UNDERWEAR" />
+  </armor>
+  <armor id="26435" name="Test Card - Bracelet">
+    <set name="icon" value="icon.card2_event_giyotine" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RBRACELET" />
+  </armor>
+  <etcitem id="26436" name="Test Card - Rune">
+    <set name="icon" value="icon.card2_event_giyotine" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26437" name="Shadow Shaper Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26438" name="Shadow Cutter Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26439" name="Shadow Slasher Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26440" name="Shadow Fighter Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26441" name="Shadow Stormer Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26442" name="Shadow Thrower Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26443" name="Shadow Shooter Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26444" name="Shadow Buster Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26445" name="Shadow Retributer Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26446" name="Shadow Dual sword Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26447" name="Talisman - Abundance">
+    <set name="icon" value="BranchSys2.icon.g_giant_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26448" name="Talisman - Abundance">
+    <set name="icon" value="BranchSys2.icon.g_giant_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26449" name="Talisman - Abundance">
+    <set name="icon" value="BranchSys2.icon.g_giant_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26450" name="Talisman - Abundance">
+    <set name="icon" value="BranchSys2.icon.g_giant_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26451" name="Talisman - Abundance">
+    <set name="icon" value="BranchSys2.icon.g_twilight_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26452" name="Talisman - Abundance">
+    <set name="icon" value="BranchSys2.icon.g_twilight_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26453" name="Talisman - Abundance">
+    <set name="icon" value="BranchSys2.icon.g_twilight_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26454" name="Talisman - Abundance">
+    <set name="icon" value="BranchSys2.icon.g_twilight_gem" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26455" name="Talisman - Abundance Lv. 1 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.g_therich_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26456" name="Talisman - Abundance Lv. 2 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.g_therich_i01" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26457" name="Talisman - Abundance Lv. 3 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.g_therich_i02" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <armor id="26458" name="Talisman - Abundance Lv. 4 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.g_therich_i03" />
+    <set name="tradeable" value="false" />
+    <slot id="DECO1" />
+  </armor>
+  <etcitem id="26459" name="Recipe: Talisman - Abundance Lv. 1 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26460" name="Recipe: Talisman - Abundance Lv. 2 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26461" name="Recipe: Talisman - Abundance Lv. 3 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26462" name="Recipe: Talisman - Abundance Lv. 4 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26463" name="Recipe: Talisman - Abundance Lv. 1 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26464" name="Recipe: Talisman - Abundance Lv. 2 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26465" name="Recipe: Talisman - Abundance Lv. 3 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26466" name="Recipe: Talisman - Abundance Lv. 4 (High-grade)">
+    <set name="icon" value="BranchIcon.Icon.etc_recipe_black_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26467" name="Abundance Box">
+    <set name="icon" value="icon.etc_pi_gift_box_i03" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26468" name="Lindvior's Earring">
+    <set name="icon" value="icon.accessory_earring_of_lind_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="26469" name="Lindvior's Earring">
+    <set name="icon" value="icon.accessory_earring_of_lind_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="26470" name="Lindvior's Earring">
+    <set name="icon" value="icon.accessory_earring_of_lind_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <armor id="26471" name="Lindvior's Earring">
+    <set name="icon" value="icon.accessory_earring_of_lind_i00" />
+    <set name="crystal_type" value="s84" />
+    <set name="tradeable" value="false" />
+    <slot id="RIGHT_EAR" />
+    <slot id="LEFT_EAR" />
+  </armor>
+  <etcitem id="26472" name="Lindvior's Earring Random Box">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26473" name="Lindvior's Earring Random Box">
+    <set name="icon" value="icon.event_big_july_seven_park_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26474" name="La Vie En Rose's Radiant Brooch">
+    <set name="icon" value="icon.etc_bm_brooch_lavianrose_i03" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH" />
+  </armor>
+  <etcitem id="26475" name="Radiant Gemstone Fragment">
+    <set name="icon" value="icon.etc_bm_brooch_lavianrose_piece" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26476" name="Vital Stone">
+    <set name="icon" value="icon.etc_bm_jewel_vital" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26477" name="Vital Stone">
+    <set name="icon" value="icon.etc_bm_jewel_vital" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26478" name="Vital Stone">
+    <set name="icon" value="icon.etc_bm_jewel_vital" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26479" name="Vital Stone">
+    <set name="icon" value="icon.etc_bm_jewel_vital" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26480" name="Vital Stone">
+    <set name="icon" value="icon.etc_bm_jewel_vital" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26481" name="Garnet">
+    <set name="icon" value="icon.etc_bm_jewel_garnet" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26482" name="Garnet">
+    <set name="icon" value="icon.etc_bm_jewel_garnet" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26483" name="Garnet">
+    <set name="icon" value="icon.etc_bm_jewel_garnet" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26484" name="Garnet">
+    <set name="icon" value="icon.etc_bm_jewel_garnet" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26485" name="Garnet">
+    <set name="icon" value="icon.etc_bm_jewel_garnet" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26486" name="Tanzanite">
+    <set name="icon" value="icon.etc_bm_jewel_tanzanite" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26487" name="Tanzanite">
+    <set name="icon" value="icon.etc_bm_jewel_tanzanite" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26488" name="Tanzanite">
+    <set name="icon" value="icon.etc_bm_jewel_tanzanite" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26489" name="Tanzanite">
+    <set name="icon" value="icon.etc_bm_jewel_tanzanite" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26490" name="Tanzanite">
+    <set name="icon" value="icon.etc_bm_jewel_tanzanite" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <etcitem id="26491" name="La Vie En Rose's Vital Stone Box">
+    <set name="icon" value="icon.etc_bm_jewelbox_vital" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26492" name="La Vie En Rose's Garnet Box">
+    <set name="icon" value="icon.etc_bm_jewelbox_garnet" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26493" name="La Vie En Rose's Tanzanite Box">
+    <set name="icon" value="icon.etc_bm_jewelbox_tanzanite" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26494" name="La Vie En Rose's Radiant Brooch Box">
+    <set name="icon" value="icon.etc_pi_box_belief_pack" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26495" name="Shadai's Jewelry Box">
+    <set name="icon" value="icon.etc_bm_jewelbox_main_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26496" name="Shiny Gemstone Fragment">
+    <set name="icon" value="icon.etc_bm_brooch_lavianrose_piece" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26497" name="Cat's Eye">
+    <set name="icon" value="BranchIcon.Icon.etc_bm_jewel_catseye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26498" name="Cat's Eye">
+    <set name="icon" value="BranchIcon.Icon.etc_bm_jewel_catseye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26499" name="Cat's Eye">
+    <set name="icon" value="BranchIcon.Icon.etc_bm_jewel_catseye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26500" name="Cat's Eye">
+    <set name="icon" value="BranchIcon.Icon.etc_bm_jewel_catseye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26501" name="Cat's Eye">
+    <set name="icon" value="BranchIcon.Icon.etc_bm_jewel_catseye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26502" name="Amethyst">
+    <set name="icon" value="BranchIcon.Icon.etc_bm_jewel_amethyst_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26503" name="Amethyst">
+    <set name="icon" value="BranchIcon.Icon.etc_bm_jewel_amethyst_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26504" name="Amethyst">
+    <set name="icon" value="BranchIcon.Icon.etc_bm_jewel_amethyst_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26505" name="Amethyst">
+    <set name="icon" value="BranchIcon.Icon.etc_bm_jewel_amethyst_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <armor id="26506" name="Amethyst">
+    <set name="icon" value="BranchIcon.Icon.etc_bm_jewel_amethyst_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="BROOCH_JEWEL" />
+  </armor>
+  <etcitem id="26507" name="La Vie En Rose's Cat's Eye Box">
+    <set name="icon" value="BranchIcon.Icon.etc_bm_jewelbox_catseye_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26508" name="La Vie En Rose's Amethyst Box">
+    <set name="icon" value="BranchIcon.Icon.etc_bm_jewelbox_amethyst_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26509" name="Summon Scroll: Pomona">
+    <set name="icon" value="icon.etc_star_scroll_baekisung" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26510" name="Attendance Vitality Tonic">
+    <set name="icon" value="icon.etc_recall_potion3" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26511" name="Anakim Set Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26512" name="Mysterious Wind Scroll Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26513" name="Lv. 5 Legendary CHA Dye Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26514" name="Lv. 5 Legendary LUC Dye Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26515" name="Lv. 3 Legendary CHA Dye Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26516" name="Lv. 3 Legendary LUC Dye Pack">
+    <set name="icon" value="icon.etc_pi_gift_box_i04" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26517" name="Apparition Stone (All-purpose)">
+    <set name="icon" value="icon.etc_life_stone_of_begining_i00" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26518" name="Pirate Captain Outfit">
+    <set name="icon" value="BranchSys3.iconArmor.g_co_captain_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <armor id="26519" name="Pirate Crew Outfit">
+    <set name="icon" value="BranchSys3.iconArmor.g_co_pirate_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="FORMAL_WEAR" />
+  </armor>
+  <etcitem id="26520" name="Pirate Captain Appeareance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <etcitem id="26521" name="Pirate Crew Appeareance Stone">
+    <set name="icon" value="BranchSys3.icon1.g_scrl_change_chest" />
+    <set name="tradeable" value="false" />
+  </etcitem>
+  <armor id="26522" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26523" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26524" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26525" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26526" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26527" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26528" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26529" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26530" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26531" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26532" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26533" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26534" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26535" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26536" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26537" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26538" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26539" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26540" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26541" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26542" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26543" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26544" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26545" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26546" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26547" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26548" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26549" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26550" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26551" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26552" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26553" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26554" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26555" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26556" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26557" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26558" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26559" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26560" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26561" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26562" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26563" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26564" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26565" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26566" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26567" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26568" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26569" name="Rabbit Ears">
+    <set name="icon" value="icon.accessory_rabbit_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26570" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26571" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26572" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26573" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26574" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26575" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26576" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26577" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26578" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26579" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26580" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26581" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26582" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26583" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26584" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26585" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26586" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26587" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26588" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26589" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26590" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26591" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26592" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26593" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26594" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26595" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26596" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26597" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26598" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26599" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26600" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26601" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26602" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26603" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26604" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26605" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26606" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26607" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26608" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26609" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26610" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26611" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26612" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26613" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26614" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26615" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26616" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26617" name="Raccoon Ears">
+    <set name="icon" value="icon.accessory_racoon_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26618" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26619" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26620" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26621" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26622" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26623" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26624" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26625" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26626" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26627" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26628" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26629" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26630" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26631" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26632" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26633" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26634" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26635" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26636" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26637" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26638" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26639" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26640" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26641" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26642" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26643" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26644" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26645" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26646" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26647" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26648" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26649" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26650" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26651" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26652" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26653" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26654" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26655" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26656" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26657" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26658" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26659" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26660" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26661" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26662" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26663" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26664" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26665" name="Cat Ears">
+    <set name="icon" value="icon.accessory_cat_ear_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26666" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26667" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26668" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26669" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26670" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26671" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26672" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26673" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26674" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26675" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26676" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26677" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26678" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26679" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26680" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26681" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26682" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26683" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26684" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26685" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26686" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26687" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26688" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26689" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26690" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26691" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26692" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26693" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26694" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26695" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26696" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26697" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26698" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26699" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26700" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26701" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26702" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26703" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26704" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26705" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26706" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26707" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26708" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26709" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26710" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26711" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26712" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26713" name="Romantic Chapeau">
+    <set name="icon" value="icon.accessory_romantic_chaperon_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26714" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26715" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26716" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26717" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26718" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26719" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26720" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26721" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26722" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26723" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26724" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26725" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26726" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26727" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26728" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26729" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26730" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26731" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26732" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26733" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26734" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26735" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26736" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26737" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26738" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26739" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26740" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26741" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26742" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26743" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26744" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26745" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26746" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26747" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26748" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26749" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26750" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26751" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26752" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26753" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26754" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26755" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26756" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26757" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26758" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26759" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26760" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26761" name="Angel Circlet">
+    <set name="icon" value="icon.Accessary_angel_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26762" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26763" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26764" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26765" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26766" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26767" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26768" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26769" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26770" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26771" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26772" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26773" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26774" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26775" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26776" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26777" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26778" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26779" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26780" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26781" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26782" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26783" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26784" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26785" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26786" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26787" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26788" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26789" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26790" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26791" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26792" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26793" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26794" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26795" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26796" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26797" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26798" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26799" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26800" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26801" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26802" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26803" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26804" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26805" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26806" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26807" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26808" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26809" name="Demon Circlet">
+    <set name="icon" value="icon.Accessary_demon_circlet_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26810" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26811" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26812" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26813" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26814" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26815" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26816" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26817" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26818" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26819" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26820" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26821" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26822" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26823" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26824" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26825" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26826" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26827" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26828" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26829" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26830" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26831" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26832" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26833" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26834" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26835" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26836" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26837" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26838" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26839" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26840" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26841" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26842" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26843" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26844" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26845" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26846" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26847" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26848" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26849" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26850" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26851" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26852" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26853" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26854" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26855" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26856" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26857" name="Pirate's Eyepatch">
+    <set name="icon" value="icon.accessory_eye_bandage_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26858" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26859" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26860" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26861" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26862" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26863" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26864" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26865" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26866" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26867" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26868" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26869" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26870" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26871" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26872" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26873" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26874" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26875" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26876" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26877" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26878" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26879" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26880" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26881" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26882" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26883" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26884" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26885" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26886" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26887" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26888" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26889" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26890" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26891" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26892" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26893" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26894" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26895" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26896" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26897" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26898" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26899" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26900" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26901" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26902" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26903" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26904" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26905" name="Outlaw's Eyepatch">
+    <set name="icon" value="icon.accessory_outlaw_eyepatch_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26906" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26907" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26908" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26909" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26910" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26911" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26912" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26913" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26914" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26915" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26916" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26917" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26918" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26919" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26920" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26921" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26922" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26923" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26924" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26925" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26926" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26927" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26928" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26929" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26930" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26931" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26932" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26933" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26934" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26935" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26936" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26937" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26938" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26939" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26940" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26941" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26942" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26943" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26944" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26945" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26946" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26947" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26948" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26949" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26950" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26951" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26952" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26953" name="Eyepatch">
+    <set name="icon" value="icon.Accessary_one_eye_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR2" />
+  </armor>
+  <armor id="26954" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26955" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26956" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26957" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26958" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26959" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26960" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26961" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26962" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26963" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26964" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26965" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26966" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26967" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26968" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26969" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26970" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26971" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26972" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26973" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26974" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26975" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26976" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26977" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26978" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26979" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26980" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26981" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26982" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26983" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26984" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26985" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26986" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26987" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26988" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26989" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26990" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26991" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26992" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26993" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26994" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26995" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26996" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26997" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26998" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+  <armor id="26999" name="Party Hat">
+    <set name="icon" value="icon.accessory_party_hat_i00" />
+    <set name="tradeable" value="false" />
+    <slot id="HAIR_ALL" />
+  </armor>
+</list>

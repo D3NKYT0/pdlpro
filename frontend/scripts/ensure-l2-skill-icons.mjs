@@ -8,8 +8,8 @@ const frontendDir = join(scriptsDir, '..')
 const publicDir = join(frontendDir, 'public')
 const iconsDir = join(publicDir, 'skill-icons')
 const archive = join(frontendDir, 'assets', 'skill-icons.tar.gz')
-const requiredIcons = ['1.png', '58.png', '100.png', '1177.png', '1410.png']
-const MIN_SKILL_ICONS = 2000
+const requiredIcons = ['1.png', '58.png', '100.png', '590.png', '1177.png', '1322.png', '1410.png']
+const MIN_SKILL_ICONS = 10300
 
 function hasCompleteCatalog() {
   if (!existsSync(iconsDir)) return false

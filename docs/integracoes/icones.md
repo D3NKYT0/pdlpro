@@ -49,6 +49,12 @@ O comando recria `frontend/assets/skill-icons.tar.gz`. Para apenas empacotar os 
 
 Os arquivos individuais gerados não são versionados. Os hooks `predev` e `prebuild` restauram os dois pacotes quando necessário. Também é possível chamar `npm run icons:ensure` e `npm run skill-icons:ensure` explicitamente.
 
+Quando um ID usa uma textura com outro nome, use o campo `icon` do XML do datapack para localizar a imagem de origem. Por exemplo, as skills `1320`, `1321` e `1322` do Eternity compartilham `icon.skill0172`. Empacote uma cópia por ID para que as URLs diretas funcionem. `LINEAGE_QUERY_MODULE=eternity` carrega os metadados dos diretórios `backend/data/items-by-query-module/eternity` e `backend/data/skills-by-query-module/eternity`. Esses XMLs prevalecem sobre os catálogos padrão. Diretórios próprios configurados em `LINEAGE_ITEM_XML_DIR` e `LINEAGE_SKILL_XML_DIR` têm prioridade para IDs em comum.
+
+O catálogo do Eternity foi normalizado a partir dos XMLs do datapack entregue pelo operador. Os itens preservam nome, tipo, slots e indicação de negociação. Itens sem indicação explícita e sem uma regra no catálogo padrão ficam indisponíveis para negociação. As skills usam `nameEn`, o tipo de operação (`P` para passiva e `T` para alternável) e os limites definidos em `enchantSkillGroups.xml`. Imagens sem textura exata disponível usam o ícone padrão.
+
+O ícone do Anakim Outfit (`23881`) foi obtido pelo mesmo ID no catálogo Grand Crusade, que publica a textura `g_co_anakim_i00`. [Ficha do Anakim Outfit](https://l2i-gc.gaikotsu.ru/item_23881-Naryad-Anakim)
+
 Ao adicionar ícones, publique o pacote atualizado e o novo build estático. Confira se o arquivo responde no ambiente publicado (`/item-icons/<ID>.jpg` ou `/skill-icons/<ID>.png`). A ficha do personagem consome `icon_url` em `/api/v1/customer/server/characters/<id>/skills/`. Os nomes e as pastas da janela L2 (`group`: physical, magic, reinforcement, weaken, special, other) vêm do XML em `LINEAGE_SKILL_XML_DIR` (padrão `data/skills`): `operateType` separa Active/Passive, `skillType` + `isMagic` montam as pastas, e nomes de clan/herói/mentoria vão para a pasta especial. O encanto (+0…+N) não é uma coluna à parte: o `skill_level` acima de `levels` é a rota `enchantLevels1`/`enchantLevels2` do XML. A referência de textura do XML não é uma URL de imagem do navegador; nomes, aliases e fallback de itens são resolvidos no backend.
 
 Imagens enviadas para itens customizados ficam em mídia, não neste pacote, e não exigem rebuild do frontend. Veja o [catálogo composto](catalogo-de-itens.md).

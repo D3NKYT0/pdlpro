@@ -1,0 +1,1428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <skill id="19001" levels="1" name="Test Bleed">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19002" levels="1" name="Anchor">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19003" levels="5" name="Clan Resistance Hall">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19004" levels="5" name="Clan De-Buff Control">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19005" levels="5" name="Clan Muzzle Control">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19006" levels="5" name="Clan Mental Control">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19007" levels="1" name="Clan Summon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19008" levels="1" name="Clan Rebirth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19009" levels="1" name="Clan Leader Bonus">
+    <set name="operateType" val="TOGGLE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19010" levels="1" name="Clan Copy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19011" levels="1" name="Clan Legend">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19012" levels="1" name="Clan Hide">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19013" levels="1" name="Clan Purge">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19014" levels="1" name="Clan Defense">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19015" levels="1" name="Clan Friendly">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19016" levels="1" name="Clan Boundary">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19017" levels="1" name="Clan Prison">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19018" levels="1" name="Clan Guardian Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19019" levels="1" name="Revolution Blade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19020" levels="1" name="Revolution Eruption">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19021" levels="1" name="Revolution Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19022" levels="1" name="Revolution Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19023" levels="1" name="Revolution Multi-Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19024" levels="1" name="Revolution Tornado Shot">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19025" levels="1" name="Revolution Spike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19026" levels="1" name="Revolution Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19027" levels="1" name="Revolution Destruction">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19028" levels="2" name="Revolution Spirit">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19029" levels="1" name="Revolution Self CP Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19030" levels="1" name="Revolution CP Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19031" levels="1" name="Revolution Party CP Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19032" levels="1" name="Ability of Light">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19033" levels="1" name="Ability of Darkness">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19034" levels="1" name="Imprint of Light">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19035" levels="1" name="Imprint of Darkness">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19036" levels="1" name="Blessing of Light">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19037" levels="1" name="Cloak of Radiant Light">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19038" levels="1" name="Cold Cloak of Darkness">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19039" levels="1" name="Cloak of Light">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19040" levels="1" name="Cloak of Darkness">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19041" levels="1" name="King's Call">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19042" levels="1" name="King's Summon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19074" levels="2" name="Academy Precept">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19075" levels="1" name="Clan Relation">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19076" levels="1" name="Clan Academy Reward">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19080" levels="1" name="Sigel Ixion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19081" levels="1" name="Tyrr Ixion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19082" levels="1" name="Othell Ixion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19083" levels="1" name="Yul Ixion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19084" levels="1" name="Feoh Ixion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19085" levels="1" name="Iss Ixion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19086" levels="1" name="Wynn Ixion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19087" levels="1" name="Aeore Ixion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19088" levels="4" name="Summon Siege Golem">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SUMMON" />
+  </skill>
+  <skill id="19089" levels="4" name="Summon Wild Hog Cannon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SUMMON" />
+  </skill>
+  <skill id="19090" levels="4" name="Summon Swoop Cannon">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="SUMMON" />
+  </skill>
+  <skill id="19091" levels="1" name="Increase Item Drop Rate">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19092" levels="2" name="Chat Prohibited">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="#isMagic" />
+  </skill>
+  <skill id="19093" levels="1" name="Added Blow Quiver">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="19094" levels="1" name="Increased Damage Quiver">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="19095" levels="1" name="Added Bleed Quiver">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="19096" levels="1" name="Added Blow">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19097" levels="1" name="Critical Target">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19098" levels="1" name="Bleed Target">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19099" levels="1" name="GM's Authority">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19100" levels="1" name="Light Armor Mastery - Test">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19101" levels="1" name="Chain Blow - Test">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19102" levels="1" name="Chaos Sympathy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19103" levels="1" name="Resident Power">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19104" levels="2" name="Resident Power">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19105" levels="1" name="Resident Advantage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19106" levels="2" name="Resident Advantage">
+    <set name="operateType" val="PASSIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19107" levels="1" name="Resident Guidance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19108" levels="2" name="Resident Guidance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19109" levels="4" name="Siege Golem's Spirit">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19110" levels="5" name="Clan Resilience">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19111" levels="5" name="Clan Steadfastness">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19112" levels="1" name="Clan Escape">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19113" levels="1" name="Clan Block">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19114" levels="1" name="Clan Exclusion">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19115" levels="1" name="Air Bike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19116" levels="1" name="Summon Lyn Draco">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19117" levels="1" name="Dimensional Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19118" levels="4" name="Bike Ability">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19119" levels="1" name="Noblesse Grace">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19120" levels="4" name="Noble Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19121" levels="4" name="Noble Magic Barrier">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19122" levels="4" name="Noble Blessed Body">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19123" levels="4" name="Noble Haste">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19124" levels="2" name="Noble Knight Buffs">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19125" levels="2" name="Noble Critical Focus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19126" levels="2" name="Noble Mindset">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19127" levels="2" name="Noble Guidance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19128" levels="2" name="Noble Sting">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19129" levels="2" name="Noble Protection">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19130" levels="2" name="Noble Attributes">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19131" levels="2" name="Noble Expertise">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19132" levels="2" name="Noble Mind">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19133" levels="1" name="Noble Heavy Armor Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19134" levels="4" name="Noble Heavy Armor Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19135" levels="4" name="Noble Heavy Armor Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19136" levels="3" name="Noble Prayer">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19137" levels="1" name="Noble Guts">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19138" levels="1" name="Noble Frenzy">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19139" levels="4" name="Noble Might">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19140" levels="2" name="Noble Cost">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19141" levels="2" name="Noble Wind Walk">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19142" levels="2" name="Noble Warrior Buffs">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19143" levels="2" name="Noble Focus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19144" levels="2" name="Noble Backfire">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19145" levels="2" name="Noble Death Whisper">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19146" levels="2" name="Noble Protection Magic">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19147" levels="2" name="Noble Ambush">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19148" levels="1" name="Noble Light Armor Blessing">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19149" levels="4" name="Noble Anti Magic">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19150" levels="4" name="Noble Light Armor Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19151" levels="3" name="Noble Vampiric Rage">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19152" levels="1" name="Noble Endurance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19153" levels="1" name="Noble Critical Boost">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19154" levels="4" name="Noble Empower">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19155" levels="2" name="Noble Acumen">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19156" levels="2" name="Noble Wizard Buffs">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19157" levels="2" name="Noble Wild Magic">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19158" levels="2" name="Noble Blessed Soul">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19159" levels="2" name="Noble Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19160" levels="2" name="Noble Magic Death">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19161" levels="2" name="Noble Protection Armor">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19162" levels="2" name="Noble Recovery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19163" levels="2" name="Noble Skill Mastery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19164" levels="1" name="Noble Robe Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19165" levels="4" name="Noble Robe Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19166" levels="4" name="Noble Robe Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19167" levels="3" name="Noble Heal Boost">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19168" levels="1" name="Noble Gain">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19169" levels="1" name="Noble Advance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19170" levels="2" name="Noble Blessing">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19171" levels="4" name="Noble Condition">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19172" levels="2" name="Noble Eagle Eye">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19173" levels="2" name="Noble Emblem">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19174" levels="4" name="Noble Earth">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19175" levels="2" name="Noble Life">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19176" levels="2" name="Noble Vision">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19177" levels="2" name="Noble Spirit">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19178" levels="1" name="Knight Hidden Trigger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19179" levels="1" name="Warrior Hidden Trigger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19180" levels="1" name="Rogue Hidden Trigger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19181" levels="1" name="Archer Hidden Trigger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19182" levels="1" name="Wizard Hidden Trigger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19183" levels="1" name="Enchanter Hidden Trigger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19184" levels="1" name="Summoner Hidden Trigger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19185" levels="1" name="Healer Hidden Trigger">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19186" levels="1" name="Rampage Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19187" levels="1" name="Blockade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19188" levels="1" name="Snicker">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19189" levels="1" name="Retreating Shot">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19190" levels="1" name="Brilliant Magic">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19191" levels="1" name="Mist Armor">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19192" levels="1" name="Mass Servitor Berserk">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19193" levels="1" name="Divine Blessing">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19196" levels="1" name="Rampage Shield">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="19197" levels="1" name="Divine Blessing">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="19198" levels="1" name="Cancel target">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19199" levels="1" name="Hurricane Sign">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19200" levels="1" name="Gravity Sign">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19201" levels="1" name="Paladin's Protection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19202" levels="1" name="Sentinel's Protection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19203" levels="1" name="Ultimate Bullseye">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19204" levels="1" name="Prophecy of Might">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19205" levels="1" name="Song of Archery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19206" levels="1" name="Sage's Dance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19207" levels="1" name="Chant of Bison">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19208" levels="7" name="Seal of Suspension">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19209" levels="1" name="Divinity of Einhasad">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19210" levels="1" name="Summon Tree of Sephiroth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="SUMMON" />
+  </skill>
+  <skill id="19211" levels="1" name="Barrer for Test">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19212" levels="1" name="Shillien Protection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19213" levels="1" name="Polishing Arrows: Atk. Spd.">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19214" levels="1" name="Polishing Bolts: Atk. Spd.">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19215" levels="1" name="Polishing Arrows: P. Atk.">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19216" levels="1" name="Polishing Bolts: P. Atk.">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19217" levels="1" name="Polishing Arrows: Added Blow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19218" levels="1" name="Polishing Bolts: Added Blow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19219" levels="1" name="Blessing of Tree">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19220" levels="1" name="Sharing Equipment">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19221" levels="1" name="Power of Darkness">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19222" levels="5" name="Dignity of the Exalted">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19223" levels="1" name="Belief of the Exalted">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19224" levels="1" name="Blessing of the Exalted">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19225" levels="1" name="Summon Battle Potion">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19226" levels="2" name="Favor of the Exalted">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19227" levels="2" name="Wind Hiding">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19228" levels="1" name="Song of Thief">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19229" levels="1" name="Fate of the Exalted">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19230" levels="30" name="MP Recovery">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19231" levels="1" name="Song of Assault">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19232" levels="1" name="Crippling Dance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19233" levels="3" name="Guardian Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19234" levels="3" name="Guardian Magic Barrier">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19235" levels="3" name="Guardian Body">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19236" levels="3" name="Guardian Elemental Cover">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19237" levels="2" name="Guardian Armor Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19238" levels="2" name="Guardian Leather Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19239" levels="2" name="Guardian Tunic Defense">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19240" levels="2" name="Guardian Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19241" levels="4" name="Guardian Life">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19242" levels="1" name="Guardian Block">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19243" levels="4" name="Guardian Armor">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19244" levels="1" name="Guardian Guidance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19245" levels="2" name="Guardian Death Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19246" levels="2" name="Guardian Focus Shield">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19247" levels="2" name="Guardian Mind Control">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19248" levels="2" name="Guardian Blessing">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19249" levels="2" name="Guardian Binding Cover">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19250" levels="1" name="Guardian Spirit">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19251" levels="1" name="Guardian Potential">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19252" levels="2" name="Guardian Expert Potion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19253" levels="1" name="Guardian Defense Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19254" levels="2" name="Berserker Haste">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19255" levels="4" name="Berserker Might">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19256" levels="4" name="Berserker'sElemental Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19257" levels="3" name="Berserker Craft Focus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19258" levels="2" name="Berserker Backfire">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19259" levels="3" name="Berserker Focus">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19260" levels="1" name="Berserker Coast">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19261" levels="3" name="Berserker Craft Death">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19262" levels="2" name="Mortal Berserker">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19263" levels="3" name="Berserker's Death Whisper">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19264" levels="1" name="Berserker Eagle">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19265" levels="2" name="Berserker Battle">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19266" levels="2" name="Berserker Fire">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19267" levels="1" name="Berserker's Skill Reduction">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19268" levels="2" name="Berserker's Blessing">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19269" levels="2" name="Berserker's Binding Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19270" levels="2" name="Berserker's Divine Attack">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19271" levels="2" name="Berserker's Expert Potion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19272" levels="1" name="Berserker Combat Master">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19273" levels="2" name="Wizard's Acumen">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19274" levels="3" name="Wizard's Empower">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19275" levels="3" name="Wizard's Elemental Shot">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19276" levels="3" name="Wizard's Wild Magic">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19277" levels="3" name="Wizard's Condition">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19278" levels="1" name="Wizard's Eva">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19279" levels="3" name="Wizard's Mystic">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19280" levels="2" name="Wizard's Prominence">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19281" levels="1" name="Wizard's Sight">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19282" levels="2" name="Wizard's Protection">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19283" levels="2" name="Wizard's Water">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19284" levels="2" name="Wizard's Magic Reduction">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19285" levels="2" name="Wizard's Blessing">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19286" levels="2" name="Wizard's Binding Shot">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19287" levels="2" name="Wizard's Divine Shot">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19288" levels="2" name="Wizard's Expert Potion">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19289" levels="1" name="Wizard's Spellmaster">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19290" levels="2" name="Vitality of the Exalted">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19296" levels="8" name="Counter Flip">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19297" levels="8" name="Counter Flip">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19298" levels="8" name="Flash Dagger">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19299" levels="7" name="Reverse Mana">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19300" levels="1" name="Reverse Mana Drain">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19301" levels="9" name="Istina Acid Swarm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19302" levels="9" name="Thrown Acid Swarm">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19303" levels="7" name="Right Angle Reverse">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="19304" levels="2" name="Easterly Wind Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19305" levels="7" name="Shadow Reverse">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="19306" levels="1" name="Coin of Maphr">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19307" levels="2" name="Lucky Coin: Attack">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19308" levels="1" name="Lucky Coin: Defense">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19309" levels="7" name="Reverse Plunder">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="19311" levels="3" name="Dwarven Flare Bluff">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19312" levels="1" name="Holy Stance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19313" levels="1" name="Dark Stance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19314" levels="11" name="Elemental Spike (Dark)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="19315" levels="4" name="Mana Burst">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19316" levels="8" name="Elemental Final Storm (Dark)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="19400" levels="3" name="Elemental Spike - Decrease Dark Resistance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19403" levels="3" name="Elemental Harmony">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19404" levels="6" name="Fire Attribute">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19405" levels="4" name="Discarded Wizard's Soul">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="SUMMON" />
+  </skill>
+  <skill id="19406" levels="4" name="Curse from Deadland">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19407" levels="3" name="Essence of Mana">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="19408" levels="1" name="Embody Mana Armor" enchantLevels1="15">
+    <set name="operateType" val="TOGGLE" />
+  </skill>
+  <skill id="19409" levels="1" name="Curse Gloom">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19410" levels="1" name="Elemental Crash (Wind)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19411" levels="1" name="Elemental Crash (Earth)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19412" levels="1" name="Elemental Crash (Holy)">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19413" levels="7" name="Elemental Burst: Water">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19414" levels="7" name="Elemental Burst: Wind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19415" levels="7" name="Elemental Burst: Earth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19416" levels="7" name="Elemental Burst: Holy">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19417" levels="7" name="Elemental Burst: Water">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19418" levels="7" name="Elemental Burst: Wind">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19419" levels="7" name="Elemental Burst: Earth">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19420" levels="4" name="Quadruple Elemental Blast">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19421" levels="1" name="Ensemble Melody">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19422" levels="1" name="Trio Sonata">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19423" levels="1" name="Spirit's Chorus">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19424" levels="1" name="Dance of Triumph">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19425" levels="1" name="Immune Derangement">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19426" levels="11" name="Shadow Blade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19427" levels="7" name="Hands of Einhasad">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19428" levels="3" name="Divine Meditation">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19429" levels="1" name="Introspection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19430" levels="11" name="Resonant Halo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19431" levels="9" name="Sforzando Sting">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19432" levels="1" name="Swift Praise">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19433" levels="11" name="Alluring Conduct">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19434" levels="11" name="Repeat Mark Somersault">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19435" levels="5" name="Spectral Slash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19436" levels="11" name="Dancing Phantom Blade">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19437" levels="1" name="Vanguard of Baylor">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19438" levels="1" name="Triple Stroke">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19439" levels="1" name="Overlord's Dignity">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19440" levels="1" name="Divine Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="MDAM" />
+  </skill>
+  <skill id="19441" levels="4" name="Grand Soul Cry">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19442" levels="3" name="Single Note">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19443" levels="7" name="Melody of Refection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19444" levels="1" name="War Drumb">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19445" levels="1" name="Marching Drum">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19446" levels="1" name="Soothing Drum">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19447" levels="2" name="Glaring">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19448" levels="11" name="Rampageous Beat">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="19449" levels="1" name="Vanguard of Baylor">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19503" levels="1" name="Crier's Harmony">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19504" levels="1" name="Tempted">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19506" levels="1" name="Spectral Wound">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19507" levels="1" name="Beat Extension">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="2" />
+  </skill>
+  <skill id="19509" levels="1" name="Elemental Endurance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19510" levels="1" name="Debuff Endurance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19511" levels="1" name="Mental Endurance">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="22" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19522" levels="11" name="Repeat Mark Somersault">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19523" levels="1" name="Maximum Blow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19524" levels="1" name="Immortal Soul">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19525" levels="1" name="Resonant Halo">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+  </skill>
+  <skill id="19526" levels="3" name="Limit of Sigel">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19527" levels="3" name="Limit of Iss">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="4" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19528" levels="7" name="Right Angle Reverse">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19529" levels="1" name="Elemental Burst: Dark">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19530" levels="1" name="Battle Prelude">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="3" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19531" levels="4" name="Clan Hunter">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19532" levels="3" name="Clan Elemental">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19533" levels="1" name="Clan Rating">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19534" levels="2" name="Clan Barrier">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19535" levels="3" name="Clan Resistance">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19536" levels="1" name="Clan Battlefield">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19537" levels="2" name="Clan Iron">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19538" levels="1" name="Clan Vitality">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19539" levels="1" name="Clan Battle">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19540" levels="1" name="Clan Blood">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19541" levels="1" name="Clan Cry">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19542" levels="1" name="Clan Darkness">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19543" levels="11" name="Clan Combat">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19544" levels="6" name="Clan Will">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19545" levels="6" name="Clan Condition">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19546" levels="1" name="Clan Creation">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19547" levels="1" name="Clan Flag">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19548" levels="1" name="Clan Flag">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19549" levels="1" name="Clan Flag">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19550" levels="1" name="Clan Flag">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19551" levels="1" name="Superior Summon Mastery">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19552" levels="9" name="Burning Chain Rash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="19553" levels="5" name="Revenging Thorn">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="19554" levels="5" name="Revenging Black Thorn">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19555" levels="5" name="Maelstrom">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="19556" levels="5" name="Inhale Soul">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="19557" levels="5" name="Inhale Soul">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19558" levels="5" name="Flame Feather">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="19559" levels="9" name="Black Thorn Chain Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="19560" levels="9" name="Rising Tide Circle">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19561" levels="9" name="Chained Death Scythe">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="19562" levels="7" name="Reborn from Ashes">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+  </skill>
+  <skill id="19563" levels="1" name="Wave Reflection">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19564" levels="1" name="Wave Barrier">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19565" levels="11" name="Shield Bash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19566" levels="4" name="Grand Shillien Shadow">
+    <set name="operateType" val="PASSIVE" />
+  </skill>
+  <skill id="19567" levels="9" name="Gigantic Wave">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="PDAM" />
+  </skill>
+  <skill id="19568" levels="1" name="Nine Aegis">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="BUFF" />
+  </skill>
+  <skill id="19569" levels="8" name="Aggression Aura">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19570" levels="1" name="Release Guard">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19571" levels="1" name="Lightning Strike">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19572" levels="1" name="Shillien Shadow">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19573" levels="7" name="Cubic Fire Bless">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19574" levels="1" name="Shield Grab Stance">
+    <set name="operateType" val="ACTIVE" />
+  </skill>
+  <skill id="19575" levels="11" name="Vanishing Stun">
+    <set name="operateType" val="ACTIVE" />
+    <set name="isMagic" val="1" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+  <skill id="19576" levels="1" name="Two-Hand Smash">
+    <set name="operateType" val="ACTIVE" />
+    <set name="skillType" val="DEBUFF" />
+  </skill>
+</list>

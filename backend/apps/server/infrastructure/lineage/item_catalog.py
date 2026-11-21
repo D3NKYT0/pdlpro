@@ -9,6 +9,8 @@ from pathlib import Path
 
 from django.conf import settings
 
+from apps.server.infrastructure.lineage.catalog import xml_catalog_roots
+
 ITEM_RE = re.compile(
     r"<(weapon|armor|etcitem)\s+id=\"(\d+)\"\s+name=\"([^\"]*)\"[^>]*>([\s\S]*?)</\1>",
     re.IGNORECASE,
@@ -145,7 +147,9 @@ class LineageItemCatalog:
     ``get`` consulta por ID inteiro; ``search`` busca por ID/prefixo numérico ou nome e respeita
     o limite informado. ``name_for`` fornece um fallback quando o ID não existe;
     ``is_tradeable`` retorna False para desconhecidos. O diretório padrão vem de
-    LINEAGE_ITEM_XML_DIR ou de backend/data/items. Nos fluxos do painel, use os helpers e
+    LINEAGE_ITEM_XML_DIR ou de backend/data/items. O catálogo do módulo de queries tem prioridade
+    sobre os XMLs padrão. Um diretório explicitamente configurado tem a maior prioridade.
+    Nos fluxos do painel, use os helpers e
     item_catalog_scope deste módulo para compartilhar o catálogo e aplicar a composição de itens
     customizados.
     """
@@ -207,13 +211,16 @@ class LineageItemCatalog:
 
     @classmethod
     def load(cls, root: Path | None = None) -> LineageItemCatalog:
-        folder = root or cls.default_root()
         items: dict[int, L2Item] = {}
-        if not folder.is_dir():
-            return cls(items)
-        for path in sorted(folder.rglob("*.xml")):
-            for item in cls._parse(path.read_text(encoding="utf-8")):
-                items[item.id] = item
+        roots = (root,) if root is not None else xml_catalog_roots(
+            cls.default_root(),
+            Path(settings.BASE_DIR) / "data" / "items",
+            str(getattr(settings, "LINEAGE_QUERY_MODULE", "") or ""),
+        )
+        for source in roots:
+            for path in sorted(source.rglob("*.xml")):
+                for item in cls._parse(path.read_text(encoding="utf-8")):
+                    items[item.id] = item
         return cls(attach_recipe_results(items))
 
     @classmethod
