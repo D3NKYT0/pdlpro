@@ -10,13 +10,17 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.9.1] - 2026-11-21
+
 ### Adicionado
 
 - O catálogo Eternity declara High Five e oferece retratos e classes iniciais Kamael. A criação pelo painel usa um intervalo de IDs de objeto reservado no gameserver.
+- O catálogo Eternity inclui os metadados de 42.213 itens e 21.297 skills do seu datapack, com nomes, tipos, níveis, encantos e as imagens disponíveis. Os demais módulos continuam usando os catálogos padrão.
 
 ### Corrigido
 
 - A ficha do personagem e as fichas de comércio separam as skills da classe base e de cada subclasse, preservando as abas Ativas e Passivas. No Eternity, o seletor mostra o nome de cada classe.
+- Os pacotes incluem ícones do Eternity com IDs compartilhados e variantes de textura. A ficha tem imagem para todas as skills encontradas no backup de homologação.
 
 ## [2.9.0] - 2026-11-21
 
