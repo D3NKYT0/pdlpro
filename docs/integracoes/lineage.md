@@ -16,6 +16,7 @@ Módulos disponíveis no core:
 - `lucerav2`
 - `dreamv3`
 - `mobius`
+- `eternity`
 
 Forks de cliente **não** precisam de um módulo novo no core. Coloque o SQL em
 `backend/extensions/<cliente>/infrastructure/lineage/queries/<dialeto>/` e
@@ -112,6 +113,34 @@ sem executar INSERT/UPDATE/DELETE. Isso não substitui um teste de integração
 controlado de cadastro, login no jogo e consumo da fila `items_delayed`.
 O módulo mantém SHA1 para novas senhas; confirme o algoritmo no loginserver
 antes de liberar cadastro/troca de senha, especialmente em bancos com hashes mistos.
+
+## Schema Eternity
+
+Configure o catálogo na instalação que usa o schema Eternity.
+
+```dotenv
+LINEAGE_QUERY_MODULE=eternity
+```
+
+O catálogo usa `characters.charId`, o nível e a classe ativa de `characters`,
+os dados de aliança em `clan_data` e os brasões binários em `crests`. O
+inventário usa `items.object_id` para a instância, `items.item_id` para o
+template e `loc_data` para o slot equipado. A adena exibida nas fichas e no
+ranking soma apenas as pilhas do inventário e do armazém do personagem.
+
+Prepare as colunas de `accounts` descritas acima. Para vincular contas, o
+usuário SQL do PDL precisa de leitura e de `UPDATE (linked_uuid)` em
+`accounts`. O módulo usa Whirlpool-2003 em Base64 para senhas novas.
+
+O schema homologado permite ler personagens, equipamentos, rankings, clãs,
+olimpíadas, bosses e castelos. Entrega ao jogo, câmbio pelo painel, criação
+de personagens pelo painel e vitrine de lojas offline ficam indisponíveis
+até que a integração com o gameserver ofereça os contratos correspondentes.
+
+Valide o vínculo e a ficha com uma conta de teste. A suíte cobre propriedade,
+aliança, adena, equipamento, olimpíadas, preparo e vínculo de contas, além
+de retirada de pilhas exatas com saldo insuficiente e rollback. Homologue
+as escritas com o gameserver antes de ativá-las.
 
 ## Homologação e operações de escrita
 

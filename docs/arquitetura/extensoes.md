@@ -201,7 +201,7 @@ extensão sem path extra no settings.
 
 O painel fala com o banco do jogo só por consultas nomeadas
 (`-- name: top_pvp`, `list_characters`, …). Os dialetos do core
-(`lucerav2`, `dreamv3`, `mobius`) ficam em
+(`lucerav2`, `dreamv3`, `mobius`, `eternity`) ficam em
 `backend/apps/server/infrastructure/lineage/queries/`.
 
 O cliente **não** pede um patch nessas pastas. Coloque SQL em:
@@ -245,7 +245,7 @@ Pasta nova com **todas** as consultas `REQUIRED` (lista em
 `LineageQueryCatalog.REQUIRED`). Aponte `LINEAGE_QUERY_MODULE` para esse nome
 (`[a-z][a-z0-9_]{0,63}`).
 
-Hash de senha nova: Lucera (`lucerav2`) usa Whirlpool; os demais, SHA1. Se o
+Para senhas novas, `lucerav2` e `eternity` usam Whirlpool. Os demais usam SHA1. Se o
 nome do módulo não bater com o algoritmo do login server:
 
 ```env

@@ -33,6 +33,7 @@ SCHEMAS = {
         "SELECT object_id, item_id, count, enchant_level, loc FROM items ORDER BY object_id",
     ),
 }
+SCHEMAS["eternity"] = SCHEMAS["mobius"]
 # (stack, owner, template, amount, enchant, location)
 ROWS = [
     (1, 1, 6579, 1, 0, "INVENTORY"),
@@ -50,10 +51,11 @@ def _gateway(dialect: str):
     for name in ("withdraw_stacks", "withdraw_character"):
         queries._statements[name] = re.sub(r"\s+FOR UPDATE\s*$", "", queries[name], flags=re.IGNORECASE)
     create, _ = SCHEMAS[dialect]
+    character_id = "charId" if dialect == "eternity" else "obj_Id"
     engine = create_engine("sqlite://")
     with engine.begin() as conn:
         conn.execute(text(create))
-        conn.execute(text("CREATE TABLE characters(obj_Id INTEGER PRIMARY KEY, account_name TEXT, online INTEGER)"))
+        conn.execute(text(f"CREATE TABLE characters({character_id} INTEGER PRIMARY KEY, account_name TEXT, online INTEGER)"))
         conn.execute(text("INSERT INTO characters VALUES (1, 'hero', 0), (2, 'other', 0)"))
         for row in ROWS:
             conn.execute(text("INSERT INTO items VALUES (:a, :b, :c, :d, :e, :f)"), dict(zip("abcdef", row)))
@@ -125,7 +127,7 @@ def test_withdraw_requires_the_character_offline_and_owned_inside_the_transactio
     login = "other" if cause == "other_login" else "hero"
     if cause == "online":
         with gateway._engine.begin() as conn:
-            conn.execute(text("UPDATE characters SET online = 1 WHERE obj_Id = 1"))
+            conn.execute(text("UPDATE characters SET online = 1 WHERE account_name = 'hero'"))
 
     with pytest.raises(ValidationDomainError, match="online"):
         gateway.withdraw_item(1, 57, 5, 0, login)

@@ -50,6 +50,7 @@ class LineageQueryCatalog:
     CONTRACT_REVISION = 1
     DIALECT_RE = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
     NAME_RE = re.compile(r"^--\s*name:\s*([a-z0-9_]+)\s*$", re.IGNORECASE)
+    OPTIONAL_BY_DIALECT = {"eternity": frozenset({"deposit_item"})}
     REQUIRED = (
         "players_online",
         "top_pvp",
@@ -87,7 +88,8 @@ class LineageQueryCatalog:
     def __init__(self, dialect: str, statements: dict[str, str]) -> None:
         self.dialect = dialect
         self._statements = statements
-        missing = [name for name in self.REQUIRED if name not in statements]
+        optional = self.OPTIONAL_BY_DIALECT.get(dialect, ())
+        missing = [name for name in self.REQUIRED if name not in statements and name not in optional]
         if missing:
             raise QueryNotFoundError(
                 f"O dialeto '{dialect}' está incompleto. Faltam: {', '.join(missing)}."

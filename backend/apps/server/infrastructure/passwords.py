@@ -10,7 +10,7 @@ from apps.server.infrastructure.crypto.whirlpool2003 import Whirlpool2003
 
 SHA1_LENGTH = 28
 WHIRLPOOL_LENGTH = 88
-WHIRLPOOL_DIALECTS = frozenset({"lucerav2", "lucera"})
+WHIRLPOOL_DIALECTS = frozenset({"lucerav2", "lucera", "eternity"})
 
 
 class LineagePasswordHasher:

@@ -2,13 +2,17 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 14 de novembro de 2026
+> **Atualizado:** 21 de novembro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Não publicado]
+
+### Adicionado
+
+- Catálogo `eternity` para contas, personagens, inventário, rankings e informações do mundo no schema Eternity.
 
 ## [2.8.4] - 2026-11-14
 

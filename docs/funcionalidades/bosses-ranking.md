@@ -18,7 +18,8 @@ de raids**. Ele aparece na aba de épicos com o timestamp retornado pela consult
 de raids e não aparece também na aba de normais.
 
 Os catálogos Lucera v2, Dream v3 e Mobius consultam `epic_boss_spawn`
-(`bossId`, `respawnDate`) e `raidboss_status` (`id`, `respawn_delay`). Forks com
+(`bossId`, `respawnDate`) e `raidboss_status` (`id`, `respawn_delay`). O catálogo
+Eternity lê `grandboss_data` e `raidboss_status`, ambas com `boss_id` e `respawn_time`. Forks com
 schemas diferentes devem fornecer as consultas nomeadas `grandboss_status` e
 `raidboss_status` no overlay da extensão, retornando `boss_id` e `respawn`.
 Não é necessário criar `site_bosses` no banco Lineage.
@@ -43,7 +44,7 @@ catálogo aparecem na próxima consulta; não é necessário reiniciar o backend
 
 Validação: `apps/server/tests/test_boss_rankings.py` cobre categoria/origem,
 desativação, ausência de spawn, unicidade, limites, permissões, API pública e SQL
-nos três dialetos. `WorldBossGrid.test.tsx` cobre nomes customizados, estados de
+nos quatro dialetos. `WorldBossGrid.test.tsx` cobre nomes customizados, estados de
 respawn e navegação entre abas.
 `test_npc_catalog.py` cobre leitura do acervo, entidades XML, arquivos inválidos,
 atualização do índice e preenchimento automático no admin.

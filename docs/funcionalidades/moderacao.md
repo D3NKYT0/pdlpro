@@ -18,7 +18,7 @@ do painel (`ModerationActionLog`) e na ficha.
 ## O que cada ação faz
 
 Todas as escritas no Lineage passam pelo `ILineageGateway` e pelo SQL do
-dialeto (`lucerav2`, `dreamv3`, `mobius`). Não há canal telnet/packet com o
+dialeto (`lucerav2`, `dreamv3`, `mobius`, `eternity`). Não há canal telnet/packet com o
 gameserver: o painel altera o banco do jogo.
 
 | Ação | Efeito | Personagem online |

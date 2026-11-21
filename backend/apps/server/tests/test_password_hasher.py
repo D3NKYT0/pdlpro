@@ -1,3 +1,5 @@
+import pytest
+
 from apps.server.infrastructure.crypto.whirlpool2003 import Whirlpool2003
 from apps.server.infrastructure.passwords import (
     SHA1_LENGTH,
@@ -10,8 +12,10 @@ def test_whirlpool2003_empty_digest_matches_vector():
     assert Whirlpool2003().self_test() is True
 
 
-def test_lucera_hash_is_whirlpool(settings):
-    settings.LINEAGE_QUERY_MODULE = "lucerav2"
+@pytest.mark.parametrize("dialect", ["lucerav2", "eternity"])
+def test_whirlpool_dialects_generate_whirlpool_hashes(settings, dialect):
+    settings.LINEAGE_QUERY_MODULE = dialect
+    settings.LINEAGE_PASSWORD_ALGO = ""
     hasher = LineagePasswordHasher()
     hashed = hasher.hash("yang")
     assert len(hashed) == WHIRLPOOL_LENGTH

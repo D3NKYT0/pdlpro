@@ -145,6 +145,8 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         return bool(settings.LINEAGE_ALLOW_ONLINE_DELIVERY) and self._sql.has("online_delivery_ready")
 
     def assert_exchange_ready(self) -> None:
+        if not self._sql.has("exchange_table_engines"):
+            raise CharacterServiceUnavailableError()
         rows = self._fetch("exchange_table_engines")
         engines = {row["table_name"].lower(): (row["engine"] or "").upper() for row in rows}
         required = {"characters", "items", "items_delayed", "pdl_exchange_receipts"}
@@ -415,7 +417,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         required_binds = {"insert_character": {"title", "x", "y", "z"},
                           "insert_character_subclass": {"level", "xp", "sp"}}
         for query, binds in required_binds.items():
-            if not binds.issubset(BIND_RE.findall(self._sql[query])):
+            if not self._sql.has(query) or not binds.issubset(BIND_RE.findall(self._sql[query])):
                 raise CharacterServiceUnavailableError()
         # Named lock serializes panel allocations; it is scoped to this same connection.
         with self._engine_or_create().connect() as connection:
@@ -542,6 +544,8 @@ class SqlAlchemyLineageGateway(ILineageGateway):
 
         if quantity < 1:
             raise ValidationDomainError("Quantidade inválida.")
+        if not self._sql.has("deposit_item"):
+            raise CharacterServiceUnavailableError()
         with self._engine_or_create().begin() as connection:
             rows = connection.execute(
                 text(self._sql["delivery_character"]), {"name": char_name}

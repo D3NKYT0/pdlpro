@@ -76,7 +76,7 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | `LINEAGE_DB_SSL_VERIFY` | `true` valida o certificado e o hostname; `false` cifra sem verificar (só rede isolada) |
 | `LINEAGE_DB_SSL_CA` | Caminho do PEM da CA visto pelo processo Django (no Compose: `/run/secrets/lineage-mysql/ca.pem`) |
 | `LINEAGE_DB_SSL_CERT`, `LINEAGE_DB_SSL_KEY` | Cliente mTLS, se o MySQL exigir `REQUIRE X509` |
-| `LINEAGE_QUERY_MODULE` | Catálogo SQL: `lucerav2`, `dreamv3`, `mobius` ou dialeto da extensão |
+| `LINEAGE_QUERY_MODULE` | Catálogo SQL `lucerav2`, `dreamv3`, `mobius`, `eternity` ou dialeto da extensão |
 | `LINEAGE_PASSWORD_ALGO` | Hash de senha nova: vazio (convenção do módulo), `whirlpool` ou `sha1` |
 | `LINEAGE_DB_POOL_SIZE` | Conexões permanentes no pool |
 | `LINEAGE_DB_MAX_OVERFLOW` | Conexões extras permitidas |

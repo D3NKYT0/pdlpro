@@ -59,10 +59,13 @@ def test_duplicate_npc_rejected():
         RankingBoss.objects.create(npc_id=1, name="Duplicate", category="raid")
 
 
-@pytest.mark.parametrize("dialect", ["lucerav2", "dreamv3", "mobius"])
+@pytest.mark.parametrize("dialect", ["lucerav2", "dreamv3", "mobius", "eternity"])
 def test_raid_query_returns_all_npcs_without_site_bosses(dialect):
     with sqlite3.connect(":memory:") as db:
-        db.execute("CREATE TABLE raidboss_status (id INTEGER, respawn_delay INTEGER)")
+        if dialect == "eternity":
+            db.execute("CREATE TABLE raidboss_status (boss_id INTEGER, respawn_time INTEGER)")
+        else:
+            db.execute("CREATE TABLE raidboss_status (id INTEGER, respawn_delay INTEGER)")
         db.executemany("INSERT INTO raidboss_status VALUES (?, ?)", [(90001, 0), (90002, 1999999999)])
         assert db.execute(LineageQueryCatalog.load(dialect)["raidboss_status"]).fetchall() == [
             (90002, 1999999999), (90001, 0),
