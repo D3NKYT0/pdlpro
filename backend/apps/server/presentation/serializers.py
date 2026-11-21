@@ -139,6 +139,7 @@ class GameCharacterSerializer(serializers.Serializer):
     pvp = serializers.IntegerField()
     pk = serializers.IntegerField()
     class_id = serializers.IntegerField()
+    race = serializers.CharField(allow_null=True, required=False)
     title = serializers.CharField(allow_blank=True)
     clan_name = serializers.CharField(allow_blank=True)
     is_clan_leader = serializers.BooleanField()
@@ -164,7 +165,7 @@ class CreateCharacterSerializer(serializers.Serializer):
 
     login = serializers.CharField(max_length=45)
     name = serializers.CharField(min_length=2, max_length=16)
-    race = serializers.IntegerField(min_value=0, max_value=4)
+    race = serializers.IntegerField(min_value=0, max_value=5)
     class_id = serializers.IntegerField(min_value=0)
     sex = serializers.IntegerField(min_value=0, max_value=1)
     hair_style = serializers.IntegerField(required=False, default=0, min_value=0)

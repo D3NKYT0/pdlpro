@@ -78,6 +78,7 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | `LINEAGE_DB_SSL_CERT`, `LINEAGE_DB_SSL_KEY` | Cliente mTLS, se o MySQL exigir `REQUIRE X509` |
 | `LINEAGE_QUERY_MODULE` | Catálogo SQL `lucerav2`, `dreamv3`, `mobius`, `eternity` ou dialeto da extensão |
 | `LINEAGE_PASSWORD_ALGO` | Hash de senha nova: vazio (convenção do módulo), `whirlpool` ou `sha1` |
+| `LINEAGE_CREATION_ID_MIN`, `LINEAGE_CREATION_ID_MAX` | Limites inclusivos do intervalo exclusivo de IDs de objeto para criação pelo painel no Eternity. O padrão `0` mantém essa escrita desabilitada |
 | `LINEAGE_DB_POOL_SIZE` | Conexões permanentes no pool |
 | `LINEAGE_DB_MAX_OVERFLOW` | Conexões extras permitidas |
 | `GAME_SERVER_IP` | Host usado no status do login/game server |

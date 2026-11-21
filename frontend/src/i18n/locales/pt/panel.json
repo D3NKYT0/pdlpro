@@ -1023,6 +1023,11 @@
       "creating": "Criando personagem...",
       "submit": "Criar Personagem",
       "slotsNotice": "Personagens na conta: {{count}}/{{max}}",
+      "kamael": {
+        "name": "Kamael",
+        "lore": "Combatentes alados que canalizam a energia das almas.",
+        "soldier": "Classe inicial Kamael de combate físico."
+      },
       "limitNotice": "Esta conta já possui o limite máximo de 7 personagens.",
       "errors": {
         "nameRequired": "Informe o nick do personagem.",
@@ -1944,6 +1949,10 @@
       "enchantValue": "+{{value}} / +{{max}}",
       "routeValue": "{{route}}",
       "tabsLabel": "Abas de skills",
+      "classLabel": "Classe das skills",
+      "baseClass": "Classe base",
+      "subclass": "Subclasse {{index}}",
+      "namedClass": "{{slot}} · {{name}}",
       "tabs": {
         "active": "Ativas",
         "passive": "Passivas"

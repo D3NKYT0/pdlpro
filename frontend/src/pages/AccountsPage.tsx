@@ -28,13 +28,15 @@ export function AccountsPage() {
   const resourceOn = useResourceControls()
   const { t } = useTranslation('panel')
   const canLink = useResourceEnabled('accounts-link', 'accounts')
-  const canCreateCharacter = useResourceEnabled('accounts-create-character', 'accounts')
+  const creationEnabled = useResourceEnabled('accounts-create-character', 'accounts')
   const { user } = useAuth()
   const { activeLogin, setActiveAccount: selectActiveAccount } = useActiveAccount()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const accounts = useQuery({ queryKey: ['lineage-accounts'], queryFn: lineageApi.accounts })
   const servicePrices = useQuery({ queryKey: ['service-prices'], queryFn: lineageApi.servicePrices })
+  const creationCatalog = servicePrices.data?.catalog
+  const canCreateCharacter = creationEnabled && servicePrices.isSuccess && creationCatalog?.character_creation_available !== false
   const wallet = useQuery({ queryKey: ['wallet'], queryFn: walletApi.me })
   const launch = useLaunchAccess()
   const [params, setParams] = useSearchParams()
@@ -652,6 +654,7 @@ export function AccountsPage() {
                               onClick={(event) => event.stopPropagation()}
                             >
                               <CharacterAvatar
+                                race={character.race}
                                 classId={character.class_id}
                                 className="character-avatar"
                                 name={character.name}
@@ -770,6 +773,7 @@ export function AccountsPage() {
 
       <CreateCharacterModal
         open={createCharacterOpen && canCreateCharacter}
+        highFive={creationCatalog?.chronicle === 'high_five'}
         accountLogin={selectedLogin ?? ''}
         characterCount={characterCount}
         pending={creatingCharacter}

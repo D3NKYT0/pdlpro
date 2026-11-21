@@ -1,6 +1,13 @@
 import { expect, it } from 'vitest'
 import { characterAvatarSrc, raceFromClass } from './characterPortrait'
 
+it('usa retratos Kamael pelas classes iniciais e avançadas de High Five', () => {
+  expect(raceFromClass(123)).toBe('kamael')
+  expect(raceFromClass(136)).toBe('kamael')
+  expect(characterAvatarSrc({ classId: 123, sex: 0 })).toBe('/theme/avatars/kamael-m.png')
+  expect(characterAvatarSrc({ classId: 134, sex: 1 })).toBe('/theme/avatars/kamael-f.png')
+})
+
 it('escolhe o retrato pela raça, sexo e classe Interlude', () => {
   expect(characterAvatarSrc({ race: 'elf', sex: 0 })).toBe('/theme/avatars/elf-m.png')
   expect(characterAvatarSrc({ race: 'dark_elf', sex: 1 })).toBe('/theme/avatars/dark-elf-f.png')

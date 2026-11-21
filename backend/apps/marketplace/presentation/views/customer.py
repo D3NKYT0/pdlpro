@@ -38,6 +38,7 @@ def dump_listing(listing: CharacterListingEntity, skill_catalog: ISkillCatalog) 
             int(row.get("level") or 1),
             int(row.get("class_index") or 0),
             skill_catalog,
+            class_id=row.get("class_id"),
         )
         for row in payload.get("skills") or []
         if row.get("skill_id")

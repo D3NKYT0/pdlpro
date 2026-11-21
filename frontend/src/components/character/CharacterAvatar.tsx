@@ -20,7 +20,7 @@ export function CharacterAvatar({
   className,
 }: {
   name?: string
-  race?: string
+  race?: string | null
   sex?: number
   classId?: number
   size?: CharacterAvatarSize
@@ -33,7 +33,7 @@ export function CharacterAvatar({
   return (
     <img
       className={classes}
-      src={characterAvatarSrc({ race, sex, classId })}
+      src={characterAvatarSrc({ race: race ?? undefined, sex, classId })}
       alt={alt ?? (name ? t('characterAvatar.named', { name }) : t('characterAvatar.unnamed'))}
       width={box.width}
       height={box.height}

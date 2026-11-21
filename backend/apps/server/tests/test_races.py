@@ -12,5 +12,6 @@ def test_race_from_interlude_class_ids():
     assert race_from_class(113) == "orc"
     assert race_from_class(57) == "dwarf"
     assert race_from_class(118) == "dwarf"
+    assert all(race_from_class(class_id) == "kamael" for class_id in range(123, 137))
     assert race_from_class(0) == "human"
     assert race_from_class(999) == "human"

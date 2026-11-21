@@ -267,6 +267,36 @@ it('abre modal de criação de personagem e chama lineageApi.createCharacter', a
   })
 })
 
+it.each([true, false])('usa o catálogo High Five com criação disponível=%s', async available => {
+  vi.mocked(lineageApi.accounts).mockResolvedValue({
+    accounts: [{ login: 'denky', is_primary: true, linked: true }],
+    slots: { used: 1, total: 3, can_link: true },
+    primary: { login: 'denky', status: 'owned' },
+  } as Awaited<ReturnType<typeof lineageApi.accounts>>)
+  vi.mocked(lineageApi.characters).mockResolvedValue([])
+  vi.mocked(lineageApi.servicePrices).mockResolvedValue({
+    CHANGE_NICKNAME: '10', CHANGE_SEX: '10', UNSTUCK: '0', LINK_SLOT: '10.00',
+    catalog: {
+      chronicle: 'high_five',
+      character_creation_available: available,
+      towns: [],
+      appearance: { hair_style_max_male: 4, hair_style_max_female: 6, hair_color_max: 3, face_max: 2 },
+    },
+  })
+
+  const user = mount()
+  expect(await screen.findByText('Nenhum personagem criado')).toBeVisible()
+  const createButton = screen.getByRole('button', { name: 'Criar personagem' })
+  if (available) {
+    await waitFor(() => expect(createButton).toBeEnabled())
+    await user.click(createButton)
+    expect(screen.getByRole('radio', { name: 'Kamael' })).toBeVisible()
+  } else {
+    await waitFor(() => expect(client.getQueryState(['service-prices'])?.status).toBe('success'))
+    expect(createButton).toBeDisabled()
+  }
+})
+
 it('mostra contador e desabilita criação quando atingir 7 personagens', async () => {
   const sevenChars = Array.from({ length: 7 }, (_, i) => ({
     char_id: i + 1,

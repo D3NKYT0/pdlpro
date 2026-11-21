@@ -98,7 +98,7 @@ def test_create_bid_and_close_character_auction(api, seller, bidder):
             GameItem(57, "Adena", 100, 0, location="INVENTORY"),
             GameItem(6673, "Festival Adena", 5, 0, location="WAREHOUSE"),
         ],
-        skills=[GameSkill(1, 52)],
+        skills=[GameSkill(1, 52, class_index=1, class_id=88)],
     )
     created = api.post(
         "/api/v1/customer/auctions/",
@@ -120,6 +120,7 @@ def test_create_bid_and_close_character_auction(api, seller, bidder):
     skill = created.data["skills"][0]
     progress = skill_progress(1, 52)
     assert skill["skill_id"] == 1
+    assert (skill["class_index"], skill["class_id"]) == (1, 88)
     assert skill["level"] == progress["level"]
     assert skill["enchant"] == progress["enchant"]
     assert skill["icon_url"] == "/skill-icons/1.png"

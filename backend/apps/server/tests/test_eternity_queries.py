@@ -19,7 +19,8 @@ def eternity():
             "char_name TEXT, level INTEGER, classid INTEGER, online INTEGER, sex INTEGER, "
             "pvpkills INTEGER, pkkills INTEGER, clanid INTEGER, onlinetime INTEGER, accesslevel INTEGER, "
             "title TEXT DEFAULT '', karma INTEGER DEFAULT 0, lastAccess INTEGER DEFAULT 0, "
-            "hairStyle INTEGER DEFAULT 0, hairColor INTEGER DEFAULT 0, face INTEGER DEFAULT 0)"
+            "hairStyle INTEGER DEFAULT 0, hairColor INTEGER DEFAULT 0, face INTEGER DEFAULT 0, "
+            "base_class INTEGER, race INTEGER)"
         )
         connection.exec_driver_sql(
             "CREATE TABLE clan_data (clan_id INTEGER PRIMARY KEY, clan_name TEXT, leader_id INTEGER, "
@@ -120,6 +121,29 @@ def test_prepares_and_links_accounts_on_the_existing_schema(eternity, settings):
     assert eternity.get_account("owner").linked_user_id is None
 
 
+def test_skill_classes_use_the_base_class_and_the_subclass_at_each_index(eternity):
+    with eternity._engine.begin() as connection:
+        connection.exec_driver_sql(
+            "CREATE TABLE character_skills (charId INTEGER, skill_id INTEGER, "
+            "skill_level INTEGER, class_index INTEGER)"
+        )
+        connection.exec_driver_sql(
+            "CREATE TABLE character_subclasses (charId INTEGER, class_id INTEGER, class_index INTEGER)"
+        )
+        connection.exec_driver_sql("UPDATE characters SET base_class = 112, classid = 102 WHERE charId = 42")
+        connection.exec_driver_sql(
+            "INSERT INTO character_subclasses VALUES (42, 102, 1), (42, 88, 5), (42, 94, 5), (44, 93, 2)"
+        )
+        connection.exec_driver_sql(
+            "INSERT INTO character_skills VALUES (42, 1, 3, 0), (42, 1, 9, 1), (42, 3, 2, 2), (42, 3, 4, 5)"
+        )
+
+    skills = eternity.list_character_skills(42)
+    assert [(skill.skill_id, skill.class_index, skill.class_id) for skill in skills] == [
+        (1, 0, 112), (1, 1, 102), (3, 2, None), (3, 5, None),
+    ]
+
+
 def test_olympiad_uses_competition_classes_and_only_current_heroes(eternity):
     with eternity._engine.begin() as connection:
         connection.exec_driver_sql(
@@ -143,6 +167,9 @@ def test_olympiad_uses_competition_classes_and_only_current_heroes(eternity):
 
 def test_missing_delivery_and_character_creation_fail_before_connecting(eternity, settings, monkeypatch):
     settings.LINEAGE_ALLOW_ONLINE_DELIVERY = True
+    settings.LINEAGE_CREATION_ID_MIN = 0
+    settings.LINEAGE_CREATION_ID_MAX = 0
+    assert not eternity.character_creation_available()
 
     def unexpected_connection():
         pytest.fail("Uma operação indisponível não deve abrir conexão com o jogo.")

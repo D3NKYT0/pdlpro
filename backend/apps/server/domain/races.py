@@ -1,4 +1,4 @@
-"""Raças Interlude derivadas da classe base do personagem."""
+"""Raças de Interlude e High Five derivadas da classe do personagem."""
 
 from __future__ import annotations
 
@@ -7,12 +7,13 @@ RACE_ELF = "elf"
 RACE_DARK_ELF = "dark_elf"
 RACE_ORC = "orc"
 RACE_DWARF = "dwarf"
+RACE_KAMAEL = "kamael"
 
-RACES = (RACE_HUMAN, RACE_ELF, RACE_DARK_ELF, RACE_ORC, RACE_DWARF)
+RACES = (RACE_HUMAN, RACE_ELF, RACE_DARK_ELF, RACE_ORC, RACE_DWARF, RACE_KAMAEL)
 
 
 def race_from_class(class_id: int) -> str:
-    """Devolve o código estável da raça a partir do ``class_id`` Interlude."""
+    """Devolve o código estável da raça a partir do identificador de classe."""
 
     cid = int(class_id or 0)
     if 0 <= cid <= 17 or 88 <= cid <= 98:
@@ -25,4 +26,6 @@ def race_from_class(class_id: int) -> str:
         return RACE_ORC
     if 53 <= cid <= 57 or 117 <= cid <= 118:
         return RACE_DWARF
+    if 123 <= cid <= 136:
+        return RACE_KAMAEL
     return RACE_HUMAN

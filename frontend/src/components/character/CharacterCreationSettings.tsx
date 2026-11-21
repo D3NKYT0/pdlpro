@@ -5,6 +5,7 @@ import { CharacterAvatar } from './CharacterAvatar'
 import { ItemIcon } from '../ItemIcon'
 import { EmptyState } from '../ui/Feedback'
 import { formatNumber } from '../../lib/formatters'
+import { getClassName, KAMAEL_STARTING_CLASSES } from '../../lib/lineage'
 import './character-creation.css'
 import { useTranslation } from 'react-i18next'
 import { PAPERDOLL_SLOTS } from './CharacterPaperdoll'
@@ -20,8 +21,8 @@ export const defaultCharacterCreation = (): ApiCharacterCreation => ({
 const classes = [0, 10, 18, 25, 31, 38, 44, 49, 53]
 
 /** Edita o padrão geral e snapshots completos por classe inicial. */
-export function CharacterCreationSettings({ value, onChange, disabled, maxLevel }: {
-  value: ApiCharacterCreation; onChange: (value: ApiCharacterCreation) => void; disabled: boolean; maxLevel: number
+export function CharacterCreationSettings({ value, onChange, disabled, maxLevel, highFive = false }: {
+  value: ApiCharacterCreation; onChange: (value: ApiCharacterCreation) => void; disabled: boolean; maxLevel: number; highFive?: boolean
 }) {
   const { t } = useTranslation('admin')
   const { t: panelT } = useTranslation('panel')
@@ -31,13 +32,20 @@ export function CharacterCreationSettings({ value, onChange, disabled, maxLevel 
   })
   const [selected, setSelected] = useState('default')
   const [previewSex, setPreviewSex] = useState<0 | 1>(0)
+  const options = highFive ? [...classes, ...KAMAEL_STARTING_CLASSES] : classes
+  const [maleSoldier, femaleSoldier] = KAMAEL_STARTING_CLASSES
+  const kamaelSex = Number(selected) === maleSoldier ? 0 : Number(selected) === femaleSoldier ? 1 : undefined
+  const profileSex = kamaelSex ?? previewSex
+  const profileLabel = (id: number) => id === maleSoldier || id === femaleSoldier
+    ? getClassName(id)
+    : t(`characterCreation.classes.${id}`)
   const override = selected !== 'default' && Boolean(value.classes[selected])
   const profile = value.classes[selected] ?? value.default
   const update = (patch: Partial<ApiCharacterStart>) => {
     const next = { ...profile, ...patch }
     onChange(selected === 'default' ? { ...value, default: next } : { ...value, classes: { ...value.classes, [selected]: next } })
   }
-  const profileName = selected === 'default' ? t('characterCreation.general') : t(`characterCreation.classes.${selected}`)
+  const profileName = selected === 'default' ? t('characterCreation.general') : profileLabel(Number(selected))
   const equipped = profile.items.filter(item => item.slot !== null).length
   const status = selected === 'default' ? 'generalStatus' : override ? 'customStatus' : 'inheritedStatus'
   return <Card className="admin-config-section cc-workshop" data-theme-part="character-creation">
@@ -51,7 +59,7 @@ export function CharacterCreationSettings({ value, onChange, disabled, maxLevel 
         <div className="cc-profile-picker">
           <Field label={t('characterCreation.profile')}>
             <Select aria-label={t('characterCreation.profile')} value={selected} disabled={disabled} onChange={setSelected}
-              options={[{ value: 'default', label: t('characterCreation.general') }, ...classes.map(id => ({ value: String(id), label: t(`characterCreation.classes.${id}`) }))]} />
+              options={[{ value: 'default', label: t('characterCreation.general') }, ...options.map(id => ({ value: String(id), label: profileLabel(id) }))]} />
           </Field>
           {selected !== 'default' && <div className="cc-inheritance">
             <p className="muted">{t(override ? 'characterCreation.custom' : 'characterCreation.inherited')}</p>
@@ -102,14 +110,14 @@ export function CharacterCreationSettings({ value, onChange, disabled, maxLevel 
       </div>
       <Card as="aside" className="cc-preview" aria-label={t('characterCreation.preview')}>
         <span className="panel-eyebrow">{t('characterCreation.preview')}</span>
-        {selected !== 'default' && <div className="cc-preview-sex" role="group" aria-label={t('characterCreation.previewSex')}>
+        {selected !== 'default' && kamaelSex === undefined && <div className="cc-preview-sex" role="group" aria-label={t('characterCreation.previewSex')}>
           {([0, 1] as const).map(sex => <Button key={sex} size="sm" variant={previewSex === sex ? 'primary' : 'secondary'} aria-pressed={previewSex === sex} onClick={() => setPreviewSex(sex)}>
             {panelT(sex === 0 ? 'accounts.createCharModal.male' : 'accounts.createCharModal.female')}
           </Button>)}
         </div>}
-        <div key={`${selected}-${previewSex}`} className={`cc-portrait${selected === 'default' ? ' cc-portrait-general' : ''}`}>
+        <div key={`${selected}-${profileSex}`} className={`cc-portrait${selected === 'default' ? ' cc-portrait-general' : ''}`}>
           <span className="cc-portrait-ring" />
-          {selected === 'default' ? <img src="/theme/avatars/general-party.png" width={144} height={192} alt={t('characterCreation.generalIllustration')} /> : <CharacterAvatar classId={Number(selected)} sex={previewSex} size="xl" alt={t('characterCreation.raceIllustration')} />}
+          {selected === 'default' ? <img src="/theme/avatars/general-party.png" width={144} height={192} alt={t('characterCreation.generalIllustration')} /> : <CharacterAvatar classId={Number(selected)} sex={profileSex} size="xl" alt={t('characterCreation.raceIllustration')} />}
         </div>
         <h3>{profileName}</h3>
         <span className="cc-badge" data-custom={override || undefined}>{t(`characterCreation.${status}`)}</span>

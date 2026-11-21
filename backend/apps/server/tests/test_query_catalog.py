@@ -62,6 +62,14 @@ def test_unknown_dialect_fails():
         LineageQueryCatalog.load("nao_existe")
 
 
+@pytest.mark.parametrize(
+    ("dialect", "chronicle"),
+    [("lucerav2", "interlude"), ("dreamv3", "interlude"), ("mobius", "interlude"), ("eternity", "high_five")],
+)
+def test_native_catalog_declares_the_chronicle(dialect, chronicle):
+    assert LineageQueryCatalog.load(dialect).chronicle == chronicle
+
+
 def test_rejects_unsafe_dialect_names():
     with pytest.raises(QueryDialectNotFoundError):
         LineageQueryCatalog.load("../lucerav2")

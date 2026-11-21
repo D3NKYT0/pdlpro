@@ -1,4 +1,4 @@
-export const CHARACTER_RACES = ['human', 'elf', 'dark_elf', 'orc', 'dwarf'] as const
+export const CHARACTER_RACES = ['human', 'elf', 'dark_elf', 'orc', 'dwarf', 'kamael'] as const
 
 export type CharacterRace = (typeof CHARACTER_RACES)[number]
 
@@ -8,13 +8,14 @@ const AVATARS: Record<CharacterRace, { 0: string; 1: string }> = {
   dark_elf: { 0: '/theme/avatars/dark-elf-m.png', 1: '/theme/avatars/dark-elf-f.png' },
   orc: { 0: '/theme/avatars/orc-m.png', 1: '/theme/avatars/orc-f.png' },
   dwarf: { 0: '/theme/avatars/dwarf-m.png', 1: '/theme/avatars/dwarf-f.png' },
+  kamael: { 0: '/theme/avatars/kamael-m.png', 1: '/theme/avatars/kamael-f.png' },
 }
 
 export function characterRace(value: string | undefined): CharacterRace {
   return CHARACTER_RACES.includes(value as CharacterRace) ? (value as CharacterRace) : 'human'
 }
 
-/** Raça Interlude a partir do class_id (mesmas faixas do backend). */
+/** Raça a partir do class_id (mesmas faixas do backend). */
 export function raceFromClass(classId: number | undefined): CharacterRace {
   const cid = Number(classId || 0)
   if ((cid >= 0 && cid <= 17) || (cid >= 88 && cid <= 98)) return 'human'
@@ -22,6 +23,7 @@ export function raceFromClass(classId: number | undefined): CharacterRace {
   if ((cid >= 31 && cid <= 43) || (cid >= 106 && cid <= 112)) return 'dark_elf'
   if ((cid >= 44 && cid <= 52) || (cid >= 113 && cid <= 116)) return 'orc'
   if ((cid >= 53 && cid <= 57) || (cid >= 117 && cid <= 118)) return 'dwarf'
+  if (cid >= 123 && cid <= 136) return 'kamael'
   return 'human'
 }
 
@@ -39,7 +41,7 @@ export function characterAvatarSrc(options: {
     (cid >= 94 && cid <= 98) || (cid >= 103 && cid <= 105) ||
     (cid >= 110 && cid <= 112) || (cid >= 115 && cid <= 116)
   )
-  if (magical && race !== 'dwarf') {
+  if (magical && race !== 'dwarf' && race !== 'kamael') {
     return `/theme/avatars/${race.replace('_', '-')}-mage-${options.sex === 1 ? 'f' : 'm'}.png`
   }
   const portraits = AVATARS[race]

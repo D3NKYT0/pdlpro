@@ -1004,6 +1004,11 @@
     "characterCountBadge": "{{count}}/{{max}} characters",
     "characterLimitReached": "Limit of 7 characters reached on this account",
     "createCharModal": {
+      "kamael": {
+        "name": "Kamael",
+        "lore": "Winged warriors who channel the energy of souls.",
+        "soldier": "Starting Kamael class focused on physical combat."
+      },
       "title": "Create New Character",
       "unnamed": "Unnamed",
       "nameLabel": "1. Character Nickname",
@@ -1944,6 +1949,10 @@
       "enchantValue": "+{{value}} / +{{max}}",
       "routeValue": "{{route}}",
       "tabsLabel": "Skill tabs",
+      "classLabel": "Skill class",
+      "baseClass": "Base class",
+      "subclass": "Subclass {{index}}",
+      "namedClass": "{{slot}} · {{name}}",
       "tabs": {
         "active": "Active",
         "passive": "Passive"

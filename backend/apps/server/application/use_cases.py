@@ -22,14 +22,6 @@ from apps.server.domain.site_metadata import IPackagedSiteMetadata
 from common.architecture.base import UseCase
 from common.architecture.exceptions import ValidationDomainError
 
-CHRONICLE_BY_MODULE = {
-    "dreamv3": "Interlude",
-    "l2dev": "High Five",
-    "l2jfrozen": "Interlude",
-    "lucera": "Interlude",
-    "lucerav2": "Interlude",
-}
-
 
 def _coming_soon_at_iso(value) -> str | None:
     if value is None:
@@ -77,15 +69,16 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
         self,
         index_config: IIndexConfigRepository,
         packaged_metadata: IPackagedSiteMetadata,
+        lineage: ILineageGateway,
     ) -> None:
         self._index_config = index_config
         self._packaged_metadata = packaged_metadata
+        self._lineage = lineage
 
     def execute(self, data: None = None) -> ServerInfo:
-        module = str(getattr(settings, "LINEAGE_QUERY_MODULE", "") or "")
         chronicle = str(getattr(settings, "SERVER_CHRONICLE", "") or "").strip()
         if not chronicle:
-            chronicle = CHRONICLE_BY_MODULE.get(module, module.capitalize() if module else "Lineage 2")
+            chronicle = self._lineage.chronicle().replace("_", " ").title()
         features = [item.strip() for item in getattr(settings, "SERVER_FEATURES", []) if str(item).strip()]
         theme = self._packaged_metadata.get_overlay()
         env_name = str(getattr(settings, "PROJECT_TITLE", "PDL PRO"))

@@ -39,7 +39,7 @@ def test_list_and_buy_character(api, seller, buyer):
             GameItem(57, "Adena", 100, 0, location="INVENTORY"),
             GameItem(6673, "Festival Adena", 5, 0, location="WAREHOUSE"),
         ],
-        skills=[GameSkill(1, 52)],
+        skills=[GameSkill(1, 52, class_index=1, class_id=102)],
     )
 
     listed = api.post(
@@ -80,6 +80,7 @@ def test_list_and_buy_character(api, seller, buyer):
         (6673, "WAREHOUSE"),
     ]
     assert catalog.data[0]["skills"][0]["skill_id"] == 1
+    assert catalog.data[0]["skills"][0]["class_id"] == 102
 
     api.force_authenticate(user=buyer)
     assert api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json").status_code == 200

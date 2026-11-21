@@ -78,6 +78,10 @@ Uma distribuição nova deve manter as consultas obrigatórias e seus contratos 
 parâmetros/retorno; veja os [testes de catálogos](../desenvolvimento/testes.md).
 SQL de instalação entra na extensão, não nessa pasta.
 
+Na ficha do personagem, o seletor de skills aparece quando o servidor retorna skills
+de mais de uma classe. A classe base abre por padrão quando tem skills. As abas
+Ativas e Passivas filtram apenas a classe selecionada.
+
 ## Schema Lucera v2
 
 O catálogo `lucerav2` atende distribuições Lucera 2 (Interlude / Classic) em total paridade de consultas com o `dreamv3` (63 consultas SQL):
@@ -116,7 +120,10 @@ antes de liberar cadastro/troca de senha, especialmente em bancos com hashes mis
 
 ## Schema Eternity
 
-Configure o catálogo na instalação que usa o schema Eternity.
+O catálogo Eternity declara a crônica High Five no `manifest.json`. Os demais
+catálogos nativos declaram Interlude. O painel lê a crônica do catálogo ativo
+para decidir quais raças e classes oferecer. O nome editorial da crônica
+continua configurável na página pública.
 
 ```dotenv
 LINEAGE_QUERY_MODULE=eternity
@@ -127,20 +134,41 @@ os dados de aliança em `clan_data` e os brasões binários em `crests`. O
 inventário usa `items.object_id` para a instância, `items.item_id` para o
 template e `loc_data` para o slot equipado. A adena exibida nas fichas e no
 ranking soma apenas as pilhas do inventário e do armazém do personagem.
+O seletor de skills identifica o nome da classe base por `characters.base_class`
+e o da subclasse pelo índice em `character_subclasses`. A interface usa o
+catálogo de nomes do painel e conserva o rótulo numérico quando falta a associação.
 
 Prepare as colunas de `accounts` descritas acima. Para vincular contas, o
 usuário SQL do PDL precisa de leitura e de `UPDATE (linked_uuid)` em
-`accounts`. O módulo usa Whirlpool-2003 em Base64 para senhas novas.
+`accounts`. Para cadastrar contas, conceda também
+`INSERT (login, password, accessLevel, email, created_time)` na mesma tabela.
+O módulo usa Whirlpool-2003 em Base64 para senhas novas. Para habilitar a retirada
+do jogo para o painel, conceda `UPDATE (count)` e `DELETE` em `items`.
 
 O schema homologado permite ler personagens, equipamentos, rankings, clãs,
-olimpíadas, bosses e castelos. Entrega ao jogo, câmbio pelo painel, criação
-de personagens pelo painel e vitrine de lojas offline ficam indisponíveis
-até que a integração com o gameserver ofereça os contratos correspondentes.
+olimpíadas, bosses e castelos. Entrega ao jogo, câmbio pelo painel e vitrine de
+lojas offline dependem de integração adicional com o gameserver.
 
 Valide o vínculo e a ficha com uma conta de teste. A suíte cobre propriedade,
 aliança, adena, equipamento, olimpíadas, preparo e vínculo de contas, além
 de retirada de pilhas exatas com saldo insuficiente e rollback. Homologue
 as escritas com o gameserver antes de ativá-las.
+
+### Criação de personagens High Five
+
+O Kamael usa raça `5` e começa como Male Kamael Soldier (`123`) ou Female
+Kamael Soldier (`124`), conforme o gênero selecionado. As duas classes
+têm perfis iniciais no admin. O Eternity grava classe base, nível, XP e SP na
+tabela `characters` e grava o kit em `items` na mesma transação.
+
+Para habilitar a criação pelo painel, reserve antes um intervalo exclusivo de
+IDs de objeto no alocador do gameserver. Configure os limites inclusivos em
+`LINEAGE_CREATION_ID_MIN` e `LINEAGE_CREATION_ID_MAX` no `.env` do PDL.
+Reserve espaço para personagens e peças do kit e confirme a exclusão do
+intervalo no jogo antes de ativar. O usuário SQL do painel precisa de
+`INSERT` em `characters` e `items`. Teste a criação e o primeiro login
+no cliente em homologação. Sem o intervalo, a criação pelo site fica
+indisponível e a ficha continua exibindo os personagens existentes.
 
 ## Homologação e operações de escrita
 

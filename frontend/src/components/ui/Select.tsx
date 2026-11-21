@@ -178,8 +178,7 @@ export function Select({
               aria-selected={item.value === selected?.value}
               className={index === activeIndex ? 'is-active' : undefined}
               onMouseEnter={() => setActiveIndex(index)}
-              onPointerDown={event => {
-                event.preventDefault()
+              onClick={event => {
                 event.stopPropagation()
                 choose(item.value)
               }}

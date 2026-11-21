@@ -128,7 +128,7 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
               {t('inventory.characters.character')}
               <span className="inventory-character-pick">
                 {selectedCharacter ? (
-                  <CharacterAvatar name={selectedCharacter.name} classId={selectedCharacter.class_id} sex={selectedCharacter.sex} size="sm" />
+                  <CharacterAvatar name={selectedCharacter.name} classId={selectedCharacter.class_id} race={selectedCharacter.race} sex={selectedCharacter.sex} size="sm" />
                 ) : null}
                 <select value={charId} onChange={(e) => setCharId(e.target.value ? Number(e.target.value) : '')} required>
                   <option value="">{t('inventory.characters.select')}</option>
@@ -188,6 +188,7 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
               <CharacterAvatar
                 name={row.character.name}
                 classId={row.character.class_id}
+                race={row.character.race}
                 sex={row.character.sex}
                 size="md"
               />

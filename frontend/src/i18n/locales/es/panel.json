@@ -1004,6 +1004,11 @@
     "characterCountBadge": "{{count}}/{{max}} personajes",
     "characterLimitReached": "Límite de 7 personajes alcanzado en esta cuenta",
     "createCharModal": {
+      "kamael": {
+        "name": "Kamael",
+        "lore": "Combatientes alados que canalizan la energía de las almas.",
+        "soldier": "Clase inicial Kamael centrada en el combate físico."
+      },
       "title": "Crear Nuevo Personaje",
       "unnamed": "Sin Nombre",
       "nameLabel": "1. Nick del Personaje",
@@ -1944,6 +1949,10 @@
       "enchantValue": "+{{value}} / +{{max}}",
       "routeValue": "{{route}}",
       "tabsLabel": "Pestañas de skills",
+      "classLabel": "Clase de las skills",
+      "baseClass": "Clase base",
+      "subclass": "Subclase {{index}}",
+      "namedClass": "{{slot}} · {{name}}",
       "tabs": {
         "active": "Activas",
         "passive": "Pasivas"

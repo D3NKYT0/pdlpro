@@ -133,7 +133,7 @@ export function NameForm({ onSave }: { onSave: (name: string) => Promise<void> }
 }
 ```
 
-Use `Select` (não `<select>` nativo) quando o menu aberto precisar seguir o tema: a lista é um listbox no painel, com hover dourado, e não o popup do SO.
+Use `Select` quando o menu aberto precisar seguir o tema do painel. A lista usa o papel `listbox` e confirma a opção ao concluir o clique ou toque, ou com Enter pelo teclado.
 
 [useAsyncAction](../../frontend/src/hooks/useAsyncAction.ts) centraliza `pending`, `error` e bloqueio síncrono de chamadas repetidas. Retorna `{ ok: true, value }` ou `{ ok: false, error }`; chamadas ignoradas também têm `skipped: true`. Não cancela a operação ao desmontar a tela. [useFeedbackAction](../../frontend/src/hooks/useFeedbackAction.ts) acrescenta o toast de falha, preservando a mensagem pública de `ApiError` ou usando o fallback. O callback continua responsável pela mensagem de sucesso.
 

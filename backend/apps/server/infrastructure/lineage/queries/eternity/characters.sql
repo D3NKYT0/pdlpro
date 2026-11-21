@@ -7,6 +7,7 @@ SELECT
     COALESCE(C.level, 0) AS level,
     C.online,
     C.sex,
+    C.race,
     C.pvpkills AS pvp,
     C.pkkills AS pk,
     COALESCE(C.classid, 0) AS class_id,
@@ -44,6 +45,7 @@ SELECT
     COALESCE(C.level, 0) AS level,
     C.online,
     C.sex,
+    C.race,
     C.pvpkills AS pvp,
     C.pkkills AS pk,
     COALESCE(C.classid, 0) AS class_id,
@@ -136,3 +138,41 @@ UPDATE characters
 SET pkkills = 0
 WHERE charId = :cid AND account_name = :login
 LIMIT 1
+
+-- name: creation_lock
+SELECT GET_LOCK('pdl_character_creation', 10)
+
+-- name: creation_unlock
+SELECT RELEASE_LOCK('pdl_character_creation')
+
+-- name: creation_storage
+SELECT TABLE_NAME AS table_name, ENGINE AS engine
+FROM information_schema.TABLES
+WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME IN ('characters', 'items')
+
+-- name: creation_reserved_next_id
+SELECT COALESCE(MAX(reserved_id), :first_id - 1) + 1
+FROM (
+    SELECT MAX(charId) AS reserved_id FROM characters WHERE charId BETWEEN :first_id AND :last_id
+    UNION ALL
+    SELECT MAX(object_id) AS reserved_id FROM items WHERE object_id BETWEEN :first_id AND :last_id
+) used_ids
+
+-- name: insert_character
+INSERT INTO characters (
+    charId, account_name, char_name, race, sex, classid, base_class,
+    face, hairStyle, hairColor, level, exp, sp, title, x, y, z, createDate,
+    maxHp, curHp, maxMp, curMp, maxCp, curCp, online, onlinetime, pvpkills, pkkills,
+    clanid, karma, heading
+)
+VALUES (
+    :char_id, :login, :name, :race, :sex, :class_id, :class_id,
+    :face, :hair_style, :hair_color, :level, :xp, :sp, :title, :x, :y, :z, UNIX_TIMESTAMP() * 1000,
+    CASE WHEN :race = 5 THEN 104 ELSE 100 END,
+    CASE WHEN :race = 5 THEN 104 ELSE 100 END,
+    CASE :class_id WHEN 123 THEN 38 WHEN 124 THEN 52 ELSE 100 END,
+    CASE :class_id WHEN 123 THEN 38 WHEN 124 THEN 52 ELSE 100 END,
+    CASE WHEN :race = 5 THEN 52 ELSE 100 END,
+    CASE WHEN :race = 5 THEN 52 ELSE 100 END,
+    0, 0, 0, 0, 0, 0, 0
+)

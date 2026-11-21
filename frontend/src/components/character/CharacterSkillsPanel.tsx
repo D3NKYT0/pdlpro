@@ -2,7 +2,9 @@ import { useTranslation } from 'react-i18next'
 import { useMemo, useState } from 'react'
 import { SkillIcon } from '../SkillIcon'
 import { Modal } from '../ui/Modal'
+import { Select } from '../ui/Select'
 import { Tabs } from '../ui/Tabs'
+import { getClassName } from '../../lib/lineage'
 import type { ApiGameSkill, SkillGroup } from '../../services/api'
 import { CHARACTER_SKILL_COLUMNS, CHARACTER_SLOT_ICON_PX } from './characterSlotGrid'
 
@@ -61,12 +63,26 @@ export function CharacterSkillsPanel({
 }) {
   const { t } = useTranslation('panel')
   const [tab, setTab] = useState<OperateTab>('active')
+  const [selectedClass, setSelectedClass] = useState<number>()
   const [collapsed, setCollapsed] = useState<Set<SkillGroup>>(() => new Set())
   const [selected, setSelected] = useState<ApiGameSkill | null>(null)
 
+  const classes = useMemo(() => {
+    const byIndex = new Map<number, number | undefined>()
+    for (const skill of skills) {
+      const index = skill.class_index ?? 0
+      byIndex.set(index, byIndex.get(index) ?? skill.class_id ?? undefined)
+    }
+    return new Map([...byIndex].sort(([left], [right]) => left - right))
+  }, [skills])
+  const classIndex = selectedClass !== undefined && classes.has(selectedClass)
+    ? selectedClass
+    : classes.keys().next().value
   const visibleSkills = useMemo(
-    () => skills.filter((skill) => (tab === 'passive' ? skill.operate === 'passive' : skill.operate !== 'passive')),
-    [skills, tab],
+    () => skills.filter(skill =>
+      (skill.class_index ?? 0) === classIndex && (skill.operate === 'passive') === (tab === 'passive'),
+    ),
+    [skills, classIndex, tab],
   )
 
   const groups = useMemo(
@@ -77,6 +93,12 @@ export function CharacterSkillsPanel({
       })).filter((group) => group.items.length > 0),
     [visibleSkills],
   )
+
+  function classOptionLabel(index: number, classId: number | undefined) {
+    const slot = index === 0 ? t('character.skills.baseClass') : t('character.skills.subclass', { index })
+    const name = getClassName(classId, '')
+    return name ? t('character.skills.namedClass', { slot, name }) : slot
+  }
 
   function toggleGroup(id: SkillGroup) {
     setCollapsed((current) => {
@@ -99,6 +121,19 @@ export function CharacterSkillsPanel({
         <header className="character-skills-titlebar">
           <h3>{t('character.skills.title')}</h3>
         </header>
+        {!loading && !error && classes.size > 1 && (
+          <div className="character-skills-class-picker">
+            <Select
+              aria-label={t('character.skills.classLabel')}
+              value={String(classIndex)}
+              onChange={value => setSelectedClass(Number(value))}
+              options={Array.from(classes, ([index, classId]) => ({
+                value: String(index),
+                label: classOptionLabel(index, classId),
+              }))}
+            />
+          </div>
+        )}
         <Tabs
           id="character-skills"
           label={t('character.skills.tabsLabel')}

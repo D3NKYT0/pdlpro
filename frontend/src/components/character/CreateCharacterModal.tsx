@@ -4,6 +4,8 @@ import { Shield, Sparkles, Sword, User, Wand2 } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { Modal } from '../ui/Modal'
 import { CharacterAvatar } from './CharacterAvatar'
+import type { CharacterRace } from './characterPortrait'
+import { getClassName, KAMAEL_STARTING_CLASSES } from '../../lib/lineage'
 
 export interface StartingClass {
   id: number
@@ -14,7 +16,7 @@ export interface StartingClass {
 
 export interface RaceConfig {
   id: number
-  key: 'human' | 'elf' | 'dark_elf' | 'orc' | 'dwarf'
+  key: CharacterRace
   name: string
   lore: string
   startingClasses: StartingClass[]
@@ -77,6 +79,7 @@ export interface CreateCharacterModalProps {
   accountLogin: string
   characterCount?: number
   pending?: boolean
+  highFive?: boolean
   onClose: () => void
   onConfirm: (payload: {
     login: string
@@ -95,6 +98,7 @@ export function CreateCharacterModal({
   accountLogin,
   characterCount = 0,
   pending = false,
+  highFive = false,
   onClose,
   onConfirm,
 }: CreateCharacterModalProps) {
@@ -111,11 +115,25 @@ export function CreateCharacterModal({
   const [face, setFace] = useState(0)
   const [validationError, setValidationError] = useState<string | null>(null)
 
-  const activeRace = CHARACTER_CREATION_RACES.find((r) => r.id === raceId) ?? CHARACTER_CREATION_RACES[0]
+  const kamael: RaceConfig = {
+    id: 5,
+    key: 'kamael',
+    name: t('accounts.createCharModal.kamael.name'),
+    lore: t('accounts.createCharModal.kamael.lore'),
+    startingClasses: [{
+      id: KAMAEL_STARTING_CLASSES[sex],
+      name: getClassName(KAMAEL_STARTING_CLASSES[sex]),
+      type: 'fighter',
+      description: t('accounts.createCharModal.kamael.soldier'),
+    }],
+  }
+  const races = highFive ? [...CHARACTER_CREATION_RACES, kamael] : CHARACTER_CREATION_RACES
+  const activeRace = races.find(race => race.id === raceId) ?? CHARACTER_CREATION_RACES[0]
+  const activeClass = activeRace.startingClasses.find(cls => cls.id === classId) ?? activeRace.startingClasses[0]
 
   function handleSelectRace(newRaceId: number) {
     setRaceId(newRaceId)
-    const targetRace = CHARACTER_CREATION_RACES.find((r) => r.id === newRaceId)
+    const targetRace = races.find((r) => r.id === newRaceId)
     if (targetRace && !targetRace.startingClasses.some((c) => c.id === classId)) {
       setClassId(targetRace.startingClasses[0]?.id ?? 0)
     }
@@ -149,8 +167,8 @@ export function CreateCharacterModal({
     await onConfirm({
       login: accountLogin,
       name: cleaned,
-      race: raceId,
-      class_id: classId,
+      race: activeRace.id,
+      class_id: activeClass.id,
       sex,
       hair_style: hairStyle,
       hair_color: hairColor,
@@ -162,8 +180,6 @@ export function CreateCharacterModal({
   const hairStyleOptions = Array.from({ length: maxHairStyles }, (_, i) => i)
   const hairColorOptions = [0, 1, 2, 3]
   const faceOptions = [0, 1, 2]
-
-  const activeClass = activeRace.startingClasses.find((c) => c.id === classId) ?? activeRace.startingClasses[0]
 
   return (
     <Modal
@@ -184,7 +200,7 @@ export function CreateCharacterModal({
                   name={name || 'Novo Personagem'}
                   race={activeRace.key}
                   sex={sex}
-                  classId={classId}
+                  classId={activeClass.id}
                   size="xl"
                   className="create-char-portrait"
                 />
@@ -262,8 +278,8 @@ export function CreateCharacterModal({
                 {t('accounts.createCharModal.raceLabel', { defaultValue: '2. Raça' })}
               </span>
               <div className="create-char-races-grid" role="radiogroup" aria-label="Raça">
-                {CHARACTER_CREATION_RACES.map((r) => {
-                  const selected = r.id === raceId
+                {races.map((r) => {
+                  const selected = r.id === activeRace.id
                   return (
                     <button
                       key={r.id}
@@ -316,7 +332,7 @@ export function CreateCharacterModal({
               </span>
               <div className="create-char-classes-list" role="radiogroup" aria-label="Classe">
                 {activeRace.startingClasses.map((cls) => {
-                  const selected = cls.id === classId
+                  const selected = cls.id === activeClass.id
                   return (
                     <button
                       key={cls.id}

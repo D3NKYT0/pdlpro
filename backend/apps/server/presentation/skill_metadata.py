@@ -6,8 +6,10 @@ def dump_learned_skill(
     stored_level: int,
     class_index: int,
     catalog: ISkillCatalog,
+    *,
+    class_id: int | None = None,
 ) -> dict:
-    """Monta o payload público de uma skill aprendida (nome, ícone, pasta e encanto)."""
+    """Monta o payload de uma skill aprendida com classe, nome, ícone, pasta e encanto."""
 
     meta = catalog.metadata(skill_id)
     progress = catalog.progress(skill_id, stored_level)
@@ -19,6 +21,7 @@ def dump_learned_skill(
         "enchant_max": progress["enchant_max"],
         "enchantable": progress["enchantable"],
         "class_index": class_index,
+        "class_id": class_id,
         "name": meta["name"],
         "icon_url": meta["icon_url"],
         "operate": meta["operate"],

@@ -324,7 +324,7 @@ class CharacterSkillsView(InjectedAPIView):
         catalog = self.resolve(ISkillCatalog)
         return Response(
             [
-                dump_learned_skill(skill.skill_id, skill.level, skill.class_index, catalog)
+                dump_learned_skill(skill.skill_id, skill.level, skill.class_index, catalog, class_id=skill.class_id)
                 for skill in skills
             ]
         )

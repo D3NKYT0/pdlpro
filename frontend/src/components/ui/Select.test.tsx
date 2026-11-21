@@ -32,3 +32,27 @@ it('abre a lista focando com preventScroll para não empurrar a página', async 
   expect(screen.getByRole('listbox')).toBeInTheDocument()
   expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true })
 })
+
+it('confirma a opção ao completar o toque e devolve o foco ao seletor', async () => {
+  const user = userEvent.setup()
+  const onChange = vi.fn()
+  render(
+    <Select
+      value="pt"
+      options={[{ value: 'pt', label: 'Português' }, { value: 'en', label: 'English' }]}
+      aria-label="Idioma"
+      onChange={onChange}
+    />,
+  )
+
+  const trigger = screen.getByRole('combobox', { name: 'Idioma' })
+  await user.click(trigger)
+  await user.pointer({ keys: '[TouchA>]', target: screen.getByRole('option', { name: 'English' }) })
+  expect(onChange).not.toHaveBeenCalled()
+  expect(screen.getByRole('listbox')).toBeVisible()
+
+  await user.pointer({ keys: '[/TouchA]' })
+  expect(onChange).toHaveBeenCalledExactlyOnceWith('en')
+  expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+  expect(trigger).toHaveFocus()
+})

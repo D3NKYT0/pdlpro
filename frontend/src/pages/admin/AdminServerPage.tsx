@@ -11,7 +11,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { FileText, Gauge, Globe, ServerCog, Sparkles } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { staffApi, type ApiPanelSettings } from '../../services/api'
+import { lineageApi, staffApi, type ApiPanelSettings } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
 
 function panelBase(data: ApiPanelSettings) {
@@ -26,6 +26,7 @@ export function AdminServerPage() {
   const creationOnly = hash === '#character-creation'
   const creationSection = useRef<HTMLElement>(null)
   const panel = useQuery({ queryKey: ['staff-panel'], queryFn: staffApi.panel })
+  const gameServices = useQuery({ queryKey: ['service-prices'], queryFn: lineageApi.servicePrices })
   const [name, setName] = useState('')
   const [slogan, setSlogan] = useState('')
   const [description, setDescription] = useState('')
@@ -186,7 +187,7 @@ export function AdminServerPage() {
               {(['x', 'y', 'z'] as const).map(axis => <Field key={axis} label={t(`unstuck.${axis}`)}><CoordinateInput disabled={saving} value={unstuckLocation[axis]} onChange={value => setUnstuckLocation({ ...unstuckLocation, [axis]: value })} /></Field>)}
             </div>}
           </Card>
-          <CharacterCreationSettings value={characterCreation} onChange={setCharacterCreation} disabled={saving || panel.isPending || panel.isError} maxLevel={Number(maxLevel) || 80} />
+          <CharacterCreationSettings value={characterCreation} onChange={setCharacterCreation} disabled={saving || panel.isPending || panel.isError} maxLevel={Number(maxLevel) || 80} highFive={gameServices.data?.catalog?.chronicle === 'high_five'} />
         </section>
 
         <Card as="div" className="admin-server-actions"><span><strong>{t('server.actionsTitle')}</strong><small>{t('server.actionsHint')}</small></span><AdminSaveBar saving={saving} /></Card>

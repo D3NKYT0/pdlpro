@@ -14,7 +14,12 @@ from apps.server.domain.access import (
     PrimaryLoginState,
     same_linked_user,
 )
-from apps.server.domain.character_creation import resolve_start
+from apps.server.domain.character_creation import (
+    HIGH_FIVE,
+    KAMAEL_INITIAL_CLASSES,
+    KAMAEL_RACE_ID,
+    resolve_start,
+)
 from apps.server.domain.character_rules import MAX_CHARACTERS_PER_ACCOUNT
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
@@ -499,6 +504,8 @@ class CreateCharacterUseCase(UseCase[CreateCharacterInput, GameCharacter]):
             3: (44, 49),  # Orc: Orc Fighter, Orc Mage
             4: (53,),     # Dwarf: Dwarven Fighter
         }
+        if self._lineage.chronicle() == HIGH_FIVE:
+            allowed_classes[KAMAEL_RACE_ID] = (KAMAEL_INITIAL_CLASSES[data.sex],)
         if data.race not in allowed_classes:
             raise ValidationDomainError(_("Raça inválida."))
         if data.class_id not in allowed_classes[data.race]:

@@ -41,8 +41,28 @@ it('renderiza campos de criação de personagem e preview inicial', () => {
   expect(screen.getByRole('radio', { name: 'Elfo Negro' })).toBeInTheDocument()
   expect(screen.getByRole('radio', { name: 'Orc' })).toBeInTheDocument()
   expect(screen.getByRole('radio', { name: 'Anão' })).toBeInTheDocument()
+  expect(screen.queryByRole('radio', { name: 'Kamael' })).not.toBeInTheDocument()
   expect(screen.getByRole('radio', { name: /Masculino/i })).toBeInTheDocument()
   expect(screen.getByRole('radio', { name: /Feminino/i })).toBeInTheDocument()
+})
+
+it('oferece Kamael em High Five e envia a classe inicial do gênero escolhido', async () => {
+  const user = userEvent.setup()
+  const onConfirm = vi.fn().mockResolvedValue(undefined)
+  render(<CreateCharacterModal open highFive accountLogin="denky" onClose={vi.fn()} onConfirm={onConfirm} />)
+
+  await user.click(screen.getByRole('radio', { name: 'Kamael' }))
+  expect(screen.getByRole('radio', { name: /Male Kamael Soldier/ })).toHaveAttribute('aria-checked', 'true')
+  expect(screen.getByRole('img')).toHaveAttribute('src', '/theme/avatars/kamael-m.png')
+
+  await user.click(screen.getByRole('radio', { name: 'Feminino' }))
+  expect(screen.getByRole('radio', { name: /Female Kamael Soldier/ })).toHaveAttribute('aria-checked', 'true')
+  expect(screen.getByRole('img')).toHaveAttribute('src', '/theme/avatars/kamael-f.png')
+  await user.type(screen.getByLabelText(/nick do personagem/i), 'Winged')
+  await user.click(screen.getByRole('button', { name: 'Criar Personagem' }))
+  expect(onConfirm).toHaveBeenCalledExactlyOnceWith({
+    login: 'denky', name: 'Winged', race: 5, class_id: 124, sex: 1, hair_style: 0, hair_color: 0, face: 0,
+  })
 })
 
 it('permite preencher o nick, trocar raça e submeter a criação', async () => {

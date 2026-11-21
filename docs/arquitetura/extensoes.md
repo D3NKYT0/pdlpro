@@ -239,6 +239,11 @@ extensions/acme/infrastructure/lineage/queries/lucerav2/manifest.json
 arquivo, o overlay carrega. Revisão antiga levanta `QueryNotFoundError` na
 subida do catálogo — o cliente ajusta o SQL antes de promover o core novo.
 
+O campo opcional `chronicle` aceita `interlude` ou `high_five`. Um overlay
+herda a crônica do módulo base quando omite esse campo. Um dialeto inteiro
+sem crônica declarada usa `interlude`. O portal consulta esse metadado para
+habilitar opções compatíveis, como a criação de personagens Kamael.
+
 ### Dialeto inteiro (fork longe do core)
 
 Pasta nova com **todas** as consultas `REQUIRED` (lista em

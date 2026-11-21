@@ -5,6 +5,7 @@ import re
 from collections.abc import Iterable
 from pathlib import Path
 
+from apps.server.domain.character_creation import HIGH_FIVE, INTERLUDE
 from common.architecture.exceptions import DomainError
 
 
@@ -85,8 +86,9 @@ class LineageQueryCatalog:
         "deposit_item",
     )
 
-    def __init__(self, dialect: str, statements: dict[str, str]) -> None:
+    def __init__(self, dialect: str, statements: dict[str, str], *, chronicle: str = INTERLUDE) -> None:
         self.dialect = dialect
+        self.chronicle = chronicle
         self._statements = statements
         optional = self.OPTIONAL_BY_DIALECT.get(dialect, ())
         missing = [name for name in self.REQUIRED if name not in statements and name not in optional]
@@ -112,13 +114,16 @@ class LineageQueryCatalog:
         dialect = cls._normalize_dialect(dialect)
         statements: dict[str, str] = {}
         found = False
-        for index, root in enumerate(cls._iter_roots(extra_roots)):
+        chronicle = INTERLUDE
+        for root in cls._iter_roots(extra_roots):
             folder = root / dialect
             if not folder.is_dir():
                 continue
             found = True
-            if index > 0:
-                cls._validate_overlay_manifest(folder, dialect)
+            manifest = cls._read_manifest(folder, dialect)
+            chronicle = manifest.get("chronicle", chronicle)
+            if chronicle not in (INTERLUDE, HIGH_FIVE):
+                raise QueryNotFoundError(f"O manifest.json do dialeto '{dialect}' em {folder} é inválido.")
             for path in sorted(folder.glob("*.sql")):
                 statements.update(cls._parse(path.read_text(encoding="utf-8")))
         if not found:
@@ -126,7 +131,7 @@ class LineageQueryCatalog:
             raise QueryDialectNotFoundError(
                 f"Dialeto '{dialect}' não encontrado. Disponíveis: {available}."
             )
-        return cls(dialect, statements)
+        return cls(dialect, statements, chronicle=chronicle)
 
     @classmethod
     def discover_dialects(cls, extra_roots: Iterable[Path] | None = None) -> list[str]:
@@ -142,21 +147,23 @@ class LineageQueryCatalog:
         return sorted(names)
 
     @classmethod
-    def _validate_overlay_manifest(cls, folder: Path, dialect: str) -> None:
-        """Recusa overlay com ``core_revision`` diferente do contrato atual."""
+    def _read_manifest(cls, folder: Path, dialect: str) -> dict:
+        """Lê os metadados e valida a revisão do contrato quando declarada."""
 
         manifest_path = folder / "manifest.json"
         if not manifest_path.is_file():
-            return
+            return {}
         try:
             data = json.loads(manifest_path.read_text(encoding="utf-8"))
         except json.JSONDecodeError as exc:
             raise QueryNotFoundError(
                 f"O manifest.json do dialeto '{dialect}' em {folder} é inválido."
             ) from exc
+        if not isinstance(data, dict):
+            raise QueryNotFoundError(f"O manifest.json do dialeto '{dialect}' em {folder} é inválido.")
         expected = data.get("core_revision")
         if expected is None:
-            return
+            return data
         try:
             revision = int(expected)
         except (TypeError, ValueError) as exc:
@@ -168,6 +175,7 @@ class LineageQueryCatalog:
                 f"O overlay do dialeto '{dialect}' espera core_revision={revision}, "
                 f"o core está em {cls.CONTRACT_REVISION}."
             )
+        return data
 
     @classmethod
     def _normalize_dialect(cls, dialect: str) -> str:

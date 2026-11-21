@@ -198,7 +198,7 @@ export function CharacterPage() {
       <Card as="header" className="account-hero" data-theme-part="page-header">
         <div className="character-hero-identity">
           {char ? (
-            <CharacterAvatar name={char.name} classId={char.class_id} sex={char.sex} size="xl" />
+            <CharacterAvatar name={char.name} classId={char.class_id} race={char.race} sex={char.sex} size="xl" />
           ) : null}
           <div>
             <Link className="character-back" to="/panel/accounts">
@@ -273,6 +273,7 @@ export function CharacterPage() {
             />
 
             <MicroResource code="accounts-skills"><CharacterSkillsPanel
+              key={id}
               skills={skills.data ?? []}
               loading={skills.isLoading}
               error={skills.isError}
@@ -283,7 +284,7 @@ export function CharacterPage() {
             <Card className="character-sheet">
             <div className="account-section-heading">
               <div className="character-sheet-identity">
-                <CharacterAvatar name={char.name} classId={char.class_id} sex={char.sex} size="sm" />
+                <CharacterAvatar name={char.name} classId={char.class_id} race={char.race} sex={char.sex} size="sm" />
                 <div>
                   <span className="panel-eyebrow">{t('character.infoEyebrow')}</span>
                   <h2>{char.name}</h2>

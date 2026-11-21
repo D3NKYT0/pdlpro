@@ -4827,6 +4827,7 @@ html.pdl-panel .character-skills-titlebar h3 {
   letter-spacing: 0.08em;
 }
 
+html.pdl-panel .character-skills-class-picker,
 html.pdl-panel .character-skills-tabs {
   position: relative;
   z-index: 1;

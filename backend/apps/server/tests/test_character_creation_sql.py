@@ -127,3 +127,67 @@ def test_creation_refuses_unsafe_storage_or_unavailable_lock(gateway, failure):
         create(gateway)
     with gateway._engine.connect() as conn:
         assert conn.execute(text("SELECT COUNT(*) FROM characters")).scalar() == 0
+
+
+@pytest.fixture
+def eternity_creation(settings):
+    settings.LINEAGE_CREATION_ID_MIN = 400000000
+    settings.LINEAGE_CREATION_ID_MAX = 400000005
+    catalog = LineageQueryCatalog.load("eternity")
+    catalog._statements["creation_lock"] = "SELECT 1"
+    catalog._statements["creation_unlock"] = "SELECT 1"
+    catalog._statements["creation_storage"] = (
+        "SELECT 'characters' AS table_name, 'InnoDB' AS engine UNION ALL SELECT 'items', 'InnoDB'"
+    )
+    catalog._statements["insert_character"] = catalog["insert_character"].replace("UNIX_TIMESTAMP()", "12345")
+    engine = create_engine("sqlite://")
+    with engine.begin() as connection:
+        connection.exec_driver_sql(
+            "CREATE TABLE characters (charId INTEGER PRIMARY KEY, account_name TEXT, char_name TEXT UNIQUE, "
+            "race INTEGER, sex INTEGER, classid INTEGER, base_class INTEGER, face INTEGER, hairStyle INTEGER, "
+            "hairColor INTEGER, level INTEGER, exp INTEGER, sp INTEGER, title TEXT, x INTEGER, y INTEGER, z INTEGER, "
+            "createDate INTEGER, maxHp INTEGER, curHp INTEGER, maxMp INTEGER, curMp INTEGER, maxCp INTEGER, "
+            "curCp INTEGER, online INTEGER, onlinetime INTEGER, pvpkills INTEGER, pkkills INTEGER, "
+            "clanid INTEGER, karma INTEGER, heading INTEGER)"
+        )
+        connection.exec_driver_sql(
+            "CREATE TABLE items (object_id INTEGER PRIMARY KEY, owner_id INTEGER, item_id "
+            "INTEGER CHECK(item_id != 999), count INTEGER, enchant_level INTEGER, loc TEXT, loc_data INTEGER)"
+        )
+        connection.exec_driver_sql("INSERT INTO characters (charId, char_name) VALUES (400000006, 'External')")
+        connection.exec_driver_sql("INSERT INTO items (object_id, item_id) VALUES (400000001, 57)")
+    gateway = SqlAlchemyLineageGateway(catalog)
+    gateway._engine = engine
+    yield gateway
+    engine.dispose()
+
+
+def test_eternity_creates_kamael_base_and_kit_inside_the_reserved_ids(eternity_creation):
+    start = CharacterStart(level=4, xp=120, sp=20, items=(InitialItem(57, 5),))
+    char = eternity_creation.create_character("owner", "Winged", 5, 124, 1, start=start)
+    assert (char.char_id, char.race, char.class_id) == (400000002, "kamael", 124)
+    with eternity_creation._engine.connect() as connection:
+        assert connection.exec_driver_sql(
+            "SELECT base_class, level, exp, sp, curHp, curMp, createDate "
+            "FROM characters WHERE char_name='Winged'"
+        ).one() == (124, 4, 120, 20, 104, 52, 12345000)
+        assert connection.exec_driver_sql(
+            "SELECT object_id, owner_id, count FROM items WHERE owner_id=400000002"
+        ).one() == (400000003, 400000002, 5)
+
+    with pytest.raises(NicknameTakenError):
+        eternity_creation.create_character("owner", "Winged", 5, 124, 1, start=start)
+    eternity_creation.create_character("owner", "Second", 5, 123, 0, start=start)
+    with pytest.raises(CharacterServiceUnavailableError):
+        eternity_creation.create_character("owner", "Third", 5, 123, 0, start=start)
+
+
+def test_eternity_rolls_back_character_and_kit_if_an_insert_fails(eternity_creation):
+    start = CharacterStart(items=(InitialItem(57, 5), InitialItem(999)))
+    with pytest.raises(IntegrityError):
+        eternity_creation.create_character("owner", "Winged", 5, 123, 0, start=start)
+    with eternity_creation._engine.connect() as connection:
+        assert connection.exec_driver_sql(
+            "SELECT COUNT(*) FROM characters WHERE account_name='owner'"
+        ).scalar() == 0
+        assert connection.exec_driver_sql("SELECT COUNT(*) FROM items").scalar() == 1

@@ -20,6 +20,7 @@ export interface ApiPrimaryLoginState {
 }
 
 export interface ApiGameCharacter {
+  race?: string | null
   char_id: number
   name: string
   level: number
@@ -64,6 +65,8 @@ export interface ApiServicePrices {
   available?: string[]
   catalog?: {
     towns: ApiServiceTown[]
+    chronicle?: 'interlude' | 'high_five'
+    character_creation_available?: boolean
     appearance: {
       hair_style_max_male: number
       hair_style_max_female: number
@@ -112,6 +115,7 @@ export interface ApiGameSkill {
   name: string
   level: number
   class_index: number
+  class_id?: number | null
   icon_url: string
   operate: SkillOperate
   kind: SkillKind

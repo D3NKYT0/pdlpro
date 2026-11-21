@@ -10,6 +10,14 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Adicionado
+
+- O catálogo Eternity declara High Five e oferece retratos e classes iniciais Kamael. A criação pelo painel usa um intervalo de IDs de objeto reservado no gameserver.
+
+### Corrigido
+
+- A ficha do personagem e as fichas de comércio separam as skills da classe base e de cada subclasse, preservando as abas Ativas e Passivas. No Eternity, o seletor mostra o nome de cada classe.
+
 ## [2.9.0] - 2026-11-21
 
 ### Adicionado

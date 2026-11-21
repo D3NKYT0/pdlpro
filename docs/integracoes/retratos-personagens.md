@@ -2,7 +2,9 @@
 
 [← Lineage](lineage.md)
 
-Os avatares usam raça, sexo e `class_id` Interlude. Classes mágicas usam os novos arquivos `*-mage-{m,f}.png`; classes físicas e personagens sem classe informada mantêm os retratos originais. Anões não possuem linhagem mágica neste catálogo. Classes de suporte e curandeiros pertencem à linhagem mágica, inclusive as terceiras classes.
+Os avatares usam raça, sexo e `class_id`. Classes mágicas usam os arquivos `*-mage-{m,f}.png`. Classes físicas e personagens sem classe informada usam os retratos por raça. Anões não possuem linhagem mágica neste catálogo. Classes de suporte e curandeiros pertencem à linhagem mágica, inclusive as terceiras classes.
+
+O módulo `eternity` declara a crônica High Five. Para Kamael, os retratos `kamael-m.png` e `kamael-f.png` cobrem as classes iniciais 123 e 124 e suas evoluções. O catálogo de criação oferece a raça apenas em High Five. Quando o banco informa a raça do personagem, o retrato a preserva mesmo que a subclasse ativa pertença a outra raça.
 
 Os oito novos PNGs estão em `frontend/public/theme/avatars/`, com 432 × 576 pixels para uso no painel. Foram gerados com a ferramenta integrada de geração de imagens e redimensionados na preparação dos assets. Os dez retratos anteriores foram conferidos e preservados. A imagem é ilustrativa: não representa equipamento, cabelo ou rosto efetivos do servidor.
 
@@ -11,6 +13,8 @@ O mesmo resolvedor atende os personagens existentes, a criação pelo jogador e 
 Testes: `characterPortrait.test.ts` cobre faixas físicas/mágicas, terceiras classes e ambos os sexos; `CreateCharacterModal.test.tsx` cobre as trocas pelo usuário; `AdminSettings.test.tsx` cobre a prévia e o payload salvo.
 
 ## Prompts utilizados
+
+Os dois retratos Kamael foram gerados com a ferramenta integrada de geração de imagens. O pedido foi de ilustrações originais 3:4 para o painel, com uma asa escura, armadura em aço escuro e tons de vinho e cabelo prateado, curto e penteado para o lado no masculino e trançado no feminino.
 
 O perfil **Padrão geral** usa `general-party.png`: um grupo das cinco raças, com personagens masculinos/femininos e linhagens físicas/mágicas. Essa imagem substitui o ícone abstrato na prévia e representa a base compartilhada por todas as classes. O teste de interação do admin verifica a imagem inicial e a troca para os retratos específicos.
 

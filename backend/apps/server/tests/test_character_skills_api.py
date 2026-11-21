@@ -32,15 +32,15 @@ def test_character_skills_are_read_only_and_include_icon_urls(api, player):
     char = gateway.seed_character(
         "hero",
         "SirHero",
-        skills=[GameSkill(1, 37), GameSkill(3, 9, class_index=0)],
+        skills=[GameSkill(1, 37, class_id=0), GameSkill(3, 9, class_index=2)],
     )
 
     response = api.get(f"/api/v1/customer/server/characters/{char.char_id}/skills/?login=hero")
 
     assert response.status_code == 200
-    assert [(row["skill_id"], row["level"], row["class_index"]) for row in response.data] == [
-        (1, 37, 0),
-        (3, 9, 0),
+    assert [(row["skill_id"], row["level"], row["class_index"], row["class_id"]) for row in response.data] == [
+        (1, 37, 0, 0),
+        (3, 9, 2, None),
     ]
     for row in response.data:
         meta = skill_metadata(row["skill_id"])

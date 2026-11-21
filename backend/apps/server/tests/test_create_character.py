@@ -139,6 +139,32 @@ def test_create_character_api_endpoint(api, player):
 
 
 @pytest.mark.django_db
+@pytest.mark.parametrize(
+    "chronicle,sex,class_id,expected",
+    [("high_five", 0, 123, 201), ("high_five", 1, 124, 201),
+     ("high_five", 1, 123, 400), ("high_five", 0, 131, 400), ("interlude", 0, 123, 400)],
+)
+def test_kamael_creation_uses_the_catalog_chronicle_and_gender(api, player, monkeypatch, chronicle, sex, class_id, expected):
+    api.force_authenticate(user=player)
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    monkeypatch.setattr(gateway, "chronicle", lambda: chronicle, raising=False)
+    gateway.register_account("hero", "password123", player.email)
+    gateway.link_account("hero", str(player.id))
+
+    prices = api.get("/api/v1/customer/server/services/")
+    assert prices.data["catalog"]["chronicle"] == chronicle
+    response = api.post(
+        "/api/v1/customer/server/characters/create/",
+        {"login": "hero", "name": "Winged", "race": 5, "class_id": class_id, "sex": sex},
+        format="json",
+    )
+    assert response.status_code == expected
+    assert len(gateway.list_characters("hero")) == (1 if expected == 201 else 0)
+    if expected == 201:
+        assert (response.data["class_id"], response.data["sex"]) == (class_id, sex)
+
+
+@pytest.mark.django_db
 def test_create_character_limit_exceeded(actor, player):
     container = DependencyInjection.root()
     gateway = container.resolve(ILineageGateway)

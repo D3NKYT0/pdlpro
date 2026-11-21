@@ -9,7 +9,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.exc import SQLAlchemyError
 
 from apps.server.domain.access import same_linked_user
-from apps.server.domain.character_creation import CharacterStart
+from apps.server.domain.character_creation import INVALID_START, CharacterStart
 from apps.server.domain.character_rules import require_offline_character
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
@@ -30,6 +30,7 @@ from apps.server.domain.gateways import (
     RankingEntry,
     ServerStatus,
 )
+from apps.server.domain.races import RACES
 from apps.server.domain.services import SERVICE_QUERY_NAMES
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 from apps.server.infrastructure.lineage.crests import crest_to_png_base64
@@ -256,6 +257,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         return entries
 
     def _character(self, row: dict) -> GameCharacter:
+        race_id = row.get("race")
         return GameCharacter(
             char_id=int(row["char_id"]),
             name=row["name"],
@@ -280,6 +282,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             hair_style=int(row.get("hair_style") or 0),
             hair_color=int(row.get("hair_color") or 0),
             face=int(row.get("face") or 0),
+            race=RACES[race_id] if isinstance(race_id, int) and 0 <= race_id < len(RACES) else None,
         )
 
     def get_status(self) -> ServerStatus:
@@ -400,6 +403,20 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         rows = self._fetch("get_character", {"login": login, "char_id": char_id})
         return self._character(rows[0]) if rows else None
 
+    def chronicle(self) -> str:
+        """Retorna a crônica declarada pelo catálogo SQL ativo."""
+        return self._sql.chronicle
+
+    def character_creation_available(self) -> bool:
+        """Verifica se o catálogo tem consultas de criação e o intervalo exigido."""
+        if not all(self._sql.has(query) for query in (
+            "creation_lock", "creation_unlock", "creation_storage", "insert_character", "insert_initial_item",
+        )):
+            return False
+        if self._sql.has("creation_reserved_next_id"):
+            return 268435456 <= settings.LINEAGE_CREATION_ID_MIN <= settings.LINEAGE_CREATION_ID_MAX <= 2147483647
+        return self._sql.has("creation_next_id")
+
     def create_character(
         self,
         login: str,
@@ -412,10 +429,21 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         face: int = 0,
         start: CharacterStart | None = None,
     ) -> GameCharacter:
+        if not self.character_creation_available():
+            raise CharacterServiceUnavailableError()
         start = start or CharacterStart()
-        # Refuse legacy extension queries that would silently ignore configured attributes.
-        required_binds = {"insert_character": {"title", "x", "y", "z"},
-                          "insert_character_subclass": {"level", "xp", "sp"}}
+        reserved = self._sql.has("creation_reserved_next_id")
+        expected_tables = {"characters", "items"}
+        required_binds = {"insert_character": {"title", "x", "y", "z"}}
+        if self._sql.has("insert_character_subclass"):
+            required_binds["insert_character_subclass"] = {"level", "xp", "sp"}
+            expected_tables.add("character_subclasses")
+        else:
+            required_binds["insert_character"].update({"level", "xp", "sp"})
+        if reserved and any(not -8388608 <= coord <= 8388607 for coord in (start.x, start.y, start.z)):
+            from common.architecture.exceptions import ValidationDomainError
+
+            raise ValidationDomainError(INVALID_START)
         for query, binds in required_binds.items():
             if not self._sql.has(query) or not binds.issubset(BIND_RE.findall(self._sql[query])):
                 raise CharacterServiceUnavailableError()
@@ -428,7 +456,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             try:
                 with connection.begin():
                     storage = connection.execute(text(self._sql["creation_storage"])).mappings().all()
-                    if len(storage) != 3 or any(str(row["engine"]).upper() != "INNODB" for row in storage):
+                    if {row["table_name"].lower() for row in storage if str(row["engine"]).upper() == "INNODB"} != expected_tables:
                         raise CharacterServiceUnavailableError()
                     if connection.execute(text(self._sql["nickname_exists"]), {"name": name}).scalar():
                         raise NicknameTakenError()
@@ -438,7 +466,15 @@ class SqlAlchemyLineageGateway(ILineageGateway):
                             CharacterLimitReachedError,
                         )
                         raise CharacterLimitReachedError()
-                    new_id = int(connection.execute(text(self._sql["creation_next_id"])).scalar())
+                    if reserved:
+                        first_id, last_id = settings.LINEAGE_CREATION_ID_MIN, settings.LINEAGE_CREATION_ID_MAX
+                        new_id = int(connection.execute(
+                            text(self._sql["creation_reserved_next_id"]), {"first_id": first_id, "last_id": last_id},
+                        ).scalar())
+                        if new_id + len(start.items) > last_id:
+                            raise CharacterServiceUnavailableError()
+                    else:
+                        new_id = int(connection.execute(text(self._sql["creation_next_id"])).scalar())
                     params = {
                         "char_id": new_id, "login": login, "name": name, "sex": sex, "race": race,
                         "class_id": class_id, "hair_style": hair_style, "hair_color": hair_color, "face": face,
@@ -446,7 +482,8 @@ class SqlAlchemyLineageGateway(ILineageGateway):
                         "x": start.x, "y": start.y, "z": start.z,
                     }
                     connection.execute(text(self._sql["insert_character"]), params)
-                    connection.execute(text(self._sql["insert_character_subclass"]), params)
+                    if "character_subclasses" in expected_tables:
+                        connection.execute(text(self._sql["insert_character_subclass"]), params)
                     for index, item in enumerate(start.items, 1):
                         connection.execute(text(self._sql["insert_initial_item"]), {
                             "object_id": new_id + index, "owner_id": new_id, "item_id": item.item_id,
@@ -461,6 +498,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             char_id=new_id, name=name, level=start.level, online=False, sex=sex,
             class_id=class_id, hair_style=hair_style, hair_color=hair_color, face=face, title=start.title,
             adena=sum(item.quantity for item in start.items if item.item_id == 57 and item.slot is None),
+            race=RACES[race] if 0 <= race < len(RACES) else None,
         )
 
     def _game_item(self, row, slot: int | None = None) -> GameItem:
@@ -501,6 +539,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
                 skill_id=int(row["skill_id"]),
                 level=int(row["level"] or 1),
                 class_index=int(row["class_index"] or 0),
+                class_id=int(row["class_id"]) if row.get("class_id") is not None else None,
             )
             for row in rows
         ]

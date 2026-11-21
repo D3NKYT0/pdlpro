@@ -194,7 +194,12 @@ class ListServicePricesUseCase(UseCase[None, dict]):
             "LINK_SLOT": str(self._prices.get_price("LINK_SLOT")),
             "UNSTUCK": "0.00",
             "available": ["CHANGE_NICKNAME", "CHANGE_SEX", "UNSTUCK", "LINK_SLOT"],
-            "catalog": {"towns": town_catalog(), "appearance": appearance_catalog()},
+            "catalog": {
+                "towns": town_catalog(),
+                "appearance": appearance_catalog(),
+                "chronicle": self._lineage.chronicle(),
+                "character_creation_available": self._lineage.character_creation_available(),
+            },
         }
         for code in TAVERN_SERVICES:
             if not self._lineage.supports(code):

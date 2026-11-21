@@ -107,8 +107,10 @@ const classNames: Record<number, string> = {
   136: 'Judicator',
 }
 
-export function getClassName(classId: number | undefined) {
-  return classNames[classId ?? -1] ?? 'Desconhecida'
+export const KAMAEL_STARTING_CLASSES = [123, 124] as const
+
+export function getClassName(classId: number | undefined, fallback = 'Desconhecida') {
+  return classNames[classId ?? -1] ?? fallback
 }
 
 export function formatServicePrice(value: string | undefined) {

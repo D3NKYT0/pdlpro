@@ -4,7 +4,11 @@ from dataclasses import asdict, dataclass
 
 from common.architecture.exceptions import ValidationDomainError
 
-INITIAL_CLASSES = (0, 10, 18, 25, 31, 38, 44, 49, 53)
+INTERLUDE = "interlude"
+HIGH_FIVE = "high_five"
+KAMAEL_RACE_ID = 5
+KAMAEL_INITIAL_CLASSES = (123, 124)
+INITIAL_CLASSES = (0, 10, 18, 25, 31, 38, 44, 49, 53, *KAMAEL_INITIAL_CLASSES)
 INVALID_START = "Configuração inicial de personagem inválida."
 
 

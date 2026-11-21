@@ -9,18 +9,38 @@ import type { ApiCharacterCreation } from '../../services/api'
 
 afterEach(cleanup)
 
-function mount() {
+function mount(highFive = false) {
   const save = vi.fn()
   function Editor() {
     const [value, setValue] = useState<ApiCharacterCreation>(defaultCharacterCreation)
     return <form onSubmit={event => { event.preventDefault(); save(value) }}>
-      <CharacterCreationSettings value={value} onChange={setValue} disabled={false} maxLevel={80} />
+      <CharacterCreationSettings value={value} onChange={setValue} disabled={false} maxLevel={80} highFive={highFive} />
       <button type="submit">Save coordinates</button>
     </form>
   }
   render(<Editor />)
   return { user: userEvent.setup(), save }
 }
+
+it('edita os perfis Kamael separadamente e mostra o retrato da classe escolhida', async () => {
+  const { user, save } = mount(true)
+  const profile = screen.getByRole('combobox')
+  await user.click(profile)
+  await user.click(screen.getByRole('option', { name: 'Male Kamael Soldier' }))
+  expect(screen.getByRole('img')).toHaveAttribute('src', '/theme/avatars/kamael-m.png')
+  const x = screen.getByLabelText('Posição inicial X')
+  await user.clear(x)
+  await user.type(x, '123')
+
+  await user.click(profile)
+  await user.click(screen.getByRole('option', { name: 'Female Kamael Soldier' }))
+  expect(screen.getByRole('img')).toHaveAttribute('src', '/theme/avatars/kamael-f.png')
+  expect(screen.getByLabelText('Posição inicial X')).toHaveValue('83400')
+  await user.click(screen.getByRole('button', { name: 'Save coordinates' }))
+  expect(save).toHaveBeenCalledWith(expect.objectContaining({
+    classes: { '123': expect.objectContaining({ x: 123 }) },
+  }))
+})
 
 it.each(['X', 'Y', 'Z'])('aceita sinal negativo antes dos dígitos na coordenada %s', async axis => {
   const { user, save } = mount()

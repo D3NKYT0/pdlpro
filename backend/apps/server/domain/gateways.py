@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 
-from apps.server.domain.character_creation import CharacterStart
+from apps.server.domain.character_creation import INTERLUDE, CharacterStart
 
 
 @dataclass(frozen=True, slots=True)
@@ -125,6 +125,7 @@ class GameCharacter:
     hair_style: int = 0
     hair_color: int = 0
     face: int = 0
+    race: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -177,12 +178,14 @@ class GameSkill:
     """Skill aprendida pelo personagem; skill_id é o identificador inteiro do Lineage.
 
     ``level`` é o nível (ou encanto) gravado em character_skills. ``class_index`` distingue
-    a classe base das subclasses quando o servidor as armazena em linhas separadas.
+    a classe base das subclasses. ``class_id`` identifica a classe do jogo quando o
+    dialeto consegue associá-la ao índice.
     """
 
     skill_id: int
     level: int
     class_index: int = 0
+    class_id: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -224,6 +227,14 @@ class ILineageGateway(ABC):
     O banco do jogo tem transações próprias: UnitOfWork do Django não desfaz automaticamente
     escritas feitas por esta porta.
     """
+
+    def chronicle(self) -> str:
+        """Identifica a crônica para as políticas de personagem."""
+        return INTERLUDE
+
+    def character_creation_available(self) -> bool:
+        """Indica se o adaptador pode criar personagens pelo painel."""
+        return True
 
     def allows_online_delivery(self) -> bool:
         """Indica a política efetiva de envio online; retiradas sempre exigem offline.
