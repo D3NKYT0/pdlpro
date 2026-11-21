@@ -10,6 +10,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.9.0] - 2026-11-21
+
 ### Adicionado
 
 - Catálogo `eternity` para contas, personagens, inventário, rankings e informações do mundo no schema Eternity.
